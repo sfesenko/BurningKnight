@@ -80,7 +80,7 @@ namespace BurningKnight.entity.creature.npc {
 
 				try {
 					// Needs xclip on linux
-					seed = TextCopy.Clipboard.GetText().ToUpper();
+					seed = TextCopy.ClipboardService.GetText().ToUpper();
 				} catch (Exception e) {
 					Log.Error(e);
 				}

@@ -403,7 +403,7 @@ namespace BurningKnight.ui.str {
 						sinceLastSpace = 0;
 						width = 0;
 					} else {
-						w = g.FontRegion.Width;
+						w = g.Character.TextureRegion.Width;
 					}
 
 					var hadIcon = false;
@@ -521,7 +521,7 @@ namespace BurningKnight.ui.str {
 			for (var i = 0; i < l; i++) {
 				var g = glyphs[i];
 				
-				if (g.G.FontRegion != null) {
+				if (g.G.Character?.TextureRegion != null) {
 					var pos = new Vector2(
 						Position.X + g.G.Position.X + g.Offset.X + g.Origin.X,
 						Position.Y + g.G.Position.Y + g.Offset.Y + g.Origin.Y
@@ -538,8 +538,8 @@ namespace BurningKnight.ui.str {
 
 					c.A = (byte) MathUtils.Clamp(0, 255, (float) c.A * Tint.A / 255f);
 
-					Graphics.Batch.Draw(g.G.FontRegion.TextureRegion.Texture, pos,
-						g.G.FontRegion.TextureRegion.Bounds, c, g.Angle, g.Origin, g.Scale, g.Effects, 0);
+					Graphics.Batch.Draw(g.G.Character.TextureRegion.Texture, pos,
+						g.G.Character.TextureRegion.Bounds, c, g.Angle, g.Origin, g.Scale, g.Effects, 0);
 				}
 
 				if (renderers.Count > 0) {
@@ -606,9 +606,9 @@ namespace BurningKnight.ui.str {
 
 							CharTyped?.Invoke(this, v, label[v]);
 
-							if (g.G.FontRegion != null) {
-								Width = Math.Max(Width, g.G.Position.X + g.G.FontRegion.Width);
-								Height = Math.Max(Height, g.G.Position.Y + g.G.FontRegion.Height);
+							if (g.G.Character?.TextureRegion != null) {
+								Width = Math.Max(Width, g.G.Position.X + g.G.Character.TextureRegion.Width);
+								Height = Math.Max(Height, g.G.Position.Y + g.G.Character.TextureRegion.Height);
 							}
 						}
 

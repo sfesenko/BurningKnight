@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net.Mime;
 using System.Runtime.InteropServices;
 using ImGuiNET;
+using Microsoft.Toolkit.HighPerformance;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -142,8 +143,8 @@ namespace BurningKnight.ui.imgui {
         /// </summary>
         protected virtual void SetupInput()
         {
-            var io = ImGui.GetIO();
-
+            ImGuiIOPtr io = ImGui.GetIO();
+            
             _keys.Add(io.KeyMap[(int)ImGuiKey.Tab] = (int)Keys.Tab);
             _keys.Add(io.KeyMap[(int)ImGuiKey.LeftArrow] = (int)Keys.Left);
             _keys.Add(io.KeyMap[(int)ImGuiKey.RightArrow] = (int)Keys.Right);
@@ -218,14 +219,16 @@ namespace BurningKnight.ui.imgui {
         /// </summary>
         protected virtual void UpdateInput()
         {
-            var io = ImGui.GetIO();
+            ImGuiIOPtr io = ImGui.GetIO();
 
             var mouse = Mouse.GetState();
             var keyboard = Keyboard.GetState();
 
             for (int i = 0; i < _keys.Count; i++)
             {
-                io.KeysDown[_keys[i]] = keyboard.IsKeyDown((Keys)_keys[i]);
+                int key = _keys[i];
+                var isKeyDown = keyboard.IsKeyDown((Keys)key).ToByte();
+                io.KeysData[key].Down = isKeyDown;
             }
 
             io.KeyShift = keyboard.IsKeyDown(Keys.LeftShift) || keyboard.IsKeyDown(Keys.RightShift);
@@ -312,7 +315,7 @@ namespace BurningKnight.ui.imgui {
 
             for (int n = 0; n < drawData.CmdListsCount; n++)
             {
-                ImDrawListPtr cmdList = drawData.CmdListsRange[n];
+                ImDrawListPtr cmdList = drawData.CmdLists[n];
 
                 fixed (void* vtxDstPtr = &_vertexData[vtxOffset * DrawVertDeclaration.Size])
                 fixed (void* idxDstPtr = &_indexData[idxOffset * sizeof(ushort)])
@@ -340,7 +343,8 @@ namespace BurningKnight.ui.imgui {
 
             for (int n = 0; n < drawData.CmdListsCount; n++)
             {
-                ImDrawListPtr cmdList = drawData.CmdListsRange[n];
+                ImDrawListPtr cmdList = drawData.CmdLists[n];
+                    // CmdListsRange[n];
 
                 for (int cmdi = 0; cmdi < cmdList.CmdBuffer.Size; cmdi++)
                 {

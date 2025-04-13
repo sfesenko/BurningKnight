@@ -144,7 +144,7 @@ namespace BurningKnight.entity.creature.npc {
 
 		public override void Save(FileWriter stream) {
 			base.Save(stream);
-			stream.WriteSbyte(Mood);
+			stream.WriteByte((byte)Mood);
 		}
 
 		public void Enrage() {

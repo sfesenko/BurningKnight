@@ -12,7 +12,8 @@ using RectangleF = MonoGame.Extended.RectangleF;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
 using Vector3 = Microsoft.Xna.Framework.Vector3;
 using Viewport = Microsoft.Xna.Framework.Graphics.Viewport;
-
+using Point2 = Microsoft.Xna.Framework.Vector2;
+	
 namespace Lens.util.camera {
 	public class Camera : Entity {
 		public const int TargetPadding = 16;

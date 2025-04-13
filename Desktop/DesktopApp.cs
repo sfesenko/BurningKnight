@@ -24,9 +24,11 @@ namespace Desktop {
 		protected override void Initialize() {
 			base.Initialize();
 
-			integrations.Add(new DiscordIntegration());
-			integrations.Add(new SteamIntegration());
-			integrations.Add(twitchIntegration = new TwitchIntegration());
+			// Disable integrations for now
+
+			// integrations.Add(new DiscordIntegration());
+			// integrations.Add(new SteamIntegration());
+			// integrations.Add(twitchIntegration = new TwitchIntegration());
 
 			foreach (var i in integrations) {
 				i.Init();

@@ -50,7 +50,7 @@ namespace BurningKnight.state {
 			ImGuiHelper.End();
 			
 			Graphics.Batch.Begin();
-			Graphics.Batch.DrawCircle(new CircleF(Mouse.GetState().Position, 3f), 8, Color.White);
+			Graphics.Batch.DrawCircle(new CircleF(Mouse.GetState().Position.ToVector2(), 3f), 8, Color.White);
 			Graphics.Batch.End();
 		}
 

@@ -11,7 +11,8 @@ namespace BurningKnight.ui.str.effect {
 			
 			if (glyph.State != a) {
 				glyph.State = a;
-				glyph.G.FontRegion = Font.Small.GetCharacterRegion(a ? Rnd.Int(255) : glyph.G.Character);
+				// TODO!
+				// glyph.G.FontRegion = Font.Small.GetCharacterRegion(a ? Rnd.Int(255) : glyph.G.Character);
 			}
 		}
 	}

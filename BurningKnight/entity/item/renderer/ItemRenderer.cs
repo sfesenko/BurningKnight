@@ -37,7 +37,7 @@ namespace BurningKnight.entity.item.renderer {
 				var m = ImGui.GetScrollY();
 				var pos = ImGui.GetWindowPos() + ImGui.GetCursorPos() - new System.Numerics.Vector2(0, m);
 
-				if (ImGui.IsMouseDown(1)) {
+				if (ImGui.IsMouseDown(ImGuiMouseButton.Right)) {
 					v = ImGui.GetMousePos() - pos;
 					
 					if (!(v.X < 0) && !(v.Y < 0) && !(v.X > region.Width * 3) && !(v.Y > region.Height * 3)) {
@@ -111,7 +111,7 @@ namespace BurningKnight.entity.item.renderer {
 				var m = ImGui.GetScrollY();
 				var pos = ImGui.GetWindowPos() + ImGui.GetCursorPos() - new System.Numerics.Vector2(0, m);
 				
-				if (ImGui.IsMouseDown(1)) {
+				if (ImGui.IsMouseDown(ImGuiMouseButton.Right)) {
 					v = ImGui.GetMousePos() - pos;
 
 					if (!(v.X < 0) && !(v.Y < 0) && !(v.X > region.Width * 3) && !(v.Y > region.Height * 3)) {

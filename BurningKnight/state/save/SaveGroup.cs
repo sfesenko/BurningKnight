@@ -9,7 +9,7 @@ namespace BurningKnight.state.save {
 		public override void Render() {
 			foreach (var f in Dirs) {
 				if (ImGui.TreeNode(f.Name)) {
-					ImGui.TreePush();
+					ImGui.TreePush(f.Name);
 					f.Render();
 					ImGui.TreePop();
 					ImGui.TreePop();

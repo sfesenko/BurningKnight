@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using System.Reflection;
 using System.Text;
-using System.Windows.Forms;
+// using System.Windows.Forms;
 using Lens;
 using Lens.util;
 using Microsoft.Xna.Framework.Audio;
@@ -35,7 +35,7 @@ namespace Desktop.integration.crash {
 			builder.AppendLine($"Date: {DateTime.Now:dd.MM.yyyy h:mm tt}");
 			builder.AppendLine($"OS: {Environment.OSVersion} {(Environment.Is64BitOperatingSystem ? 64 : 32 )} bit");
 
-			builder.AppendLine($"Mono version: {GetMonoVersion()}");
+			builder.AppendLine($".NET version: {System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription}");
 			builder.AppendLine($"Burning Knight version: {Engine.Version}");
 			
 			builder.AppendLine("--- Error --- ");
@@ -51,22 +51,8 @@ namespace Desktop.integration.crash {
 
 			Log.Error(message);
 			Log.Close();
-			
-			MessageBox.Show(message, "Error");
-		}
-
-		private static string GetMonoVersion() {
-			var type = Type.GetType("Mono.Runtime");
-
-			if (type != null) {
-				var method = type.GetMethod("GetDisplayName", BindingFlags.NonPublic | BindingFlags.Static);
-
-				if (method != null) {
-					return (string) method.Invoke(null, null);
-				}
-			}
-
-			return "Unknown";
+			System.Console.WriteLine("Error! {0}", message);
+			// MessageBox.Show(message, "Error");
 		}
 	}
 }

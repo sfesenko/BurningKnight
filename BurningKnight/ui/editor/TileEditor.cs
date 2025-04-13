@@ -133,7 +133,8 @@ namespace BurningKnight.ui.editor {
 
 			var cur = CurrentInfo;
 
-			ImGui.ImageButton(cur.Texture, tileSize, cur.Uv0, cur.Uv1, 4, bg, tintColor);
+			// 4
+			ImGui.ImageButton(cur.ToString(), cur.Texture, tileSize, cur.Uv0, cur.Uv1, bg, tintColor);
 			ImGui.SameLine();
 			ImGui.Text(CurrentInfo.Tile.ToString());
 
@@ -161,8 +162,8 @@ namespace BurningKnight.ui.editor {
 			for (var i = 0; i < infos.Count; i++) {
 				var info = infos[i];
 				ImGui.PushID((int) info.Tile);
-
-				if (ImGui.ImageButton(info.Texture, tileSize, info.Uv0, info.Uv1, 0, bg, info == CurrentInfo ? tintColorActive : tintColor)) {
+				var tintCol = info == CurrentInfo ? tintColorActive : tintColor;
+				if (ImGui.ImageButton(info.ToString(), info.Texture, tileSize, info.Uv0, info.Uv1,  bg, tintCol)) {
 					CurrentInfo = info;
 				}
 
