@@ -47,7 +47,7 @@ namespace Lens.assets {
 
 		public static ContentManager Content;
 		public static string Root => LoadOriginalFiles 
-		    ? Path.Combine(Directory.GetCurrentDirectory(), "../../../BurningKnight/Content/") 
+		    ? Path.Combine(Directory.GetCurrentDirectory(), "Content/") 
 		    : NearRoot;
 		    
 		public static string NearRoot => $"{Directory.GetCurrentDirectory()}/Content/";

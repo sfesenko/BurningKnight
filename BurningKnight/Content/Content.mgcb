@@ -10,9 +10,10 @@
 
 #-------------------------------- References --------------------------------#
 
-/reference:..\..\Aseprite\bin\Debug\Aseprite.dll
-/reference:..\..\packages\MonoGame.Framework.Content.Pipeline.Portable.3.7.0.1708\lib\portable-net45+win8+wpa81\MonoGame.Framework.Content.Pipeline.dll
-/reference:..\..\packages\MonoGame.Extended.Content.Pipeline.1.1.0\tools\MonoGame.Extended.Content.Pipeline.dll
+# /reference:..\..\Aseprite\bin\Debug\Aseprite.dll
+# /reference:..\..\packages\MonoGame.Framework.Content.Pipeline.Portable.3.7.0.1708\lib\portable-net45+win8+wpa81\MonoGame.Framework.Content.Pipeline.dll
+/reference:../BurningKnight/pipeline-references/MonoGame.Extended.Content.Pipeline.dll
+# /reference:../Desktop/bin/x64/Debug/net9.0/MonoGame.Extended.Content.Pipeline.dll
 
 #---------------------------------- Content ---------------------------------#
 
@@ -22,6 +23,13 @@
 /processorParam:PremultiplyAlpha=False
 /processorParam:TextureFormat=Compressed
 /build:Fonts/fnt.spritefont
+
+#begin Fonts/large_font.fnt
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/large_font.fnt
 
 #begin Fonts/large.png
 /importer:TextureImporter

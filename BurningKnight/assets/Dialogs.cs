@@ -25,8 +25,8 @@ namespace BurningKnight.assets {
 		
 		public static void Load() {
 			var dir = FileHandle.FromRoot("Dialogs");
-			
-			foreach (var f in dir.ListFileHandles()) {
+			var listFileHandles = dir.ListFileHandles();
+			foreach (var f in listFileHandles) {
 				if (f.Extension == ".json") {
 					try {
 						var name = f.NameWithoutExtension;
@@ -42,7 +42,14 @@ namespace BurningKnight.assets {
 						
 						// Connect em
 						foreach (var node in ImNodes.Nodes) {
-							node.Value.ReadOutputs();
+							try
+							{
+								node.Value.ReadOutputs();
+							}
+							catch(Exception e)
+							{
+								Log.Error("ERROR: Load: " + e.Message);
+							}
 						}
 						
 						// Parse

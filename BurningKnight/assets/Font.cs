@@ -1,4 +1,4 @@
-﻿using Lens.assets;
+﻿using Lens;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended.BitmapFonts;
 
@@ -14,8 +14,10 @@ namespace BurningKnight.assets {
 			// Test = Assets.Content.Load<SpriteFont>("Fonts/fnt");
 		}
 
-		public static BitmapFont LoadFont(string name) {
-			return Assets.Content.Load<BitmapFont>(name);
+		public static BitmapFont LoadFont(string name)
+		{
+			var fontFileName = $"Content/{name}.fnt";
+			return BitmapFont.FromFile(Engine.GraphicsDevice, fontFileName);
 		}
 	}
 }

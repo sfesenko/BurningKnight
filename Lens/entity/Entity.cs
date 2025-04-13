@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Lens.entity.component;
 using Lens.entity.component.graphics;
 using Lens.util;
@@ -205,8 +206,11 @@ namespace Lens.entity {
 			}
 		}
 		
-		public virtual void Update(float dt) {
-			foreach (var component in Components.Values) {
+		public virtual void Update(float dt)
+		{
+			var components = Components.Values.ToArray();
+			foreach (var component in components)
+			{
 				component.Update(dt);
 			}
 		}

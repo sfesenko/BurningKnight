@@ -403,7 +403,7 @@ namespace BurningKnight.assets.achievements {
 					if (ImGui.Selectable(i.Id, i == selected)) {
 						selected = i;
 
-						if (ImGui.IsMouseDown(1)) {
+						if (ImGui.IsMouseDown(ImGuiMouseButton.Right)) {
 							if (ImGui.Button("Give")) {
 								LocalPlayer.Locate(Engine.Instance.State.Area)
 									?.GetComponent<InventoryComponent>()

@@ -95,7 +95,7 @@ namespace BurningKnight.assets {
 				if ((target.Value - ImNode.Offset).Length() <= 3f) {
 					target = null;
 				}
-			} else if (ImGui.IsMouseDragging(2) || Input.Keyboard.IsDown(Keys.Space, true)) {
+			} else if (ImGui.IsMouseDragging(ImGuiMouseButton.Middle) || Input.Keyboard.IsDown(Keys.Space, true)) {
 				ImNode.Offset += ImGui.GetIO().MouseDelta;
 			}
 
@@ -212,9 +212,8 @@ namespace BurningKnight.assets {
 							(Engine.Instance.GetScreenHeight() - node.Size.Y) / 2);
 				}
 
-				if (ImGui.OpenPopupOnItemClick("node_menu", 1)) {
+				ImGui.OpenPopupOnItemClick("node_menu", ImGuiPopupFlags.MouseButtonDefault);
 					CurrentMenu = node;
-				}
 			}
 
 			if (!sawFocused) {
@@ -287,8 +286,13 @@ namespace BurningKnight.assets {
 			}
 		}
 		
-		public static void RenderMenu(bool window = false) {
-			if (window ? ImGui.BeginPopupContextWindow("window_node_menu", 1) : ImGui.BeginPopupContextItem("node_menu", 1)) {
+		public static void RenderMenu(bool window = false)
+		{
+			var beginPopupContextWindow = window 
+				? ImGui.BeginPopupContextWindow("window_node_menu", ImGuiPopupFlags.MouseButtonDefault) 
+				: ImGui.BeginPopupContextItem("node_menu", ImGuiPopupFlags.MouseButtonDefault);
+			
+			if (beginPopupContextWindow) {
 				if (ImGui.Selectable("Copy (Ctrl+C)")) {
 					Copy();
 				}

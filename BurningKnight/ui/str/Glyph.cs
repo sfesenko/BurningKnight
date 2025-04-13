@@ -7,7 +7,7 @@ using MonoGame.Extended.BitmapFonts;
 
 namespace BurningKnight.ui.str {
 	public class Glyph {
-		public BitmapFontGlyph G;
+		public BitmapFont.BitmapFontGlyph G;
 		public Color Color;
 		public Vector2 Offset;
 		public Vector2 Origin;
@@ -22,9 +22,9 @@ namespace BurningKnight.ui.str {
 			Offset.X = 0;
 			Offset.Y = 0;
 
-			if (G.FontRegion != null) {
-				Origin.X = G.FontRegion.Width / 2f;
-				Origin.Y = G.FontRegion.Height / 2f;
+			if (G.Character?.TextureRegion != null) {
+				Origin.X = G.Character.TextureRegion.Width / 2f;
+				Origin.Y = G.Character.TextureRegion.Height / 2f;
 			}
 			
 			Angle = 0;

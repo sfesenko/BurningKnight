@@ -18,8 +18,11 @@ namespace Lens.assets {
 			}
 		}
 
-		private static void LoadEffect(FileHandle handle) {
-			All[handle.NameWithoutExtension] = Assets.Content.Load<Effect>($"bin/Shaders/{handle.NameWithoutExtension}");
+		private static void LoadEffect(FileHandle handle)
+		{
+			var assetName = $"bin/Shaders/{handle.NameWithoutExtension}";
+			var effect = Assets.Content.Load<Effect>(assetName);
+			All[handle.NameWithoutExtension] = effect;
 		}
 		
 		public static void Destroy() {

@@ -130,7 +130,7 @@ namespace BurningKnight.ui.imgui.node {
 							}
 						}
 					}
-				} else if (ImGui.IsMouseClicked(1) && connection.ConnectedTo.Count > 0) {
+				} else if (ImGui.IsMouseClicked(ImGuiMouseButton.Right) && connection.ConnectedTo.Count > 0) {
 					RemoveConnection(connection);
 				}
 			}

@@ -807,7 +807,7 @@ namespace BurningKnight.state {
 					if (ImGui.Selectable(i.Id, i == Selected)) {
 						Selected = i;
 
-						if (ImGui.IsMouseDown(1)) {
+						if (ImGui.IsMouseDown(ImGuiMouseButton.Right)) {
 							if (ImGui.Button("Give")) {
 								LocalPlayer.Locate(Engine.Instance.State.Area)
 									?.GetComponent<InventoryComponent>()

@@ -1,3 +1,4 @@
+using System;
 using BurningKnight.assets.loot;
 using BurningKnight.entity.creature.drop;
 using BurningKnight.ui.imgui;

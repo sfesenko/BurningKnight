@@ -60,10 +60,10 @@ namespace Desktop {
 				Console.WriteLine($"Failed: {e}");
 			}
 
-			try {
-				using (var game = new DesktopApp()) {
-					game.Run();
-				}
+			try
+			{
+				using var game = new DesktopApp();
+				game.Run();
 			} catch (Exception e) {
 				CrashReporter.Report(e);
 			}

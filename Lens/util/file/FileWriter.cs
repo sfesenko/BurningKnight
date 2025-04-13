@@ -39,8 +39,8 @@ namespace Lens.util.file {
 			}
 		}
 
-		public unsafe void WriteSbyte(sbyte value) {
-			WriteByte(*((byte*) &value));
+		public void WriteSbyte(sbyte value) {
+			WriteByte((byte) value);
 		}
 
 		public void WriteBoolean(bool value) {
@@ -92,20 +92,21 @@ namespace Lens.util.file {
 			}
 		}
 
-		public unsafe void WriteFloat(float value) {
-			uint val = *((uint*) &value);
+		public void WriteFloat(float value)
+		{
+			var val = BitConverter.SingleToUInt32Bits(value);
 
-			WriteByte((byte) (val & 0xFF));
-			WriteByte((byte) ((val >> 8) & 0xFF));
-			WriteByte((byte) ((val >> 16) & 0xFF));
-			WriteByte((byte) ((val >> 24) & 0xFF));
+			WriteByte((byte)(val & 0xFF));
+			WriteByte((byte)((val >> 8) & 0xFF));
+			WriteByte((byte)((val >> 16) & 0xFF));
+			WriteByte((byte)((val >> 24) & 0xFF));
 		}
 
 		public virtual void Close() {
 			try {
 				stream.Close();
 			} catch (Exception e) {
-				
+				Log.Error("Close: " + e);
 			}
 		}
 	}

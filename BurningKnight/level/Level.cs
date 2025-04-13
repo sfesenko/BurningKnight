@@ -1544,7 +1544,7 @@ namespace BurningKnight.level {
 
 			Graphics.Batch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, 
 				state.RasterizerState, null, Camera.Instance?.Matrix);
-			Graphics.Clear(Color.TransparentBlack);
+			Graphics.Clear(Color.Transparent);
 
 			Graphics.Color = ColorUtils.WhiteColor;
 			
