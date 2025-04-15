@@ -1,24 +1,21 @@
 using System.Collections.Generic;
+using System.Linq;
 using BurningKnight.entity.creature.npc;
-using BurningKnight.entity.room;
 using BurningKnight.level.biome;
 using BurningKnight.level.builders;
 using BurningKnight.level.rooms;
 using BurningKnight.level.rooms.challenge;
 using BurningKnight.level.rooms.darkmarket;
 using BurningKnight.level.rooms.entrance;
-using BurningKnight.level.rooms.payed;
 using BurningKnight.level.rooms.preboss;
 using BurningKnight.level.rooms.regular;
 using BurningKnight.level.rooms.scourged;
 using BurningKnight.level.rooms.secret;
 using BurningKnight.level.rooms.shop;
-using BurningKnight.level.rooms.shop.sub;
 using BurningKnight.level.rooms.special;
 using BurningKnight.level.rooms.special.minigame;
 using BurningKnight.level.rooms.special.shop;
 using BurningKnight.level.rooms.spiked;
-using BurningKnight.level.rooms.trap;
 using BurningKnight.level.tile;
 using BurningKnight.level.variant;
 using BurningKnight.save;
@@ -47,12 +44,9 @@ namespace BurningKnight.level {
 		public bool Generate() {
 			Run.Level = this;
 			rooms = null;
-			ItemsToSpawn = new List<string>();
-			Variant = VariantRegistry.Generate(LevelSave.BiomeGenerated.Id);
-
-			if (Variant == null) {
-				Variant = new RegularLevelVariant();
-			}
+			ItemsToSpawn = [];
+			Variant = VariantRegistry.Generate(LevelSave.BiomeGenerated.Id) 
+			          ?? new RegularLevelVariant();
 
 			if (Run.Depth > 0) {
 				var c = Rnd.Int(1, Run.Depth);
@@ -87,7 +81,7 @@ namespace BurningKnight.level {
 			return true;
 		}
 
-		protected bool Paint() {
+		private bool Paint() {
 			Log.Info("Painting...");
 			var p = GetPainter();
 			LevelSave.BiomeGenerated.ModifyPainter(this, p);
@@ -95,7 +89,7 @@ namespace BurningKnight.level {
 			return p.Paint(this, rooms);
 		}
 
-		protected void Build() {
+		private void Build() {
 			var Builder = GetBuilder();
 			var Rooms = CreateRooms();
 
@@ -118,13 +112,12 @@ namespace BurningKnight.level {
 				var a = rooms == null;
 				var b = false;
 				
-				if (!a) {
-					foreach (var r in Rm) {
-						if (r.IsEmpty()) {
-							Log.Error("Found an empty room!");
-							b = true;
-							break;
-						}
+				if (!a)
+				{
+					if (Rm.Any(r => r.IsEmpty()))
+					{
+						Log.Error("Found an empty room!");
+						b = true;
 					}
 				}
 				
@@ -356,9 +349,9 @@ namespace BurningKnight.level {
 
 				if (builder is RegularBuilder b) {
 					if (LevelSave.BiomeGenerated.Id == Biome.Ice) {
-						b.SetTunnelLength(new float[] {4, 6, 4}, new float[] {1, 3, 1});
+						b.SetTunnelLength([4, 6, 4], [1, 3, 1]);
 					} else if (GetFilling() == Tile.Chasm) {
-						b.SetTunnelLength(new float[] {4, 3, 4}, new float[] {1, 3, 1});
+						b.SetTunnelLength([4, 3, 4], [1, 3, 1]);
 					}
 				}
 			}
@@ -366,7 +359,7 @@ namespace BurningKnight.level {
 			return builder;
 		}
 
-		protected int GetNumConnectionRooms() {
+		private int GetNumConnectionRooms() {
 			return 0;
 		}
 	}

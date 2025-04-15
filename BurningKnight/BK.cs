@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using BurningKnight.assets;
 using BurningKnight.assets.input;
 using BurningKnight.assets.items;
@@ -14,16 +13,13 @@ using Lens;
 using Lens.util;
 using Lens.util.math;
 using Microsoft.Xna.Framework;
-using Version = Lens.Version;
 
 namespace BurningKnight {
 	public class BK : Engine {
 		public const bool StandMode = false;
 		public const bool Demo = false;
 		
-		public static Version Version = new Version("Bad rock update", 50, 1, 3, 1, 4, Debug);
-		
-		public BK(int width, int height, bool fullscreen) : base(Version, 
+		protected BK(int width, int height, bool fullscreen) : base(
 			#if DEBUG
 				new DevAssetLoadState(),
 			#else
@@ -46,24 +42,6 @@ namespace BurningKnight {
 			}
 			
 			Weather.Init();
-		}
-
-		private static void RunBash(string args) {
-			var process = new Process {
-				StartInfo = new ProcessStartInfo {
-					FileName = "/bin/bash",
-					Arguments = $"-c \"{args}\"",
-					RedirectStandardOutput = true,
-					UseShellExecute = false,
-					CreateNoWindow = true,
-				}
-			};
-			
-			process.Start();
-			var result = process.StandardOutput.ReadToEnd();
-			process.WaitForExit();
-
-			Console.WriteLine(result);
 		}
 
 		protected override void UnloadContent() {

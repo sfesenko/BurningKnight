@@ -1,33 +1,28 @@
 using System;
 using System.Collections.Generic;
 using System.Numerics;
-using BurningKnight.assets;
-using BurningKnight.entity;
 using BurningKnight.state;
 using BurningKnight.ui.imgui;
 using ImGuiNET;
 using Lens;
 using Lens.entity;
-using Lens.graphics;
 using Lens.input;
 using Lens.util;
 using Lens.util.camera;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-using Vector2 = Microsoft.Xna.Framework.Vector2;
 
 namespace BurningKnight.debug {
 	public unsafe class Console {
-		private static System.Numerics.Vector2 size = new System.Numerics.Vector2(300, 200);
-		private static System.Numerics.Vector2 spacer = new System.Numerics.Vector2(4, 1);
-		private static System.Numerics.Vector4 color = new System.Numerics.Vector4(1, 0.4f, 0.4f, 1f);
+		private static Vector2 size = new(300, 200);
+		private static Vector2 spacer = new(4, 1);
+		private static Vector4 color = new(1, 0.4f, 0.4f, 1f);
 		
-		private ImGuiTextFilterPtr filter = new ImGuiTextFilterPtr(ImGuiNative.ImGuiTextFilter_ImGuiTextFilter(null));
-		private List<ConsoleCommand> commands = new List<ConsoleCommand>();
+		private ImGuiTextFilterPtr filter = new(ImGuiNative.ImGuiTextFilter_ImGuiTextFilter(null));
+		private List<ConsoleCommand> commands = [];
 		private string input = "";
 
-		public List<string> Lines = new List<string>();
-		public Area GameArea;
+		private List<string> Lines = [];
+		public readonly Area GameArea;
 		public static bool Open;
 
 		private bool forceFocus;
@@ -53,10 +48,6 @@ namespace BurningKnight.debug {
 			commands.Add(new TileCommand());
 			commands.Add(new HappeningCommand());
 		}
-
-		public void AddCommand(ConsoleCommand command) {
-			commands.Add(command);
-		}
 		
 		public void Print(string str) {
 			Lines.Add(str);
@@ -81,19 +72,18 @@ namespace BurningKnight.debug {
 			}
 
 			ImGui.SetNextWindowSize(size, ImGuiCond.Once);
-			ImGui.SetNextWindowPos(new System.Numerics.Vector2(10, Engine.Instance.GetScreenHeight() - size.Y - 10), ImGuiCond.Once);
+			ImGui.SetNextWindowPos(new Vector2(10, Engine.Instance.GetScreenHeight() - size.Y - 10), ImGuiCond.Once);
 			ImGui.Begin("Console", ImGuiWindowFlags.NoTitleBar);
 
-			/* filter.Draw("##console");
+			 filter.Draw("##console");
 			ImGui.SameLine();
-			
 			if (ImGui.Button("Clear")) {
 				Lines.Clear();
 			}
+			ImGui.Separator();
 			
-			ImGui.Separator();*/
 			var height = ImGui.GetStyle().ItemSpacing.Y + ImGui.GetFrameHeightWithSpacing();
-			ImGui.BeginChild("ScrollingRegionConsole", new System.Numerics.Vector2(0, -height), 
+			ImGui.BeginChild("ScrollingRegionConsole", new Vector2(0, -height), 
 				false, ImGuiWindowFlags.HorizontalScrollbar);
 			ImGui.PushStyleVar(ImGuiStyleVar.ItemSpacing, spacer);
 			
@@ -145,7 +135,7 @@ namespace BurningKnight.debug {
 				if (command.Name.Equals(name) || command.ShortName.Equals(name)) {
 					var args = new string[parts.Length - 1];
 					
-					for (int i = 0; i < args.Length; i++) {
+					for (var i = 0; i < args.Length; i++) {
 						args[i] = parts[i + 1];
 					}
 

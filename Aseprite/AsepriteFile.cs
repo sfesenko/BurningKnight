@@ -20,11 +20,11 @@ namespace Aseprite {
 		public int Width;
 		public int Height;
 
-		public List<AsepriteFrame> Frames = new List<AsepriteFrame>();
-		public List<AsepriteLayer> Layers = new List<AsepriteLayer>();
-		public List<AsepriteTag> Tags = new List<AsepriteTag>();
-		public List<AsepriteSlice> Slices = new List<AsepriteSlice>();
-		public Dictionary<string, AsepriteAnimation> Animations = new Dictionary<string, AsepriteAnimation>();
+		public List<AsepriteFrame> Frames = [];
+		public List<AsepriteLayer> Layers = [];
+		public List<AsepriteTag> Tags = [];
+		public List<AsepriteSlice> Slices = [];
+		public Dictionary<string, AsepriteAnimation> Animations = new();
 
 		public Texture2D Texture;
 
@@ -183,13 +183,12 @@ namespace Aseprite {
 					var frame = new AsepriteFrame();
 					Frames.Add(frame);
 
-					long frameStart;
 					long frameEnd;
 					int chunkCount;
 
 					// Frame header
 					{
-						frameStart = reader.BaseStream.Position;
+						var frameStart = reader.BaseStream.Position;
 						frameEnd = frameStart + DWORD();
 						WORD(); // Magic number (always 0xF1FA)
 
@@ -199,13 +198,12 @@ namespace Aseprite {
 					}
 
 					for (int j = 0; j < chunkCount; j++) {
-						long chunkStart;
 						long chunkEnd;
 						Chunks chunkType;
 
 						// Chunk header
 						{
-							chunkStart = reader.BaseStream.Position;
+							var chunkStart = reader.BaseStream.Position;
 							chunkEnd = chunkStart + DWORD();
 							chunkType = (Chunks) WORD();
 						}
@@ -291,7 +289,6 @@ namespace Aseprite {
 
 							if (lastUserData != null) {
 								var flags = DWORD();
-
 								if (Calc.IsBitSet(flags, 0)) {
 									lastUserData.UserDataText = STRING();
 								}

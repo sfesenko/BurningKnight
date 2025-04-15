@@ -1,25 +1,18 @@
 ﻿using System.Collections.Generic;
 using BurningKnight;
 using Desktop.integration;
-using Desktop.integration.crash;
-using Desktop.integration.discord;
-using Desktop.integration.rgb;
-using Desktop.integration.steam;
 using Desktop.integration.twitch;
 using Lens;
 using Microsoft.Xna.Framework;
 
 namespace Desktop {
-	public class DesktopApp : BK {
+	public class DesktopApp() : BK(Display.Width * Scale, Display.Height * Scale, !Version.Dev)
+	{
 		private const int Scale = 3;
 		public static string In = "20sw479alxyc1";
 		
-		private List<Integration> integrations = new List<Integration>();
+		private List<Integration> integrations = [];
 		private TwitchIntegration twitchIntegration;
-		
-		public DesktopApp() : base(Display.Width * Scale, Display.Height * Scale, !BK.Version.Dev) {
-			
-		}
 
 		protected override void Initialize() {
 			base.Initialize();

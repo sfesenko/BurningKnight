@@ -14,26 +14,27 @@ using Microsoft.Xna.Framework.Media;
 using VelcroPhysics;
 
 namespace Lens.assets {
-	public class Audio {
+	public static class Audio {
 		public static float MasterVolume = 1;
 		public static float SfxVolume = 1;
 		public static float SfxVolumeBuffer = 1f;
 		public static float SfxVolumeBufferResetTimer = 0;
+		
 		private const float CrossFadeTime = 0.25f;
 
-		public static float Db3 = 0.1f;
+		public static readonly float Db3 = 0.1f;
 
 		private static Song currentPlaying;
 		private static string currentPlayingMusic;
-		private static Dictionary<string, Song> musicInstances = new Dictionary<string, Song>();
-		private static Dictionary<string, SoundEffect> sounds = new Dictionary<string, SoundEffect>();
+		private static Dictionary<string, Song> musicInstances = new();
+		private static Dictionary<string, SoundEffect> sounds = new();
 
 		public static bool Repeat {
 			get => MediaPlayer.IsRepeating;
 			set => MediaPlayer.IsRepeating = value;
 		}
 
-		public static DynamicSoundEffectInstance SoundEffectInstance;
+		private static DynamicSoundEffectInstance SoundEffectInstance;
 
 		public static float Speed = 1;
 
@@ -94,9 +95,7 @@ namespace Lens.assets {
 		}
 
 		public static SoundEffect GetSfx(string id) {
-			SoundEffect effect;
-
-			if (sounds.TryGetValue(id, out effect)) {
+			if (sounds.TryGetValue(id, out var effect)) {
 				return effect;
 			}
 
@@ -104,7 +103,7 @@ namespace Lens.assets {
 			return null;
 		}
 
-		public static void PlaySfx(SoundEffect sfx, float volume = 1, float pitch = 0, float pan = 0) {
+		private static void PlaySfx(SoundEffect sfx, float volume = 1, float pitch = 0, float pan = 0) {
 			if (!Assets.LoadSfx) {
 				return;
 			}
@@ -112,7 +111,7 @@ namespace Lens.assets {
 			sfx?.Play(MathUtils.Clamp(0, 1, volume * SfxVolume * MasterVolume), pitch, pan);
 		}
 		
-		public static void PlayMusic(string music, bool fromStart = false) {
+		public static void PlayMusic(string music, bool fromStart = true) {
 			if (!Assets.LoadMusic) {
 				return;
 			}
@@ -135,13 +134,19 @@ namespace Lens.assets {
 		private static bool loading;
 
 		private static void LoadAndPlayMusic(string music, bool fromStart = false) {
-			if (musicInstances.ContainsKey(music)) {
+			// TODO: fix hangups
+			//
+			new Thread(() => {
 				ThreadLoad(music, fromStart);
-			} else {
-				new Thread(() => {
-					ThreadLoad(music, fromStart);
-				}).Start();
-			}
+			}).Start();
+
+			// if (musicInstances.ContainsKey(music)) {
+			// 	ThreadLoad(music, fromStart);
+			// } else {
+			// 	new Thread(() => {
+			// 		ThreadLoad(music, fromStart);
+			// 	}).Start();
+			// }
 		}
 
 		public static void ThreadLoad(string music, bool fromStart = false) {
@@ -156,7 +161,6 @@ namespace Lens.assets {
 					musicInstances[music] = currentPlaying;
 				}
 
-				MediaPlayer.Volume = 0;
 				MediaPlayer.Play(currentPlaying);
 
 				Tween.To(musicVolume, MediaPlayer.Volume, x => MediaPlayer.Volume = x, fromStart ? 0.05f : CrossFadeTime);
@@ -174,8 +178,12 @@ namespace Lens.assets {
 				Tween.To(0, MediaPlayer.Volume, x => MediaPlayer.Volume = x, CrossFadeTime).OnEnd = () => {
 					currentPlaying = null;
 					currentPlayingMusic = null;
-
-					MediaPlayer.Stop();
+					var mediaState = MediaPlayer.State;
+					Log.Debug($@"MediaState: {mediaState}");
+					if (mediaState == MediaState.Playing)
+					{
+						MediaPlayer.Stop();
+					}
 					callback?.Invoke();
 				};
 			} else {

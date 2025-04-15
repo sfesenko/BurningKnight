@@ -85,10 +85,11 @@ namespace BurningKnight.save {
 				area.Add(entity, false);
 
 				entity.Load(reader);
-				var sum = reader.Position - position - size;
+				var readSize = reader.Position - position;
+				var sum = readSize - size;
 
 				if (sum != 0) {
-					Log.Error($"Entity {entity.GetType().FullName} was expected to read {size} bytes but read {reader.Position - position}!");
+					Log.Error($"Entity {entity.GetType().FullName} was expected to read {size} bytes but read {readSize}!");
 					reader.Position -= sum;
 				}
 
