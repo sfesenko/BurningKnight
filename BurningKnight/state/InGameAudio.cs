@@ -13,7 +13,11 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 
 namespace BurningKnight.state {
-	public class InGameAudio : Entity {
+	public class InGameAudio : Entity
+	{
+
+		private static Audio Audio => Audio.Instance;
+		
 		public override void Init() {
 			base.Init();
 
@@ -43,7 +47,7 @@ namespace BurningKnight.state {
 			Subscribe<SpawnTrigger.TriggeredEvent>();
 
 			if (!InGameState.InMenu && Run.Level != null) {
-				Audio.PlayMusic(Run.Level.GetMusic()/*, Run.Depth < 1 || Run.Depth % 2 == 1*/);
+				Audio.Instance.PlayMusic(Run.Level.GetMusic()/*, Run.Depth < 1 || Run.Depth % 2 == 1*/);
 			}
 			
 			// Audio.PlayMusic("Disk 6", Camera.Instance.Listener, LocalPlayer.Locate(Area).GetComponent<AudioEmitterComponent>().Emitter);

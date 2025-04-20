@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Lens.assets;
 using Lens.entity.component;
 using Lens.entity.component.graphics;
 using Lens.util;
@@ -10,6 +11,7 @@ namespace Lens.entity {
 	public delegate void PositionChanged();
 	
 	public class Entity : Subscriber, IComparable {
+		protected static Audio Audio => Audio.Instance;
 		public Area Area;
 		
 		public bool Active = true;

@@ -5,19 +5,19 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
 namespace BurningKnight.ui.dialog {
-	public class AnswerDialog : Dialog {
+	public class AnswerDialog(string id, AnswerType type, string[] next = null) : Dialog(id, next)
+	{
+		private static Audio Audio => Audio.Instance;
+		
 		// Keep in sync with AnswerType!
-		public static string[] Types = {
+		public static string[] Types =
+		[
 			"Text", "Seed"
-		};
+		];
 		
 		public string Answer = "";
 		public bool Focused = true;
-		public AnswerType Type;
-		
-		public AnswerDialog(string id, AnswerType type, string[] next = null) : base(id, next) {
-			Type = type;
-		}
+		public AnswerType Type = type;
 
 		public override void Reset() {
 			base.Reset();

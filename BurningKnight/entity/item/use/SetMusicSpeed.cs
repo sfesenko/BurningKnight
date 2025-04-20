@@ -8,8 +8,10 @@ namespace BurningKnight.entity.item.use {
 	public class SetMusicSpeed : ItemUse {
 		private float speed;
 
-		public override void Use(Entity entity, Item item) {
-			Tween.To(speed, Audio.Speed, x => Audio.Speed = x, 0.4f);
+		public override void Use(Entity entity, Item item)
+		{
+			var audio = Audio.Instance;
+			Tween.To(speed, audio.Speed, x => audio.Speed = x, 0.4f);
 		}
 
 		public override void Setup(JsonValue settings) {

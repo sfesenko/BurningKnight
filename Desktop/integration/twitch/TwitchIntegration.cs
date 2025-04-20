@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using BurningKnight;
-using BurningKnight.assets;
 using BurningKnight.entity.component;
 using BurningKnight.entity.creature.player;
 using BurningKnight.entity.twitch;
@@ -13,7 +13,6 @@ using Lens;
 using Lens.assets;
 using Lens.util;
 using Lens.util.math;
-using Microsoft.Xna.Framework;
 using TwitchLib.Client;
 using TwitchLib.Client.Events;
 using TwitchLib.Client.Models;
@@ -133,27 +132,25 @@ namespace Desktop.integration.twitch {
 			public string Color;
 		}
 		
-		private List<Data> buffer = new List<Data>();
-		private List<Data> totalBuffer = new List<Data>();
-		private List<string> messageIds = new List<string>();
+		private List<Data> buffer = [];
+		private List<Data> totalBuffer = [];
+		private List<string> messageIds = [];
 
 		private void OnSub(string who, string color) {
 			try {
 				// Just to be safe from threading tbh
-				for (var i = 0; i < buffer.Count; i++) {
-					if (buffer[i].Nick == who) {
-						return;
-					}
+				if (buffer.Any(t1 => t1.Nick == who))
+				{
+					return;
 				}
 
-				for (var i = 0; i < totalBuffer.Count; i++) {
-					if (totalBuffer[i].Nick == who) {
-						return;
-					}
+				if (totalBuffer.Any(t1 => t1.Nick == who))
+				{
+					return;
 				}
 
 				Log.Info($"{who} subscribed!");
-				Audio.PlaySfx("level_cleared");
+				Audio.Instance.PlaySfx("level_cleared");
 
 				buffer.Add(new Data {
 					Nick = who,
@@ -185,7 +182,7 @@ namespace Desktop.integration.twitch {
 			try {
 				var state = Engine.Instance.State;
 
-				if (!(state is InGameState gamestate)) {
+				if (state is not InGameState gamestate) {
 					return;
 				}
 
@@ -216,7 +213,7 @@ namespace Desktop.integration.twitch {
 				}
 
 				if (message.StartsWith("!")) {
-					var m = message.Substring(1, message.Length - 1);
+					var m = message.Substring(1);
 					var n = e.ChatMessage.DisplayName;
 
 					if (m.StartsWith("color ")) {

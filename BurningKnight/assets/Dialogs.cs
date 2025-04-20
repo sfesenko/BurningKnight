@@ -10,7 +10,7 @@ using Lens.util.file;
 
 namespace BurningKnight.assets {
 	public static class Dialogs {
-		private static Dictionary<string, Dialog> dialogs = new Dictionary<string, Dialog>();
+		private static Dictionary<string, Dialog> dialogs = new();
 
 		public static void RegisterCallback(string id, Func<Dialog, DialogComponent, Dialog> callback) {
 			var a = Get(id)?.Callbacks;

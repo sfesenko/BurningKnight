@@ -24,14 +24,14 @@ namespace BurningKnight.level.entities {
 					var state = (InGameState) Engine.Instance.State;
 					Audio.PlaySfx("player_descending");			
 
-					state.TransitionToBlack(Center, () => {
+					InGameState.TransitionToBlack(Center, () => {
 						foreach (var p in Area.Tagged[Tags.Player]) {
 							p.BottomCenter = e.BottomCenter + new Vector2(0, 2);
 						}
 
 						state.ResetFollowing();
 						Camera.Instance.Jump();
-						state.TransitionToOpen();
+						InGameState.TransitionToOpen();
 					});
 					
 					return true;

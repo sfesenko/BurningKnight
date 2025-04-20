@@ -77,7 +77,7 @@ namespace BurningKnight.entity.item {
 				}
 			}
 			
-			Audio.PlaySfx("item_reroll");
+			Audio.Instance.PlaySfx("item_reroll");
 		}
 
 		public static bool Reroll(Item item, ItemPool pool, Func<ItemData, bool> filter = null) {
@@ -96,13 +96,9 @@ namespace BurningKnight.entity.item {
 			return false;
 		}
 
-		public static bool Reroll(Item item, List<ItemData> pool, Func<ItemData, bool> filter = null, bool d2 = false) {
-			var id = d2 ? item.LastId : null;
+		private static bool Reroll(Item item, List<ItemData> pool, Func<ItemData, bool> filter = null, bool d2 = false) {
+			var id = (d2 ? item.LastId : null) ?? Items.GenerateAndRemove(pool, i => i.Id != item.Id && (filter == null || filter(i)));
 
-			if (id == null) {
-				id = Items.GenerateAndRemove(pool, i => i.Id != item.Id && (filter == null || filter(i)));
-			}
-			
 			if (id != null) {
 				item.LastId = item.Id;
 				item.ConvertTo(id);

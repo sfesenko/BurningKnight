@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended.BitmapFonts;
 
 namespace BurningKnight.assets {
-	public class Font {
+	public abstract class Font {
 		public static BitmapFont Small;
 		public static BitmapFont Medium;
 		public static SpriteFont Test;
@@ -14,7 +14,7 @@ namespace BurningKnight.assets {
 			// Test = Assets.Content.Load<SpriteFont>("Fonts/fnt");
 		}
 
-		public static BitmapFont LoadFont(string name)
+		private static BitmapFont LoadFont(string name)
 		{
 			var fontFileName = $"Content/{name}.fnt";
 			return BitmapFont.FromFile(Engine.GraphicsDevice, fontFileName);

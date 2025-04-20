@@ -8,6 +8,10 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight {
 	public class Settings {
+		
+		
+		private static Audio Audio => Audio.Instance;
+
 		// Audio
 		public static float MasterVolume {
 			get => Audio.MasterVolume;

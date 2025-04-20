@@ -7,7 +7,7 @@ using Lens.util.file;
 
 namespace BurningKnight.assets.mod {
 	public static class Mods {
-		public static Dictionary<string, Mod> Loaded = new Dictionary<string, Mod>();
+		public static Dictionary<string, Mod> Loaded = new();
 		public static string BurningKnight = "bk";
 		
 		public static void Load() {

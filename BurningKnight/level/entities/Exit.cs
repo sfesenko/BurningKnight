@@ -58,7 +58,7 @@ namespace BurningKnight.level.entities {
 					Run.Win();
 				}
 			} else {
-				((InGameState) Engine.Instance.State).TransitionToBlack(entity.Center, () => {
+				InGameState.TransitionToBlack(entity.Center, () => {
 					Run.NumPlayers = 0;
 					Descend();
 				});

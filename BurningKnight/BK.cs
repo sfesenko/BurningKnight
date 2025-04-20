@@ -30,7 +30,7 @@ namespace BurningKnight {
 
 		protected override void Initialize() {
 			base.Initialize();
-
+			
 			SaveManager.Init();
 			Controls.Load();
 			Font.Load();

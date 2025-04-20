@@ -74,7 +74,7 @@ namespace BurningKnight.state {
 				checkFullscreen = true;
 
 				if (Assets.LoadMusic) {
-					LoadSection(() => Audio.ThreadLoad("Void"), "Audio");
+					LoadSection(() => Audio.Instance.ThreadLoad("Void"), "Audio");
 				} else {
 					progress++;
 				}

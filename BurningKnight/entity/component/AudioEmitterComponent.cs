@@ -23,8 +23,10 @@ namespace BurningKnight.entity.component {
 		public float PitchMod;
 		public bool DestroySounds = false;
 
-		public Dictionary<string, Sfx> Playing = new Dictionary<string, Sfx>();
+		public Dictionary<string, Sfx> Playing = new();
 
+		private static Audio Audio => Audio.Instance;
+		
 		public class Sfx {
 			public SoundEffectInstance Effect;
 			public float BaseVolume = 1f;
@@ -55,8 +57,15 @@ namespace BurningKnight.entity.component {
 			if (Listener != null) {
 				var d = (ListenerPosition - Entity.Center).Length();
 
-				foreach (var s in Playing.Values) {
-					s.Effect.Volume = MathUtils.Clamp(0, 1, (1 - Math.Min(Distance, d) / Distance) * Settings.MasterVolume * Settings.SfxVolume * s.BaseVolume * (s.ApplyBuffer ? Audio.SfxVolumeBuffer : 1));
+				foreach (var s in Playing.Values)
+				{
+					var sfxVolumeBuffer = (1 - Math.Min(Distance, d) / Distance) 
+					                      * Settings.MasterVolume 
+					                      * Settings.SfxVolume 
+					                      * s.BaseVolume 
+					                      * (s.ApplyBuffer ? Audio.SfxVolumeBuffer : 1);
+					
+					s.Effect.Volume = MathUtils.Clamp(0, 1, sfxVolumeBuffer);
 				}
 			}
 		} // 6y0204mm

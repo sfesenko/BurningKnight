@@ -11,7 +11,7 @@ namespace BurningKnight.entity.item.use {
 			base.Use(entity, item);
 			
 			var level = Run.Level;
-			Audio.PlaySfx("item_map");
+			Audio.Instance.PlaySfx("item_map");
 			
 			foreach (var e in entity.Area.Tagged[Tags.Room]) {
 				var room = (Room) e;

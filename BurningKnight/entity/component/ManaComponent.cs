@@ -61,7 +61,7 @@ namespace BurningKnight.entity.component {
 					Who = Entity
 				});
 
-				Audio.PlaySfx("item_mana");
+				Audio.Instance.PlaySfx("item_mana");
 				
 				for (var i = 0; i < 3; i++) {
 					Timer.Add(() => {

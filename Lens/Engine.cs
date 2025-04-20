@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using Lens.assets;
 using Lens.game;
 using Lens.graphics;
@@ -9,7 +10,6 @@ using Lens.util.timer;
 using Lens.util.tween;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System.Runtime.InteropServices;
 
 namespace Lens
 {
@@ -127,7 +127,7 @@ namespace Lens
         {
             GraphicsDevice = base.GraphicsDevice;
             GraphicsDevice.BlendState = BlendState.NonPremultiplied;
-            Lens.graphics.Graphics.Init();
+            graphics.Graphics.Init();
         }
 
         protected override void UnloadContent()
@@ -181,7 +181,7 @@ namespace Lens
             Delta = dt;
             Time += dt;
 
-            Audio.Update(dt);
+            Audio.Instance.Update(dt);
 
             Split = Math.Max(0, Split - dt);
 

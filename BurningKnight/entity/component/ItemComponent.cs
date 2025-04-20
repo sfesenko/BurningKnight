@@ -16,6 +16,8 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.component {
 	public class ItemComponent : SaveableComponent {
+		protected static Audio Audio => Audio.Instance;
+		
 		public Item Item { get; protected set; }
 		public bool DontSave;
 		public bool UpdateItem;

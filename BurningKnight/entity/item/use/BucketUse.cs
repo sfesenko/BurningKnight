@@ -23,10 +23,10 @@ namespace BurningKnight.entity.item.use {
 				var r = entity.GetComponent<RoomComponent>().Room;
 
 				if (r != null) {
+					Audio.Instance.Stop();
 					foreach (var b in r.Tagged[Tags.Boss]) {
-						if (b is BkHead h && h.CanBeSaved) {
+						if (b is BkHead { CanBeSaved: true } h) {
 							h.Save();
-							Audio.Stop();
 							ReplaceItem(entity, "bk:bucket");
 						}
 					}

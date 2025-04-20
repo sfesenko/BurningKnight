@@ -88,8 +88,6 @@ namespace Lens.assets {
 		private static void LoadAssets(ref int progress) {
 			AsepriteReader.GraphicsDevice = Engine.GraphicsDevice;
 			
-			Audio.StartThread();
-
 			if (Locale.Map == null) {
 				Locale.Load(Locale.PrefferedClientLanguage);
 			}
@@ -103,7 +101,7 @@ namespace Lens.assets {
 			progress++;
 			
 			if (LoadSfx) {
-				Audio.Load();
+				Audio.Instance.Load();
 			}
 
 			progress++;
@@ -118,7 +116,7 @@ namespace Lens.assets {
 			Effects.Destroy();
 			Textures.Destroy();
 			Animations.Destroy();
-			Audio.Destroy();
+			Audio.Instance.Destroy();
 		}
 
 		public static void Update(float dt) {
@@ -158,8 +156,7 @@ namespace Lens.assets {
 						if (!reloadedSfx) {
 							Log.Debug("Reloading sfx...");
 
-							Audio.Destroy();
-							Audio.Load();
+							Audio.Instance.Load();
 							
 							reloadedSfx = true;
 						}

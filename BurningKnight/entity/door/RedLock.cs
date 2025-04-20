@@ -6,15 +6,17 @@ using Lens.graphics.animation;
 
 namespace BurningKnight.entity.door {
 	public class RedLock : Lock {
-		private static ColorSet palette = ColorSets.New(new[] {
+		private static Audio Audio => Audio.Instance;
+		
+		private static ColorSet palette = ColorSets.New([
 			Palette.Default[9],
 			Palette.Default[10],
 			Palette.Default[11]
-		}, new[] {
+		], [
 			Palette.Default[59],
 			Palette.Default[60],
 			Palette.Default[62]
-		});
+		]);
 		
 		protected override ColorSet GetLockPalette() {
 			return palette;
@@ -25,7 +27,7 @@ namespace BurningKnight.entity.door {
 		}
 
 		protected override bool TryToConsumeKey(Entity entity) {
-			if (entity.TryGetComponent<ActiveWeaponComponent>(out var a) && a.Item != null && a.Item.Id == "bk:treasure_key") {
+			if (entity.TryGetComponent<ActiveWeaponComponent>(out var a) && a.Item is { Id: "bk:treasure_key" }) {
 				var i = a.Item;
 				a.Set(null);
 				i.Done = true;
@@ -36,7 +38,7 @@ namespace BurningKnight.entity.door {
 				return true;
 			}
 			
-			if (entity.TryGetComponent<WeaponComponent>(out var w) && w.Item != null && w.Item.Id == "bk:treasure_key") {
+			if (entity.TryGetComponent<WeaponComponent>(out var w) && w.Item is { Id: "bk:treasure_key" }) {
 				var i = w.Item;
 				w.Set(null);
 				i.Done = true;

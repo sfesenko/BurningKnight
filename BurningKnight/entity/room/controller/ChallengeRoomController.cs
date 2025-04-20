@@ -81,16 +81,21 @@ namespace BurningKnight.entity.room.controller {
 					var where = mob.Center;
 					
 					for (var j = 0; j < 8; j++) {
-						var part = new ParticleEntity(Particles.Dust());
-						
-						part.Position = where + Rnd.Vector(-8, 8);
-						part.Particle.Scale = Rnd.Float(1f, 1.3f);
-						part.Particle.Velocity = MathUtils.CreateVector(Rnd.AnglePI(), 40);
+						var part = new ParticleEntity(Particles.Dust())
+						{
+							Position = where + Rnd.Vector(-8, 8),
+							Particle =
+							{
+								Scale = Rnd.Float(1f, 1.3f),
+								Velocity = MathUtils.CreateVector(Rnd.AnglePI(), 40)
+							}
+						};
+
 						Run.Level.Area.Add(part);
 						part.Depth = 1;
 					}
 					
-					Audio.PlaySfx("scroll");
+					Audio.Instance.PlaySfx("scroll");
 				}, (i) * 0.2f);
 			}
 

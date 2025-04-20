@@ -297,7 +297,7 @@ namespace BurningKnight.entity.projectile {
 
 				ProjectileCallbacks.AttachDeathCallback(p, (pr, e, t) => {
 					pr.Owner.Center = pr.Center;
-					Audio.PlaySfx("item_discord");
+					Audio.Instance.PlaySfx("item_discord");
 				});
 			});
 			

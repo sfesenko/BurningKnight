@@ -35,84 +35,75 @@ namespace BurningKnight.state {
 			base.Init();
 			
 			progress = 0;
+			Log.Info("Init: progress = 0");
 
-			var thread = new Thread(Load);
-
-			thread.Priority = ThreadPriority.Highest;
-			thread.Start();
+			AsyncUtils.RunAsync("Load", Load);
 		}
 		
 		private void Load() {
 			Log.Info("Starting asset loading thread");
 
-			SaveManager.Load(gameArea, SaveType.Global);
+			AsyncUtils.RunSync("SaveManager.Load", () => SaveManager.Load(gameArea, SaveType.Global) );
+			
 			checkFullscreen = true;
 			progress++;
 			
-			var t = DateTime.Now.Millisecond;
-			var c = DateTime.Now.Millisecond;
+			AsyncUtils.RunSync("Assets.Load", () => Assets.Load(ref progress) );
 
-			Assets.Load(ref progress);
-			Log.Info($"Assets took {(DateTime.Now.Millisecond - c) / 1000f} seconds");
-			c = DateTime.Now.Millisecond;
-
-			Dialogs.Load();
+			AsyncUtils.RunSync("Dialogs.Load", Dialogs.Load ); 
 			progress++;
-			CommonAse.Load();
+			AsyncUtils.RunSync("CommonAse.Load()", CommonAse.Load );
+			
 			progress++;
-			ImGuiHelper.BindTextures();
+			AsyncUtils.RunSync("ImGuiHelper.BindTextures()", ImGuiHelper.BindTextures );
+			
 			progress++;
-			Shaders.Load();
+			AsyncUtils.RunSync("Shaders.Load()", Shaders.Load );
 			progress++;
-			Prefabs.Load();
+			AsyncUtils.RunSync("Prefabs.Load()", Prefabs.Load );
 			progress++;
-			Items.Load();
+			AsyncUtils.RunSync("Items.Load()", Items.Load );
 			progress++;
-			LootTables.Load();
+			AsyncUtils.RunSync("LootTables.Load()", LootTables.Load );
 			progress++;
-			Mods.Load();
+			AsyncUtils.RunSync("Mods.Load()", Mods.Load );
+			;
 			progress++; // Should be 13 here
-			Log.Info($"Custom assets took {(DateTime.Now.Millisecond - c) / 1000f} seconds");
-				
+
 			Log.Info("Done loading assets! Loading level now.");
 			
-			Lights.Init();
-			Physics.Init();
+			AsyncUtils.RunSync("Lights.Init()", Lights.Init );
+			AsyncUtils.RunSync("Physics.Init()", Physics.Init );
+
 			gameArea = new Area();
 
 			Run.Level = null;
-			Tilesets.Load();
+			AsyncUtils.RunSync("Tilesets.Load()", Tilesets.Load );
+			;
 			progress++;
-				
-			Achievements.Load();
-			c = DateTime.Now.Millisecond;
+			
+			AsyncUtils.RunSync("Achievements.Load()", Achievements.Load );
 
-			if (!LoadEditor) {
-				SaveManager.Load(gameArea, SaveType.Game);
+			if (!LoadEditor)
+			{
+				AsyncUtils.RunSync("SaveManager.Load", () => SaveManager.Load(gameArea, SaveType.Game)); 
 				progress++;
-				Log.Info($"Game took {(DateTime.Now.Millisecond - c) / 1000f} seconds");
-				c = DateTime.Now.Millisecond;
 
 				Rnd.Seed = $"{Run.Seed}_{Run.Depth}";
-
-				SaveManager.Load(gameArea, SaveType.Level);
+				AsyncUtils.RunSync("SaveManager.Load", () => SaveManager.Load(gameArea, SaveType.Level));
 				progress++;
-				Log.Info($"Level took {(DateTime.Now.Millisecond - c) / 1000f} seconds");
-				c = DateTime.Now.Millisecond;
 
 				if (Run.Depth > 0) {
-					SaveManager.Load(gameArea, SaveType.Player);
-				} else {
-					SaveManager.Generate(gameArea, SaveType.Player);
+					AsyncUtils.RunSync("SaveManager.Load", () => SaveManager.Load(gameArea, SaveType.Player));
+				} else
+				{
+					AsyncUtils.RunSync("SaveManager.Generate", () => SaveManager.Generate(gameArea, SaveType.Player));
 				}
-
-				Log.Info($"Player took {(DateTime.Now.Millisecond - c) / 1000f}");
 			}
 
 			progress++; // Should be 18 here
-			Log.Info($"Done loading level! ({(DateTime.Now.Millisecond - t) / 1000f} seconds) Going to menu.");
 
-			Engine.AssetsLoaded?.Invoke();
+			AsyncUtils.RunSync("Engine.AssetsLoaded?.Invoke()", () => Engine.AssetsLoaded?.Invoke());
 			ready = true;
 		}
 

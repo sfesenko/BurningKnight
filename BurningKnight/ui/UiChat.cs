@@ -11,6 +11,8 @@ using Microsoft.Xna.Framework.Input;
 
 namespace BurningKnight.ui {
 	public class UiChat : Entity {
+		private static Audio Audio => Audio.Instance;
+		
 		private bool open;
 		private string input = "";
 

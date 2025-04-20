@@ -30,7 +30,8 @@ namespace BurningKnight.entity.creature.player {
 
 		public static float TimeIdle;
 		public bool InDialog;
-
+		private static Audio Audio => Audio.Instance;
+		
 		public DialogComponent Dialog {
 			get => dialog;
 			

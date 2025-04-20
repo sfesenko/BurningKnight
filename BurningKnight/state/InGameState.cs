@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using BurningKnight.assets;
 using BurningKnight.assets.achievements;
@@ -16,7 +15,6 @@ using BurningKnight.entity.creature.player;
 using BurningKnight.entity.events;
 using BurningKnight.entity.fx;
 using BurningKnight.entity.item;
-using BurningKnight.entity.item.stand;
 using BurningKnight.entity.item.use;
 using BurningKnight.entity.room;
 using BurningKnight.entity.twitch;
@@ -27,14 +25,12 @@ using BurningKnight.level.rooms;
 using BurningKnight.level.tile;
 using BurningKnight.physics;
 using BurningKnight.save;
-using BurningKnight.save.statistics;
 using BurningKnight.ui;
 using BurningKnight.ui.dialog;
 using BurningKnight.ui.editor;
 using BurningKnight.ui.imgui;
 using BurningKnight.ui.inventory;
 using BurningKnight.util;
-using ImGuiNET;
 using Lens;
 using Lens.assets;
 using Lens.entity;
@@ -51,8 +47,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended;
-using Newtonsoft.Json;
 using Steamworks;
+using TextCopy;
 using Console = BurningKnight.debug.Console;
 using Timer = Lens.util.timer.Timer;
 
@@ -128,7 +124,9 @@ namespace BurningKnight.state {
 		public static bool Ready;
 		public static bool InMenu;
 		
-		public void TransitionToBlack(Vector2 position, Action callback = null) {
+		private static Audio Audio => Audio.Instance;
+
+		public static void TransitionToBlack(Vector2 position, Action callback = null) {
 			Camera.Instance.Targets.Clear();
 			var v = Camera.Instance.CameraToScreen(position);
 
@@ -141,7 +139,7 @@ namespace BurningKnight.state {
 			Ready = false;
 		}
 
-		public void TransitionToOpen(Action callback = null) {
+		public static void TransitionToOpen(Action callback = null) {
 			Shaders.Ui.Parameters["bx"].SetValue(0.333f);
 			Shaders.Ui.Parameters["by"].SetValue(0.333f);
 
@@ -1464,7 +1462,7 @@ namespace BurningKnight.state {
 
 						try {
 							// Needs xclip on linux
-							TextCopy.ClipboardService.SetText(Run.Seed);
+							ClipboardService.SetText(Run.Seed);
 						} catch (Exception e) {
 							Log.Error(e);
 						}
@@ -2981,7 +2979,7 @@ namespace BurningKnight.state {
 
 					try {
 						// Needs xclip on linux
-						TextCopy.ClipboardService.SetText(Run.Seed);
+						ClipboardService.SetText(Run.Seed);
 					} catch (Exception e) {
 						Log.Error(e);
 					}
@@ -3137,7 +3135,7 @@ namespace BurningKnight.state {
 
 				try {
 					// Needs xclip on linux
-					TextCopy.ClipboardService.SetText(Run.Seed);
+					ClipboardService.SetText(Run.Seed);
 				} catch (Exception e) {
 					Log.Error(e);
 				}

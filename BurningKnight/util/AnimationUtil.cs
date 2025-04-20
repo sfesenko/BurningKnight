@@ -15,6 +15,8 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.util {
 	public static class AnimationUtil {
+		private static Audio Audio => Audio.Instance;
+
 		public static void ActionFailed() {
 			Camera.Instance.Shake(10);
 			Audio.PlaySfx("item_nocash");
@@ -26,10 +28,15 @@ namespace BurningKnight.util {
 			}
 			
 			for (var i = 0; i < 4; i++) {
-				var part = new ParticleEntity(Particles.Dust());
-						
-				part.Position = where;
-				part.Particle.Scale = Rnd.Float(0.4f, 0.8f);
+				var part = new ParticleEntity(Particles.Dust())
+				{
+					Position = where,
+					Particle =
+					{
+						Scale = Rnd.Float(0.4f, 0.8f)
+					}
+				};
+
 				Run.Level.Area.Add(part);
 				part.Depth = depth;
 			}
