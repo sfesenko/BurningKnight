@@ -483,8 +483,9 @@ namespace BurningKnight.level {
 			Set(ToIndex(x, y), value);
 		}
 		
-		public Tile Get(int x, int y, bool liquid = false) {
-			return (Tile) (liquid ? Liquid[ToIndex(x, y)] : Tiles[ToIndex(x, y)]);
+		public Tile Get(int x, int y, bool liquid = false)
+		{
+			return Get(ToIndex(x, y), liquid);
 		}
 		
 		public Tile Get(int i, bool liquid = false) {

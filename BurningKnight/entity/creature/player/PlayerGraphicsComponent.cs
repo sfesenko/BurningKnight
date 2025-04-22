@@ -2,12 +2,9 @@
 using BurningKnight.assets;
 using BurningKnight.entity.bomb;
 using BurningKnight.entity.component;
-using BurningKnight.entity.creature.mob;
 using BurningKnight.entity.creature.pet;
-using BurningKnight.entity.door;
 using BurningKnight.entity.events;
 using BurningKnight.entity.item;
-using BurningKnight.entity.item.stand;
 using BurningKnight.entity.item.util;
 using BurningKnight.entity.orbital;
 using BurningKnight.entity.projectile;
@@ -17,7 +14,6 @@ using BurningKnight.level;
 using BurningKnight.level.entities;
 using BurningKnight.physics;
 using BurningKnight.state;
-using BurningKnight.util.geometry;
 using Lens;
 using Lens.assets;
 using Lens.entity;
@@ -26,7 +22,6 @@ using Lens.graphics;
 using Lens.graphics.animation;
 using Lens.input;
 using Lens.util;
-using Lens.util.camera;
 using Lens.util.tween;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -34,7 +29,7 @@ using MonoGame.Extended;
 
 namespace BurningKnight.entity.creature.player {
 	public class PlayerGraphicsComponent : AnimationComponent {
-		public static Color AimLineColor = new Color(1f, 0f, 0f, 1f);
+		public static Color AimLineColor = new(1f, 0f, 0f, 1f);
 
 		private Vector2 scale = Vector2.One;
 		private Animation head;
@@ -94,7 +89,7 @@ namespace BurningKnight.entity.creature.player {
 			Graphics.Render(region, p, a, origin, s, Graphics.ParseEffect(Flipped, FlippedVerticaly));
 			var st = GetComponent<StateComponent>().StateInstance;
 			
-			if (st is Player.RollState || st is Player.SleepingState) {
+			if (st is Player.RollState or Player.SleepingState) {
 				return;
 			}
 
@@ -102,11 +97,14 @@ namespace BurningKnight.entity.creature.player {
 			var hat = h.Item;
 
 			if (hat != null && !h.DoNotRender) {
-				var r = $"{hat.Id}_{(Entity.GetComponent<StateComponent>().StateInstance is Player.DuckState ? "b" : "a")}";
+				var duck = Entity.GetComponent<StateComponent>().StateInstance is Player.DuckState 
+					? 'b' : 'a';
+
+				var r = $"{hat.Id}_{duck}";
+				var region1 = CommonAse.Items.GetSlice(r);
+				origin = new Vector2(region1.Width / 2, region1.Height + 4);
+
 				var m = shadow ? -4 : 4;
-				
-				region = CommonAse.Items.GetSlice(r);
-				origin = new Vector2(region.Width / 2, region.Height + 4);
 
 				var pp = new Vector2(Entity.CenterX, m +
 					Entity.Bottom - (shadow ? 0 : GetComponent<ZComponent>().Z) + (shadow ? -1 : 1) *
@@ -114,7 +112,9 @@ namespace BurningKnight.entity.creature.player {
 
 				pp.Floor();
 
-				Graphics.Render(region, pp, a, origin, Scale * new Vector2(s.X, s.Y * (shadow ? -1 : 1)), Flipped ? SpriteEffects.FlipHorizontally : SpriteEffects.None);
+				var rotation = Scale * new Vector2(s.X, s.Y * (shadow ? -1 : 1));
+				var flipHorizontally = Flipped ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
+				Graphics.Render(region1, pp, a, origin, rotation, flipHorizontally);
 			} else {	
 				region = head.GetFrame(Animation.Tag, (int) Animation.Frame);
 

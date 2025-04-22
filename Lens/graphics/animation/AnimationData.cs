@@ -7,9 +7,9 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Lens.graphics.animation {
 	public class AnimationData {
-		public Dictionary<string, List<AnimationFrame>> Layers = new Dictionary<string, List<AnimationFrame>>();
-		public Dictionary<string, AnimationTag> Tags = new Dictionary<string, AnimationTag>();
-		public Dictionary<string, TextureRegion> Slices = new Dictionary<string, TextureRegion>();
+		public readonly Dictionary<string, List<AnimationFrame>> Layers = new();
+		public readonly Dictionary<string, AnimationTag> Tags = new();
+		public readonly Dictionary<string, TextureRegion> Slices = new();
 		public Texture2D Texture;
 
 		public AnimationData Recolor(Color[] from, Color[] to) {

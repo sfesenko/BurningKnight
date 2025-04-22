@@ -223,7 +223,7 @@ namespace Lens
                 Assets.Update(FixedUpdateTime);
                 Input.Update(FixedUpdateTime);
                 Timer.Update(FixedUpdateTime);
-                Tween.Update(FixedUpdateTime);
+                Tween.Instance.Update(FixedUpdateTime);
 
                 State?.Update(FixedUpdateTime);
             }

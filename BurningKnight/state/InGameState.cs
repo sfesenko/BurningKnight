@@ -3252,9 +3252,7 @@ namespace BurningKnight.state {
 			Audio.PlayMusic("Nostalgia", true);
 			
 			Tween.To(this, new {blur = 1}, 0.5f);
-			Tween.To(0, gameOverMenu.Y, x => gameOverMenu.Y = x, 1f, Ease.BackOut).OnEnd = () => {
-				SelectFirst();
-			};
+			Tween.To(0, gameOverMenu.Y, x => gameOverMenu.Y = x, 1f, Ease.BackOut).OnEnd = SelectFirst;
 			
 			OpenBlackBars();
 
@@ -3263,24 +3261,24 @@ namespace BurningKnight.state {
 		
 		public void HandleDeath() {
 			Died = true;
-				
-			new Thread(() => {
+
+			AsyncUtils.RunAsync("Death", () =>
+			{
 				// SaveManager.Save(Area, SaveType.Statistics);
 				SaveManager.Delete(SaveType.Player, SaveType.Level, SaveType.Game);
 				SaveManager.Backup();
-			}).Start();
+			});
 		}
 
-		private TweenTask last;
+		// private TweenTask last;
 
 		public bool HandleEvent(Event e) {
 			if (e is GiveEmeraldsUse.GaveEvent ge) {
 				Tween.To(0, emeraldY, x => emeraldY = x, 0.4f, Ease.BackOut).OnEnd = () => {
-					Tween.Remove(last);
-					
-					last = Tween.To(-20, emeraldY, x => emeraldY = x, 0.3f, Ease.QuadIn);
-					last.OnEnd = () => { last = null; };
-					last.Delay = 3;
+					// Tween.Remove(last);
+
+					Tween.To(-20, emeraldY, x => emeraldY = x, 0.3f, Ease.QuadIn)
+						.Delay = 3;
 				};
 				
 				return false;
@@ -3290,7 +3288,7 @@ namespace BurningKnight.state {
 				return false;
 			}
 			
-			if (e is DiedEvent de && de.Who is Mob) {
+			if (e is DiedEvent { Who: Mob }) {
 				Run.KillCount++;
 			}
 

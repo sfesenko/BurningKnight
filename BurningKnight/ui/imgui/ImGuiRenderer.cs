@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Net.Mime;
 using System.Runtime.InteropServices;
 using ImGuiNET;
-using Microsoft.Toolkit.HighPerformance;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -37,7 +35,22 @@ namespace BurningKnight.ui.imgui {
         // Input
         private int _scrollWheelValue;
 
-        private List<int> _keys = new List<int>();
+        // mapped keys for ImGui
+        private readonly IReadOnlyList<(Keys, ImGuiKey)> _keys = [
+            (Keys.Back, ImGuiKey.Backspace),
+            (Keys.Enter, ImGuiKey.Enter),
+            (Keys.Delete, ImGuiKey.Delete),
+            (Keys.Escape, ImGuiKey.Escape),
+            (Keys.Tab, ImGuiKey.Tab),
+            (Keys.Up,ImGuiKey.UpArrow),
+            (Keys.Down,ImGuiKey.DownArrow),
+            (Keys.Left,ImGuiKey.LeftArrow),
+            (Keys.Right,ImGuiKey.RightArrow),
+            (Keys.Home, ImGuiKey.Home),
+            (Keys.End, ImGuiKey.End),
+            (Keys.PageUp, ImGuiKey.PageUp),
+            (Keys.PageDown, ImGuiKey.PageDown)
+        ];
 
         public ImGuiRenderer(Game game)
         {
@@ -131,7 +144,7 @@ namespace BurningKnight.ui.imgui {
         {
             ImGui.Render();
 
-            unsafe { RenderDrawData(ImGui.GetDrawData()); }
+            RenderDrawData(ImGui.GetDrawData());
         }
 
         #endregion ImGuiRenderer
@@ -141,29 +154,9 @@ namespace BurningKnight.ui.imgui {
         /// <summary>
         /// Maps ImGui keys to XNA keys. We use this later on to tell ImGui what keys were pressed
         /// </summary>
-        protected virtual void SetupInput()
+        protected void SetupInput()
         {
-            ImGuiIOPtr io = ImGui.GetIO();
-            
-            _keys.Add(io.KeyMap[(int)ImGuiKey.Tab] = (int)Keys.Tab);
-            _keys.Add(io.KeyMap[(int)ImGuiKey.LeftArrow] = (int)Keys.Left);
-            _keys.Add(io.KeyMap[(int)ImGuiKey.RightArrow] = (int)Keys.Right);
-            _keys.Add(io.KeyMap[(int)ImGuiKey.UpArrow] = (int)Keys.Up);
-            _keys.Add(io.KeyMap[(int)ImGuiKey.DownArrow] = (int)Keys.Down);
-            _keys.Add(io.KeyMap[(int)ImGuiKey.PageUp] = (int)Keys.PageUp);
-            _keys.Add(io.KeyMap[(int)ImGuiKey.PageDown] = (int)Keys.PageDown);
-            _keys.Add(io.KeyMap[(int)ImGuiKey.Home] = (int)Keys.Home);
-            _keys.Add(io.KeyMap[(int)ImGuiKey.End] = (int)Keys.End);
-            _keys.Add(io.KeyMap[(int)ImGuiKey.Delete] = (int)Keys.Delete);
-            _keys.Add(io.KeyMap[(int)ImGuiKey.Backspace] = (int)Keys.Back);
-            _keys.Add(io.KeyMap[(int)ImGuiKey.Enter] = (int)Keys.Enter);
-            _keys.Add(io.KeyMap[(int)ImGuiKey.Escape] = (int)Keys.Escape);
-            _keys.Add(io.KeyMap[(int)ImGuiKey.A] = (int)Keys.A);
-            _keys.Add(io.KeyMap[(int)ImGuiKey.C] = (int)Keys.C);
-            _keys.Add(io.KeyMap[(int)ImGuiKey.V] = (int)Keys.V);
-            _keys.Add(io.KeyMap[(int)ImGuiKey.X] = (int)Keys.X);
-            _keys.Add(io.KeyMap[(int)ImGuiKey.Y] = (int)Keys.Y);
-            _keys.Add(io.KeyMap[(int)ImGuiKey.Z] = (int)Keys.Z);
+            var io = ImGui.GetIO();
 
             // MonoGame-specific //////////////////////
             _game.Window.TextInput += (s, a) =>
@@ -219,27 +212,26 @@ namespace BurningKnight.ui.imgui {
         /// </summary>
         protected virtual void UpdateInput()
         {
-            ImGuiIOPtr io = ImGui.GetIO();
+            var io = ImGui.GetIO();
 
             var mouse = Mouse.GetState();
             var keyboard = Keyboard.GetState();
 
-            for (int i = 0; i < _keys.Count; i++)
+            foreach (var (key, imGuiKey) in _keys)
             {
-                int key = _keys[i];
-                var isKeyDown = keyboard.IsKeyDown((Keys)key).ToByte();
-                io.KeysData[key].Down = isKeyDown;
+                var isDown = keyboard.IsKeyDown(key);
+                io.AddKeyEvent(imGuiKey, isDown);
             }
-
+            
             io.KeyShift = keyboard.IsKeyDown(Keys.LeftShift) || keyboard.IsKeyDown(Keys.RightShift);
             io.KeyCtrl = keyboard.IsKeyDown(Keys.LeftControl) || keyboard.IsKeyDown(Keys.RightControl);
             io.KeyAlt = keyboard.IsKeyDown(Keys.LeftAlt) || keyboard.IsKeyDown(Keys.RightAlt);
             io.KeySuper = keyboard.IsKeyDown(Keys.LeftWindows) || keyboard.IsKeyDown(Keys.RightWindows);
 
-            io.DisplaySize = new System.Numerics.Vector2(_graphicsDevice.PresentationParameters.BackBufferWidth, _graphicsDevice.PresentationParameters.BackBufferHeight);
-            io.DisplayFramebufferScale = new System.Numerics.Vector2(1f, 1f);
+            io.DisplaySize = new Vector2(_graphicsDevice.PresentationParameters.BackBufferWidth, _graphicsDevice.PresentationParameters.BackBufferHeight);
+            io.DisplayFramebufferScale = new Vector2(1f, 1f);
 
-            io.MousePos = new System.Numerics.Vector2(mouse.X, mouse.Y);
+            io.MousePos = new Vector2(mouse.X, mouse.Y);
 
             io.MouseDown[0] = mouse.LeftButton == ButtonState.Pressed;
             io.MouseDown[1] = mouse.RightButton == ButtonState.Pressed;
@@ -333,7 +325,7 @@ namespace BurningKnight.ui.imgui {
             _indexBuffer.SetData(_indexData, 0, drawData.TotalIdxCount * sizeof(ushort));
         }
 
-        private unsafe void RenderCommandLists(ImDrawDataPtr drawData)
+        private void RenderCommandLists(ImDrawDataPtr drawData)
         {
             _graphicsDevice.SetVertexBuffer(_vertexBuffer);
             _graphicsDevice.Indices = _indexBuffer;
@@ -344,11 +336,11 @@ namespace BurningKnight.ui.imgui {
             for (int n = 0; n < drawData.CmdListsCount; n++)
             {
                 ImDrawListPtr cmdList = drawData.CmdLists[n];
-                    // CmdListsRange[n];
+                // CmdListsRange[n];
 
-                for (int cmdi = 0; cmdi < cmdList.CmdBuffer.Size; cmdi++)
+                for (var cmdi = 0; cmdi < cmdList.CmdBuffer.Size; cmdi++)
                 {
-                    ImDrawCmdPtr drawCmd = cmdList.CmdBuffer[cmdi];
+                    var drawCmd = cmdList.CmdBuffer[cmdi];
 
                     if (!_loadedTextures.ContainsKey(drawCmd.TextureId))
                     {

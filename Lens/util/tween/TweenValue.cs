@@ -5,7 +5,8 @@ using System.Reflection;
 namespace Lens.util.tween {
 	public class TweenValue {
 		static TweenValue() {
-			NumericTypes = new[] {
+			NumericTypes =
+			[
 				typeof(Int16),
 				typeof(Int32),
 				typeof(Int64),
@@ -15,7 +16,7 @@ namespace Lens.util.tween {
 				typeof(Single),
 				typeof(Double),
 				typeof(Byte)
-			};
+			];
 		}
 
 		private static readonly Type[] NumericTypes;
@@ -114,7 +115,7 @@ namespace Lens.util.tween {
 
 		private void CheckPropertyType(Type type, string prop, string targetTypeName) {
 			if (!ValidatePropertyType(type)) {
-				throw new InvalidCastException(string.Format("Property is invalid: ({0} on {1}).", prop, targetTypeName));
+				throw new InvalidCastException($"Property is invalid: ({prop} on {targetTypeName}).");
 			}
 		}
 

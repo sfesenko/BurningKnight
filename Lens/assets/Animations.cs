@@ -1,37 +1,39 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Aseprite;
 using Lens.graphics;
 using Lens.graphics.animation;
 using Lens.util;
-using Lens.util.file;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Lens.assets {
 	public struct Animations {
 		public static bool Reload;
-		private static Dictionary<string, AnimationData> animations = new Dictionary<string, AnimationData>();
+		private static readonly Dictionary<string, AnimationData> animations = new();
 		
-		internal static void Load() {
-			var animationDir = FileHandle.FromRoot("Animations/");
+		internal static void Load()
+		{
+			var animationDir = Path.Combine(Assets.Root, "Animations");
+			if (!Directory.Exists(animationDir))
+			{
+				Log.Error($"Can't load animations from: {animationDir}");
+				return;
+			}
 
-			if (animationDir.Exists()) {
-				foreach (var animation in animationDir.ListFileHandles()) {
-					if (animation.Extension == ".ase") {
-						try {
-							LoadAnimation(animation.NameWithoutExtension, animation.FullPath);
-						} catch (Exception e) {
-							Log.Error(e);
-						}
-					}
-				}
+			foreach (var file in Directory.GetFiles(animationDir, "*.ase"))
+			{
+				var name = Path.GetFileNameWithoutExtension(file);
+				var animation = LoadAnimation(file);
+				animations[name] = animation;
 			}
 		}
-
-		private static void LoadAnimation(string name, string fullPath) {
-			var file = new AsepriteFile(fullPath);
+		
+		private static AnimationData LoadAnimation(string fileName)
+		{
+			var file = new AsepriteFile(fileName);
+			
 			var animation = new AnimationData();
 			
 			for (var i = 0; i < file.Layers.Count; i++) {
@@ -40,10 +42,12 @@ namespace Lens.assets {
 				
 				for (var j = 0; j < file.Frames.Count; j++) {
 					var frame = file.Frames[j];
-					var newFrame = new AnimationFrame();
-					
-					newFrame.Duration = frame.Duration;
-					newFrame.Texture = new TextureRegion(file.Texture, new Rectangle(j * file.Width, i * file.Height, file.Width, file.Height));
+					var newFrame = new AnimationFrame
+					{
+						Duration = frame.Duration,
+						Texture = new TextureRegion(file.Texture, new Rectangle(j * file.Width, i * file.Height, file.Width, file.Height))
+					};
+
 					newFrame.Bounds = newFrame.Texture.Source;
 					
 					list.Add(newFrame);
@@ -51,37 +55,39 @@ namespace Lens.assets {
 				
 				animation.Layers[layer.Name] = list;
 			}
-
-			for (var i = 0; i < file.Slices.Count; i++) {
-				var slice = file.Slices[i];
+			
+			foreach (var slice in file.Slices)
+			{
 				animation.Slices[slice.Name] = new TextureRegion(file.Texture, new Rectangle(slice.OriginX, slice.OriginY, slice.Width, slice.Height));
 			}
 			
 			foreach (var tag in file.Animations.Values) {
-				var newTag = new AnimationTag();
-			
-				newTag.Direction = (AnimationDirection) tag.Directions;
-				newTag.StartFrame = (uint) tag.FirstFrame;
-				newTag.EndFrame = (uint) tag.LastFrame;
-				
+				var newTag = new AnimationTag
+				{
+					Direction = (AnimationDirection) tag.Directions,
+					StartFrame = (uint) tag.FirstFrame,
+					EndFrame = (uint) tag.LastFrame
+				};
+
 				animation.Tags[tag.Name] = newTag;
 			}
 			
 			foreach (var tag in file.Tags) {
-				var newTag = new AnimationTag();
-			
-				newTag.Direction = (AnimationDirection) tag.LoopDirection;
-				newTag.StartFrame = (uint) tag.From;
-				newTag.EndFrame = (uint) tag.To;
-				
+				var newTag = new AnimationTag
+				{
+					Direction = (AnimationDirection) tag.LoopDirection,
+					StartFrame = (uint) tag.From,
+					EndFrame = (uint) tag.To
+				};
+
 				animation.Tags[tag.Name] = newTag;
 			}
 
 
 			animation.Texture = file.Texture;
-			animations[name] = animation;
+			return animation;
 		}
-		
+
 		internal static void Destroy() {
 			foreach (var animation in animations.Values) {
 				animation.Texture.Dispose();
@@ -127,12 +133,12 @@ namespace Lens.assets {
 			animation.Texture.GetData(tdata);
 			var pixelData = new Color[w * h];
 			
-			for (int y = 0; y < h; y++) {
-				for (int x = 0; x < w; x++) {
+			for (var y = 0; y < h; y++) {
+				for (var x = 0; x < w; x++) {
 					var i = x + y * w;
 					var color = tdata[i];
 
-					for (int c = 0; c < set.From.Length; c++) {
+					for (var c = 0; c < set.From.Length; c++) {
 						if (ColorUtils.Compare(set.From[c], color, 4)) {
 							color = set.To[c];
 						}
@@ -144,22 +150,15 @@ namespace Lens.assets {
 			
 			texture.SetData(pixelData);
 
-			foreach (var l in animation.Layers) {
-				var list = new List<AnimationFrame>();
-				
-				foreach (var f in l.Value) {
-					list.Add(new AnimationFrame {
-						Texture = new TextureRegion(texture, f.Bounds),
-						Duration = f.Duration,
-						Bounds = f.Bounds
-					});	
-				}
-
-				data.Layers[l.Key] = list;
+			foreach (var l in animation.Layers)
+			{
+				data.Layers[l.Key] =
+					l.Value.Select(f => f with { Texture = new TextureRegion(texture, f.Bounds) })
+						.ToList();
 			}
 
-			foreach (var s in animation.Slices) {
-				data.Slices[s.Key] = new TextureRegion(texture, s.Value.Source);
+			foreach (var (key, value) in animation.Slices) {
+				data.Slices[key] = new TextureRegion(texture, value.Source);
 			}
 
 			foreach (var t in animation.Tags) {
@@ -170,10 +169,6 @@ namespace Lens.assets {
 			animations[fullId] = data;
 			
 			return data;
-		}
-		
-		public static Animation CreateColored(string id, ColorSet set, string layer = null) {
-			return new Animation(GetColored(id, set), layer);
 		}
 	}
 }

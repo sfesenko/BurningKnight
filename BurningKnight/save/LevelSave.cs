@@ -36,7 +36,7 @@ namespace BurningKnight.save {
 
 		public override void Save(Area area, FileWriter writer, bool old) {
 			SmartSave(area.Tagged[Tags.LevelSave], writer);
-			var d = (old ? Run.LastDepth : Run.Depth);
+				var d = (old ? Run.LastDepth : Run.Depth);
 			
 			if (d > 0) {
 				Run.LastSavedDepth = d;

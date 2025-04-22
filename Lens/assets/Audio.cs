@@ -68,10 +68,6 @@ public class Audio
         }
     }
 
-    public void StartThread()
-    {
-    }
-
     internal void Load()
     {
         Destroy();
@@ -165,20 +161,44 @@ public class Audio
 
     private void LoadAndPlayMusic(string music, bool fromStart = false)
     {
-        // TODO: fix hangups
-        //
-        ThreadLoad(music, fromStart);
+        try
+        {
+            loading = true;
+            
+            var id = Environment.CurrentManagedThreadId;
+            Log.Info($"Audio.Play: {id}");
 
-        // if (musicInstances.ContainsKey(music)) {
-        // 	ThreadLoad(music, fromStart);
-        // } else {
-        // 	new Thread(() => {
-        // 		ThreadLoad(music, fromStart);
-        // 	}).Start();
-        // }
+            if (!musicInstances.TryGetValue(music, out currentPlaying))
+            {
+                Log.Debug($"ThreadLoad: loading {music}");
+                // currentPlaying = Assets.Content.Load<Song>($"bin/Music/{music}");
+                var uri = new Uri($"Content/Music/{music}.ogg", UriKind.Relative);
+                currentPlaying = Song.FromUri(music, uri);
+                
+                // ($"Content/Music/{music}.ogg");
+                musicInstances[music] = currentPlaying;
+            }
+
+            MediaPlayer.Pause();
+            MediaPlayer.Play(currentPlaying);
+
+            Log.Info($"Playing music {music} repeat = {Repeat}");
+            currentPlayingMusic = music;
+
+            Tween.To(musicVolume, MediaPlayer.Volume, x => MediaPlayer.Volume = x,
+                fromStart ? 0.05f : CrossFadeTime);
+
+            loading = false;
+        }
+        catch (Exception e)
+        {
+            Log.Error($"Failed to load {music}");
+            Log.Error(e);
+            loading = false;
+        }
     }
 
-    public void ThreadLoad(string music, bool fromStart = false)
+    private void ThreadLoad(string music, bool fromStart = false)
     {
         try
         {
@@ -190,10 +210,15 @@ public class Audio
             if (!musicInstances.TryGetValue(music, out currentPlaying))
             {
                 Log.Debug($"ThreadLoad: loading {music}");
-                currentPlaying = Assets.Content.Load<Song>($"bin/Music/{music}");
+                // currentPlaying = Assets.Content.Load<Song>($"bin/Music/{music}");
+                var uri = new Uri($"Content/Music/{music}.ogg", UriKind.Relative);
+                currentPlaying = Song.FromUri(music, uri);
+                
+                    // ($"Content/Music/{music}.ogg");
                 musicInstances[music] = currentPlaying;
             }
 
+            MediaPlayer.Pause();
             MediaPlayer.Play(currentPlaying);
 
             Log.Info($"Playing music {music} repeat = {Repeat}");

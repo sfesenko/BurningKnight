@@ -24,9 +24,9 @@ namespace BurningKnight.assets.items {
 	public static class Items {
 		public const string PlaceholderItem = "bk:my_heart";
 		
-		public static Dictionary<string, ItemData> Datas = new Dictionary<string, ItemData>();
-		private static Dictionary<ItemType, List<ItemData>> byType = new Dictionary<ItemType, List<ItemData>>();
-		private static Dictionary<int, List<ItemData>> byPool = new Dictionary<int, List<ItemData>>();
+		public static readonly Dictionary<string, ItemData> Datas = new();
+		private static Dictionary<ItemType, List<ItemData>> byType = new();
+		private static Dictionary<int, List<ItemData>> byPool = new();
 		
 		public static void Load() {
 			Load(FileHandle.FromRoot("items.json"));

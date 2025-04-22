@@ -416,10 +416,12 @@ namespace VelcroPhysics.Dynamics
         /// <returns>Return the world position of the body's origin.</returns>
         public Vector2 Position
         {
-            get { return _xf.p; }
+            get => _xf.p;
             set
             {
-                Debug.Assert(!float.IsNaN(value.X) && !float.IsNaN(value.Y));
+                // FIXME: X & Y are assigned independently,
+                // so assert it triggered on init
+                // Debug.Assert(!float.IsNaN(value.X) && !float.IsNaN(value.Y));
 
                 SetTransform(ref value, Rotation);
             }

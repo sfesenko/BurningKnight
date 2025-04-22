@@ -59,17 +59,20 @@ namespace Lens.assets {
 		public static void Load(ref int progress) {
 			LoadAssets(ref progress);
 
-			if (Reload && LoadOriginalFiles) {				
-				folders = new[] {
+			if (Reload && LoadOriginalFiles)
+			{
+				folders =
+				[
 					//"Textures/",
 					"Animations/"
 					//"Sfx/"
-				};
+				];
 
-				for (int i = 0; i < folders.Length; i++) {
+				foreach (var t in folders)
+				{
 					var watcher = new FileSystemWatcher();
 					
-					watcher.Path = Path.GetFullPath(Root + folders[i]);
+					watcher.Path = Path.GetFullPath(Root + t);
 					watcher.NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite
 					                                                | NotifyFilters.FileName | NotifyFilters.DirectoryName;
 

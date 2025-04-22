@@ -23,7 +23,8 @@ namespace BurningKnight.entity.component {
 			
 			if (Item == null) {
 				var hat = GlobalSave.GetString($"hat_{Entity.GetComponent<InputComponent>().Index}");
-				Log.Debug($"hat_{Entity.GetComponent<InputComponent>().Index}");
+				Log.Debug($"HatComponent.Setup: {hat}");
+				// Log.Debug($"hat_{Entity.GetComponent<InputComponent>().Index}");
 
 				if (hat != null) {
 					Set(Items.CreateAndAdd(hat, Entity.Area), false);

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Immutable;
 using BurningKnight.assets;
 using BurningKnight.assets.items;
 using BurningKnight.entity.component;
@@ -22,10 +23,10 @@ using Num = System.Numerics;
 
 namespace BurningKnight.state {
 	public static class ItemEditor {
-		private static unsafe ImGuiTextFilterPtr filter = new ImGuiTextFilterPtr(ImGuiNative.ImGuiTextFilter_ImGuiTextFilter(null));
-		private static unsafe ImGuiTextFilterPtr popupFilter = new ImGuiTextFilterPtr(ImGuiNative.ImGuiTextFilter_ImGuiTextFilter(null));
-		private static System.Numerics.Vector2 size = new System.Numerics.Vector2(300, 400);
-		private static System.Numerics.Vector2 popupSize = new System.Numerics.Vector2(400, 400);
+		private static unsafe ImGuiTextFilterPtr filter = new(ImGuiNative.ImGuiTextFilter_ImGuiTextFilter(null));
+		private static unsafe ImGuiTextFilterPtr popupFilter = new(ImGuiNative.ImGuiTextFilter_ImGuiTextFilter(null));
+		private static Num.Vector2 size = new(300, 400);
+		private static Num.Vector2 popupSize = new(400, 400);
 
 		private static int id;
 		private static int ud;
@@ -36,7 +37,8 @@ namespace BurningKnight.state {
 		
 		// Keep in sync with ItemType enum!!!
 		// (in the same order)
-		public static string[] Types = {
+		public static readonly string[] Types =
+		[
 			"artifact",
 			"active",
 			"coin",
@@ -51,23 +53,25 @@ namespace BurningKnight.state {
 			"scourge",
 			"mana",
 			"lamp"
-		};
+		];
 
 		// Keep in sync with the WeaponType enum!!!
-		public static string[] WeaponTypes = {
+		private static string[] WeaponTypes =
+		[
 			"melee",
 			"ranged",
 			"magic",
 			"none"
-		};
+		];
 		
 		// Keep in sync with the ItemQuality enum!!!
-		public static string[] Quality = {
+		private static string[] Quality =
+		[
 			"wooden",
 			"iron",
 			"golden",
 			"trash"
-		};
+		];
 
 		private static int toRemove = -1;
 
@@ -98,16 +102,16 @@ namespace BurningKnight.state {
 					ImGui.TreePop();
 				}
 			} else if (root.IsJsonObject && root["id"] != JsonValue.Null) {
-				var id = root["id"].AsString;
+				var rootId = root["id"].AsString;
 				
-				if (ImGui.TreeNode(id)) {
+				if (ImGui.TreeNode(rootId)) {
 					root.Checkbox("Single Use", "single", false);
 					ImGui.Separator();
 					
-					if (UseRegistry.Renderers.TryGetValue(id, out var renderer)) {
+					if (UseRegistry.Renderers.TryGetValue(rootId, out var renderer)) {
 						renderer(root);
 					} else {
-						ImGui.Text($"No renderer found for use '{id}'");
+						ImGui.Text($"No renderer found for use '{rootId}'");
 					}
 					
 					ImGui.TreePop();
@@ -709,43 +713,58 @@ namespace BurningKnight.state {
 			count = 0;
 			ImGui.Combo("Filter by", ref sortBy, sortTypes, sortTypes.Length);
 
-			if (sortBy > 0) {
-				if (sortBy == 1) {
-					ImGui.Combo("Type", ref sortType, Types, Types.Length);
-				} else if (sortBy == 2) {
-					ImGui.Checkbox("Lockable", ref locked);
-				} else if (sortBy == 3) {
-					if (ImGui.TreeNode("Spawns in")) {
-						ImGui.Checkbox("Does not spawn", ref invertSpawn);
-						ImGui.Separator();
+			if (sortBy > 0)
+			{
+				switch (sortBy)
+				{
+					case 1:
+						ImGui.Combo("Type", ref sortType, Types, Types.Length);
+						break;
+					case 2:
+						ImGui.Checkbox("Lockable", ref locked);
+						break;
+					case 3:
+					{
+						if (ImGui.TreeNode("Spawns in")) {
+							ImGui.Checkbox("Does not spawn", ref invertSpawn);
+							ImGui.Separator();
 						
-						var i = 0;
+							var i = 0;
 						
-						foreach (var p in ItemPool.ById) {
-							var val = p.Contains(pools);
+							foreach (var p in ItemPool.ById) {
+								var val = p.Contains(pools);
 					
-							if (ImGui.Checkbox(p.Name, ref val)) {
-								pools = p.Apply(pools, val);
+								if (ImGui.Checkbox(p.Name, ref val)) {
+									pools = p.Apply(pools, val);
+								}
+					
+								i++;
+					
+								if (i == ItemPool.Count) {
+									break;
+								}
 							}
-					
-							i++;
-					
-							if (i == ItemPool.Count) {
-								break;
-							}
+						
+							ImGui.TreePop();
 						}
-						
-						ImGui.TreePop();
-					}
-				} else if (sortBy == 4) {
-					ImGui.Checkbox("Single?", ref single);
-				} else if (sortBy == 5) {
-					ImGui.Combo("Quality", ref quality, Quality, Quality.Length);
-				} else if (sortBy == 6) {
-					var v = (int) weaponTypeSort;
 
-					if (ImGui.Combo("Weapon Type", ref v, WeaponTypes, WeaponTypes.Length)) {
-						weaponTypeSort = (WeaponType) v;
+						break;
+					}
+					case 4:
+						ImGui.Checkbox("Single?", ref single);
+						break;
+					case 5:
+						ImGui.Combo("Quality", ref quality, Quality, Quality.Length);
+						break;
+					case 6:
+					{
+						var v = (int) weaponTypeSort;
+
+						if (ImGui.Combo("Weapon Type", ref v, WeaponTypes, WeaponTypes.Length)) {
+							weaponTypeSort = (WeaponType) v;
+						}
+
+						break;
 					}
 				}
 			}
@@ -756,7 +775,8 @@ namespace BurningKnight.state {
 			ImGui.BeginChild("ScrollingRegionItems", new System.Numerics.Vector2(0, -height), 
 				false, ImGuiWindowFlags.HorizontalScrollbar);
 
-			foreach (var i in Items.Datas.Values) {
+			var items = Items.Datas.ToImmutableSortedDictionary();
+			foreach (var i in items.Values) {
 				ImGui.PushID(id);
 
 				if (ForceFocus && i == Selected) {
@@ -765,40 +785,34 @@ namespace BurningKnight.state {
 				}
 				
 				if (filter.PassFilter(i.Id)) {
-					if (sortBy > 0) {
-						if (sortBy == 1) {
-							if (i.Type != (ItemType) sortType) {
+					if (sortBy > 0)
+					{
+						switch (sortBy)
+						{
+							case 1 when i.Type != (ItemType) sortType:
+							case 2 when i.Lockable != locked:
 								continue;
-							}
-						} else if (sortBy == 2) {
-							if (i.Lockable != locked) {
-								continue;
-							}
-						} else if (sortBy == 3) {
-							var found = false;
+							case 3:
+							{
+								var found = false;
 							
-							for (var j = 0; j < 32; j++) {
-								if (BitHelper.IsBitSet(pools, j) && BitHelper.IsBitSet(i.Pools, j)) {
-									found = true;
-									break;
+								for (var j = 0; j < 32; j++) {
+									if (BitHelper.IsBitSet(pools, j) && BitHelper.IsBitSet(i.Pools, j)) {
+										found = true;
+										break;
+									}
 								}
-							}
 
-							if (invertSpawn == found) {
-								continue;
+								if (invertSpawn == found) {
+									continue;
+								}
+
+								break;
 							}
-						} else if (sortBy == 4) {
-							if (i.Single != single) {
+							case 4 when i.Single != single:
+							case 5 when i.Quality != (ItemQuality) quality:
+							case 6 when i.Type != ItemType.Weapon || i.WeaponType != weaponTypeSort:
 								continue;
-							}
-						} else if (sortBy == 5) {
-							if (i.Quality != (ItemQuality) quality) {
-								continue;
-							}
-						} else if (sortBy == 6) {
-							if (i.Type != ItemType.Weapon || i.WeaponType != weaponTypeSort) {
-								continue;
-							}
 						}
 					}
 					
