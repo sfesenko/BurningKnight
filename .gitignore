@@ -15,3 +15,6 @@ BurningKnight/achievement_sprites*
 *mgfxc.*
 SharpDX.xml
 SharpDX.D3DCompiler.xml
+
+*.DotSettings.user
+
