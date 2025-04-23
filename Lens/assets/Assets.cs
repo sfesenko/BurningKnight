@@ -89,7 +89,7 @@ namespace Lens.assets {
 		}
 
 		private static void LoadAssets(ref int progress) {
-			AsepriteReader.GraphicsDevice = Engine.GraphicsDevice;
+			// AsepriteReader.GraphicsDevice = Engine.GraphicsDevice;
 			
 			if (Locale.Map == null) {
 				Locale.Load(Locale.PrefferedClientLanguage);

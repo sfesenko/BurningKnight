@@ -6,7 +6,6 @@ using System.Text;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content.Pipeline;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace Aseprite;
 
@@ -27,7 +26,8 @@ public class AsepriteFile {
 	public readonly List<AsepriteSlice> Slices = [];
 	public readonly Dictionary<string, AsepriteAnimation> Animations = new();
 
-	public Texture2D Texture;
+	// public Texture2D Texture;
+	public readonly Color[] pixelData;
 
 	private enum Chunks {
 		OldPaletteA = 0x0004,
@@ -49,21 +49,18 @@ public class AsepriteFile {
 		CompressedImage = 2
 	}
 
-	public AsepriteFile() {
-			
-	}
 
+	public int TextureWidth => Frames.Count * Width;
+	public int TextureHeight => Layers.Count * Height;
+	
 	public AsepriteFile(string filename) : this(filename, null) {
 		int framesCount = Frames.Count;
-		int layersCount = Layers.Count;
-				
-		int textureWidth = framesCount * Width;
-		int textureHeight = layersCount * Height;
+
 		int width = Width;
 		int height = Height;
-		int size = textureWidth * (textureHeight + 1);
+		int size = TextureWidth * (TextureHeight + 1);
 
-		var pixelData = new Color[size];
+		var textureData = new Color[size];
 		for (int f = 0; f < framesCount; f++) {
 			var frame = Frames[f];
 
@@ -77,17 +74,16 @@ public class AsepriteFile {
 				{
 					for (var celX = 0; celX < cel.Width; celX++)
 					{
-						var pixel = cel.Pixels[celX + celY * cel.Width];
+						Color pixel = cel.Pixels[celX + celY * cel.Width];
 
-						var index = (f * width) + startX + celX + (startY + (celNo * height) + celY) * textureWidth;
-						pixelData[index] = pixel;
+						var index = (f * width) + startX + celX + (startY + (celNo * height) + celY) * TextureWidth;
+						textureData[index] = pixel;
 					}
 				}
 			}
 		}
-
-		Texture = new Texture2D(AsepriteReader.GraphicsDevice, textureWidth, textureHeight + 1);
-		Texture.SetData(pixelData);
+		
+		pixelData = textureData;
 	}
 
 	private AsepriteFile(string filename, ContentBuildLogger logger) {
@@ -573,4 +569,11 @@ public class AsepriteCel : IUserData {
 
 	public string UserDataText { get; set; }
 	public Color UserDataColor { get; set; }
+}
+
+public class AsepriteAnimation {
+	public int FirstFrame;
+	public int LastFrame;
+	public string Name;
+	public AsepriteTag.LoopDirections Directions;
 }

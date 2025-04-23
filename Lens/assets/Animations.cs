@@ -33,6 +33,8 @@ namespace Lens.assets {
 		private static AnimationData LoadAnimation(string fileName)
 		{
 			var file = new AsepriteFile(fileName);
+			var texture = new Texture2D(Engine.GraphicsDevice, file.TextureWidth, file.TextureHeight + 1);
+			texture.SetData(file.pixelData);
 			
 			var animation = new AnimationData();
 			
@@ -45,7 +47,7 @@ namespace Lens.assets {
 					var newFrame = new AnimationFrame
 					{
 						Duration = frame.Duration,
-						Texture = new TextureRegion(file.Texture, new Rectangle(j * file.Width, i * file.Height, file.Width, file.Height))
+						Texture = new TextureRegion(texture, new Rectangle(j * file.Width, i * file.Height, file.Width, file.Height))
 					};
 
 					newFrame.Bounds = newFrame.Texture.Source;
@@ -58,7 +60,7 @@ namespace Lens.assets {
 			
 			foreach (var slice in file.Slices)
 			{
-				animation.Slices[slice.Name] = new TextureRegion(file.Texture, new Rectangle(slice.OriginX, slice.OriginY, slice.Width, slice.Height));
+				animation.Slices[slice.Name] = new TextureRegion(texture, new Rectangle(slice.OriginX, slice.OriginY, slice.Width, slice.Height));
 			}
 			
 			foreach (var tag in file.Animations.Values) {
@@ -84,7 +86,7 @@ namespace Lens.assets {
 			}
 
 
-			animation.Texture = file.Texture;
+			animation.Texture = texture;
 			return animation;
 		}
 
