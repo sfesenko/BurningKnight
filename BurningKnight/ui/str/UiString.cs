@@ -46,12 +46,12 @@ namespace BurningKnight.ui.str {
 	public class UiString : Entity {
 		private string label;
 		private BitmapFont font;
-		private List<Glyph> glyphs = new List<Glyph>();
-		private List<GlyphEffect> effects = new List<GlyphEffect>();
-		private List<StrRenderer> renderers = new List<StrRenderer>();
+		private List<Glyph> glyphs = [];
+		private List<GlyphEffect> effects = [];
+		private List<StrRenderer> renderers = [];
 		private float progress;
 		private int lastChar;
-		public float FinalWidth;
+		protected float FinalWidth;
 		private float finalHeight;
 
 		public float Delay;
@@ -65,8 +65,8 @@ namespace BurningKnight.ui.str {
 		public EventFired EventFired;
 		public CharTyped CharTyped;
 		public Action<Vector2, int> Renderer;
-		public Dictionary<string, object> Variables = new Dictionary<string, object>();
-		public List<TextureRegion> Icons = new List<TextureRegion>();
+		public readonly Dictionary<string, object> Variables = new();
+		public readonly List<TextureRegion> Icons = [];
 
 		public void SetVariable(string id, object o) {
 			Variables[id] = o;
@@ -122,7 +122,7 @@ namespace BurningKnight.ui.str {
 				e.End = builder.Length;
 				e.Closed = true;
 			} else {
-				var ef = (GlyphEffect) Activator.CreateInstance(typeof(T));
+				var ef = Activator.CreateInstance<T>();
 
 				ef.Start = builder.Length;
 				effects.Add(ef);
@@ -136,15 +136,142 @@ namespace BurningKnight.ui.str {
 			
 			StartTyping();
 
+			var (builder, events) = CalculateLabel(parsingToken: false);
+
+			label = builder.ToString();
+			builder.Clear();
+			var spaceWidth = (int) (font.MeasureString("a a").Width - font.MeasureString("aa").Width);
+
+			var glp = font.GetGlyphs(label);
+
+			if (WidthLimit > 0) {
+				var k = 0;
+				var lastSpace = 0;
+				var sinceLastSpace = 0;
+				var sinceLast = 0;
+				var width = 0;
+				var first = true;
+				var i = 0;
+				
+				foreach (var g in glp) {
+					var c = label[k];
+					var w = 0;
+
+					switch (c)
+					{
+						case ' ':
+							lastSpace = k;
+							sinceLastSpace = 0;
+							w = spaceWidth;
+							break;
+						case '\n':
+							sinceLast = 0;
+							sinceLastSpace = 0;
+							width = 0;
+							break;
+						default:
+							// null checks for missing font glyphs
+							w = g.Character?.TextureRegion?.Width ?? 8;
+							break;
+					}
+
+					var hadIcon = false;
+					
+					if (renderers.Count > 0) {
+						foreach (var r in renderers) {
+							if (r.Where == i && r is IconRenderer ir) {
+								w += ir.GetWidth(this) - spaceWidth;
+								hadIcon = true;
+							}
+						}
+					}
+					
+					i++;
+
+					if (c != '\n' || hadIcon) {
+						sinceLast += w;
+						width += w;
+
+						if (c != ' ') {
+							sinceLastSpace += w;
+						}
+					}
+
+					builder.Append(c);
+					
+					if (width >= WidthLimit) {
+						if (first) {
+							WidthLimit = width - sinceLastSpace - spaceWidth;
+							first = false;
+						}
+
+						width -= sinceLast;
+						
+						sinceLast = width;
+						builder[lastSpace] = '\n';
+					}
+
+					k++;
+				}
+
+				label = builder.ToString();
+			}
+			
+			glp = font.GetGlyphs(label);
+			var size = font.MeasureString(label);
+
+			FinalWidth = size.Width;
+			finalHeight = size.Height - 4;
+
+			var j = 0;
+			var ww = 0;
+
+			foreach (var g in glp) {
+				var gl = new Glyph {
+					G = g
+				};
+				
+				if (label[j] == '\n') {
+					ww = 0;
+				}
+				
+				gl.G.Position.X += ww;
+				
+				if (renderers.Count > 0) {
+					foreach (var r in renderers) {
+						if (r.Where == j && r is IconRenderer ir) {
+							var v = ir.GetWidth(this) - spaceWidth;
+							ww += v;
+							FinalWidth += v;
+						}
+					}
+				}
+
+				gl.Reset();
+				glyphs.Add(gl);
+
+				for (var i = events.Count - 1; i >= 0; i--) {
+					var e = events[i];
+
+					if (e.I == j) {
+						gl.Events.Add(e);
+						events.RemoveAt(i);
+					}
+				}
+
+				j++;
+			}
+		}
+
+		private (StringBuilder, List<GlyphEvent>) CalculateLabel(bool parsingToken)
+		{
 			var builder = new StringBuilder();
-			var token = new StringBuilder();
-			var lc = '\0';
-			var parsingToken = false;
 			var events = new List<GlyphEvent>();
 
-			for (var i = 0; i < label.Length; i++) {
-				var c = label[i];
-
+			var token = new StringBuilder();
+			var lc = '\0';
+			foreach (var c in label)
+			{
 				if (parsingToken) {
 					if (c == ']') {
 						parsingToken = false;
@@ -375,129 +502,10 @@ namespace BurningKnight.ui.str {
 					e.End = builder.Length;
 				}
 			}
-			
-			label = builder.ToString();
-			builder.Clear();
-			var glp = font.GetGlyphs(label);
-			var spaceWidth = (int) (font.MeasureString("a a").Width - font.MeasureString("aa").Width);
 
-			if (WidthLimit > 0) {
-				var k = 0;
-				var lastSpace = 0;
-				var sinceLastSpace = 0;
-				var sinceLast = 0;
-				var width = 0;
-				var first = true;
-				var i = 0;
-				
-				foreach (var g in glp) {
-					var c = label[k];
-					var w = 0;
-
-					if (c == ' ') {
-						lastSpace = k;
-						sinceLastSpace = 0;
-						w = spaceWidth;
-					} else if (c == '\n') {
-						sinceLast = 0;
-						sinceLastSpace = 0;
-						width = 0;
-					} else {
-						w = g.Character.TextureRegion.Width;
-					}
-
-					var hadIcon = false;
-					
-					if (renderers.Count > 0) {
-						foreach (var r in renderers) {
-							if (r.Where == i) {
-								if (r is IconRenderer ir) {
-									w += ir.GetWidth(this) - spaceWidth;
-									hadIcon = true;
-								}
-							}
-						}
-					}
-					
-					i++;
-
-					if (c != '\n' || hadIcon) {
-						sinceLast += w;
-						width += w;
-
-						if (c != ' ') {
-							sinceLastSpace += w;
-						}
-					}
-
-					builder.Append(c);
-					
-					if (width >= WidthLimit) {
-						if (first) {
-							WidthLimit = width - sinceLastSpace - spaceWidth;
-							first = false;
-						}
-
-						width -= sinceLast;
-						
-						sinceLast = width;
-						builder[lastSpace] = '\n';
-					}
-
-					k++;
-				}
-
-				label = builder.ToString();
-			}
-			
-			glp = font.GetGlyphs(label);
-			var size = font.MeasureString(label);
-
-			FinalWidth = size.Width;
-			finalHeight = size.Height - 4;
-
-			var j = 0;
-			var ww = 0;
-
-			foreach (var g in glp) {
-				var gl = new Glyph {
-					G = g
-				};
-				
-				if (label[j] == '\n') {
-					ww = 0;
-				}
-				
-				gl.G.Position.X += ww;
-				
-				if (renderers.Count > 0) {
-					foreach (var r in renderers) {
-						if (r.Where == j) {
-							if (r is IconRenderer ir) {
-								var v = ir.GetWidth(this) - spaceWidth;
-								ww += v;
-								FinalWidth += v;
-							}
-						}
-					}
-				}
-
-				gl.Reset();
-				glyphs.Add(gl);
-
-				for (var i = events.Count - 1; i >= 0; i--) {
-					var e = events[i];
-
-					if (e.I == j) {
-						gl.Events.Add(e);
-						events.RemoveAt(i);
-					}
-				}
-
-				j++;
-			}
+			return (builder, events);
 		}
-		
+
 		public void Stop() {
 			Paused = true;
 		}
