@@ -8,17 +8,14 @@ using Lens.util.math;
 using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.item {
-	public class ItemGraphicsComponent : SliceComponent {
+	public class ItemGraphicsComponent(string slice) : SliceComponent(CommonAse.Items, slice)
+	{
 		public const float FlashSize = 0.025f;
 		public const int ScourgedColorId = 48;
 		public static Color MaskedColor = new Color(0f, 0f, 0f, 0.75f);
 		public static Vector4 ScourgedColor = Palette.Default[ScourgedColorId].ToVector4();
 		
-		public float T;
-		
-		public ItemGraphicsComponent(string slice) : base(CommonAse.Items, slice) {
-			T = Rnd.Float(32f);
-		}
+		public float T = Rnd.Float(32f);
 
 		public override void Init() {
 			base.Init();

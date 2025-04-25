@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Lens.entity;
 using Microsoft.Xna.Framework;
 
 namespace Lens.util.math {
 	public static class Rnd {
-		private static System.Random random = new System.Random(Guid.NewGuid().GetHashCode());
+		private static Random random = new(Guid.NewGuid().GetHashCode());
 		private static string seed;
 		private static int intSeed;
 
-		public static System.Random Generator => random;
+		public static Random Generator => random;
 		
 		public static string Seed {
 			get => seed;
@@ -66,42 +67,28 @@ namespace Lens.util.math {
 
 		public static Vector2 Vector(float min, float max) {
 			if (min > max) {
-				var t = min;
-				
-				min = max;
-				max = t;
+				(min, max) = (max, min);
 			}
 			
 			return new Vector2(Float(min, max), Float(min, max));
 		}
 
-		public static int Int() {
-			return random.Next();
-		}
-		
 		public static int Int(int max) {
 			return random.Next(0, max);
 		}
 		
 		public static int Int(int min, int max) {
 			if (min > max) {
-				var t = min;
-				
-				min = max;
-				max = t;
+				(min, max) = (max, min);
 			}
 		
 			return random.Next(min, max);
 		}
 
 		public static int IntCentred(int min, int max) {
-			if (min > max) {
-				var t = min;
-				
-				min = max;
-				max = t;
-			}
-			
+			if (min <= max) return (int)((Int(min, max) + Int(min, max)) / 2f - 0.1f);
+			(min, max) = (max, min);
+
 			return (int) ((Int(min, max) + Int(min, max)) / 2f - 0.1f);
 		}
 
@@ -114,13 +101,9 @@ namespace Lens.util.math {
 		}
 
 		public static float Float(float min, float max) {
-			if (min > max) {
-				var t = min;
-				
-				min = max;
-				max = t;
-			}
-			
+			if (!(min > max)) return (float)(random.NextDouble() * (max - min) + min);
+			(min, max) = (max, min);
+
 			return (float) (random.NextDouble() * (max - min) + min);
 		}
 
@@ -159,11 +142,7 @@ namespace Lens.util.math {
 
 		public static int Chances(float[] chances) {
 			var length = chances.Length;
-			float sum = 0;
-
-			foreach (var chance in chances) {
-				sum += chance;
-			}
+			float sum = chances.Sum();
 
 			float value = Float(sum);
 			sum = 0;

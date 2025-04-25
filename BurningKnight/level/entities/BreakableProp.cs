@@ -7,7 +7,6 @@ using BurningKnight.entity.events;
 using BurningKnight.entity.item;
 using BurningKnight.entity.item.stand;
 using BurningKnight.ui.editor;
-using Lens;
 using Lens.entity;
 using Lens.util.camera;
 using Lens.util.tween;
@@ -125,7 +124,6 @@ namespace BurningKnight.level.entities {
 
 				Particles.BreakSprite(Area, GetComponent<SliceComponent>().Sprite, Position);
 				Camera.Instance.Shake(2f);
-				Engine.Instance.Freeze = 1f;
 			}
 		}
 

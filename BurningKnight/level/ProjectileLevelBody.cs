@@ -6,7 +6,6 @@ using BurningKnight.entity.projectile;
 using BurningKnight.level.tile;
 using BurningKnight.physics;
 using BurningKnight.util.geometry;
-using Lens;
 using Lens.entity;
 using Lens.util.camera;
 using Microsoft.Xna.Framework;
@@ -64,8 +63,6 @@ namespace BurningKnight.level {
 					part.Position = new Vector2(x * 16 + 8, y * 16 + 8);
 					Level.Area.Add(part);
 				}
-		
-				Engine.Instance.Freeze = 0.5f;
 
 				return true;
 			}

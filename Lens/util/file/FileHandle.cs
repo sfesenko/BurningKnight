@@ -4,19 +4,14 @@ using Lens.assets;
 
 namespace Lens.util.file;
 
-public class FileHandle {
-	private string path;
+public class FileHandle(string path)
+{
 	public string FullPath => Path.GetFullPath(path);
 	public string NameWithoutExtension => Path.GetFileNameWithoutExtension(path);
 	public string Name => Path.GetFileName(path);
 	public string Extension => Path.GetExtension(path);
-	public string ParentName => Path.GetDirectoryName(path);
-	public FileHandle Parent => new FileHandle(ParentName);
-	public long LastModified => File.GetLastWriteTime(FullPath).ToFileTime();
-
-	public FileHandle(string path) {
-		this.path = path;
-	}
+	private string ParentName => Path.GetDirectoryName(path);
+	public FileHandle Parent => new(ParentName);
 
 	public static FileHandle FromRoot(string path) {
 		return new FileHandle(Assets.Root + path);
@@ -28,10 +23,6 @@ public class FileHandle {
 
 	public void MakeDirectory() {
 		Directory.CreateDirectory(path);
-	}
-
-	public void MakeFile() {
-		File.Create(path);
 	}
 
 	public string ReadAll() {
@@ -46,37 +37,11 @@ public class FileHandle {
 		}
 	}
 
-	public FileHandle FindFile(string name) {
-		name = Path.GetFileName(name);
-		var names = ListFiles();
-
-		foreach (var id in names) {
-			if (Path.GetFileName(id) == name) {
-				return new FileHandle(id);
-			}
-		}
-
-		return null;
-	}
-
-	public FileHandle FindDirectory(string name) {
-		name = Path.GetFileName(name);
-		var names = ListDirectories();
-
-		foreach (var id in names) {
-			if (Path.GetFileName(id) == name) {
-				return new FileHandle(id);
-			}
-		}
-
-		return null;
-	}
-
-	public string[] ListFiles() {
+	private string[] ListFiles() {
 		return Directory.GetFiles(path);
 	}
 
-	public string[] ListDirectories() {
+	private string[] ListDirectories() {
 		return Directory.GetDirectories(path);
 	}
 
@@ -88,7 +53,7 @@ public class FileHandle {
 		return List(ListDirectories());
 	}
 
-	protected static FileHandle[] List(string[] names) {
+	private static FileHandle[] List(string[] names) {
 		var handles = new FileHandle[names.Length];
 
 		for (int i = 0; i < names.Length; i++) {

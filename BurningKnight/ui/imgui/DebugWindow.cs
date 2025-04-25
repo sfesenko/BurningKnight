@@ -51,12 +51,8 @@ namespace BurningKnight.ui.imgui {
 				ImGui.Checkbox("Enable Clip", ref pr.EnableClip);
 			}
 
-			if (Input.Blocked > 0) {
-				ImGui.Text("Input blocked");
-			} else {
-				ImGui.Text("Input free");
-			}
-			
+			ImGui.Text(Input.Blocked > 0 ? "Input blocked" : "Input free");
+
 			ImGui.Text($"Multiplayer: {InGameState.Multiplayer}");
 			ImGui.Text($"Camera targets: {Camera.Instance?.Targets?.Count ?? 0}");
 
@@ -91,9 +87,9 @@ namespace BurningKnight.ui.imgui {
 				}
 
 				float mem;
-
-				using (var data = Process.GetCurrentProcess()) {
-					mem = data.PrivateMemorySize64 / (1024f * 1024f);
+				using (var data = Process.GetCurrentProcess())
+				{
+					mem = data.PrivateMemorySize64 / (1024 * 1024f);
 				}
 				
 				ImGui.Text($"Memory: {mem} mb");
@@ -110,7 +106,7 @@ namespace BurningKnight.ui.imgui {
 						memUsage[i - 1] = memUsage[i];
 					}
 
-					memUsage[memUsage.Length - 1] = mem;
+					memUsage[^1] = mem;
 				}
 				
 				ImGui.PlotHistogram("Memory", ref memUsage[0], memUsage.Length, 0, null, 0, 2048, new Vector2(300, 100));
@@ -125,7 +121,7 @@ namespace BurningKnight.ui.imgui {
 						fps[i - 1] = fps[i];
 					}
 
-					fps[fps.Length - 1] = Engine.Instance.Counter.AverageFramesPerSecond;
+					fps[^1] = Engine.Instance.Counter.AverageFramesPerSecond;
 				}
 
 				ImGui.PlotHistogram("FPS", ref fps[0], fps.Length, 0, null, 0, 60);
@@ -139,7 +135,7 @@ namespace BurningKnight.ui.imgui {
 
 					var nextValue = 1.0; // cpuCounter.NextValue();
 					
-					cpuUsage[cpuUsage.Length - 1] = (float) Math.Round(nextValue);
+					cpuUsage[^1] = (float) Math.Round(nextValue);
 				}
 
 				ImGui.PlotHistogram("CPU", ref cpuUsage[0], cpuUsage.Length, 0, null, 0, 100);

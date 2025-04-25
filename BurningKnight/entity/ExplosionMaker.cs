@@ -89,7 +89,6 @@ namespace BurningKnight.entity {
 			
 			Engine.Instance.Split = 1f;
 			Engine.Instance.Flash = 1f;
-			Engine.Instance.Freeze = 1f;
 
 			var damager = whoHurts;
 

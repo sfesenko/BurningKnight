@@ -18,7 +18,6 @@ using BurningKnight.save;
 using BurningKnight.state;
 using BurningKnight.ui.editor;
 using BurningKnight.util;
-using Lens;
 using Lens.entity;
 using Lens.entity.component.logic;
 using Lens.graphics;
@@ -186,7 +185,6 @@ namespace BurningKnight.entity.creature {
 		}
 
 		protected virtual void CreateGore(DiedEvent d) {
-			Engine.Instance.Freeze = 0.5f;
 			Camera.Instance.ShakeMax(5);
 			
 

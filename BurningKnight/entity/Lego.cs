@@ -26,17 +26,16 @@ namespace BurningKnight.entity {
 			AddComponent(new SensorBodyComponent(0, 0, Width, Height));
 		}
 
-		public override bool HandleEvent(Event e) {
-			if (e is CollisionStartedEvent cse) {
-				if (cse.Entity is Creature c && !c.IsFriendly()) {
-					if (c.GetComponent<HealthComponent>().ModifyHealth(-10, this, DamageType.Custom)) {
-						AnimationUtil.Ash(Center);
-						Done = true;
-						Camera.Instance.Shake(5);
-					}
-				}
+		public override bool HandleEvent(Event e)
+		{
+			if (e is CollisionStartedEvent { Entity: Creature c } && !c.IsFriendly() &&
+			    c.GetComponent<HealthComponent>().ModifyHealth(-10, this, DamageType.Custom))
+			{
+				AnimationUtil.Ash(Center);
+				Done = true;
+				Camera.Instance.Shake(5);
 			}
-			
+
 			return base.HandleEvent(e);
 		}
 	}

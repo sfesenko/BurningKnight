@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using BurningKnight.assets;
 using BurningKnight.assets.achievements;
@@ -54,7 +55,7 @@ using Timer = Lens.util.timer.Timer;
 
 namespace BurningKnight.state {
 	public class InGameState : GameState, Subscriber {
-		public static bool ShouldHide => Engine.Instance.State is InGameState st && st.Paused && !st.InStats && st.currentBack != st.graphicsBack;
+		public static bool ShouldHide => Engine.Instance.State is InGameState { Paused: true, InStats: false } st && st.currentBack != st.graphicsBack;
 		
 		public static bool SkipPause;
 		public static Action<UiTable, string, string, int, Action> SetupLeaderboard;
@@ -92,7 +93,7 @@ namespace BurningKnight.state {
 		public bool Died;
 		private float saveTimer;
 		private SaveIndicator indicator;
-		private SaveLock saveLock = new SaveLock();
+		private SaveLock saveLock = new();
 
 		private Painting painting;
 		private EditorWindow editor;
@@ -639,17 +640,21 @@ namespace BurningKnight.state {
 				if (Achievements.AchievementBuffer.Count > 0) {
 					var id = Achievements.AchievementBuffer[0];
 				
-					var a = new UiAchievement(id);
-					a.Y = Display.UiHeight + 60;
+					var a = new UiAchievement(id)
+					{
+						Y = Display.UiHeight + 60,
+						Right = Display.UiWidth - 8
+					};
 					TopUi.Add(a);
-					a.Right = Display.UiWidth - 8;
 				} else if (Achievements.ItemBuffer.Count > 0) {
 					var id = Achievements.ItemBuffer[0];
 				
-					var a = new UiAchievement(id, true);
-					a.Y = Display.UiHeight + 60;
+					var a = new UiAchievement(id, true)
+					{
+						Y = Display.UiHeight + 60,
+						Right = Display.UiWidth - 8
+					};
 					TopUi.Add(a);
-					a.Right = Display.UiWidth - 8;
 				}
 			}
 			
@@ -686,7 +691,7 @@ namespace BurningKnight.state {
 				}
 			}
 
-			if (credits != null && credits.Enabled) {
+			if (credits is { Enabled: true }) {
 				if (lastCreditsLabel.Y <= Display.UiHeight * 0.75f) {
 					if (!stopped) {
 						stopped = true;
@@ -732,7 +737,7 @@ namespace BurningKnight.state {
 						var mn = UiButton.LastId;
 						
 						foreach (var b in TopUi.Tagged[Tags.Button]) {
-							var bt = ((UiButton) b);
+							var bt = (UiButton) b;
 
 							if (bt.Active && bt.IsOnScreen() && bt.Id > UiButton.Selected && bt.Id < mn) {
 								mn = bt.Id;
@@ -820,11 +825,7 @@ namespace BurningKnight.state {
 				Weather.Update(dt);
 
 				if (Run.Depth == 0) {
-					var night = Weather.IsNight;
-
-					if (Events.Halloween) {
-						night = true;
-					}
+					var night = Weather.IsNight || Events.Halloween;
 
 					if (night != wasNight) {
 						wasNight = night;
@@ -1007,15 +1008,14 @@ namespace BurningKnight.state {
 			var player = LocalPlayer.Locate(Area);
 			var room = player.GetComponent<RoomComponent>().Room;
 
-			foreach (var r in Area.Tagged[Tags.Room]) {
-				if (r != room && ((Room) r).Type == type) {
-					player.Center = r.Center;
-					return;
-				}
+			foreach (var r in Area.Tagged[Tags.Room].Where(r => r != room && ((Room) r).Type == type))
+			{
+				player.Center = r.Center;
+				return;
 			}
 		}
 
-		public static bool ToolsEnabled = BK.Version.Dev;
+		public static bool ToolsEnabled = Engine.Version.Dev;
 		
 		private void UpdateDebug(float dt) {
 			if (BK.Version.Dev && Assets.ImGuiEnabled && ((Input.Keyboard.WasPressed(Keys.Tab) && Input.Keyboard.IsDown(Keys.LeftControl)))) {
@@ -1297,16 +1297,14 @@ namespace BurningKnight.state {
 			
 			if (Settings.ShowFps) {
 				var c = Engine.Instance.Counter.AverageFramesPerSecond;
-				Color color;
 
-				if (c >= 55) {
-					color = new Color(0f, 1f, 0f, 1f);
-				} else if (c >= 45) {
-					color = new Color(1f, 1f, 0f, 1f);
-				} else {
-					color = new Color(1f, 0f, 0f, 1f);
-				}
-				
+				var color = c switch
+				{
+					>= 55 => Color.Green,
+					>= 45 => Color.Yellow,
+					_ => Color.Red
+				};
+
 				Graphics.Color = color;
 				var s = $"{c}";
 				Graphics.Print(s, Font.Small, x, 1);
@@ -2328,9 +2326,10 @@ namespace BurningKnight.state {
 			
 			graphicsSettings.Add(new UiChoice {
 				Name = "quality",
-				Options = new [] {
+				Options =
+				[
 					"normal", "potato"
-				},
+				],
 				
 				Option = Settings.LowQuality ? 1 : 0,
 				RelativeX = sx,
@@ -2477,13 +2476,13 @@ namespace BurningKnight.state {
 			audioSettings.Enabled = false;
 		}
 
-		public void AddInputSettings() {
+		private void AddInputSettings() {
 			pauseMenu.Add(inputSettings = new UiPane {
 				RelativeX = Display.UiWidth * 2	
 			});
 			
 			var sx = Display.UiWidth * 0.5f;
-			var space = 20f;
+			const float space = 20f;
 			var sy = Display.UiHeight * 0.5f - space * 0.5f;
 			
 			inputSettings.Add(new UiLabel {
@@ -2502,7 +2501,7 @@ namespace BurningKnight.state {
 				RelativeX = sx,
 				RelativeCenterY = sy - space,
 				
-				Options = new [] {"none"},
+				Options = ["none"],
 				
 				Click = c => {
 					// var i = ((UiChoice) c).Option;

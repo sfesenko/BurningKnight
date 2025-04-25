@@ -54,9 +54,6 @@ namespace Lens
         private float time;
         public float Speed = 1;
         public float Flash;
-        public float Freeze;
-        public static float FlashModifier = 1;
-        public static float FreezeModifier = 1;
 
         public bool Focused;
         public Color FlashColor = ColorUtils.WhiteColor;
@@ -74,14 +71,7 @@ namespace Lens
             {
                 if (value != null && !RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
                 {
-                    try
-                    {
-                        Window.Title = value;
-                    }
-                    catch (Exception e)
-                    {
-                        Log.Error(e);
-                    }
+                    Window.Title = value;
                 }
             }
         }
@@ -227,8 +217,7 @@ namespace Lens
 
                 State?.Update(FixedUpdateTime);
             }
-
-            Counter.Update(dt);
+            
             UpdateTime = DateTime.Now.Millisecond - t;
         }
 
@@ -259,6 +248,7 @@ namespace Lens
             var t = DateTime.Now.Millisecond;
             StateRenderer.Render();
             base.Draw(gameTime);
+            Counter.Update(gameTime);
             RenderTime = DateTime.Now.Millisecond - t;
         }
 
@@ -286,12 +276,9 @@ namespace Lens
 
         public float GetScreenHeight()
         {
-            if (Graphics.IsFullScreen)
-            {
-                return GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
-            }
-
-            return Math.Max(Display.Height, Graphics.PreferredBackBufferHeight);
+            return Graphics.IsFullScreen 
+                ? GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height 
+                : Math.Max(Display.Height, Graphics.PreferredBackBufferHeight);
         }
 
         public void UpdateView()

@@ -9,14 +9,16 @@ namespace Lens.util {
 		public static Vector2 InvertXY = new Vector2(-1, -1);
 		public static Vector2 DoubleScale = new Vector2(2);
 		
-		public static Vector2[] Directions = {
+		public static readonly Vector2[] Directions =
+		[
 			new Vector2(-1, 0),
 			new Vector2(1, 0),
 			new Vector2(0, 1),
 			new Vector2(0, -1)
-		};
+		];
 		
-		public static Vector2[] AllDirections = {
+		public static readonly Vector2[] AllDirections =
+		[
 			new Vector2(-1, 0),
 			new Vector2(1, 0),
 			new Vector2(0, 1),
@@ -25,7 +27,7 @@ namespace Lens.util {
 			new Vector2(-1, 1),
 			new Vector2(1, 1),
 			new Vector2(1, -1)
-		};
+		];
 		
 		public static Vector2[] EntityDirections = {
 			new Vector2(-1, 0),
@@ -54,9 +56,7 @@ namespace Lens.util {
 		
 		public static int Clamp(int Min, int Max, int Val) {
 			if (Min > Max) {
-				var tmp = Min;
-				Min = Max;
-				Max = tmp;
+				(Min, Max) = (Max, Min);
 			}
 			
 			return Math.Max(Min, Math.Min(Max, Val));
@@ -141,11 +141,7 @@ namespace Lens.util {
 				return "I" + ToRoman(number - 1);
 			}
 
-			if (number == 1) {
-				return "I";
-			}
-
-			return "???";
+			return number == 1 ? "I" : "???";
 		}
 	}
 }

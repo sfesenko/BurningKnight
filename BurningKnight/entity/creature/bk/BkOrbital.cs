@@ -1,15 +1,11 @@
 using BurningKnight.entity.component;
 using BurningKnight.entity.creature.mob;
-using BurningKnight.entity.creature.mob.boss;
-using BurningKnight.entity.creature.mob.desert;
-using BurningKnight.entity.creature.mob.prefabs;
 using BurningKnight.entity.projectile;
 using BurningKnight.entity.projectile.controller;
 using BurningKnight.level;
 using Lens.entity;
 using Lens.util;
 using Lens.util.tween;
-using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.creature.bk {
 	public class BkOrbital : Mob {

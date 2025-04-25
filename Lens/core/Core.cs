@@ -1,39 +1,29 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace Lens.Core {
-	public class Core {
-		public GameWindow Window;
-		public GraphicsDeviceManager Graphics;
+namespace Lens.Core;
+
+public class Core {
+	protected GameWindow Window;
+	protected GraphicsDeviceManager Graphics;
 		
-		public virtual void Init(int width, int height, bool fullscreen) {
+	public virtual void Init(int width, int height, bool fullscreen) {
 			
-		}
+	}
 
-		public virtual void SetWindowed(int width, int height) {
+	public virtual void SetWindowed(int width, int height) {
 			
-		}
+	}
 
-		public virtual void SetFullscreen() {
+	public virtual void SetFullscreen() {
 			
-		}
+	}
 
-		public static Core SelectCore(GameWindow Window, GraphicsDeviceManager Graphics) {
-			Core core;
-			
-#if NSWITCH
-			core = SwitchCore();
-#elif XBOXONE
-			core = new XBoxCore();
-#elif PS4
-			core = new PS4Core();
-#else
-			core = new DesktopCore();
-#endif
+	public static Core SelectCore(GameWindow Window, GraphicsDeviceManager Graphics) {
+		Core core = new DesktopCore();
 
-			core.Window = Window;
-			core.Graphics = Graphics;
+		core.Window = Window;
+		core.Graphics = Graphics;
 
-			return core;
-		}
+		return core;
 	}
 }

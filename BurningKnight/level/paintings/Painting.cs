@@ -171,7 +171,6 @@ namespace BurningKnight.level.paintings {
 				
 				Particles.BreakSprite(Area, GetComponent<InteractableSliceComponent>().Sprite, Position, Depth);
 				Camera.Instance.Shake(2f);
-				Engine.Instance.Freeze = 1f;
 			}
 		}
 

@@ -12,9 +12,7 @@ namespace Lens.util.file {
 		public int Position {
 			get => position;
 
-			set {
-				position = Math.Max(0, Math.Min(read.Length - 1, value));
-			}
+			set => position = Math.Max(0, Math.Min(read.Length - 1, value));
 		}
 		
 		public FileReader(string path) {

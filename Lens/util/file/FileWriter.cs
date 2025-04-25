@@ -6,7 +6,7 @@ using BinaryWriter = System.IO.BinaryWriter;
 namespace Lens.util.file {
 	public class FileWriter {
 		private BinaryWriter stream;
-		private List<byte> cache = new List<byte>();
+		private List<byte> cache = [];
 
 		public int CacheSize => cache.Count;
 		public bool Cache;
@@ -15,7 +15,7 @@ namespace Lens.util.file {
 			OpenStream(path, append);
 		}
 
-		protected virtual void OpenStream(string path, bool append) {
+		private void OpenStream(string path, bool append) {
 			stream = new BinaryWriter(File.Open(path, append ? FileMode.Append : FileMode.Create, FileAccess.ReadWrite, FileShare.ReadWrite));
 		}
 
@@ -27,7 +27,7 @@ namespace Lens.util.file {
 			cache.Clear();
 		}
 
-		protected virtual void Write(byte value) {
+		protected void Write(byte value) {
 			stream.Write(value);
 		}
 		

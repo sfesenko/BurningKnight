@@ -127,8 +127,6 @@ namespace BurningKnight {
 			Language = Locale.PrefferedClientLanguage;
 			
 			ShakeComponent.Modifier = Screenshake;
-			Engine.FreezeModifier = FreezeFrames;
-			Engine.FlashModifier = FlashFrames;
 			Engine.Flashes = Flashes;
 		}
 		
@@ -166,8 +164,6 @@ namespace BurningKnight {
 			Locale.Load(Language);
 
 			ShakeComponent.Modifier = Screenshake;
-			Engine.FreezeModifier = FreezeFrames;
-			Engine.FlashModifier = FlashFrames;
 			Engine.Flashes = Flashes;
 		}
 

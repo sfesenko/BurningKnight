@@ -1,32 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Xna.Framework;
 
-namespace Lens.util {
-	public class FrameCounter {
-		public const int MaximumSamples = 30;
+namespace Lens.util;
 
-		private Queue<float> buffer = new Queue<float>();
+public class FrameCounter
+{
+    private const int MaximumSamples = 30;
 
-		public long TotalFrames { get; private set; }
-		public float TotalSeconds { get; private set; }
-		public int AverageFramesPerSecond { get; private set; }
-		public int CurrentFramesPerSecond { get; private set; }
+    private readonly Queue<int> _buffer = new();
 
-		public void Update(float deltaTime) {
-			CurrentFramesPerSecond = (int) Math.Round(1.0f / deltaTime);
+    public int AverageFramesPerSecond { get; private set; }
+    public int CurrentFramesPerSecond { get; private set; }
 
-			buffer.Enqueue(CurrentFramesPerSecond);
+    public void Update(GameTime gt)
+    {
+        CurrentFramesPerSecond = (int)Math.Round(1f / gt.ElapsedGameTime.TotalSeconds);
 
-			if (buffer.Count > MaximumSamples) {
-				buffer.Dequeue();
-				AverageFramesPerSecond = (int) Math.Round(buffer.Average(i => i));
-			} else {
-				AverageFramesPerSecond = CurrentFramesPerSecond;
-			}
+        _buffer.Enqueue(CurrentFramesPerSecond);
 
-			TotalFrames++;
-			TotalSeconds += deltaTime;
-		}
-	}
+        if (_buffer.Count > MaximumSamples)
+        {
+            _buffer.Dequeue();
+        }
+
+        AverageFramesPerSecond = (int)Math.Round(_buffer.Average(i => i));
+    }
 }

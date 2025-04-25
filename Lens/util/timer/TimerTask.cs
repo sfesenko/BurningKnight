@@ -1,17 +1,13 @@
 ﻿using System;
 
-namespace Lens.util.timer {
-	public class TimerTask {
-		public float Delay;
-		public Action Fn;
+namespace Lens.util.timer;
 
-		public TimerTask(Action fn, float delay) {
-			Fn = fn;
-			Delay = delay;
-		}
-		
-		public void Cancel() {
-			Timer.Cancel(this);
-		}
+public class TimerTask(Action fn, float delay)
+{
+	public float Delay = delay;
+	public readonly Action Fn = fn;
+
+	public void Cancel() {
+		Timer.Cancel(this);
 	}
 }
