@@ -31,10 +31,11 @@ namespace BurningKnight.entity.creature.npc {
 		public const string Nurse = "nurse";
 		public const string Elon = "elon";
 
-		public static string[] AllNpc = {
+		public static readonly string[] AllNpc =
+		[
 			AccessoryTrader, ActiveTrader, WeaponTrader, HatTrader, Mike, Snek,
 			Boxy, Roger, Gobetta, Vampire, TrashGoblin, Duck, Nurse, Elon
-		};
+		];
 	
 		private float delay;
 		internal bool Hidden;

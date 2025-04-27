@@ -3,14 +3,10 @@ using Lens.entity;
 using Lens.entity.component;
 
 namespace BurningKnight.entity.component {
-	public class InteractDialogComponent : Component {
-		private string dialog;
+	public class InteractDialogComponent(string dialog) : Component
+	{
 		private bool started;
 		private Entity toStart;
-		
-		public InteractDialogComponent(string d) {
-			dialog = d;
-		}
 
 		public override void Init() {
 			base.Init();

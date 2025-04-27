@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using BurningKnight.entity.creature.npc;
 using BurningKnight.entity.creature.npc.dungeon;
@@ -7,7 +6,6 @@ using BurningKnight.level.entities;
 using BurningKnight.level.rooms.special;
 using BurningKnight.level.tile;
 using BurningKnight.save;
-using BurningKnight.util.geometry;
 using Lens.util.math;
 using Microsoft.Xna.Framework;
 

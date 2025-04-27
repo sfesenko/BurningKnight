@@ -165,14 +165,16 @@ namespace BurningKnight.assets.particle.custom {
 				return prt;
 			}
 			
-			var part = new TextParticle();
-			part.BottomCenter = where;
+			var part = new TextParticle
+			{
+				BottomCenter = where,
+				HasSign = hasSign,
+				Count = count,
+				Negative = minus,
+				Text = text
+			};
+
 			Engine.Instance.State.Ui.Add(part);
-			
-			part.HasSign = hasSign;
-			part.Count = count;
-			part.Negative = minus;
-			part.Text = text;
 
 			return part;
 		}

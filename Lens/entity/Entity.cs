@@ -80,7 +80,7 @@ namespace Lens.entity {
 		}
 
 		public Vector2 BottomCenter {
-			get => new Vector2(CenterX, Bottom);
+			get => new(CenterX, Bottom);
 			set {
 				X = value.X - Width / 2;
 				Y = value.Y - Height;

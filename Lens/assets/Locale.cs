@@ -6,20 +6,19 @@ using Lens.lightJson;
 using Lens.lightJson.Serialization;
 using Lens.util;
 using Lens.util.file;
-using Lens.util.math;
 
 namespace Lens.assets {
 	public class Locale {
 		public static Dictionary<string, string> Map;
 		
-		public static Dictionary<string, string> Fallback = new Dictionary<string, string>();
-		public static Dictionary<string, Dictionary<string, string>> Loaded = new Dictionary<string, Dictionary<string, string>>();
+		public static Dictionary<string, string> Fallback = new();
+		public static readonly Dictionary<string, Dictionary<string, string>> Loaded = new();
 		private static bool LoadedFallback;
 		
 		public static string Current;
 		public static string PrefferedClientLanguage = "en";
 
-		private static string[] quacks = { "quack", "QUACK", "quaaak", "qk" };
+		private static readonly string[] quacks = ["quack", "QUACK", "quaaak", "qk"];
 
 		private static void LoadRaw(string name, string path, bool backup = false) {
 			if (Loaded.TryGetValue(name, out var cached)) {
@@ -87,8 +86,8 @@ namespace Lens.assets {
 				LoadRaw(locale, $"Locales/{locale}.json");
 			}
 
-			if (Loaded.ContainsKey(locale)) {
-				Map = Loaded[locale];
+			if (Loaded.TryGetValue(locale, out var value)) {
+				Map = value;
 			}
 		}
 
@@ -127,11 +126,11 @@ namespace Lens.assets {
 		}
 
 		public static string Get(string key, bool eng = false) {
-			return !eng && Map.ContainsKey(key) ? Map[key] : GetEnglish(key);
+			return !eng && Map.TryGetValue(key, out var value) ? value : GetEnglish(key);
 		}
 		
 		public static string GetEnglish(string key) {
-			return Fallback.ContainsKey(key) ? Fallback[key] : key;
+			return Fallback.GetValueOrDefault(key, key);
 		}
 
 		public static bool Contains(string key) {

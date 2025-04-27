@@ -4,12 +4,13 @@ using BurningKnight.entity.creature.player;
 using BurningKnight.ui.dialog;
 using Lens.assets;
 using Lens.entity;
-using Lens.util.file;
 using Microsoft.Xna.Framework;
 using VelcroPhysics.Dynamics;
 
 namespace BurningKnight.entity.creature.npc.dungeon {
+	
 	public class Nurse : DungeonShopNpc {
+		
 		public override void AddComponents() {
 			base.AddComponents();
 			
@@ -28,16 +29,16 @@ namespace BurningKnight.entity.creature.npc.dungeon {
 		}
 
 		private bool Interact(Entity e) {
-			var c = e.GetComponent<HealthComponent>();
+			var health = e.GetComponent<HealthComponent>();
 			var d = GetComponent<DialogComponent>();
 
-			if (c.IsFull()) {
+			if (health.IsFull()) {
 				// Ya look pretty good
 				d.StartAndClose("nurse_0", 3);
 				return false;
 			}
 
-			var price = (int) (c.MaxHealth - c.Health) * 4;
+			var price = (int) (health.MaxHealth - health.Health) * 4;
 			var consumables = e.GetComponent<ConsumablesComponent>();
 
 			if (consumables.Coins < price) {
@@ -48,7 +49,7 @@ namespace BurningKnight.entity.creature.npc.dungeon {
 				return false;
 			}
 
-			c.ModifyHealth(c.MaxHealth, this);
+			health.ModifyHealth(health.MaxHealth, this);
 			TextParticle.Add(e, Locale.Get("coins"), price, true, true);
 			
 			d.StartAndClose("nurse_2", 5);
@@ -59,10 +60,13 @@ namespace BurningKnight.entity.creature.npc.dungeon {
 			return ShopNpc.Nurse;
 		}
 
-		public static void Place(Vector2 where, Area area) {
-			var nurse = new Nurse();
+		public static void Place(Vector2 where, Area area)
+		{
+			var nurse = new Nurse
+			{
+				BottomCenter = where + new Vector2(0, 8)
+			};
 			area.Add(nurse);
-			nurse.BottomCenter = where + new Vector2(0, 8);
 		}
 
 		public override bool ShouldCollide(Entity entity) {

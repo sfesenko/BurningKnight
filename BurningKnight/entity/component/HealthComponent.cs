@@ -110,23 +110,19 @@ namespace BurningKnight.entity.component {
 				return false;
 			}
 			
-			if (amount < 0) {
-				if (Entity.TryGetComponent<HeartsComponent>(out var hearts)) {
-					if (hearts.Total > 0) {
-						if (Unhittable || (PreventDamageInInvincibility && InvincibilityTimer > 0)) {
-							return false;
-						}
-
-						if (hearts.Hurt((int) Math.Round(amount), setter, type)) {
-							InvincibilityTimer = InvincibilityTimerMax;
-							TryToKill(setter, type);
-							LastModifiedHearts = true;
-							return true;
-						}
-						
-						return false;
-					}
+			if (amount < 0 && Entity.TryGetComponent<HeartsComponent>(out var hearts) && hearts.Total > 0) {
+				if (Unhittable || (PreventDamageInInvincibility && InvincibilityTimer > 0)) {
+					return false;
 				}
+
+				if (hearts.Hurt((int) Math.Round(amount), setter, type)) {
+					InvincibilityTimer = InvincibilityTimerMax;
+					TryToKill(setter, type);
+					LastModifiedHearts = true;
+					return true;
+				}
+						
+				return false;
 			}
 			
 			return SetHealth(health + (amount), setter, true, type);

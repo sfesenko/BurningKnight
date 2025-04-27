@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using Lens.graphics;
 using Lens.util;
-using Aseprite;
 using Microsoft.Xna.Framework.Content;
 
 namespace Lens.assets {
@@ -15,14 +13,11 @@ namespace Lens.assets {
 			get => modified;
 
 			set {
-				if (!modified && value) {
+				if (!modified && value)
+				{
 					modified = true;
 
-					try {
-						Engine.Instance.Window.Title = $"MODIFIED {Engine.Instance.Window.Title}";
-					} catch (Exception e) {
-						
-					}
+					Engine.Instance.Window.Title = $"MODIFIED {Engine.Instance.Window.Title}";
 				}
 			}
 		}
@@ -33,7 +28,7 @@ namespace Lens.assets {
 		public static bool LoadOriginalFiles = true;
 		public static bool LoadMusic = true;
 		public static bool LoadSfx = true;
-		public const bool Reload = false;
+		public const bool Reload = true;
 		public static bool LoadMods = false;
 #else
 		public static bool LoadOriginalFiles = false;
@@ -53,7 +48,7 @@ namespace Lens.assets {
 		public static string NearRoot => $"{Directory.GetCurrentDirectory()}/Content/";
 		
 		private static string[] folders;
-		private static List<FileSystemEventArgs> changed = new List<FileSystemEventArgs>();
+		private static List<FileSystemEventArgs> changed = [];
 		private static float lastUpdate;
 		
 		public static void Load(ref int progress) {

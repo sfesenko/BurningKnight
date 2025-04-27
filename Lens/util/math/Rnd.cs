@@ -7,39 +7,38 @@ using Microsoft.Xna.Framework;
 
 namespace Lens.util.math {
 	public static class Rnd {
-		private static Random random = new(Guid.NewGuid().GetHashCode());
 		private static string seed;
-		private static int intSeed;
 
-		public static Random Generator => random;
-		
+		public static Random Generator { get; private set; } = new(Guid.NewGuid().GetHashCode());
+
 		public static string Seed {
 			get => seed;
 
 			set {
 				seed = value;
-				intSeed = ParseSeed(seed);
-				random = new Random(intSeed);
+				IntSeed = ParseSeed(seed);
+				Generator = new Random(IntSeed);
 			}
 		}
 
-		public static int IntSeed => intSeed;
-		public static string SeedChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_";
-		
+		public static int IntSeed { get; private set; }
+
+		public const string SeedChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_";
+
 		static Rnd() {
 			Seed = GenerateSeed();
 			Log.Debug($"Random seed is {seed}");
 		}
-		
-		public static int ParseSeed(string seed) {
-			if (seed == null) {
+
+		private static int ParseSeed(string seed1) {
+			if (seed1 == null) {
 				return 0;
 			}
 			
 			var value = 0;
 			var i = 0;
 
-			foreach (var c in seed) {
+			foreach (var c in seed1) {
 				var index = SeedChars.IndexOf(c);
 
 				if (index == -1) {
@@ -74,7 +73,7 @@ namespace Lens.util.math {
 		}
 
 		public static int Int(int max) {
-			return random.Next(0, max);
+			return Generator.Next(0, max);
 		}
 		
 		public static int Int(int min, int max) {
@@ -82,7 +81,7 @@ namespace Lens.util.math {
 				(min, max) = (max, min);
 			}
 		
-			return random.Next(min, max);
+			return Generator.Next(min, max);
 		}
 
 		public static int IntCentred(int min, int max) {
@@ -93,18 +92,18 @@ namespace Lens.util.math {
 		}
 
 		public static float Float() {
-			return (float) random.NextDouble();
+			return (float) Generator.NextDouble();
 		}
 		
 		public static float Float(float max) {
-			return (float) (random.NextDouble() * max);
+			return (float) (Generator.NextDouble() * max);
 		}
 
 		public static float Float(float min, float max) {
-			if (!(min > max)) return (float)(random.NextDouble() * (max - min) + min);
+			if (!(min > max)) return (float)(Generator.NextDouble() * (max - min) + min);
 			(min, max) = (max, min);
 
-			return (float) (random.NextDouble() * (max - min) + min);
+			return (float) (Generator.NextDouble() * (max - min) + min);
 		}
 
 		public static Vector2 Offset(float d) {
@@ -113,23 +112,23 @@ namespace Lens.util.math {
 		}
 		
 		public static double Double() {
-			return random.NextDouble();
+			return Generator.NextDouble();
 		}
 		
 		public static double Double(double max) {
-			return random.NextDouble() * max;
+			return Generator.NextDouble() * max;
 		}
 
 		public static double Double(double min, double max) {
-			return random.NextDouble() * (max - min) + min;
+			return Generator.NextDouble() * (max - min) + min;
 		}
 
 		public static bool Bool() {
-			return random.NextDouble() >= 0.5;
+			return Generator.NextDouble() >= 0.5;
 		}
 
 		public static bool Chance(float chance = 50) {
-			return random.NextDouble() * 100 <= chance;
+			return Generator.NextDouble() * 100 <= chance;
 		}
 
 		public static float Angle() {
@@ -160,13 +159,9 @@ namespace Lens.util.math {
 
 		public static int Chances(List<float> chances) {
 			var length = chances.Count;
-			float sum = 0;
+			var sum = chances.Sum();
 
-			foreach (var chance in chances) {
-				sum += chance;
-			}
-
-			float value = Float(sum);
+			var value = Float(sum);
 			sum = 0;
 
 			for (int i = 0; i < length; i++) {
@@ -186,13 +181,7 @@ namespace Lens.util.math {
 
 		public static T Element<T>(List<T> list, Func<T, bool> filter) where T : Entity {
 			var length = list.Count;
-			var sum = 0;
-
-			foreach (var e in list) {
-				if (filter(e)) {
-					sum++;
-				}
-			}
+			var sum = list.Count(filter);
 
 			int value = Int(sum);
 			sum = 0;

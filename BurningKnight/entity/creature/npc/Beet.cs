@@ -1,5 +1,4 @@
-using System;
-using System.Text;
+using System.Linq;
 using BurningKnight.assets;
 using BurningKnight.entity.component;
 using BurningKnight.state;
@@ -76,31 +75,21 @@ namespace BurningKnight.entity.creature.npc {
 
 			if (GetComponent<DialogComponent>().Current?.Id == "beet_2" && Input.Keyboard.WasPressed(Keys.V) && (Input.Keyboard.IsDown(Keys.LeftControl) || Input.Keyboard.IsDown(Keys.RightControl))) {
 				Log.Info("Pasting the seed");
-				var seed = "ERROR";
 
-				try {
+				var seed =
 					// Needs xclip on linux
-					seed = TextCopy.ClipboardService.GetText().ToUpper();
-				} catch (Exception e) {
-					Log.Error(e);
+					TextCopy.ClipboardService.GetText()?.ToUpper() ?? string.Empty;
+
+				switch (seed.Length)
+				{
+					case 0:
+						return;
+					case > 8:
+						seed = seed[..8];
+						break;
 				}
-
-				if (seed.Length == 0) {
-					return;
-				}
-
-				if (seed.Length > 8) {
-					seed = seed.Substring(0, 8);
-				}
-
-				var builder = new StringBuilder();
-
-				for (var i = 0; i < seed.Length; i++) {
-					var c = seed[i];
-					builder.Append(Rnd.SeedChars.IndexOf(c) != -1 && c != '_' ? c : 'X');
-				}
-
-				var result = builder.ToString();
+				
+				var result = new string(seed.Select(c => Rnd.SeedChars.Contains(c) ? c : 'X').ToArray());
 				Log.Info($"Initial seed {seed} converted to {result}");
 
 				((AnswerDialog) GetComponent<DialogComponent>().Current).Answer = result;
