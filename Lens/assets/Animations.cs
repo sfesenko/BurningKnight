@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Aseprite;
 using Lens.graphics;
 using Lens.graphics.animation;
@@ -22,10 +23,13 @@ namespace Lens.assets {
 				return;
 			}
 
-			foreach (var file in Directory.GetFiles(animationDir, "*.ase"))
+			var jobs = Directory.GetFiles(animationDir, "*.ase")
+				.Select(file => Task.Run(() => (file, animation: LoadAnimation(file)))
+				).ToList();
+			foreach(var t in jobs)
 			{
+				var (file, animation) = t.Result;
 				var name = Path.GetFileNameWithoutExtension(file);
-				var animation = LoadAnimation(file);
 				animations[name] = animation;
 			}
 		}

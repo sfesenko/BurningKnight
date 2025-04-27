@@ -84,22 +84,20 @@ namespace Lens.assets {
 		}
 
 		private static void LoadAssets(ref int progress) {
-			// AsepriteReader.GraphicsDevice = Engine.GraphicsDevice;
-			
 			if (Locale.Map == null) {
-				Locale.Load(Locale.PrefferedClientLanguage);
+				AsyncUtils.RunSync("Locale.Load", () => Locale.Load(Locale.PrefferedClientLanguage));
 			}
 
 			progress++;
-			Effects.Load();
+			AsyncUtils.RunSync("Effects.Load()", Effects.Load);
 			progress++;
-			Textures.Load();
+			AsyncUtils.RunSync("Textures.Load()", Textures.Load);
 			progress++;
-			Animations.Load();
+			AsyncUtils.RunSync("Animations.Load()", Animations.Load);
 			progress++;
 			
 			if (LoadSfx) {
-				Audio.Instance.Load();
+				AsyncUtils.RunSync("Audio.Instance.Load()", Audio.Instance.Load);
 			}
 
 			progress++;
