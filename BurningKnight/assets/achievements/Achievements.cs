@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using BurningKnight.assets.items;
 using BurningKnight.entity.component;
 using BurningKnight.entity.creature.player;
@@ -23,9 +24,9 @@ namespace BurningKnight.assets.achievements {
 	public delegate void AchievementProgressSetCallback(string id, int progress, int max);
 	
 	public static class Achievements {
-		public static Dictionary<string, Achievement> Defined = new Dictionary<string, Achievement>();
-		public static List<string> AchievementBuffer = new List<string>();
-		public static List<string> ItemBuffer = new List<string>();
+		public static readonly Dictionary<string, Achievement> Defined = new();
+		public static readonly List<string> AchievementBuffer = [];
+		public static readonly List<string> ItemBuffer = [];
 
 		private static System.Numerics.Vector2 size = new System.Numerics.Vector2(300, 400);
 
@@ -33,9 +34,15 @@ namespace BurningKnight.assets.achievements {
 		public static AchievementLockedCallback LockedCallback;
 		public static AchievementProgressSetCallback ProgressSetCallback;
 		public static Action PostLoadCallback;
-		
-		public static Achievement Get(string id) {
-			return Defined.TryGetValue(id, out var a) ? a : null;
+
+		public static Achievement Get(string id)
+		{
+			if (!Defined.TryGetValue(id, out var a))
+			{
+				Log.Error($"Achievements.Get: wrong id: {id}");
+			}
+
+			return a;
 		}
 		
 		public static void Load() {
@@ -424,7 +431,7 @@ namespace BurningKnight.assets.achievements {
 
 		public static bool IsComplete(string id) {
 			var ach = Get(id);
-			return ach != null && ach.Unlocked;
+			return ach is { Unlocked: true };
 		}
 
 		public static bool IsGroupComplete(string group) {
@@ -438,7 +445,7 @@ namespace BurningKnight.assets.achievements {
 						return false;
 					}
 				}
-			}
+		}
 
 			return found;
 		} 

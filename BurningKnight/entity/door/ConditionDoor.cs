@@ -1,15 +1,14 @@
-using System;
 using BurningKnight.assets.achievements;
 using BurningKnight.entity.creature.npc;
 using BurningKnight.save;
 using ImGuiNET;
-using Lens;
 using Lens.entity;
 using Lens.util.file;
 
 namespace BurningKnight.entity.door {
 	public class ConditionDoor : LockableDoor {
-		private static string[] conditions = {
+		private static string[] conditions =
+		[
 			"Played Once",
 			"Saved Hat Trader",
 			"Saved Weapon Trader",
@@ -23,42 +22,42 @@ namespace BurningKnight.entity.door {
 			"Achievement Branch B Complete",
 			"Achievement Branch C Complete",
 			"Achievement Branch D Complete"
-		};
+		];
 
 		private bool shouldLock;
 		private bool cached;
 		private bool lockInDemo;
 		private int condition;
 
-		private bool DecideState() {
+		private bool DecideState()
+		{
 			if (lockInDemo && BK.Demo) {
 				return false;
 			}
-			
-			switch (condition) {
-				case 0: return GlobalSave.IsTrue("played_once");
-				case 1: return GlobalSave.IsTrue(ShopNpc.HatTrader);
-				case 2: return GlobalSave.IsTrue(ShopNpc.WeaponTrader);
-				case 3: return GlobalSave.IsTrue(ShopNpc.AccessoryTrader);
-				case 4: return GlobalSave.IsTrue(ShopNpc.ActiveTrader);
-				case 5: return GlobalSave.IsTrue(ShopNpc.Mike);
-				case 6: return GlobalSave.GetInt("challenges_completed") >= 10;
-				case 7: return GlobalSave.GetInt("challenges_completed") >= 20;
-				case 8: return GlobalSave.GetInt("challenges_completed") >= 30;
-				case 9: return Achievements.IsGroupComplete("a");
-				case 10: return Achievements.IsGroupComplete("b");
-				case 11: return Achievements.IsGroupComplete("c");
-				case 12: return Achievements.IsGroupComplete("d");
-			}
 
-			return false;
+			return condition switch
+			{
+				0 => GlobalSave.IsTrue("played_once"),
+				1 => GlobalSave.IsTrue(ShopNpc.HatTrader),
+				2 => GlobalSave.IsTrue(ShopNpc.WeaponTrader),
+				3 => GlobalSave.IsTrue(ShopNpc.AccessoryTrader),
+				4 => GlobalSave.IsTrue(ShopNpc.ActiveTrader),
+				5 => GlobalSave.IsTrue(ShopNpc.Mike),
+				6 => GlobalSave.GetInt("challenges_completed") >= 10,
+				7 => GlobalSave.GetInt("challenges_completed") >= 20,
+				8 => GlobalSave.GetInt("challenges_completed") >= 30,
+				9 => Achievements.IsGroupComplete("a"),
+				10 => Achievements.IsGroupComplete("b"),
+				11 => Achievements.IsGroupComplete("c"),
+				12 => Achievements.IsGroupComplete("d"),
+				_ => false
+			};
 		}
 		
 		public bool ShouldLock() {
-			if (!cached) {
-				shouldLock = !DecideState();
-				cached = true;
-			}
+			if (cached) return shouldLock;
+			shouldLock = !DecideState();
+			cached = true;
 
 			return shouldLock;
 		}

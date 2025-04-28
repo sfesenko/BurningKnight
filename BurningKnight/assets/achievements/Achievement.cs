@@ -2,18 +2,15 @@ using Lens.entity;
 using Lens.lightJson;
 
 namespace BurningKnight.assets.achievements {
-	public class Achievement {
-		public readonly string Id;
+	public class Achievement(string id)
+	{
+		public readonly string Id = id;
 		public bool Unlocked { get; internal set; }
 		public int Max;
 		public string Unlock = "";
 		public bool Secret;
 		public string Group = "";
 		public string CompletionDate = "???";
-		
-		public Achievement(string id) {
-			Id = id;
-		}
 
 		public void Load(JsonValue root) {
 			Max = root["max"].Int(0);

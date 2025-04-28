@@ -13,7 +13,6 @@ using BurningKnight.util;
 using Lens;
 using Lens.assets;
 using Lens.entity;
-using Lens.graphics;
 using Lens.lightJson;
 using Lens.lightJson.Serialization;
 using Lens.util;
@@ -152,10 +151,8 @@ namespace BurningKnight.assets.items {
 
 		private static int TryToApply(ItemData data, int pool, ItemPool pl) {
 			if (!pl.Contains(pool)) {
-				List<ItemData> datas;
-
-				if (!byPool.TryGetValue(pl.Id, out datas)) {
-					datas = new List<ItemData>();
+				if (!byPool.TryGetValue(pl.Id, out var datas)) {
+					datas = [];
 					byPool[pl.Id] = datas;
 				}
 
@@ -203,21 +200,16 @@ namespace BurningKnight.assets.items {
 			var pl = item["pool"];
 			var pools = 0;
 
-			if (pl == JsonValue.Null) {
-				switch (data.Type) {
-					case ItemType.Key:
-					case ItemType.Coin:
-					case ItemType.Bomb:
-					case ItemType.Heart:
-						pools = TryToApply(data, pools, ItemPool.Consumable);
-						break;
-
-					case ItemType.Artifact:
-					case ItemType.Weapon:
-					case ItemType.Active:						
-						pools = TryToApply(data, pools, ItemPool.Treasure);
-						break;
-				}
+			if (pl == JsonValue.Null)
+			{
+				pools = data.Type switch
+				{
+					ItemType.Key or ItemType.Coin or ItemType.Bomb or ItemType.Heart => 
+						TryToApply(data, pools, ItemPool.Consumable),
+					ItemType.Artifact or ItemType.Weapon or ItemType.Active => 
+						TryToApply(data, pools, ItemPool.Treasure),
+					_ => pools
+				};
 			} else {
 				var pls = pl.Int(0);
 
@@ -231,10 +223,9 @@ namespace BurningKnight.assets.items {
 			data.Pools = pools;
 
 			Datas[id] = data;
-			List<ItemData> all;
 
-			if (!byType.TryGetValue(data.Type, out all)) {
-				all = new List<ItemData>();
+			if (!byType.TryGetValue(data.Type, out var all)) {
+				all = [];
 				byType[data.Type] = all;
 			}
 			
@@ -370,7 +361,7 @@ namespace BurningKnight.assets.items {
 				return uses.ToArray();
 			}
 
-			return new ItemUse[0];
+			return [];
 		}
 
 		private static ItemUse ParseItemUse(string id, JsonValue? data) {
@@ -431,18 +422,12 @@ namespace BurningKnight.assets.items {
 			                                                     !Run.Statistics.Banned.Contains(t.Id))) && t.Id != "bk:the_sword";
 		}
 
-		public static List<string> GeneratedOnFloor = new List<string>();
+		public static readonly List<string> GeneratedOnFloor = [];
 
-		public static List<ItemData> GeneratePool(List<ItemData> types, Func<ItemData, bool> filter = null, PlayerClass c = PlayerClass.Any) {
-			var datas = new List<ItemData>();
-
-			foreach (var t in types) {
-				if (ShouldAppear(t) && (filter == null || filter(t)) && !GeneratedOnFloor.Contains(t.Id)) {
-					datas.Add(t);
-				}
-			}
-
-			return datas;
+		public static List<ItemData> GeneratePool(List<ItemData> types, Func<ItemData, bool> filter = null, PlayerClass c = PlayerClass.Any)
+		{
+			return types.Where(t => ShouldAppear(t) && (filter == null || filter(t)) && !GeneratedOnFloor.Contains(t.Id))
+				.ToList();
 		}
 
 		public static string GenerateAndRemove(List<ItemData> datas, Func<ItemData, bool> filter = null, bool removeFromFloor = false) {
@@ -584,15 +569,14 @@ namespace BurningKnight.assets.items {
 		}
 
 		public static void CheckForCollector() {
-			if (Achievements.Get("bk:collector").Unlocked) {
+			if (Achievements.IsComplete("bk:collector")) {
 				return;
 			}
 			
-			foreach (var item in Datas.Values) {
-				if (item.Lockable && !item.Unlocked) {
-					Log.Info($"Collector achievement was not unlocked cuz {item.Id}");
-					return;
-				}
+			foreach (var item in Datas.Values.Where(item => item.Lockable && !item.Unlocked))
+			{
+				Log.Info($"Collector achievement was not unlocked cuz {item.Id}");
+				return;
 			}
 			
 			Achievements.Unlock("bk:collector");

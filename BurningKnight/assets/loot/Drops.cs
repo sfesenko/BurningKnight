@@ -6,7 +6,7 @@ using Lens.util;
 
 namespace BurningKnight.assets.loot {
 	public static class Drops {
-		public static Dictionary<string, Drop> Defined = new Dictionary<string, Drop>();
+		public static readonly Dictionary<string, Drop> Defined = new();
 
 		static Drops() {
 			Define("wooden_chest", new OneOfDrop(
@@ -58,9 +58,10 @@ namespace BurningKnight.assets.loot {
 			
 			Define("safe", new AnyDrop(
 				new SimpleDrop {
-					Items = new [] {
+					Items =
+					[
 						"bk:coin"
-					},
+					],
 				
 					Chance = 0.8f,
 					Min = 3,
@@ -68,9 +69,10 @@ namespace BurningKnight.assets.loot {
 				},
 				
 				new SimpleDrop {
-					Items = new[] {
+					Items =
+					[
 						"bk:key"
-					},
+					],
 
 					Chance = 0.5f,
 					Min = 1,
@@ -78,9 +80,10 @@ namespace BurningKnight.assets.loot {
 				},
 				
 				new SimpleDrop {
-					Items = new [] {
+					Items =
+					[
 						"bk:bomb"
-					},
+					],
 				
 					Chance = 0.3f,
 					Min = 1,
@@ -92,9 +95,10 @@ namespace BurningKnight.assets.loot {
 
 			Define("charger", new AnyDrop(
 				new SimpleDrop {
-					Items = new [] {
+					Items =
+					[
 						"bk:battery"
-					},
+					],
 				
 					Chance = 0.5f,
 					Min = 1,
@@ -102,9 +106,10 @@ namespace BurningKnight.assets.loot {
 				},
 				
 				new SimpleDrop {
-					Items = new [] {
+					Items =
+					[
 						"bk:coin"
-					},
+					],
 				
 					Chance = 0.5f,
 					Min = 1,
@@ -117,9 +122,10 @@ namespace BurningKnight.assets.loot {
 			Define("vending_machine", new AnyDrop(
 				new SimpleDrop {
 					Chance = 1f,
-					Items = new[] {
+					Items =
+					[
 						"bk:coin"
-					},
+					],
 				
 					Min = 2,
 					Max = 7
@@ -127,9 +133,10 @@ namespace BurningKnight.assets.loot {
 				
 				new SimpleDrop {
 					Chance = 0.3f,
-					Items = new[] {
+					Items =
+					[
 						"bk:key"
-					}
+					]
 				}
 			));
 
@@ -144,9 +151,10 @@ namespace BurningKnight.assets.loot {
 				},
 				
 				new SimpleDrop {
-					Items = new [] {
+					Items =
+					[
 						"bk:coin"
-					},
+					],
 				
 					Chance = 0.8f,
 					Min = 5,
@@ -156,15 +164,12 @@ namespace BurningKnight.assets.loot {
 		}
 
 		public static Drop Get(string drop) {
-			if (!Defined.TryGetValue(drop, out var d)) {
-				Log.Error($"Unknown drop {drop}");
-				return null;
-			}
-
-			return d;
+			if (Defined.TryGetValue(drop, out var d)) return d;
+			Log.Error($"Unknown drop {drop}");
+			return null;
 		}
-		
-		public static void Define(string id, Drop drop, Mod mod = null) {
+
+		private static void Define(string id, Drop drop, Mod mod = null) {
 			Defined[$"{(mod == null ? Mods.BurningKnight : mod.Prefix)}:{id}"] = drop;
 		}
 	}
