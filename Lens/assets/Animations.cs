@@ -36,9 +36,9 @@ namespace Lens.assets {
 		
 		private static AnimationData LoadAnimation(string fileName)
 		{
-			var file = new AsepriteFile(fileName);
+			var file = AsepriteFile.ReadAsepriteFile(fileName);
 			var texture = new Texture2D(Engine.GraphicsDevice, file.TextureWidth, file.TextureHeight + 1);
-			texture.SetData(file.pixelData);
+			texture.SetData(file.PixelData);
 			
 			var animation = new AnimationData();
 			
