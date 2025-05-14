@@ -1,6 +1,5 @@
 ﻿using Lens.util.math;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace Lens.graphics.animation {
 	public delegate void AnimationCallback();

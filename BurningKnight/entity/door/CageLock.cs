@@ -4,22 +4,20 @@ using BurningKnight.entity.component;
 using BurningKnight.entity.creature.npc;
 using BurningKnight.entity.creature.player;
 using BurningKnight.save;
-using Lens.assets;
 using Lens.entity;
 using Lens.graphics.animation;
-using Steamworks.Data;
 
 namespace BurningKnight.entity.door {
 	public class CageLock : Lock {
-		private static ColorSet palette = ColorSets.New(new[] {
+		private static ColorSet palette = ColorSet.New([
 			Palette.Default[9],
 			Palette.Default[10],
 			Palette.Default[11]
-		}, new[] {
+		], [
 			Palette.Default[8],
 			Palette.Default[9],
 			Palette.Default[10]
-		});
+		]);
 		
 		protected override ColorSet GetLockPalette() {
 			return palette;

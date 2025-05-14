@@ -303,6 +303,7 @@ public static class AsepriteFile
 
 						var slicesCount = reader.DWORD();
 						var flags = reader.DWORD();
+						// reserved
 						reader.DWORD();
 						var name = reader.STRING();
 
@@ -323,7 +324,8 @@ public static class AsepriteFile
 								reader.LONG(); // Center Y position
 								reader.DWORD(); // Center width
 								reader.DWORD(); // Center height
-							}	else if (flags.IsBitSet(1)) {
+							}	
+							if (flags.IsBitSet(1)) {
 								// Pivot
 
 								slice.Pivot = new Point((int) reader.DWORD(), (int) reader.DWORD());

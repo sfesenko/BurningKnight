@@ -5,15 +5,15 @@ using Lens.graphics.animation;
 
 namespace BurningKnight.entity.door {
 	public class LevelLock : Lock {
-		private static ColorSet palette = ColorSets.New(new[] {
-				Palette.Default[9],
+		private static ColorSet palette = ColorSet.New([
+			Palette.Default[9],
 				Palette.Default[10],
 				Palette.Default[11]
-		}, new[] {
-				Palette.Default[31],
+		], [
+			Palette.Default[31],
 				Palette.Default[30],
 				Palette.Default[29]
-		});
+		]);
 		
 		protected override ColorSet GetLockPalette() {
 			return palette;

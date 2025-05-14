@@ -4,9 +4,10 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.assets {
 	public static class Palette {
-		public static Dictionary<string, Color> Colors = new Dictionary<string, Color>();
+		public static readonly Dictionary<string, Color> Colors = new();
 		
-		public static Color[] Default = new[] {
+		public static readonly Color[] Default =
+		[
 			ColorUtils.FromHex("#ff0040"),
 			ColorUtils.FromHex("#131313"),
 			ColorUtils.FromHex("#1b1b1b"),
@@ -71,7 +72,7 @@ namespace BurningKnight.assets {
 			ColorUtils.FromHex("#c42430"),
 			ColorUtils.FromHex("#891e2b"),
 			ColorUtils.FromHex("#571c27")
-		};
+		];
 
 		static Palette() {
 			Define("red", Default[60]);
@@ -88,7 +89,7 @@ namespace BurningKnight.assets {
 			Define("cyan", Default[43]);
 		}
 
-		public static void Define(string s, Color c) {
+		private static void Define(string s, Color c) {
 			Colors[s] = c;
 		}
 	}

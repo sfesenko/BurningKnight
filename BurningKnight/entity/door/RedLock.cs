@@ -8,7 +8,7 @@ namespace BurningKnight.entity.door {
 	public class RedLock : Lock {
 		private static Audio Audio => Audio.Instance;
 		
-		private static ColorSet palette = ColorSets.New([
+		private static ColorSet palette = ColorSet.New([
 			Palette.Default[9],
 			Palette.Default[10],
 			Palette.Default[11]
