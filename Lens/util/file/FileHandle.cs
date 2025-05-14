@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Lens.assets;
 
 namespace Lens.util.file;
@@ -25,9 +27,8 @@ public class FileHandle(string path)
 		Directory.CreateDirectory(path);
 	}
 
-	public string ReadAll() {
-		return File.ReadAllText(path);
-	}
+	public string ReadAll() => 
+		File.ReadAllText(path);
 
 	public void Delete() {
 		if (IsDirectory()) {
@@ -37,31 +38,15 @@ public class FileHandle(string path)
 		}
 	}
 
-	private string[] ListFiles() {
-		return Directory.GetFiles(path);
+	public IEnumerable<FileHandle> ListFileHandles() => 
+		List(Directory.GetFiles(path));
+
+	public IEnumerable<FileHandle> ListDirectoryHandles() {
+		return List(Directory.GetDirectories(path));
 	}
 
-	private string[] ListDirectories() {
-		return Directory.GetDirectories(path);
-	}
-
-	public FileHandle[] ListFileHandles() {
-		return List(ListFiles());
-	}
-
-	public FileHandle[] ListDirectoryHandles() {
-		return List(ListDirectories());
-	}
-
-	private static FileHandle[] List(string[] names) {
-		var handles = new FileHandle[names.Length];
-
-		for (int i = 0; i < names.Length; i++) {
-			handles[i] = new FileHandle(names[i]);
-		}
-
-		return handles;
-	}
+	private static IEnumerable<FileHandle> List(IEnumerable<string> names) => 
+		names.Select(n => new FileHandle(n));
 
 	public bool Exists() {
 		return IsDirectory() ? Directory.Exists(path) : File.Exists(path);
@@ -75,8 +60,6 @@ public class FileHandle(string path)
 		}
 	}
 
-	public override string ToString()
-	{
-		return path;
-	}
+	public override string ToString() => 
+		path;
 }

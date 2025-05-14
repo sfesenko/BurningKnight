@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using Aseprite;
 using Lens.graphics;
 using Lens.util;
 using Lens.util.file;
@@ -8,8 +7,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Lens.assets {
-	public class Textures {
-		private static Dictionary<string, TextureRegion> textures = new Dictionary<string, TextureRegion>();
+	public static class Textures {
+		private static Dictionary<string, TextureRegion> textures = new();
 		public static TextureRegion Missing;
 		
 		internal static void Load() {
@@ -21,11 +20,7 @@ namespace Lens.assets {
 		}
 
 		public static Texture2D FastLoad(string path) {
-			var fileStream = new FileStream(path, FileMode.Open);
-			var texture = Texture2D.FromStream(Engine.GraphicsDevice, fileStream);
-			fileStream.Dispose();
-
-			return texture;
+			return Texture2D.FromFile(Engine.GraphicsDevice, path);
 		}
 		
 		private static void LoadTextures(FileHandle handle) {

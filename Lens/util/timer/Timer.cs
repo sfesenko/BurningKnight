@@ -1,51 +1,49 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Lens.util.timer {
-	public static class Timer {
-		private static List<TimerTask> tasks = new List<TimerTask>();
+namespace Lens.util.timer;
 
-		public static void Cancel(TimerTask task) {
-			tasks.Remove(task);
-		}
+public class TimerTask(Action fn)
+{
+    public readonly Action? Fn = fn;
 
-		public static TimerTask Add(Action fn, float Delay) {
-			if (Delay <= 0) {
-				fn();
-				return null;
-			}
+    public void Cancel()
+    {
+        fn = null;
+    }
+}
 
-			var t = new TimerTask(fn, Delay);
-			tasks.Add(t);
+public static class Timer
+{
+    private static readonly PriorityQueue<TimerTask, float> Tasks = new();
+    private static float _time;
 
-			return t;
-		}
+    public static TimerTask Add(Action fn, float delay)
+    {
+        if (delay <= 0)
+        {
+            fn();
+            return null;
+        }
 
-		public static void Clear() {
-			tasks.Clear();
-		}
-		
-		public static void Update(float dt) {
-			for (int i = tasks.Count - 1; i >= 0; i--) {
-				TimerTask task = tasks[i];
+        var t = new TimerTask(fn);
+        Tasks.Enqueue(t, _time + delay);
+        return t;
+    }
 
-				if (task == null) {
-					tasks.RemoveAt(i);
-					continue;
-				}
-				
-				task.Delay -= dt;
+    public static void Clear()
+    {
+        Tasks.Clear();
+    }
 
-				if (task.Delay <= 0) {
-					try {
-						task.Fn?.Invoke();
-					} catch (Exception e) {
-						Log.Error(e);
-					}
-					
-					tasks.RemoveAt(i);
-				}
-			}
-		}
-	}
+    public static void Update(float dt)
+    {
+        _time += dt;
+
+        while (Tasks.TryPeek(out _, out var time) && _time >= time)
+        {
+            var t = Tasks.Dequeue();
+            t.Fn?.Invoke();
+        }
+    }
 }
