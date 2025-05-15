@@ -24,7 +24,7 @@ namespace BurningKnight.entity.component {
 			entity.Area.Add(Lock);
 			entity.Area.EventListener.Subscribe<LockOpenedEvent>(this);
 
-			if (Lock.Interactable()) {
+			if (Lock.CanInteract()) {
 				Lock.AddComponent(new RectBodyComponent(-(entity.Width - Lock.Width) / 2f - offset.X - 2, 
 					-(entity.Height - Lock.Height) / 2f - offset.Y - 2, entity.Width + 4, entity.Height + 4, BodyType.Static, true));
 			}

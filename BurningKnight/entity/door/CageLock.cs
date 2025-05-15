@@ -1,4 +1,3 @@
-using BurningKnight.assets;
 using BurningKnight.assets.achievements;
 using BurningKnight.entity.component;
 using BurningKnight.entity.creature.npc;
@@ -9,18 +8,15 @@ using Lens.graphics.animation;
 
 namespace BurningKnight.entity.door {
 	public class CageLock : Lock {
-		private static ColorSet palette = ColorSet.New([
-			Palette.Default[9],
-			Palette.Default[10],
-			Palette.Default[11]
-		], [
-			Palette.Default[8],
-			Palette.Default[9],
-			Palette.Default[10]
+		
+		private static readonly ColorMap Palette = ColorMap.New([
+			(assets.Palette.Default[9], assets.Palette.Default[8]),
+			(assets.Palette.Default[10], assets.Palette.Default[9]),
+			(assets.Palette.Default[11], assets.Palette.Default[10])
 		]);
 		
-		protected override ColorSet GetLockPalette() {
-			return palette;
+		protected override ColorMap GetLockPalette() {
+			return Palette;
 		}
 
 		private void SaveNpc() {
@@ -62,7 +58,7 @@ namespace BurningKnight.entity.door {
 		}
 
 		protected override bool TryToConsumeKey(Entity entity) {
-			if (entity.TryGetComponent<ActiveWeaponComponent>(out var a) && a.Item != null && a.Item.Id == "bk:cage_key") {
+			if (entity.TryGetComponent<ActiveWeaponComponent>(out var a) && a.Item is { Id: "bk:cage_key" }) {
 				var i = a.Item;
 				a.Set(null);
 				i.Done = true;
@@ -73,7 +69,7 @@ namespace BurningKnight.entity.door {
 				return true;
 			}
 			
-			if (entity.TryGetComponent<WeaponComponent>(out var w) && w.Item != null && w.Item.Id == "bk:cage_key") {
+			if (entity.TryGetComponent<WeaponComponent>(out var w) && w.Item is { Id: "bk:cage_key" }) {
 				var i = w.Item;
 				w.Set(null);
 				i.Done = true;

@@ -1,17 +1,12 @@
 using System;
 using Lens.graphics;
-using Lens.graphics.animation;
 using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.component {
-	public class WallAnimationComponent : MobAnimationComponent {
+	public class WallAnimationComponent(string animationName, string layer = null, string tag = null)
+		: MobAnimationComponent(animationName, layer, tag)
+	{
 		public float WallAngle;
-		
-		public WallAnimationComponent(string animationName, string layer = null, string tag = null) : base(animationName, layer, tag) {
-		}
-
-		public WallAnimationComponent(string animationName, ColorSet set) : base(animationName, set) {
-		}
 
 		protected override void CallRender(Vector2 pos, bool shadow) {
 			var region = Animation.GetCurrentTexture();

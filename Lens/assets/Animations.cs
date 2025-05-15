@@ -50,12 +50,13 @@ namespace Lens.assets {
 			return new Animation(Get(id), layer);
 		}
 
-		public static AnimationData GetColored(string id, ColorSet set) {
-			if (set == null) {
+		public static AnimationData GetColored(string id, ColorMap colorMap) {
+			if (colorMap.IsEmpty())
+			{
 				return Get(id);
 			}
 			
-			var fullId = $"{id}_{set.Id}";
+			var fullId = $"{id}_{colorMap.Id}";
 			
 			if (animations.TryGetValue(fullId, out var animation)) {
 				return animation;
@@ -67,7 +68,7 @@ namespace Lens.assets {
 				return null;
 			}
 
-			var data = animation.Recolor(set);			
+			var data = animation.Recolor(colorMap);			
 			
 			animations[fullId] = data;
 			

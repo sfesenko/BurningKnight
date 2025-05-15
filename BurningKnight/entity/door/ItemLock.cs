@@ -1,22 +1,20 @@
 using System.Collections.Generic;
-using BurningKnight.entity.item;
+using System.Linq;
 using BurningKnight.entity.item.stand;
 using BurningKnight.entity.room;
-using BurningKnight.level.rooms;
-using BurningKnight.state;
 using Lens.entity.component.logic;
 
 namespace BurningKnight.entity.door {
 	public class ItemLock : Lock {
-		protected List<Room> rooms = new List<Room>();
+		protected readonly List<Room> rooms = [];
 
-		public void CalcRooms() {
+		public void CalcRooms()
+		{
 			rooms.Clear();
-			
-			foreach (var room in Area.Tagged[Tags.Room]) {
-				if (room.Overlaps(this)) {
-					rooms.Add((Room) room);
-				}
+
+			foreach (var room in Area.Tagged[Tags.Room].Where(room => room.Overlaps(this)))
+			{
+				rooms.Add((Room) room);
 			}
 		}
 
@@ -24,7 +22,7 @@ namespace BurningKnight.entity.door {
 			return false;
 		}
 
-		public override bool Interactable() {
+		public override bool CanInteract() {
 			return false;
 		}
 
@@ -44,16 +42,15 @@ namespace BurningKnight.entity.door {
 		protected virtual void UpdateState() {
 			var shouldLock = false;
 
-			foreach (var r in rooms) {
+			foreach (var r in rooms)
+			{
 				if (r.Tagged[Tags.Player].Count == 0) {
 					continue;
 				}
-				
-				foreach (var item in r.Tagged[Tags.Item]) {
-					if ((item is ItemStand ist && ist.Item != null)) {
-						shouldLock = true;
-						break;
-					}
+
+				if (r.Tagged[Tags.Item].Any(item => item is ItemStand { Item: not null }))
+				{
+					shouldLock = true;
 				}
 			}
 

@@ -5,24 +5,22 @@ using Lens.entity;
 using Lens.entity.component.logic;
 using Lens.graphics.animation;
 using Lens.util.camera;
-using VelcroPhysics.Dynamics;
 
 namespace BurningKnight.entity.door {
 	public class Lock : Entity {
-		private bool locked;
 		protected bool LockedByDefault = true;
 
 		public Entity Owner;
-		public bool IsLocked => locked;
+		public bool IsLocked { get; private set; }
 
 		public void SetLocked(bool value, Entity entity) {
-			if (value == locked || Done) {
+			if (value == IsLocked || Done) {
 				return;
 			}
 
-			locked = value;
+			IsLocked = value;
 			
-			if (!locked) {
+			if (!IsLocked) {
 				HandleEvent(new LockOpenedEvent {
 					Lock = this,
 					Who = entity
@@ -45,11 +43,11 @@ namespace BurningKnight.entity.door {
 		public bool Move;
 		private float t;
 		private float shake;
-		
-		public Lock() {
+
+		protected Lock() {
 			Width = 10;
 			Height = 20;
-			locked = true;
+			IsLocked = true;
 		}
 		
 		protected virtual bool Interact(Entity entity) {
@@ -75,7 +73,7 @@ namespace BurningKnight.entity.door {
 		public override void AddComponents() {
 			base.AddComponents();
 
-			if (Interactable()) {
+			if (CanInteract()) {
 				AddComponent(new InteractableComponent(Interact) {
 					CanInteract = CanInteract
 				});
@@ -90,10 +88,10 @@ namespace BurningKnight.entity.door {
 
 			if (LockedByDefault) {
 				state.Become<IdleState>();
-				locked = true;
+				IsLocked = true;
 			} else {
 				state.Become<OpenState>();
-				locked = false;
+				IsLocked = false;
 			}
 
 			AddTag(Tags.Lock);
@@ -137,7 +135,7 @@ namespace BurningKnight.entity.door {
 		}
 
 		public void RealRender() {
-			if (/*!Done && */!(GetComponent<StateComponent>().StateInstance is OpenState)) {
+			if (/*!Done && */GetComponent<StateComponent>().StateInstance is not OpenState) {
 				base.Render();
 			}
 		}
@@ -146,11 +144,11 @@ namespace BurningKnight.entity.door {
 			return true;
 		}
 
-		protected virtual ColorSet GetLockPalette() {
-			return null;
+		protected virtual ColorMap GetLockPalette() {
+			return ColorMap.Empty;
 		}
 
-		public virtual bool Interactable() {
+		public virtual bool CanInteract() {
 			return true;
 		}
 		
@@ -188,7 +186,7 @@ namespace BurningKnight.entity.door {
 			}
 		}
 
-		public class ClosingState : EntityState {
+		protected class ClosingState : EntityState {
 			public override void Init() {
 				base.Init();
 				Self.GetComponent<AnimationComponent>().SetAutoStop(true);

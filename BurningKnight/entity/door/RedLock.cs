@@ -8,17 +8,13 @@ namespace BurningKnight.entity.door {
 	public class RedLock : Lock {
 		private static Audio Audio => Audio.Instance;
 		
-		private static ColorSet palette = ColorSet.New([
-			Palette.Default[9],
-			Palette.Default[10],
-			Palette.Default[11]
-		], [
-			Palette.Default[59],
-			Palette.Default[60],
-			Palette.Default[62]
+		private static ColorMap palette = ColorMap.New([
+			(Palette.Default[9], Palette.Default[59]),
+			(Palette.Default[10], Palette.Default[60]),
+			(Palette.Default[11], Palette.Default[62])
 		]);
 		
-		protected override ColorSet GetLockPalette() {
+		protected override ColorMap GetLockPalette() {
 			return palette;
 		}
 

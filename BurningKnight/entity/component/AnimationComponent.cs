@@ -1,8 +1,6 @@
 ﻿using System;
 using BurningKnight.assets;
 using BurningKnight.entity.buff;
-using BurningKnight.entity.creature.player;
-using BurningKnight.util;
 using Lens;
 using Lens.assets;
 using Lens.entity;
@@ -19,7 +17,7 @@ namespace BurningKnight.entity.component {
 		public Animation Animation;
 		public Color Tint = Color.White;
 		private string name;
-		private ColorSet set;
+		private ColorMap colorMap;
 
 		public float ShadowOffset;
 		public Vector2 Scale = Vector2.One;
@@ -39,11 +37,11 @@ namespace BurningKnight.entity.component {
 			ReloadAnimation(layer, tag);
 		}
 		
-		public AnimationComponent(string animationName, ColorSet set) {
+		public AnimationComponent(string animationName, ColorMap colorMap) {
 			name = animationName;
 			Id = animationName;
 			
-			this.set = set;
+			this.colorMap = colorMap;
 			
 			ReloadAnimation();
 		}
@@ -53,7 +51,9 @@ namespace BurningKnight.entity.component {
 		}
 		
 		private void ReloadAnimation(string layer = null, string tag = null) {
-			var data = set == null ? Animations.Get(name) : Animations.GetColored(name, set);
+			var data = (colorMap == null) 
+				? Animations.Get(name) 
+				: Animations.GetColored(name, colorMap);
 
 			if (data != null) {
 				Animation = data.CreateAnimation(layer);

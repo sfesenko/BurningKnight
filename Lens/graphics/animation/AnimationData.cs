@@ -7,13 +7,15 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Lens.graphics.animation;
 
-public struct AnimationTag {
+public struct AnimationTag
+{
     public uint StartFrame;
     public uint EndFrame;
     public AnimationDirection Direction;
 }
 
-public struct AnimationFrame {
+public struct AnimationFrame
+{
     public float Duration;
     public Rectangle Bounds;
     public TextureRegion Texture;
@@ -26,51 +28,36 @@ public class AnimationData
     public readonly Dictionary<string, TextureRegion> Slices = new();
     public Texture2D Texture;
 
-    public AnimationData Recolor(ColorSet set)
+    public AnimationData Recolor(ColorMap colorMap)
     {
         var newAnimation = new AnimationData();
-        var w = Texture.Width;
-        var h = Texture.Height;
-        var texture = new Texture2D(Engine.GraphicsDevice, w, h);
-        var tdata = new Color[w * h];
-			
-        Texture.GetData(tdata);
-        var pixelData = new Color[w * h];
-			
-        for (var y = 0; y < h; y++) {
-            for (var x = 0; x < w; x++) {
-                var i = x + y * w;
-                var color = tdata[i];
+        var colorData = new Color[Texture.Width * Texture.Height];
+        Texture.GetData(colorData);
 
-                for (var c = 0; c < set.From.Length; c++) {
-                    if (ColorUtils.Compare(set.From[c], color, 4)) {
-                        color = set.To[c];
-                    }
-                }
-					
-                pixelData[i] = color;
-            }
-        }
-			
-        texture.SetData(pixelData);
+        colorMap.ReColor(colorData);
 
-        foreach (var l in this.Layers)
+        var texture = new Texture2D(Engine.GraphicsDevice, Texture.Width, Texture.Height);
+        texture.SetData(colorData);
+
+        foreach (var l in Layers)
         {
             newAnimation.Layers[l.Key] =
                 l.Value.Select(f => f with { Texture = new TextureRegion(texture, f.Bounds) })
                     .ToList();
         }
 
-        foreach (var (key, value) in this.Slices) {
+        foreach (var (key, value) in Slices)
+        {
             newAnimation.Slices[key] = new TextureRegion(texture, value.Source);
         }
 
-        foreach (var t in this.Tags) {
+        foreach (var t in Tags)
+        {
             newAnimation.Tags[t.Key] = t.Value;
         }
-			
+
         newAnimation.Texture = texture;
-			
+
         return newAnimation;
     }
 

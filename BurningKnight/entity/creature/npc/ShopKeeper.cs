@@ -122,7 +122,6 @@ namespace BurningKnight.entity.creature.npc {
 
 			var b = new RectBodyComponent(4, 2, 10, 14);
 			AddComponent(b);
-			b.Body.LinearDamping = 5;
 			
 			Subscribe<BombPlacedEvent>();
 			Subscribe<GramophoneBrokenEvent>();
