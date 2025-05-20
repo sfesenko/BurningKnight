@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework;
 
 namespace Lens.util;
 
-public class FrameCounter
+public class FrameCounter(Game game) : DrawableGameComponent(game)
 {
     private const int MaximumSamples = 30;
 
@@ -14,7 +14,7 @@ public class FrameCounter
     public int AverageFramesPerSecond { get; private set; }
     public int CurrentFramesPerSecond { get; private set; }
 
-    public void Update(GameTime gt)
+    public override void Draw(GameTime gt)
     {
         CurrentFramesPerSecond = (int)Math.Round(1f / gt.ElapsedGameTime.TotalSeconds);
 

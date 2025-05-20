@@ -1296,7 +1296,7 @@ namespace BurningKnight.state {
 			var x = 1;
 			
 			if (Settings.ShowFps) {
-				var c = Engine.Instance.Counter.AverageFramesPerSecond;
+				var c = Engine.Instance.AverageFramesPerSecond;
 
 				var color = c switch
 				{
@@ -1561,7 +1561,7 @@ namespace BurningKnight.state {
 					RelativeCenterX = Display.UiWidth / 2f,
 					RelativeCenterY = BackY,
 					Click = b => {
-						Engine.Instance.Quit();
+						Engine.Instance.Exit();
 					}
 				});
 			}

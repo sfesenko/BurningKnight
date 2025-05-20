@@ -10,12 +10,13 @@ using Lens.util.timer;
 using Lens.util.tween;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using MonoGame.Extended;
 
 namespace Lens
 {
     public class Engine : Game
     {
-        public const bool Debug =
+        public static readonly bool Debug =
 #if DEBUG
                 true
 #else
@@ -42,9 +43,10 @@ namespace Lens
         public static int RenderTime;
         public static bool Flashes = true;
 
-        public FrameCounter Counter;
         public GameRenderer StateRenderer;
         public GameState State { get; private set; }
+        protected GameState NewState;
+
         public static Vector2 Viewport;
         public float Upscale;
         public float UiUpscale;
@@ -60,13 +62,17 @@ namespace Lens
 
         public float Split;
 
+        
+        private readonly FrameCounter Counter;
+        public int AverageFramesPerSecond => Counter.AverageFramesPerSecond;
+        public int CurrentFramesPerSecond => Counter.CurrentFramesPerSecond;
+
+        
         // Window.Title works only in Init, sadly
         private string tmpTitle;
-        private GameState newState;
 
         public string Title
         {
-            get => Window.Title;
             set
             {
                 if (value != null && !RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
@@ -76,7 +82,7 @@ namespace Lens
             }
         }
 
-        protected Engine(GameState state, string title, int width, int height, bool fullscreen)
+        protected Engine(string title, int width, int height, bool fullscreen)
         {
             Instance = this;
             tmpTitle = title;
@@ -95,8 +101,8 @@ namespace Lens
 
             Content.RootDirectory = "Content/";
             Assets.Content = Content;
-            newState = state;
-            Counter = new FrameCounter();
+            Counter = new FrameCounter(this);
+            Components.Add(Counter);
         }
 
         protected override void OnActivated(object sender, EventArgs args)
@@ -112,14 +118,7 @@ namespace Lens
             Focused = false;
             State?.OnDeactivated();
         }
-
-        protected override void LoadContent()
-        {
-            GraphicsDevice = base.GraphicsDevice;
-            GraphicsDevice.BlendState = BlendState.NonPremultiplied;
-            graphics.Graphics.Init();
-        }
-
+        
         protected override void UnloadContent()
         {
             Quiting = true;
@@ -142,7 +141,9 @@ namespace Lens
 
         protected override void Initialize()
         {
-            base.Initialize();
+            GraphicsDevice = base.GraphicsDevice;
+            GraphicsDevice.BlendState = BlendState.NonPremultiplied;
+            graphics.Graphics.Init();
 
             StateRenderer ??= new PixelPerfectGameRenderer();
 
@@ -157,6 +158,7 @@ namespace Lens
             Title = tmpTitle;
 
             Input.Init();
+            base.Initialize();
         }
 
         protected override void Update(GameTime gameTime)
@@ -195,18 +197,19 @@ namespace Lens
             {
                 time -= FixedUpdateTime;
 
-                if (newState != null)
+                if (NewState != null)
                 {
-                    Log.Info("Setting state to " + newState.GetType().Name);
+                    Log.Info("Setting state to " + NewState.GetType().Name);
 
                     Speed = 1;
+                    
 
                     State?.Destroy();
-                    State = newState;
+                    State = NewState;
                     Input.EnableImGuiFocus = true;
                     State?.Init();
 
-                    newState = null;
+                    NewState = null;
                     UpdateView();
                 }
 
@@ -234,21 +237,15 @@ namespace Lens
             }
             else
             {
-                newState = state;
+                NewState = state;
             }
         }
-
-        public void Quit()
-        {
-            Exit();
-        }
-
+        
         protected override void Draw(GameTime gameTime)
         {
             var t = DateTime.Now.Millisecond;
             StateRenderer.Render();
             base.Draw(gameTime);
-            Counter.Update(gameTime);
             RenderTime = DateTime.Now.Millisecond - t;
         }
 

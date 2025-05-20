@@ -111,7 +111,7 @@ namespace BurningKnight.ui.imgui {
 				
 				ImGui.PlotHistogram("Memory", ref memUsage[0], memUsage.Length, 0, null, 0, 2048, new Vector2(300, 100));
 				
-				ImGui.Text($"FPS: {Engine.Instance.Counter.CurrentFramesPerSecond}");
+				ImGui.Text($"FPS: {Engine.Instance?.CurrentFramesPerSecond}");
 				lastFps += Engine.Delta;
 
 				if (lastFps > 0.5f) {
@@ -121,7 +121,7 @@ namespace BurningKnight.ui.imgui {
 						fps[i - 1] = fps[i];
 					}
 
-					fps[^1] = Engine.Instance.Counter.AverageFramesPerSecond;
+					fps[^1] = Engine.Instance.AverageFramesPerSecond;
 				}
 
 				ImGui.PlotHistogram("FPS", ref fps[0], fps.Length, 0, null, 0, 60);

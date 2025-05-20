@@ -17,13 +17,13 @@ namespace BurningKnight.assets {
 		public static ImGuiRenderer Renderer;
 		public static IntPtr ItemsTexture;
 		public static IntPtr ProjectilesTexture;
-		public static unsafe ImGuiTextFilterPtr filter2 = new ImGuiTextFilterPtr(ImGuiNative.ImGuiTextFilter_ImGuiTextFilter(null));
+		public static unsafe ImGuiTextFilterPtr filter2 = new(ImGuiNative.ImGuiTextFilter_ImGuiTextFilter(null));
 
 		public static void Init() {
 			try {
 				Renderer = new ImGuiRenderer(Engine.Instance);
 				ImGui.PushStyleVar(ImGuiStyleVar.FrameRounding, 4f);
-			} catch (Exception e) {
+			} catch (Exception) {
 				
 			}
 		}
@@ -38,12 +38,12 @@ namespace BurningKnight.assets {
 			}
 		}
 
-		private static List<int> toRemove = new List<int>();
+		private static List<int> toRemove = [];
 		private static bool loadedFont;
-		private static unsafe ImGuiTextFilterPtr filter = new ImGuiTextFilterPtr(ImGuiNative.ImGuiTextFilter_ImGuiTextFilter(null));
-		private static Vector2 size = new Vector2(200, 400);
-		private static Color gridColor = new Color(0.15f, 0.15f, 0.15f, 1f);
-		private static Color gridMainColor = new Color(0.35f, 0.15f, 0.15f, 1f);
+		private static unsafe ImGuiTextFilterPtr filter = new(ImGuiNative.ImGuiTextFilter_ImGuiTextFilter(null));
+		private static Vector2 size = new(200, 400);
+		private static Color gridColor = new(0.15f, 0.15f, 0.15f, 1f);
+		private static Color gridMainColor = new(0.35f, 0.15f, 0.15f, 1f);
 		private static int gridSize = 128;
 		private static Vector2? target;
 		private static bool grid = true;
