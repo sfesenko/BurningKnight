@@ -17,25 +17,24 @@ namespace BurningKnight.assets {
 		public static ImGuiRenderer Renderer;
 		public static IntPtr ItemsTexture;
 		public static IntPtr ProjectilesTexture;
-		public static unsafe ImGuiTextFilterPtr filter2 = new(ImGuiNative.ImGuiTextFilter_ImGuiTextFilter(null));
 
 		public static void Init() {
-			try {
+			// try {
 				Renderer = new ImGuiRenderer(Engine.Instance);
 				ImGui.PushStyleVar(ImGuiStyleVar.FrameRounding, 4f);
-			} catch (Exception) {
+			// } catch (Exception) {
 				
-			}
+			// }
 		}
 		
 		public static void BindTextures() {
-			try {
+			// try {
 				ItemsTexture = Renderer.BindTexture(CommonAse.Items.Texture);
 				ProjectilesTexture = Renderer.BindTexture(CommonAse.Projectiles.Texture);
 				Assets.ImGuiEnabled = true;
-			} catch (Exception e) {
+			// } catch (Exception e) {
 				
-			}
+			// }
 		}
 
 		private static List<int> toRemove = [];
@@ -100,15 +99,13 @@ namespace BurningKnight.assets {
 			}
 
 
-			foreach (var n in ImNodes.Nodes) {
-				var node = n.Value;
-
+			foreach (var (key, node) in ImNodes.Nodes) {
 				if (!hideFiltred || filter.PassFilter(node.GetName())) {
 					node.Render();
 				}
 
 				if (node.Done) {
-					toRemove.Add(n.Key);
+					toRemove.Add(key);
 				}
 			}
 
@@ -193,9 +190,7 @@ namespace BurningKnight.assets {
 					continue;
 				}
 
-				if (first == null) {
-					first = node;
-				}
+				first ??= node;
 
 				if (ImNode.Focused == node) {
 					node.ForceFocus = true;

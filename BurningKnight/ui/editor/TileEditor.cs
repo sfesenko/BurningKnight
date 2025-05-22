@@ -19,51 +19,51 @@ using Num = System.Numerics;
 
 namespace BurningKnight.ui.editor {
 	public static class TileEditor {
-		private static Num.Vector2 tileSize = new Num.Vector2(32f);
-		private static Num.Vector4 tintColorActive = new Num.Vector4(0.6f);
-		private static Num.Vector4 tintColor = new Num.Vector4(1f);
-		private static Num.Vector4 bg = new Num.Vector4(0.1f);
+		private static readonly Num.Vector2 TileSize = new(32f);
+		private static readonly Num.Vector4 TintColorActive = new(0.6f);
+		private static readonly Num.Vector4 TintColor = new(1f);
+		private static readonly Num.Vector4 Bg = new(0.1f);
 
 		public static Editor Editor;
 		public static EditorWindow Window;
 		
-		private static string[] biomes;
-		private static int currentBiome;
-		private static List<TileInfo> infos = new List<TileInfo>();
-		private static Texture2D biomeTexture;
-		private static IntPtr biomePointer;
-		private static Texture2D tilesetTexture;
-		private static IntPtr tilesetPointer;
-		private static bool fill;
-		private static bool open;
+		private static string[] _biomes;
+		private static int _currentBiome;
+		private static readonly List<TileInfo> Infos = [];
+		private static Texture2D _biomeTexture;
+		private static IntPtr _biomePointer;
+		private static Texture2D _tilesetTexture;
+		private static IntPtr _tilesetPointer;
+		private static bool _fill;
+		private static bool _open;
 
-		public static TileInfo CurrentInfo;
-		public static bool Grid;
+		private static TileInfo CurrentInfo;
+		private static bool Grid;
 		
 		public static void ReloadBiome() {
 			if (Editor?.Level?.Biome == null) {
 				return;
 			}
 		
-			biomes = new string[BiomeRegistry.Defined.Count];
+			_biomes = new string[BiomeRegistry.Defined.Count];
 			var i = 0;
 			
 			foreach (var r in BiomeRegistry.Defined.Values) {
 				if (r.Id == Editor?.Level?.Biome?.Id) {
-					currentBiome = i;
+					_currentBiome = i;
 				}
 				
-				biomes[i] = r.Id;
+				_biomes[i] = r.Id;
 				i++;
 			}
 			
-			tilesetTexture = Animations.Get($"{Editor.Level.Biome.Id}_biome").Texture;
-			tilesetPointer = ImGuiHelper.Renderer.BindTexture(tilesetTexture);
+			_tilesetTexture = Animations.Get($"{Editor.Level.Biome.Id}_biome").Texture;
+			_tilesetPointer = ImGuiHelper.Renderer.BindTexture(_tilesetTexture);
 			
-			biomeTexture = Animations.Get("biome_assets").Texture;
-			biomePointer = ImGuiHelper.Renderer.BindTexture(biomeTexture);
+			_biomeTexture = Animations.Get("biome_assets").Texture;
+			_biomePointer = ImGuiHelper.Renderer.BindTexture(_biomeTexture);
 			
-			infos.Clear();
+			Infos.Clear();
 			
 			DefineTile(Tile.WallA, 128, 0);
 			DefineTile(Tile.WallB, 144, 0);
@@ -100,20 +100,20 @@ namespace BurningKnight.ui.editor {
 			DefineTile(Tile.TintedRock, 160, 224);
 			DefineTile(Tile.MetalBlock, 128, 192);
 			
-			CurrentInfo = infos[0];
+			CurrentInfo = Infos[0];
 		}
 		
 		public static void Render() {
 			if (!ImGui.Begin("Tile editor", ImGuiWindowFlags.AlwaysAutoResize)) {
 				ImGui.End();
-				open = false;
+				_open = false;
 				return;
 			}
 
-			open = true;
+			_open = true;
 
-			if (ImGui.Combo("Biome", ref currentBiome, biomes, biomes.Length)) {
-				Editor.Level.SetBiome(BiomeRegistry.Get(biomes[currentBiome]));
+			if (ImGui.Combo("Biome", ref _currentBiome, _biomes, _biomes.Length)) {
+				Editor.Level.SetBiome(BiomeRegistry.Get(_biomes[_currentBiome]));
 				ReloadBiome();
 			}
 			
@@ -124,17 +124,15 @@ namespace BurningKnight.ui.editor {
 			var down = !ImGui.GetIO().WantCaptureMouse && Input.Mouse.CheckLeftButton;
 			var clicked = !ImGui.GetIO().WantCaptureMouse && MouseData.HadClick;
 				
-			ImGui.Checkbox("Fill", ref fill);
+			ImGui.Checkbox("Fill", ref _fill);
 			ImGui.Separator();
 
-			if (CurrentInfo == null) {
-				CurrentInfo = infos[1];
-			}
+			CurrentInfo ??= Infos[1];
 
 			var cur = CurrentInfo;
 
 			// 4
-			ImGui.ImageButton(cur.ToString(), cur.Texture, tileSize, cur.Uv0, cur.Uv1, bg, tintColor);
+			ImGui.ImageButton(cur.ToString(), cur.Texture, TileSize, cur.Uv0, cur.Uv1, Bg, TintColor);
 			ImGui.SameLine();
 			ImGui.Text(CurrentInfo.Tile.ToString());
 
@@ -147,9 +145,9 @@ namespace BurningKnight.ui.editor {
 			}
 					
 			if (Input.Keyboard.WasPressed(Keys.F)) {
-				fill = true;
+				_fill = true;
 			} else if (Input.Keyboard.WasPressed(Keys.P)) {
-				fill = false;
+				_fill = false;
 			}
 
 			if (CurrentInfo.Tile.Matches(TileFlags.Burns)) {
@@ -158,72 +156,70 @@ namespace BurningKnight.ui.editor {
 			}
 				
 			ImGui.Separator();
-
-			for (var i = 0; i < infos.Count; i++) {
-				var info = infos[i];
+			for (var i = 0; i < Infos.Count; i++) {
+				var info = Infos[i];
 				ImGui.PushID((int) info.Tile);
-				var tintCol = info == CurrentInfo ? tintColorActive : tintColor;
-				if (ImGui.ImageButton(info.ToString(), info.Texture, tileSize, info.Uv0, info.Uv1,  bg, tintCol)) {
+				var active = info == CurrentInfo ? TintColorActive : TintColor;
+				if (ImGui.ImageButton(info.ToString(), info.Texture, TileSize, info.Uv0, info.Uv1,  Bg, active)) {
 					CurrentInfo = info;
 				}
 
 				ImGui.PopID();
-					
-				if (i % 4 < 3 && i < infos.Count - 1) {
+				
+				if (i % 6 < 5 && i < Infos.Count - 1) {
 					ImGui.SameLine();
 				}
 			}
-				
-
-			if (down) {
-				var mouse = Input.Mouse.GamePosition;
-
-				var x = (int) (mouse.X / 16);
-				var y = (int) (mouse.Y / 16);
-					
-				if (Editor.Level.IsInside(x, y)) {
-					if (Editor.Level.Get(x, y, CurrentInfo.Tile.Matches(TileFlags.LiquidLayer)) != CurrentInfo.Tile) {
-						if (!fill) {
-							Window.Commands.Do(new SetCommand {
-								X = x,
-								Y = y,
-								Tile = CurrentInfo.Tile
-							});
-						} else {
-							Window.Commands.Do(new FillCommand {
-								X = x,
-								Y = y,
-								Tile = CurrentInfo.Tile
-							});
-						}
-					}
-				}
+			
+			if (down)
+			{
+				PlaceTile(CurrentInfo.Tile);
 			}
 			
 			ImGui.End();
 		}
-		
-		private static void DefineTile(Tile tile, int x, int y, bool biome = false) {
-			infos.Add(new TileInfo(tile, biome ? biomeTexture : tilesetTexture, biome ? biomePointer : tilesetPointer, x, y));
+
+		private static void PlaceTile(Tile tile)
+		{
+			var mouse = Input.Mouse.GamePosition;
+
+			var x = (int) (mouse.X / 16);
+			var y = (int) (mouse.Y / 16);
+
+			if (Editor.Level.IsInside(x, y) && Editor.Level.Get(x, y, tile.Matches(TileFlags.LiquidLayer)) != tile)
+			{
+				Command command = _fill
+						? new FillCommand { X = x, Y = y, Tile = tile }
+						: new SetCommand { X = x, Y = y, Tile = tile }
+					;
+				Window.Commands.Do(command);
+			}
+		}
+
+		private static void DefineTile(Tile tile, int x, int y, bool biome = false)
+		{
+			var texture2D = biome ? _biomeTexture : _tilesetTexture;
+			var pointer = biome ? _biomePointer : _tilesetPointer;
+			Infos.Add(new TileInfo(tile, texture2D, pointer, x, y));
 		}
 
 		public static void RenderInGame() {
-			if (!open) {
+			if (!_open) {
 				return;
 			}
 			
 			Color color;
 
 			if (Grid) {
-				var gridSize = 16;
+				const int gridSize = 16;
 				var off = (Camera.Instance.TopLeft - new Vector2(0, 8));
 				color = new Color(1f, 1f, 1f, 0.5f);
 
-				for (float x = Math.Max(0, off.X - off.X % gridSize); x <= off.X + Display.Width && x <= Editor.Level.Width * 16; x += gridSize) {
+				for (var x = Math.Max(0, off.X - off.X % gridSize); x <= off.X + Display.Width && x <= Editor.Level.Width * 16; x += gridSize) {
 					Graphics.Batch.DrawLine(x, off.Y, x, off.Y + Display.Height + gridSize, color);
 				}
 
-				for (float y = Math.Max(0, off.Y - off.Y % gridSize); y <= off.Y + Display.Height && y <= Editor.Level.Height * 16; y += gridSize) {
+				for (var y = Math.Max(0, off.Y - off.Y % gridSize); y <= off.Y + Display.Height && y <= Editor.Level.Height * 16; y += gridSize) {
 					Graphics.Batch.DrawLine(off.X, y, off.X + Display.Width + gridSize, y, color);
 				}
 			}

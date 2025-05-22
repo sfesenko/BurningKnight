@@ -28,12 +28,14 @@ namespace BurningKnight.assets.achievements {
 		public static readonly List<string> AchievementBuffer = [];
 		public static readonly List<string> ItemBuffer = [];
 
-		private static System.Numerics.Vector2 size = new System.Numerics.Vector2(300, 400);
+		private static readonly System.Numerics.Vector2 size = new(300, 400);
 
 		public static AchievementUnlockedCallback UnlockedCallback;
 		public static AchievementLockedCallback LockedCallback;
 		public static AchievementProgressSetCallback ProgressSetCallback;
 		public static Action PostLoadCallback;
+
+		private static unsafe ImGuiTextFilterPtr _filter2 = new(ImGuiNative.ImGuiTextFilter_ImGuiTextFilter(null));
 
 		public static Achievement Get(string id)
 		{
@@ -65,7 +67,7 @@ namespace BurningKnight.assets.achievements {
 			}
 		}
 
-		public static void Save() {
+		private static void Save() {
 			var root = new JsonObject();
 
 			foreach (var a in Defined.Values) {
@@ -73,8 +75,8 @@ namespace BurningKnight.assets.achievements {
 				a.Save(data);
 				root[a.Id] = data;
 			}
-			
-			var file = File.CreateText(FileHandle.FromRoot("achievements.json").FullPath);
+
+			using var file = File.CreateText(FileHandle.FromRoot("achievements.json").FullPath);
 			var writer = new JsonWriter(file);
 			writer.Write(root);
 			file.Close();
@@ -82,13 +84,11 @@ namespace BurningKnight.assets.achievements {
 			Locale.Save();
 		}
 
-		public static void LockAll() {
-			try {
-				foreach (var a in Defined.Values) {
-					a.Unlocked = false;
-				}
-			} catch (Exception e) {
-				Log.Error(e);			
+		public static void LockAll()
+		{
+			foreach (var a in Defined.Values)
+			{
+				a.Unlocked = false;
 			}
 		}
 
@@ -208,7 +208,7 @@ namespace BurningKnight.assets.achievements {
 			}
 		}
 
-		public static void Lock(string id) {
+		private static void Lock(string id) {
 			var a = Get(id);
 
 			if (a == null) {
@@ -239,11 +239,11 @@ namespace BurningKnight.assets.achievements {
 			}
 		}
 		
-		private static string achievementName = "";
-		private static Achievement selected;
-		private static bool hideLocked;
-		private static bool hideUnlocked;
-		private static bool forceFocus;
+		private static string _achievementName = "";
+		private static Achievement _selected;
+		private static bool _hideLocked;
+		private static bool _hideUnlocked;
+		private static bool _forceFocus;
 
 		private static void RenderSelectedInfo() {
 			var open = true;
@@ -254,36 +254,36 @@ namespace BurningKnight.assets.achievements {
 			}
 
 			if (!open) {
-				selected = null;
+				_selected = null;
 				ImGui.End();
 
 				return;
 			}
 			
-			ImGui.Text(selected.Id);
+			ImGui.Text(_selected.Id);
 			ImGui.Separator();
 
-			ImGui.InputText("Unlocks", ref selected.Unlock, 128);
-			ImGui.InputText("Group", ref selected.Group, 128);
+			ImGui.InputText("Unlocks", ref _selected.Unlock, 128);
+			ImGui.InputText("Group", ref _selected.Group, 128);
 
-			ImGui.InputInt("Max progress", ref selected.Max);
-			ImGui.Checkbox("Secret", ref selected.Secret);
+			ImGui.InputInt("Max progress", ref _selected.Max);
+			ImGui.Checkbox("Secret", ref _selected.Secret);
 			
-			var u = selected.Unlocked;
+			var u = _selected.Unlocked;
 			
 			if (ImGui.Checkbox("Unlocked", ref u)) {
 				if (u) {
-					Unlock(selected.Id);
+					Unlock(_selected.Id);
 				} else {
-					Lock(selected.Id);
+					Lock(_selected.Id);
 				}			
 			}
 			
 			ImGui.SameLine();
 
 			if (ImGui.Button("Delete##ach")) {
-				Defined.Remove(selected.Id);
-				selected = null;
+				Defined.Remove(_selected.Id);
+				_selected = null;
 
 				ImGui.End();
 				return;
@@ -291,14 +291,14 @@ namespace BurningKnight.assets.achievements {
 			
 			ImGui.Separator();
 
-			var k = $"ach_{selected.Id}";
+			var k = $"ach_{_selected.Id}";
 			var name = Locale.Get(k);
 			
 			if (ImGui.InputText("Name##ac", ref name, 64)) {
 				Locale.Map[k] = name;
 			}
 
-			var key = $"ach_{selected.Id}_desc";
+			var key = $"ach_{_selected.Id}_desc";
 			var desc = Locale.Get(key);
 				
 			if (ImGui.InputText("Description##ac", ref desc, 256)) {
@@ -315,7 +315,7 @@ namespace BurningKnight.assets.achievements {
 				return;
 			}
 			
-			if (selected != null) {
+			if (_selected != null) {
 				RenderSelectedInfo();
 			}
 			
@@ -339,13 +339,13 @@ namespace BurningKnight.assets.achievements {
 
 			if (ImGui.BeginPopupModal("New achievement")) {
 				ImGui.PushItemWidth(300);
-				ImGui.InputText("Id", ref achievementName, 64);
+				ImGui.InputText("Id", ref _achievementName, 64);
 				ImGui.PopItemWidth();
 				
 				if (ImGui.Button("Create") || Input.Keyboard.WasPressed(Keys.Enter, true)) {
-					Defined[achievementName] = selected = new Achievement(achievementName);
-					achievementName = "";
-					forceFocus = true;
+					Defined[_achievementName] = _selected = new Achievement(_achievementName);
+					_achievementName = "";
+					_forceFocus = true;
 					
 					ImGui.CloseCurrentPopup();
 				}	
@@ -353,7 +353,7 @@ namespace BurningKnight.assets.achievements {
 				ImGui.SameLine();
 
 				if (ImGui.Button("Cancel") || Input.Keyboard.WasPressed(Keys.Escape, true)) {
-					achievementName = "";
+					_achievementName = "";
 					ImGui.CloseCurrentPopup();
 				}
 				
@@ -377,15 +377,16 @@ namespace BurningKnight.assets.achievements {
 			}
 			
 			ImGui.Separator();
-			ImGuiHelper.filter2.Draw("Search");
+
+			_filter2.Draw("Search");
 			
 			ImGui.SameLine();
 			ImGui.Text($"{count}");
 			count = 0;
 
-			ImGui.Checkbox("Hide unlocked", ref hideUnlocked);
+			ImGui.Checkbox("Hide unlocked", ref _hideUnlocked);
 			ImGui.SameLine();
-			ImGui.Checkbox("Hide locked", ref hideLocked);
+			ImGui.Checkbox("Hide locked", ref _hideLocked);
 			ImGui.Separator();
 			
 			var height = ImGui.GetStyle().ItemSpacing.Y;
@@ -395,27 +396,27 @@ namespace BurningKnight.assets.achievements {
 			foreach (var i in Defined.Values) {
 				ImGui.PushID(i.Id);
 
-				if (forceFocus && i == selected) {
+				if (_forceFocus && i == _selected) {
 					ImGui.SetScrollHereY();
-					forceFocus = false;
+					_forceFocus = false;
 				}
 				
-				if (ImGuiHelper.filter2.PassFilter(i.Id)) {
-					if ((hideLocked && !i.Unlocked) || (hideUnlocked && i.Unlocked)) {
+				if (_filter2.PassFilter(i.Id)) {
+					if ((_hideLocked && !i.Unlocked) || (_hideUnlocked && i.Unlocked)) {
 						continue;
 					}
 					
 					count++;
 
-					if (ImGui.Selectable(i.Id, i == selected)) {
-						selected = i;
+					if (ImGui.Selectable(i.Id, i == _selected)) {
+						_selected = i;
 
 						if (ImGui.IsMouseDown(ImGuiMouseButton.Right)) {
 							if (ImGui.Button("Give")) {
 								LocalPlayer.Locate(Engine.Instance.State.Area)
 									?.GetComponent<InventoryComponent>()
 									.Pickup(Items.CreateAndAdd(
-										selected.Id, Engine.Instance.State.Area
+										_selected.Id, Engine.Instance.State.Area
 									), true);
 							}
 						}
@@ -445,8 +446,7 @@ namespace BurningKnight.assets.achievements {
 						return false;
 					}
 				}
-		}
-
+			}
 			return found;
 		} 
 	}

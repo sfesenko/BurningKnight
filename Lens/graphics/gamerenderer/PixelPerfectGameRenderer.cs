@@ -70,7 +70,9 @@ namespace Lens.graphics.gamerenderer {
 				Engine.GraphicsDevice.SetRenderTarget(UiTarget);
 			}
 
-			Graphics.Batch.Begin(SpriteSortMode, BlendState, SamplerState, DepthStencilState, EnableClip ? ClipRasterizerState : DefaultRasterizerState, SurfaceEffect, force ? Matrix.Identity : uiScale);
+			var defaultRasterizerState = EnableClip ? ClipRasterizerState : DefaultRasterizerState;
+			var transformMatrix = force ? Matrix.Identity : uiScale;
+			Graphics.Batch.Begin(SpriteSortMode, BlendState, SamplerState, DepthStencilState, defaultRasterizerState, SurfaceEffect, transformMatrix);
 		}
 
 		private void RenderUi() {

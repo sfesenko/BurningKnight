@@ -27,7 +27,7 @@ namespace BurningKnight.ui.imgui {
         private int _indexBufferSize;
 
         // Textures
-        private Dictionary<IntPtr, Texture2D> _loadedTextures;
+        private readonly Dictionary<IntPtr, Texture2D> _loadedTextures;
 
         private int _textureId;
         private IntPtr? _fontTextureId;
@@ -84,7 +84,7 @@ namespace BurningKnight.ui.imgui {
         {
             // Get font texture from ImGui
             var io = ImGui.GetIO();
-            io.Fonts.GetTexDataAsRGBA32(out byte* pixelData, out int width, out int height, out int bytesPerPixel);
+            io.Fonts.GetTexDataAsRGBA32(out byte* pixelData, out var width, out var height, out var bytesPerPixel);
 
             // Copy the data to a managed array
             var pixels = new byte[width * height * bytesPerPixel];
@@ -185,12 +185,12 @@ namespace BurningKnight.ui.imgui {
         /// </summary>
         protected virtual Effect UpdateEffect(Texture2D texture)
         {
-            _effect = _effect ?? new BasicEffect(_graphicsDevice);
+            _effect ??= new BasicEffect(_graphicsDevice);
 
             var io = ImGui.GetIO();
 
             // MonoGame-specific //////////////////////
-            var offset = .5f;
+            const float offset = .5f;
             ///////////////////////////////////////////
 
             // FNA-specific ///////////////////////////
@@ -305,9 +305,9 @@ namespace BurningKnight.ui.imgui {
             int vtxOffset = 0;
             int idxOffset = 0;
 
-            for (int n = 0; n < drawData.CmdListsCount; n++)
+            for (var n = 0; n < drawData.CmdListsCount; n++)
             {
-                ImDrawListPtr cmdList = drawData.CmdLists[n];
+                var cmdList = drawData.CmdLists[n];
 
                 fixed (void* vtxDstPtr = &_vertexData[vtxOffset * DrawVertDeclaration.Size])
                 fixed (void* idxDstPtr = &_indexData[idxOffset * sizeof(ushort)])
@@ -330,19 +330,19 @@ namespace BurningKnight.ui.imgui {
             _graphicsDevice.SetVertexBuffer(_vertexBuffer);
             _graphicsDevice.Indices = _indexBuffer;
 
-            int vtxOffset = 0;
-            int idxOffset = 0;
+            var vtxOffset = 0;
+            var idxOffset = 0;
 
-            for (int n = 0; n < drawData.CmdListsCount; n++)
+            for (var n = 0; n < drawData.CmdListsCount; n++)
             {
-                ImDrawListPtr cmdList = drawData.CmdLists[n];
+                var cmdList = drawData.CmdLists[n];
                 // CmdListsRange[n];
 
                 for (var cmdi = 0; cmdi < cmdList.CmdBuffer.Size; cmdi++)
                 {
                     var drawCmd = cmdList.CmdBuffer[cmdi];
 
-                    if (!_loadedTextures.ContainsKey(drawCmd.TextureId))
+                    if (!_loadedTextures.TryGetValue(drawCmd.TextureId, out var texture2D))
                     {
                         throw new InvalidOperationException($"Could not find a texture with id '{drawCmd.TextureId}', please check your bindings");
                     }
@@ -354,7 +354,7 @@ namespace BurningKnight.ui.imgui {
                         (int)(drawCmd.ClipRect.W - drawCmd.ClipRect.Y)
                     );
 
-                    var effect = UpdateEffect(_loadedTextures[drawCmd.TextureId]);
+                    var effect = UpdateEffect(texture2D);
 
                     foreach (var pass in effect.CurrentTechnique.Passes)
                     {
