@@ -4,10 +4,6 @@
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
     <ItemGroup>
-        <ProjectReference Include="..\Aseprite\Aseprite.csproj">
-            <Project>{13c6f252-0b3c-4a22-a9db-270c76657fab}</Project>
-            <Name>Aseprite</Name>
-        </ProjectReference>
         <ProjectReference Include="..\Lens\Lens.csproj">
             <Project>{3b26aa2e-0ba2-42dc-ad62-e6c8617f9e4d}</Project>
             <Name>Lens</Name>

@@ -4,7 +4,6 @@
         <TargetFramework>net10.0</TargetFramework>
     </PropertyGroup>
     <ItemGroup>
-        <ProjectReference Include="..\Aseprite\Aseprite.csproj"/>
         <ProjectReference Include="..\BurningKnight\BurningKnight.csproj"/>
         <ProjectReference Include="..\Lens\Lens.csproj"/>
     </ItemGroup>
