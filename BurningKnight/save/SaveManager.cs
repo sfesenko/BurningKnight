@@ -12,7 +12,10 @@ using Steamworks;
 
 namespace BurningKnight.save {
 	public class SaveManager {
-		public const string SaveDir = BK.Demo ? "burning_knight_demo/" : "burning_knight/";
+		// Absolute: saves stay beside the executable whatever directory the game was launched from.
+		public static readonly string SaveDir =
+			Path.Combine(AppContext.BaseDirectory, BK.Demo ? "burning_knight_demo" : "burning_knight") +
+			Path.DirectorySeparatorChar;
 		public const int MagicNumber = 894923782;
 		public const short Version = 2;
 

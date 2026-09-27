@@ -91,9 +91,18 @@ namespace Desktop {
 			}
 
 			KillPreviousInstance();
+
+			// The engine takes the content root explicitly, but the working directory is set as
+			// well: MonoGame's TitleContainer — and MonoGame.Extended's BitmapFont, which uses it
+			// — only accepts paths relative to the working directory.
+			var content = ContentRoot.Resolve();
+
+			Assets.SetRoot(content);
+			ContentRoot.LinkNextToExecutable(content);
+			Directory.SetCurrentDirectory(Path.GetDirectoryName(Path.TrimEndingDirectorySeparator(content)));
 			
-			TryToRemove("burning_log.txt");
-			TryToRemove("crashes.txt");
+			TryToRemove(Path.Combine(AppContext.BaseDirectory, "burning_log.txt"));
+			TryToRemove(Path.Combine(AppContext.BaseDirectory, "crashes.txt"));
 
 			try {
 				SoundEffect.Initialize();

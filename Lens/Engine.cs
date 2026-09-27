@@ -99,7 +99,7 @@ namespace Lens
             core = Core.Core.SelectCore(Window, Graphics);
             core.Init(width, height, fullscreen);
 
-            Content.RootDirectory = "Content/";
+            Content = new ContentManagerWithRoot(Services) { RootDirectory = Assets.Root };
             Assets.Content = Content;
             Counter = new FrameCounter(this);
             Components.Add(Counter);

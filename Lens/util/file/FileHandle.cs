@@ -18,10 +18,6 @@ public class FileHandle(string path)
 	public static FileHandle FromRoot(string path) {
 		return new FileHandle(Assets.Root + path);
 	}
-	
-	public static FileHandle FromNearRoot(string path) {
-		return new FileHandle(Assets.NearRoot + path);
-	}
 
 	public void MakeDirectory() {
 		Directory.CreateDirectory(path);

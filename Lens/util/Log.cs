@@ -5,7 +5,7 @@ using System.Numerics;
 
 namespace Lens.util;
 public static class Log {
-	private const string LogName = "burning_log.txt";
+	private static readonly string LogName = Path.Combine(AppContext.BaseDirectory, "burning_log.txt");
 
 	public static bool WriteToFile = !Engine.Debug;
 	private static Vector2 size = new(300, 400);

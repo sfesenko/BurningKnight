@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using Lens.graphics;
 using Lens.util;
@@ -41,11 +42,13 @@ namespace Lens.assets {
 		public static bool FailedToLoadAudio;
 
 		public static ContentManager Content;
-		public static string Root => LoadOriginalFiles 
-		    ? Path.Combine(Directory.GetCurrentDirectory(), "Content/") 
-		    : NearRoot;
-		    
-		public static string NearRoot => $"{Directory.GetCurrentDirectory()}/Content/";
+		public static string Root { get; private set; } =
+			Path.Combine(AppContext.BaseDirectory, "Content") + Path.DirectorySeparatorChar;
+
+		// The host supplies the root; the engine must not guess it from the working directory.
+		public static void SetRoot(string root) {
+			Root = Path.EndsInDirectorySeparator(root) ? root : root + Path.DirectorySeparatorChar;
+		}
 		
 		private static string[] folders;
 		private static List<FileSystemEventArgs> changed = [];

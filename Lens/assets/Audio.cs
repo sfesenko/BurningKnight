@@ -71,7 +71,7 @@ public class Audio
     internal void Load()
     {
         Destroy();
-        LoadSfx(FileHandle.FromNearRoot("bin/Sfx/"), "", true);
+        LoadSfx(FileHandle.FromRoot("bin/Sfx/"), "", true);
     }
 
     private void LoadSfx(string sfx, string path)
