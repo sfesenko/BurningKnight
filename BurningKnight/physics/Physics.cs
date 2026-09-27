@@ -112,15 +112,25 @@ namespace BurningKnight.physics {
 			if (World == null) {
 				return;
 			}
-			
+
 			try {
 				RemoveBodies();
-				
-				locked = true;
-				World.Step(dt);
-				locked = false;
 			} catch (Exception e) {
 				Log.Error(e);
+				return;
+			}
+
+			// 'locked' has to be cleared even when a contact callback throws, otherwise the world
+			// stays locked and RemoveBodies silently stops draining 'toRemove' for the rest of the
+			// process.
+			locked = true;
+
+			try {
+				World.Step(dt);
+			} catch (Exception e) {
+				Log.Error(e);
+			} finally {
+				locked = false;
 			}
 		}
 
