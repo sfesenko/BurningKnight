@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 
 namespace Lens.Core;
 
@@ -18,11 +19,13 @@ public class Core {
 			
 	}
 
-	public static Core SelectCore(GameWindow Window, GraphicsDeviceManager Graphics) {
-		Core core = new DesktopCore();
+	// The host decides which core the engine runs on, so a platform can supply its own without
+	// the engine naming it.
+	public static Core Create(GameWindow window, GraphicsDeviceManager graphics, Func<Core> factory) {
+		var core = factory();
 
-		core.Window = Window;
-		core.Graphics = Graphics;
+		core.Window = window;
+		core.Graphics = graphics;
 
 		return core;
 	}

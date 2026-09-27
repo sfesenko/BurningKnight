@@ -1,8 +1,10 @@
 ﻿using System;
+using Lens;
+using Lens.Core;
 using Lens.util;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Lens.Core {
+namespace Desktop.core {
 	public class DesktopCore : Core {
 		private static bool resizing;
 		private static bool fullscreen;

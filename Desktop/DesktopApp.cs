@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using BurningKnight;
+using Desktop.core;
 using Desktop.integration;
 using Lens;
 using Microsoft.Xna.Framework;
 
 namespace Desktop {
-	public class DesktopApp() : BK(Display.Width * Scale, Display.Height * Scale, !Version.Dev)
+	public class DesktopApp() : BK(Display.Width * Scale, Display.Height * Scale, !Version.Dev, () => new DesktopCore())
 	{
 		private const int Scale = 3;
 

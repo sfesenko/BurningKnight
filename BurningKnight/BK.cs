@@ -1,4 +1,5 @@
-﻿using BurningKnight.assets;
+﻿using System;
+using BurningKnight.assets;
 using BurningKnight.assets.input;
 using BurningKnight.assets.items;
 using BurningKnight.assets.lighting;
@@ -9,6 +10,7 @@ using BurningKnight.save;
 using BurningKnight.state;
 using BurningKnight.util;
 using Lens;
+using Lens.Core;
 using Lens.util.math;
 using Microsoft.Xna.Framework;
 
@@ -18,8 +20,8 @@ public class BK : Engine {
 	public const bool StandMode = false;
 	public const bool Demo = false;
 
-	protected BK(int width, int height, bool fullscreen) : base(
-		Rnd.Chance(60) ? "Burning Knight" : $"Burning Knight{(Demo ? " Demo" : "")}: {Titles.Generate()}", width, height, fullscreen) {
+	protected BK(int width, int height, bool fullscreen, Func<Core> coreFactory) : base(
+		Rnd.Chance(60) ? "Burning Knight" : $"Burning Knight{(Demo ? " Demo" : "")}: {Titles.Generate()}", width, height, fullscreen, coreFactory) {
 	}
 
 	protected override void Initialize() {

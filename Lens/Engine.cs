@@ -82,7 +82,7 @@ namespace Lens
             }
         }
 
-        protected Engine(string title, int width, int height, bool fullscreen)
+        protected Engine(string title, int width, int height, bool fullscreen, Func<Core.Core> coreFactory)
         {
             Instance = this;
             tmpTitle = title;
@@ -96,7 +96,7 @@ namespace Lens
 
             Graphics.HardwareModeSwitch = false;
 
-            core = Core.Core.SelectCore(Window, Graphics);
+            core = Core.Core.Create(Window, Graphics, coreFactory);
             core.Init(width, height, fullscreen);
 
             Content = new ContentManagerWithRoot(Services) { RootDirectory = Assets.Root };
