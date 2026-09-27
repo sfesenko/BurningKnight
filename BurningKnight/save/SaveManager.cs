@@ -8,7 +8,6 @@ using Lens;
 using Lens.entity;
 using Lens.util;
 using Lens.util.file;
-using Steamworks;
 
 namespace BurningKnight.save {
 	public class SaveManager {
@@ -23,8 +22,6 @@ namespace BurningKnight.save {
 		public static string SlotDir = $"{SaveDir}slot-{CurrentSlot}/";
 
 		public static string BackupDir => Paths.DataDir;
-
-		public static bool EnableCloudSave;
 
 		public static Saver[] Savers;
 
@@ -263,124 +260,6 @@ namespace BurningKnight.save {
 					File.Copy(file.FullPath, $"{backup.FullPath}{file.Name}", true);
 				} catch (Exception e) {
 				}
-			}
-		}
-
-		public static void DeleteCloudSaves() {
-			if (!EnableCloudSave || !SteamRemoteStorage.IsCloudEnabled) {
-				return;
-			}
-
-			foreach (var f in SteamRemoteStorage.Files) {
-				SteamRemoteStorage.FileDelete(f);
-			}
-		}
-
-		public static void LoadCloudSaves() {
-			if (!EnableCloudSave || !SteamRemoteStorage.IsCloudEnabled) {
-				return;
-			}
-
-			Log.Info("Loading data from cloud");
-
-			if (!SteamClient.IsLoggedOn) {
-				Log.Error("Can't connect to steam servers");
-
-				return;
-			}
-
-			if (SteamRemoteStorage.FileCount > 0) {
-				RemoveFile(new FileHandle(SaveDir), "");
-			}
-
-			foreach (var file in SteamRemoteStorage.Files) {
-				var to = $"{SaveDir}{file}";
-				Log.Info($"Loading file {file} to {to}");
-
-				var handle = new FileHandle(to);
-
-				if (!handle.Parent.Exists()) {
-					Log.Info($"Making the directory {handle.Parent.FullPath}");
-					handle.Parent.MakeDirectory();
-				}
-
-				File.WriteAllBytes(to, SteamRemoteStorage.FileRead(file));
-			}
-		}
-
-		private static void RemoveFile(FileHandle handle, string path) {
-			if (handle.IsDirectory()) {
-				path += $"{handle.Name}/";
-
-				foreach (var dir in handle.ListDirectoryHandles()) {
-					RemoveFile(dir, path);
-				}
-
-				foreach (var file in handle.ListFileHandles()) {
-					RemoveFile(file, path);
-				}
-			} else {
-				path = $"{path}{handle.Name}";
-
-				if (!SteamRemoteStorage.Files.Contains(path)) {
-					Log.Info($"Removing file {path} from local saves");
-				}
-			}
-		}
-
-		public static void SaveCloudSaves() {
-			if (!EnableCloudSave || !SteamRemoteStorage.IsCloudEnabled) {
-				return;
-			}
-
-			Log.Info("Saving data to cloud");
-
-			if (!SteamClient.IsLoggedOn) {
-				Log.Error("Can't connect to steam servers");
-
-				return;
-			}
-
-			var toRemove = new List<string>();
-
-			foreach (var file in SteamRemoteStorage.Files) {
-				var handle = new FileHandle($"{SaveDir}{file}");
-
-				if (!handle.Exists()) {
-					toRemove.Add(file);
-				}
-			}
-
-			foreach (var file in toRemove) {
-				Log.Info($"Removing cloud file {file}");
-				SteamRemoteStorage.FileDelete(file);
-			}
-
-			WriteFile(new FileHandle(SaveDir), "");
-		}
-
-		private static void WriteFile(FileHandle handle, string path) {
-			if (handle.IsDirectory()) {
-				path += $"{handle.Name}/";
-
-				foreach (var dir in handle.ListDirectoryHandles()) {
-					WriteFile(dir, path);
-				}
-
-				foreach (var file in handle.ListFileHandles()) {
-					WriteFile(file, path);
-				}
-			} else {
-				if (handle.Extension != ".sv" && handle.Extension != ".lvl") {
-					Log.Info($"Ignoring file {handle.FullPath} cause of its extension {handle.Extension}");
-
-					return;
-				}
-
-				path = $"{path}{handle.Name}";
-				Log.Info($"Saving file {path} from {handle.FullPath}");
-
-				SteamRemoteStorage.FileWrite(path, File.ReadAllBytes(handle.FullPath));
 			}
 		}
 	}

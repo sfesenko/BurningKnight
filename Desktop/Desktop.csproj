@@ -14,5 +14,7 @@
         <PackageReference Include="MonoGame.Extended.Content.Pipeline" Version="4.0.4"/>
         <PackageReference Include="MonoGame.Extended" Version="4.0.4"/>
         <PackageReference Include="System.IO.Ports" Version="10.0.12"/>
+        <PackageReference Include="Facepunch.Steamworks" Version="2.3.3"/>
+        <PackageReference Include="TextCopy" Version="6.2.1"/>
     </ItemGroup>
 </Project>

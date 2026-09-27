@@ -7,6 +7,7 @@ using BurningKnight.ui;
 using Lens;
 using Lens.assets;
 using Lens.util;
+using Desktop.services;
 using Steamworks;
 using Steamworks.Data;
 using Achievement = Steamworks.Data.Achievement;
@@ -22,7 +23,7 @@ namespace Desktop.integration.steam {
 				SteamClient.Init(851150);
 
 				LaunchedFromSteam = true;
-				SaveManager.EnableCloudSave = true;
+				SteamCloudSave.Instance.Enabled = true;
 				
 				var lang = SteamApps.GameLanguage.ToLower();
 				var ui = SteamUtils.SteamUILanguage;
@@ -201,7 +202,7 @@ namespace Desktop.integration.steam {
 				};
 
 				try {
-					SaveManager.LoadCloudSaves();
+					SteamCloudSave.Instance.Load();
 				} catch (Exception e) {
 					Log.Error(e);
 				}
@@ -232,7 +233,7 @@ namespace Desktop.integration.steam {
 
 			if (LaunchedFromSteam) {
 				try {
-					SaveManager.SaveCloudSaves();
+					SteamCloudSave.Instance.Save();
 					SteamClient.Shutdown();
 				} catch (Exception e) {
 					Log.Error(e);

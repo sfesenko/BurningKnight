@@ -2,8 +2,10 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using Desktop.integration.crash;
+using Desktop.services;
 using Lens;
 using Lens.assets;
+using Lens.services;
 using Microsoft.Xna.Framework.Audio;
 
 namespace Desktop {
@@ -84,6 +86,11 @@ namespace Desktop {
 		[STAThread]
 		public static void Main() {
 			Paths.Setup(DataDir);
+
+			Clipboard.Instance = new DesktopClipboard();
+			CloudSave.Instance = SteamCloudSave.Instance;
+			Stats.Instance = new SteamStats();
+
 			CrashReporter.Bind();
 
 			if (!Environment.Is64BitOperatingSystem) {

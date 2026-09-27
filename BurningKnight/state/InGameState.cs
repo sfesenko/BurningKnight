@@ -42,13 +42,12 @@ using Lens.input;
 using Lens.lightJson;
 using Lens.util;
 using Lens.util.camera;
+using Lens.services;
 using Lens.util.tween;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended;
-using Steamworks;
-using TextCopy;
 using Console = BurningKnight.debug.Console;
 using Timer = Lens.util.timer.Timer;
 
@@ -1458,7 +1457,7 @@ namespace BurningKnight.state {
 
 						try {
 							// Needs xclip on linux
-							ClipboardService.SetText(Run.Seed);
+							Clipboard.SetText(Run.Seed);
 						} catch (Exception e) {
 							Log.Error(e);
 						}
@@ -2108,10 +2107,10 @@ namespace BurningKnight.state {
 						new Thread(() => {
 							try {
 								SaveManager.Delete(SaveType.Player, SaveType.Level, SaveType.Game, SaveType.Global);
-								SaveManager.DeleteCloudSaves();
+								CloudSave.Delete();
 
 								try {
- 									SteamUserStats.ResetAll(true);
+ 									Stats.Reset();
 								} catch (Exception e) {
 									
 								}
@@ -2974,7 +2973,7 @@ namespace BurningKnight.state {
 
 					try {
 						// Needs xclip on linux
-						ClipboardService.SetText(Run.Seed);
+						Clipboard.SetText(Run.Seed);
 					} catch (Exception e) {
 						Log.Error(e);
 					}
@@ -3130,7 +3129,7 @@ namespace BurningKnight.state {
 
 				try {
 					// Needs xclip on linux
-					ClipboardService.SetText(Run.Seed);
+					Clipboard.SetText(Run.Seed);
 				} catch (Exception e) {
 					Log.Error(e);
 				}

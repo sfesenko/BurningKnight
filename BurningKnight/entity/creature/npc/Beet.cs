@@ -6,6 +6,7 @@ using BurningKnight.ui.dialog;
 using Lens.entity;
 using Lens.entity.component.logic;
 using Lens.input;
+using Lens.services;
 using Lens.util;
 using Lens.util.math;
 using Microsoft.Xna.Framework.Input;
@@ -78,7 +79,7 @@ namespace BurningKnight.entity.creature.npc {
 
 				var seed =
 					// Needs xclip on linux
-					TextCopy.ClipboardService.GetText()?.ToUpper() ?? string.Empty;
+					Clipboard.GetText()?.ToUpper() ?? string.Empty;
 
 				switch (seed.Length)
 				{
