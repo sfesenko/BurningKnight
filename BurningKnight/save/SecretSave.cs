@@ -1,4 +1,3 @@
-using System;
 using Lens;
 using Lens.entity;
 using Lens.util;
@@ -18,7 +17,7 @@ namespace BurningKnight.save {
 		}
 		
 		public override string GetPath(string path, bool old = false) {
-			return $"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}/.nothing.sv";
+			return $"{Paths.DataDir}nothing.sv";
 		}
 
 		public static bool HadSaveBefore = true;

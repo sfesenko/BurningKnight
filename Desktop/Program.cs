@@ -2,16 +2,19 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using Desktop.integration.crash;
+using Lens;
 using Lens.assets;
 using Microsoft.Xna.Framework.Audio;
 
 namespace Desktop {
 	public class Program {
-		// The game records its own pid here so the next launch can stop it. A user-level path
-		// rather than one relative to the working directory, so it is the same file whichever
-		// build output the game was started from.
-		private static readonly string InstanceFile = Path.Combine(
-			Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".burning_knight", "instance.pid");
+		// Writable state lives in the user's data directory, not next to the executable: a
+		// staged install may be read-only.
+		private static readonly string DataDir = Path.Combine(
+			Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".burning_knight") + Path.DirectorySeparatorChar;
+
+		// The game records its own pid here so the next launch can stop it.
+		private static readonly string InstanceFile = Path.Combine(DataDir, "instance.pid");
 
 		private static void TryToRemove(string file) {
 			if (File.Exists(file)) {
@@ -80,6 +83,7 @@ namespace Desktop {
 		
 		[STAThread]
 		public static void Main() {
+			Paths.Setup(DataDir);
 			CrashReporter.Bind();
 
 			if (!Environment.Is64BitOperatingSystem) {
@@ -101,8 +105,8 @@ namespace Desktop {
 			ContentRoot.LinkNextToExecutable(content);
 			Directory.SetCurrentDirectory(Path.GetDirectoryName(Path.TrimEndingDirectorySeparator(content)));
 			
-			TryToRemove(Path.Combine(AppContext.BaseDirectory, "burning_log.txt"));
-			TryToRemove(Path.Combine(AppContext.BaseDirectory, "crashes.txt"));
+			TryToRemove(Path.Combine(DataDir, "burning_log.txt"));
+			TryToRemove(Path.Combine(DataDir, "crashes.txt"));
 
 			try {
 				SoundEffect.Initialize();

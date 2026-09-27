@@ -22,8 +22,7 @@ namespace BurningKnight.save {
 		public static byte CurrentSlot = 0;
 		public static string SlotDir = $"{SaveDir}slot-{CurrentSlot}/";
 
-		public static string BackupDir =
-			$"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}/.burning_knight/";
+		public static string BackupDir => Paths.DataDir;
 
 		public static bool EnableCloudSave;
 
