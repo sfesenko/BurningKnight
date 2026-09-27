@@ -57,7 +57,7 @@ namespace BurningKnight.ui {
 		}
 
 		public override void Render() {
-			if (!Settings.Minimap || Engine.Instance.State.Paused || Run.Type == RunType.Twitch) {
+			if (!Settings.Minimap || Engine.Instance.State.Paused) {
 				return;
 			}
 

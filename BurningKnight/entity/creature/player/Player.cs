@@ -21,7 +21,6 @@ using BurningKnight.entity.item;
 using BurningKnight.entity.item.stand;
 using BurningKnight.entity.projectile;
 using BurningKnight.entity.room;
-using BurningKnight.entity.twitch;
 using BurningKnight.level;
 using BurningKnight.level.biome;
 using BurningKnight.level.entities;
@@ -222,8 +221,6 @@ namespace BurningKnight.entity.creature.player {
 
 		public void FindSpawnPoint() {
 			if (Run.StartedNew && Run.Depth > 0) {
-				TwitchBridge.OnNewRun?.Invoke();
-
 				var index = GetComponent<InputComponent>().Index;
 				
 				if (StartingLamps[index] != null) {

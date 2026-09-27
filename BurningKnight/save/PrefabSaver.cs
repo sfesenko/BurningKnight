@@ -21,7 +21,16 @@ namespace BurningKnight.save {
 				type = "entity.item.stand.ItemStand";
 			}
 		
-			var t = Type.GetType($"BurningKnight.{type}", true, false);
+			var t = Type.GetType($"BurningKnight.{type}", false, false);
+
+			if (t == null) {
+				Log.Error($"Unknown entity {type} in prefab, skipping it");
+
+				var unknownSize = reader.ReadUint16();
+				reader.Position += unknownSize;
+
+				return;
+			}
 
 			if (typeof(Level).IsAssignableFrom(t)) {
 				base.ReadEntity(area, reader, type, post);

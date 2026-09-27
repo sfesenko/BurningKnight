@@ -304,10 +304,6 @@ namespace BurningKnight.state {
 					return $"challenge_{Run.ChallengeId}";
 				}
 
-				case RunType.Twitch: {
-					return "twitch";
-				}
-				
 				default: case RunType.Regular: {
 					return "high_score";
 				}

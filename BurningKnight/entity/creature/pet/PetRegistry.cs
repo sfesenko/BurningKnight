@@ -7,7 +7,6 @@ using BurningKnight.assets.mod;
 using BurningKnight.entity.component;
 using BurningKnight.entity.events;
 using BurningKnight.entity.projectile;
-using BurningKnight.entity.twitch;
 using Lens.entity;
 using Lens.util;
 using Lens.util.math;
@@ -174,10 +173,6 @@ namespace BurningKnight.entity.creature.pet {
 			}));
 			
 			Define("the_eye", o => o.Area.Add(new TheEye() {
-				Owner = o
-			}));
-			
-			Define("twitch", o => o.Area.Add(new TwitchPet() {
 				Owner = o
 			}));
 		}
