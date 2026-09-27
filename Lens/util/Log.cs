@@ -34,13 +34,19 @@ public static class Log {
 		}
 	}
 
-	public static void Assert(bool condiftion, Func<string>? message = null)
+	/// <summary>
+	/// Logs an error, with a stack trace, when <paramref name="condition"/> is false.
+	/// Only active in Debug builds; in Release this does nothing.
+	/// </summary>
+	public static void Assert(bool condition, Func<string>? message = null)
 	{
 #if DEBUG
-		var msg = message?.Invoke() ?? "";
-		var st = new StackTrace(true);
-		msg += st;
-		Error(msg);
+		if (!condition) {
+			var msg = message?.Invoke() ?? "";
+			var st = new StackTrace(true);
+			msg += st;
+			Error(msg);
+		}
 #endif
 	}
 	

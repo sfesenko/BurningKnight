@@ -3261,7 +3261,8 @@ namespace BurningKnight.state {
 		public void HandleDeath() {
 			Died = true;
 
-			AsyncUtils.RunAsync("Death", () =>
+			// Not awaited: this runs while the death screen animates. RunAsync logs any failure.
+			_ = AsyncUtils.RunAsync("Death", () =>
 			{
 				// SaveManager.Save(Area, SaveType.Statistics);
 				SaveManager.Delete(SaveType.Player, SaveType.Level, SaveType.Game);

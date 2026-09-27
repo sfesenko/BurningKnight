@@ -84,11 +84,23 @@ namespace Lens.util.math {
 			return Generator.Next(min, max);
 		}
 
+		/// <summary>
+		/// Returns a random integer in [min, max], biased towards the middle of the range. The
+		/// bias comes from averaging two independent uniform draws, which gives a triangular
+		/// distribution. The sum is computed in long arithmetic so large ranges cannot overflow.
+		/// </summary>
 		public static int IntCentred(int min, int max) {
-			if (min <= max) return (int)((Int(min, max) + Int(min, max)) / 2f - 0.1f);
-			(min, max) = (max, min);
+			if (min > max) {
+				(min, max) = (max, min);
+			}
 
-			return (int) ((Int(min, max) + Int(min, max)) / 2f - 0.1f);
+			if (min == max) {
+				return min;
+			}
+
+			// Random.Next treats max as exclusive, so the result lands in [min, max - 1], which
+			// is still inside the requested range.
+			return (int) (((long) Generator.Next(min, max) + Generator.Next(min, max)) / 2L);
 		}
 
 		public static float Float() {
