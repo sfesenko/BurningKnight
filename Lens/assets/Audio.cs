@@ -81,6 +81,62 @@ public class Audio
         sounds[key] = Assets.Content.Load<SoundEffect>($"bin/Sfx/{path}{s}");
     }
 
+    // MonoGame hands OpenAL sources out of one shared pool and never clears AL_LOOPING when a source
+    // comes back, so a source a looping SoundEffectInstance has used can still be flagged as looping
+    // when a Song reserves it. OpenAL then loops the Song's first streaming buffers forever instead
+    // of playing through, and nothing in the Song or MediaPlayer API can clear the flag afterwards.
+    // A SoundEffectInstance applies IsLooped to the source it plays on, so playing and stopping a
+    // silent non-looping one first clears the flag on the source the Song is about to reserve: the
+    // pool hands back the most recently returned source, and that is now this one.
+    private void ClearLoopFlagOnNextSource()
+    {
+        if (!Assets.LoadSfx || sounds.Count == 0)
+        {
+            return;
+        }
+
+        foreach (var sound in sounds.Values)
+        {
+            try
+            {
+                var instance = sound.CreateInstance();
+
+                if (instance == null)
+                {
+                    continue;
+                }
+
+                instance.Volume = 0;
+                instance.IsLooped = false;
+                instance.Play();
+                instance.Stop();
+                instance.Dispose();
+            }
+            catch (Exception e)
+            {
+                Log.Error(e);
+            }
+
+            return;
+        }
+    }
+
+    private Song GetOrLoadMusic(string music)
+    {
+        if (musicInstances.TryGetValue(music, out var song))
+        {
+            return song;
+        }
+
+        ClearLoopFlagOnNextSource();
+
+        var uri = new Uri($"Content/Music/{music}.ogg", UriKind.Relative);
+        song = Song.FromUri(music, uri);
+        musicInstances[music] = song;
+
+        return song;
+    }
+
     internal void Destroy()
     {
         foreach (var sound in sounds.Values)
@@ -168,16 +224,7 @@ public class Audio
             var id = Environment.CurrentManagedThreadId;
             Log.Info($"Audio.Play: {id}");
 
-            if (!musicInstances.TryGetValue(music, out currentPlaying))
-            {
-                Log.Debug($"ThreadLoad: loading {music}");
-                // currentPlaying = Assets.Content.Load<Song>($"bin/Music/{music}");
-                var uri = new Uri($"Content/Music/{music}.ogg", UriKind.Relative);
-                currentPlaying = Song.FromUri(music, uri);
-                
-                // ($"Content/Music/{music}.ogg");
-                musicInstances[music] = currentPlaying;
-            }
+            currentPlaying = GetOrLoadMusic(music);
 
             MediaPlayer.Pause();
             MediaPlayer.Play(currentPlaying);
