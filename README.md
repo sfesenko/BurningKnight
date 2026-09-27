@@ -18,8 +18,8 @@ I believe in the power open source. I'm opening this project up with hope, that 
 
 Anyway, onto the juicy stuff.
 
-The game has a lot of developer tools in it, but to gain access to them, you must build the solution in Debug configuration.
-This is really important, because **music & sfx wont load in Debug configuration, but dev tools will be enabled**. The assets are dropped in favor of quicker loading time (there is still no hotswap support for Mono on Linux).
+The game has a lot of developer tools in it, but to gain access to them, you must build the `Desktop` project in Debug configuration.
+Debug is a development build: the dev tools are enabled, textures are loaded from the original files in `BurningKnight/Content` instead of the compiled ones, animations reload while the game runs, and the intro cutscene is skipped — you start at the beginning of the first level. Release is the build that behaves like the Steam version, intro and all.
 
 To access the dev tools, you shall press F1 while being in InGameState (while you are normally playing and not watching a loading screen).
 A panel with a bunch of checkboxes should appear, that show different dev tools. Have fun!
@@ -32,40 +32,29 @@ my dev branch into release, and 10 minutes later press a few buttons on Itch/Ste
 
 ##### Building
 
-Hey, so I saw a bunch of people complain online about no building instructions. I couldn't be surprised more, since you just open the .sln file in your C# IDE of choice and compile & run the Desktop project. But just in case anyone is still curious, here you go.  
+You just need the [.NET 10 SDK](https://dotnet.microsoft.com/download) — everything else is restored from NuGet. Open `Lens.sln` in your C# IDE of choice and run the `Desktop` project, or do it from the terminal.
 
-If you don't have a ready environment for compiling .NET Framework code, check [this](https://github.com/egordorichev/BurningKnight/blob/dev/CompileNetFrameworkOnLinux.md) page. It explains how to install and use all tools needed to compile Burning Knight on Linux.
-
-Or if you prefer to do it from the terminal: install the packages:
+Debug (dev tools enabled, assets loaded from the source tree):
 
 ```bash
-nuget restore
+dotnet run --project Desktop/Desktop.csproj
 ```
 
-Debug configuration (disabled sfx & music but has dev tools enabled):
+Release (same as on Steam):
 
 ```bash
-msbuild
-cd Desktop/bin/Debug/
-mono Desktop.exe
+dotnet build Desktop/Desktop.csproj -c Release
+Desktop/bin/Release/net10.0/Desktop
 ```
 
-Release configuration (same as on Steam) is a bit more tricky. You gotta install MonoGame Content Pipeline tool and compile the assets (raw sfx -> .xnb).
-If you are on Linux, you can get it via:
+The game finds its content on its own: it looks for a `Content` directory next to the executable, then for the source tree, and links the content next to the executable when it needs to. Set the `BK_CONTENT` environment variable to point it somewhere else.
 
-wget https://github.com/MonoGame/MonoGame/releases/download/v3.7.1/monogame-sdk.run
-chmod +x monogame-sdk.run
-sudo ./monogame-sdk.run
-Otherwise, find a binary on the monogame website. After that open BurningKnight/Content/Content.mgcb in the tool and hit build.
-
-![](https://user-images.githubusercontent.com/7851390/96409702-5cb22700-11ee-11eb-8586-0afe349f1473.png)
-
-If you are on Linux, ignore shader compilation errors, prebuild shaders (via a Windows machine) are already in the repo.
-After that build the sources and run:
-
+Sound effects are the one kind of asset the repository does not ship compiled (`Content/bin/Sfx` is ignored by git), so a fresh checkout runs with silent sfx. To build them, install the MonoGame Content Builder and compile the content from its own directory:
 
 ```bash
-msbuild /p:Configuration=Release
-cd Desktop/bin/Release/
-mono Desktop.exe
+dotnet tool install --global dotnet-mgcb --version 3.8.*
+cd BurningKnight/Content
+mgcb Content.mgcb
 ```
+
+Shader compilation needs Wine on Linux; the prebuilt shaders are already in the repository, so the errors it reports for them can be ignored.
