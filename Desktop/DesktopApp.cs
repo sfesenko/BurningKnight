@@ -6,7 +6,7 @@ using Lens;
 using Microsoft.Xna.Framework;
 
 namespace Desktop {
-	public class DesktopApp() : BK(Display.Width * Scale, Display.Height * Scale, !Version.Dev, () => new DesktopCore())
+	public class DesktopApp() : BK(BurningKnight.Display.Width * Scale, BurningKnight.Display.Height * Scale, !Version.Dev, () => new DesktopCore())
 	{
 		private const int Scale = 3;
 

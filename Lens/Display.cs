@@ -1,10 +1,20 @@
 ﻿namespace Lens;
 
 public class Display {
-	public static readonly int Width = 320;
-	public static readonly int Height = 180;
-	public static readonly float Viewport = (float) Width / Height;
-	public const float UiScale = 1.5f;
-	public static readonly int UiWidth = (int) (Width * UiScale);
-	public static readonly int UiHeight = (int) (Height * UiScale);
+	public static int Width { get; private set; }
+	public static int Height { get; private set; }
+	public static float Viewport { get; private set; }
+	public static float UiScale { get; private set; }
+	public static int UiWidth { get; private set; }
+	public static int UiHeight { get; private set; }
+
+	// The app supplies the design resolution; the engine must not carry the game's numbers.
+	public static void Setup(int width, int height, float uiScale) {
+		Width = width;
+		Height = height;
+		UiScale = uiScale;
+		Viewport = (float) width / height;
+		UiWidth = (int) (width * uiScale);
+		UiHeight = (int) (height * uiScale);
+	}
 }

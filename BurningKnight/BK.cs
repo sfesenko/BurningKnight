@@ -22,6 +22,7 @@ public class BK : Engine {
 
 	protected BK(int width, int height, bool fullscreen, Func<Core> coreFactory) : base(
 		Rnd.Chance(60) ? "Burning Knight" : $"Burning Knight{(Demo ? " Demo" : "")}: {Titles.Generate()}", width, height, fullscreen, coreFactory) {
+		Lens.Display.Setup(Display.Width, Display.Height, Display.UiScale);
 	}
 
 	protected override void Initialize() {
