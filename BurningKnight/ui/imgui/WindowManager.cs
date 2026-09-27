@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Numerics;
 using BurningKnight.assets.lighting;
@@ -34,7 +35,34 @@ namespace BurningKnight.ui.imgui {
 		public static bool Save;
 		public static bool PoolEditor;
 		public static bool LootTable;
-		
+
+		// Every window toggle in one list, so the Hide/Show buttons and the checkbox list below
+		// cannot drift apart. A new window has to be added here as well as to the checkboxes.
+		private static readonly Action<bool>[] AllWindows = {
+			v => Cheats = v,
+			v => Debug = v,
+			v => Entities = v,
+			v => RunInfo = v,
+			v => Console = v,
+			v => ItemEditor = v,
+			v => LevelEditor = v,
+			v => LayerDebug = v,
+			v => LocaleEditor = v,
+			v => Rooms = v,
+			v => Settings = v,
+			v => Lighting = v,
+			v => Achievements = v,
+			v => Save = v,
+			v => PoolEditor = v,
+			v => LootTable = v
+		};
+
+		private static void SetAllWindows(bool value) {
+			foreach (var set in AllWindows) {
+				set(value);
+			}
+		}
+
 		private static void RenderSettings() {
 			if (!Settings) {
 				return;
@@ -100,13 +128,13 @@ namespace BurningKnight.ui.imgui {
 			ImGui.Begin("Windows", ImGuiWindowFlags.NoCollapse | ImGuiWindowFlags.AlwaysAutoResize | ImGuiWindowFlags.NoTitleBar);
 
 			if (ImGui.Button("Hide")) {
-				Debug = Entities = RunInfo = Console = ItemEditor = LevelEditor = LocaleEditor = Rooms = Settings = PoolEditor = LootTable = false;
+				SetAllWindows(false);
 			}
 			
 			ImGui.SameLine();
 
 			if (ImGui.Button("Show")) {
-				Debug = Entities = RunInfo = Console = ItemEditor = LevelEditor = LocaleEditor = Rooms = Settings = PoolEditor = LootTable = true;
+				SetAllWindows(true);
 			}
 			
 			ImGui.Separator();

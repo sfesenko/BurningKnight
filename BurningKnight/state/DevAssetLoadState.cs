@@ -37,7 +37,8 @@ namespace BurningKnight.state {
 			progress = 0;
 			Log.Info("Init: progress = 0");
 
-			AsyncUtils.RunAsync("Load", Load);
+			// Not awaited: Update polls 'progress' while this loads. RunAsync logs any failure.
+			_ = AsyncUtils.RunAsync("Load", Load);
 		}
 		
 		private void Load() {

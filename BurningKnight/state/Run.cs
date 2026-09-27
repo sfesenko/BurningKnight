@@ -105,7 +105,14 @@ namespace BurningKnight.state {
 				Statistics.Done = true;
 				Statistics = null;
 			}
-			
+
+			// These track which items stands have already offered this run. They are only ever
+			// Remove()d on pickup, so without this an id offered by a stand that was unloaded
+			// mid-generation would stay blocked for the rest of the process.
+			entity.item.stand.LampStand.AlreadyOnStand.Clear();
+			entity.item.stand.GarderobeStand.AlreadyOnStand.Clear();
+			entity.item.EmeraldStand.AlreadyOnStand.Clear();
+
 			StartingNew = true;
 			HasRun = false;
 			NextDepth = depth;
