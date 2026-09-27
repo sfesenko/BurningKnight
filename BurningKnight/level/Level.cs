@@ -695,7 +695,6 @@ namespace BurningKnight.level {
 						continue;
 					}
 					
-					// var tile = (Tile) Tiles[index];
 					var liquid = (Tile) Liquid[index];
 
 					if (liquid == Tile.Lava) {

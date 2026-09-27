@@ -93,7 +93,6 @@ namespace BurningKnight.ui.inventory {
 			}
 			
 			if (item != null) {
-				// var region = item.Region;
 				var timed = item.UseTime < 0;
 				var chargeMax = Math.Abs(item.UseTime);
 				var charge = timed ? chargeMax - item.Delay : (float) Math.Floor(chargeMax - item.Delay);

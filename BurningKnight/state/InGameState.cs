@@ -2504,9 +2504,7 @@ namespace BurningKnight.state {
 				Options = ["none"],
 				
 				Click = c => {
-					// var i = ((UiChoice) c).Option;
 					var p = LocalPlayer.Locate(Area);
-					// var e = i == GamepadData.Identifiers.Length;
 					
 					// Settings.Gamepad = e ? null : GamepadData.Identifiers[i];
 					if (p != null) {
