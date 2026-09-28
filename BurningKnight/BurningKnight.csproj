@@ -12,15 +12,8 @@
 
     <ItemGroup>
         <PackageReference Include="MonoGame.Extended" Version="4.0.4" />
-        <PackageReference Include="MonoGame.Extended.Content.Pipeline" Version="4.0.4" />
-        <PackageReference Include="MonoGame.Framework.Content.Pipeline" Version="3.8.*">
-            <PrivateAssets>All</PrivateAssets>
-        </PackageReference>
         <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.*">
             <PrivateAssets>All</PrivateAssets>
         </PackageReference>
     </ItemGroup>
-    <PropertyGroup>
-        <MonoGameExtendedPipelineReferencePath>$(MSBuildThisFileDirectory)pipeline-references</MonoGameExtendedPipelineReferencePath>
-    </PropertyGroup>
 </Project>

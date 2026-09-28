@@ -49,12 +49,6 @@ Desktop/bin/Release/net10.0/Desktop
 
 The game finds its content on its own: it looks for a `Content` directory next to the executable, then for the source tree, and links the content next to the executable when it needs to. Set the `BK_CONTENT` environment variable to point it somewhere else.
 
-Sound effects are the one kind of asset the repository does not ship compiled (`Content/bin/Sfx` is ignored by git), so a fresh checkout runs with silent sfx. To build them, install the MonoGame Content Builder and compile the content from its own directory:
+Content loads from the source files in both configurations — textures as PNG, sound effects as WAV, animations parsed from `.ase` at startup. Nothing needs a content build, so a fresh checkout runs with everything in place.
 
-```bash
-dotnet tool install --global dotnet-mgcb --version 3.8.*
-cd BurningKnight/Content
-mgcb Content.mgcb
-```
-
-Shader compilation needs Wine on Linux; the prebuilt shaders are already in the repository, so the errors it reports for them can be ignored.
+Shaders are the one compiled asset: their `.xnb` bytecode is committed. Rebuilding it — only when a `.fx` changes — goes through `scripts/compile-shaders.sh`, which needs the MGCB tool and, on Linux, Wine.
