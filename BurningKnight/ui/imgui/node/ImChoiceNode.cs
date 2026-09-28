@@ -98,7 +98,7 @@ namespace BurningKnight.ui.imgui.node {
 				AddOutput();
 			}
 
-			name = Locale.Map[LocaleId];
+			name = Locale.Get(LocaleId);
 			label = name;
 		}
 

@@ -28,7 +28,7 @@ namespace BurningKnight.ui.imgui.node {
 
 		public override void Load(JsonObject root) {
 			base.Load(root);
-			name = Locale.Map[LocaleId];
+			name = Locale.Get(LocaleId);
 			label = name;
 		}
 

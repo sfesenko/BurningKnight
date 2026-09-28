@@ -37,6 +37,8 @@ namespace BurningKnight.assets {
 							try {
 								ImNode.Create(name, vl);
 							} catch (Exception e) {
+								Log.Error($"Failed to create a node in {name}");
+								Log.Error(e);
 							}
 						}
 						

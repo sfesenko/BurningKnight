@@ -47,11 +47,11 @@ namespace BurningKnight.ui.imgui.node {
 		public override void Load(JsonObject root) {
 			base.Load(root);
 			
-			header = Locale.Map[LocaleId];
-			optionA = Locale.Map[$"{LocaleId}_a"];
-			answerA = Locale.Map[$"{LocaleId}_aa"];
-			optionB = Locale.Map[$"{LocaleId}_b"];
-			answerB = Locale.Map[$"{LocaleId}_ab"];
+			header = Locale.Get(LocaleId);
+			optionA = Locale.Get($"{LocaleId}_a");
+			answerA = Locale.Get($"{LocaleId}_aa");
+			optionB = Locale.Get($"{LocaleId}_b");
+			answerB = Locale.Get($"{LocaleId}_ab");
 		}
 
 		public override string GetName() {
