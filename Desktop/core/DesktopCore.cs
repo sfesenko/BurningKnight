@@ -1,6 +1,6 @@
 ﻿using System;
 using Lens;
-using Lens.Core;
+using Lens.core;
 using Lens.util;
 using Microsoft.Xna.Framework.Graphics;
 

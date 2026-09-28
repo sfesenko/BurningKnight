@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using Lens.assets;
+using Lens.core;
 using Lens.game;
 using Lens.graphics;
 using Lens.graphics.gamerenderer;
@@ -51,7 +52,7 @@ namespace Lens
         public float Upscale;
         public float UiUpscale;
 
-        private static Core.Core core;
+        private static Core core;
         private const float FixedUpdateTime = 0.015f;
         private float time;
         public float Speed = 1;
@@ -82,7 +83,7 @@ namespace Lens
             }
         }
 
-        protected Engine(string title, int width, int height, bool fullscreen, Func<Core.Core> coreFactory)
+        protected Engine(string title, int width, int height, bool fullscreen, Func<Core> coreFactory)
         {
             Instance = this;
             tmpTitle = title;
@@ -96,7 +97,7 @@ namespace Lens
 
             Graphics.HardwareModeSwitch = false;
 
-            core = Core.Core.Create(Window, Graphics, coreFactory);
+            core = Core.Create(Window, Graphics, coreFactory);
             core.Init(width, height, fullscreen);
 
             Content = new ContentManagerWithRoot(Services) { RootDirectory = Assets.Root };

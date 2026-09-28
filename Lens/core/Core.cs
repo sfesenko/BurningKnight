@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 
-namespace Lens.Core;
+namespace Lens.core;
 
 public class Core {
 	protected GameWindow Window;
@@ -22,6 +22,10 @@ public class Core {
 	// The host decides which core the engine runs on, so a platform can supply its own without
 	// the engine naming it.
 	public static Core Create(GameWindow window, GraphicsDeviceManager graphics, Func<Core> factory) {
+		if (factory == null) {
+			throw new ArgumentNullException(nameof(factory));
+		}
+
 		var core = factory();
 
 		core.Window = window;

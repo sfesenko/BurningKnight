@@ -10,7 +10,7 @@ using BurningKnight.save;
 using BurningKnight.state;
 using BurningKnight.util;
 using Lens;
-using Lens.Core;
+using Lens.core;
 using Lens.util.math;
 using Microsoft.Xna.Framework;
 
@@ -22,6 +22,8 @@ public class BK : Engine {
 
 	protected BK(int width, int height, bool fullscreen, Func<Core> coreFactory) : base(
 		Rnd.Chance(60) ? "Burning Knight" : $"Burning Knight{(Demo ? " Demo" : "")}: {Titles.Generate()}", width, height, fullscreen, coreFactory) {
+		// Display reads as 0 until this runs, so nothing before it — including Engine's
+		// constructor — may use it.
 		Lens.Display.Setup(Display.Width, Display.Height, Display.UiScale);
 	}
 
