@@ -55,17 +55,27 @@ namespace Desktop {
 			}
 
 			try {
-				// A link left by an earlier layout dangles rather than failing Exists(), and it
-				// still blocks a new one. Delete the entry itself — deleting through it would
-				// follow the missing target and fail.
-				if (new FileInfo(link).LinkTarget != null) {
-					File.Delete(link);
+				// A leftover entry here — a link from an earlier layout, say — still blocks a new
+				// link, and a dangling one reports no Directory.Exists while still being present.
+				if (Path.Exists(link) && !Directory.Exists(link)) {
+					Unlink(link);
 				}
 
 				Directory.CreateSymbolicLink(link, Path.GetRelativePath(AppContext.BaseDirectory, root));
 				Console.WriteLine($"Linked {link} -> {root}");
 			} catch (Exception e) {
 				Console.WriteLine($"Could not link content beside the executable: {e.Message}");
+			}
+		}
+
+		// Removes whatever occupies a path without following it. Unix unlinks the entry itself;
+		// Windows treats a directory link as a directory even when its target is gone, and wants
+		// the directory call.
+		private static void Unlink(string path) {
+			if (OperatingSystem.IsWindows()) {
+				Directory.Delete(path);
+			} else {
+				File.Delete(path);
 			}
 		}
 	}
