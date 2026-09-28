@@ -7,14 +7,10 @@
 //   * the atlas is one row taller than the bands and the blit is unclipped, so an off-canvas cel
 //     wraps into the next row (worm) or spills into the next band (gobbo), exactly as today.
 //
-// The pixel comparison at the bottom loads the old first-party parser, so running this needs a
-// Debug build of Aseprite/ and Desktop/; delete that block together with Aseprite/ (WS-1 T1.5).
-//
-// Input that would silently produce wrong pixels fails the run: cels out of layer order, an atlas
-// past the texture cap, a file with no frames or layers.
+// The pixel comparison that validated the swap lived here and loaded the old first-party parser;
+// both are gone (WS-1 T1.5). Output that would silently produce wrong pixels still fails the run:
+// cels out of layer order, an atlas past the texture cap, a file with no frames or layers.
 #r "nuget: AsepriteDotNet, 1.9.1"
-#r "../Aseprite/bin/Debug/net10.0/Aseprite.dll"
-#r "../Desktop/bin/Debug/net10.0/MonoGame.Framework.dll"
 
 open System
 open System.Buffers.Binary
@@ -103,7 +99,6 @@ let rec celImage (cel: AsepriteCel) =
     | _ -> failwithf "unsupported cel type %s" (cel.GetType().Name)
 
 let mutable missingCels = 0
-let mutable differences = 0
 let animations = JsonObject()
 
 // GraphicsProfile.Reach, the profile the game targets.
@@ -214,28 +209,6 @@ for path in Directory.GetFiles(source, "*.ase") |> Array.sort do
     entry.["slices"] <- slices
     animations.[name] <- entry
 
-    // --- verify against the old parser, while it is still here ------------------------------
-
-    let old = Aseprite.AsepriteFile.ReadAsepriteFile path
-    let expected = old.PixelData
-    let oldWidth = old.TextureWidth
-
-    if oldWidth <> atlasWidth || old.TextureHeight + 1 <> atlasHeight then
-        differences <- differences + 1
-        printfn "size mismatch: %s — old %dx%d vs new %dx%d" name oldWidth (old.TextureHeight + 1) atlasWidth atlasHeight
-    else
-        for y in 0 .. atlasHeight - 1 do
-            for x in 0 .. atlasWidth - 1 do
-                let pixel = expected.[y * oldWidth + x]
-                let o = (y * atlasWidth + x) * 4
-
-                if pixel.R <> rgba.[o] || pixel.G <> rgba.[o + 1] || pixel.B <> rgba.[o + 2] || pixel.A <> rgba.[o + 3] then
-                    differences <- differences + 1
-                    printfn "pixel mismatch: %s at %d,%d" name x y
-
-                    if differences > 10 then
-                        failwith "too many pixel differences"
-
 let document = JsonObject()
 document.["version"] <- 1
 document.["animations"] <- animations
@@ -243,7 +216,4 @@ File.WriteAllText(Path.Combine(output, "animations.json"), document.ToJsonString
 
 printfn ""
 printfn "wrote %d PNGs and animations.json to %s" animations.Count output
-printfn "missing-cel frames %d, pixel differences %d" missingCels differences
-
-if differences > 0 then
-    failwithf "%d pixel differences against the old parser" differences
+printfn "missing-cel frames %d" missingCels

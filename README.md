@@ -49,6 +49,12 @@ Desktop/bin/Release/net10.0/Desktop
 
 The game finds its content on its own: it looks for a `Content` directory next to the executable, then for the source tree, and links the content next to the executable when it needs to. Set the `BK_CONTENT` environment variable to point it somewhere else.
 
-Content loads from the source files in both configurations — textures as PNG, sound effects as WAV, animations parsed from `.ase` at startup. Nothing needs a content build, so a fresh checkout runs with everything in place.
+Content loads from the source files in both configurations — textures as PNG, sound effects as WAV, animations as one sheet PNG per animation plus a single `animations.json`. The sheets are cut from the `.ase` sources by a preprocessor, which also validates them:
+
+```bash
+dotnet fsi tools/preprocess-ase.fsx
+```
+
+It writes `Content/bin/Animations/`, which is ignored by git — so a fresh checkout needs one run of it before the game has animations. Nothing else needs a content build.
 
 Shaders are the one compiled asset: their `.xnb` bytecode is committed. Rebuilding it — only when a `.fx` changes — goes through `scripts/compile-shaders.sh`, which needs the MGCB tool and, on Linux, Wine.

@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text.Json;
 using Lens.graphics.animation;
 using Lens.util;
+using Lens.util.file;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Lens.assets {
 	public struct Animations {
@@ -12,21 +13,33 @@ namespace Lens.assets {
 		
 		internal static void Load()
 		{
-			var animationDir = Path.Combine(Assets.Root, "Animations");
-			if (!Directory.Exists(animationDir))
+			var file = FileHandle.FromRoot("bin/Animations/animations.json");
+
+			if (!file.Exists())
 			{
-				Log.Error($"Can't load animations from: {animationDir}");
+				Log.Error($"Can't load animations from: {file}");
 				return;
 			}
 
-			var jobs = Directory.GetFiles(animationDir, "*.ase")
-				.Select(file => Task.Run(() => (file, animation: AnimationUtils.LoadAnimation(file))))
-				.ToList();
-			foreach(var t in jobs)
+			using var document = JsonDocument.Parse(file.ReadAll());
+			var root = document.RootElement;
+			var version = root.GetProperty("version").GetInt32();
+
+			if (version != 1)
 			{
-				var (file, animation) = t.Result;
-				var name = Path.GetFileNameWithoutExtension(file);
-				animations[name] = animation;
+				Log.Error($"Unsupported animations.json version: {version}");
+				return;
+			}
+
+			foreach (var entry in root.GetProperty("animations").EnumerateObject())
+			{
+				var path = FileHandle.FromRoot($"bin/Animations/{entry.Name}.png").FullPath;
+
+				using var stream = new FileStream(path, FileMode.Open);
+
+				// MonoGame does not premultiply here, and the sheets are premultiplied already.
+				var texture = Texture2D.FromStream(Engine.GraphicsDevice, stream);
+				animations[entry.Name] = AnimationUtils.LoadAnimation(texture, entry.Value);
 			}
 		}
 

@@ -2,8 +2,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lens", "Lens\Lens.csproj", "{3B26AA2E-0BA2-42DC-AD62-E6C8617F9E4D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aseprite", "Aseprite\Aseprite.csproj", "{13C6F252-0B3C-4A22-A9DB-270C76657FAB}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BurningKnight", "BurningKnight\BurningKnight.csproj", "{D31D0D40-105E-47D5-A5D0-F6E30328BF86}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VelcroPhysics.MonoGame", "VelcroPhysics\VelcroPhysics.MonoGame.csproj", "{4650BD15-4B03-4A7E-98D4-9F8697ED2EB4}"
@@ -20,10 +18,6 @@ Global
 		{3B26AA2E-0BA2-42DC-AD62-E6C8617F9E4D}.Debug|x64.Build.0 = Debug|x64
 		{3B26AA2E-0BA2-42DC-AD62-E6C8617F9E4D}.Release|x64.ActiveCfg = Release|x64
 		{3B26AA2E-0BA2-42DC-AD62-E6C8617F9E4D}.Release|x64.Build.0 = Release|x64
-		{13C6F252-0B3C-4A22-A9DB-270C76657FAB}.Debug|x64.ActiveCfg = Debug|x64
-		{13C6F252-0B3C-4A22-A9DB-270C76657FAB}.Debug|x64.Build.0 = Debug|x64
-		{13C6F252-0B3C-4A22-A9DB-270C76657FAB}.Release|x64.ActiveCfg = Release|x64
-		{13C6F252-0B3C-4A22-A9DB-270C76657FAB}.Release|x64.Build.0 = Release|x64
 		{D31D0D40-105E-47D5-A5D0-F6E30328BF86}.Debug|x64.ActiveCfg = Debug|x64
 		{D31D0D40-105E-47D5-A5D0-F6E30328BF86}.Debug|x64.Build.0 = Debug|x64
 		{D31D0D40-105E-47D5-A5D0-F6E30328BF86}.Release|x64.ActiveCfg = Release|x64

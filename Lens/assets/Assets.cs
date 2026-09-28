@@ -62,7 +62,7 @@ namespace Lens.assets {
 				folders =
 				[
 					//"Textures/",
-					"Animations/"
+					"bin/Animations/"
 					//"Sfx/"
 				];
 

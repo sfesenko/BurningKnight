@@ -1,5 +1,5 @@
-using System.Collections.Generic;
-using Aseprite;
+﻿using System.Collections.Generic;
+using System.Text.Json;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -8,71 +8,65 @@ namespace Lens.graphics.animation;
 public static class AnimationUtils
 {
     /// <summary>
-    /// Load .ase animation
+    /// Builds an animation from one entry of the preprocessor's animations.json and the sheet it
+    /// was cut from. Layer order is the file's, and each layer is a horizontal band: frame i of
+    /// layer j is the rectangle (i * width, j * height, width, height).
     /// </summary>
-    /// <param name="fileName"></param>
-    public static AnimationData LoadAnimation(string fileName)
+    public static AnimationData LoadAnimation(Texture2D texture, JsonElement entry)
     {
-        var file = AsepriteFile.ReadAsepriteFile(fileName);
-        var texture = new Texture2D(Engine.GraphicsDevice, file.TextureWidth, file.TextureHeight + 1);
-        texture.SetData(file.PixelData);
-        
+        var width = entry.GetProperty("width").GetInt32();
+        var height = entry.GetProperty("height").GetInt32();
+        var frames = entry.GetProperty("frames").GetInt32();
+        var durations = entry.GetProperty("durations");
+
         var animation = new AnimationData
         {
             Texture = texture
         };
 
-        for (var i = 0; i < file.Layers.Count; i++)
-        {
-            var layer = file.Layers[i];
-            var list = new List<AnimationFrame>();
+        var band = 0;
 
-            for (var j = 0; j < file.Frames.Count; j++)
+        foreach (var layer in entry.GetProperty("layers").EnumerateArray())
+        {
+            var list = new List<AnimationFrame>(frames);
+
+            for (var i = 0; i < frames; i++)
             {
-                var frame = file.Frames[j];
-                var newFrame = new AnimationFrame
+                var frame = new AnimationFrame
                 {
-                    Duration = frame.Duration,
+                    Duration = durations[i].GetSingle(),
                     Texture = new TextureRegion(texture,
-                        new Rectangle(j * file.Width, i * file.Height, file.Width, file.Height))
+                        new Rectangle(i * width, band * height, width, height))
                 };
 
-                newFrame.Bounds = newFrame.Texture.Source;
+                frame.Bounds = frame.Texture.Source;
 
-                list.Add(newFrame);
+                list.Add(frame);
             }
 
-            animation.Layers[layer.Name] = list;
+            animation.Layers[layer.GetString()] = list;
+            band++;
         }
 
-        foreach (var slice in file.Slices)
+        foreach (var slice in entry.GetProperty("slices").EnumerateObject())
         {
-            animation.Slices[slice.Name] = new TextureRegion(texture,
-                new Rectangle(slice.OriginX, slice.OriginY, slice.Width, slice.Height));
+            var bounds = new Rectangle(
+                slice.Value.GetProperty("x").GetInt32(),
+                slice.Value.GetProperty("y").GetInt32(),
+                slice.Value.GetProperty("width").GetInt32(),
+                slice.Value.GetProperty("height").GetInt32());
+
+            animation.Slices[slice.Name] = new TextureRegion(texture, bounds);
         }
 
-        foreach (var tag in file.Animations.Values)
+        foreach (var tag in entry.GetProperty("tags").EnumerateObject())
         {
-            var newTag = new AnimationTag
+            animation.Tags[tag.Name] = new AnimationTag
             {
-                Direction = (AnimationDirection)tag.Directions,
-                StartFrame = (uint)tag.FirstFrame,
-                EndFrame = (uint)tag.LastFrame
+                Direction = (AnimationDirection) tag.Value.GetProperty("direction").GetInt32(),
+                StartFrame = (uint) tag.Value.GetProperty("from").GetInt32(),
+                EndFrame = (uint) tag.Value.GetProperty("to").GetInt32()
             };
-
-            animation.Tags[tag.Name] = newTag;
-        }
-
-        foreach (var tag in file.Tags)
-        {
-            var newTag = new AnimationTag
-            {
-                Direction = (AnimationDirection)tag.LoopDirection,
-                StartFrame = (uint)tag.From,
-                EndFrame = (uint)tag.To
-            };
-
-            animation.Tags[tag.Name] = newTag;
         }
 
         return animation;
