@@ -71,8 +71,10 @@ namespace Lens.assets {
 					var watcher = new FileSystemWatcher();
 					
 					watcher.Path = Path.GetFullPath(Root + t);
-					watcher.NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite
-					                                                | NotifyFilters.FileName | NotifyFilters.DirectoryName;
+					// No LastAccess: the game reads these files itself, and watching access times
+					// makes every read schedule a reload of what it just read.
+					watcher.NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.FileName
+					                                                | NotifyFilters.DirectoryName;
 
 					watcher.Changed += OnChanged;
 					watcher.Created += OnChanged;

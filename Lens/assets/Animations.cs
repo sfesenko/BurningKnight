@@ -10,8 +10,7 @@ namespace Lens.assets {
 	public struct Animations {
 		public static bool Reload;
 		private static readonly Dictionary<string, AnimationData> animations = new();
-		private static Dictionary<string, JsonElement> sources = new();
-		private static JsonDocument document;
+		private static Dictionary<string, AnimationSource> sources = new();
 
 		internal static void Load()
 		{
@@ -27,11 +26,9 @@ namespace Lens.assets {
 			// reload pick up new art. Their textures are left to the finalizer, because an Animation
 			// may still be drawing one mid-frame and Animations.Reload makes consumers refetch.
 			animations.Clear();
-			sources = new Dictionary<string, JsonElement>();
+			sources = new Dictionary<string, AnimationSource>();
 
-			document?.Dispose();
-			document = JsonDocument.Parse(file.ReadAll());
-
+			using var document = JsonDocument.Parse(file.ReadAll());
 			var root = document.RootElement;
 			var version = root.GetProperty("version").GetInt32();
 
@@ -43,7 +40,7 @@ namespace Lens.assets {
 
 			foreach (var entry in root.GetProperty("animations").EnumerateObject())
 			{
-				sources[entry.Name] = entry.Value;
+				sources[entry.Name] = AnimationUtils.ReadSource(entry.Value);
 			}
 		}
 
@@ -54,9 +51,6 @@ namespace Lens.assets {
 
 			animations.Clear();
 			sources.Clear();
-
-			document?.Dispose();
-			document = null;
 		}
 
 		public static AnimationData Get(string id) {
