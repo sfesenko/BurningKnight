@@ -10,7 +10,9 @@ namespace Lens.assets {
 	public struct Animations {
 		public static bool Reload;
 		private static readonly Dictionary<string, AnimationData> animations = new();
-		
+		private static Dictionary<string, JsonElement> sources = new();
+		private static JsonDocument document;
+
 		internal static void Load()
 		{
 			var file = FileHandle.FromRoot("bin/Animations/animations.json");
@@ -21,7 +23,15 @@ namespace Lens.assets {
 				return;
 			}
 
-			using var document = JsonDocument.Parse(file.ReadAll());
+			// Only the index is read here; sheets load on first use. Dropping the loaded ones lets a
+			// reload pick up new art. Their textures are left to the finalizer, because an Animation
+			// may still be drawing one mid-frame and Animations.Reload makes consumers refetch.
+			animations.Clear();
+			sources = new Dictionary<string, JsonElement>();
+
+			document?.Dispose();
+			document = JsonDocument.Parse(file.ReadAll());
+
 			var root = document.RootElement;
 			var version = root.GetProperty("version").GetInt32();
 
@@ -33,13 +43,7 @@ namespace Lens.assets {
 
 			foreach (var entry in root.GetProperty("animations").EnumerateObject())
 			{
-				var path = FileHandle.FromRoot($"bin/Animations/{entry.Name}.png").FullPath;
-
-				using var stream = new FileStream(path, FileMode.Open);
-
-				// MonoGame does not premultiply here, and the sheets are premultiplied already.
-				var texture = Texture2D.FromStream(Engine.GraphicsDevice, stream);
-				animations[entry.Name] = AnimationUtils.LoadAnimation(texture, entry.Value);
+				sources[entry.Name] = entry.Value;
 			}
 		}
 
@@ -47,16 +51,35 @@ namespace Lens.assets {
 			foreach (var animation in animations.Values) {
 				animation.Texture.Dispose();
 			}
+
 			animations.Clear();
+			sources.Clear();
+
+			document?.Dispose();
+			document = null;
 		}
 
 		public static AnimationData Get(string id) {
 			if (animations.TryGetValue(id, out var animation)) {
 				return animation;
 			}
-			
-			Log.Error($"Animation {id} was not found!");
-			return null;
+
+			if (!sources.TryGetValue(id, out var source)) {
+				Log.Error($"Animation {id} was not found!");
+				return null;
+			}
+
+			var path = FileHandle.FromRoot($"bin/Animations/{id}.png").FullPath;
+
+			using var stream = new FileStream(path, FileMode.Open);
+
+			// MonoGame does not premultiply here, and the sheets are premultiplied already.
+			var texture = Texture2D.FromStream(Engine.GraphicsDevice, stream);
+
+			animation = AnimationUtils.LoadAnimation(texture, source);
+			animations[id] = animation;
+
+			return animation;
 		}
 
 		public static Animation Create(string id, string layer = null) {
