@@ -33,7 +33,7 @@ namespace BurningKnight.level.entities {
 		}
 
 		protected override bool Interact(Entity entity) {
-			Log.Error($"Go to runs last saved depth to {Run.LastSavedDepth}");
+			Log.Debug($"Go to runs last saved depth to {Run.LastSavedDepth}");
 			Run.Depth = Run.LastSavedDepth;
 			entity.RemoveComponent<PlayerInputComponent>();
 			

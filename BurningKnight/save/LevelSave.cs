@@ -41,7 +41,7 @@ namespace BurningKnight.save {
 			
 			if (d > 0) {
 				Run.LastSavedDepth = d;
-				Log.Error($"Set run last saved depth to {Run.LastSavedDepth}");
+				Log.Debug($"Set run last saved depth to {Run.LastSavedDepth}");
 			}
 		}
 
