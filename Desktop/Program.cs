@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using BurningKnight;
 using Desktop.integration.crash;
 using Desktop.services;
 using Lens;
@@ -10,10 +11,17 @@ using Microsoft.Xna.Framework.Audio;
 
 namespace Desktop {
 	public class Program {
+		// The game's name for its writable state; a demo build keeps its own.
+		private static readonly string StateName = BK.Demo ? "burning_knight_demo" : "burning_knight";
+
 		// Writable state lives in the user's data directory, not next to the executable: a
 		// staged install may be read-only.
 		private static readonly string DataDir = Path.Combine(
-			Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".burning_knight") + Path.DirectorySeparatorChar;
+			Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "." + StateName) + Path.DirectorySeparatorChar;
+
+		// Where this build kept it before the move, for the game to migrate from: beside the
+		// executable.
+		private static readonly string LegacyDataDir = Path.Combine(AppContext.BaseDirectory, StateName);
 
 		// The game records its own pid here so the next launch can stop it.
 		private static readonly string InstanceFile = Path.Combine(DataDir, "instance.pid");
@@ -85,7 +93,7 @@ namespace Desktop {
 		
 		[STAThread]
 		public static void Main() {
-			Paths.Setup(DataDir);
+			Paths.Setup(DataDir, LegacyDataDir);
 
 			Clipboard.Instance = new DesktopClipboard();
 			CloudSave.Instance = SteamCloudSave.Instance;

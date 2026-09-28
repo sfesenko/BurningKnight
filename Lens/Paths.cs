@@ -7,7 +7,12 @@ namespace Lens;
 public static class Paths {
 	public static string DataDir { get; private set; } = "";
 
-	public static void Setup(string dataDir) {
+	// Where the host kept it before, when that has changed. Null when there is nowhere to
+	// migrate from.
+	public static string? LegacyDataDir { get; private set; }
+
+	public static void Setup(string dataDir, string? legacyDataDir = null) {
 		DataDir = Path.EndsInDirectorySeparator(dataDir) ? dataDir : dataDir + Path.DirectorySeparatorChar;
+		LegacyDataDir = legacyDataDir;
 	}
 }

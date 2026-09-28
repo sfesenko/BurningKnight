@@ -11,10 +11,9 @@ using Lens.util.file;
 
 namespace BurningKnight.save {
 	public class SaveManager {
-		// Absolute: saves stay beside the executable whatever directory the game was launched from.
-		public static readonly string SaveDir =
-			Path.Combine(AppContext.BaseDirectory, BK.Demo ? "burning_knight_demo" : "burning_knight") +
-			Path.DirectorySeparatorChar;
+		// A subdirectory of the host-supplied data directory: the platform decides where
+		// writable state lives, and the saves live inside it.
+		public static string SaveDir => Path.Combine(Paths.DataDir, "saves") + Path.DirectorySeparatorChar;
 		public const int MagicNumber = 894923782;
 		public const short Version = 2;
 
@@ -26,6 +25,8 @@ namespace BurningKnight.save {
 		public static Saver[] Savers;
 
 		public static void Init() {
+			Migrate();
+
 			Log.Info($"Save directory is '{new FileHandle(SaveDir).FullPath}'");
 
 			Savers = new Saver[6];
@@ -48,6 +49,24 @@ namespace BurningKnight.save {
 
 		public static Saver ForType(SaveType type) {
 			return Savers[(int) type];
+		}
+
+		// Saves used to live beside the executable. Move them once, rather than lose a run that
+		// started before the move.
+		private static void Migrate() {
+			if (Paths.LegacyDataDir == null || Directory.Exists(SaveDir) || !Directory.Exists(Paths.LegacyDataDir)) {
+				return;
+			}
+
+			try {
+				Directory.CreateDirectory(Paths.DataDir);
+				Directory.Move(Paths.LegacyDataDir, SaveDir);
+
+				Log.Info($"Moved the saves from {Paths.LegacyDataDir} to {SaveDir}");
+			} catch (Exception e) {
+				Log.Error($"Could not move the saves from {Paths.LegacyDataDir}");
+				Log.Error(e);
+			}
 		}
 
 		public static string GetSavePath(SaveType saveType, bool old = false, string path = null) {
