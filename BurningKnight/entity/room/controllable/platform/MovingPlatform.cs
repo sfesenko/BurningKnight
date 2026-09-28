@@ -17,7 +17,6 @@ using Lens.util.file;
 using Lens.util.math;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
-using VelcroPhysics.Dynamics;
 
 namespace BurningKnight.entity.room.controllable.platform {
 	public class MovingPlatform : Platform, CollisionFilterEntity {

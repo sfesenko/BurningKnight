@@ -5,8 +5,8 @@ using BurningKnight.save;
 using BurningKnight.state;
 using BurningKnight.ui.editor;
 using Lens.util.math;
+using Lens.physics;
 using Microsoft.Xna.Framework;
-using VelcroPhysics.Dynamics;
 
 namespace BurningKnight.level.entities {
 	public class Campfire : Prop {

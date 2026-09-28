@@ -6,7 +6,7 @@ using Lens.entity;
 using Lens.entity.component.logic;
 using Lens.util.math;
 using Lens.util.timer;
-using VelcroPhysics.Dynamics;
+using Lens.physics;
 
 namespace BurningKnight.entity.creature.mob {
 	public class Dummy : Mob {

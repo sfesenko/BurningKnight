@@ -8,7 +8,6 @@ using BurningKnight.ui.dialog;
 using Lens;
 using Lens.util.file;
 using Lens.util.math;
-using VelcroPhysics.Utilities;
 
 namespace BurningKnight.entity.creature.npc {
 	public class Duck : Npc {
@@ -107,7 +106,7 @@ namespace BurningKnight.entity.creature.npc {
 				var n = Self.X + vx * (10 * dt);
 
 				if (Self.quantom) {
-					Self.X = MathUtils.Clamp(n, Self.x - 16, Self.x + 16);
+					Self.X = Math.Clamp(n, Self.x - 16, Self.x + 16);
 
 					if (Math.Abs(Self.X - Self.x) >= 16) {
 						toLeft = !toLeft;
@@ -119,7 +118,7 @@ namespace BurningKnight.entity.creature.npc {
 						}
 					}
 				} else {
-					Self.X = MathUtils.Clamp(n, Self.x - 16, Self.x + 16);
+					Self.X = Math.Clamp(n, Self.x - 16, Self.x + 16);
 
 					if (Math.Abs(Self.X - Self.x) >= 16) {
 						toLeft = !toLeft;

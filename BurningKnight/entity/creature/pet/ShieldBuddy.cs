@@ -2,7 +2,7 @@ using BurningKnight.entity.component;
 using BurningKnight.entity.events;
 using BurningKnight.entity.projectile;
 using Lens.entity;
-using VelcroPhysics.Dynamics;
+using Lens.physics;
 
 namespace BurningKnight.entity.creature.pet {
 	public class ShieldBuddy : Pet {

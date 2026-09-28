@@ -5,13 +5,9 @@ using BurningKnight.level.tile;
 using BurningKnight.physics;
 using BurningKnight.state;
 using BurningKnight.util;
+using Lens.physics;
 using Lens.util;
 using Microsoft.Xna.Framework;
-using VelcroPhysics.Dynamics;
-using VelcroPhysics.Factories;
-using VelcroPhysics.Shared;
-using VelcroPhysics.Utilities;
-using MathUtils = Lens.util.MathUtils;
 
 namespace BurningKnight.level {
 	public class LevelBodyComponent : BodyComponent {
@@ -20,7 +16,7 @@ namespace BurningKnight.level {
 		public Level Level;
 		
 		private bool dirty;
-		protected Body[] chunks;
+		protected IPhysicsBody[] chunks;
 		protected int cw;
 		private int ch;
 		private int cs;
@@ -99,7 +95,7 @@ namespace BurningKnight.level {
 					Physics.RemoveBody(c);
 				}
 			} else {
-				chunks = new Body[cs];
+				chunks = new IPhysicsBody[cs];
 			}
 
 			for (int cy = 0; cy < ch; cy++) {
@@ -112,7 +108,7 @@ namespace BurningKnight.level {
 		protected virtual void RecreateChunk(int cx, int cy) {
 			var level = Level;
 			
-			var body = BodyFactory.CreateBody(Physics.World, Vector2.Zero);
+			var body = Physics.World.CreateBody(Vector2.Zero, 0, BodyType.Static);
 			body.FixedRotation = true;
 			body.UserData = this;
 
@@ -190,7 +186,7 @@ namespace BurningKnight.level {
 						}
 
 						try {
-							FixtureFactory.AttachPolygon(new Vertices(list), 1f, body);
+							body.CreatePolygonFixture(new Vertices(list), 1f);
 						} catch (Exception e) {
 							Log.Error(e);
 						}

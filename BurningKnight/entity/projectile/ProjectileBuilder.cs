@@ -13,8 +13,8 @@ using BurningKnight.util;
 using Lens.entity;
 using Lens.util;
 using Lens.util.math;
+using Lens.physics;
 using Microsoft.Xna.Framework;
-using VelcroPhysics.Dynamics;
 
 namespace BurningKnight.entity.projectile {
 	public class ProjectileBuilder {

@@ -14,8 +14,8 @@ using BurningKnight.state;
 using Lens.entity;
 using Lens.graphics;
 using Lens.util.camera;
+using Lens.physics;
 using Microsoft.Xna.Framework;
-using VelcroPhysics.Dynamics;
 
 namespace BurningKnight.entity.item.util {
 	public delegate void ArcHurtCallback(MeleeArc p, Entity e);
@@ -78,17 +78,17 @@ namespace BurningKnight.entity.item.util {
 			if (e is CollisionStartedEvent ev) {
 				if (ev.Entity is HalfProjectileLevel bdd) {
 					if (Mines) {
-						Physics.Fixture.GetAABB(out var hitbox, 0);
+						var hitbox = Physics.Fixture.GetAABB();
 						ProjectileLevelBody.Mine(Run.Level, hitbox.Center.X, hitbox.Center.Y);
 					}
 				} else if (ev.Entity is ProjectileLevelBody bd) {
 					if (Mines) {
-						Physics.Fixture.GetAABB(out var hitbox, 0);
+						var hitbox = Physics.Fixture.GetAABB();
 						ProjectileLevelBody.Mine(Run.Level, hitbox.Center.X, hitbox.Center.Y);
 					}
 					
 					if (Run.Level.Biome is IceBiome) {
-						Physics.Fixture.GetAABB(out var hitbox, 0);
+						var hitbox = Physics.Fixture.GetAABB();
 
 						if (bd.Break(hitbox.Center.X, hitbox.Center.Y)) {
 							AudioEmitterComponent.Dummy(Area, Center).EmitRandomizedPrefixed("level_snow_break", 3);

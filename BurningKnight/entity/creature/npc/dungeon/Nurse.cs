@@ -4,8 +4,8 @@ using BurningKnight.entity.creature.player;
 using BurningKnight.ui.dialog;
 using Lens.assets;
 using Lens.entity;
+using Lens.physics;
 using Microsoft.Xna.Framework;
-using VelcroPhysics.Dynamics;
 
 namespace BurningKnight.entity.creature.npc.dungeon {
 	

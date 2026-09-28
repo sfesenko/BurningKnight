@@ -10,9 +10,9 @@ using Lens.entity;
 using Lens.graphics;
 using Lens.util;
 using Lens.util.file;
+using Lens.physics;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
-using VelcroPhysics.Dynamics;
 
 namespace BurningKnight.entity.door {
 	public class TeleportTrigger : SaveableEntity, PlaceableEntity {

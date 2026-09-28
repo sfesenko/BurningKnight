@@ -46,8 +46,8 @@ namespace BurningKnight.entity.item.renderer {
 							v.Y = (float) (Math.Floor(v.Y / 3) * 3);
 						}
 
-						v.X = VelcroPhysics.Utilities.MathUtils.Clamp(v.X, 0, region.Width * 3);
-						v.Y = VelcroPhysics.Utilities.MathUtils.Clamp(v.Y, 0, region.Height * 3);
+						v.X = Math.Clamp(v.X, 0, region.Width * 3);
+						v.Y = Math.Clamp(v.Y, 0, region.Height * 3);
 
 						root["ox"] = v.X / 3f;
 						root["oy"] = v.Y / 3f;
@@ -120,8 +120,8 @@ namespace BurningKnight.entity.item.renderer {
 							v.Y = (float) (Math.Floor(v.Y / 3) * 3);
 						}
 
-						v.X = VelcroPhysics.Utilities.MathUtils.Clamp(v.X, 0, region.Width * 3);
-						v.Y = VelcroPhysics.Utilities.MathUtils.Clamp(v.Y, 0, region.Height * 3);
+						v.X = Math.Clamp(v.X, 0, region.Width * 3);
+						v.Y = Math.Clamp(v.Y, 0, region.Height * 3);
 
 						root["nx"] = v.X / 3f;
 						root["ny"] = v.Y / 3f;

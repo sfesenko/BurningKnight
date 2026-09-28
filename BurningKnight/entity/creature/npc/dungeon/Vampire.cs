@@ -6,8 +6,8 @@ using BurningKnight.entity.item.stand;
 using BurningKnight.ui.dialog;
 using Lens.entity;
 using Lens.util.math;
+using Lens.physics;
 using Microsoft.Xna.Framework;
-using VelcroPhysics.Dynamics;
 
 namespace BurningKnight.entity.creature.npc.dungeon {
 	public class Vampire : DungeonShopNpc {

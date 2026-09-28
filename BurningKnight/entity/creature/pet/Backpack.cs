@@ -12,8 +12,8 @@ using Lens.assets;
 using Lens.entity;
 using Lens.graphics;
 using Lens.util;
+using Lens.physics;
 using Microsoft.Xna.Framework;
-using VelcroPhysics.Dynamics;
 
 namespace BurningKnight.entity.creature.pet {
 	public class Backpack : Pet {

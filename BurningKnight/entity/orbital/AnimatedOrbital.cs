@@ -1,5 +1,5 @@
 using BurningKnight.entity.component;
-using VelcroPhysics.Dynamics;
+using Lens.physics;
 
 namespace BurningKnight.entity.orbital {
 	public class AnimatedOrbital : Orbital {

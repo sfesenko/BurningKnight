@@ -5,7 +5,7 @@ using BurningKnight.util;
 using Lens.entity;
 using Lens.util;
 using Lens.util.math;
-using VelcroPhysics.Dynamics;
+using Lens.physics;
 
 namespace BurningKnight.entity.creature.pet {
 	public class Crystal : Pet {

@@ -7,8 +7,8 @@ using Lens.entity;
 using Lens.entity.component.logic;
 using Lens.util.camera;
 using Lens.util.file;
+using Lens.physics;
 using Microsoft.Xna.Framework;
-using VelcroPhysics.Dynamics;
 
 namespace BurningKnight.entity.room.input {
 	public class Button : RoomInput {

@@ -8,8 +8,8 @@ using BurningKnight.state;
 using BurningKnight.util;
 using Lens.assets;
 using Lens.entity;
+using Lens.physics;
 using Microsoft.Xna.Framework;
-using VelcroPhysics.Dynamics;
 
 namespace BurningKnight.entity.door {
 	public class HeadDoor : CustomDoor {

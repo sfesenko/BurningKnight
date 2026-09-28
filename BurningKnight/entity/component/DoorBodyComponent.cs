@@ -1,7 +1,7 @@
 ﻿using BurningKnight.entity.creature.player;
 using BurningKnight.entity.projectile;
 using Lens.entity;
-using VelcroPhysics.Dynamics;
+using Lens.physics;
 
 namespace BurningKnight.entity.component {
 	public class DoorBodyComponent : RectBodyComponent {

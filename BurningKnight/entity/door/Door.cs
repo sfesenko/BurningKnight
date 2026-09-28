@@ -18,9 +18,9 @@ using Lens.entity.component.logic;
 using Lens.graphics;
 using Lens.util.file;
 using Lens.util.math;
+using Lens.physics;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
-using VelcroPhysics.Dynamics;
 
 namespace BurningKnight.entity.door {
 	public class Door : SaveableEntity, PlaceableEntity {

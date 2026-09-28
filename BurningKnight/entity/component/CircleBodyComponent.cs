@@ -1,8 +1,6 @@
 ﻿using BurningKnight.physics;
+using Lens.physics;
 using Microsoft.Xna.Framework;
-using VelcroPhysics.Collision.Shapes;
-using VelcroPhysics.Dynamics;
-using VelcroPhysics.Factories;
 
 namespace BurningKnight.entity.component {
 	public class CircleBodyComponent : BodyComponent {
@@ -13,14 +11,12 @@ namespace BurningKnight.entity.component {
 				Offset = new Vector2(r, r);
 			}
 
-			Body = BodyFactory.CreateBody(Physics.World, Vector2.Zero, 0, type);
+			Body = Physics.World.CreateBody(Vector2.Zero, 0, type);
 			Body.FixedRotation = true;
 			Body.UserData = this;
 			Body.LinearDamping = 0;
 
-			Body.CreateFixture(new CircleShape(r, 1) {
-				Position = new Vector2(x + r, y + r),
-			}).IsSensor = sensor;
+			Body.CreateCircleFixture(r, 1, new Vector2(x + r, y + r)).IsSensor = sensor;
 		}
 
 		public override void Resize(float x, float y, float w, float h, bool center = false) {
@@ -37,9 +33,7 @@ namespace BurningKnight.entity.component {
 				Offset = new Vector2(r, r);
 			}
 			
-			Body.CreateFixture(new CircleShape(r, 1) {
-				Position = new Vector2(x + r, y + r),
-			}).IsSensor = sensor;
+			Body.CreateCircleFixture(r, 1, new Vector2(x + r, y + r)).IsSensor = sensor;
 		}
 	}
 }

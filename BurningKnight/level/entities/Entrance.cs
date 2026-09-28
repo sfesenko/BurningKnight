@@ -9,7 +9,7 @@ using Lens;
 using Lens.assets;
 using Lens.entity;
 using Lens.util.file;
-using VelcroPhysics.Dynamics;
+using Lens.physics;
 
 namespace BurningKnight.level.entities {
 	public class Entrance : SaveableEntity, PlaceableEntity {

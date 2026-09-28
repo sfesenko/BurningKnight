@@ -8,7 +8,7 @@ using Lens.entity.component.logic;
 using Lens.util.camera;
 using Lens.util.file;
 using Lens.util.tween;
-using VelcroPhysics.Dynamics;
+using Lens.physics;
 
 namespace BurningKnight.entity.room.input {
 	public class Lever : RoomInput {

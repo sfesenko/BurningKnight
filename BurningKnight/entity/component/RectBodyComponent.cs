@@ -1,9 +1,7 @@
 ﻿using BurningKnight.physics;
+using Lens.physics;
 using Lens.util;
 using Microsoft.Xna.Framework;
-using VelcroPhysics.Dynamics;
-using VelcroPhysics.Factories;
-using VelcroPhysics.Shared;
 
 namespace BurningKnight.entity.component {
 	public class RectBodyComponent : BodyComponent {
@@ -14,7 +12,7 @@ namespace BurningKnight.entity.component {
 				Offset = new Vector2(w / 2, h / 2);
 			}
 
-			Body = BodyFactory.CreateBody(Physics.World, Vector2.Zero, 0, type);
+			Body = Physics.World.CreateBody(Vector2.Zero, 0, type);
 
 			Body.FixedRotation = true;
 			Body.UserData = this;
@@ -24,9 +22,9 @@ namespace BurningKnight.entity.component {
 				KnockbackModifier = 0;
 			}
 			
-			FixtureFactory.AttachPolygon(new Vertices(4) {
+			Body.CreatePolygonFixture(new Vertices(4) {
 				new Vector2(x, y), new Vector2(x + w, y), new Vector2(x + w, y + h), new Vector2(x, y + h)
-			}, 1f, Body).IsSensor = sensor;
+			}, 1f).IsSensor = sensor;
 		}
 
 		public override void Resize(float x, float y, float w, float h, bool center = false) {
@@ -41,9 +39,9 @@ namespace BurningKnight.entity.component {
 				Offset = new Vector2(w / 2, h / 2);
 			}
 			
-			FixtureFactory.AttachPolygon(new Vertices(4) {
+			Body.CreatePolygonFixture(new Vertices(4) {
 				new Vector2(x, y), new Vector2(x + w, y), new Vector2(x + w, y + h), new Vector2(x, y + h)
-			}, 1f, Body).IsSensor = sensor;
+			}, 1f).IsSensor = sensor;
 		}
 	}
 }

@@ -15,8 +15,8 @@ using Lens.entity;
 using Lens.util.file;
 using Lens.util.math;
 using Lens.util.tween;
+using Lens.physics;
 using Microsoft.Xna.Framework;
-using VelcroPhysics.Dynamics;
 
 namespace BurningKnight.level.entities.machine {
 	public class VendingMachine : Prop {

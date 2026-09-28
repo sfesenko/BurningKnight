@@ -4,7 +4,7 @@ using BurningKnight.entity.creature;
 using BurningKnight.entity.events;
 using Lens.entity;
 using Lens.entity.component.logic;
-using VelcroPhysics.Dynamics;
+using Lens.physics;
 
 namespace BurningKnight.entity.room.input {
 	public class PreasurePlate : RoomInput {

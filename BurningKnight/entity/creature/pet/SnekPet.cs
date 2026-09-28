@@ -4,7 +4,7 @@ using BurningKnight.entity.component;
 using BurningKnight.entity.creature.mob;
 using BurningKnight.entity.events;
 using Lens.entity;
-using VelcroPhysics.Dynamics;
+using Lens.physics;
 
 namespace BurningKnight.entity.creature.pet {
 	public class SnekPet : Pet {

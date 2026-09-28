@@ -1,6 +1,6 @@
 using BurningKnight.assets;
 using BurningKnight.entity.component;
-using VelcroPhysics.Dynamics;
+using Lens.physics;
 
 namespace BurningKnight.entity.creature.pet {
 	public class AnimatedFollowerPet : Pet {

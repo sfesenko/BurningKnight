@@ -4,7 +4,7 @@ using BurningKnight.entity.projectile.controller;
 using Lens.util.math;
 using Lens.util.timer;
 using Lens.util.tween;
-using VelcroPhysics.Dynamics;
+using Lens.physics;
 
 namespace BurningKnight.entity.creature.mob.desert {
 	/*public class Cactus : Mob {

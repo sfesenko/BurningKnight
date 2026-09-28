@@ -10,8 +10,8 @@ using Lens.entity;
 using Lens.graphics;
 using Lens.input;
 using Lens.util.camera;
+using Lens.physics;
 using Microsoft.Xna.Framework;
-using VelcroPhysics.Dynamics;
 
 namespace BurningKnight.entity.pc {
 	public class Pico : SaveableEntity, PlaceableEntity {

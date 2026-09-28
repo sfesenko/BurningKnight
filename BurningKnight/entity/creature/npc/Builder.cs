@@ -9,7 +9,7 @@ using BurningKnight.state;
 using BurningKnight.ui.dialog;
 using BurningKnight.util;
 using Lens.util.timer;
-using VelcroPhysics.Dynamics;
+using Lens.physics;
 
 namespace BurningKnight.entity.creature.npc {
 	public class Builder : Npc {

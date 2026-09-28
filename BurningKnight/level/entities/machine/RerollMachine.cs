@@ -13,7 +13,7 @@ using Lens.entity;
 using Lens.util.file;
 using Lens.util.math;
 using Lens.util.tween;
-using VelcroPhysics.Dynamics;
+using Lens.physics;
 
 namespace BurningKnight.level.entities.machine {
 	public class RerollMachine : Prop {

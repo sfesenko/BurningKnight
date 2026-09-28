@@ -31,7 +31,7 @@ using Lens.util.file;
 using Lens.util.math;
 using Lens.util.timer;
 using Lens.util.tween;
-using VelcroPhysics.Dynamics;
+using Lens.physics;
 using Color = Microsoft.Xna.Framework.Color;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
 

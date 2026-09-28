@@ -6,7 +6,6 @@ using Lens.util.math;
 using Lens.util.timer;
 using Lens.util.tween;
 using Microsoft.Xna.Framework;
-using VelcroPhysics.Utilities;
 using MathUtils = Lens.util.MathUtils;
 
 namespace BurningKnight.entity.creature.mob.library {

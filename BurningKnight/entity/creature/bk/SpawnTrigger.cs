@@ -17,8 +17,8 @@ using Lens.util.file;
 using Lens.util.math;
 using Lens.util.timer;
 using Lens.util.tween;
+using Lens.physics;
 using Microsoft.Xna.Framework;
-using VelcroPhysics.Dynamics;
 
 namespace BurningKnight.entity.creature.bk {
 	public class SpawnTrigger : SaveableEntity {

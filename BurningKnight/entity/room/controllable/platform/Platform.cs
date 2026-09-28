@@ -4,7 +4,6 @@ using BurningKnight.save;
 using Lens.entity;
 using Lens.util.file;
 using Microsoft.Xna.Framework;
-using VelcroPhysics.Dynamics;
 
 namespace BurningKnight.entity.room.controllable.platform {
 	public class Platform : Support {

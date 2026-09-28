@@ -5,8 +5,8 @@ using BurningKnight.level;
 using BurningKnight.level.entities;
 using BurningKnight.physics;
 using Lens.entity;
+using Lens.physics;
 using Microsoft.Xna.Framework;
-using VelcroPhysics.Dynamics;
 
 namespace BurningKnight.entity.room.controllable.platform {
 	public class PlatformBorder : Entity, CollisionFilterEntity {

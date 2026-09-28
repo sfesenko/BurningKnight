@@ -6,8 +6,8 @@ using BurningKnight.entity.projectile;
 using BurningKnight.physics;
 using BurningKnight.util.geometry;
 using Lens.entity;
+using Lens.physics;
 using Microsoft.Xna.Framework;
-using VelcroPhysics.Dynamics;
 
 namespace BurningKnight.level.entities {
 	public class SolidProp : SlicedProp, CollisionFilterEntity {

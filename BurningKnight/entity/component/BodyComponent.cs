@@ -5,15 +5,15 @@ using BurningKnight.util;
 using ImGuiNET;
 using Lens.entity;
 using Lens.entity.component;
+using Lens.physics;
 using Lens.util;
 using Lens.util.file;
 using Lens.util.math;
 using Microsoft.Xna.Framework;
-using VelcroPhysics.Dynamics;
 
 namespace BurningKnight.entity.component {
 	public class BodyComponent : SaveableComponent {
-		public Body Body;
+		public IPhysicsBody Body;
 		public Vector2 Acceleration;
 		public Vector2 Knockback;
 		public float KnockbackModifier = 1;

@@ -11,8 +11,8 @@ using Lens.entity;
 using Lens.util;
 using Lens.util.file;
 using Lens.util.timer;
+using Lens.physics;
 using Microsoft.Xna.Framework;
-using VelcroPhysics.Dynamics;
 
 namespace BurningKnight.entity.creature.npc.dungeon {
 	public class TrashGoblin : DungeonShopNpc {

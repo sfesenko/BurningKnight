@@ -10,8 +10,8 @@ using Lens.entity;
 using Lens.util;
 using Lens.util.file;
 using Lens.util.math;
+using Lens.physics;
 using Microsoft.Xna.Framework;
-using VelcroPhysics.Dynamics;
 
 namespace BurningKnight.level.entities {
 	public class Stand : SolidProp {

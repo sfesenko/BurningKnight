@@ -1,7 +1,7 @@
 using BurningKnight.entity.component;
 using BurningKnight.entity.creature.player;
 using Lens.entity;
-using VelcroPhysics.Dynamics;
+using Lens.physics;
 
 namespace BurningKnight.entity.pc {
 	public class Controller : Entity {

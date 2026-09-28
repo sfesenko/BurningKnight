@@ -1,4 +1,4 @@
-using VelcroPhysics.Dynamics;
+using Lens.physics;
 
 namespace BurningKnight.entity.component {
 	public class SensorBodyComponent : RectBodyComponent {

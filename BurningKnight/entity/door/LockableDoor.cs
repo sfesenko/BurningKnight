@@ -4,8 +4,8 @@ using BurningKnight.physics;
 using Lens.entity;
 using Lens.entity.component.logic;
 using Lens.util.file;
+using Lens.physics;
 using Microsoft.Xna.Framework;
-using VelcroPhysics.Dynamics;
 
 namespace BurningKnight.entity.door {
 	public class LockableDoor : Door, CollisionFilterEntity {

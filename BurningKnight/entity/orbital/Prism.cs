@@ -4,7 +4,7 @@ using BurningKnight.entity.projectile;
 using BurningKnight.util;
 using Lens.entity;
 using Lens.util.math;
-using VelcroPhysics.Dynamics;
+using Lens.physics;
 
 namespace BurningKnight.entity.orbital {
 	public class Prism : Orbital {

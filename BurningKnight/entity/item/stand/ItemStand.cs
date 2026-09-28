@@ -16,8 +16,8 @@ using Lens.entity;
 using Lens.graphics;
 using Lens.util;
 using Lens.util.file;
+using Lens.physics;
 using Microsoft.Xna.Framework;
-using VelcroPhysics.Dynamics;
 
 namespace BurningKnight.entity.item.stand {
 	public class ItemStand : Prop, CollisionFilterEntity {

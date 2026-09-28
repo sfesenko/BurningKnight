@@ -13,7 +13,7 @@ using Lens.entity;
 using Lens.util;
 using Lens.util.camera;
 using Lens.util.file;
-using VelcroPhysics.Dynamics;
+using Lens.physics;
 
 namespace BurningKnight.level.entities {
 	public class Teleporter : SaveableEntity {

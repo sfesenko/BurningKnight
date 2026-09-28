@@ -5,15 +5,13 @@ using BurningKnight.level.tile;
 using BurningKnight.physics;
 using BurningKnight.state;
 using BurningKnight.util;
+using Lens.physics;
 using Microsoft.Xna.Framework;
-using VelcroPhysics.Dynamics;
-using VelcroPhysics.Factories;
-using VelcroPhysics.Shared;
 
 namespace BurningKnight.level {
 	public class ChasmBodyComponent : BodyComponent {
 		private bool dirty;
-		private Body[] chunks;
+		private IPhysicsBody[] chunks;
 		private int cw;
 		private int ch;
 		private int cs;
@@ -92,7 +90,7 @@ namespace BurningKnight.level {
 					Physics.RemoveBody(c);
 				}
 			} else {
-				chunks = new Body[cs];
+				chunks = new IPhysicsBody[cs];
 			}
 
 			for (int cy = 0; cy < ch; cy++) {
@@ -117,7 +115,7 @@ namespace BurningKnight.level {
 		private void RecreateChunk(int cx, int cy) {
 			var level = Run.Level;
 			
-			var body = BodyFactory.CreateBody(Physics.World, Vector2.Zero);
+			var body = Physics.World.CreateBody(Vector2.Zero, 0, BodyType.Static);
 			body.FixedRotation = true;
 			body.UserData = this;
 			
@@ -190,7 +188,7 @@ namespace BurningKnight.level {
 							list.Add(new Vector2(xx + 6 + 4, yy + 16));
 						}
 						
-						FixtureFactory.AttachPolygon(new Vertices(list), 1f, body);			
+						body.CreatePolygonFixture(new Vertices(list), 1f);			
 					}
 				}
 			}

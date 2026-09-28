@@ -12,8 +12,8 @@ using Lens.entity;
 using Lens.util;
 using Lens.util.file;
 using Lens.util.tween;
+using Lens.physics;
 using Microsoft.Xna.Framework;
-using VelcroPhysics.Dynamics;
 
 namespace BurningKnight.entity.room.controllable.turret {
 	public class Turret : RoomControllable, CollisionFilterEntity {

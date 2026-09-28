@@ -6,8 +6,8 @@ using BurningKnight.util;
 using Lens;
 using Lens.entity;
 using Lens.util.file;
+using Lens.physics;
 using Microsoft.Xna.Framework;
-using VelcroPhysics.Dynamics;
 
 namespace BurningKnight.level.entities {
 	public class Belt : Support {

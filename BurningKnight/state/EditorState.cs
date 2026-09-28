@@ -1,3 +1,4 @@
+using System;
 using BurningKnight.assets;
 using BurningKnight.assets.lighting;
 using BurningKnight.assets.prefabs;
@@ -17,7 +18,6 @@ using Lens.util.camera;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended;
-using VelcroPhysics.Utilities;
 using Console = BurningKnight.debug.Console;
 
 namespace BurningKnight.state {
@@ -74,8 +74,8 @@ namespace BurningKnight.state {
 			if (Input.Keyboard.IsDown(Keys.Space)) {
 				Camera.Position -= Input.Mouse.PositionDelta;
 				
-				Camera.X = MathUtils.Clamp(Camera.X, -Display.Width / 2f, Level.Width * 16f - Display.Width / 2f);
-				Camera.Y = MathUtils.Clamp(Camera.Y, -Display.Height / 2f, Level.Height * 16f - Display.Height / 2f);
+				Camera.X = Math.Clamp(Camera.X, -Display.Width / 2f, Level.Width * 16f - Display.Width / 2f);
+				Camera.Y = Math.Clamp(Camera.Y, -Display.Height / 2f, Level.Height * 16f - Display.Height / 2f);
 			}
 		}
 

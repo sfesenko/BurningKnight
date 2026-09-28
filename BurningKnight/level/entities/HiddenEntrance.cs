@@ -11,8 +11,8 @@ using Lens.assets;
 using Lens.entity;
 using Lens.util.camera;
 using Lens.util.file;
+using Lens.physics;
 using Microsoft.Xna.Framework;
-using VelcroPhysics.Dynamics;
 
 namespace BurningKnight.level.entities {
 	public class HiddenEntrance : SaveableEntity, PlaceableEntity {

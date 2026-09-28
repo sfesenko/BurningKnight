@@ -1,58 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using BurningKnight.entity.component;
-using Lens.util;
+﻿using BurningKnight.entity.component;
+using Lens.physics;
 using Microsoft.Xna.Framework;
-using VelcroPhysics.Collision.ContactSystem;
-using VelcroPhysics.Collision.Narrowphase;
-using VelcroPhysics.Dynamics;
 
 namespace BurningKnight.physics {
 	public class Physics {
-		public static World World;
-		public static PhysicsDebugRenderer Debug;
+		public static IPhysicsWorld World;
 		public static bool RenderDebug = false;
 
-		public static Fixture Fixture;
-
-		private static bool locked;
-		private static List<Body> toRemove = new List<Body>();
+		public static IFixture Fixture;
 
 		public static void Init() {
-			World = new World(Vector2.Zero);
-			Debug = new PhysicsDebugRenderer(World);
+			World = PhysicsFactory.CreateWorld(Vector2.Zero);
 
-			World.ContactManager.PreSolve += PreSolve;
-
-			World.ContactManager.BeginContact += BeginContact;
-			World.ContactManager.EndContact += EndContact;
+			World.PreSolve += PreSolve;
+			World.BeginContact += BeginContact;
+			World.EndContact += EndContact;
 		}
 
-		
-		
-		private static void RemoveBodies() {
-			if (locked || World == null || toRemove.Count == 0) {
-				return;
-			}
-
-			foreach (var b in toRemove) {
-				try {
-					World.RemoveBody(b);
-				} catch (Exception e) {
-					Log.Error(e);
-				}
-			}
-
-			toRemove.Clear();
+		public static void RemoveBody(IPhysicsBody body) {
+			World?.RemoveBody(body);
 		}
 
-		public static void RemoveBody(Body body) {
-			if (!toRemove.Contains(body)) {
-				toRemove.Add(body);
-			}
-		}
-		
-		public static void PreSolve(Contact contact, ref Manifold oldManifold) {
+		public static void PreSolve(IContact contact) {
 			var a = contact.FixtureA.Body.UserData;
 			var b = contact.FixtureB.Body.UserData;
 
@@ -83,7 +52,7 @@ namespace BurningKnight.physics {
 			}
 		}
 		
-		public static bool BeginContact(Contact contact) {
+		public static void BeginContact(IContact contact) {
 			var a = contact.FixtureA.Body.UserData;
 			var b = contact.FixtureB.Body.UserData;
 			
@@ -94,11 +63,9 @@ namespace BurningKnight.physics {
 				Fixture = contact.FixtureA;
 				bc.OnCollision(ac.Entity);
 			}
-
-			return true;
 		}
 
-		public static void EndContact(Contact contact) {
+		public static void EndContact(IContact contact) {
 			var a = contact.FixtureA.Body.UserData;
 			var b = contact.FixtureB.Body.UserData;
 
@@ -109,49 +76,17 @@ namespace BurningKnight.physics {
 		}
 
 		public static void Update(float dt) {
-			if (World == null) {
-				return;
-			}
-
-			try {
-				RemoveBodies();
-			} catch (Exception e) {
-				Log.Error(e);
-				return;
-			}
-
-			// 'locked' has to be cleared even when a contact callback throws, otherwise the world
-			// stays locked and RemoveBodies silently stops draining 'toRemove' for the rest of the
-			// process.
-			locked = true;
-
-			try {
-				World.Step(dt);
-			} catch (Exception e) {
-				Log.Error(e);
-			} finally {
-				locked = false;
-			}
+			World?.Step(dt);
 		}
 
 		public static void Render() {
 			if (RenderDebug) {
-				Debug.DrawDebugData();
+				World?.RenderDebug();
 			}
 		}
 
 		public static void Destroy() {
-			if (locked) {
-				Log.Error("World was locked when destroying");
-			}
-			
-			try {
-				RemoveBodies();
-				World?.Clear();
-			} catch (Exception e) {
-				Log.Error(e);
-			}
-
+			World?.Clear();
 			World = null;
 		}
 	}

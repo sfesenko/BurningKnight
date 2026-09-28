@@ -4,8 +4,8 @@ using BurningKnight.entity.events;
 using Lens;
 using Lens.entity;
 using Lens.entity.component;
+using Lens.physics;
 using Microsoft.Xna.Framework;
-using VelcroPhysics.Dynamics;
 
 namespace BurningKnight.entity.component {
 	public class LockComponent : Component, Subscriber {

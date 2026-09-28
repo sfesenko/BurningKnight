@@ -9,8 +9,8 @@ using BurningKnight.level.entities;
 using Lens.entity;
 using Lens.graphics;
 using Lens.util.math;
+using Lens.physics;
 using Microsoft.Xna.Framework;
-using VelcroPhysics.Dynamics;
 
 namespace BurningKnight.entity.room.controllable {
 	public class FireTrap : RoomControllable {

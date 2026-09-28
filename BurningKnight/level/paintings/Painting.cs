@@ -15,8 +15,8 @@ using Lens.graphics;
 using Lens.util.camera;
 using Lens.util.file;
 using Lens.util.tween;
+using Lens.physics;
 using Microsoft.Xna.Framework;
-using VelcroPhysics.Dynamics;
 
 namespace BurningKnight.level.paintings {
 	public class Painting : SaveableEntity {

@@ -8,8 +8,8 @@ using BurningKnight.state;
 using Lens.entity;
 using Lens.entity.component.graphics;
 using Lens.util.tween;
+using Lens.physics;
 using Microsoft.Xna.Framework;
-using VelcroPhysics.Dynamics;
 
 namespace BurningKnight.level.entities {
 	public class ExplodingBarrel : SolidProp {

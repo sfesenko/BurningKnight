@@ -27,7 +27,6 @@ using Lens.util;
 using Lens.util.file;
 using Lens.util.math;
 using Microsoft.Xna.Framework;
-using VelcroPhysics.Dynamics;
 
 namespace BurningKnight.entity.item {
 	public class Item : SaveableEntity, CollisionFilterEntity, PlaceableEntity {

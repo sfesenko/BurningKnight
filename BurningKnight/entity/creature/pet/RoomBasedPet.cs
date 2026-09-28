@@ -1,7 +1,7 @@
 using BurningKnight.entity.component;
 using BurningKnight.util;
 using Microsoft.Xna.Framework;
-using VelcroPhysics.Dynamics;
+using Lens.physics;
 
 namespace BurningKnight.entity.creature.pet {
 	public class RoomBasedPet : Pet {

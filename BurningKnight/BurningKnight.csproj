@@ -8,10 +8,6 @@
             <Project>{3b26aa2e-0ba2-42dc-ad62-e6c8617f9e4d}</Project>
             <Name>Lens</Name>
         </ProjectReference>
-        <ProjectReference Include="..\VelcroPhysics\VelcroPhysics.MonoGame.csproj">
-            <Project>{4650bd15-4b03-4a7e-98d4-9f8697ed2eb4}</Project>
-            <Name>VelcroPhysics.MonoGame</Name>
-        </ProjectReference>
     </ItemGroup>
 
     <ItemGroup>

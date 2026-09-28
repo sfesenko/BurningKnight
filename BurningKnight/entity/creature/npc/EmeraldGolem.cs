@@ -16,7 +16,7 @@ using Lens.util.camera;
 using Lens.util.file;
 using Lens.util.math;
 using Lens.util.timer;
-using VelcroPhysics.Dynamics;
+using Lens.physics;
 
 namespace BurningKnight.entity.creature.npc {
 	public class EmeraldGolem : Npc {

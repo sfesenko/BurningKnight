@@ -19,8 +19,8 @@ using Lens.entity;
 using Lens.input;
 using Lens.util.camera;
 using Lens.util.file;
+using Lens.physics;
 using Microsoft.Xna.Framework;
-using VelcroPhysics.Dynamics;
 
 namespace BurningKnight.level.entities {
 	public class Tombstone : Prop {

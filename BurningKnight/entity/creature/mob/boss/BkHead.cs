@@ -21,8 +21,8 @@ using Lens.util.camera;
 using Lens.util.math;
 using Lens.util.timer;
 using Lens.util.tween;
+using Lens.physics;
 using Microsoft.Xna.Framework;
-using VelcroPhysics.Dynamics;
 
 namespace BurningKnight.entity.creature.mob.boss {
 	public class BkHead : Boss {

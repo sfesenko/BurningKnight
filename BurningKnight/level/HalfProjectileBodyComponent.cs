@@ -3,17 +3,16 @@ using System.Collections.Generic;
 using BurningKnight.level.tile;
 using BurningKnight.physics;
 using BurningKnight.util;
+using Lens.physics;
 using Lens.util;
 using Microsoft.Xna.Framework;
-using VelcroPhysics.Factories;
-using VelcroPhysics.Shared;
 
 namespace BurningKnight.level {
 	public class HalfProjectileBodyComponent : LevelBodyComponent {
 		protected override void RecreateChunk(int cx, int cy) {
 			var level = Level;
 			
-			var body = BodyFactory.CreateBody(Physics.World, Vector2.Zero);
+			var body = Physics.World.CreateBody(Vector2.Zero, 0, BodyType.Static);
 			body.FixedRotation = true;
 			body.UserData = this;
 
@@ -69,7 +68,7 @@ namespace BurningKnight.level {
 						list.Add(new Vector2(xx, yy + (Check(level, x, y + 1) ? 16 : 8 + v)));
 
 						try {
-							FixtureFactory.AttachPolygon(new Vertices(list), 1f, body);
+							body.CreatePolygonFixture(new Vertices(list), 1f);
 						} catch (Exception e) {
 							foreach (var p in list) {
 								Log.Info($"{p.X - xx}:{p.Y - yy}");

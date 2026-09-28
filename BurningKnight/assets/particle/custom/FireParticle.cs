@@ -9,9 +9,9 @@ using Lens;
 using Lens.entity;
 using Lens.graphics;
 using Lens.util.math;
+using Lens.physics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using VelcroPhysics.Dynamics;
 using MathUtils = Lens.util.MathUtils;
 
 namespace BurningKnight.assets.particle.custom {

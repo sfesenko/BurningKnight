@@ -8,8 +8,8 @@ using BurningKnight.level.entities;
 using Lens.entity;
 using Lens.entity.component.logic;
 using Lens.util;
+using Lens.physics;
 using Microsoft.Xna.Framework;
-using VelcroPhysics.Dynamics;
 
 namespace BurningKnight.entity.creature.pet {
 	public class TheEye : RoomBasedPet {

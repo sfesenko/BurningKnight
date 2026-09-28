@@ -11,9 +11,9 @@ using Lens.entity.component.graphics;
 using Lens.graphics;
 using Lens.util;
 using Lens.util.file;
+using Lens.physics;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
-using VelcroPhysics.Dynamics;
 
 namespace BurningKnight.level.entities.building {
 	public class Thing : Prop, CollisionFilterEntity {

@@ -4,9 +4,8 @@ using BurningKnight.entity.events;
 using BurningKnight.entity.item;
 using Lens.entity;
 using Lens.entity.component.logic;
+using Lens.physics;
 using Microsoft.Xna.Framework;
-using VelcroPhysics.Dynamics;
-using VelcroPhysics.Utilities;
 using MathUtils = Lens.util.MathUtils;
 
 namespace BurningKnight.entity.creature.pet {

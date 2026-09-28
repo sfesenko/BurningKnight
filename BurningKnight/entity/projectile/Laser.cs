@@ -13,8 +13,6 @@ using BurningKnight.state;
 using Lens.entity;
 using Lens.util;
 using Microsoft.Xna.Framework;
-using VelcroPhysics.Dynamics;
-using VelcroPhysics.Dynamics.Solver;
 
 namespace BurningKnight.entity.projectile {
 	public class Laser : Projectile {
