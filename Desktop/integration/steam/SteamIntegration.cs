@@ -6,6 +6,7 @@ using BurningKnight.state;
 using BurningKnight.ui;
 using Lens;
 using Lens.assets;
+using Lens.services;
 using Lens.util;
 using Desktop.services;
 using Steamworks;
@@ -202,7 +203,7 @@ namespace Desktop.integration.steam {
 				};
 
 				try {
-					SteamCloudSave.Instance.Load();
+					CloudSave.Load();
 				} catch (Exception e) {
 					Log.Error(e);
 				}
@@ -233,7 +234,7 @@ namespace Desktop.integration.steam {
 
 			if (LaunchedFromSteam) {
 				try {
-					SteamCloudSave.Instance.Save();
+					CloudSave.Save();
 					SteamClient.Shutdown();
 				} catch (Exception e) {
 					Log.Error(e);
