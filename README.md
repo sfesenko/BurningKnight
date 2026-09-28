@@ -57,4 +57,4 @@ dotnet fsi tools/preprocess-ase.fsx
 
 It writes `Content/bin/Animations/`, which is ignored by git — so a fresh checkout needs one run of it before the game has animations. Nothing else needs a content build.
 
-Shaders are the one compiled asset: their `.xnb` bytecode is committed. Rebuilding it — only when a `.fx` changes — goes through `scripts/compile-shaders.sh`, which needs the MGCB tool and, on Linux, Wine.
+Shaders are the one compiled asset: their `.xnb` bytecode is committed. Rebuilding it — only when a `.fx` changes — goes through `tools/compile-shaders.sh`, which needs the MGCB tool and, on Linux, Wine.
