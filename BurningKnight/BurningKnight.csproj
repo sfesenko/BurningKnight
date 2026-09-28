@@ -16,4 +16,17 @@
             <PrivateAssets>All</PrivateAssets>
         </PackageReference>
     </ItemGroup>
+
+    <ItemGroup>
+        <AnimationSource Include="Content/Animations/*.ase" />
+        <AnimationSheet Include="Content/bin/Animations/*.png" />
+        <AnimationSheet Include="Content/bin/Animations/animations.json" />
+    </ItemGroup>
+
+    <!-- The sheets are build output, cut from the .ase sources before anything loads them.
+         Timestamps keep the preprocessor off the path when nothing changed. -->
+    <Target Name="PreprocessAnimations" BeforeTargets="BeforeBuild"
+            Inputs="@(AnimationSource)" Outputs="@(AnimationSheet)">
+        <Exec Command="dotnet fsi &quot;$(MSBuildThisFileDirectory)../tools/preprocess-ase.fsx&quot;" />
+    </Target>
 </Project>
