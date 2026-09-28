@@ -34,13 +34,11 @@ my dev branch into release, and 10 minutes later press a few buttons on Itch/Ste
 
 You just need the [.NET 10 SDK](https://dotnet.microsoft.com/download) — everything else is restored from NuGet. Open `Lens.sln` in your C# IDE of choice and run the `Desktop` project, or do it from the terminal.
 
-The animation sheets are build output, not sources, so a fresh checkout needs one preprocessor run before the game has any:
+The animation sheets are build output, not sources: the build cuts every `Content/Animations/*.ase` into one PNG plus a shared `animations.json` under `Content/bin/Animations/` (ignored by git), and fails on input it cannot blit. To redo that without a full build — while iterating on art — run it directly:
 
 ```bash
 dotnet fsi tools/preprocess-ase.fsx
 ```
-
-It cuts every `Content/Animations/*.ase` into one PNG plus a shared `animations.json` under `Content/bin/Animations/` (ignored by git), and fails on input it cannot blit.
 
 Debug (dev tools enabled, assets loaded from the source tree):
 
@@ -57,6 +55,6 @@ Desktop/bin/Release/net10.0/Desktop
 
 The game finds its content on its own: it looks for a `Content` directory next to the executable, then for the source tree, and links the content next to the executable when it needs to. Set the `BK_CONTENT` environment variable to point it somewhere else.
 
-Content loads from the source files in both configurations — textures as PNG, sound effects as WAV, animations as one sheet PNG per animation plus a single `animations.json`, cut from the `.ase` sources by `tools/preprocess-ase.fsx` (see above). Nothing else needs a content build.
+Content loads from the source files in both configurations — textures as PNG, sound effects as WAV, animations as one sheet PNG per animation plus a single `animations.json`, cut from the `.ase` sources by the build (`tools/preprocess-ase.fsx`). Nothing else needs a content build.
 
 Shaders are the one compiled asset: their `.xnb` bytecode is committed. Rebuilding it — only when a `.fx` changes — goes through `tools/compile-shaders.sh`, which needs the MGCB tool and, on Linux, Wine.
