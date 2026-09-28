@@ -9,6 +9,9 @@
 //
 // The pixel comparison at the bottom loads the old first-party parser, so running this needs a
 // Debug build of Aseprite/ and Desktop/; delete that block together with Aseprite/ (WS-1 T1.5).
+//
+// Input that would silently produce wrong pixels fails the run: cels out of layer order, an atlas
+// past the texture cap, a file with no frames or layers.
 #r "nuget: AsepriteDotNet, 1.9.1"
 #r "../Aseprite/bin/Debug/net10.0/Aseprite.dll"
 #r "../Desktop/bin/Debug/net10.0/MonoGame.Framework.dll"
@@ -103,11 +106,23 @@ let mutable missingCels = 0
 let mutable differences = 0
 let animations = JsonObject()
 
+// GraphicsProfile.Reach, the profile the game targets.
+let maxTextureSize = 2048
+
 for path in Directory.GetFiles(source, "*.ase") |> Array.sort do
     let name = Path.GetFileNameWithoutExtension path
-    let file = AsepriteFileLoader.FromFile(path, false)
+    let file =
+        try
+            AsepriteFileLoader.FromFile(path, false)
+        with ex ->
+            failwithf "cannot read %s: %s" name ex.Message
+
     let frames = file.Frames.ToArray()
     let layers = file.Layers.ToArray()
+
+    if frames.Length = 0 || layers.Length = 0 then
+        failwithf "%s has no %s" name (if frames.Length = 0 then "frames" else "layers")
+
     // The old parser premultiplied RGBA and grayscale pixels but left indexed palette entries as
     // they are; reproduce that exactly, so the flag stays off and the multiplication is manual.
     let premultiply = file.ColorDepth <> AsepriteColorDepth.Indexed
@@ -118,6 +133,10 @@ for path in Directory.GetFiles(source, "*.ase") |> Array.sort do
     // off-canvas cel wrap into the next row (visible in worm) and the last band's overflow land in
     // this padding row, which the runtime never samples.
     let atlasHeight = layers.Length * height + 1
+
+    if atlasWidth > maxTextureSize || atlasHeight > maxTextureSize then
+        failwithf "%s: the %dx%d atlas exceeds the %d texture cap" name atlasWidth atlasHeight maxTextureSize
+
     let rgba = Array.zeroCreate (atlasWidth * atlasHeight * 4)
 
     for f in 0 .. frames.Length - 1 do
@@ -129,6 +148,10 @@ for path in Directory.GetFiles(source, "*.ase") |> Array.sort do
 
         for celNo in 0 .. cels.Length - 1 do
             let cel = cels.[celNo]
+
+            if cel.Layer.Name <> layers.[celNo].Name then
+                failwithf "%s frame %s: cel %d belongs to layer '%s', but band %d is '%s'" name frames.[f].Name celNo cel.Layer.Name celNo layers.[celNo].Name
+
             let pixels, celWidth, celHeight = celImage cel
             let x = cel.Location.X
             let y = cel.Location.Y
