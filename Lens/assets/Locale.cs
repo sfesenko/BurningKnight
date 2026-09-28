@@ -95,7 +95,11 @@ namespace Lens.assets {
 			Log.Info($"Saving locale {Current}");
 			
 			try {
-				var file = File.CreateText(FileHandle.FromRoot($"Locales/{Current}.json").FullPath);
+				var file = Assets.WriteContent($"Locales/{Current}.json");
+
+				if (file == null) {
+					return;
+				}
 				var writer = new JsonWriter(file, 
 					#if DEBUG
 						true

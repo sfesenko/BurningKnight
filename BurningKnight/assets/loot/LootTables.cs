@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using BurningKnight.entity.creature.drop;
 using ImGuiNET;
+using Lens.assets;
 using Lens.lightJson;
 using Lens.lightJson.Serialization;
 using Lens.util;
@@ -64,7 +65,12 @@ namespace BurningKnight.assets.loot {
 				root[d.Key] = d.Value;
 			}
 			
-			var file = File.CreateText(FileHandle.FromRoot("Loot/loot.json").FullPath);
+			var file = Assets.WriteContent("Loot/loot.json");
+
+			if (file == null) {
+				return;
+			}
+
 			var writer = new JsonWriter(file);
 			writer.Write(root);
 			file.Close();

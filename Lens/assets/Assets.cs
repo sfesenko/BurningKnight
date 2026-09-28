@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using Lens.graphics;
 using Lens.util;
+using Lens.util.file;
 using Microsoft.Xna.Framework.Content;
 
 namespace Lens.assets {
@@ -48,6 +49,20 @@ namespace Lens.assets {
 		// The host supplies the root; the engine must not guess it from the working directory.
 		public static void SetRoot(string root) {
 			Root = Path.EndsInDirectorySeparator(root) ? root : root + Path.DirectorySeparatorChar;
+		}
+
+		/// <summary>
+		/// Opens a file in the content tree for writing, or returns null outside Debug. The content
+		/// tree ships read-only — a Release install may not even be writable — and only the dev
+		/// editors write into it; their callers log and give up when this returns null.
+		/// </summary>
+		public static StreamWriter WriteContent(string path) {
+			if (!Engine.Debug) {
+				Log.Warning($"Not writing {path}: the content tree is read-only outside Debug");
+				return null;
+			}
+
+			return File.CreateText(FileHandle.FromRoot(path).FullPath);
 		}
 		
 		private static string[] folders;

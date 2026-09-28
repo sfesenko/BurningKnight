@@ -56,7 +56,12 @@ namespace BurningKnight.ui.imgui {
 				root.Add(obj);
 			}
 
-			var file = File.CreateText(FileHandle.FromRoot($"Dialogs/{files[current]}.json").FullPath);
+			var file = Assets.WriteContent($"Dialogs/{files[current]}.json");
+
+			if (file == null) {
+				return;
+			}
+
 			var writer = new JsonWriter(file);
 			writer.Write(root);
 			file.Close();

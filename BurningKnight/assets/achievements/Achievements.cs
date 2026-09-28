@@ -76,7 +76,12 @@ namespace BurningKnight.assets.achievements {
 				root[a.Id] = data;
 			}
 
-			using var file = File.CreateText(FileHandle.FromRoot("achievements.json").FullPath);
+			using var file = Assets.WriteContent("achievements.json");
+
+			if (file == null) {
+				return;
+			}
+
 			var writer = new JsonWriter(file);
 			writer.Write(root);
 			file.Close();

@@ -136,7 +136,12 @@ namespace BurningKnight.assets.items {
 				root[item.Id] = data;
 			}
 			
-			var file = File.CreateText(FileHandle.FromRoot("items.json").FullPath);
+			var file = Assets.WriteContent("items.json");
+
+			if (file == null) {
+				return;
+			}
+
 			var writer = new JsonWriter(file);
 			writer.Write(root);
 			file.Close();
