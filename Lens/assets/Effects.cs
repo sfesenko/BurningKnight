@@ -7,7 +7,7 @@ namespace Lens.assets {
 		public static Dictionary<string, Effect> All = new Dictionary<string, Effect>();
 		
 		public static void Load() {
-			var shaderDir = FileHandle.FromRoot("bin/Shaders/");
+			var shaderDir = FileHandle.FromRoot("Shaders/");
 			
 			if (shaderDir.Exists()) {
 				foreach (var h in shaderDir.ListFileHandles()) {
@@ -20,7 +20,7 @@ namespace Lens.assets {
 
 		private static void LoadEffect(FileHandle handle)
 		{
-			var assetName = $"bin/Shaders/{handle.NameWithoutExtension}";
+			var assetName = $"Shaders/{handle.NameWithoutExtension}";
 			var effect = Assets.Content.Load<Effect>(assetName);
 			All[handle.NameWithoutExtension] = effect;
 		}

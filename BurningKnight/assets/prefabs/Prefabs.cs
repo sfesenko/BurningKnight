@@ -54,7 +54,7 @@ namespace BurningKnight.assets.prefabs {
 			
 			try {
 				var prefab = new Prefab();
-				var stream = new FileReader(handle.FullPath);
+				var stream = new FileReader(handle.OpenRead());
 
 				if (stream.ReadInt32() != SaveManager.MagicNumber) {
 					Log.Error("Invalid magic number!");

@@ -81,7 +81,7 @@ public class Audio
         var s = file.NameWithoutExtension;
         var key = $"{path}{s}".Replace('/', '_');
 
-        using (var stream = new FileStream(file.FullPath, FileMode.Open))
+        using (var stream = file.OpenRead())
         {
             sounds[key] = SoundEffect.FromStream(stream);
         }

@@ -1,5 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
+using Lens;
+using Lens.assets;
 
 namespace Desktop {
 	// The host decides where content lives; the engine is told, never left to guess from the
@@ -7,10 +10,31 @@ namespace Desktop {
 	// executable, then the source tree found by walking up to the repository root.
 	public static class ContentRoot {
 		public const string EnvVar = "BK_CONTENT";
+		public const string ArchiveName = "Content.zip";
 
 		private const int MaxDepth = 6;
 		private const string RepoMarker = "global.json";
 		private const string SourceContent = "Content";
+
+		// Reads resolve through layers: generated content first, then the source tree, then the
+		// packaged archive. Loose files win over the archive, so a mod or an override dropped into
+		// Content/ still takes effect. Debug never reads the archive — a stale one beside a
+		// development build would only shadow the source tree.
+		public static IContentSource BuildSource(string root) {
+			var layers = new List<IContentSource> {
+				new FileContentSource(Path.Combine(root, "bin")),
+				new FileContentSource(root)
+			};
+
+			var archive = Path.Combine(AppContext.BaseDirectory, ArchiveName);
+
+			if (!Engine.Debug && File.Exists(archive)) {
+				Console.WriteLine($"Content archive: {archive}");
+				layers.Add(new ArchiveContentSource(archive));
+			}
+
+			return new LayeredContentSource([.. layers]);
+		}
 
 		public static string Resolve() {
 			var fromEnv = Environment.GetEnvironmentVariable(EnvVar);

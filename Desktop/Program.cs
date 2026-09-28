@@ -117,6 +117,7 @@ namespace Desktop {
 			var content = ContentRoot.Resolve();
 
 			Assets.SetRoot(content);
+			Assets.SetSource(ContentRoot.BuildSource(content));
 			ContentRoot.LinkNextToExecutable(content);
 			Directory.SetCurrentDirectory(Path.GetDirectoryName(Path.TrimEndingDirectorySeparator(content)));
 			

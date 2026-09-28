@@ -46,10 +46,10 @@ namespace BurningKnight.state {
 		public override void Init() {
 			base.Init();
 
-			pixel = new TextureRegion(Textures.FastLoad("Content/pixel.png"));
+			pixel = new TextureRegion(Textures.FastLoad("pixel.png"));
 			
 			Ui.Add(logoCard = new PhotoCard {
-				Region = new TextureRegion(Textures.FastLoad("Content/logo.png")),
+				Region = new TextureRegion(Textures.FastLoad("logo.png")),
 				Url = "https://twitter.com/rexcellentgames",
 				Name = "Rexcellent Games",
 				Position = new Vector2(240, Display.UiHeight + 60),

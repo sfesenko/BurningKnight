@@ -20,7 +20,9 @@ namespace Lens.assets {
 		}
 
 		public static Texture2D FastLoad(string path) {
-			return Texture2D.FromFile(Engine.GraphicsDevice, path);
+			using var stream = Assets.Source.Open(path);
+
+			return Texture2D.FromStream(Engine.GraphicsDevice, stream);
 		}
 		
 		private static void LoadTextures(FileHandle handle) {
@@ -37,9 +39,8 @@ namespace Lens.assets {
 			var region = new TextureRegion();
 			string id = handle.NameWithoutExtension;
 
-			var fileStream = new FileStream(handle.FullPath, FileMode.Open);
+			using var fileStream = handle.OpenRead();
 			region.Texture = Texture2D.FromStream(Engine.GraphicsDevice, fileStream);
-			fileStream.Dispose();
 
 			region.Source = region.Texture.Bounds;
 			region.Center = new Vector2(region.Source.Width / 2f, region.Source.Height / 2f);

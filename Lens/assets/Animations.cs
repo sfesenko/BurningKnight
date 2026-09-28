@@ -14,7 +14,7 @@ namespace Lens.assets {
 
 		internal static void Load()
 		{
-			var file = FileHandle.FromRoot("bin/Animations/animations.json");
+			var file = FileHandle.FromRoot("Animations/animations.json");
 
 			if (!file.Exists())
 			{
@@ -63,11 +63,8 @@ namespace Lens.assets {
 				return null;
 			}
 
-			var path = FileHandle.FromRoot($"bin/Animations/{id}.png").FullPath;
-
-			using var stream = new FileStream(path, FileMode.Open);
-
 			// MonoGame does not premultiply here, and the sheets are premultiplied already.
+			using var stream = FileHandle.FromRoot($"Animations/{id}.png").OpenRead();
 			var texture = Texture2D.FromStream(Engine.GraphicsDevice, stream);
 
 			animation = AnimationUtils.LoadAnimation(texture, source);

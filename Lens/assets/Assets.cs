@@ -46,9 +46,17 @@ namespace Lens.assets {
 		public static string Root { get; private set; } =
 			Path.Combine(AppContext.BaseDirectory, "Content") + Path.DirectorySeparatorChar;
 
+		// Reads go through the source, so the same loaders serve plain files and a packaged
+		// archive. FullPath on a handle still points into the content root, for writes.
+		public static IContentSource Source { get; private set; } = new FileContentSource(Root);
+
 		// The host supplies the root; the engine must not guess it from the working directory.
 		public static void SetRoot(string root) {
 			Root = Path.EndsInDirectorySeparator(root) ? root : root + Path.DirectorySeparatorChar;
+		}
+
+		public static void SetSource(IContentSource source) {
+			Source = source;
 		}
 
 		/// <summary>

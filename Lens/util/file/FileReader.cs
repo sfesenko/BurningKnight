@@ -24,6 +24,15 @@ namespace Lens.util.file {
 			ReadData(path);
 		}
 
+		// Reads a prefab that may live inside an archive, where the stream has no path — and no
+		// length to trust, since a deflated entry cannot report one.
+		public FileReader(Stream stream) {
+			using var memory = new MemoryStream();
+
+			stream.CopyTo(memory);
+			read = memory.ToArray();
+		}
+
 		protected virtual void ReadData(string path) {
 			var file = File.Open(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
 			var stream = new BinaryReader(file);

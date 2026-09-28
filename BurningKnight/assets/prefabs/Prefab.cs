@@ -13,7 +13,7 @@ namespace BurningKnight.assets.prefabs {
 
 		public void Place(Level level, int x, int y) {
 			var pos = new Vector2(x * 16, y * 16);
-			var reader = new FileReader(null);
+			var reader = new FileReader((string) null);
 			
 			foreach (var d in Datas) {
 				if (d.Type == typeof(Level)) {
