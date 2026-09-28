@@ -51,9 +51,9 @@ public class Audio
 
             foreach (var sfx in file.ListFileHandles())
             {
-                if (sfx.Extension == ".xnb")
+                if (sfx.Extension == ".wav")
                 {
-                    LoadSfx(sfx.NameWithoutExtension, path);
+                    LoadSound(sfx, path);
                 }
             }
 
@@ -71,14 +71,20 @@ public class Audio
     internal void Load()
     {
         Destroy();
-        LoadSfx(FileHandle.FromRoot("bin/Sfx/"), "", true);
+        LoadSfx(FileHandle.FromRoot("Sfx/"), "", true);
+
+        Log.Debug($"Loaded {sounds.Count} sounds");
     }
 
-    private void LoadSfx(string sfx, string path)
+    private void LoadSound(FileHandle file, string path)
     {
-        var s = Path.GetFileNameWithoutExtension(sfx);
+        var s = file.NameWithoutExtension;
         var key = $"{path}{s}".Replace('/', '_');
-        sounds[key] = Assets.Content.Load<SoundEffect>($"bin/Sfx/{path}{s}");
+
+        using (var stream = new FileStream(file.FullPath, FileMode.Open))
+        {
+            sounds[key] = SoundEffect.FromStream(stream);
+        }
     }
 
     // MonoGame hands OpenAL sources out of one shared pool and never clears AL_LOOPING when a source

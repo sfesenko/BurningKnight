@@ -37,13 +37,9 @@ namespace Lens.assets {
 			var region = new TextureRegion();
 			string id = handle.NameWithoutExtension;
 
-			if (Assets.LoadOriginalFiles) {
-				var fileStream = new FileStream(handle.FullPath, FileMode.Open);
-				region.Texture = Texture2D.FromStream(Engine.GraphicsDevice, fileStream);
-				fileStream.Dispose();
-			} else {
-				region.Texture = Assets.Content.Load<Texture2D>($"bin/Textures/{handle.NameWithoutExtension}");
-			}
+			var fileStream = new FileStream(handle.FullPath, FileMode.Open);
+			region.Texture = Texture2D.FromStream(Engine.GraphicsDevice, fileStream);
+			fileStream.Dispose();
 
 			region.Source = region.Texture.Bounds;
 			region.Center = new Vector2(region.Source.Width / 2f, region.Source.Height / 2f);
