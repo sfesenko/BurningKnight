@@ -40,7 +40,7 @@ namespace BurningKnight.save {
 			var prefab = new PrefabData();
 			prefab.Type = t;
 
-			var size = reader.ReadInt16();
+			var size = reader.ReadUint16();
 			prefab.Data = new byte[size];
 			
 			for (var i = 0; i < size; i++) {
