@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <!-- Content is data, not code. This project exists to own the content targets; nothing
+             references its output, and the default globs would just index 600 data files. -->
+        <TargetFramework>net10.0</TargetFramework>
+        <EnableDefaultItems>false</EnableDefaultItems>
+        <IncludeBuildOutput>false</IncludeBuildOutput>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <AnimationSource Include="Animations/*.ase" />
+        <AnimationSheet Include="bin/Animations/*.png" />
+        <AnimationSheet Include="bin/Animations/animations.json" />
+    </ItemGroup>
+
+    <!-- The sheets are build output, cut from the .ase sources before anything loads them.
+         Timestamps keep the preprocessor off the path when nothing changed. -->
+    <Target Name="PreprocessAnimations" BeforeTargets="BeforeBuild"
+            Inputs="@(AnimationSource)" Outputs="@(AnimationSheet)">
+        <Exec Command="dotnet fsi &quot;$(MSBuildThisFileDirectory)../tools/preprocess-ase.fsx&quot;" />
+    </Target>
+</Project>

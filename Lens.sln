@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VelcroPhysics.MonoGame", "V
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Desktop", "Desktop\Desktop.csproj", "{68B0E433-3961-4232-9EB1-393AB85FAF7C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Content", "Content\Content.csproj", "{B7262448-6510-49A1-8988-504F3D008E30}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -30,6 +32,10 @@ Global
 		{68B0E433-3961-4232-9EB1-393AB85FAF7C}.Debug|x64.Build.0 = Debug|x64
 		{68B0E433-3961-4232-9EB1-393AB85FAF7C}.Release|x64.ActiveCfg = Release|x64
 		{68B0E433-3961-4232-9EB1-393AB85FAF7C}.Release|x64.Build.0 = Release|x64
+		{B7262448-6510-49A1-8988-504F3D008E30}.Debug|x64.ActiveCfg = Debug|x64
+		{B7262448-6510-49A1-8988-504F3D008E30}.Debug|x64.Build.0 = Debug|x64
+		{B7262448-6510-49A1-8988-504F3D008E30}.Release|x64.ActiveCfg = Release|x64
+		{B7262448-6510-49A1-8988-504F3D008E30}.Release|x64.Build.0 = Release|x64
 		{0820B7EB-02C1-411D-A08D-42C5A6B69010}.Debug|x64.ActiveCfg = Debug|Any CPU
 		{0820B7EB-02C1-411D-A08D-42C5A6B69010}.Debug|x64.Build.0 = Debug|Any CPU
 		{0820B7EB-02C1-411D-A08D-42C5A6B69010}.Release|x64.ActiveCfg = Release|Any CPU

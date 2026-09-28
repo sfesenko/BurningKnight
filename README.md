@@ -19,7 +19,7 @@ I believe in the power open source. I'm opening this project up with hope, that 
 Anyway, onto the juicy stuff.
 
 The game has a lot of developer tools in it, but to gain access to them, you must build the `Desktop` project in Debug configuration.
-Debug is a development build: the dev tools are enabled, textures are loaded from the original files in `BurningKnight/Content` instead of the compiled ones, animations reload while the game runs, and the intro cutscene is skipped — you start at the beginning of the first level. Release is the build that behaves like the Steam version, intro and all.
+Debug is a development build: the dev tools are enabled, textures are loaded from the original files in `Content` instead of the compiled ones, animations reload while the game runs, and the intro cutscene is skipped — you start at the beginning of the first level. Release is the build that behaves like the Steam version, intro and all.
 
 To access the dev tools, you shall press F1 while being in InGameState (while you are normally playing and not watching a loading screen).
 A panel with a bunch of checkboxes should appear, that show different dev tools. Have fun!

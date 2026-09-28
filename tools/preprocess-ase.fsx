@@ -23,7 +23,7 @@ open AsepriteDotNet.Aseprite
 open AsepriteDotNet.Aseprite.Types
 
 let root = Path.GetFullPath(Path.Combine(__SOURCE_DIRECTORY__, ".."))
-let content = Path.Combine(root, "BurningKnight", "Content")
+let content = Path.Combine(root, "Content")
 let source = Path.Combine(content, "Animations")
 let output = Path.Combine(content, "bin", "Animations")
 

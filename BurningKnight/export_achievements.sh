@@ -1,4 +1,4 @@
-cp Content/Animations/achievements.ase .
+cp ../Content/Animations/achievements.ase .
 
 rm -rf achievement_sprites
 mkdir achievement_sprites

@@ -10,7 +10,7 @@ namespace Desktop {
 
 		private const int MaxDepth = 6;
 		private const string RepoMarker = "global.json";
-		private const string SourceContent = "BurningKnight/Content";
+		private const string SourceContent = "Content";
 
 		public static string Resolve() {
 			var fromEnv = Environment.GetEnvironmentVariable(EnvVar);
@@ -55,6 +55,13 @@ namespace Desktop {
 			}
 
 			try {
+				// A link left by an earlier layout dangles rather than failing Exists(), and it
+				// still blocks a new one. Delete the entry itself — deleting through it would
+				// follow the missing target and fail.
+				if (new FileInfo(link).LinkTarget != null) {
+					File.Delete(link);
+				}
+
 				Directory.CreateSymbolicLink(link, Path.GetRelativePath(AppContext.BaseDirectory, root));
 				Console.WriteLine($"Linked {link} -> {root}");
 			} catch (Exception e) {

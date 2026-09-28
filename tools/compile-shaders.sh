@@ -19,4 +19,4 @@ if [ ! -d "$MGFXC_WINE_PATH" ]; then
 	exit 1
 fi
 
-exec dotnet mgcb "$ROOT/BurningKnight/Content/Content.mgcb"
+exec dotnet mgcb "$ROOT/Content/Content.mgcb"

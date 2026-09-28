@@ -2,11 +2,11 @@
 .git
 */bin/*
 */obj/*
-BurningKnight/Content/bin/Sfx
-BurningKnight/Content/bin/Music
-BurningKnight/Content/bin/Animations
-BurningKnight/Content/obj*
-BurningKnight/Content/obj/**
+Content/bin/Sfx
+Content/bin/Music
+Content/bin/Animations
+Content/obj*
+Content/obj/**
 packages/*
 BurningKnight/achievement_sprites*
 *.exe
