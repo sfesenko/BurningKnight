@@ -8,6 +8,20 @@
         <ProjectReference Include="..\Lens\Lens.csproj"/>
         <ProjectReference Include="..\Content\Content.csproj" ReferenceOutputAssembly="false"/>
     </ItemGroup>
+
+    <!-- Release must run from its output directory alone, so the content travels with it. Debug
+         links to the source tree instead, for hot reload. Globs inside the target see the sheets
+         the preprocess step has just written; SkipUnchangedFiles keeps later builds cheap. -->
+    <Target Name="StageContent" AfterTargets="Build" Condition="'$(Configuration)' == 'Release'">
+        <ItemGroup>
+            <StagedContent Include="..\Content\**\*"
+                           Exclude="..\Content\**\*.ase;..\Content\**\*.fx;..\Content\Content.mgcb;..\Content\obj\**;..\Content\bin\Sfx\**;..\Content\bin\Music\**" />
+        </ItemGroup>
+
+        <Copy SourceFiles="@(StagedContent)"
+              DestinationFiles="@(StagedContent->'$(OutDir)Content\%(RecursiveDir)%(Filename)%(Extension)')"
+              SkipUnchangedFiles="true" />
+    </Target>
     <ItemGroup>
         <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.*"/>
 
