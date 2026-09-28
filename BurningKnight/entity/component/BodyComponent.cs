@@ -83,17 +83,19 @@ namespace BurningKnight.entity.component {
 			return true;
 		}
 		
-		public virtual void OnCollision(Entity entity) {
+		public virtual void OnCollision(Entity entity, IFixture fixture) {
 			Entity.HandleEvent(new CollisionStartedEvent {
 				Entity = entity,
-				Body = this
+				Body = this,
+				Fixture = fixture
 			});
 		}
 
-		public virtual void OnCollisionEnd(Entity entity) {
+		public virtual void OnCollisionEnd(Entity entity, IFixture fixture) {
 			Entity.HandleEvent(new CollisionEndedEvent {
 				Entity = entity,
-				Body = this
+				Body = this,
+				Fixture = fixture
 			});
 		}
 

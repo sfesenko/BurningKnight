@@ -7,8 +7,6 @@ namespace BurningKnight.physics {
 		public static IPhysicsWorld World;
 		public static bool RenderDebug = false;
 
-		public static IFixture Fixture;
-
 		public static void Init() {
 			World = PhysicsFactory.CreateWorld(Vector2.Zero);
 
@@ -57,11 +55,8 @@ namespace BurningKnight.physics {
 			var b = contact.FixtureB.Body.UserData;
 			
 			if (a is BodyComponent ac && b is BodyComponent bc) {
-				Fixture = contact.FixtureB;
-				ac.OnCollision(bc.Entity);
-			
-				Fixture = contact.FixtureA;
-				bc.OnCollision(ac.Entity);
+				ac.OnCollision(bc.Entity, contact.FixtureB);
+				bc.OnCollision(ac.Entity, contact.FixtureA);
 			}
 		}
 
@@ -70,8 +65,8 @@ namespace BurningKnight.physics {
 			var b = contact.FixtureB.Body.UserData;
 
 			if (a is BodyComponent ac && b is BodyComponent bc) {
-				ac.OnCollisionEnd(bc.Entity);
-				bc.OnCollisionEnd(ac.Entity);
+				ac.OnCollisionEnd(bc.Entity, contact.FixtureB);
+				bc.OnCollisionEnd(ac.Entity, contact.FixtureA);
 			}
 		}
 
