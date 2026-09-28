@@ -68,9 +68,16 @@ namespace Lens.assets {
 
 				foreach (var t in folders)
 				{
+					var path = Path.GetFullPath(Root + t);
+
+					if (!Directory.Exists(path)) {
+						Log.Warning($"Not watching {t}: it does not exist yet");
+						continue;
+					}
+
 					var watcher = new FileSystemWatcher();
 					
-					watcher.Path = Path.GetFullPath(Root + t);
+					watcher.Path = path;
 					// No LastAccess: the game reads these files itself, and watching access times
 					// makes every read schedule a reload of what it just read.
 					watcher.NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.FileName
