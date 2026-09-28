@@ -2110,9 +2110,9 @@ namespace BurningKnight.state {
 								CloudSave.Delete();
 
 								try {
- 									Stats.Reset();
+									Stats.Reset();
 								} catch (Exception e) {
-									
+									Log.Error(e);
 								}
 								
 								Achievements.LoadState();
