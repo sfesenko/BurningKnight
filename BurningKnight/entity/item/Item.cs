@@ -30,7 +30,7 @@ using Lens.util.math;
 using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.item {
-	public class Item : SaveableEntity, CollisionFilterEntity, PlaceableEntity {
+	public partial class Item : SaveableEntity, CollisionFilterEntity, PlaceableEntity {
 		public static TextureRegion UnknownRegion;
 		public static bool Attact;
 		
@@ -87,69 +87,6 @@ namespace BurningKnight.entity.item {
 			}
 		}
 
-		public bool Use(Entity entity, bool avoidCheck = false) {
-			if (!avoidCheck && (Type == ItemType.Weapon || Type == ItemType.Active) && !UseCheck.CanUse(entity, this)) {
-				return false;
-			}
-
-			ForEachUse(use => use.Use(entity, this), true);
-
-			Delay = Math.Abs(UseTime);
-
-			entity.HandleEvent(new ItemUsedEvent {
-				Item = this,
-				Who = entity,
-				Fake = avoidCheck
-			});
-
-			Used = true;
-			Renderer?.OnUse();
-
-			if (Type == ItemType.Active) {
-				((Player) entity).AnimateItemPickup(this, null, false, false);
-			}
-
-			return true;
-		}
-		
-		private void ForEachUse(Action<ItemUse> action, bool skipUsed = false) {
-			foreach (var use in Uses) {
-				if (skipUsed && use.SingleUse && Used) {
-					continue;
-				}
-
-				try {
-					action(use);
-				} catch (Exception e) {
-					Log.Error(e);
-				}
-			}
-		}
-
-		public void Pickup() {
-			var entity = Owner;
-
-			ForEachUse(use => use.Pickup(entity, this));
-		}
-		
-		public void Drop() {
-			var entity = Owner;
-
-			ForEachUse(use => use.Drop(entity, this));
-		}
-		
-		public void TakeOut() {
-			var entity = Owner;
-
-			ForEachUse(use => use.TakeOut(entity, this));
-		}
-		
-		public void PutAway() {
-			var entity = Owner;
-
-			ForEachUse(use => use.PutAway(entity, this));
-		}
-
 		public override void PostInit() {
 			base.PostInit();
 
@@ -202,168 +139,6 @@ namespace BurningKnight.entity.item {
 			} else if (!HasComponent<OwnerComponent>() && Run.Depth != -2) {
 				Engine.Instance.State.Ui.Add(new ItemPickupFx(this));
 			}			
-		}
-
-		protected virtual BodyComponent CreateBody() {
-			var slice = Region;
-			return new RectBodyComponent(0, 0, slice.Source.Width, slice.Source.Height);
-		}
-		
-		public virtual void AddDroppedComponents() {
-			var body = CreateBody();
-
-			t = 0;
-			
-			AddComponent(body);
-
-			body.Body.LinearDamping = Type == ItemType.Mana ? 1 : 4;
-			body.Body.Friction = 0;
-			body.Body.Mass = 0.1f;
-			
-			AddComponent(new InteractableComponent(Interact) {
-				OnStart = OnInteractionStart,
-				CanInteract = ShouldInteract
-			});
-			
-			AddComponent(new ShadowComponent(RenderShadow));
-			
-			AddTag(Tags.LevelSave);
-			AddTag(Tags.Item);
-			
-			AddComponent(new RoomComponent());
-			AddComponent(new ExplodableComponent());
-			AddComponent(new SupportableComponent());
-
-			CheckMasked();
-		}
-
-		public void RandomizeVelocity(float force) {
-			var component = GetBody();
-			
-			if (component == null) {
-				return;
-			}
-
-			force *= 60f;
-			var angle = Rnd.AnglePI();
-			
-			component.Velocity += new Vector2((float) Math.Cos(angle) * force, (float) Math.Sin(angle) * force);
-		}
-
-		protected virtual void RemoveBody() {
-			RemoveComponent<RectBodyComponent>();
-		}
-		
-		public virtual void RemoveDroppedComponents() {
-			RemoveComponent<InteractableComponent>();
-			RemoveComponent<ShadowComponent>();
-			RemoveComponent<LightComponent>();
-			RemoveBody();
-			
-			RemoveTag(Tags.LevelSave);
-			RemoveTag(Tags.Item);
-
-			RemoveComponent<RoomComponent>();
-			RemoveComponent<ExplodableComponent>();
-			RemoveComponent<SupportableComponent>();
-
-			CheckMasked();
-		}
-
-		private void RenderShadow() {
-			GraphicsComponent.Render(true);
-		}
-
-		public override void Save(FileWriter stream) {
-			base.Save(stream);
-			
-			stream.WriteString(Id);
-			stream.WriteBoolean(Used);
-			stream.WriteBoolean(Touched);
-			stream.WriteFloat(Delay);
-			stream.WriteBoolean(Unknown);
-			stream.WriteBoolean(Scourged);
-			stream.WriteBoolean(Hide);
-		}
-
-		public void ConvertTo(string id) {
-			var item = Items.Create(id);
-
-			if (item == null) {
-				Log.Error($"Failed to convert item {Id}, such id does not exist!");
-				return;
-			}
-
-			if (HasComponent<AnimatedItemGraphicsComponent>()) {
-				RemoveComponent<AnimatedItemGraphicsComponent>();
-			} else if (HasComponent<ItemGraphicsComponent>()) {
-				RemoveComponent<ItemGraphicsComponent>();
-			}
-
-			Uses = Items.ParseUses(Items.Datas[id].Uses);
-			
-			foreach (var u in Uses) {
-				u.Item = this;
-				u.Init();
-			}
-			
-			UseTime = item.UseTime;
-			Renderer = item.Renderer;
-			Animation = item.Animation;
-			AutoPickup = item.AutoPickup;
-			Automatic = item.Automatic;
-			SingleUse = item.SingleUse;
-			Type = item.Type;
-			Id = id;
-			Used = false;
-			Scourged = Scourged || item.Scourged;
-			
-			if (Renderer != null) {
-				Renderer.Item = this;
-			}
-			
-			if (Animation != null) {
-				AddComponent(new AnimatedItemGraphicsComponent(Animation));
-			} else {
-				AddComponent(new ItemGraphicsComponent(Id));
-			}
-			
-			if (HasBody()) {
-				RemoveDroppedComponents();
-				AddDroppedComponents();
-			}
-		}
-
-		protected virtual bool HasBody() {
-			return HasComponent<RectBodyComponent>();
-		}
-
-		public override void Load(FileReader stream) {
-			base.Load(stream);
-
-			try {
-				LoadedSelf = true;
-				Id = stream.ReadString();
-				Scourged = false;
-
-				if (!Items.Has(Id)) {
-					Id = "bk:revolver";
-				}
-
-				ConvertTo(Id);
-				
-				Used = stream.ReadBoolean();
-				Touched = stream.ReadBoolean();
-				Delay = stream.ReadFloat();
-				Unknown = stream.ReadBoolean();
-
-				var v = stream.ReadBoolean();
-				Scourged = Scourged || v;
-
-				Hide = stream.ReadBoolean();
-			} catch (Exception e) {
-				Log.Error(e);
-			}
 		}
 
 		private float lastParticle;
@@ -489,10 +264,6 @@ namespace BurningKnight.entity.item {
 				
 				b.LinearVelocity = new Vector2((float) Math.Cos(a) * d, (float) Math.Sin(a) * d);
 			}
-		}
-
-		protected virtual BodyComponent GetBody() {
-			return TryGetComponent<RectBodyComponent>(out var b) ? b : null;
 		}
 
 		public virtual bool ShouldCollide(Entity entity) {
