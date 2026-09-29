@@ -329,9 +329,13 @@ namespace BurningKnight.level {
 		}
 
 		public void RefreshSurfaces() {
-			WallSurface.Dispose();
-			MessSurface.Dispose();
+			WallSurface?.Dispose();
+			MessSurface?.Dispose();
 			cleared = false;
+
+			if (Graphics.Batch == null) {
+				return;
+			}
 
 			WallSurface = new RenderTarget2D(Engine.GraphicsDevice, Display.Width + 1, Display.Height + 1);
 

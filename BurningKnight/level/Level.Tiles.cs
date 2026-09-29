@@ -290,9 +290,13 @@ namespace BurningKnight.level {
 			}*/
 
 			PathFinder.SetMapSize(Width, Height);
-			
-			WallSurface = new RenderTarget2D(Engine.GraphicsDevice, Display.Width + 1, Display.Height + 1);
-			MessSurface = new RenderTarget2D(Engine.GraphicsDevice, Width * 16, Height * 16, false, Engine.Graphics.PreferredBackBufferFormat, DepthFormat.Depth24, 0, RenderTargetUsage.PreserveContents);
+
+			// The wall and mess surfaces are render data; a level can be generated without a
+			// device, so they are only allocated once a renderer exists.
+			if (Graphics.Batch != null) {
+				WallSurface = new RenderTarget2D(Engine.GraphicsDevice, Display.Width + 1, Display.Height + 1);
+				MessSurface = new RenderTarget2D(Engine.GraphicsDevice, Width * 16, Height * 16, false, Engine.Graphics.PreferredBackBufferFormat, DepthFormat.Depth24, 0, RenderTargetUsage.PreserveContents);
+			}
 		}
 		public bool CheckFlag(int x, int y, int i) {
 			return CheckFlag(ToIndex(x, y), i);
