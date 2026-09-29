@@ -11,7 +11,7 @@ namespace Lens.assets {
 		private static Dictionary<string, TextureRegion> textures = new();
 		public static TextureRegion Missing;
 		
-		internal static void Load() {
+		public static void Load() {
 			var textureDir = FileHandle.FromRoot("Textures/");
 			
 			if (textureDir.Exists()) {

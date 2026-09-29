@@ -12,7 +12,7 @@ namespace Lens.assets {
 		private static readonly Dictionary<string, AnimationData> animations = new();
 		private static Dictionary<string, AnimationSource> sources = new();
 
-		internal static void Load()
+		public static void Load()
 		{
 			var file = FileHandle.FromRoot("Animations/animations.json");
 
