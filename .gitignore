@@ -19,3 +19,5 @@ SharpDX.D3DCompiler.xml
 
 *.DotSettings.user
 
+# Test output
+TestResults/
