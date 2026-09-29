@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using BurningKnight.ui.dialog;
 using BurningKnight.ui.imgui;
-using BurningKnight.ui.imgui.node;
+using BurningKnight.assets.dialogs;
 using Lens.assets;
 using Lens.lightJson;
 using Lens.util;
@@ -35,7 +35,7 @@ namespace BurningKnight.assets {
 						// Create nodes
 						foreach (var vl in root.AsJsonArray) {
 							try {
-								ImNode.Create(name, vl);
+								GraphNode.Create(name, vl);
 							} catch (Exception e) {
 								Log.Error($"Failed to create a node in {name}");
 								Log.Error(e);
@@ -43,7 +43,7 @@ namespace BurningKnight.assets {
 						}
 						
 						// Connect em
-						foreach (var node in ImNodes.Nodes) {
+						foreach (var node in DialogGraph.Nodes) {
 							try
 							{
 								node.Value.ReadOutputs();
@@ -55,12 +55,12 @@ namespace BurningKnight.assets {
 						}
 						
 						// Parse
-						foreach (var node in ImNodes.Nodes) {
+						foreach (var node in DialogGraph.Nodes) {
 							ParseNode(node.Value);
 						}
 						
-						ImNodes.Nodes.Clear();
-						ImNode.LastId = 0;
+						DialogGraph.Nodes.Clear();
+						GraphNode.LastId = 0;
 					} catch (Exception e) {
 						Log.Error(e);
 					}
@@ -68,8 +68,8 @@ namespace BurningKnight.assets {
 			}
 		}
 
-		private static void ParseNode(ImNode node) {
-			if (node is DialogNode n) {
+		private static void ParseNode(GraphNode node) {
+			if (node is IDialogNode n) {
 				Add(n.Convert());				
 			}
 		}

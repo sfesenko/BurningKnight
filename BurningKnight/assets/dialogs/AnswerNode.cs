@@ -2,8 +2,8 @@ using BurningKnight.ui.dialog;
 using ImGuiNET;
 using Lens.lightJson;
 
-namespace BurningKnight.ui.imgui.node {
-	public class ImAnswerNode : ImDialogNode {
+namespace BurningKnight.assets.dialogs {
+	public class AnswerNode : DialogNode {
 		private int type;
 		
 		public override void RenderElements() {

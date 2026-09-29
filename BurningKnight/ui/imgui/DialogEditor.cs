@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using BurningKnight.assets;
-using BurningKnight.ui.imgui.node;
+using BurningKnight.assets.dialogs;
 using BurningKnight.ui.str;
 using ImGuiNET;
 using Lens;
@@ -44,7 +44,7 @@ namespace BurningKnight.ui.imgui {
 			Locale.Save();
 			Log.Info($"Saving {files[current]}");
 			
-			var nodes = ImNodes.Nodes;
+			var nodes = DialogGraph.Nodes;
 			var root = new JsonArray();
 
 			foreach (var p in nodes) {
@@ -103,18 +103,18 @@ namespace BurningKnight.ui.imgui {
 
 		private static void LoadFromRoot(string name, JsonArray root) {
 			foreach (var vl in root) {
-				ImNode.Create(name, vl);
+				GraphNode.Create(name, vl);
 			}
 		}
 
-		private static ImNode last;
+		private static GraphNode last;
 		private static UiString str;
 
 		public static void RenderUi() {
-			if (ImNode.Focused != null) {
-				if (last != ImNode.Focused) {
-					last = ImNode.Focused;
-					str.Label = Locale.Get(ImNode.Focused.LocaleId);
+			if (GraphNode.Focused != null) {
+				if (last != GraphNode.Focused) {
+					last = GraphNode.Focused;
+					str.Label = Locale.Get(GraphNode.Focused.LocaleId);
 				}
 			}
 			

@@ -3,8 +3,8 @@ using ImGuiNET;
 using Lens.assets;
 using Lens.lightJson;
 
-namespace BurningKnight.ui.imgui.node {
-	public class ImTextNode : ImNode, DialogNode {
+namespace BurningKnight.assets.dialogs {
+	public class TextNode : GraphNode, IDialogNode {
 		private string name = "";
 		private string label = "";
 		

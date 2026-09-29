@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using BurningKnight.ui.imgui;
-using BurningKnight.ui.imgui.node;
+using BurningKnight.assets.dialogs;
 using ImGuiNET;
 using Lens;
 using Lens.assets;
@@ -53,12 +53,12 @@ namespace BurningKnight.assets {
 		}
 
 		public static void ClearNodes() {
-			ImNodes.Nodes.Clear();
-			ImNode.LastId = 0;
+			DialogGraph.Nodes.Clear();
+			GraphNode.LastId = 0;
 		}
 
-		public static void Node(ImNode node) {
-			ImNodes.Nodes[node.Id] = node;
+		public static void Node(GraphNode node) {
+			DialogGraph.Nodes[node.Id] = node;
 		}
 
 		public static bool BeforeRender() {
@@ -67,7 +67,7 @@ namespace BurningKnight.assets {
 
 				var width = Engine.Instance.GetScreenWidth();
 				var height = Engine.Instance.GetScreenHeight();
-				var off = ImNode.Offset;
+				var off = GraphNode.Offset;
 
 				for (float x = off.X % gridSize; x <= width - off.X % gridSize; x += gridSize) {
 					list.AddLine(new Vector2(x, 0), new Vector2(x, height), ((int) (off.X - x) == 0 ? gridMainColor : gridColor).PackedValue);
@@ -81,17 +81,17 @@ namespace BurningKnight.assets {
 			RenderVoidMenu();
 
 			if (target.HasValue) {
-				ImNode.Offset += (target.Value - ImNode.Offset) * Engine.Delta * 10f;
+				GraphNode.Offset += (target.Value - GraphNode.Offset) * Engine.Delta * 10f;
 
-				if ((target.Value - ImNode.Offset).Length() <= 3f) {
+				if ((target.Value - GraphNode.Offset).Length() <= 3f) {
 					target = null;
 				}
 			} else if (ImGui.IsMouseDragging(ImGuiMouseButton.Middle) || Input.Keyboard.IsDown(Keys.Space, true)) {
-				ImNode.Offset += ImGui.GetIO().MouseDelta;
+				GraphNode.Offset += ImGui.GetIO().MouseDelta;
 			}
 
 
-			foreach (var (key, node) in ImNodes.Nodes) {
+			foreach (var (key, node) in DialogGraph.Nodes) {
 				if (!hideFiltred || filter.PassFilter(node.GetName())) {
 					node.Render();
 				}
@@ -104,14 +104,14 @@ namespace BurningKnight.assets {
 			CurrentActive?.RemoveEmptyConnection();
 
 			if (toRemove.Count > 0) {
-				var c = ImNodes.Nodes.Count - 1;
+				var c = DialogGraph.Nodes.Count - 1;
 				
 				foreach (var k in toRemove) {
-					if (ImNodes.Nodes[k].Id == c) {
-						ImNode.LastId--;
+					if (DialogGraph.Nodes[k].Id == c) {
+						GraphNode.LastId--;
 					}
 
-					ImNodes.Nodes.Remove(k);
+					DialogGraph.Nodes.Remove(k);
 				}
 				
 				toRemove.Clear();
@@ -123,12 +123,12 @@ namespace BurningKnight.assets {
 
 					if (root.IsJsonObject) {
 						var val = root["imnode"];
-						var node = ImNode.Create(val, true);
+						var node = GraphNode.Create(val, true);
 
 						if (node != null) {
 							node.New = true;
 							node.Position = ImGui.GetIO().MousePos;
-							ImNode.Focused = node;
+							GraphNode.Focused = node;
 						}
 					}
 				} catch (Exception e) {
@@ -139,13 +139,13 @@ namespace BurningKnight.assets {
 			}
 
 			if (toAdd != null) {
-				var node = ImNodeRegistry.Create(toAdd);
+				var node = GraphNodeRegistry.Create(toAdd);
 				
 				if (node != null) {
 					node.New = true;
 					node.Position = ImGui.GetIO().MousePos;
 					node.File = DialogEditor.Current;
-					ImNode.Focused = node;
+					GraphNode.Focused = node;
 				}
 
 				Node(node);
@@ -171,10 +171,10 @@ namespace BurningKnight.assets {
 			
 			RenderMenu();
 
-			ImNode first = null;
+			GraphNode first = null;
 			var sawFocused = false;
 			
-			foreach (var p in ImNodes.Nodes) {
+			foreach (var p in DialogGraph.Nodes) {
 				var node = p.Value;
 				var name = node.GetName();
 
@@ -184,13 +184,13 @@ namespace BurningKnight.assets {
 
 				first ??= node;
 
-				if (ImNode.Focused == node) {
+				if (GraphNode.Focused == node) {
 					node.ForceFocus = true;
 					sawFocused = true;
 				}
 				
-				if (ImGui.Selectable($"#{node.Id} {name}", ImNode.Focused == node)) {
-					ImNode.Focused = node;
+				if (ImGui.Selectable($"#{node.Id} {name}", GraphNode.Focused == node)) {
+					GraphNode.Focused = node;
 					node.ForceFocus = true;
 					sawFocused = true;
 
@@ -204,13 +204,13 @@ namespace BurningKnight.assets {
 			}
 
 			if (!sawFocused) {
-				ImNode.Focused = first;
+				GraphNode.Focused = first;
 			}
 			
 			ImGui.End();
 		}
 
-		public static ImNode CurrentMenu;
+		public static GraphNode CurrentMenu;
 		private static string pasted;
 		private static string toAdd;
 		private static bool hideFiltred;
@@ -236,8 +236,8 @@ namespace BurningKnight.assets {
 					Paste();
 				}
 				
-				if (Input.Keyboard.WasPressed(Keys.D, true) && ImNode.Focused != null) {
-					ImNode.Focused.Remove();
+				if (Input.Keyboard.WasPressed(Keys.D, true) && GraphNode.Focused != null) {
+					GraphNode.Focused.Remove();
 				}	
 			}
 		}
@@ -245,7 +245,7 @@ namespace BurningKnight.assets {
 		private static void RenderAddNew() {
 			ImGui.Separator();
 
-			foreach (var p in ImNodeRegistry.Defined) {
+			foreach (var p in GraphNodeRegistry.Defined) {
 				if (ImGui.Selectable(p.Key)) {
 					toAdd = p.Key;
 				}
@@ -257,8 +257,8 @@ namespace BurningKnight.assets {
 
 			if (menu && CurrentMenu != null) {
 				CurrentMenu.Save(root);
-			} else if (ImNode.Focused != null) {
-				ImNode.Focused.Save(root);
+			} else if (GraphNode.Focused != null) {
+				GraphNode.Focused.Save(root);
 			}
 			
 			ImGui.SetClipboardText($"{{ \"imnode\" : {root} }}");
@@ -295,6 +295,6 @@ namespace BurningKnight.assets {
 			}
 		}
 
-		public static ImNode CurrentActive;
+		public static GraphNode CurrentActive;
 	}
 }

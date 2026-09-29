@@ -4,13 +4,13 @@ using ImGuiNET;
 using Lens.assets;
 using Lens.lightJson;
 
-namespace BurningKnight.ui.imgui.node {
-	public class ImChoiceNode : ImNode, DialogNode {
+namespace BurningKnight.assets.dialogs {
+	public class ChoiceNode : GraphNode, IDialogNode {
 		private List<string> choices = new List<string>();
 		private string label = "";
 		private string name = "";
 
-		public ImChoiceNode() {
+		public ChoiceNode() {
 			AddInput();
 		}
 

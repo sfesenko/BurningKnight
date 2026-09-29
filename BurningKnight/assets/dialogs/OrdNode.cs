@@ -2,15 +2,15 @@ using ImGuiNET;
 using Lens.assets;
 using Lens.lightJson;
 
-namespace BurningKnight.ui.imgui.node {
-	public class ImOrdNode : ImNode {
+namespace BurningKnight.assets.dialogs {
+	public class OrdNode : GraphNode {
 		private string header = "Title";
 		private string optionA = "Option A";
 		private string optionB = "Option B";
 		private string answerA = "Answer A";
 		private string answerB = "Answer B";
 
-		public ImOrdNode() {
+		public OrdNode() {
 			AddInput();
 			
 			AddOutput();

@@ -10,8 +10,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Vector2 = System.Numerics.Vector2;
 
-namespace BurningKnight.ui.imgui.node {
-	public class ImNode {
+namespace BurningKnight.assets.dialogs {
+	public class GraphNode {
 		public const int InputHalfHeight = 8;
 		private const int connectorRadius = 7;
 		private const int connectorRadiusSquare = connectorRadius * connectorRadius;
@@ -26,23 +26,23 @@ namespace BurningKnight.ui.imgui.node {
 		private static Vector2 connectorVector = new Vector2(connectorRadius);
 		public static int LastId;
 		
-		public static ImNode Focused;
+		public static GraphNode Focused;
 		public static Vector2 Offset;
 
 		public int Id;
 		public Vector2 Position;
 		public Vector2 RealPosition;
 		public Vector2 Size;
-		public List<ImConnection> Inputs = new List<ImConnection>();
-		public List<ImConnection> Outputs = new List<ImConnection>();
-		public ImConnection CurrentActive;
+		public List<GraphConnection> Inputs = new List<GraphConnection>();
+		public List<GraphConnection> Outputs = new List<GraphConnection>();
+		public GraphConnection CurrentActive;
 		public bool Done;
 		public string Tip;
 		public string File;
 		
 		public string LocaleId => $"{File}_{Id}";
 		
-		public ImNode() {
+		public GraphNode() {
 			Id = LastId++;
 		}
 
@@ -56,7 +56,7 @@ namespace BurningKnight.ui.imgui.node {
 		}
 
 		public void AddInput() {
-			Inputs.Add(new ImConnection {
+			Inputs.Add(new GraphConnection {
 				Input = true,
 				Parent = this,
 				Id = Inputs.Count
@@ -64,13 +64,13 @@ namespace BurningKnight.ui.imgui.node {
 		}
 
 		public void AddOutput() {
-			Outputs.Add(new ImConnection {
+			Outputs.Add(new GraphConnection {
 				Parent = this,
 				Id = Outputs.Count
 			});
 		}
 		
-		private unsafe void RenderConnector(ImDrawListPtr list, ImConnection connection, Vector2 connector) {
+		private unsafe void RenderConnector(ImDrawListPtr list, GraphConnection connection, Vector2 connector) {
 			var hovered = IsConnectorHovered(connector);
 			list.AddCircleFilled(connector, connectorRadius, (hovered ? hoveredConnectorColor : connectorColor).PackedValue);
 
@@ -147,7 +147,7 @@ namespace BurningKnight.ui.imgui.node {
 			}
 		}
 		
-		public void RemoveConnection(ImConnection connection, bool remove = false) {
+		public void RemoveConnection(GraphConnection connection, bool remove = false) {
 			if (ImGuiHelper.CurrentActive == this) {
 				ImGuiHelper.CurrentActive = null;
 			} else {
@@ -235,7 +235,7 @@ namespace BurningKnight.ui.imgui.node {
 							continue;
 						}
 							
-						var to = ImNodes.Nodes[o[0]];
+						var to = DialogGraph.Nodes[o[0]];
 						var from = Outputs[j];
 						var where = to.Inputs[o[1]];
 
@@ -395,7 +395,7 @@ namespace BurningKnight.ui.imgui.node {
 			
 		}
 		
-		private JsonArray SaveConnections(List<ImConnection> connections) {
+		private JsonArray SaveConnections(List<GraphConnection> connections) {
 			var root = new JsonArray();
 
 			foreach (var c in connections) {
@@ -421,7 +421,7 @@ namespace BurningKnight.ui.imgui.node {
 		public virtual void Save(JsonObject root) {
 			root["id"] = Id;
 			root["outputs"] = SaveConnections(Outputs);
-			root["type"] = ImNodeRegistry.GetName(this);
+			root["type"] = GraphNodeRegistry.GetName(this);
 			root["x"] = RealPosition.X;
 			root["y"] = RealPosition.Y;
 		}
@@ -457,7 +457,7 @@ namespace BurningKnight.ui.imgui.node {
 			return "Node";
 		}
 
-		public static ImNode Create(string file, JsonValue vl, bool ignoreId = false) {
+		public static GraphNode Create(string file, JsonValue vl, bool ignoreId = false) {
 			if (!vl.IsJsonObject) {
 				return null;
 			}
@@ -468,7 +468,7 @@ namespace BurningKnight.ui.imgui.node {
 				return null;
 			}
 
-			var node = ImNodeRegistry.Create(type.AsString);
+			var node = GraphNodeRegistry.Create(type.AsString);
 
 			if (node == null) {
 				Log.Error($"Unknown node type {type.AsString}");
@@ -483,7 +483,7 @@ namespace BurningKnight.ui.imgui.node {
 				node.Id = LastId;
 			}
 			
-			ImNodes.Nodes[node.Id] = node;
+			DialogGraph.Nodes[node.Id] = node;
 			return node;
 		}
 	}
