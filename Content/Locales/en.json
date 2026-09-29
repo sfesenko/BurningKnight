@@ -1295,5 +1295,8 @@
 	"bk:pumpkin_juice_desc": "Exciting",
 	"bk:bouncy_glove": "Bouncy Glove",
 	"bk:bouncy_glove_desc": "Bonk",
-	"seeded": "(seeded)"
+	"seeded": "(seeded)",
+	"you_won_demo": "That's the demo end :)",
+	"full_version": "Door will be unlocked in the full version!",
+	"wishlist_pls": "Enjoying the demo? Wishlist the full game! [cl red]burningknight.net/steam"
 }

@@ -93,8 +93,6 @@ let mutable strictFailures = []
 for loc in localeFiles do
     if loc = "en" then
         () // the baseline itself
-    elif loc = "qu" then
-        printfn "%-4s (runtime-generated quack locale, file is not read — see Phase 2)" loc
     else
         let map = readMap (Path.Combine(localesDir, $"{loc}.json"))
         let keys = map |> Map.keys |> Set.ofSeq

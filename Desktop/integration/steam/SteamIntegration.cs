@@ -47,6 +47,11 @@ namespace Desktop.integration.steam {
 						break;
 					}
 					
+					case "ukrainian": {
+						Locale.PrefferedClientLanguage = "ua";
+						break;
+					}
+					
 					case "german": {
 						Locale.PrefferedClientLanguage = "de";
 						break;
