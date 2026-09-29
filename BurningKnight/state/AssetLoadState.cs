@@ -86,14 +86,6 @@ namespace BurningKnight.state {
 
 				CommonAse.Load();
 				progress++;
-
-				try {
-					ImGuiHelper.BindTextures();
-				} catch (Exception e) {
-					Log.Error(e);
-				}
-
-				progress++;
 				
 				LoadSection(Shaders.Load, "Shaders");
 				LoadSection(Prefabs.Load, "Prefabs");
@@ -219,7 +211,7 @@ namespace BurningKnight.state {
 		public override void RenderUi() {
 			base.RenderUi();
 			
-			var v = Math.Min(1, progress / 23f);
+			var v = Math.Min(1, progress / 22f);
 			lastV += (v - lastV) * Engine.Delta;
 
 			var w = Display.UiWidth * 0.5f;

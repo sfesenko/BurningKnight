@@ -35,7 +35,12 @@ namespace BurningKnight.assets.achievements {
 		public static AchievementProgressSetCallback ProgressSetCallback;
 		public static Action PostLoadCallback;
 
-		private static unsafe ImGuiTextFilterPtr _filter2 = new(ImGuiNative.ImGuiTextFilter_ImGuiTextFilter(null));
+		// Created on first use: a field initializer would make an ImGui native call as soon as the
+		// class is touched, and a release run must not touch ImGui at all.
+		private static ImGuiTextFilterPtr? searchFilter;
+
+		private static unsafe ImGuiTextFilterPtr SearchFilter =>
+			searchFilter ??= new ImGuiTextFilterPtr(ImGuiNative.ImGuiTextFilter_ImGuiTextFilter(null));
 
 		public static Achievement Get(string id)
 		{
@@ -383,7 +388,7 @@ namespace BurningKnight.assets.achievements {
 			
 			ImGui.Separator();
 
-			_filter2.Draw("Search");
+			SearchFilter.Draw("Search");
 			
 			ImGui.SameLine();
 			ImGui.Text($"{count}");
@@ -406,7 +411,7 @@ namespace BurningKnight.assets.achievements {
 					_forceFocus = false;
 				}
 				
-				if (_filter2.PassFilter(i.Id)) {
+				if (SearchFilter.PassFilter(i.Id)) {
 					if ((_hideLocked && !i.Unlocked) || (_hideUnlocked && i.Unlocked)) {
 						continue;
 					}

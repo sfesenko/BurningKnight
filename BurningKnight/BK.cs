@@ -32,7 +32,13 @@ public class BK : Engine {
 
 		SaveManager.Init();
 		Controls.Load();
-		ImGuiHelper.Init();
+
+		// The overlay is a development tool: a release build must not start it, so it neither
+		// reads its font nor keeps the renderer alive.
+		if (Debug) {
+			ImGuiHelper.Init();
+		}
+
 		Weather.Init();
 	}
 

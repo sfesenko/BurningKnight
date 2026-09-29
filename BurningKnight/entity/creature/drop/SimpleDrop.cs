@@ -11,7 +11,13 @@ using Microsoft.Xna.Framework.Input;
 namespace BurningKnight.entity.creature.drop {
 	public class SimpleDrop : Drop {
 		private static System.Numerics.Vector2 popupSize = new System.Numerics.Vector2(400, 400);
-		private static unsafe ImGuiTextFilterPtr popupFilter = new ImGuiTextFilterPtr(ImGuiNative.ImGuiTextFilter_ImGuiTextFilter(null));
+		// Created on first use: a field initializer would make an ImGui native call as soon as the
+		// class is touched, and a release run must not touch ImGui at all.
+		private static ImGuiTextFilterPtr? itemFilter;
+
+		private static unsafe ImGuiTextFilterPtr PopupFilter =>
+			itemFilter ??= new ImGuiTextFilterPtr(ImGuiNative.ImGuiTextFilter_ImGuiTextFilter(null));
+
 		private static string selectedItem;
 		private static int id;
 		
@@ -119,7 +125,7 @@ namespace BurningKnight.entity.creature.drop {
 			if (ImGui.BeginPopupModal("Add Item##p")) {
 				ImGui.SetWindowSize(popupSize);
 				
-				popupFilter.Draw("");
+				PopupFilter.Draw("");
 				ImGui.BeginChild("ScrollinegionUses##reee", new System.Numerics.Vector2(0, -ImGui.GetStyle().ItemSpacing.Y - ImGui.GetFrameHeightWithSpacing() - 4), 
 					false, ImGuiWindowFlags.HorizontalScrollbar);
 				
@@ -128,7 +134,7 @@ namespace BurningKnight.entity.creature.drop {
 				foreach (var i in assets.items.Items.Datas) {
 					ImGui.PushID($"{id}__itm");
 				
-					if (popupFilter.PassFilter(i.Key) && !items.Contains(i.Key) && ImGui.Selectable($"{i.Key}##dd", selectedItem == i.Key)) {
+					if (PopupFilter.PassFilter(i.Key) && !items.Contains(i.Key) && ImGui.Selectable($"{i.Key}##dd", selectedItem == i.Key)) {
 						selectedItem = i.Key;
 					}
 
