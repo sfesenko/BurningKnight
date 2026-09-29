@@ -1,11 +1,10 @@
 using BurningKnight.entity.events;
 using BurningKnight.util;
-using ImGuiNET;
 using Lens.entity;
 using Lens.lightJson;
 
 namespace BurningKnight.entity.item.use {
-	public class AffectDealChanceUse : ItemUse {
+	public partial class AffectDealChanceUse : ItemUse {
 		private float granny;
 		private bool addGranny;
 		private float dm;
@@ -42,20 +41,6 @@ namespace BurningKnight.entity.item.use {
 			addGranny = settings["agr"].Bool(true);
 			dm = settings["dm"].Number(0);
 			addDm = settings["adm"].Bool(true);
-		}
-
-		public static void RenderDebug(JsonValue root) {
-			root.Checkbox("Open Both if one is present", "bt", false);
-			
-			ImGui.Separator();
-			
-			root.InputFloat("Granny", "gr", 0);
-			root.Checkbox("Add Granny", "agr", true);
-
-			ImGui.Separator();
-			
-			root.InputFloat("Dm", "dm", 0);
-			root.Checkbox("Add Dm", "adm", true);
 		}
 	}
 }

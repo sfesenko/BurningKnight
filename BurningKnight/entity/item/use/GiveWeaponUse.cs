@@ -1,12 +1,11 @@
 using BurningKnight.assets.items;
 using BurningKnight.entity.creature.player;
-using ImGuiNET;
 using Lens.entity;
 using Lens.lightJson;
 using Lens.util;
 
 namespace BurningKnight.entity.item.use {
-	public class GiveWeaponUse : ItemUse {
+	public partial class GiveWeaponUse : ItemUse {
 		public string Item;
 
 		public override void Use(Entity entity, Item item) {
@@ -33,18 +32,6 @@ namespace BurningKnight.entity.item.use {
 		public override void Setup(JsonValue settings) {
 			base.Setup(settings);
 			Item = settings["item"].AsString ?? "";
-		}
-		
-		public static void RenderDebug(JsonValue root) {
-			var item = root["item"].AsString ?? "";
-
-			if (ImGui.InputText("Item", ref item, 128)) {
-				root["item"] = item;
-			}
-
-			if (!Items.Datas.ContainsKey(item)) {
-				ImGui.BulletText("Unknown item!");
-			}
 		}
 	}
 }

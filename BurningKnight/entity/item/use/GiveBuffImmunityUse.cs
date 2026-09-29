@@ -1,12 +1,11 @@
 using BurningKnight.entity.buff;
 using BurningKnight.entity.component;
 using BurningKnight.util;
-using ImGuiNET;
 using Lens.entity;
 using Lens.lightJson;
 
 namespace BurningKnight.entity.item.use {
-	public class GiveBuffImmunityUse : GiveBuffUse {
+	public partial class GiveBuffImmunityUse : GiveBuffUse {
 		public bool IceImmunity;
 		public bool PitImmunity;
 		
@@ -32,13 +31,6 @@ namespace BurningKnight.entity.item.use {
 			}
 			
 			return base.HandleEvent(e);
-		}
-
-		public static void RenderDebug(JsonValue root) {
-			GiveBuffUse.RenderDebug(root);
-			ImGui.Separator();
-			root.Checkbox("Give ice immunity", "ice", false);
-			root.Checkbox("Pit immunity", "pit", false);
 		}
 	}
 }

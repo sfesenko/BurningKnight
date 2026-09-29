@@ -1,14 +1,13 @@
 using BurningKnight.assets.items;
 using BurningKnight.entity.bomb;
 using BurningKnight.entity.component;
-using ImGuiNET;
 using Lens.entity;
 using Lens.lightJson;
 using Lens.util.math;
 using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.item.use {
-	public class SpawnBombUse : ConsumeUse {
+	public partial class SpawnBombUse : ConsumeUse {
 		public float Timer;
 		public int Amount;
 		public bool Randomly;
@@ -53,26 +52,6 @@ namespace BurningKnight.entity.item.use {
 			Timer = settings["timer"].Number(2);
 			Amount = settings["amount"].Int(1);
 			Randomly = settings["randomly"].Bool(false);
-		}
-
-		public static void RenderDebug(JsonValue root) {
-			var val = root["timer"].Number(2);
-
-			if (ImGui.InputFloat("Timer", ref val)) {
-				root["timer"] = val;
-			}
-			
-			var am = root["amount"].Int(1);
-
-			if (ImGui.InputInt("Amount", ref am)) {
-				root["amount"] = am;
-			}
-
-			var randomly = root["randomly"].Bool(false);
-
-			if (ImGui.Checkbox("Randomly", ref randomly)) {
-				root["randomly"] = randomly;
-			}
 		}
 	}
 }

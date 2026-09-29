@@ -5,13 +5,12 @@ using BurningKnight.entity.room;
 using BurningKnight.level.rooms;
 using BurningKnight.level.tile;
 using BurningKnight.state;
-using ImGuiNET;
 using Lens.entity;
 using Lens.lightJson;
 using Lens.util.math;
 
 namespace BurningKnight.entity.item.use {
-	public class DiscoverSecretRoomsUse : ItemUse {
+	public partial class DiscoverSecretRoomsUse : ItemUse {
 		private float chance;
 
 		public override void Use(Entity entity, Item item) {				
@@ -33,14 +32,6 @@ namespace BurningKnight.entity.item.use {
 		public override void Setup(JsonValue settings) {
 			base.Setup(settings);
 			chance = settings["chance"].Number(100);
-		}
-
-		public static void RenderDebug(JsonValue root) {
-			var chance = root["chance"].Number(100);
-
-			if (ImGui.InputFloat("Chance", ref chance)) {
-				root["chance"] = chance;
-			}
 		}
 	}
 }

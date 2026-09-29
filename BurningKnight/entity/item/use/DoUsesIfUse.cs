@@ -1,12 +1,11 @@
 using System;
 using BurningKnight.entity.component;
 using BurningKnight.entity.item.use.parent;
-using ImGuiNET;
 using Lens.entity;
 using Lens.lightJson;
 
 namespace BurningKnight.entity.item.use {
-	public class DoUsesIfUse : DoUsesUse {
+	public partial class DoUsesIfUse : DoUsesUse {
 		private static string[] options = {
 			"full_hp",
 			"min_hp",
@@ -44,23 +43,11 @@ namespace BurningKnight.entity.item.use {
 		}
 
 		protected override void DoAction(Entity entity, Item item, ItemUse use) {
-			
 		}
 
 		public override void Setup(JsonValue settings) {
 			base.Setup(settings);
 			option = settings["opt"].Int(0);
-		}
-
-		public static void RenderDebug(JsonValue root) {
-			DoUsesUse.RenderDebug(root);
-			ImGui.Separator();
-
-			var option = root["opt"].Int(0);
-
-			if (ImGui.Combo("If", ref option, options, options.Length)) {
-				root["opt"] = option;
-			}
 		}
 	}
 }

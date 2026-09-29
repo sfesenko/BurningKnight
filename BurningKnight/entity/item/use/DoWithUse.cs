@@ -3,13 +3,12 @@ using BurningKnight.assets.items;
 using BurningKnight.entity.item.use.parent;
 using BurningKnight.state;
 using BurningKnight.util;
-using ImGuiNET;
 using Lens.entity;
 using Lens.lightJson;
 using Lens.util.math;
 
 namespace BurningKnight.entity.item.use {
-	public class DoWithUse : DoWithTagUse {
+	public partial class DoWithUse : DoWithTagUse {
 		protected ItemUse[] Uses;
 		protected float chance;
 
@@ -25,7 +24,6 @@ namespace BurningKnight.entity.item.use {
 			}
 		}
 		
-		
 		public override void Setup(JsonValue settings) {
 			base.Setup(settings);
 			
@@ -35,23 +33,6 @@ namespace BurningKnight.entity.item.use {
 			
 			Uses = Items.ParseUses(settings["uses"]);
 			chance = settings["chance"].Number(100);
-		}
-		
-		public static void RenderDebug(JsonValue root) {
-			root.InputFloat("Chance", "chance", 100f);
-			
-			if (ImGui.TreeNode("With who")) {
-				DoWithTagUse.RenderDebug(root);
-				ImGui.TreePop();
-			}
-			
-			ImGui.Separator();
-			
-			if (!root["uses"].IsJsonArray) {
-				root["uses"] = new JsonArray();
-			}
-			
-			ItemEditor.DisplayUse(root, root["uses"]);
 		}
 	}
 }

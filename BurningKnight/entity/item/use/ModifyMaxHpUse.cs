@@ -1,15 +1,14 @@
-﻿using System;
+using System;
 using BurningKnight.assets.particle.custom;
 using BurningKnight.entity.component;
 using BurningKnight.entity.creature.player;
 using BurningKnight.util;
-using ImGuiNET;
 using Lens.assets;
 using Lens.entity;
 using Lens.lightJson;
 
 namespace BurningKnight.entity.item.use {
-	public class ModifyMaxHpUse : ItemUse {
+	public partial class ModifyMaxHpUse : ItemUse {
 		public int Amount;
 		public bool Set;
 		public bool GiveHp;
@@ -74,23 +73,6 @@ namespace BurningKnight.entity.item.use {
 			GiveHp = settings["give_hp"].Bool(true);
 			Set = settings["set"].Bool(false);
 			Bomb = settings["bomb"].Bool(false);
-		}
-		
-		public static void RenderDebug(JsonValue root) {
-			var val = root["amount"].Int(1);
-
-			if (ImGui.InputInt("Amount", ref val)) {
-				root["amount"] = val;
-			}
-
-			var giveHp = root["give_hp"].Bool(true);
-
-			if (ImGui.Checkbox("Give health", ref giveHp)) {
-				root["give_hp"] = giveHp;
-			}
-
-			root.Checkbox("Set", "set", false);
-			root.Checkbox("Bomb", "bomb", false);
 		}
 	}
 }

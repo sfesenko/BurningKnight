@@ -2,13 +2,12 @@ using BurningKnight.assets.items;
 using BurningKnight.entity.component;
 using BurningKnight.entity.orbital;
 using BurningKnight.util;
-using ImGuiNET;
 using Lens.entity;
 using Lens.lightJson;
 using Lens.util;
 
 namespace BurningKnight.entity.item.use {
-	public class SpawnOrbitalUse : ItemUse {
+	public partial class SpawnOrbitalUse : ItemUse {
 		private string orbital;
 		private bool random;
 		private bool onlyIfHasNone;
@@ -45,18 +44,6 @@ namespace BurningKnight.entity.item.use {
 			random = settings["random"].Bool(false);
 			orbital = settings["orbital"].String("");
 			onlyIfHasNone = settings["oin"].Bool(false);
-		}
-
-		public static void RenderDebug(JsonValue root) {
-			root.Checkbox("Only if has none", "oin", false);
-			
-			if (root.Checkbox("Random", "random", false)) {
-				return;
-			}
-			
-			if (!OrbitalRegistry.Has(root.InputText("Orbital", "orbital", "", 128))) {
-				ImGui.BulletText("Unknown orbital!");
-			}
 		}
 	}
 }

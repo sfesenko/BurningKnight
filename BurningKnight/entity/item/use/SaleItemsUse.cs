@@ -2,12 +2,11 @@ using BurningKnight.entity.component;
 using BurningKnight.entity.events;
 using BurningKnight.entity.item.stand;
 using BurningKnight.util;
-using ImGuiNET;
 using Lens.entity;
 using Lens.lightJson;
 
 namespace BurningKnight.entity.item.use {
-	public class SaleItemsUse : ItemUse {
+	public partial class SaleItemsUse : ItemUse {
 		private float percent;
 		private bool onlyOnceUsed;
 		private bool used;
@@ -38,16 +37,6 @@ namespace BurningKnight.entity.item.use {
 			base.Setup(settings);
 			percent = settings["prc"].Number(50f);
 			onlyOnceUsed = settings["wu"].Bool(false);
-		}
-		
-		public static void RenderDebug(JsonValue root) {
-			var v = root["prc"].Number(50f);
-
-			if (ImGui.InputFloat("% sale", ref v)) {
-				root["prc"] = v;
-			}
-
-			root.Checkbox("Only when used", "wu", false);
 		}
 	}
 }

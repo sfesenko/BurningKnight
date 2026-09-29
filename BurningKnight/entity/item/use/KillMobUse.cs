@@ -2,13 +2,12 @@ using System.Linq;
 using BurningKnight.entity.component;
 using BurningKnight.entity.creature.mob;
 using BurningKnight.util;
-using ImGuiNET;
 using Lens.entity;
 using Lens.lightJson;
 using Lens.util.math;
 
 namespace BurningKnight.entity.item.use {
-	public class KillMobUse : ItemUse {
+	public partial class KillMobUse : ItemUse {
 		private bool all;
 		private bool half;
 		private int count;
@@ -61,24 +60,6 @@ namespace BurningKnight.entity.item.use {
 			all = settings["all"].Bool(false);
 			half = settings["half"].Bool(false);
 			count = settings["count"].Int(1);
-		}
-
-		public static void RenderDebug(JsonValue root) {
-			var all = root["all"].Bool(false);
-
-			if (ImGui.Checkbox("All?", ref all)) {
-				root["all"] = all;
-			}
-
-			if (all || root.Checkbox("Half", "half", false)) {
-				return;
-			}
-
-			var count = root["count"].Int(1);
-
-			if (ImGui.InputInt("Count", ref count)) {
-				root["count"] = count;
-			}
 		}
 	}
 }

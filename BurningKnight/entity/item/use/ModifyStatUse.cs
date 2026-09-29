@@ -1,12 +1,11 @@
 using BurningKnight.assets.particle.custom;
 using BurningKnight.entity.component;
-using ImGuiNET;
 using Lens.assets;
 using Lens.entity;
 using Lens.lightJson;
 
 namespace BurningKnight.entity.item.use {
-	public class ModifyStatUse : ItemUse {
+	public partial class ModifyStatUse : ItemUse {
 		private Stat stat;
 		private float value;
 		
@@ -27,20 +26,6 @@ namespace BurningKnight.entity.item.use {
 			value = settings["val"].Number(1);
 		}
 		
-		public static void RenderDebug(JsonValue root) {
-			var stat = root["stat"].Int(0);
-
-			if (ImGui.Combo("Stat", ref stat, stats, stats.Length)) {
-				root["stat"] = stat;
-			}
-			
-			var value = root["val"].Number(1);
-
-			if (ImGui.InputFloat("Amount", ref value)) {
-				root["val"] = value;
-			}
-		}
-
 		private enum Stat {
 			InvincibilityTime,
 			

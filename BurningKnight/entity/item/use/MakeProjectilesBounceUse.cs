@@ -1,10 +1,9 @@
 using BurningKnight.entity.events;
-using ImGuiNET;
 using Lens.entity;
 using Lens.lightJson;
 
 namespace BurningKnight.entity.item.use {
-	public class MakeProjectilesBounceUse : ItemUse {
+	public partial class MakeProjectilesBounceUse : ItemUse {
 		private int count;
 
 		public override void Setup(JsonValue settings) {
@@ -18,14 +17,6 @@ namespace BurningKnight.entity.item.use {
 			}
 			
 			return base.HandleEvent(e);
-		}
-
-		public static void RenderDebug(JsonValue root) {
-			var count = root["count"].Int(1);
-
-			if (ImGui.InputInt("Count", ref count)) {
-				root["count"] = count;
-			}
 		}
 	}
 }

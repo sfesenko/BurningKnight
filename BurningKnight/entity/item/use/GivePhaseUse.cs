@@ -1,12 +1,11 @@
 using BurningKnight.entity.component;
 using BurningKnight.util;
-using ImGuiNET;
 using Lens.entity;
 using Lens.lightJson;
 using Lens.util.math;
 
 namespace BurningKnight.entity.item.use {
-	public class GivePhaseUse : ItemUse {
+	public partial class GivePhaseUse : ItemUse {
 		public int Amount;
 		public bool Broken;
 
@@ -21,16 +20,6 @@ namespace BurningKnight.entity.item.use {
 			
 			Amount = settings["amount"].Int(1);
 			Broken = settings["broken"].Bool(false);
-		}
-		
-		public static void RenderDebug(JsonValue root) {
-			var val = root["amount"].Int(1);
-
-			if (ImGui.InputInt("Amount", ref val)) {
-				root["amount"] = val;
-			}
-
-			root.Checkbox("Broken", "broken", false);
 		}
 	}
 }

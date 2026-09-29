@@ -1,12 +1,11 @@
 using System;
 using BurningKnight.state;
-using ImGuiNET;
 using Lens.entity;
 using Lens.lightJson;
 using Lens.util;
 
 namespace BurningKnight.entity.item.use {
-	public class UseOnEventUse : ItemUse {
+	public partial class UseOnEventUse : ItemUse {
 		private string type;
 		private Type typeInstance;
 		private string use;
@@ -44,45 +43,6 @@ namespace BurningKnight.entity.item.use {
 			}
 			
 			return base.HandleEvent(e);
-		}
-
-		public static void RenderDebug(JsonValue root) {
-			var type = root["tp"].String("");
-			var use = root["use"].String("");
-			
-			if (ImGui.InputText("Use", ref use, 128)) {
-				root["use"] = use;
-			}
-
-			var c = !UseRegistry.Uses.ContainsKey(use);
-
-			if (c) {
-				ImGui.BulletText("Unknown use");
-			}
-			
-			if (ImGui.InputText("Event type", ref type, 256)) {
-				root["tp"] = type;
-			}
-
-			try {
-				Type.GetType(type, true, false);
-			} catch (Exception e) {
-				ImGui.BulletText("Unknown type");
-			}
-			
-			if (c) {
-				return;
-			}
-			
-			var us = root["us"];
-
-			if (us == JsonValue.Null) {
-				us = root["us"] = new JsonObject();
-			}
-
-			us["id"] = use;
-			
-			ItemEditor.DisplayUse(root, us);
 		}
 	}
 }

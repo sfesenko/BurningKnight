@@ -2,14 +2,13 @@ using BurningKnight.assets.items;
 using BurningKnight.entity.component;
 using BurningKnight.entity.creature.pet;
 using BurningKnight.util;
-using ImGuiNET;
 using Lens.entity;
 using Lens.lightJson;
 using Lens.util;
 using Lens.util.math;
 
 namespace BurningKnight.entity.item.use {
-	public class SpawnPetUse : ItemUse {
+	public partial class SpawnPetUse : ItemUse {
 		private string pet;
 		private bool random;
 		private bool onlyIfHasNone;
@@ -47,18 +46,6 @@ namespace BurningKnight.entity.item.use {
 			pet = settings["pet"].String("");
 			random = settings["random"].Bool(false);
 			onlyIfHasNone = settings["oin"].Bool(false);
-		}
-
-		public static void RenderDebug(JsonValue root) {
-			root.Checkbox("Only if has none", "oin", false);
-			
-			if (root.Checkbox("Random", "random", false)) {
-				return;
-			}
-			
-			if (!PetRegistry.Has(root.InputText("Pet", "pet", "", 128))) {
-				ImGui.BulletText("Unknown pet!");
-			}
 		}
 	}
 }

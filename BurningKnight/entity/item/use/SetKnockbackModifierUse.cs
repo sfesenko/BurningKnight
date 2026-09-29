@@ -1,10 +1,9 @@
 using BurningKnight.entity.component;
-using ImGuiNET;
 using Lens.entity;
 using Lens.lightJson;
 
 namespace BurningKnight.entity.item.use {
-	public class SetKnockbackModifierUse : ItemUse {
+	public partial class SetKnockbackModifierUse : ItemUse {
 		private float mod;
 
 		public override void Use(Entity entity, Item item) {
@@ -14,14 +13,6 @@ namespace BurningKnight.entity.item.use {
 		public override void Setup(JsonValue settings) {
 			base.Setup(settings);
 			mod = settings["mod"].Number(0);
-		}
-
-		public static void RenderDebug(JsonValue root) {
-			var val = root["mod"].Number(0);
-
-			if (ImGui.InputFloat("Modifier", ref val)) {
-				root["mod"] = val;
-			}
 		}
 	}
 }

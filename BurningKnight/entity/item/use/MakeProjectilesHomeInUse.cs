@@ -2,12 +2,11 @@ using BurningKnight.entity.events;
 using BurningKnight.entity.projectile;
 using BurningKnight.entity.projectile.controller;
 using BurningKnight.util;
-using ImGuiNET;
 using Lens.entity;
 using Lens.lightJson;
 
 namespace BurningKnight.entity.item.use {
-	public class MakeProjectilesHomeInUse : ItemUse {
+	public partial class MakeProjectilesHomeInUse : ItemUse {
 		private float speed;
 		private bool better;
 		
@@ -45,16 +44,6 @@ namespace BurningKnight.entity.item.use {
 			base.Setup(settings);
 			speed = settings["speed"].Number(1);
 			better = settings["better"].Bool(false);
-		}
-
-		public static void RenderDebug(JsonValue root) {
-			var speed = root["speed"].Number(1);
-
-			if (ImGui.InputFloat("Speed", ref speed)) {
-				root["speed"] = speed;
-			}
-
-			root.Checkbox("Better?", "better", false);
 		}
 	}
 }
