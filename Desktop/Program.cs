@@ -23,15 +23,9 @@ namespace Desktop {
 			Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData, Environment.SpecialFolderOption.Create),
 			StateName) + Path.DirectorySeparatorChar;
 
-		// The builds before this one kept their state in a dot-directory in the home folder;
-		// before that, beside the executable. Migrate from whichever exists.
-		private static readonly string LegacyDataDir = Legacy();
-
-		private static string Legacy() {
-			var dot = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "." + StateName, "saves");
-
-			return Directory.Exists(dot) ? dot : Path.Combine(AppContext.BaseDirectory, StateName);
-		}
+		// The game used to keep its saves in a directory beside the executable; migrate from
+		// there once, rather than lose a run that started before the move.
+		private static readonly string LegacyDataDir = Path.Combine(AppContext.BaseDirectory, StateName);
 
 		// The game records its own pid here so the next launch can stop it.
 		private static readonly string InstanceFile = Path.Combine(DataDir, "instance.pid");
