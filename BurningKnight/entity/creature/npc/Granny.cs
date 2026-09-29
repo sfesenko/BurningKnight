@@ -1,4 +1,3 @@
-using BurningKnight.assets.achievements;
 using BurningKnight.assets.items;
 using BurningKnight.entity.component;
 using BurningKnight.entity.creature.player;
@@ -55,10 +54,6 @@ namespace BurningKnight.entity.creature.npc {
 					// Welcome, gobbo!
 					GetComponent<DialogComponent>().Dialog.Str.SetVariable("id", MathUtils.ToRoman((int) GlobalSave.RunId));
 					GetComponent<DialogComponent>().StartAndClose(room.Type == RoomType.Granny ? "granny_4" : GetDialog(), 3);
-					
-					if (rce.New.Type != RoomType.Granny) {
-						Achievements.Unlock("bk:tea_party");
-					}
 				}
 			} else if (e is Dialog.EndedEvent dee) {
 				if (dee.Dialog.Id == "bk_9") {
