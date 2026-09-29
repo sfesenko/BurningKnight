@@ -49,6 +49,18 @@ Desktop/bin/Release/net10.0/Desktop
 
 The game finds its content on its own: a release build reads the `Content` directory next to the executable and the archive beside it; a development build walks up to the source tree and links it next to the executable, for hot reload. Set the `BK_CONTENT` environment variable to point it somewhere else.
 
+##### Tests
+
+The generation suite lives in `BurningKnight.Tests/`, a project of its own that the game never references, so it neither builds with the game nor ships:
+
+```bash
+dotnet test BurningKnight.Tests/BurningKnight.Tests.csproj
+```
+
+It generates levels for every depth a run can reach and asserts that each one connects: no throw, every placed room reachable, every connection symmetric with a door between the rooms. `BK_TEST_SEEDS` sets the seeds per depth (25 by default; CI runs 50, the nightly job 770 — 10,010 in all).
+
+Generation places entities, and their components fetch sprites, so the suite boots a real `GraphicsDevice` and needs a display. On a headless Linux machine run it under Xvfb — `xvfb-run -a dotnet test BurningKnight.Tests/BurningKnight.Tests.csproj`, which is what CI does. On a desktop, Linux, Windows or macOS, plain `dotnet test` works.
+
 ##### Content
 
 `Content/` is a code-less project that owns the content targets; `Desktop/` references it, so building the game builds the content.
