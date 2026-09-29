@@ -1,4 +1,4 @@
-#if DEBUG
+﻿#if DEBUG
 using ImGuiNET;
 #endif
 using System;
@@ -92,17 +92,7 @@ namespace BurningKnight.entity.item {
 				return false;
 			}
 
-			foreach (var use in Uses) {
-				if (use.SingleUse && Used) {
-					continue;
-				}
-				
-				try {
-					use.Use(entity, this);
-				} catch (Exception e) {
-					Log.Error(e);
-				}
-			}
+			ForEachUse(use => use.Use(entity, this), true);
 
 			Delay = Math.Abs(UseTime);
 
@@ -122,52 +112,42 @@ namespace BurningKnight.entity.item {
 			return true;
 		}
 		
-		public void Pickup() {
-			var entity = Owner;
-		
+		private void ForEachUse(Action<ItemUse> action, bool skipUsed = false) {
 			foreach (var use in Uses) {
+				if (skipUsed && use.SingleUse && Used) {
+					continue;
+				}
+
 				try {
-					use.Pickup(entity, this);
+					action(use);
 				} catch (Exception e) {
 					Log.Error(e);
 				}
 			}
+		}
+
+		public void Pickup() {
+			var entity = Owner;
+
+			ForEachUse(use => use.Pickup(entity, this));
 		}
 		
 		public void Drop() {
 			var entity = Owner;
-		
-			foreach (var use in Uses) {
-				try {
-					use.Drop(entity, this);
-				} catch (Exception e) {
-					Log.Error(e);
-				}
-			}
+
+			ForEachUse(use => use.Drop(entity, this));
 		}
 		
 		public void TakeOut() {
 			var entity = Owner;
-		
-			foreach (var use in Uses) {
-				try {
-					use.TakeOut(entity, this);
-				} catch (Exception e) {
-					Log.Error(e);
-				}
-			}
+
+			ForEachUse(use => use.TakeOut(entity, this));
 		}
 		
 		public void PutAway() {
 			var entity = Owner;
-		
-			foreach (var use in Uses) {
-				try {
-					use.PutAway(entity, this);
-				} catch (Exception e) {
-					Log.Error(e);
-				}
-			}
+
+			ForEachUse(use => use.PutAway(entity, this));
 		}
 
 		public override void PostInit() {
