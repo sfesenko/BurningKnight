@@ -177,132 +177,10 @@ namespace BurningKnight.entity.creature.mob {
 			
 		}
 
-		public override bool HandleEvent(Event e) {
-			if (prefix != null && prefix.HandleEvent(e)) {
-				e.Handled = true;
-			}
-			
-			if (e is BuffAddedEvent add && add.Buff is CharmedBuff || e is BuffRemovedEvent del && del.Buff is CharmedBuff) {
-				// If old target even was a thing, it was from wrong category
-				FindTarget();
-			} else if (e is CollisionStartedEvent collisionStart) {
-				if (collisionStart.Entity.HasComponent<HealthComponent>() && CanHurt(collisionStart.Entity)) {
-					CollidingToHurt.Add(collisionStart.Entity);
-				}
-			} else if (e is CollisionEndedEvent collisionEnd) {
-				if (collisionEnd.Entity.HasComponent<HealthComponent>()) {
-					CollidingToHurt.Remove(collisionEnd.Entity);
-				}
-			} else if (e is DiedEvent de) {
-				var who = de.From;
-				
-				if (de.From != null) {
-					if (de.From.TryGetComponent<OwnerComponent>(out var o)) {
-						who = o.Owner;
-					} else if (who is Projectile p) {
-						who = p.Owner;
-					}
-				}
-
-				if (who is Player && who.GetComponent<LampComponent>().Item?.Id == "bk:explosive_lamp") {
-					AddDrops(new SimpleDrop(1f, 1, 1, "bk:bomb"));
-				}
-
-				if (!de.BlockClear) {
-					GetComponent<RoomComponent>().Room?.CheckCleared(who);
-				}
-			} else if (e is HealthModifiedEvent hme && hme.Amount < 0) {
-				if (!(this is bk.BurningKnight) && TryGetComponent<RoomComponent>(out var room) && room.Room != null && room.Room.Tagged[Tags.Player].Count == 0) {
-					return true;
-				}
-
-				if (!rotationApplied) {
-					rotationApplied = true;
-					var a = GetAnyComponent<AnimationComponent>();
-				
-					if (a != null) {
-						var w = a.Angle;
-						a.Angle += 0.5f;
-
-						var t = Tween.To(w, a.Angle, x => a.Angle = x, 0.2f);
-						
-						t.Delay = 0.2f;
-						t.OnEnd = () => {
-							rotationApplied = false;
-						};
-					}
-				}
-			} else if (e is TileCollisionStartEvent tce) {
-				if (tce.Tile == Tile.Cobweb) {
-					var body = GetAnyComponent<BodyComponent>();
-					wasSlow = body.Slow;
-					body.Slow = true;
-				}
-			} else if (e is TileCollisionEndEvent tee) {
-				if (tee.Tile == Tile.Cobweb) {
-					var body = GetAnyComponent<BodyComponent>();
-
-					if (!wasSlow && body.Slow && !GetComponent<BuffsComponent>().Has<SlowBuff>()) {
-						body.Slow = false;
-					}
-				}
-			}  
-			
-			return base.HandleEvent(e);
-		}
-
 		private bool wasSlow;
 
 		protected virtual bool CanHurt(Entity entity) {
 			return !(entity is BreakableProp || entity is Painting || entity is Prop);
-		}
-
-		protected void FindTarget() {
-			List<Entity> targets;
-
-			if (TargetEverywhere) {
-				targets = Area.Tagged[IsFriendly() ? Tags.Mob : Tags.PlayerTarget];
-			} else {
-				var room = GetComponent<RoomComponent>().Room;
-
-				if (room == null) {
-					return;
-				}
-			
-				targets = room.Tagged[IsFriendly() ? Tags.Mob : Tags.PlayerTarget];
-			}
-			
-			var closestDistance = float.MaxValue;
-			var friendly = IsFriendly();
-			
-			Entity closest = null;
-			
-			foreach (var target in targets) {
-				if (target == this || target is bk.BurningKnight || ((Creature) target).IsFriendly() == friendly || 
-				    (target.TryGetComponent<BuffsComponent>(out var b) && b.Has<InvisibleBuff>())) {
-					
-					continue;
-				}
-				
-				var d = target.DistanceToSquared(this);
-
-				if (d < closestDistance) {
-					closestDistance = d;
-					closest = target;
-				}
-			}
-
-			if (Target != closest) {
-				HandleEvent(new MobTargetChange {
-					Mob = this,
-					New = closest,
-					Old = Target 
-				});
-			}			
-			
-			// Might be null, thats ok
-			Target = closest;
-			OnTargetChange(closest);
 		}
 
 		public override bool IsFriendly() {
@@ -320,66 +198,6 @@ namespace BurningKnight.entity.creature.mob {
 		protected Vec2 NextPathPoint;
 		private int lastStepBack;
 		private int prevStepBack;
-
-		private void BuildPath(Vector2 to, bool back = false) {
-			var level = Run.Level;
-			var fp = level.ToIndex((int) Math.Floor(CenterX / 16f), (int) Math.Floor(Bottom / 16f));
-			var tp = level.ToIndex((int) Math.Floor(to.X / 16f), (int) Math.Floor(to.Y / 16f));
-
-			var p = back ? PathFinder.GetStepBack(fp, tp, level.Passable, prevStepBack) : PathFinder.GetStep(fp, tp, level.Passable);
-
-			if (back) {
-				prevStepBack = lastStepBack;
-				lastStepBack = p;
-			}
-			
-			if (p == -1) {
-				return;
-			}
-			
-			NextPathPoint = new Vec2 {
-				X = level.FromIndexX(p) * 16 + 8, 
-				Y = level.FromIndexY(p) * 16 + 8
-			};
-		}
-		
-		public bool MoveTo(Vector2 point, float speed, float distance = 8f, bool back = false) {
-			if (!back) {
-				var ds = DistanceToFromBottom(point);
-
-				if (ds <= distance) {
-					return true;
-				}
-			} else {
-				var ds = DistanceToFromBottom(point);
-
-				if (ds >= distance) {
-					return true;
-				}
-			}
-
-			if (NextPathPoint == null) {
-				BuildPath(point, back);
-
-				if (NextPathPoint == null) {
-					return false;
-				}
-			}
-
-			var dx = NextPathPoint.X - CenterX;
-			var dy = NextPathPoint.Y - Bottom;
-			var d = (float) Math.Sqrt(dx * dx + dy * dy);
-
-			if (d <= 2f) {
-				NextPathPoint = null;
-				return false;
-			}
-
-			speed *= Engine.Delta * 60;
-			GetAnyComponent<BodyComponent>().Velocity = new Vector2(dx / d * speed, dy / d * speed);
-
-			return false;
-		}
 
 		public bool FlyTo(Vector2 point, float speed, float distance = 8f) {
 			var dx = DxTo(point);
@@ -438,7 +256,6 @@ namespace BurningKnight.entity.creature.mob {
 			}
 		}
 
-
 		public override void RenderDebug() {
 			base.RenderDebug();
 
@@ -452,111 +269,9 @@ namespace BurningKnight.entity.creature.mob {
 			return entity is ProjectileLevelBody;
 		}
 
-		protected bool CanSeeTarget() {
-			if (Target == null) {
-				return false;
-			}
-			
-			var min = 1f;
-			var found = false;
-			
-			Physics.World.RayCast((fixture, point, normal, fraction) => {
-				if (min > fraction && fixture.Body.UserData is BodyComponent b && RayShouldCollide(b.Entity)) {
-					min = fraction;
-					found = true;
-				}
-				
-				return min;
-			}, Center, Target.Center);
-
-			return !found;
-		}
-		
 		protected void TurnToTarget() {
 			if (Target != null) {
 				GraphicsComponent.Flipped = Target.CenterX < CenterX;
-			}
-		}
-
-		protected void PushFromOtherEnemies(float dt, Func<Creature, bool> filter = null) {
-			var room = GetComponent<RoomComponent>().Room;
-			var body = GetAnyComponent<BodyComponent>();
-
-			if (room == null || body == null) {
-				return;
-			}
-			
-			foreach (var m in room.Tagged[Tags.Mob]) {
-				if (m == this) {
-					continue;
-				}
-				
-				var mob = (Creature) m;
-				
-				if (filter != null && !filter(mob)) {
-					return;
-				}
-
-				var dx = DxTo(mob);
-				var dy = DyTo(mob);
-				var d = MathUtils.Distance(dx, dy);
-				var force = dt * 800;
-				
-				if (d <= 8) {
-					var a = MathUtils.Angle(dx, dy) - (float) Math.PI;
-					body.Velocity += new Vector2((float) Math.Cos(a) * force, (float) Math.Sin(a) * force);
-				}
-			}
-		}
-
-		protected void PushOthersFromMe(float dt, Func<Creature, bool> filter = null) {
-			var room = GetComponent<RoomComponent>().Room;
-
-			if (room == null) {
-				return;
-			}
-
-			foreach (var m in room.Tagged[Tags.Mob]) {
-				if (m == this) {
-					continue;
-				}
-
-				var mob = (Creature) m;
-
-				if (filter != null && !filter(mob)) {
-					return;
-				}
-
-				var dx = DxTo(mob);
-				var dy = DyTo(mob);
-				var d = MathUtils.Distance(dx, dy);
-				var force = dt * 800;
-
-				if (d <= 12) {
-					var a = MathUtils.Angle(dx, dy) - (float) Math.PI;
-					var b = mob.GetAnyComponent<BodyComponent>();
-
-					if (b != null) {
-						b.Velocity -= new Vector2((float) Math.Cos(a) * force, (float) Math.Sin(a) * force);
-					}
-				}
-			}
-		}
-		
-		public void ModifyDrops(List<Item> drops) {
-			if (Rnd.Chance(Run.Scourge * 0.5f)) {
-				var c = Rnd.Int(0, 3);
-				
-				for (var i = 0; i < c; i++) {
-					drops.Add(Items.Create("bk:copper_coin"));
-				}
-			}
-
-			foreach (var p in Area.Tagged[Tags.Player]) {
-				if (p.GetComponent<LampComponent>().Item?.Id == "bk:explosive_lamp") {
-					drops.Add(Items.Create("bk:bomb"));
-					break;
-				}
 			}
 		}
 	}
