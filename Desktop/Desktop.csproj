@@ -9,17 +9,25 @@
         <ProjectReference Include="..\Content\Content.csproj" ReferenceOutputAssembly="false"/>
     </ItemGroup>
 
-    <!-- Release must run from its output directory alone, so the content travels with it. Debug
-         links to the source tree instead, for hot reload. Globs inside the target see the sheets
-         the preprocess step has just written; SkipUnchangedFiles keeps later builds cheap. -->
+    <!-- Release must run from its output directory alone. The payload travels as one archive, and
+         the music stays loose: a Song can only be opened from a path, not a stream. A leftover
+         loose tree from an older layout is removed, because it would win over the archive; Music
+         is staged and Mods is the player's, so both stay. Debug links to the source tree instead,
+         for hot reload. -->
     <Target Name="StageContent" AfterTargets="Build" Condition="'$(Configuration)' == 'Release'">
+        <MSBuild Projects="..\Content\Content.csproj" Targets="PackContent"
+                 Properties="PackOutput=$([MSBuild]::NormalizePath('$(MSBuildThisFileDirectory)', '$(OutDir)', 'Content.zip'))" />
+
         <ItemGroup>
-            <StagedContent Include="..\Content\**\*"
-                           Exclude="..\Content\**\*.ase;..\Content\**\*.fx;..\Content\Content.mgcb;..\Content\obj\**;..\Content\bin\Sfx\**;..\Content\bin\Music\**" />
+            <LooseContent Include="..\Content\Music\**\*" />
+            <RetiredContent Include="$(OutDir)Content\**\*"
+                            Exclude="$(OutDir)Content\Music\**;$(OutDir)Content\Mods\**" />
         </ItemGroup>
 
-        <Copy SourceFiles="@(StagedContent)"
-              DestinationFiles="@(StagedContent->'$(OutDir)Content\%(RecursiveDir)%(Filename)%(Extension)')"
+        <Delete Files="@(RetiredContent)" />
+
+        <Copy SourceFiles="@(LooseContent)"
+              DestinationFiles="@(LooseContent->'$(OutDir)Content\Music\%(RecursiveDir)%(Filename)%(Extension)')"
               SkipUnchangedFiles="true" />
     </Target>
     <ItemGroup>

@@ -5,6 +5,11 @@
         <TargetFramework>net10.0</TargetFramework>
         <EnableDefaultItems>false</EnableDefaultItems>
         <IncludeBuildOutput>false</IncludeBuildOutput>
+        <!-- Where PackContent writes the archive; the host overrides this to stage the game. -->
+        <PackOutput Condition="'$(PackOutput)' == ''">$(MSBuildThisFileDirectory)bin/Pack/Content.zip</PackOutput>
+        <!-- Written by ProbeFfmpeg: installing or losing ffmpeg must repack, and a timestamp
+             cannot express that. -->
+        <FfmpegMarker>$(MSBuildThisFileDirectory)bin/Pack/ffmpeg.present</FfmpegMarker>
     </PropertyGroup>
 
     <ItemGroup>
@@ -13,10 +18,42 @@
         <AnimationSheet Include="bin/Animations/animations.json" />
     </ItemGroup>
 
+    <!-- What the pack reads. The .ase sources are in the list because the preprocessor rewrites a
+         sheet after MSBuild has evaluated the globs, so a changed sheet would otherwise not count
+         as a change. -->
+    <ItemGroup>
+        <PackInput Include="../tools/pack-content.fsx" />
+        <PackInput Include="bin/Pack/ffmpeg.present" />
+        <PackInput Include="Animations/*.ase" />
+        <PackInput Include="items.json;achievements.json;*.png" />
+        <PackInput Include="Textures/**/*;Fonts/*.fnt;Fonts/*.png;Fonts/font.ttf;Locales/**/*;Dialogs/**/*;Prefabs/**/*" />
+        <PackInput Include="Sfx/**/*.wav" />
+        <PackInput Include="bin/Animations/**/*;bin/Shaders/*.xnb" />
+    </ItemGroup>
+
     <!-- The sheets are build output, cut from the .ase sources before anything loads them.
          Timestamps keep the preprocessor off the path when nothing changed. -->
     <Target Name="PreprocessAnimations" BeforeTargets="BeforeBuild"
             Inputs="@(AnimationSource)" Outputs="@(AnimationSheet)">
         <Exec Command="dotnet fsi &quot;$(MSBuildThisFileDirectory)../tools/preprocess-ase.fsx&quot;" />
+    </Target>
+
+    <!-- One archive holding everything the runtime reads. Built by the build, never committed;
+         `dotnet build -t:PackContent` runs it alone. -->
+    <Target Name="PackContent" DependsOnTargets="PreprocessAnimations"
+            Inputs="@(PackInput)" Outputs="$(PackOutput)">
+        <Exec Command="dotnet fsi &quot;$(MSBuildThisFileDirectory)../tools/pack-content.fsx&quot; &quot;$(MSBuildThisFileDirectory)&quot; &quot;$(PackOutput)&quot;" />
+    </Target>
+
+    <!-- ffmpeg is not an input with a timestamp, so its presence gets a marker of its own; the
+         pack reads it and rebuilds when it changes. -->
+    <Target Name="ProbeFfmpeg" BeforeTargets="PackContent">
+        <Exec Command="ffmpeg -version" IgnoreExitCode="true"
+              StandardOutputImportance="low" StandardErrorImportance="low">
+            <Output TaskParameter="ExitCode" PropertyName="FfmpegExitCode" />
+        </Exec>
+
+        <WriteLinesToFile File="$(FfmpegMarker)" Lines="$(FfmpegExitCode)"
+                          Overwrite="true" WriteOnlyWhenDifferent="true" />
     </Target>
 </Project>
