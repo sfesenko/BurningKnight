@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
@@ -6,7 +6,6 @@ using Lens.util;
 using Lens.util.file;
 using Lens.util.tween;
 using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Media;
 
 namespace Lens.assets;
 
@@ -23,16 +22,13 @@ public class Audio
 
     public readonly float Db3 = 0.1f;
 
-    private Song? currentPlaying = null;
+    private MusicPlayer currentPlaying = null;
     private string? currentPlayingMusic = null;
-    private Dictionary<string, Song> musicInstances = new();
+    private Dictionary<string, MusicPlayer> musicInstances = new();
     private Dictionary<string, SoundEffect> sounds = new();
 
-    public bool Repeat
-    {
-        get => MediaPlayer.IsRepeating;
-        set => MediaPlayer.IsRepeating = value;
-    }
+    // The player loops on its own; the flag stays because PlayMusic sets it and the log names it.
+    public bool Repeat { get; set; } = true;
 
     private DynamicSoundEffectInstance SoundEffectInstance;
 
@@ -89,8 +85,8 @@ public class Audio
 
     // MonoGame hands OpenAL sources out of one shared pool and never clears AL_LOOPING when a source
     // comes back, so a source a looping SoundEffectInstance has used can still be flagged as looping
-    // when a Song reserves it. OpenAL then loops the Song's first streaming buffers forever instead
-    // of playing through, and nothing in the Song or MediaPlayer API can clear the flag afterwards.
+    // when the music player reserves it. OpenAL then loops the track's first buffers forever
+    // instead of playing through, and nothing in the audio API can clear the flag afterwards.
     // A SoundEffectInstance applies IsLooped to the source it plays on, so playing and stopping a
     // silent non-looping one first clears the flag on the source the Song is about to reserve: the
     // pool hands back the most recently returned source, and that is now this one.
@@ -127,59 +123,28 @@ public class Audio
         }
     }
 
-    // MonoGame's Song has no stream constructor, so a track that lives in the archive is copied
-    // out first — into the writable data directory, never beside the executable. A loose file is
-    // used where it is, so the source tree and mods keep working, hot reload included.
-    private static string MusicFile(string music)
+    // MonoGame's Song opens from a path only, so the archive's music is played by a MusicPlayer
+    // instead — NVorbis reads the entry straight from the content source, and nothing is written
+    // out to disk.
+    private MusicPlayer GetOrLoadMusic(string music)
     {
-        var loose = FileHandle.FromRoot($"Music/{music}.ogg");
-
-        if (File.Exists(loose.FullPath))
+        if (musicInstances.TryGetValue(music, out var player))
         {
-            return loose.FullPath;
-        }
-
-        using var source = Assets.Source.Open($"Music/{music}.ogg");
-
-        if (source == null)
-        {
-            Log.Error($"Music {music} was not found!");
-            return null;
-        }
-
-        var directory = Path.Combine(Paths.DataDir, "music");
-        var cached = Path.Combine(directory, $"{music}.ogg");
-
-        Directory.CreateDirectory(directory);
-
-        using (var target = File.Create(cached))
-        {
-            source.CopyTo(target);
-        }
-
-        return cached;
-    }
-
-    private Song GetOrLoadMusic(string music)
-    {
-        if (musicInstances.TryGetValue(music, out var song))
-        {
-            return song;
+            return player;
         }
 
         ClearLoopFlagOnNextSource();
 
-        var file = MusicFile(music);
+        player = new MusicPlayer(music);
 
-        if (file == null)
+        if (!player.Ready)
         {
             return null;
         }
 
-        song = Song.FromUri(music, new Uri(file));
-        musicInstances[music] = song;
+        musicInstances[music] = player;
 
-        return song;
+        return player;
     }
 
     internal void Destroy()
@@ -277,49 +242,11 @@ public class Audio
                 return;
             }
 
-            MediaPlayer.Pause();
-            MediaPlayer.Play(currentPlaying);
+            currentPlaying.Play();
+            currentPlaying.Volume = musicVolume;
 
             Log.Info($"Playing music {music} repeat = {Repeat}");
             currentPlayingMusic = music;
-
-            Tween.To(musicVolume, MediaPlayer.Volume, x => MediaPlayer.Volume = x,
-                fromStart ? 0.05f : CrossFadeTime);
-
-            loading = false;
-        }
-        catch (Exception e)
-        {
-            Log.Error($"Failed to load {music}");
-            Log.Error(e);
-            loading = false;
-        }
-    }
-
-    private void ThreadLoad(string music, bool fromStart = false)
-    {
-        try
-        {
-            loading = true;
-            
-            var id = Environment.CurrentManagedThreadId;
-            Log.Info($"Audio.Play: {id}");
-
-            if (!musicInstances.TryGetValue(music, out currentPlaying))
-            {
-                Log.Debug($"ThreadLoad: loading {music}");
-                currentPlaying = Song.FromUri(music, new Uri(MusicFile(music)));
-                musicInstances[music] = currentPlaying;
-            }
-
-            MediaPlayer.Pause();
-            MediaPlayer.Play(currentPlaying);
-
-            Log.Info($"Playing music {music} repeat = {Repeat}");
-            currentPlayingMusic = music;
-
-            Tween.To(musicVolume, MediaPlayer.Volume, x => MediaPlayer.Volume = x,
-                fromStart ? 0.05f : CrossFadeTime);
 
             loading = false;
         }
@@ -335,16 +262,14 @@ public class Audio
     {
         if (currentPlaying != null)
         {
-            Tween.To(0, MediaPlayer.Volume, x => MediaPlayer.Volume = x, CrossFadeTime).OnEnd = () =>
+            var player = currentPlaying;
+
+            Tween.To(0, player.Volume, x => player.Volume = x, CrossFadeTime).OnEnd = () =>
             {
                 currentPlaying = null;
                 currentPlayingMusic = null;
-                var mediaState = MediaPlayer.State;
-                Log.Debug($@"MediaState: {mediaState}");
-                if (mediaState == MediaState.Playing)
-                {
-                    // MediaPlayer.Stop();
-                }
+                Log.Debug($@"Music state: {player.State}");
+                player.Stop();
 
                 callback?.Invoke();
             };
@@ -359,8 +284,8 @@ public class Audio
     {
         var id = Environment.CurrentManagedThreadId;
         Log.Info($"Audio.Stop: {id}");
-        // MediaPlayer.Stop();
 
+        currentPlaying?.Stop();
         currentPlaying = null;
         currentPlayingMusic = null;
     }
@@ -369,8 +294,12 @@ public class Audio
 
     public void UpdateMusicVolume(float value)
     {
-        MediaPlayer.Volume = value;
         musicVolume = value;
+
+        if (currentPlaying != null)
+        {
+            currentPlaying.Volume = value;
+        }
     }
 
     public void Update(float dt)
