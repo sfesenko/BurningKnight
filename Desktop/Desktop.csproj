@@ -9,26 +9,19 @@
         <ProjectReference Include="..\Content\Content.csproj" ReferenceOutputAssembly="false"/>
     </ItemGroup>
 
-    <!-- Release must run from its output directory alone. The payload travels as one archive, and
-         the music stays loose: a Song can only be opened from a path, not a stream. A leftover
-         loose tree from an older layout is removed, because it would win over the archive; Music
-         is staged and Mods is the player's, so both stay. Debug links to the source tree instead,
+    <!-- Release must run from its output directory alone, and the whole payload travels as one
+         archive. A leftover loose tree from an older layout is removed, because it would win over
+         the archive; Mods is the player's, so it stays. Debug links to the source tree instead,
          for hot reload. -->
     <Target Name="StageContent" AfterTargets="Build" Condition="'$(Configuration)' == 'Release'">
         <MSBuild Projects="..\Content\Content.csproj" Targets="PackContent"
                  Properties="PackOutput=$([MSBuild]::NormalizePath('$(MSBuildThisFileDirectory)', '$(OutDir)', 'Content.zip'))" />
 
         <ItemGroup>
-            <LooseContent Include="..\Content\Music\**\*" />
-            <RetiredContent Include="$(OutDir)Content\**\*"
-                            Exclude="$(OutDir)Content\Music\**;$(OutDir)Content\Mods\**" />
+            <RetiredContent Include="$(OutDir)Content\**\*" Exclude="$(OutDir)Content\Mods\**" />
         </ItemGroup>
 
         <Delete Files="@(RetiredContent)" />
-
-        <Copy SourceFiles="@(LooseContent)"
-              DestinationFiles="@(LooseContent->'$(OutDir)Content\Music\%(RecursiveDir)%(Filename)%(Extension)')"
-              SkipUnchangedFiles="true" />
     </Target>
     <ItemGroup>
         <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.*"/>

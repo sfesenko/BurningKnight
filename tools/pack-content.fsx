@@ -47,6 +47,9 @@ let isPayload (rel: string) =
     | _ when under "Locales" || under "Dialogs" -> ext = ".json"
     | _ when under "Prefabs" -> ext = ".lvl"
     | _ when under "Sfx" -> ext = ".wav"
+    // Music ships in the archive too; the runtime copies a track out on first play, because a
+    // Song opens from a path and not from a stream.
+    | _ when under "Music" -> ext = ".ogg"
     | _ when under "bin/Animations" -> true
     | _ when under "bin/Shaders" -> ext = ".xnb"
     | _ -> false

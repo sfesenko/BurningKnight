@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
@@ -127,6 +127,39 @@ public class Audio
         }
     }
 
+    // MonoGame's Song has no stream constructor, so a track that lives in the archive is copied
+    // out first — into the writable data directory, never beside the executable. A loose file is
+    // used where it is, so the source tree and mods keep working, hot reload included.
+    private static string MusicFile(string music)
+    {
+        var loose = FileHandle.FromRoot($"Music/{music}.ogg");
+
+        if (File.Exists(loose.FullPath))
+        {
+            return loose.FullPath;
+        }
+
+        using var source = Assets.Source.Open($"Music/{music}.ogg");
+
+        if (source == null)
+        {
+            Log.Error($"Music {music} was not found!");
+            return null;
+        }
+
+        var directory = Path.Combine(Paths.DataDir, "music");
+        var cached = Path.Combine(directory, $"{music}.ogg");
+
+        Directory.CreateDirectory(directory);
+
+        using (var target = File.Create(cached))
+        {
+            source.CopyTo(target);
+        }
+
+        return cached;
+    }
+
     private Song GetOrLoadMusic(string music)
     {
         if (musicInstances.TryGetValue(music, out var song))
@@ -136,8 +169,14 @@ public class Audio
 
         ClearLoopFlagOnNextSource();
 
-        var uri = new Uri($"Content/Music/{music}.ogg", UriKind.Relative);
-        song = Song.FromUri(music, uri);
+        var file = MusicFile(music);
+
+        if (file == null)
+        {
+            return null;
+        }
+
+        song = Song.FromUri(music, new Uri(file));
         musicInstances[music] = song;
 
         return song;
@@ -232,6 +271,12 @@ public class Audio
 
             currentPlaying = GetOrLoadMusic(music);
 
+            if (currentPlaying == null)
+            {
+                loading = false;
+                return;
+            }
+
             MediaPlayer.Pause();
             MediaPlayer.Play(currentPlaying);
 
@@ -263,11 +308,7 @@ public class Audio
             if (!musicInstances.TryGetValue(music, out currentPlaying))
             {
                 Log.Debug($"ThreadLoad: loading {music}");
-                // currentPlaying = Assets.Content.Load<Song>($"bin/Music/{music}");
-                var uri = new Uri($"Content/Music/{music}.ogg", UriKind.Relative);
-                currentPlaying = Song.FromUri(music, uri);
-                
-                    // ($"Content/Music/{music}.ogg");
+                currentPlaying = Song.FromUri(music, new Uri(MusicFile(music)));
                 musicInstances[music] = currentPlaying;
             }
 
