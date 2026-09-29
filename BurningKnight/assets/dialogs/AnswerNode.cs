@@ -1,16 +1,10 @@
 using BurningKnight.ui.dialog;
-using ImGuiNET;
 using Lens.lightJson;
 
 namespace BurningKnight.assets.dialogs {
-	public class AnswerNode : DialogNode {
+	public partial class AnswerNode : DialogNode {
 		private int type;
 		
-		public override void RenderElements() {
-			base.RenderElements();
-			ImGui.Combo("Type", ref type, AnswerDialog.Types, AnswerDialog.Types.Length);
-		}
-
 		protected override Dialog CreateDialog(string id, string[] variants) {
 			return new AnswerDialog(id, (AnswerType) type, variants);
 		}

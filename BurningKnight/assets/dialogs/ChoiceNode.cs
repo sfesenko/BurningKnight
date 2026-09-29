@@ -1,11 +1,10 @@
 using System.Collections.Generic;
 using BurningKnight.ui.dialog;
-using ImGuiNET;
 using Lens.assets;
 using Lens.lightJson;
 
 namespace BurningKnight.assets.dialogs {
-	public class ChoiceNode : GraphNode, IDialogNode {
+	public partial class ChoiceNode : GraphNode, IDialogNode {
 		private List<string> choices = new List<string>();
 		private string label = "";
 		private string name = "";
@@ -16,64 +15,6 @@ namespace BurningKnight.assets.dialogs {
 
 		public override string GetName() {
 			return name;
-		}
-
-		public override void RenderElements() {
-			if (choices.Count == 0) {
-				choices.Add("");
-				AddOutput();
-			}
-			
-			Inputs[0].Offset.Y = ImGui.GetCursorPos().Y + InputHalfHeight;
-
-			ImGui.PushItemWidth(200);
-			
-			if (ImGui.InputText($"##{name}", ref label, 256, ImGuiInputTextFlags.EnterReturnsTrue)) {
-				name = label;
-			}
-
-			ImGui.SameLine();
-				
-			var add = ImGui.Button("+##choice");
-			ImGui.PopItemWidth();
-			ImGui.Separator();
-			
-			var i = 0;
-			var toRemove = -1;
-			
-			foreach (var output in Outputs) {
-				var s = choices[i];
-				output.Offset.Y = ImGui.GetCursorPos().Y + InputHalfHeight;
-
-				ImGui.Bullet();
-				ImGui.SameLine();
-				ImGui.PushItemWidth(200);
-
-				ImGui.InputText($"##s_{i}", ref s, 512);
-				choices[i] = s;
-
-				ImGui.PopItemWidth();
-
-				if (i > 0) {
-					ImGui.SameLine();
-
-					if (ImGui.Button($"-##{i}")) {
-						toRemove = i;
-					}
-				}
-
-				i++;
-			}
-
-			if (toRemove > -1) {
-				choices.RemoveAt(toRemove);
-				RemoveConnection(Outputs[toRemove], true);
-			}
-
-			if (add) {
-				choices.Add("");
-				AddOutput();
-			}
 		}
 
 		public override void Save(JsonObject root) {
