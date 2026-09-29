@@ -51,14 +51,19 @@ namespace Desktop {
 				return staged;
 			}
 
-			var dir = new DirectoryInfo(AppContext.BaseDirectory);
+			// Only a development build walks up to the source tree. A release install that cannot
+			// find its staged content must not quietly read the repository instead — loose files
+			// would win over the archive.
+			if (Engine.Debug) {
+				var dir = new DirectoryInfo(AppContext.BaseDirectory);
 
-			for (var i = 0; i < MaxDepth && dir != null; i++, dir = dir.Parent) {
-				var source = Path.Combine(dir.FullName, SourceContent);
+				for (var i = 0; i < MaxDepth && dir != null; i++, dir = dir.Parent) {
+					var source = Path.Combine(dir.FullName, SourceContent);
 
-				if (File.Exists(Path.Combine(dir.FullName, RepoMarker)) && Directory.Exists(source)) {
-					Console.WriteLine($"Content root: {source} (source tree, {i + 1} levels up)");
-					return source;
+					if (File.Exists(Path.Combine(dir.FullName, RepoMarker)) && Directory.Exists(source)) {
+						Console.WriteLine($"Content root: {source} (source tree, {i + 1} levels up)");
+						return source;
+					}
 				}
 			}
 
@@ -67,11 +72,15 @@ namespace Desktop {
 			return staged;
 		}
 
-		// MonoGame's TitleContainer resolves relative paths against the executable's directory —
-		// not the content root, and not the working directory. The ContentManager and
-		// MonoGame.Extended's BitmapFont both go through it, so content has to be reachable from
-		// there too. Staging puts it there; a Debug build links to the source tree instead.
+		// A development build links the source tree beside the executable, so a `Content` directory
+		// is there for anything that opens a path rather than a stream — a music URI, the overlay's
+		// font. A release install reads its archive instead and never links: a link back to a
+		// checkout would shadow the archive.
 		public static void LinkNextToExecutable(string root) {
+			if (!Engine.Debug) {
+				return;
+			}
+
 			var link = Path.Combine(AppContext.BaseDirectory, "Content");
 
 			if (Directory.Exists(link)) {

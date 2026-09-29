@@ -47,7 +47,7 @@ dotnet build Desktop/Desktop.csproj -c Release
 Desktop/bin/Release/net10.0/Desktop
 ```
 
-The game finds its content on its own: it looks for a `Content` directory next to the executable, then for the source tree, and links the content next to the executable when it needs to. Set the `BK_CONTENT` environment variable to point it somewhere else.
+The game finds its content on its own: a release build reads the `Content` directory next to the executable and the archive beside it; a development build walks up to the source tree and links it next to the executable, for hot reload. Set the `BK_CONTENT` environment variable to point it somewhere else.
 
 ##### Content
 
