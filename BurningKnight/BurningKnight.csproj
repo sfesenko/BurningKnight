@@ -30,7 +30,7 @@
         <Compile Remove="assets/ImGuiHelper.cs" />
         <Compile Remove="state/save/**/*.cs" />
         <Compile Remove="save/SaveDebug.cs" />
-        <Compile Remove="state/EditorState.cs;state/RoomEditorState.cs;state/DialogEditorState.cs;state/PicoState.cs;state/AreaDebug.cs;state/ItemEditor.cs;state/DevAssetLoadState.cs" />
+        <Compile Remove="state/EditorState.cs;state/RoomEditorState.cs;state/DialogEditorState.cs;state/PicoState.cs;state/AreaDebug.cs;state/ItemEditor*.cs;state/DevAssetLoadState.cs" />
     </ItemGroup>
 
     <!-- The stubs that stand in for the dev windows a release build compiles out. -->
