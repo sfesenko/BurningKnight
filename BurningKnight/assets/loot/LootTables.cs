@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using BurningKnight.entity.creature.drop;
-using ImGuiNET;
 using Lens.assets;
 using Lens.lightJson;
 using Lens.lightJson.Serialization;
@@ -10,7 +9,7 @@ using Lens.util;
 using Lens.util.file;
 
 namespace BurningKnight.assets.loot {
-	public static class LootTables {
+	public static partial class LootTables {
 		public static Dictionary<string, Drop> Defined = new Dictionary<string, Drop>();
 		public static Dictionary<string, JsonValue> Data = new Dictionary<string, JsonValue>();
 		public static int LastDropId;
@@ -115,21 +114,5 @@ namespace BurningKnight.assets.loot {
 			return drop;
 		}
 
-		public static bool RenderDrop(JsonValue drop) {
-			var id = drop["type"].String("missing");
-
-			if (DropRegistry.Defined.TryGetValue(id, out var info)) {
-				if (ImGui.TreeNode($"{id}%##{drop["id"].AsInteger}")) {
-					info.Render(drop);
-					ImGui.TreePop();
-
-					return true;
-				}
-			} else {
-				ImGui.BulletText($"Unknown type {id}");
-			}
-
-			return false;
-		}
 	}
 }

@@ -4,7 +4,6 @@ using BurningKnight.entity.creature.player;
 using BurningKnight.save;
 using BurningKnight.state;
 using BurningKnight.ui.editor;
-using ImGuiNET;
 using Lens;
 using Lens.entity;
 using Lens.graphics;
@@ -14,7 +13,7 @@ using Lens.physics;
 using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.pc {
-	public class Pico : SaveableEntity, PlaceableEntity {
+	public partial class Pico : SaveableEntity, PlaceableEntity {
 		private bool on;
 		private Controller controller;
 		// private Emulator emulator;
@@ -135,14 +134,5 @@ namespace BurningKnight.entity.pc {
 			Graphics.Render(backend.Surface, Position + new Vector2(5, 16));*/
 		}
 
-		public override void RenderImDebug() {
-			base.RenderImDebug();
-			ImGui.InputText("Cart", ref cart, 64);
-			ImGui.SameLine();
-			
-			if (ImGui.Button("Load")) {
-				LoadCart();
-			}
-		}
 	}
 }

@@ -8,7 +8,6 @@ using BurningKnight.save;
 using BurningKnight.state;
 using BurningKnight.ui.editor;
 using BurningKnight.util;
-using ImGuiNET;
 using Lens;
 using Lens.assets;
 using Lens.entity;
@@ -16,7 +15,7 @@ using Lens.util.file;
 using Lens.physics;
 
 namespace BurningKnight.level.entities {
-	public class Exit : SaveableEntity, PlaceableEntity {
+	public partial class Exit : SaveableEntity, PlaceableEntity {
 		public int To;
 		public static Exit Instance;
 		
@@ -134,8 +133,5 @@ namespace BurningKnight.level.entities {
 			stream.WriteInt16((short) To);
 		}
 
-		public override void RenderImDebug() {
-			ImGui.InputInt("To", ref To);
-		}
 	}
 }

@@ -24,7 +24,6 @@ using BurningKnight.save;
 using BurningKnight.state;
 using BurningKnight.ui.imgui;
 using BurningKnight.util;
-using ImGuiNET;
 using Lens;
 using Lens.entity;
 using Lens.entity.component.logic;
@@ -39,7 +38,7 @@ using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 
 namespace BurningKnight.entity.creature.mob {
-	public class Mob : Creature, DropModifier {
+	public partial class Mob : Creature, DropModifier {
 		public Entity Target;
 		public bool HasPrefix => prefix != null;
 		public Prefix Prefix => prefix;
@@ -440,20 +439,6 @@ namespace BurningKnight.entity.creature.mob {
 			}
 		}
 
-		public override void RenderImDebug() {
-			base.RenderImDebug();
-			
-			ImGui.Text($"Target: {(Target == null ? "null" : Target.GetType().Name)}");
-
-			if (Target != null) {
-				if (ImGui.Button("Jump")) {
-					WindowManager.Entities = true;
-					AreaDebug.ToFocus = Target;
-				}
-			}
-			
-			ImGui.Text($"Prefix: {(Prefix == null ? "null" : Prefix.Id)}");
-		}
 
 		public override void RenderDebug() {
 			base.RenderDebug();

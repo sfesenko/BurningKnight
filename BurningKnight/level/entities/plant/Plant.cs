@@ -3,13 +3,12 @@ using BurningKnight.entity.component;
 using BurningKnight.level.biome;
 using BurningKnight.save;
 using BurningKnight.state;
-using ImGuiNET;
 using Lens.util.file;
 using Lens.util.math;
 using Microsoft.Xna.Framework;
 
 namespace BurningKnight.level.entities.plant {
-	public class Plant : Prop {
+	public partial class Plant : Prop {
 		private static string[] variants = {
 			"plant_a", "plant_b", "plant_c", "plant_d", "plant_e", "plant_f",
 			"plant_i", "plant_j", "plant_k", "plant_l", "plant_m", "plant_n", "plant_o" 
@@ -66,14 +65,5 @@ namespace BurningKnight.level.entities.plant {
 			stream.WriteByte(Variant);
 		}
 
-		public override void RenderImDebug() {
-			base.RenderImDebug();
-			var v = (int) Variant;
-
-			if (ImGui.InputInt("Id", ref v)) {
-				Variant = (byte) v;
-				RemoveComponent<PlantGraphicsComponent>();
-			}
-		}
 	}
 }

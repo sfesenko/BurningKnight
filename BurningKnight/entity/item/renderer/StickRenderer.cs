@@ -1,7 +1,6 @@
 using System;
 using BurningKnight.assets;
 using BurningKnight.entity.component;
-using ImGuiNET;
 using Lens.graphics;
 using Lens.input;
 using Lens.lightJson;
@@ -11,7 +10,7 @@ using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 
 namespace BurningKnight.entity.item.renderer {
-	public class StickRenderer : ItemRenderer {
+	public partial class StickRenderer : ItemRenderer {
 		private double lastAngle;
 		private Vector2 scale = Vector2.One;
 		private bool horizontal;
@@ -110,32 +109,5 @@ namespace BurningKnight.entity.item.renderer {
 			returnTime = settings["rt"].Number(0.2f);
 		}
 
-		public static void RenderDebug(string id, JsonValue parent, JsonValue root) {			
-			ItemRenderer.RenderDebug(id, parent, root);
-
-			var h = root["h"].Bool(false);
-
-			if (ImGui.Checkbox("Horizontal", ref h)) {
-				root["h"] = h;
-			}
-			
-			var mv = (float) root["mv"].Number(0);
-
-			if (ImGui.InputFloat("Move", ref mv)) {
-				root["mv"] = mv;
-			}
-			
-			var mt = (float) root["mt"].Number(0.1f);
-
-			if (ImGui.InputFloat("Move Time", ref mt)) {
-				root["mt"] = mt;
-			}
-			
-			var rt = (float) root["rt"].Number(0.2f);
-
-			if (ImGui.InputFloat("Return Time", ref rt)) {
-				root["rt"] = rt;
-			}
-		}
 	}
 }

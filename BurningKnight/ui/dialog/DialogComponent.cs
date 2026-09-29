@@ -3,7 +3,6 @@ using BurningKnight.assets;
 using BurningKnight.entity.component;
 using BurningKnight.entity.creature.player;
 using BurningKnight.state;
-using ImGuiNET;
 using Lens;
 using Lens.assets;
 using Lens.entity;
@@ -18,7 +17,7 @@ using Microsoft.Xna.Framework.Input;
 namespace BurningKnight.ui.dialog {
 	public delegate void DialogCallback(DialogComponent d);
 	
-	public class DialogComponent : Component {
+	public partial class DialogComponent : Component {
 		public static DialogComponent Talking;
 		
 		public UiDialog Dialog;
@@ -193,26 +192,6 @@ namespace BurningKnight.ui.dialog {
 
 		private static string toSay = "";
 
-		public override void RenderDebug() {
-			base.RenderDebug();
-
-			if (ImGui.InputText("Say", ref toSay, 256, ImGuiInputTextFlags.EnterReturnsTrue)) {
-				Start(toSay);
-				toSay = "";
-			}
-
-			ImGui.InputInt("Voice", ref Dialog.Voice);
-
-			if (ImGui.Button("Test")) {
-				Start("Quick brown fox jumped over lazy dog");
-			}
-
-			ImGui.SameLine();
-
-			if (ImGui.Button("Close")) {
-				Close();
-			}
-		}
 
 		private void Setup(Dialog dialog, Entity to = null) {
 			Last = Current;

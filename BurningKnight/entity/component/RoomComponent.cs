@@ -1,13 +1,12 @@
-﻿using BurningKnight.entity.creature.mob;
+using BurningKnight.entity.creature.mob;
 using BurningKnight.entity.creature.mob.boss;
 using BurningKnight.entity.events;
 using BurningKnight.entity.room;
 using BurningKnight.level.rooms;
-using ImGuiNET;
 using Lens.entity.component;
 
 namespace BurningKnight.entity.component {
-	public class RoomComponent : Component {
+	public partial class RoomComponent : Component {
 		public Room Room;
 
 		public override void Init() {
@@ -64,9 +63,6 @@ namespace BurningKnight.entity.component {
 			Room?.Tagged.Remove(Entity);
 		}
 
-		public override void RenderDebug() {
-			ImGui.Text(Room == null ? "null" : $"{Room.Type}#{Room.Y}");
-		}
 
 		public override void OnTagRemoved(int i) {
 			base.OnTagRemoved(i);

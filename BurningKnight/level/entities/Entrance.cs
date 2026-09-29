@@ -4,7 +4,6 @@ using BurningKnight.entity.fx;
 using BurningKnight.save;
 using BurningKnight.state;
 using BurningKnight.ui.editor;
-using ImGuiNET;
 using Lens;
 using Lens.assets;
 using Lens.entity;
@@ -12,7 +11,7 @@ using Lens.util.file;
 using Lens.physics;
 
 namespace BurningKnight.level.entities {
-	public class Entrance : SaveableEntity, PlaceableEntity {
+	public partial class Entrance : SaveableEntity, PlaceableEntity {
 		public int To;
 		
 		private bool Interact(Entity entity) {
@@ -63,8 +62,5 @@ namespace BurningKnight.level.entities {
 			stream.WriteInt16((short) To);
 		}
 
-		public override void RenderImDebug() {
-			ImGui.InputInt("To", ref To);
-		}
 	}
 }

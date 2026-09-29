@@ -8,7 +8,6 @@ using BurningKnight.entity.events;
 using BurningKnight.state;
 using BurningKnight.ui.dialog;
 using BurningKnight.util;
-using ImGuiNET;
 using Lens.assets;
 using Lens.entity;
 using Lens.graphics;
@@ -17,7 +16,7 @@ using Lens.util.math;
 using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.item.stand {
-	public class ShopStand : ItemStand {
+	public partial class ShopStand : ItemStand {
 		public bool Sells = true;
 		public bool Free;
 
@@ -229,13 +228,6 @@ namespace BurningKnight.entity.item.stand {
 			PriceX = (Width - Font.Small.MeasureString(PriceString).Width) / 2f;
 		}
 
-		public override void RenderImDebug() {
-			base.RenderImDebug();
-
-			if (ImGui.InputInt("Price", ref Price)) {
-				CalculatePriceSize();
-			}
-		}
 
 		public override void Load(FileReader stream) {
 			base.Load(stream);

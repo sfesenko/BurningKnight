@@ -3,14 +3,13 @@ using BurningKnight.level.biome;
 using BurningKnight.save;
 using BurningKnight.state;
 using BurningKnight.util;
-using ImGuiNET;
 using Lens;
 using Lens.assets;
 using Lens.graphics;
 using Lens.util.file;
 
 namespace BurningKnight.level.entities.exit {
-	public class ShortcutExit : Exit {
+	public partial class ShortcutExit : Exit {
 		private byte id;
     private bool broken;
 
@@ -48,14 +47,6 @@ namespace BurningKnight.level.entities.exit {
       stream.WriteByte(id);
     }
 
-    public override void RenderImDebug() {
-      base.RenderImDebug();
-      var v = (int) id;
-
-      if (ImGui.InputInt("To depth", ref v)) {
-    	  id = (byte) v;
-      }
-    }
 
     public override void Render() {
       base.Render();

@@ -1,13 +1,12 @@
 using BurningKnight.assets;
 using BurningKnight.state;
-using ImGuiNET;
 using Lens;
 using Lens.assets;
 using Lens.graphics;
 using Lens.util.file;
 
 namespace BurningKnight.level.entities.exit {
-	public class ChallengeExit : Exit {
+	public partial class ChallengeExit : Exit {
 		private byte id;
 		
 		protected override void Descend() {
@@ -29,14 +28,6 @@ namespace BurningKnight.level.entities.exit {
 	    stream.WriteByte(id);
     }
 
-    public override void RenderImDebug() {
-	    base.RenderImDebug();
-	    var v = (int) id;
-
-	    if (ImGui.InputInt("Id", ref v)) {
-		    id = (byte) v;
-	    }
-    }
 
     public override void Render() {
 	    base.Render();

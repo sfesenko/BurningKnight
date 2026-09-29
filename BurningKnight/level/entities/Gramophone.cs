@@ -11,7 +11,6 @@ using BurningKnight.entity;
 using BurningKnight.entity.creature.player;
 using BurningKnight.save;
 using BurningKnight.state;
-using ImGuiNET;
 using Lens.graphics;
 using Lens.util;
 using Lens.util.file;
@@ -20,7 +19,7 @@ using Lens.physics;
 using Microsoft.Xna.Framework;
 
 namespace BurningKnight.level.entities {
-	public class Gramophone : Prop {
+	public partial class Gramophone : Prop {
 		private TextureRegion top;
 		private TextureRegion bottom;
 		private TextureRegion tdisk;
@@ -264,9 +263,5 @@ namespace BurningKnight.level.entities {
 			public int Disk;
 		}
 
-		public override void RenderImDebug() {
-			base.RenderImDebug();
-			ImGui.InputInt("Disk", ref disk);
-		}
 	}
 }

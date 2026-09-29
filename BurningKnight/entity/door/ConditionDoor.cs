@@ -1,12 +1,11 @@
 using BurningKnight.assets.achievements;
 using BurningKnight.entity.creature.npc;
 using BurningKnight.save;
-using ImGuiNET;
 using Lens.entity;
 using Lens.util.file;
 
 namespace BurningKnight.entity.door {
-	public class ConditionDoor : LockableDoor {
+	public partial class ConditionDoor : LockableDoor {
 		private static string[] conditions =
 		[
 			"Played Once",
@@ -79,12 +78,6 @@ namespace BurningKnight.entity.door {
 			return /*Engine.EditingLevel ? null : */new ConditionLock();
 		}
 
-		public override void RenderImDebug() {
-			base.RenderImDebug();
-
-			ImGui.Checkbox("Lock in demo", ref lockInDemo);
-			ImGui.Combo("Condition", ref condition, conditions, conditions.Length);
-		}
 
 		public override void Load(FileReader stream) {
 			base.Load(stream);

@@ -3,7 +3,6 @@ using BurningKnight.assets;
 using BurningKnight.entity.component;
 using BurningKnight.state;
 using BurningKnight.util;
-using ImGuiNET;
 using Lens;
 using Lens.graphics;
 using Lens.input;
@@ -14,7 +13,7 @@ using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 
 namespace BurningKnight.entity.item.renderer {
-	public class AngledRenderer : ItemRenderer {
+	public partial class AngledRenderer : ItemRenderer {
 		public float Angle;
 		public bool InvertBack;
 		public float AddedAngle;
@@ -127,20 +126,5 @@ namespace BurningKnight.entity.item.renderer {
 			AddedAngle = settings["aa"].Number(0).ToRadians();
 		}
 
-		public static void RenderDebug(string id, JsonValue parent, JsonValue root) {
-			ItemRenderer.RenderDebug(id, parent, root);
-
-			var invert = root["invert_back"].AsBoolean;
-
-			if (ImGui.Checkbox("Invert back?", ref invert)) {
-				root["invert_back"] = invert;
-			}
-			
-			var min = (float) root["aa"].Number(0);
-
-			if (ImGui.InputFloat("Added Angle", ref min)) {
-				root["aa"] = min;
-			}
-		}
 	}
 }

@@ -7,7 +7,6 @@ using BurningKnight.level.rooms;
 using BurningKnight.physics;
 using BurningKnight.state;
 using BurningKnight.util;
-using ImGuiNET;
 using Lens.entity;
 using Lens.util;
 using Lens.util.file;
@@ -16,7 +15,7 @@ using Lens.physics;
 using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.room.controllable.turret {
-	public class Turret : RoomControllable, CollisionFilterEntity {
+	public partial class Turret : RoomControllable, CollisionFilterEntity {
 		private float beforeNextBullet;
 		protected bool Rotates;
 
@@ -219,17 +218,6 @@ namespace BurningKnight.entity.room.controllable.turret {
 			}
 		}
 
-		public override void RenderImDebug() {
-			base.RenderImDebug();
-			var u = (int) StartingAngle;
-
-			if (ImGui.InputInt("Starting angle", ref u)) {
-				Angle = StartingAngle = (uint) u % 8;
-			}
-
-			ImGui.InputFloat("Before next", ref beforeNextBullet);
-			ImGui.InputFloat("Speed", ref Speed);
-		}
 		
 		public bool ShouldCollide(Entity entity) {
 			return !(entity is Chasm);

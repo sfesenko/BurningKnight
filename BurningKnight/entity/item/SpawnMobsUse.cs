@@ -5,7 +5,6 @@ using BurningKnight.entity.creature.mob;
 using BurningKnight.entity.item.use;
 using BurningKnight.state;
 using BurningKnight.util;
-using ImGuiNET;
 using Lens.assets;
 using Lens.entity;
 using Lens.lightJson;
@@ -15,7 +14,7 @@ using Lens.util.timer;
 using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.item {
-	public class SpawnMobsUse : ItemUse {
+	public partial class SpawnMobsUse : ItemUse {
 		private int Count;
 
 		private static Func<int, int, bool> CheckDistance(Entity entity) {
@@ -68,12 +67,5 @@ namespace BurningKnight.entity.item {
 			Count = settings["count"].Int(1);
 		}
 
-		public static void RenderDebug(JsonValue root) {
-			var v = root["count"].Int(1);
-
-			if (ImGui.InputInt("Count", ref v)) {
-				root["count"] = v;
-			}
-		}
 	}
 }

@@ -19,7 +19,6 @@ using BurningKnight.level.variant;
 using BurningKnight.save;
 using BurningKnight.state;
 using BurningKnight.util;
-using ImGuiNET;
 using Lens;
 using Lens.assets;
 using Lens.entity;
@@ -36,7 +35,7 @@ using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
 
 namespace BurningKnight.level {
-	public abstract class Level : SaveableEntity {
+	public abstract partial class Level : SaveableEntity {
 		public const float LightMin = 0.01f;
 		public const float LightMax = 0.95f;
 		public static bool RenderPassable = false;
@@ -1867,15 +1866,5 @@ namespace BurningKnight.level {
 			}
 		}
 
-		public override void RenderImDebug() {
-			base.RenderImDebug();
-			ImGui.Text($"Size: {width}x{height} = {Size} (real {width * height})");
-			ImGui.Text($"Variant: {Variant.GetType().Name}");
-			ImGui.Text($"Tiles: {Tiles.Length}");
-			ImGui.Text($"Liquid: {Liquid.Length}");
-			ImGui.Text($"Variants: {Variants.Length}");
-			ImGui.Text($"LiquidVariants: {LiquidVariants.Length}");
-			ImGui.Text($"WallDecor: {WallDecor.Length}");
-		}
 	}
 }

@@ -21,7 +21,6 @@ using BurningKnight.state;
 using BurningKnight.ui;
 using BurningKnight.ui.dialog;
 using BurningKnight.util;
-using ImGuiNET;
 using Lens;
 using Lens.entity;
 using Lens.entity.component.logic;
@@ -36,7 +35,7 @@ using Color = Microsoft.Xna.Framework.Color;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
 
 namespace BurningKnight.entity.creature.bk {
-	public class BurningKnight : Boss {
+	public partial class BurningKnight : Boss {
 		private static Color tint = new Color(234, 50, 60, 200);
 		private Boss captured;
 		private bool raging;
@@ -768,19 +767,6 @@ namespace BurningKnight.entity.creature.bk {
 			}
 		}
 
-		public override void RenderImDebug() {
-			base.RenderImDebug();
-
-			if (ImGui.Checkbox("Raging", ref raging)) {
-				if (raging) {
-					Become<AttackState>();
-				} else {
-					Become<FollowState>();
-				}
-			}
-			
-			ImGui.InputInt("Times Raged", ref timesRaged);
-		}
 
 		public override void PlaceRewards() {
 			var head = new BkHead();

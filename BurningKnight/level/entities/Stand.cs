@@ -4,7 +4,6 @@ using BurningKnight.entity.creature.npc;
 using BurningKnight.save;
 using BurningKnight.state;
 using BurningKnight.ui.dialog;
-using ImGuiNET;
 using Lens;
 using Lens.entity;
 using Lens.util;
@@ -14,7 +13,7 @@ using Lens.physics;
 using Microsoft.Xna.Framework;
 
 namespace BurningKnight.level.entities {
-	public class Stand : SolidProp {
+	public partial class Stand : SolidProp {
 		private static int[] heights = {22, 17, 14};
 		
 		private int id;
@@ -85,13 +84,5 @@ namespace BurningKnight.level.entities {
 			stream.WriteInt32(id);
 		}
 
-		public override void RenderImDebug() {
-			base.RenderImDebug();
-
-			if (ImGui.InputInt("Id", ref id)) {
-				RemoveComponent<InteractableSliceComponent>();
-				InsertGraphics();
-			}
-		}
 	}
 }

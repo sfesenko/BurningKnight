@@ -4,7 +4,6 @@ using BurningKnight.entity.fx;
 using BurningKnight.save;
 using BurningKnight.state;
 using BurningKnight.ui.editor;
-using ImGuiNET;
 using Lens;
 using Lens.assets;
 using Lens.entity;
@@ -13,7 +12,7 @@ using Lens.util.file;
 using Lens.physics;
 
 namespace BurningKnight.level.entities {
-	public class HiddenExit : SaveableEntity, PlaceableEntity {
+	public partial class HiddenExit : SaveableEntity, PlaceableEntity {
 		internal string id;
 		
 		private bool Interact(Entity entity) {
@@ -81,14 +80,5 @@ namespace BurningKnight.level.entities {
 			stream.WriteString(id);
 		}
 
-		public override void RenderImDebug() {
-			base.RenderImDebug();
-
-			if (id == null) {
-				id = "";
-			}
-
-			ImGui.InputText("Id", ref id, 64);
-		}
 	}
 }

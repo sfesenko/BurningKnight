@@ -5,7 +5,6 @@ using BurningKnight.entity.component;
 using BurningKnight.entity.creature.npc;
 using BurningKnight.save;
 using BurningKnight.ui.dialog;
-using ImGuiNET;
 using Lens;
 using Lens.assets;
 using Lens.entity;
@@ -17,7 +16,7 @@ using Lens.physics;
 using Microsoft.Xna.Framework;
 
 namespace BurningKnight.level.entities {
-	public class AchievementStatue : Prop {
+	public partial class AchievementStatue : Prop {
 		private string id = "bk:rip";
 		private Achievement achievement;
 		private TextureRegion achievementTexture;
@@ -147,13 +146,5 @@ namespace BurningKnight.level.entities {
 			}
 		}
 
-		public override void RenderImDebug() {
-			base.RenderImDebug();
-
-			if (ImGui.InputText("Id", ref id, 128)) {
-				SetupSprite();
-				UpdateState();
-			}
-		}
 	}
 }

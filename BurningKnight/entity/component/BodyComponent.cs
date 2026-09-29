@@ -1,8 +1,7 @@
-﻿using System;
+using System;
 using BurningKnight.entity.events;
 using BurningKnight.physics;
 using BurningKnight.util;
-using ImGuiNET;
 using Lens.entity;
 using Lens.entity.component;
 using Lens.physics;
@@ -12,7 +11,7 @@ using Lens.util.math;
 using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.component {
-	public class BodyComponent : SaveableComponent {
+	public partial class BodyComponent : SaveableComponent {
 		public IPhysicsBody Body;
 		public Vector2 Acceleration;
 		public Vector2 Knockback;
@@ -161,24 +160,6 @@ namespace BurningKnight.entity.component {
 			Body?.SetTransform(Entity.Position, 0);
 		}
 
-		public override void RenderDebug() {
-			ImGui.DragFloat("Knockback modifier", ref KnockbackModifier);
-			
-			if (Body == null) {
-				ImGui.BulletText("Body is null");
-			} else {
-				var vel = Body.LinearVelocity;
-				var v = new System.Numerics.Vector2(vel.X, vel.Y);
-
-				if (ImGui.DragFloat2("Velocity", ref v)) {
-					Body.LinearVelocity = vel;
-				}
-			
-				if (ImGui.Button("Sync body")) {
-					PositionChangedListener();
-				}
-			}
-		}
 
 		public virtual void Resize(float x, float y, float w, float h, bool center = false) {
 			

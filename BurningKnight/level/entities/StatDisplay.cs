@@ -3,7 +3,6 @@ using BurningKnight.entity.component;
 using BurningKnight.entity.creature.npc;
 using BurningKnight.save;
 using BurningKnight.state;
-using ImGuiNET;
 using Lens;
 using Lens.entity;
 using Lens.util.file;
@@ -11,7 +10,7 @@ using Lens.physics;
 using Microsoft.Xna.Framework;
 
 namespace BurningKnight.level.entities {
-	public class StatDisplay : SolidProp {
+	public partial class StatDisplay : SolidProp {
 		private string board;
 		private int challengeId;
 
@@ -91,18 +90,5 @@ namespace BurningKnight.level.entities {
 			}
 		}
 
-		public override void RenderImDebug() {
-			base.RenderImDebug();
-
-			if (board == null) {
-				board = "";
-			}
-
-			ImGui.InputText("Board", ref board, 128);
-			
-			if (board == "challenge") {
-				ImGui.InputInt("Challenge Id", ref challengeId);
-			}
-		}
 	}
 }

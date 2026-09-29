@@ -4,12 +4,11 @@ using BurningKnight.debug;
 using BurningKnight.entity.item;
 using BurningKnight.ui.imgui;
 using BurningKnight.util;
-using ImGuiNET;
 using Lens.lightJson;
 using Lens.util.math;
 
 namespace BurningKnight.entity.creature.drop {
-	public class PoolDrop : Drop {
+	public partial class PoolDrop : Drop {
 		public ItemPool Pool;
 		public int Min;
 		public int Max;
@@ -55,22 +54,5 @@ namespace BurningKnight.entity.creature.drop {
 			root["pool"] = Pool.Id;
 		}
 
-		public static void RenderDebug(JsonValue root) {
-			root.InputFloat("Chance", "chance");
-
-			root.InputInt("Min Count", "min");
-			root.InputInt("Max Count", "max");
-			
-			var pool = root["pool"].Int(0);
-
-			if (ImGui.Combo("Pool##p", ref pool, ItemPool.Names, ItemPool.Count)) {
-				root["pool"] = pool;
-			}
-
-			if (ImGui.Button("View pool")) {
-				WindowManager.PoolEditor = true;
-				PoolEditor.Pool = pool;
-			}
-		}
 	}
 }

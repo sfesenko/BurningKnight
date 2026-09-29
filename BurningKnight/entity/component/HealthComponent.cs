@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using BurningKnight.assets;
 using BurningKnight.assets.items;
 using BurningKnight.assets.particle;
@@ -11,7 +11,6 @@ using BurningKnight.entity.events;
 using BurningKnight.entity.item;
 using BurningKnight.state;
 using BurningKnight.util;
-using ImGuiNET;
 using Lens;
 using Lens.assets;
 using Lens.entity;
@@ -23,7 +22,7 @@ using Lens.util.timer;
 using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.component {
-	public class HealthComponent : SaveableComponent {
+	public partial class HealthComponent : SaveableComponent {
 		private float health;
 		public byte Phases;
 
@@ -316,38 +315,5 @@ namespace BurningKnight.entity.component {
 			}
 		}
 
-		public override void RenderDebug() {
-			var hp = health;
-			
-			if (ImGui.InputFloat("Health", ref hp)) {
-				health = hp;
-			}
-			
-			ImGui.InputInt("Max health", ref maxHealth);
-
-			var v = (int) Phases;
-
-			if (ImGui.InputInt("Phases", ref v)) {
-				Phases = (byte) v;
-			}
-			
-			ImGui.Checkbox("Unhittable", ref Unhittable);
-
-			if (ImGui.Button("Heal")) {
-				ModifyHealth(maxHealth - health, null);
-			}
-			
-			ImGui.SameLine();
-			
-			if (ImGui.Button("Hurt")) {
-				ModifyHealth(-1, null);
-			}
-			
-			ImGui.SameLine();
-			
-			if (ImGui.Button("Kill")) {
-				ModifyHealth(-health, null);
-			}
-		}
 	}
 }

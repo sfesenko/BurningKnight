@@ -4,14 +4,13 @@ using BurningKnight.entity.component;
 using BurningKnight.entity.creature;
 using BurningKnight.physics;
 using BurningKnight.util;
-using ImGuiNET;
 using Lens.entity;
 using Lens.util.file;
 using Lens.util.tween;
 using Microsoft.Xna.Framework;
 
 namespace BurningKnight.level.entities.chest {
-	public class Chest : Prop, CollisionFilterEntity {
+	public partial class Chest : Prop, CollisionFilterEntity {
 		protected bool open;
 		protected internal float Scale = 1;
 		private bool transitioning;
@@ -213,12 +212,6 @@ namespace BurningKnight.level.entities.chest {
 			Empty = stream.ReadBoolean();
 		}
 
-		public override void RenderImDebug() {
-			base.RenderImDebug();
-
-			ImGui.Checkbox("Empty", ref Empty);
-			ImGui.Checkbox("Can open", ref CanOpen);
-		}
 
 		public class OpenedEvent : Event {
 			public Chest Chest;

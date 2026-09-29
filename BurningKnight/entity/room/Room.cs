@@ -26,7 +26,6 @@ using BurningKnight.state;
 using BurningKnight.ui.editor;
 using BurningKnight.util;
 using BurningKnight.util.geometry;
-using ImGuiNET;
 using Lens;
 using Lens.entity;
 using Lens.graphics;
@@ -40,7 +39,7 @@ using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 
 namespace BurningKnight.entity.room {
-	public class Room : SaveableEntity, PlaceableEntity {
+	public partial class Room : SaveableEntity, PlaceableEntity {
 		public int MapX;
 		public int MapY;
 		public int MapW = 4;
@@ -369,43 +368,6 @@ namespace BurningKnight.entity.room {
 			Graphics.Batch.DrawRectangle(new RectangleF(X, Y, Width, Height), Color.Red);
 		}
 
-		public override void RenderImDebug() {
-			var v = (int) Type;
-
-			if (ImGui.Combo("Type", ref v, RoomRegistry.Names, RoomRegistry.Names.Length)) {
-				Type = (RoomType) v;
-			}
-
-			if (Id == null) {
-				Id = "";
-			}
-			
-			ImGui.InputText("Id", ref Id, 128);
-			ImGui.Separator();
-
-			ImGui.InputInt("Map X", ref MapX);
-			ImGui.InputInt("Map Y", ref MapY);
-			ImGui.InputInt("Map W", ref MapW);
-			ImGui.InputInt("Map H", ref MapH);
-
-			if (Id == null) {
-				Id = "";
-			}
-			
-			ImGui.Text($"Doors: {Doors.Count}");
-
-			X = MapX * 16 + 4;
-			Y = MapY * 16 - 4;
-			Width = MapW * 16 - 8;
-			Height = MapH * 16 - 8;
-
-			/*if (ImGui.Button("Sync")) {
-				MapX = (int) Math.Floor(X / 16);
-				MapY = (int) Math.Floor(Y / 16);
-				MapW = (int) Math.Floor(Width / 16);
-				MapH = (int) Math.Floor(Height / 16);
-			}*/
-		}
 
 		public List<Point> GetFreeTiles(Func<int, int, bool> filter = null) {
 			var list = new List<Point>();

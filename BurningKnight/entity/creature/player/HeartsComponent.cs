@@ -1,15 +1,14 @@
-﻿using System;
+using System;
 using BurningKnight.assets.achievements;
 using BurningKnight.entity.component;
 using BurningKnight.entity.events;
-using ImGuiNET;
 using Lens.entity;
 using Lens.entity.component;
 using Lens.util;
 using Lens.util.file;
 
 namespace BurningKnight.entity.creature.player {
-	public class HeartsComponent : SaveableComponent {
+	public partial class HeartsComponent : SaveableComponent {
 		public const int Cap = 32;
 		public const int PerRow = Cap / 2;
 		
@@ -174,21 +173,5 @@ namespace BurningKnight.entity.creature.player {
 			bombsMax = stream.ReadByte();
 		}
 
-		public override void RenderDebug() {
-			base.RenderDebug();
-			
-			ImGui.Text($"Iron halfs: {shieldHalfs}");
-			var v = (int) bombsMax;
-
-			if (ImGui.InputInt("Bombs Max", ref v)) {
-				bombsMax = (byte) v;
-			}
-			
-			v = (int) bombs;
-
-			if (ImGui.InputInt("Bombs", ref v)) {
-				bombs = (byte) v;
-			}
-		}
 	}
 }

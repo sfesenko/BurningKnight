@@ -1,8 +1,7 @@
-﻿using ImGuiNET;
 using Microsoft.Xna.Framework;
 
 namespace Lens.entity.component.graphics {
-	public class GraphicsComponent : Component {
+	public partial class GraphicsComponent : Component {
 		public bool Flipped;
 		public bool FlippedVerticaly;
 		public bool CustomFlip;
@@ -13,9 +12,5 @@ namespace Lens.entity.component.graphics {
 			
 		}
 
-		public override void RenderDebug() {
-			base.RenderDebug();
-			ImGui.Checkbox("Visible", ref Enabled);
-		}
 	}
 }

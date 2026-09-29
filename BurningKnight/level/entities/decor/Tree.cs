@@ -6,13 +6,12 @@ using BurningKnight.entity.creature.mob.jungle;
 using BurningKnight.entity.events;
 using BurningKnight.entity.room.controllable.spikes;
 using BurningKnight.level.entities.plant;
-using ImGuiNET;
 using Lens.entity;
 using Lens.util.file;
 using Lens.util.math;
 
 namespace BurningKnight.level.entities.decor {
-	public class Tree : Prop {
+	public partial class Tree : Prop {
 		private byte type;
 		private List<Entity> colliding = new List<Entity>();
 		public bool High;
@@ -104,14 +103,5 @@ namespace BurningKnight.level.entities.decor {
 			return base.HandleEvent(e);
 		}
 
-		public override void RenderImDebug() {
-			base.RenderImDebug();
-			var v = (int) type;
-
-			if (ImGui.InputInt("Id", ref v)) {
-				type = (byte) v;
-				UpdateSprite();
-			}
-		}
 	}
 }

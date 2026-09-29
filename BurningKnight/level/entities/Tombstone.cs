@@ -12,7 +12,6 @@ using BurningKnight.state;
 using BurningKnight.ui.dialog;
 using BurningKnight.ui.inventory;
 using BurningKnight.util;
-using ImGuiNET;
 using Lens;
 using Lens.assets;
 using Lens.entity;
@@ -23,7 +22,7 @@ using Lens.physics;
 using Microsoft.Xna.Framework;
 
 namespace BurningKnight.level.entities {
-	public class Tombstone : Prop {
+	public partial class Tombstone : Prop {
 		public string Item;
 		public bool DisableDialog;
 		public byte Index;
@@ -238,20 +237,6 @@ namespace BurningKnight.level.entities {
 			}
 		}
 
-		public override void RenderImDebug() {
-			base.RenderImDebug();
-
-			var has = Item != null;
-
-			if (ImGui.Checkbox("Has item", ref has)) {
-				Item = has ? "" : null;
-				UpdateSprite();
-			}
-
-			if (has) {
-				ImGui.InputText("Item##itm", ref Item, 128);
-			}
-		}
 
 		private void UpdateSprite() {
 			GetComponent<InteractableSliceComponent>().Set("props", Item == null ? "broken_tombstone" : "tombstone");
