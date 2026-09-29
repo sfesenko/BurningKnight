@@ -41,9 +41,9 @@ let isPayload (rel: string) =
     | "items.json" | "achievements.json" -> true
     | _ when not (rel.Contains '/') && ext = ".png" -> true
     | _ when under "Textures" -> ext = ".png"
-    // font.ttf is the ImGui overlay's font, read at startup in every configuration; the other
-    // .ttf files are sources for the game's own fonts and stay out.
-    | _ when under "Fonts" -> ext = ".fnt" || ext = ".png" || rel = "Fonts/font.ttf"
+    // Every .ttf is a font source for the game's own fonts, which the runtime reads as .fnt
+    // plus .png; the overlay's font is a development tool and never loads in a release.
+    | _ when under "Fonts" -> ext = ".fnt" || ext = ".png"
     | _ when under "Locales" || under "Dialogs" -> ext = ".json"
     | _ when under "Prefabs" -> ext = ".lvl"
     | _ when under "Sfx" -> ext = ".wav"

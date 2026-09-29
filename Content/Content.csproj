@@ -26,7 +26,7 @@
         <PackInput Include="bin/Pack/ffmpeg.present" />
         <PackInput Include="Animations/*.ase" />
         <PackInput Include="items.json;achievements.json;*.png" />
-        <PackInput Include="Textures/**/*;Fonts/*.fnt;Fonts/*.png;Fonts/font.ttf;Locales/**/*;Dialogs/**/*;Prefabs/**/*" />
+        <PackInput Include="Textures/**/*;Fonts/*.fnt;Fonts/*.png;Locales/**/*;Dialogs/**/*;Prefabs/**/*" />
         <PackInput Include="Sfx/**/*.wav" />
         <PackInput Include="bin/Animations/**/*;bin/Shaders/*.xnb" />
     </ItemGroup>
