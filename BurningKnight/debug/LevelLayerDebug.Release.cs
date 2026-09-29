@@ -1,18 +1,17 @@
 namespace BurningKnight.debug {
-	// The layer flags the runtime reads, as plain flags. A release build compiles out the dev
-	// window but keeps the checks, so the flags simply stay false (ADR-0003).
+	// The layer flags the runtime reads. A release build compiles out the dev window but keeps the
+	// checks, so the flags hold the same defaults the window starts with (ADR-0003).
 	public static class LevelLayerDebug {
-		public static bool Blood;
-		public static bool Chasms;
-		public static bool Floor;
-		public static bool Lights;
-		public static bool Liquids;
-		public static bool Mess;
-		public static bool Render;
-		public static bool Rocks;
-		public static bool Shadows;
-		public static bool Sides;
-		public static bool TileLight;
-		public static bool Walls;
+		public static bool Chasms = true;
+		public static bool Floor = true;
+		public static bool Liquids = true;
+		public static bool Mess = true;
+		public static bool Sides = true;
+		public static bool Walls = true;
+		public static bool Blood = true;
+		public static bool Lights = true;
+		public static bool TileLight = true;
+		public static bool Shadows = true;
+		public static bool Rocks = true;
 	}
 }
