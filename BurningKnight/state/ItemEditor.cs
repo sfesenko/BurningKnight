@@ -1,4 +1,4 @@
-using BurningKnight.ui.imgui;
+﻿using BurningKnight.ui.imgui;
 using ImGuiNET;
 using System;
 using System.Collections.Immutable;
@@ -35,43 +35,9 @@ namespace BurningKnight.state {
 		public static ItemData Selected;
 		private static JsonValue toAdd;
 		
-		// Keep in sync with ItemType enum!!!
-		// (in the same order)
-		public static readonly string[] Types =
-		[
-			"artifact",
-			"active",
-			"coin",
-			"bomb",
-			"key",
-			"heart",
-			"consumable_artifact",
-			"weapon",
-			"battery",
-			"hat",
-			"pouch",
-			"scourge",
-			"mana",
-			"lamp"
-		];
-
-		// Keep in sync with the WeaponType enum!!!
-		private static string[] WeaponTypes =
-		[
-			"melee",
-			"ranged",
-			"magic",
-			"none"
-		];
-		
-		// Keep in sync with the ItemQuality enum!!!
-		private static string[] Quality =
-		[
-			"wooden",
-			"iron",
-			"golden",
-			"trash"
-		];
+		public static readonly string[] Types = Enum.GetNames<ItemType>();
+		private static readonly string[] WeaponTypes = Enum.GetNames<WeaponType>();
+		private static readonly string[] Quality = Enum.GetNames<ItemQuality>();
 
 		private static int toRemove = -1;
 

@@ -1,3 +1,4 @@
+﻿using System;
 using Lens.assets;
 using Lens.input;
 using Lens.util.math;
@@ -9,11 +10,7 @@ namespace BurningKnight.ui.dialog {
 	{
 		private static Audio Audio => Audio.Instance;
 		
-		// Keep in sync with AnswerType!
-		public static string[] Types =
-		[
-			"Text", "Seed"
-		];
+		public static string[] Types = Enum.GetNames<AnswerType>();
 		
 		public string Answer = "";
 		public bool Focused = true;

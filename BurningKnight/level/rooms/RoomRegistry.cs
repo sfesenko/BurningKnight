@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using BurningKnight.entity.creature.npc;
 using BurningKnight.level.biome;
@@ -30,49 +30,8 @@ namespace BurningKnight.level.rooms {
 		public static List<RoomInfo> All = new List<RoomInfo>();
 		public static Dictionary<RoomType, List<RoomInfo>> ByType = new Dictionary<RoomType, List<RoomInfo>>();
 
-		public static readonly RoomType[] TypesByIndex = {
-			RoomType.Regular,
-			RoomType.Secret,
-			RoomType.Connection,
-			RoomType.Boss,
-			RoomType.Exit,
-			RoomType.Special,
-			RoomType.Shop,
-			RoomType.Spiked,
-			RoomType.Challenge,
-			RoomType.Scourged,
-			RoomType.Payed,
-			RoomType.DarkMarket,
-			RoomType.Treasure,
-			RoomType.Entrance,
-			RoomType.Trap,
-			RoomType.Granny,
-			RoomType.OldMan,
-			RoomType.SubShop,
-			RoomType.Hidden
-		};
-		
-		public static readonly string[] Names = {
-			"Regular",
-			"Secret",
-			"Connection",
-			"Boss",
-			"Exit",
-			"Special",
-			"Shop",
-			"Spiked",
-			"Challenge",
-			"Scourged",
-			"Payed",
-			"DarkMarket",
-			"Treasure",
-			"Entrance",
-			"Trap",
-			"Granny",
-			"OldMan",
-			"SubShop",
-			"Hidden"
-		};
+		public static readonly RoomType[] TypesByIndex = Enum.GetValues<RoomType>();
+		public static readonly string[] Names = Enum.GetNames<RoomType>();
 		
 		public static RoomType FromIndex(int i) {
 			return TypesByIndex[i];

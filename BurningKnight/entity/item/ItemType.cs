@@ -1,6 +1,4 @@
-namespace BurningKnight.entity.item {
-	// Keep in sync with item editor defenition!!!
-	// (in the same order)
+﻿namespace BurningKnight.entity.item {
 	public enum ItemType {
 		Artifact,
 		Active,

@@ -1,5 +1,4 @@
-namespace BurningKnight.entity.item {
-	// Keep in sync with ItemEditor::Quality!!
+﻿namespace BurningKnight.entity.item {
 	public enum ItemQuality {
 		Wooden,
 		Iron,

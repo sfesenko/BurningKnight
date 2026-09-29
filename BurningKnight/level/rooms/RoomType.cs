@@ -1,5 +1,4 @@
-namespace BurningKnight.level.rooms {
-	// Keep in sync with RoomRegistry::byIndex and RoomRegistry::names!!
+﻿namespace BurningKnight.level.rooms {
 	public enum RoomType {
 		Regular,
 		Secret,
