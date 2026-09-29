@@ -30,3 +30,9 @@ jobs:
 
       - name: Build Release
         run: dotnet build Desktop/Desktop.csproj -c Release
+
+      # ADR-0003: a release build compiles the overlay out, so nothing may ship it.
+      - name: Release ships no ImGui
+        run: |
+          test ! -e Desktop/bin/Release/net10.0/ImGui.NET.dll
+          ! find Desktop/bin/Release/net10.0/runtimes -iname '*cimgui*' | grep -q .
