@@ -5,7 +5,7 @@ using Lens.entity;
 using Lens.lightJson;
 
 namespace BurningKnight.entity.item.use {
-	public class ModifyGenUse : ItemUse {
+	public partial class ModifyGenUse : ItemUse {
 		private bool xlLevel;
 		private float chestRewardChance;
 		private float mobDest;
@@ -43,15 +43,5 @@ namespace BurningKnight.entity.item.use {
 			melee = settings["ml"].Bool(false);
 		}
 
-		public static void RenderDebug(JsonValue root) {
-			root.Checkbox("XL Level", "xl", false);
-			root.Checkbox("Generate Market", "gm", false);
-			root.Checkbox("Only Shops", "sp", false);
-			root.Checkbox("Only Treasure", "tr", false);
-			root.Checkbox("Only Generate Melee", "ml", false);
-			root.InputFloat("Chest Reward Chance Modifier", "crc", 0);
-			root.InputFloat("Mob Not Shoot Chance Modifier", "md", 0);
-			root.InputFloat("Mimic Chance Modifier", "mimic", 0);
-		}
 	}
 }

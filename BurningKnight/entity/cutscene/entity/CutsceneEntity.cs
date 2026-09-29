@@ -1,7 +1,6 @@
 using BurningKnight.entity.component;
 using BurningKnight.save;
 using BurningKnight.ui.dialog;
-using BurningKnight.ui.editor;
 using Lens.entity;
 using Lens.entity.component.logic;
 

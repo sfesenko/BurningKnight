@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using BurningKnight.assets;
 using BurningKnight.assets.input;
 using BurningKnight.assets.items;
@@ -16,7 +16,7 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight;
 
-public class BK : Engine {
+public partial class BK : Engine {
 	public const bool StandMode = false;
 	public const bool Demo = false;
 
@@ -27,18 +27,16 @@ public class BK : Engine {
 		Lens.Display.Setup(Display.Width, Display.Height, Display.UiScale);
 	}
 
+	// Implemented in BK.Debug.cs: a release build must not start the overlay, so it neither
+	// reads its font nor keeps the renderer alive (ADR-0003).
+	partial void InitDebugOverlay();
+
 	protected override void Initialize() {
 		base.Initialize();
 
 		SaveManager.Init();
 		Controls.Load();
-
-		// The overlay is a development tool: a release build must not start it, so it neither
-		// reads its font nor keeps the renderer alive.
-		if (Debug) {
-			ImGuiHelper.Init();
-		}
-
+		InitDebugOverlay();
 		Weather.Init();
 	}
 
@@ -46,9 +44,11 @@ public class BK : Engine {
 	{
 		base.LoadContent();
 
-		NewState = Debug
-			? new DevAssetLoadState()
-			: new AssetLoadState();
+#if DEBUG
+		NewState = new DevAssetLoadState();
+#else
+		NewState = new AssetLoadState();
+#endif
 
 		Font.Load();
 	}

@@ -1,8 +1,6 @@
 using System.Collections.Generic;
 using BurningKnight.assets.items;
-using BurningKnight.debug;
 using BurningKnight.entity.item;
-using BurningKnight.ui.imgui;
 using BurningKnight.util;
 using Lens.lightJson;
 using Lens.util.math;

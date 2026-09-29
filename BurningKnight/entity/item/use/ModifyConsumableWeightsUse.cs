@@ -5,7 +5,7 @@ using Lens.entity;
 using Lens.lightJson;
 
 namespace BurningKnight.entity.item.use {
-	public class ModifyConsumableWeightsUse : ItemUse {
+	public partial class ModifyConsumableWeightsUse : ItemUse {
 		private bool keys;
 		private bool bombs;
 		private bool coins;
@@ -34,11 +34,5 @@ namespace BurningKnight.entity.item.use {
 			coins = settings["coins"].Bool(true);
 		}
 		
-		public static void RenderDebug(JsonValue root) {
-			root.InputInt("Modifier", "amount");
-			root.Checkbox("Coins", "coins", true);
-			root.Checkbox("Keys", "keys", false);
-			root.Checkbox("Bombs", "bombs", false);
-		}
 	}
 }

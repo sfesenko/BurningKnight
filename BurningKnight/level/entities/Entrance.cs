@@ -1,9 +1,9 @@
+using BurningKnight.entity;
 using BurningKnight.entity.component;
 using BurningKnight.entity.creature.player;
 using BurningKnight.entity.fx;
 using BurningKnight.save;
 using BurningKnight.state;
-using BurningKnight.ui.editor;
 using Lens;
 using Lens.assets;
 using Lens.entity;

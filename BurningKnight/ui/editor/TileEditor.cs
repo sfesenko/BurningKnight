@@ -1,3 +1,4 @@
+using ImGuiNET;
 using System;
 using System.Collections.Generic;
 using BurningKnight.assets;
@@ -5,7 +6,6 @@ using BurningKnight.level.biome;
 using BurningKnight.level.tile;
 using BurningKnight.state;
 using BurningKnight.ui.editor.command;
-using ImGuiNET;
 using Lens;
 using Lens.assets;
 using Lens.graphics;

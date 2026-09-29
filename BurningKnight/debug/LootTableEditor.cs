@@ -1,8 +1,8 @@
+using BurningKnight.ui.imgui;
+using ImGuiNET;
 using System;
 using BurningKnight.assets.loot;
 using BurningKnight.entity.creature.drop;
-using BurningKnight.ui.imgui;
-using ImGuiNET;
 using Lens.input;
 using Lens.lightJson;
 using Microsoft.Xna.Framework.Input;

@@ -16,7 +16,6 @@ using BurningKnight.level.tile;
 using BurningKnight.physics;
 using BurningKnight.save;
 using BurningKnight.state;
-using BurningKnight.ui.editor;
 using BurningKnight.util;
 using Lens.entity;
 using Lens.entity.component.logic;

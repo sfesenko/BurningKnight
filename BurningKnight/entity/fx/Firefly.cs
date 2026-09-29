@@ -1,8 +1,7 @@
-﻿using System;
+using System;
 using BurningKnight.assets;
 using BurningKnight.assets.lighting;
 using BurningKnight.save;
-using BurningKnight.ui.editor;
 using Lens.graphics;
 using Lens.util;
 using Lens.util.file;

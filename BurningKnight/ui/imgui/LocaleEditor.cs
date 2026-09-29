@@ -1,6 +1,6 @@
+using ImGuiNET;
 using System.Collections.Generic;
 using System.Linq;
-using ImGuiNET;
 using Lens.assets;
 using Lens.input;
 using Lens.util.file;

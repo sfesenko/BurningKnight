@@ -1,5 +1,7 @@
-﻿using System;
+using System;
+#if DEBUG
 using ImGuiNET;
+#endif
 using Lens.assets;
 using Lens.util.camera;
 using Microsoft.Xna.Framework;
@@ -22,7 +24,10 @@ namespace Lens.input {
 			PreviousState = CurrentState;
 			CurrentState = Mouse.GetState();
 
+			// The overlay is a development tool; a release build has no ImGui to ask (ADR-0003).
+#if DEBUG
 			blockedByGui = Assets.ImGuiEnabled && Input.EnableImGuiFocus && ImGui.GetIO().WantCaptureMouse;
+#endif
 			HadClick = HadClick || WasPressedLeftButton;
 		}
 

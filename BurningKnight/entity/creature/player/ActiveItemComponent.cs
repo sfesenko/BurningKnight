@@ -1,8 +1,8 @@
+using BurningKnight.debug;
 using System;
 using BurningKnight.assets;
 using BurningKnight.assets.input;
 using BurningKnight.assets.items;
-using BurningKnight.debug;
 using BurningKnight.entity.component;
 using BurningKnight.entity.events;
 using BurningKnight.entity.item;

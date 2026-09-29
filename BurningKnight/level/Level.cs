@@ -1,12 +1,12 @@
 // #define ART_DEBUG
 
+using BurningKnight.debug;
 using System;
 using System.Collections.Generic;
 using BurningKnight.assets;
 using BurningKnight.assets.lighting;
 using BurningKnight.assets.particle;
 using BurningKnight.assets.particle.custom;
-using BurningKnight.debug;
 using BurningKnight.entity;
 using BurningKnight.entity.component;
 using BurningKnight.entity.creature.player;

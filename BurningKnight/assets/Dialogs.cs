@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using BurningKnight.ui.dialog;
-using BurningKnight.ui.imgui;
 using BurningKnight.assets.dialogs;
 using Lens.assets;
 using Lens.lightJson;

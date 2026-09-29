@@ -3,7 +3,6 @@ using BurningKnight.assets.particle.custom;
 using BurningKnight.entity.component;
 using BurningKnight.save;
 using BurningKnight.state;
-using BurningKnight.ui.editor;
 using Lens.util.math;
 using Lens.physics;
 using Microsoft.Xna.Framework;

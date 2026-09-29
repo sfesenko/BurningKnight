@@ -6,7 +6,7 @@ using Lens.entity;
 using Lens.lightJson;
 
 namespace BurningKnight.entity.item.use {
-	public class RegenUse : ItemUse {
+	public partial class RegenUse : ItemUse {
 		private int speed;
 		private int count;
 		private bool onKills;
@@ -50,13 +50,5 @@ namespace BurningKnight.entity.item.use {
 			onPurchase = settings["purchase"].Bool(false);
 		}
 
-		public static void RenderDebug(JsonValue root) {
-			if (root.Checkbox("On Kills", "kills", true)) {
-				root.InputInt("Speed", "speed", 10);
-			}
-
-			root.Checkbox("On Chests", "chests", false);
-			root.Checkbox("On Purchase", "purchase", false);
-		}
 	}
 }

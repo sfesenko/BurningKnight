@@ -1,3 +1,6 @@
+using BurningKnight.ui.imgui;
+using BurningKnight.ui.editor;
+using ImGuiNET;
 using System;
 using BurningKnight.assets;
 using BurningKnight.assets.lighting;
@@ -6,8 +9,6 @@ using BurningKnight.entity.component;
 using BurningKnight.level;
 using BurningKnight.level.tile;
 using BurningKnight.physics;
-using BurningKnight.ui.editor;
-using BurningKnight.ui.imgui;
 using BurningKnight.util;
 using Lens;
 using Lens.game;

@@ -1,3 +1,5 @@
+using BurningKnight.ui.imgui;
+using ImGuiNET;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,8 +9,6 @@ using BurningKnight.level.tile;
 using BurningKnight.save;
 using BurningKnight.state;
 using BurningKnight.ui.editor.command;
-using BurningKnight.ui.imgui;
-using ImGuiNET;
 using Lens;
 using Lens.entity;
 using Lens.input;

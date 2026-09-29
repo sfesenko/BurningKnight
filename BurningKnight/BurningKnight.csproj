@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <TargetFramework>net10.0</TargetFramework>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -15,5 +15,26 @@
         <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.*">
             <PrivateAssets>All</PrivateAssets>
         </PackageReference>
+    </ItemGroup>
+
+    <!-- ImGui is a development tool: a release build compiles out the editor halves and the dev
+         UI, so nothing left references it. Debug keeps all of it (ADR-0003). -->
+    <ItemGroup Condition="'$(Configuration)' == 'Release'">
+        <Compile Remove="**/*.Debug.cs" />
+        <Compile Remove="ui/imgui/**/*.cs" />
+        <Compile Remove="ui/editor/**/*.cs" />
+        <Compile Remove="debug/**/*.cs" />
+        <!-- the stubs that stand in for the dev windows a release build compiles out -->
+        <Compile Include="ui/imgui/**/*.Release.cs" />
+        <Compile Include="debug/**/*.Release.cs" />
+        <Compile Remove="assets/ImGuiHelper.cs" />
+        <Compile Remove="state/save/**/*.cs" />
+        <Compile Remove="save/SaveDebug.cs" />
+        <Compile Remove="state/EditorState.cs;state/RoomEditorState.cs;state/DialogEditorState.cs;state/PicoState.cs;state/AreaDebug.cs;state/ItemEditor.cs;state/DevAssetLoadState.cs" />
+    </ItemGroup>
+
+    <!-- The stubs that stand in for the dev windows a release build compiles out. -->
+    <ItemGroup Condition="'$(Configuration)' == 'Debug'">
+        <Compile Remove="**/*.Release.cs" />
     </ItemGroup>
 </Project>

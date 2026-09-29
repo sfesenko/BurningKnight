@@ -10,7 +10,7 @@ using Lens.util;
 using Lens.util.math;
 
 namespace BurningKnight.entity.item.use {
-	public class ChanceToUseWeaponUse : ItemUse {
+	public partial class ChanceToUseWeaponUse : ItemUse {
 		private bool back;
 		private bool up;
 		private bool down;
@@ -57,11 +57,5 @@ namespace BurningKnight.entity.item.use {
 			chance = settings["chance"].Number(10f);
 		}
 
-		public static void RenderDebug(JsonValue root) {
-			root.Checkbox("Back", "back", false);
-			root.Checkbox("Up", "up", false);
-			root.Checkbox("Down", "down", false);
-			root.InputFloat("Chance", "chance", 10);
-		}
 	}
 }

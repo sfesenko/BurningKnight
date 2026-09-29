@@ -1,3 +1,5 @@
+using BurningKnight.ui.imgui;
+using ImGuiNET;
 using System;
 using System.Collections.Immutable;
 using BurningKnight.assets;
@@ -9,9 +11,7 @@ using BurningKnight.entity.item.renderer;
 using BurningKnight.entity.item.stand;
 using BurningKnight.entity.item.use;
 using BurningKnight.save;
-using BurningKnight.ui.imgui;
 using BurningKnight.util;
-using ImGuiNET;
 using Lens;
 using Lens.assets;
 using Lens.graphics;

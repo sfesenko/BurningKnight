@@ -1,6 +1,5 @@
 using BurningKnight.entity.component;
 using BurningKnight.save;
-using BurningKnight.ui.editor;
 using Lens.entity;
 
 namespace BurningKnight.entity.room.input {

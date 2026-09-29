@@ -1,8 +1,9 @@
+using BurningKnight.debug;
+using ImGuiNET;
 using System;
 using System.Collections.Generic;
 using System.Numerics;
 using BurningKnight.assets.lighting;
-using BurningKnight.debug;
 using BurningKnight.entity.component;
 using BurningKnight.entity.creature.player;
 using BurningKnight.entity.room;
@@ -10,7 +11,6 @@ using BurningKnight.level.rooms.regular;
 using BurningKnight.save;
 using BurningKnight.save.statistics;
 using BurningKnight.state;
-using ImGuiNET;
 using Lens;
 using Lens.assets;
 using Lens.entity;

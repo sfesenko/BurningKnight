@@ -1,3 +1,5 @@
+using BurningKnight.ui.imgui;
+using ImGuiNET;
 using BurningKnight.assets.particle;
 using BurningKnight.assets.particle.custom;
 using BurningKnight.entity;
@@ -5,8 +7,6 @@ using BurningKnight.entity.fx;
 using BurningKnight.entity.room;
 using BurningKnight.level;
 using BurningKnight.level.rooms;
-using BurningKnight.ui.imgui;
-using ImGuiNET;
 using Lens.entity;
 using Vector2 = System.Numerics.Vector2;
 

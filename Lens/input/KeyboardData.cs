@@ -1,4 +1,6 @@
-﻿using ImGuiNET;
+#if DEBUG
+using ImGuiNET;
+#endif
 using Lens.assets;
 using Microsoft.Xna.Framework.Input;
 
@@ -17,7 +19,10 @@ namespace Lens.input {
 			PreviousState = State;
 			State = Keyboard.GetState();
 			
+			// The overlay is a development tool; a release build has no ImGui to ask (ADR-0003).
+#if DEBUG
 			guiBlocksKeyboard = Assets.ImGuiEnabled && Input.EnableImGuiFocus && ImGui.GetIO().WantCaptureKeyboard;
+#endif
 		}
 
 		public bool Check(Keys key, Input.CheckType type, bool ignoreGui = false) {

@@ -23,7 +23,6 @@ using BurningKnight.level.rooms.oldman;
 using BurningKnight.level.tile;
 using BurningKnight.save;
 using BurningKnight.state;
-using BurningKnight.ui.editor;
 using BurningKnight.util;
 using BurningKnight.util.geometry;
 using Lens;

@@ -4,7 +4,6 @@ using BurningKnight.assets.lighting;
 using BurningKnight.entity.component;
 using BurningKnight.entity.cutscene.controller;
 using BurningKnight.physics;
-using BurningKnight.ui.imgui;
 using BurningKnight.util;
 using Lens;
 using Lens.entity;

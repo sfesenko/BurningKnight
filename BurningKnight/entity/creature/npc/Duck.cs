@@ -46,7 +46,13 @@ namespace BurningKnight.entity.creature.npc {
 		}
 
 		public override void Save(FileWriter stream) {
-			if (Engine.Instance.State is EditorState) {
+			var inEditor = false;
+
+#if DEBUG
+			inEditor = Engine.Instance.State is EditorState;
+#endif
+
+			if (inEditor) {
 				x = X;
 			} else {
 				X = x;

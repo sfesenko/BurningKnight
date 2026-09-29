@@ -12,7 +12,6 @@ using BurningKnight.level.rooms.oldman;
 using BurningKnight.level.rooms.shop;
 using BurningKnight.save;
 using BurningKnight.state;
-using BurningKnight.ui.editor;
 using Lens.entity;
 using Lens.entity.component.logic;
 using Lens.graphics;

@@ -1,9 +1,8 @@
+using BurningKnight.debug;
 using System;
 using System.Collections.Generic;
-using BurningKnight.debug;
 using BurningKnight.entity.projectile;
 using BurningKnight.state;
-using BurningKnight.ui.imgui;
 using Lens;
 using Lens.assets;
 using Lens.entity;

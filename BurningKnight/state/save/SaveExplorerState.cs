@@ -1,6 +1,6 @@
+using ImGuiNET;
 using BurningKnight.assets;
 using BurningKnight.save;
-using ImGuiNET;
 using Lens.game;
 using Lens.graphics;
 using Lens.util.file;

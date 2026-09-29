@@ -9,7 +9,7 @@ using Lens.entity;
 using Lens.lightJson;
 
 namespace BurningKnight.entity.item.use {
-	public class MakeProjectilesKillWithBuffUse : ItemUse {
+	public partial class MakeProjectilesKillWithBuffUse : ItemUse {
 		private Type buff;
 		
 		public override bool HandleEvent(Event e) {
@@ -33,8 +33,5 @@ namespace BurningKnight.entity.item.use {
 			}
 		}
 
-		public static void RenderDebug(JsonValue root) {
-			root.InputText("Buff", "buff", "bk:frozen");
-		}
 	}
 }

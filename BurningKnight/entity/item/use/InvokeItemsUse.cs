@@ -6,7 +6,7 @@ using Lens.entity;
 using Lens.lightJson;
 
 namespace BurningKnight.entity.item.use {
-	public class InvokeItemsUse : ItemUse {
+	public partial class InvokeItemsUse : ItemUse {
 		private bool pets;
 		private bool orbitals;
 		private bool any;
@@ -43,10 +43,5 @@ namespace BurningKnight.entity.item.use {
 			any = settings["any"].Bool(false);
 		}
 
-		public static void RenderDebug(JsonValue root) {
-			root.Checkbox("Pets", "pets", true);
-			root.Checkbox("Orbitals", "orbitals", false);
-			root.Checkbox("Any", "any", false);
-		}
 	}
 }

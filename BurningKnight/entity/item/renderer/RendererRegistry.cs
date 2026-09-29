@@ -5,7 +5,7 @@ using BurningKnight.assets.mod;
 using Lens.lightJson;
 
 namespace BurningKnight.entity.item.renderer {
-	public static class RendererRegistry {
+	public static partial class RendererRegistry {
 		public static Dictionary<string, Action<string, JsonValue, JsonValue>> DebugRenderers = new Dictionary<string, Action<string, JsonValue, JsonValue>>();
 		public static Dictionary<string, Type> Renderers = new Dictionary<string, Type>();
 
@@ -35,9 +35,14 @@ namespace BurningKnight.entity.item.renderer {
 		}
 
 		static RendererRegistry() {
-			Register<AngledRenderer>(AngledRenderer.RenderDebug);
-			Register<MovingAngledRenderer>(MovingAngledRenderer.RenderDebug);
-			Register<StickRenderer>(StickRenderer.RenderDebug);
+			Register<AngledRenderer>();
+			Register<MovingAngledRenderer>();
+			Register<StickRenderer>();
+
+			RegisterDebugRenderers();
 		}
+
+		// Implemented in RendererRegistry.Debug.cs, which a release build excludes (ADR-0003).
+		static partial void RegisterDebugRenderers();
 	}
 }

@@ -1,3 +1,4 @@
+using ImGuiNET;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -5,7 +6,6 @@ using System.Linq;
 using BurningKnight.assets;
 using BurningKnight.assets.dialogs;
 using BurningKnight.ui.str;
-using ImGuiNET;
 using Lens;
 using Lens.assets;
 using Lens.graphics;

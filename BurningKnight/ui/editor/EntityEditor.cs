@@ -1,3 +1,5 @@
+using BurningKnight.entity;
+using ImGuiNET;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +11,6 @@ using BurningKnight.entity.door;
 using BurningKnight.entity.fx;
 using BurningKnight.level.entities;
 using BurningKnight.state;
-using ImGuiNET;
 using Lens.entity;
 using Lens.graphics;
 using Lens.input;

@@ -1,5 +1,5 @@
-using BurningKnight.assets.items;
 using BurningKnight.debug;
+using BurningKnight.assets.items;
 using BurningKnight.entity.component;
 using BurningKnight.entity.creature.pet;
 using BurningKnight.entity.item;

@@ -7,7 +7,7 @@ using Lens.lightJson;
 using Lens.util;
 
 namespace BurningKnight.entity.item.use {
-	public class ScourgeUse : ItemUse {
+	public partial class ScourgeUse : ItemUse {
 		private int amount;
 		
 		public override void Use(Entity entity, Item item) {
@@ -23,8 +23,5 @@ namespace BurningKnight.entity.item.use {
 			amount = settings["amount"].Int(1);
 		}
 		
-		public static void RenderDebug(JsonValue root) {
-			root.InputInt("Amount", "amount");
-		}
 	}
 }

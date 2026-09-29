@@ -7,7 +7,7 @@ using Lens.lightJson;
 using Lens.util.math;
 
 namespace BurningKnight.entity.item.use {
-	public class BlockDamageUse : ItemUse {
+	public partial class BlockDamageUse : ItemUse {
 		private float chance;
 
 		public override bool HandleEvent(Event e) {
@@ -31,8 +31,5 @@ namespace BurningKnight.entity.item.use {
 			chance = settings["chance"].Number(10);
 		}
 
-		public static void RenderDebug(JsonValue root) {
-			root.InputFloat("Chance", "chance", 10);
-		}
 	}
 }

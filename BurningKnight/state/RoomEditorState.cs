@@ -1,3 +1,4 @@
+using ImGuiNET;
 using System;
 using BurningKnight.assets;
 using BurningKnight.level;
@@ -7,7 +8,6 @@ using BurningKnight.level.rooms.regular;
 using BurningKnight.level.tile;
 using BurningKnight.level.walls;
 using BurningKnight.util;
-using ImGuiNET;
 using Lens;
 using Lens.game;
 using Lens.graphics;

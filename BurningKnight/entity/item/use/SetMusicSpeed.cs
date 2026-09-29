@@ -5,7 +5,7 @@ using Lens.lightJson;
 using Lens.util.tween;
 
 namespace BurningKnight.entity.item.use {
-	public class SetMusicSpeed : ItemUse {
+	public partial class SetMusicSpeed : ItemUse {
 		private float speed;
 
 		public override void Use(Entity entity, Item item)
@@ -19,8 +19,5 @@ namespace BurningKnight.entity.item.use {
 			speed = settings["speed"].Number(1f);
 		}
 
-		public static void RenderDebug(JsonValue root) {
-			root.InputFloat("Speed", "speed", 1f);
-		}
 	}
 }

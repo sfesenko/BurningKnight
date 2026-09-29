@@ -1,8 +1,8 @@
+using BurningKnight.ui.imgui;
+using ImGuiNET;
 using BurningKnight.assets;
 using BurningKnight.entity;
-using BurningKnight.ui.imgui;
 using BurningKnight.util;
-using ImGuiNET;
 using Lens;
 using Lens.assets;
 using Lens.game;

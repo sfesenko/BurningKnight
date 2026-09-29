@@ -4,7 +4,7 @@ using Lens.entity;
 using Lens.lightJson;
 
 namespace BurningKnight.entity.item.use {
-	public class ModifyManaMaxUse : ItemUse {
+	public partial class ModifyManaMaxUse : ItemUse {
 		public int Amount;
 
 		public override void Use(Entity entity, Item item) {
@@ -19,8 +19,5 @@ namespace BurningKnight.entity.item.use {
 			Amount = settings["amount"].Int(1);
 		}
 		
-		public static void RenderDebug(JsonValue root) {
-			root.InputInt("Amount", "amount");
-		}	
 	}
 }

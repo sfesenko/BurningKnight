@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -27,8 +27,6 @@ using BurningKnight.physics;
 using BurningKnight.save;
 using BurningKnight.ui;
 using BurningKnight.ui.dialog;
-using BurningKnight.ui.editor;
-using BurningKnight.ui.imgui;
 using BurningKnight.ui.inventory;
 using BurningKnight.util;
 using Lens;
@@ -48,11 +46,10 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended;
-using Console = BurningKnight.debug.Console;
 using Timer = Lens.util.timer.Timer;
 
 namespace BurningKnight.state {
-	public class InGameState : GameState, Subscriber {
+	public partial class InGameState : GameState, Subscriber {
 		public static bool ShouldHide => Engine.Instance.State is InGameState { Paused: true, InStats: false } st && st.currentBack != st.graphicsBack;
 		
 		public static bool SkipPause;
@@ -94,7 +91,14 @@ namespace BurningKnight.state {
 		private SaveLock saveLock = new();
 
 		private Painting painting;
-		private EditorWindow editor;
+
+		// The dev-tool hooks; implemented in InGameState.Debug.cs, which a release build
+		// excludes (ADR-0003).
+		partial void FocusAreaDebug(Entity entity);
+		partial void UpdateConsole(float dt);
+		partial void RenderEditorInGame();
+		partial void CreateEditor(Camera camera);
+		partial void CreateConsole();
 
 		public bool Menu;
 		public Area TopUi;
@@ -109,7 +113,6 @@ namespace BurningKnight.state {
 		private TextureRegion emerald;
 
 		public UiAnimation Killer;
-		public Console Console;
 		private UiLabel seedLabel;
 		private UiButton currentBack;
 		private UiButton inputBack;
@@ -239,7 +242,7 @@ namespace BurningKnight.state {
 					Camera.Instance.Follow(p, imp ? 1f : 0.5f, imp);
 					
 					if (imp && Assets.ImGuiEnabled) {
-						AreaDebug.ToFocus = p;
+						FocusAreaDebug(p);
 					}
 				}
 
@@ -922,7 +925,7 @@ namespace BurningKnight.state {
 				Ui.Update(dt);
 			}
 			
-			Console?.Update(dt);
+			UpdateConsole(dt);
 
 			var controller = GamepadComponent.Current;
 			
@@ -1240,7 +1243,7 @@ namespace BurningKnight.state {
 			PrerenderShadows();
 			base.Render();
 			Physics.Render();
-			editor?.RenderInGame();
+			RenderEditorInGame();
 			
 			if (RenderDebug) {
 				Ui?.RenderDebug();
@@ -1363,13 +1366,7 @@ namespace BurningKnight.state {
 			TopUi.Add(cam);
 			// Ui.Add(new AchievementBanner());
 
-			if (Assets.ImGuiEnabled) {
-				editor = new EditorWindow(new Editor {
-					Area = Area,
-					Level = Run.Level,
-					Camera = cam
-				});
-			}
+			CreateEditor(cam);
 
 			var id = Run.Level.Biome.Id;
 
@@ -1399,9 +1396,7 @@ namespace BurningKnight.state {
 				Ui.Add(map = new UiMap(player));
 			}	
 			
-			if (Assets.ImGuiEnabled) {
-				Console = new Console(Area);
-			}
+			CreateConsole();
 
 			foreach (var p in Area.Tagged[Tags.Player]) {
 				Ui.Add(new UiInventory((Player) p, Multiplayer));
@@ -3290,22 +3285,5 @@ namespace BurningKnight.state {
 			return false;
 		}
 
-		public override void RenderNative() {
-			if (!Console.Open) {
-				return;
-			}
-			
-			ImGuiHelper.Begin();
-			
-			Console?.Render();
-			editor?.Render();
-			
-			WindowManager.Render(Area);
-			ImGuiHelper.End();
-			
-			Graphics.Batch.Begin();
-			Graphics.Batch.DrawCircle(new CircleF(Mouse.GetState().Position.ToVector2(), 3f), 8, Color.White);
-			Graphics.Batch.End();
-		}
 	}
 }

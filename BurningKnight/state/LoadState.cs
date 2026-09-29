@@ -6,7 +6,6 @@ using BurningKnight.level.biome;
 using BurningKnight.level.tile;
 using BurningKnight.physics;
 using BurningKnight.save;
-using BurningKnight.ui.imgui;
 using BurningKnight.util;
 using Lens;
 using Lens.assets;
@@ -16,10 +15,9 @@ using Lens.graphics;
 using Lens.graphics.animation;
 using Lens.util.math;
 using Microsoft.Xna.Framework;
-using Console = BurningKnight.debug.Console;
 
 namespace BurningKnight.state {
-	public class LoadState : GameState {
+	public partial class LoadState : GameState {
 		public string Path;
 		private Area gameArea;
 		private bool ready;
@@ -154,18 +152,5 @@ namespace BurningKnight.state {
 			Graphics.Color = ColorUtils.WhiteColor;
 		}
 
-		public override void RenderNative() {
-			if (!Assets.ImGuiEnabled) {
-				return;
-			}
-			
-			ImGuiHelper.Begin();
-		
-			if (Console.Open) {
-				DebugWindow.Render();
-			}
-
-			ImGuiHelper.End();
-		}
 	}
 }

@@ -11,7 +11,6 @@ using BurningKnight.entity.room;
 using BurningKnight.level;
 using BurningKnight.level.rooms;
 using BurningKnight.state;
-using BurningKnight.ui.imgui;
 using Lens.entity;
 using Lens.util;
 using Lens.util.file;

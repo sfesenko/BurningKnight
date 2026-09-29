@@ -4,7 +4,7 @@ using Lens.entity;
 using Lens.lightJson;
 
 namespace BurningKnight.entity.item.use.parent {
-	public abstract class DoUsesUse : ItemUse {
+	public abstract partial class DoUsesUse : ItemUse {
 		protected ItemUse[] Uses;
 
 		public override void Use(Entity entity, Item item) {
@@ -27,12 +27,5 @@ namespace BurningKnight.entity.item.use.parent {
 			Uses = Items.ParseUses(settings["uses"]);
 		}
 		
-		public static void RenderDebug(JsonValue root) {
-			if (!root["uses"].IsJsonArray) {
-				root["uses"] = new JsonArray();
-			}
-			
-			ItemEditor.DisplayUse(root, root["uses"]);
-		}
 	}
 }

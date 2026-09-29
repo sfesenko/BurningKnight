@@ -22,7 +22,6 @@ using BurningKnight.level.variant;
 using BurningKnight.physics;
 using BurningKnight.save;
 using BurningKnight.state;
-using BurningKnight.ui.imgui;
 using BurningKnight.util;
 using Lens;
 using Lens.entity;

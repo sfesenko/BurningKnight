@@ -1,3 +1,6 @@
+#if DEBUG
+using ImGuiNET;
+#endif
 using System;
 using System.Linq;
 using BurningKnight.assets.items;
@@ -16,9 +19,7 @@ using BurningKnight.level.rooms;
 using BurningKnight.physics;
 using BurningKnight.save;
 using BurningKnight.state;
-using BurningKnight.ui.editor;
 using BurningKnight.util;
-using ImGuiNET;
 using Lens;
 using Lens.assets;
 using Lens.entity;

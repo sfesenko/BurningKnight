@@ -6,7 +6,6 @@ using BurningKnight.entity.fx;
 using BurningKnight.level.entities.exit;
 using BurningKnight.save;
 using BurningKnight.state;
-using BurningKnight.ui.editor;
 using BurningKnight.util;
 using Lens;
 using Lens.assets;

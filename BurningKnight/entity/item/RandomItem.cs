@@ -1,5 +1,4 @@
 using BurningKnight.assets.items;
-using BurningKnight.ui.editor;
 using Lens.util.file;
 
 namespace BurningKnight.entity.item {

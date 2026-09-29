@@ -1,9 +1,9 @@
+using BurningKnight.ui.imgui;
+using ImGuiNET;
 using BurningKnight.assets.items;
 using BurningKnight.entity.item;
 using BurningKnight.state;
-using BurningKnight.ui.imgui;
 using BurningKnight.util;
-using ImGuiNET;
 using Lens.input;
 using Microsoft.Xna.Framework.Input;
 

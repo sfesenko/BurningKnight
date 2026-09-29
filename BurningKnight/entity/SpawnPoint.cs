@@ -1,5 +1,4 @@
 using BurningKnight.save;
-using BurningKnight.ui.editor;
 using Lens;
 using Lens.graphics;
 using MonoGame.Extended;

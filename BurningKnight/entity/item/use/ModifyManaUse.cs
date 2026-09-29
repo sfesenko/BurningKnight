@@ -4,7 +4,7 @@ using Lens.entity;
 using Lens.lightJson;
 
 namespace BurningKnight.entity.item.use {
-	public class ModifyManaUse : ItemUse {
+	public partial class ModifyManaUse : ItemUse {
 		public int Amount;
 		public bool SetToMin;
 		public bool SetToMax;
@@ -33,10 +33,5 @@ namespace BurningKnight.entity.item.use {
 			SetToMax = settings["to_max"].Bool(false);
 		}
 		
-		public static void RenderDebug(JsonValue root) {
-			root.InputInt("Amount", "amount");
-			root.Checkbox("Set To Min", "to_min", false);
-			root.Checkbox("Set To Max", "to_max", false);
-		}	
 	}
 }

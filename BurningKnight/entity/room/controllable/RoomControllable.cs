@@ -1,6 +1,5 @@
 using BurningKnight.entity.component;
 using BurningKnight.save;
-using BurningKnight.ui.editor;
 
 namespace BurningKnight.entity.room.controllable {
 	public partial class RoomControllable : SaveableEntity, PlaceableEntity {

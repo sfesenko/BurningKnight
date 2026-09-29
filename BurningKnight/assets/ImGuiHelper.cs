@@ -1,8 +1,8 @@
+using BurningKnight.ui.imgui;
+using ImGuiNET;
 using System;
 using System.Collections.Generic;
-using BurningKnight.ui.imgui;
 using BurningKnight.assets.dialogs;
-using ImGuiNET;
 using Lens;
 using Lens.assets;
 using Lens.input;

@@ -1,3 +1,4 @@
+using ImGuiNET;
 using System;
 using System.Diagnostics;
 using System.Numerics;
@@ -6,7 +7,6 @@ using BurningKnight.entity.creature.player;
 using BurningKnight.save;
 using BurningKnight.state;
 using BurningKnight.state.save;
-using ImGuiNET;
 using Lens;
 using Lens.game;
 using Lens.graphics.gamerenderer;

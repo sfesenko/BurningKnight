@@ -12,7 +12,7 @@ using Lens.entity;
 using Lens.lightJson;
 
 namespace BurningKnight.entity.item.use {
-	public class BucketUse : ItemUse {
+	public partial class BucketUse : ItemUse {
 		private bool water;
 		private bool snow;
 
@@ -67,9 +67,5 @@ namespace BurningKnight.entity.item.use {
 			snow = settings["snw"].Bool(true);
 		}
 
-		public static void RenderDebug(JsonValue root) {
-			root.Checkbox("Water Bucket", "wt", false);
-			root.Checkbox("Snow Bucket", "snw", false);
-		}
 	}
 }

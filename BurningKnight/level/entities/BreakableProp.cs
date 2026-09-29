@@ -1,3 +1,4 @@
+using BurningKnight.entity;
 using System;
 using BurningKnight.assets.particle;
 using BurningKnight.entity.component;
@@ -6,7 +7,6 @@ using BurningKnight.entity.creature.player;
 using BurningKnight.entity.events;
 using BurningKnight.entity.item;
 using BurningKnight.entity.item.stand;
-using BurningKnight.ui.editor;
 using Lens.entity;
 using Lens.util.camera;
 using Lens.util.tween;

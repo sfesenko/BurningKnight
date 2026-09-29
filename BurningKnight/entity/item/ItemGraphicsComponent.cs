@@ -1,7 +1,7 @@
-﻿using System;
+using BurningKnight.ui.imgui;
+using System;
 using BurningKnight.assets;
 using BurningKnight.entity.component;
-using BurningKnight.ui.imgui;
 using Lens.graphics;
 using Lens.util;
 using Lens.util.math;

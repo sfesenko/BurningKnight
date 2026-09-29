@@ -4,7 +4,7 @@ using Lens.entity;
 using Lens.lightJson;
 
 namespace BurningKnight.entity.item.use {
-	public class ModifyShootUse : ItemUse {
+	public partial class ModifyShootUse : ItemUse {
 		private int amount;
 
 		public override bool HandleEvent(Event e) {
@@ -21,8 +21,5 @@ namespace BurningKnight.entity.item.use {
 			amount = settings["amount"].Int(1);
 		}
 
-		public static void RenderDebug(JsonValue root) {
-			root.InputInt("Amount", "amount", 1);
-		}
 	}
 }

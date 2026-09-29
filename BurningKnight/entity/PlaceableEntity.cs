@@ -1,4 +1,4 @@
-namespace BurningKnight.ui.editor {
+namespace BurningKnight.entity {
 	public interface PlaceableEntity {
 		
 	}

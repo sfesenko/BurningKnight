@@ -1,8 +1,8 @@
+using BurningKnight.ui.imgui;
+using ImGuiNET;
 using BurningKnight.assets.items;
 using BurningKnight.entity.component;
 using BurningKnight.entity.creature.player;
-using BurningKnight.ui.imgui;
-using ImGuiNET;
 using Lens;
 
 namespace BurningKnight.debug {

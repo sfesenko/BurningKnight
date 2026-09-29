@@ -3,7 +3,6 @@ using BurningKnight.entity.creature.player;
 using BurningKnight.entity.events;
 using BurningKnight.save;
 using BurningKnight.state;
-using BurningKnight.ui.editor;
 using Lens;
 using Lens.entity;
 using Lens.graphics;
