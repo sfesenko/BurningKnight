@@ -1,4 +1,4 @@
-using System.IO;
+﻿using System.IO;
 
 namespace Lens;
 
@@ -12,7 +12,11 @@ public static class Paths {
 	public static string? LegacyDataDir { get; private set; }
 
 	public static void Setup(string dataDir, string? legacyDataDir = null) {
-		DataDir = Path.EndsInDirectorySeparator(dataDir) ? dataDir : dataDir + Path.DirectorySeparatorChar;
+		DataDir = EndWithSeparator(dataDir);
 		LegacyDataDir = legacyDataDir;
+	}
+
+	private static string EndWithSeparator(string path) {
+		return Path.EndsInDirectorySeparator(path) ? path : path + Path.DirectorySeparatorChar;
 	}
 }

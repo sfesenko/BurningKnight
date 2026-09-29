@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.IO;
 using BurningKnight;
@@ -14,14 +14,21 @@ namespace Desktop {
 		// The game's name for its writable state; a demo build keeps its own.
 		private static readonly string StateName = BK.Demo ? "burning_knight_demo" : "burning_knight";
 
-		// Writable state lives in the user's data directory, not next to the executable: a
-		// staged install may be read-only.
+		// Writable state lives in the platform's data directory, not next to the executable: a
+		// staged install may be read-only. On Unix that is $XDG_DATA_HOME (~/.local/share);
+		// Windows and macOS map LocalApplicationData to their own equivalent.
 		private static readonly string DataDir = Path.Combine(
-			Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "." + StateName) + Path.DirectorySeparatorChar;
+			Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), StateName) + Path.DirectorySeparatorChar;
 
-		// Where this build kept it before the move, for the game to migrate from: beside the
-		// executable.
-		private static readonly string LegacyDataDir = Path.Combine(AppContext.BaseDirectory, StateName);
+		// The builds before this one kept their state in a dot-directory in the home folder;
+		// before that, beside the executable. Migrate from whichever exists.
+		private static readonly string LegacyDataDir = Legacy();
+
+		private static string Legacy() {
+			var dot = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "." + StateName, "saves");
+
+			return Directory.Exists(dot) ? dot : Path.Combine(AppContext.BaseDirectory, StateName);
+		}
 
 		// The game records its own pid here so the next launch can stop it.
 		private static readonly string InstanceFile = Path.Combine(DataDir, "instance.pid");
