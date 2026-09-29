@@ -1,0 +1,88 @@
+using BurningKnight.debug;
+using System;
+using System.Collections.Generic;
+using BurningKnight.assets;
+using BurningKnight.assets.achievements;
+using BurningKnight.assets.items;
+using BurningKnight.assets.lighting;
+using BurningKnight.assets.particle;
+using BurningKnight.assets.particle.controller;
+using BurningKnight.assets.particle.custom;
+using BurningKnight.assets.particle.renderer;
+using BurningKnight.entity.bomb;
+using BurningKnight.entity.component;
+using BurningKnight.entity.creature.bk;
+using BurningKnight.entity.creature.mob;
+using BurningKnight.entity.creature.npc;
+using BurningKnight.entity.door;
+using BurningKnight.entity.events;
+using BurningKnight.entity.fx;
+using BurningKnight.entity.item;
+using BurningKnight.entity.item.stand;
+using BurningKnight.entity.projectile;
+using BurningKnight.entity.room;
+using BurningKnight.level;
+using BurningKnight.level.biome;
+using BurningKnight.level.entities;
+using BurningKnight.level.rooms;
+using BurningKnight.level.tile;
+using BurningKnight.save;
+using BurningKnight.state;
+using BurningKnight.ui;
+using BurningKnight.ui.dialog;
+using BurningKnight.util;
+using Lens;
+using Lens.assets;
+using Lens.entity;
+using Lens.entity.component;
+using Lens.entity.component.logic;
+using Lens.graphics;
+using Lens.graphics.gamerenderer;
+using Lens.input;
+using Lens.util;
+using Lens.util.camera;
+using Lens.util.file;
+using Lens.util.math;
+using Lens.util.timer;
+using Lens.util.tween;
+using Lens.physics;
+using Microsoft.Xna.Framework;
+
+namespace BurningKnight.entity.creature.player {
+	public partial class Player {
+		public class DuckState : EntityState {
+			public override void Init() {
+				base.Init();
+				Quacks++;
+				if (Quacks >= 150) {
+					Achievements.Unlock("bk:quackers");
+				}
+
+				var hat = Self.GetComponent<HatComponent>().Item;
+
+				if (hat != null && (hat.Id == "bk:villager_head" || hat.Id == "bk:stone_hat")) {
+					Audio.PlaySfx($"villager{Rnd.Int(1, 5)}", 1f, Rnd.Float(-0.5f, 0.5f));
+				} else {
+					Audio.PlaySfx("quck", 1f, Rnd.Float(-0.5f, 0.5f));
+				}
+				
+				Self.HandleEvent(new QuackEvent {
+					Player = (Player) Self
+				});
+			}
+
+			public override void Update(float dt) {
+				base.Update(dt);
+
+				if (Self.GetComponent<RectBodyComponent>().Velocity.Length() > 10f) {
+					if (T >= 0.2f) {
+						AnimationUtil.Poof(Self.Center);
+						T = 0;
+					}
+				} else {
+					T = 0;
+				}
+			}
+		}
+	}
+}
