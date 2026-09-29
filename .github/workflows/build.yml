@@ -4,6 +4,9 @@ on:
   push:
   pull_request:
   workflow_dispatch:
+  # The nightly run takes the generation suite to the full 10,000 seeds.
+  schedule:
+    - cron: '0 3 * * *'
 
 permissions:
   contents: read
@@ -31,6 +34,14 @@ jobs:
 
       - name: Build Release
         run: dotnet build Desktop/Desktop.csproj -c Release
+
+      # The generation suite boots a device — generation places entities, and their components
+      # fetch sprites — so it needs a display; xvfb-run gives the runner one. BK_TEST_SEEDS is
+      # seeds per depth: 50 on a push, 770 x 13 depths = 10,010 on the nightly schedule.
+      - name: Tests
+        run: xvfb-run -a dotnet test BurningKnight.Tests/BurningKnight.Tests.csproj -c Release
+        env:
+          BK_TEST_SEEDS: ${{ github.event_name == 'schedule' && 770 || 50 }}
 
       # ADR-0003: a release build compiles the overlay out, so nothing may ship it.
       - name: Release ships no ImGui
