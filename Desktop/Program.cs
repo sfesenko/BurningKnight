@@ -16,9 +16,12 @@ namespace Desktop {
 
 		// Writable state lives in the platform's data directory, not next to the executable: a
 		// staged install may be read-only. On Unix that is $XDG_DATA_HOME (~/.local/share);
-		// Windows and macOS map LocalApplicationData to their own equivalent.
+		// Windows and macOS map LocalApplicationData to their own equivalent. Create, because
+		// the lookup returns an empty string when the directory is not there yet, and an empty
+		// root would silently make the path relative.
 		private static readonly string DataDir = Path.Combine(
-			Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), StateName) + Path.DirectorySeparatorChar;
+			Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData, Environment.SpecialFolderOption.Create),
+			StateName) + Path.DirectorySeparatorChar;
 
 		// The builds before this one kept their state in a dot-directory in the home folder;
 		// before that, beside the executable. Migrate from whichever exists.
