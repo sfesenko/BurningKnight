@@ -1,5 +1,7 @@
 # Burning Knight 
 
+[![Build](https://github.com/sfesenko/BurningKnight/actions/workflows/build.yml/badge.svg)](https://github.com/sfesenko/BurningKnight/actions/workflows/build.yml)
+
 Available on [Steam](https://store.steampowered.com/app/851150/Burning_Knight/) and [itch.io](https://egordorichev.itch.io/bk).
 
 Before you look at the code: hear me out. Yes, some of it is not the best. Yes, some of it can be redone and improved.
