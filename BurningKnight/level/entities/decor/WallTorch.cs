@@ -20,7 +20,7 @@ namespace BurningKnight.level.entities.decor {
 
 			Width = 5;
 			Height = 7;
-			Sprite = Run.Level != null && Run.Level.Biome is CaveBiome ? "cave_torch" : "wall_torch";
+			Sprite = Context.Level != null && Context.Level.Biome is CaveBiome ? "cave_torch" : "wall_torch";
 			t = Rnd.Float(6);
 			AlwaysActive = Run.Depth < 1;
 		}
@@ -28,7 +28,7 @@ namespace BurningKnight.level.entities.decor {
 		public override void AddComponents() {
 			base.AddComponents();
 
-			if (Run.Level != null && Run.Level.Biome is CaveBiome) {
+			if (Context.Level != null && Context.Level.Biome is CaveBiome) {
 				AddComponent(new LightComponent(this, 64f, new Color(0.2f, 1, 0.8f, 1f)));
 			} else {
 				AddComponent(new LightComponent(this, 64f, new Color(1f, 0.8f, 0.2f, 1f)));

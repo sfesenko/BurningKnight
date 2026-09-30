@@ -120,7 +120,7 @@ namespace BurningKnight.level {
 				Area.Remove(ProjectileLevelBody);
 			}
 
-			if (Run.Level == this) {
+			if (Context.Level == this) {
 				Run.Level = null;
 			}
 
@@ -211,7 +211,7 @@ namespace BurningKnight.level {
 
 				if (Rains) {
 					for (var i = 0; i < 40; i++) {
-						Run.Level.Area.Add(new RainParticle());
+						Context.Level.Area.Add(new RainParticle());
 					}
 
 					if (Assets.LoadSfx) {
@@ -242,7 +242,7 @@ namespace BurningKnight.level {
 
 				if (Snows) {
 					for (var i = 0; i < 120; i++) {
-						Run.Level.Area.Add(new SnowParticle());
+						Context.Level.Area.Add(new SnowParticle());
 					}
 				}
 			} catch (Exception e) {
@@ -349,10 +349,10 @@ namespace BurningKnight.level {
 
 		public static string GetDepthString(bool eng = false) {
 			if (Run.Depth < 1) {
-				return Locale.Get(Run.Level.Biome.Id, eng);
+				return Locale.Get(GameContext.Current.Level.Biome.Id, eng);
 			}
 
-			var s = $"{Locale.Get(Run.Level.Biome.Id, eng)} {MathUtils.ToRoman((Run.Depth - 1) % 2 + 1)}";
+			var s = $"{Locale.Get(GameContext.Current.Level.Biome.Id, eng)} {MathUtils.ToRoman((Run.Depth - 1) % 2 + 1)}";
 
 			if (Run.Loop > 0) {
 				s = $"L{Run.Loop} {s}";

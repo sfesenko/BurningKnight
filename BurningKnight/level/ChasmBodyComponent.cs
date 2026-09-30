@@ -35,7 +35,7 @@ namespace BurningKnight.level {
 			
 			if (toUpdate.Count > 0) {
 				var updated = new List<int>();
-				var level = Run.Level;
+				var level = Context.Level;
 
 				foreach (var u in toUpdate) {
 					var cx = (int) Math.Floor(level.FromIndexX(u) / (float) LevelBodyComponent.ChunkSize);
@@ -79,7 +79,7 @@ namespace BurningKnight.level {
 		}
 
 		private void Create() {
-			var level = Run.Level;
+			var level = Context.Level;
 			
 			cw = (int) Math.Floor(level.Width / (float) LevelBodyComponent.ChunkSize + 0.5f);
 			ch = (int) Math.Floor(level.Height / (float) LevelBodyComponent.ChunkSize + 0.5f);
@@ -109,11 +109,11 @@ namespace BurningKnight.level {
 				return;
 			}
 			
-			toUpdate.Add(x + y * Run.Level.Width);
+			toUpdate.Add(x + y * Context.Level.Width);
 		}
 		
 		private void RecreateChunk(int cx, int cy) {
-			var level = Run.Level;
+			var level = Context.Level;
 			
 			var body = Physics.World.CreateBody(Vector2.Zero, 0, BodyType.Static);
 			body.FixedRotation = true;

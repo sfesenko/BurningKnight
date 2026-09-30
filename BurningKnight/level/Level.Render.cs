@@ -86,7 +86,7 @@ namespace BurningKnight.level {
 		}
 		// Renders floor layer
 		public override void Render() {
-			if (this != Run.Level) {
+			if (this != Context.Level) {
 				Done = true;
 				return;
 			}

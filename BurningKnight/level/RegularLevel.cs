@@ -51,7 +51,7 @@ namespace BurningKnight.level {
 			if (Run.Depth > 0) {
 				var c = Rnd.Int(1, Run.Depth);
 
-				if (Run.Level.Biome is CaveBiome) {
+				if (Context.Level.Biome is CaveBiome) {
 					c = Rnd.Int(5, 15);
 				}
 				
@@ -126,7 +126,7 @@ namespace BurningKnight.level {
 				
 					Log.Error($"Failed! {Builder.GetType().Name}");
 					Area.Destroy();
-					Area.Add(Run.Level);
+					Area.Add(Context.Level);
 					LevelSave.FailedAttempts++;
 					Builder = GetBuilder();
 

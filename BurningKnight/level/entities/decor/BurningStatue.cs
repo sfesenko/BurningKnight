@@ -168,11 +168,11 @@ namespace BurningKnight.level.entities.decor {
 			
 					exit.Center = p;
 
-					Painter.Fill(Run.Level, x - 1, y - 1, 3, 3, Tiles.RandomFloor());
-					Painter.Fill(Run.Level, x - 1, y - 3, 3, 3, Tiles.RandomFloor());
+					Painter.Fill(Context.Level, x - 1, y - 1, 3, 3, Tiles.RandomFloor());
+					Painter.Fill(Context.Level, x - 1, y - 3, 3, 3, Tiles.RandomFloor());
 
-					Run.Level.TileUp();
-					Run.Level.CreateBody();
+					Context.Level.TileUp();
+					Context.Level.CreateBody();
 			
 					Timer.Add(() => {
 						Tween.To(1f, Context.Camera.TextureZoom, xx => Context.Camera.TextureZoom = xx, 0.8f);
