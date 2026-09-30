@@ -31,7 +31,7 @@ namespace BurningKnight.level.entities {
 				
 				var next = new DateTime(dd.Year, dd.Month, dd.Day, 0, 0, 0, DateTimeKind.Utc);
 
-				return $"[sp 3]{Locale.Get("run_daily")} #{Run.CalculateDailyId()}\n{Locale.Get("next_daily_in")}\n{GetTime(next.Subtract(d))}";
+				return $"[sp 3]{Locale.Get("run_daily")} #{Context.Run.CalculateDailyId()}\n{Locale.Get("next_daily_in")}\n{GetTime(next.Subtract(d))}";
 			};
 		}
 	}

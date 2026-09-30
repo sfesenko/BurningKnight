@@ -52,7 +52,7 @@ namespace BurningKnight.level.biome {
 		public static BiomeInfo GenerateForDepth(int depth) {
 			var list = new List<BiomeInfo>();
 			var chances = new List<float>();
-			var array = Run.Type == RunType.BossRush && depth > 0 ? BossRushDefined : Defined;
+			var array = Context.Run.Type == RunType.BossRush && depth > 0 ? BossRushDefined : Defined;
 
 			foreach (var b in array.Values) {
 				if (b.Depths.Contains(depth)) {

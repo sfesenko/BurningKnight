@@ -28,7 +28,7 @@ namespace BurningKnight.entity.creature.mob {
 			Width = 16;
 			Height = 13;
 			
-			SetMaxHp(40 + Run.Depth * 7);
+			SetMaxHp(40 + Context.Run.Depth * 7);
 
 			var body = CreateBodyComponent();
 			AddComponent(body);

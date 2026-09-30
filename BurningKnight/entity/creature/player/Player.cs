@@ -99,7 +99,7 @@ namespace BurningKnight.entity.creature.player {
 				Engine.Instance.State.Ui.Add(banner);
 			}
 
-			if (item.Type == ItemType.Weapon && Run.Depth == 0) {
+			if (item.Type == ItemType.Weapon && Context.Run.Depth == 0) {
 				Audio.PlaySfx(item.Data.WeaponType.GetPickupSfx());
 			} else {
 				GetComponent<AudioEmitterComponent>().EmitRandomized("item_pickup");
@@ -136,7 +136,7 @@ namespace BurningKnight.entity.creature.player {
 			Height = 11;
 			
 			// Graphics
-			if (Run.Depth != 0) {
+			if (Context.Run.Depth != 0) {
 				AddComponent(new LightComponent(this, 64, LightColor));
 			}
 
@@ -238,7 +238,7 @@ namespace BurningKnight.entity.creature.player {
 				set = true;
 				GetComponent<RoomComponent>().Room?.Discover();
 
-				if (Run.Depth == 0) {
+				if (Context.Run.Depth == 0) {
 					CageLock.CheckProgress();
 					HatStand.CheckHats();
 					Items.CheckForCollector();
@@ -285,7 +285,7 @@ namespace BurningKnight.entity.creature.player {
 		public override void Destroy() {
 			base.Destroy();
 
-			if (!GetComponent<HealthComponent>().Dead && (Run.LastDepth == -1 || Run.LastDepth == 0)) {
+			if (!GetComponent<HealthComponent>().Dead && (Context.Run.LastDepth == -1 || Context.Run.LastDepth == 0)) {
 				var index = GetComponent<InputComponent>().Index;
 				
 				StartingWeapons[index] = GetComponent<ActiveWeaponComponent>().Item?.Id;

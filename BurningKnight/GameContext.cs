@@ -1,6 +1,7 @@
 #nullable enable
 
 using BurningKnight.level;
+using BurningKnight.state;
 using Lens;
 using Lens.assets;
 using Lens.entity;
@@ -56,11 +57,20 @@ namespace BurningKnight {
 			get => level;
 			set => level = value;
 		}
+
+		private Run? run;
+
+		// The run's state: one run per process, owned here since WS-5 moved it off Run's statics.
+		public Run Run {
+			get => run ??= new Run();
+			set => run = value;
+		}
 	}
 
 	// The reads: `Context.Camera`, `Context.Level`. Entities have their own `Context` property
 	// (their world's context); this one is for the code that has no entity to ask.
 	public static class Context {
+		public static Run Run => GameContext.Current.Run;
 		public static Area? Area => GameContext.Current.Area;
 		public static Camera? Camera => GameContext.Current.Camera;
 		public static Audio Audio => GameContext.Current.Audio;

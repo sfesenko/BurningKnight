@@ -42,7 +42,7 @@ namespace BurningKnight.level.rooms.entrance {
 			}
 			
 			var prop = new Entrance {
-				To = Run.Depth + 1
+				To = Context.Run.Depth + 1
 			};
 
 			var where = GetCenter();
@@ -64,7 +64,7 @@ namespace BurningKnight.level.rooms.entrance {
 				Log.Error(e);
 			}
 			
-			if (Run.Type == RunType.BossRush && Run.Depth > 1) {
+			if (Context.Run.Type == RunType.BossRush && Context.Run.Depth > 1) {
 				var item = Items.CreateAndAdd("bk:battery", level.Area);
 				
 				item.Center = where * 16 + new Vector2(8 + Rnd.Float(-16, 16), Rnd.Float(-16, 16));
@@ -88,7 +88,7 @@ namespace BurningKnight.level.rooms.entrance {
 		}
 
 		private static bool IceDemoRoom() {
-			return Run.Type == RunType.Regular && LevelSave.BiomeGenerated is IceBiome && Run.Depth % 2 == 1;
+			return Context.Run.Type == RunType.Regular && LevelSave.BiomeGenerated is IceBiome && Context.Run.Depth % 2 == 1;
 		}
 
 		public override int GetMinWidth() {

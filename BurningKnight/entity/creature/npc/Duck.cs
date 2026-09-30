@@ -26,7 +26,7 @@ namespace BurningKnight.entity.creature.npc {
 
 			quantom = Rnd.Chance(1);
 			
-			if (Run.Depth == -2) {
+			if (Context.Run.Depth == -2) {
 				AddComponent(new CloseDialogComponent("control_4"));
 			} else {
 				AddComponent(new CloseDialogComponent($"duck_{(quantom ? 20 : 19)}"));

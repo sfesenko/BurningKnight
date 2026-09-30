@@ -54,8 +54,8 @@ namespace BurningKnight.state {
 			base.RenderUi();
 			
 			if (!Settings.HideUi) {
-				if (Run.Depth == 0 || emeraldY > -20) {
-					var y = Run.Depth == 0 ? 0 : emeraldY;
+				if (Context.Run.Depth == 0 || emeraldY > -20) {
+					var y = Context.Run.Depth == 0 ? 0 : emeraldY;
 					var str = $"{GlobalSave.Emeralds}";
 					var xx = Display.UiWidth - emerald.Width - 8;
 

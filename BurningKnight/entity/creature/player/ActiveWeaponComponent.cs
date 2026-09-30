@@ -76,7 +76,7 @@ namespace BurningKnight.entity.creature.player {
 						GetComponent<StateComponent>().Become<Player.IdleState>();
 					}
 					
-					if (Run.Depth == -2) {
+					if (Context.Run.Depth == -2) {
 						GetComponent<DialogComponent>().Close();
 					}
 
@@ -97,7 +97,7 @@ namespace BurningKnight.entity.creature.player {
 				timeSinceReady = 0;
 			}
 	
-			if ((Input.WasPressed(Controls.Swap, controller) || (Input.Mouse.WheelDelta != 0 && stopped)) && Run.Depth > 0 && GetComponent<WeaponComponent>().Item != null) {
+			if ((Input.WasPressed(Controls.Swap, controller) || (Input.Mouse.WheelDelta != 0 && stopped)) && Context.Run.Depth > 0 && GetComponent<WeaponComponent>().Item != null) {
 				if (!GetComponent<InventoryComponent>().Busy) {
 					stopped = false;
 					Swap();
@@ -108,7 +108,7 @@ namespace BurningKnight.entity.creature.player {
 		}
 
 		protected override bool ShouldReplace(Item item) {
-			return item.Type == ItemType.Weapon && (Item == null || Run.Depth < 1 || Entity.GetComponent<WeaponComponent>().Item != null);
+			return item.Type == ItemType.Weapon && (Item == null || Context.Run.Depth < 1 || Entity.GetComponent<WeaponComponent>().Item != null);
 		}
 
 		protected override void OnItemSet(Item previous) {
@@ -121,7 +121,7 @@ namespace BurningKnight.entity.creature.player {
 				Audio.PlaySfx(Item.Data.WeaponType.GetSwapSfx());
 			}
 			
-			if (Run.Depth == -2) {
+			if (Context.Run.Depth == -2) {
 				var dialog = GetComponent<DialogComponent>();
 								
 				dialog.Dialog.Str.ClearIcons();

@@ -11,8 +11,8 @@ namespace BurningKnight.entity.item.use {
 			base.Use(entity, item);
 			Scourge.Enable(scourge);
 
-			if (Run.Scourge == 0) {
-				Run.AddScourge();
+			if (Context.Run.Scourge == 0) {
+				Context.Run.AddScourge();
 			}
 		}
 

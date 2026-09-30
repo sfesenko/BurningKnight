@@ -76,7 +76,7 @@ namespace BurningKnight.state {
 				}
 			}
 			
-			if (!Paused && (Settings.Autosave && Run.Depth > 0)) {
+			if (!Paused && (Settings.Autosave && Context.Run.Depth > 0)) {
 				saveTimer += dt;
 
 				if (saveTimer >= AutoSaveInterval) {
@@ -124,7 +124,7 @@ namespace BurningKnight.state {
 				overQuickBack?.OnClick();
 			}
 			
-			if ((Paused || Died || Run.Won) && UiControl.Focused == null) {
+			if ((Paused || Died || Context.Run.Won) && UiControl.Focused == null) {
 				if (UiButton.SelectedInstance != null && (!UiButton.SelectedInstance.Active || !UiButton.SelectedInstance.IsOnScreen())) {
 					UiButton.SelectedInstance = null;
 					UiButton.Selected = -1;
@@ -231,7 +231,7 @@ namespace BurningKnight.state {
 				t += dt;
 				Weather.Update(dt);
 
-				if (Run.Depth == 0) {
+				if (Context.Run.Depth == 0) {
 					var night = Weather.IsNight || Events.Halloween;
 
 					if (night != wasNight) {
@@ -318,8 +318,8 @@ namespace BurningKnight.state {
 			}
 			
 			if (!Paused) {
-				if (!Died && !Run.Won && Run.Depth > 0) {
-					Run.Time = (float) (timeWas + (Engine.GameTime.TotalGameTime.TotalSeconds - startTime));
+				if (!Died && !Context.Run.Won && Context.Run.Depth > 0) {
+					Context.Run.Time = (float) (timeWas + (Engine.GameTime.TotalGameTime.TotalSeconds - startTime));
 				} else {
 					CaptureTime();
 				}
@@ -372,7 +372,7 @@ namespace BurningKnight.state {
 							}
 						}
 
-						if (!did && (Paused || Died || Run.Won) && Input.WasPressed(Controls.UiBack, controller)) {
+						if (!did && (Paused || Died || Context.Run.Won) && Input.WasPressed(Controls.UiBack, controller)) {
 							if (Settings.UiSfx) {
 								Audio.PlaySfx("ui_exit", 0.5f);
 							}
@@ -394,7 +394,7 @@ namespace BurningKnight.state {
 				Tilesets.Update();
 			#endif
 
-			Run.Update();
+			Context.Run.Update();
 			
 			if (Input.WasPressed(Controls.Fullscreen) || (Input.Keyboard.WasPressed(Keys.Enter) && (Input.Keyboard.IsDown(Keys.LeftAlt) || Input.Keyboard.IsDown(Keys.RightAlt)))) {
 				if (Engine.Graphics.IsFullScreen) {

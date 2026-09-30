@@ -53,8 +53,8 @@ namespace BurningKnight.state {
 		public override void Init() {
 			base.Init();
 
-			if (Run.Depth < 1) {
-				Run.Time = 0;
+			if (Context.Run.Depth < 1) {
+				Context.Run.Time = 0;
 			}
 
 			unlockedHat = GlobalSave.IsTrue("bk:fez");
@@ -107,7 +107,7 @@ namespace BurningKnight.state {
 
 			Context.Camera.Jump();
 			
-			if (Run.Depth == 0) {
+			if (Context.Run.Depth == 0) {
 				if (Events.Halloween) {
 					Weather.IsNight = true;
 				}
@@ -128,10 +128,10 @@ namespace BurningKnight.state {
 			}
 
 			FireParticle.Hook(Area);
-			Run.StartedNew = false;
+			Context.Run.StartedNew = false;
 			
-			if (Run.Depth > 0 && GameSave.IsFalse($"reached_{Run.Depth}")) {
-				GameSave.Put($"reached_{Run.Depth}", true);
+			if (Context.Run.Depth > 0 && GameSave.IsFalse($"reached_{Context.Run.Depth}")) {
+				GameSave.Put($"reached_{Context.Run.Depth}", true);
 				Area.EventListener.Handle(new NewFloorEvent {
 					WasInEL = true
 				});
@@ -139,15 +139,15 @@ namespace BurningKnight.state {
 			
 			Context.Level.Prepare();
 
-			if (Run.Depth < 1) {
+			if (Context.Run.Depth < 1) {
 				Scourge.Clear();
 			}
 
-			if (Run.Depth == 1 && Area.Tagged[Tags.BurningKnight].Count == 0) {
+			if (Context.Run.Depth == 1 && Area.Tagged[Tags.BurningKnight].Count == 0) {
 				Area.Add(new entity.creature.bk.BurningKnight());
 			}
 
-			if (Run.Depth == 0) {
+			if (Context.Run.Depth == 0) {
 				SyncAchievements?.Invoke();
 			}
 

@@ -24,7 +24,7 @@ namespace BurningKnight.save {
 		}
 
 		public override void Generate(Area area) {
-			if (Run.Depth < -2) { // Cutscenes
+			if (Context.Run.Depth < -2) { // Cutscenes
 				return;
 			}
 			
@@ -35,9 +35,9 @@ namespace BurningKnight.save {
 			
 			input.Index = 0;
 			input.KeyboardEnabled = true;
-			input.GamepadEnabled = Run.NumPlayers <= 1;
+			input.GamepadEnabled = Context.Run.NumPlayers <= 1;
 
-			for (var i = 1; i < Run.NumPlayers; i++) {
+			for (var i = 1; i < Context.Run.NumPlayers; i++) {
 				input = area.Add(new LocalPlayer()).GetComponent<InputComponent>();
 
 				input.Index = (byte) i;
@@ -45,19 +45,19 @@ namespace BurningKnight.save {
 				input.GamepadEnabled = true;
 			}
 
-			Run.NumPlayers = 0;
+			Context.Run.NumPlayers = 0;
 
-			if (Run.Depth > 0) {
-				if (Run.Type == RunType.Challenge) {
-					var c = ChallengeRegistry.Get(Run.ChallengeId);
+			if (Context.Run.Depth > 0) {
+				if (Context.Run.Type == RunType.Challenge) {
+					var c = ChallengeRegistry.Get(Context.Run.ChallengeId);
 
 					try {
 						c?.Apply(player);
 					} catch (Exception e) {
 						Log.Error(e);
 					}
-				} else if (Run.Type == RunType.Daily) {
-					Rnd.Seed = Run.Seed;
+				} else if (Context.Run.Type == RunType.Daily) {
+					Rnd.Seed = Context.Run.Seed;
 					
 					var count = Rnd.Int(1, 4);
 
@@ -82,7 +82,7 @@ namespace BurningKnight.save {
 				
 				area.Add(new RunStatistics());
 				area.Add(new entity.creature.bk.BurningKnight());
-			} else if (Run.Depth == -2) {
+			} else if (Context.Run.Depth == -2) {
 				area.Add(new RunStatistics());
 			}
 		}

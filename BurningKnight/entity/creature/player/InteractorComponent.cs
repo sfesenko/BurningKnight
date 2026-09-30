@@ -25,7 +25,7 @@ namespace BurningKnight.entity.creature.player {
 			base.Update(dt);
 
 			if (CurrentlyInteracting != null && Input.WasPressed(Controls.Interact, GetComponent<InputComponent>()) && !GetComponent<InventoryComponent>().Busy) {
-				if (Run.Depth == -2 && GlobalSave.IsFalse("control_interact")) {
+				if (Context.Run.Depth == -2 && GlobalSave.IsFalse("control_interact")) {
 					GlobalSave.Put("control_interact", true);
 					Entity.GetComponent<DialogComponent>().Close();
 				}
@@ -64,7 +64,7 @@ namespace BurningKnight.entity.creature.player {
 			component.CurrentlyInteracting = Entity;
 			component.OnStart?.Invoke(Entity);
 
-			if (Run.Depth == -2) {
+			if (Context.Run.Depth == -2) {
 				var hasGamepad = GamepadComponent.Current != null && GamepadComponent.Current.Attached;
 				
 				var region = CommonAse.Ui.GetSlice(Controls.FindSlice(Controls.Interact, false));

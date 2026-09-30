@@ -262,9 +262,9 @@ namespace BurningKnight.entity.creature.mob.boss {
 			
 			GetComponent<DialogComponent>().Start("lp_0", Target, () => {
 				Timer.Add(() => {
-					Run.ActualDepth = -1;
-					Run.Depth = 1;
-					Run.Loop++;
+					Context.Run.ActualDepth = -1;
+					Context.Run.Depth = 1;
+					Context.Run.Loop++;
 
 					Achievements.Unlock("bk:loop");
 				}, 1f);

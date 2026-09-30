@@ -149,7 +149,7 @@ namespace BurningKnight.entity.creature.mob {
 			Current.Clear();
 
 			foreach (var info in All) {
-				if (info.SpawnsIn(biome) && (info.SpawnsOnFirst || Run.Depth % 2 == 0)) {
+				if (info.SpawnsIn(biome) && (info.SpawnsOnFirst || Context.Run.Depth % 2 == 0)) {
 					Current.Add(info);
 				}
 			}

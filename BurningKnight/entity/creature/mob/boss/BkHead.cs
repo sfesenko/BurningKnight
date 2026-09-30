@@ -210,7 +210,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 								nbkDialog.Close();
 								Context.Camera.Targets.Clear();
 								Context.Camera.Follow(bk, 1f);
-								Run.Win();
+								Context.Run.Win();
 							}, 2f));
 						}, 2f));
 					};

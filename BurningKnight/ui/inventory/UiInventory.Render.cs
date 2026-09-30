@@ -66,12 +66,12 @@ namespace BurningKnight.ui.inventory {
 					if (target != null && (!(target is Mob mb) || mb.Target != null) && target is Creature c && c.GetComponent<HealthComponent>().Health >= 1f && r.Contains(c.Center)) {
 						RenderArrow(target.Center);
 					}
-				} else if (Run.Depth > 0 && r.Tagged[Tags.MustBeKilled].Count == 0 && Exit.Instance != null && Player.CheckClear(Context.Area)) {
+				} else if (Context.Run.Depth > 0 && r.Tagged[Tags.MustBeKilled].Count == 0 && Exit.Instance != null && Player.CheckClear(Context.Area)) {
 					RenderArrow(Exit.Instance.Center, true);
 				}
 			}
 
-			var show = Run.Depth > 0;
+			var show = Context.Run.Depth > 0;
 			var hasMana = Player.GetComponent<WeaponComponent>().Item?.Data?.WeaponType == WeaponType.Magic || Player.GetComponent<ActiveWeaponComponent>().Item?.Data?.WeaponType == WeaponType.Magic;
 
 			RenderHealthBar(true);
@@ -80,12 +80,12 @@ namespace BurningKnight.ui.inventory {
 				RenderMana();
 			}
 
-			if ((show || Run.Depth == -2) && Player != null && Player.GetComponent<ConsumablesComponent>() == Player.ForceGetComponent<ConsumablesComponent>()) {
+			if ((show || Context.Run.Depth == -2) && Player != null && Player.GetComponent<ConsumablesComponent>() == Player.ForceGetComponent<ConsumablesComponent>()) {
 				RenderConsumables(hasMana);
 			}
 		}
 		private void RenderTop() {
-			var show = Run.Depth > 0;
+			var show = Context.Run.Depth > 0;
 
 			if (show && Player != null) {
 				if (UiItem.Hovered != null) {

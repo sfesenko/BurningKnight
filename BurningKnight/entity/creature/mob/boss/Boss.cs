@@ -304,7 +304,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 			Exploding = false;
 			Area.Add(exit);
 
-			exit.To = Run.Depth + 1;
+			exit.To = Context.Run.Depth + 1;
 
 			var center = GetComponent<RoomComponent>().Room.Center;
 
@@ -320,7 +320,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 			Context.Level.ReTileAndCreateBodyChunks(x - 1, y - 1, 3, 7);
 			var w = p - new Vector2(0, 32f);
 
-			if (!(this is DM || this is BkHead || Run.Type == RunType.BossRush)) {
+			if (!(this is DM || this is BkHead || Context.Run.Type == RunType.BossRush)) {
 				var stand = new BossStand();
 				Area.Add(stand);
 				stand.Center = w;
@@ -328,9 +328,9 @@ namespace BurningKnight.entity.creature.mob.boss {
 			}
 
 			var rewards = new List<string>();
-			var c = Run.Type == RunType.BossRush ? 2 : Rnd.Int(2, 10);
+			var c = Context.Run.Type == RunType.BossRush ? 2 : Rnd.Int(2, 10);
 
-			if (Run.Type != RunType.BossRush && !(this is DM || this is BkHead)) {
+			if (Context.Run.Type != RunType.BossRush && !(this is DM || this is BkHead)) {
 				for (var i = 0; i < c; i++) {
 					rewards.Add("bk:emerald");
 				}
@@ -342,7 +342,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 				}
 			}
 
-			if (Run.Type != RunType.BossRush) {
+			if (Context.Run.Type != RunType.BossRush) {
 				var cn = Rnd.Int(0, 3);
 
 				for (var i = 0; i < cn; i++) {

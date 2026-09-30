@@ -154,13 +154,13 @@ namespace BurningKnight.ui.imgui {
 
 			if (ImGui.CollapsingHeader("Run info")) {
 				ImGui.Text($"Run ID: {GlobalSave.RunId}");
-				ImGui.Text($"Type: {Run.Type}");
-				ImGui.Text($"Seed: {Run.Seed}");
-				ImGui.Text($"Kills: {Run.KillCount}");
-				ImGui.Text($"Time: {Run.FormatTime()}");
-				ImGui.Text($"Has run: {Run.HasRun}");
-				ImGui.Text($"Luck: {Run.Luck}");
-				ImGui.Text($"Scourge: {Run.Scourge}");
+				ImGui.Text($"Type: {Context.Run.Type}");
+				ImGui.Text($"Seed: {Context.Run.Seed}");
+				ImGui.Text($"Kills: {Context.Run.KillCount}");
+				ImGui.Text($"Time: {Context.Run.FormatTime()}");
+				ImGui.Text($"Has run: {Context.Run.HasRun}");
+				ImGui.Text($"Luck: {Context.Run.Luck}");
+				ImGui.Text($"Scourge: {Context.Run.Scourge}");
 			}
 
 			if (ImGui.CollapsingHeader("Camera")) {
@@ -191,17 +191,17 @@ namespace BurningKnight.ui.imgui {
 			ImGui.BulletText($"{GlobalSave.Emeralds} emeralds");
 
 			if (ImGui.Button("Go to hall (0)")) {
-				Run.Depth = 0;
+				Context.Run.Depth = 0;
 			}
 
 			ImGui.SameLine();
 
 			if (ImGui.Button("Go to hub (-1)")) {
-				Run.Depth = -1;
+				Context.Run.Depth = -1;
 			}
 
 			if (ImGui.Button("New run")) {
-				Run.StartNew();
+				Context.Run.StartNew();
 			}
 
 			ImGui.SameLine();

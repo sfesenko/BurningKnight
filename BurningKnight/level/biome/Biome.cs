@@ -103,7 +103,7 @@ namespace BurningKnight.level.biome {
 		}
 
 		public virtual bool HasSpikes() {
-			return Run.Type != RunType.BossRush;
+			return Context.Run.Type != RunType.BossRush;
 		}
 
 		public virtual bool HasBrekables() {
@@ -123,7 +123,7 @@ namespace BurningKnight.level.biome {
 		}
 		
 		public virtual int GetNumRegularRooms() {
-			return Run.Depth + 2;
+			return Context.Run.Depth + 2;
 		}
 
 		public virtual int GetNumTrapRooms() {
@@ -135,7 +135,7 @@ namespace BurningKnight.level.biome {
 		}
 
 		public virtual int GetNumSecretRooms() {
-			return Run.Depth <= 0 || Rnd.Chance() ? 0 : 1;
+			return Context.Run.Depth <= 0 || Rnd.Chance() ? 0 : 1;
 		}
 
 		public string GetDefaultStepSound(Tile tile) {

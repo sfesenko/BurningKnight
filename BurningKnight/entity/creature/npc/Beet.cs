@@ -17,8 +17,8 @@ namespace BurningKnight.entity.creature.npc {
 
 		static Beet() {
 			Dialogs.RegisterCallback("beet_0", (d, c) => {
-				c.Dialog.Str.SetVariable("seed", Run.NextSeed);
-				return Dialogs.Get($"beet_{(Run.IgnoreSeed ? 4 : 1)}");
+				c.Dialog.Str.SetVariable("seed", GameContext.Current.Run.NextSeed);
+				return Dialogs.Get($"beet_{(GameContext.Current.Run.IgnoreSeed ? 4 : 1)}");
 			});
 			
 			Dialogs.RegisterCallback("beet_2", (d, c) => {
@@ -27,19 +27,19 @@ namespace BurningKnight.entity.creature.npc {
 				Log.Info($"Beet set the seed to {a}");
 				
 				Rnd.Seed = a;
-				Run.NextSeed = a;
-				Run.IgnoreSeed = true;
+				GameContext.Current.Run.NextSeed = a;
+				GameContext.Current.Run.IgnoreSeed = true;
 
 				return null;
 			});
 			
 			Dialogs.RegisterCallback("beet_4", (d, c) => {
 				if (((ChoiceDialog) d).Choice == 2) {
-					Run.NextSeed = Rnd.GenerateSeed();
-					Run.IgnoreSeed = false;
+					GameContext.Current.Run.NextSeed = Rnd.GenerateSeed();
+					GameContext.Current.Run.IgnoreSeed = false;
 
-					c.Dialog.Str.SetVariable("seed", Run.NextSeed);
-					Log.Info($"Beet randomly set the seed to {Run.NextSeed}");
+					c.Dialog.Str.SetVariable("seed", GameContext.Current.Run.NextSeed);
+					Log.Info($"Beet randomly set the seed to {GameContext.Current.Run.NextSeed}");
 				}
 
 				return null;
@@ -65,7 +65,7 @@ namespace BurningKnight.entity.creature.npc {
 			
 			dialog.Dialog.Voice = 1;
 			dialog.OnNext += (c) => {
-				if (c.Current == null && !Run.IgnoreSeed) {
+				if (c.Current == null && !Context.Run.IgnoreSeed) {
 					GetComponent<StateComponent>().Become<HideState>();
 				}
 			};

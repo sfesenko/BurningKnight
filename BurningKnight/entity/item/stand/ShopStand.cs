@@ -28,7 +28,7 @@ namespace BurningKnight.entity.item.stand {
 
 		public override void Init() {
 			base.Init();
-			OnSale = Rnd.Chance(10 + Run.Luck * 2);
+			OnSale = Rnd.Chance(10 + Context.Run.Luck * 2);
 		}
 
 		public override ItemPool GetPool() {

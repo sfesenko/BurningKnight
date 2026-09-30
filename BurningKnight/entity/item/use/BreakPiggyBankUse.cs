@@ -9,7 +9,7 @@ namespace BurningKnight.entity.item.use {
 		public override void Use(Entity entity, Item item) {
 			base.Use(entity, item);
 
-			var amount = Run.Depth * 5;
+			var amount = Context.Run.Depth * 5;
 			entity.GetComponent<ConsumablesComponent>().Coins += amount;
 			
 			TextParticle.Add(entity, Locale.Get("coins"), amount, true);

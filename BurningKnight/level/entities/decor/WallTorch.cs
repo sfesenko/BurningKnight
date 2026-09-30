@@ -22,7 +22,7 @@ namespace BurningKnight.level.entities.decor {
 			Height = 7;
 			Sprite = Context.Level != null && Context.Level.Biome is CaveBiome ? "cave_torch" : "wall_torch";
 			t = Rnd.Float(6);
-			AlwaysActive = Run.Depth < 1;
+			AlwaysActive = Context.Run.Depth < 1;
 		}
 
 		public override void AddComponents() {

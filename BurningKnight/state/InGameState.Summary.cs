@@ -71,7 +71,7 @@ namespace BurningKnight.state {
 
 					try {
 						// Needs xclip on linux
-						Clipboard.SetText(Run.Seed);
+						Clipboard.SetText(Context.Run.Seed);
 					} catch (Exception e) {
 						Log.Error(e);
 					}
@@ -113,7 +113,7 @@ namespace BurningKnight.state {
 			};
 		}
 		public void AnimateDoneScreen(Player player) {
-			if (Run.Type == RunType.Daily) {
+			if (Context.Run.Type == RunType.Daily) {
 				for (var i = 0; i < Player.MaxPlayers; i++) {
 					Player.StartingItems[i] = null;
 					Player.StartingWeapons[i] = null;
@@ -143,11 +143,11 @@ namespace BurningKnight.state {
 				Log.Error(e);
 			}
 
-			if (Run.Won) {
-				if (Run.Type == RunType.BossRush) {
+			if (Context.Run.Won) {
+				if (Context.Run.Type == RunType.BossRush) {
 					Achievements.Unlock("bk:boss_rush");
-				} else if (Run.Type == RunType.Challenge) {
-					GlobalSave.Put($"challenge_{Run.ChallengeId}", true);
+				} else if (Context.Run.Type == RunType.Challenge) {
+					GlobalSave.Put($"challenge_{Context.Run.ChallengeId}", true);
 					var count = 0;
 
 					for (var i = 1; i <= 30; i++) {
@@ -159,9 +159,9 @@ namespace BurningKnight.state {
 					Achievements.SetProgress("bk:10_challenges", Math.Min(10, count), 10);
 					Achievements.SetProgress("bk:20_challenges", Math.Min(20, count), 20);
 					Achievements.SetProgress("bk:30_challenges", Math.Min(30, count), 30);
-				} else if (Run.Type == RunType.Daily) {
+				} else if (Context.Run.Type == RunType.Daily) {
 					Achievements.Unlock("bk:daily");
-				} else if (Run.Type == RunType.Regular) {
+				} else if (Context.Run.Type == RunType.Regular) {
 					if (player.GetComponent<LampComponent>().Item?.Id != "bk:no_lamp") {
 						Achievements.Unlock("bk:unstoppable");
 					}
@@ -176,7 +176,7 @@ namespace BurningKnight.state {
 			GlobalSave.Put("played_once", true);
 
 			gameOverMenu.Add(new UiLabel {
-				LocaleLabel = Run.Won ? (BK.Demo ? "you_won_demo" : "won_message") : "death_message",
+				LocaleLabel = Context.Run.Won ? (BK.Demo ? "you_won_demo" : "won_message") : "death_message",
 				RelativeCenterX = Display.UiWidth / 2f,
 				RelativeCenterY = TitleY,
 				Clickable = false
@@ -188,14 +188,14 @@ namespace BurningKnight.state {
 
 			gameOverMenu.Add(stats);
 
-			stats.Add(Locale.Get("run_type"), Locale.Get($"run_{Run.Type.ToString().ToLower()}") + (Run.CustomSeed ? " " + Locale.Get("seeded") : ""));
-			stats.Add(Locale.Get("seed"), Run.Seed, false, bt => {
+			stats.Add(Locale.Get("run_type"), Locale.Get($"run_{Context.Run.Type.ToString().ToLower()}") + (Context.Run.CustomSeed ? " " + Locale.Get("seeded") : ""));
+			stats.Add(Locale.Get("seed"), Context.Run.Seed, false, bt => {
 				var b = (UiTableEntry) bt;
 				b.RealLocaleLabel = "copied_to_clipboard";
 
 				try {
 					// Needs xclip on linux
-					Clipboard.SetText(Run.Seed);
+					Clipboard.SetText(Context.Run.Seed);
 				} catch (Exception e) {
 					Log.Error(e);
 				}
@@ -206,32 +206,32 @@ namespace BurningKnight.state {
 			stats.Add(Locale.Get("lamp"), Locale.Get(lamp));
 			stats.Add(Locale.Get("time"), GetRunTime());
 			stats.Add(Locale.Get("depth"), Level.GetDepthString(true));
-			stats.Add(Locale.Get("coins_collected"), Run.Statistics.CoinsObtained.ToString());
-			stats.Add(Locale.Get("items_collected"), Run.Statistics.Items.Count.ToString());
-			stats.Add(Locale.Get("damage_taken"), Run.Statistics.DamageTaken.ToString());
-			stats.Add(Locale.Get("kills"), Run.Statistics.MobsKilled.ToString());
-			stats.Add(Locale.Get("scourge_stats"), Run.Scourge.ToString());
-			stats.Add(Locale.Get("rooms_explored"), $"{Run.Statistics.RoomsExplored} / {Run.Statistics.RoomsTotal}");
-			stats.Add(Locale.Get("distance_traveled"), $"{(Run.Statistics.TilesWalked / 1024f):0.0} {Locale.Get("km")}");
+			stats.Add(Locale.Get("coins_collected"), Context.Run.Statistics.CoinsObtained.ToString());
+			stats.Add(Locale.Get("items_collected"), Context.Run.Statistics.Items.Count.ToString());
+			stats.Add(Locale.Get("damage_taken"), Context.Run.Statistics.DamageTaken.ToString());
+			stats.Add(Locale.Get("kills"), Context.Run.Statistics.MobsKilled.ToString());
+			stats.Add(Locale.Get("scourge_stats"), Context.Run.Scourge.ToString());
+			stats.Add(Locale.Get("rooms_explored"), $"{Context.Run.Statistics.RoomsExplored} / {Context.Run.Statistics.RoomsTotal}");
+			stats.Add(Locale.Get("distance_traveled"), $"{(Context.Run.Statistics.TilesWalked / 1024f):0.0} {Locale.Get("km")}");
 
-			Run.CalculateScore();
-			Log.Info($"Run score is {Run.Score}");
+			Context.Run.CalculateScore();
+			Log.Info($"Run score is {Context.Run.Score}");
 
 			currentBack = overBack;
 			var newHigh = false;
 
-			if (Run.Type == RunType.Regular) {
-				newHigh = GlobalSave.GetInt("high_score") < Run.Score;
+			if (Context.Run.Type == RunType.Regular) {
+				newHigh = GlobalSave.GetInt("high_score") < Context.Run.Score;
 				
 				if (newHigh) {
 					Log.Info("New highscore!");
-					GlobalSave.Put("high_score", Run.Score);
+					GlobalSave.Put("high_score", Context.Run.Score);
 				}
 			}
 			
-			var board = Run.GetLeaderboardId();
+			var board = Context.Run.GetLeaderboardId();
 			
-			stats.Add(Locale.Get("score"), newHigh ? $"{Locale.Get("new_high_score")} {Run.Score}" : Run.Score.ToString(), newHigh, b => {
+			stats.Add(Locale.Get("score"), newHigh ? $"{Locale.Get("new_high_score")} {Context.Run.Score}" : Context.Run.Score.ToString(), newHigh, b => {
 				ShowLeaderboard(board, board);
 
 				Tween.To(-Display.UiHeight, gameOverMenu.Y, x => gameOverMenu.Y = x, 0.6f).OnEnd = () => {
@@ -250,13 +250,13 @@ namespace BurningKnight.state {
 			stats.RelativeCenterX = Display.UiWidth * 0.5f;
 			stats.RelativeCenterY = Display.UiHeight * 0.5f;
 			
-			if (Run.Type == RunType.Regular) {
+			if (Context.Run.Type == RunType.Regular) {
 				var place = -1;
 
 				for (var i = 0; i < 3; i++) {
 					var id = $"top_{i}";
 						
-					if (!GlobalSave.Exists(id) || GlobalSave.GetInt(id) < Run.Score) {
+					if (!GlobalSave.Exists(id) || GlobalSave.GetInt(id) < Context.Run.Score) {
 						place = i;
 						break;
 					}
@@ -277,28 +277,28 @@ namespace BurningKnight.state {
 
 					var root = new JsonObject();
 
-					root["seed"] = Run.Seed;
+					root["seed"] = Context.Run.Seed;
 					root["time"] = GetRunTime();
 					root["depth"] = Level.GetDepthString(true);
-					root["won"] = Run.Won;
+					root["won"] = Context.Run.Won;
 
 					root["lamp"] = lamp;
-					root["coins"] = Run.Statistics.CoinsObtained;
-					root["items"] = Run.Statistics.Items.Count;
-					root["damage"] = Run.Statistics.DamageTaken;
-					root["kills"] = Run.Statistics.MobsKilled;
-					root["rooms"] = $"{Run.Statistics.RoomsExplored} / {Run.Statistics.RoomsTotal}";
-					root["scourge"] = Run.Scourge;
-					root["distance"] = $"{(Run.Statistics.TilesWalked / 1024f):0.0} {Locale.Get("km")}";
+					root["coins"] = Context.Run.Statistics.CoinsObtained;
+					root["items"] = Context.Run.Statistics.Items.Count;
+					root["damage"] = Context.Run.Statistics.DamageTaken;
+					root["kills"] = Context.Run.Statistics.MobsKilled;
+					root["rooms"] = $"{Context.Run.Statistics.RoomsExplored} / {Context.Run.Statistics.RoomsTotal}";
+					root["scourge"] = Context.Run.Scourge;
+					root["distance"] = $"{(Context.Run.Statistics.TilesWalked / 1024f):0.0} {Locale.Get("km")}";
 
 					var id = $"top_{place}";
 
-					GlobalSave.Put(id, Run.Score);
+					GlobalSave.Put(id, Context.Run.Score);
 					GlobalSave.Put($"{id}_data", root.ToString());
 				}
 			}
 			
-			if (Run.Won) {
+			if (Context.Run.Won) {
 				killedLabel.Done = true;
 				Killer.Done = true;
 
@@ -315,7 +315,7 @@ namespace BurningKnight.state {
 			
 			OpenBlackBars();
 
-			Run.SubmitScore?.Invoke(Run.Score, board);
+			Context.Run.SubmitScore?.Invoke(Context.Run.Score, board);
 		}
 	}
 }

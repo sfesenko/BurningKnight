@@ -199,7 +199,7 @@ namespace BurningKnight.level.entities {
 			
 			Item = null;
 			UpdateSprite();
-			Run.AddScourge(true);
+			Context.Run.AddScourge(true);
 
 			GetComponent<DialogComponent>().Close();
 			

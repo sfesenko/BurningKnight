@@ -10,7 +10,7 @@ namespace BurningKnight.entity.item.use {
 		public int Amount;
 
 		public override void Use(Entity entity, Item item) {
-			Run.Luck += Amount;
+			Context.Run.Luck += Amount;
 			TextParticle.Add(entity, Locale.Get("luck"), Amount, true, Amount < 0);
 		}
 

@@ -28,7 +28,7 @@ namespace BurningKnight.entity.creature.player {
 		public override void PostInit() {
 			base.PostInit();
 
-			if (Item != null && Run.Depth < 1) {
+			if (Item != null && Context.Run.Depth < 1) {
 				Item.Done = true;
 				Item = null;
 			}
@@ -62,7 +62,7 @@ namespace BurningKnight.entity.creature.player {
 		}
 		
 		protected override bool ShouldReplace(Item item) {
-			return (Run.Depth > 0 || !AtBack) && item.Type == ItemType.Weapon && !Disabled;
+			return (Context.Run.Depth > 0 || !AtBack) && item.Type == ItemType.Weapon && !Disabled;
 		}
 
 		public override void Update(float dt) {

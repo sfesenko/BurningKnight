@@ -110,7 +110,7 @@ namespace BurningKnight.entity.creature.player {
 					
 					switch (type) {
 						case ItemType.Bomb: {
-							if (Run.Depth > 0 && GlobalSave.IsFalse("control_bomb")) {
+							if (Context.Run.Depth > 0 && GlobalSave.IsFalse("control_bomb")) {
 								var dialog = GetComponent<DialogComponent>();
 
 								dialog.Dialog.Str.ClearIcons();
@@ -215,7 +215,7 @@ namespace BurningKnight.entity.creature.player {
 		public override void Update(float dt) {
 			base.Update(dt);
 
-			if (Run.Depth > 0 && Input.WasPressed(Controls.Bomb, GetComponent<InputComponent>())) {
+			if (Context.Run.Depth > 0 && Input.WasPressed(Controls.Bomb, GetComponent<InputComponent>())) {
 				SpawnBomb();
 			}
 		}

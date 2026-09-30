@@ -32,7 +32,7 @@ namespace BurningKnight.level.rooms.entrance {
 
 		private void PlaceExit(Level level, Dot where) {
 			var prop = new Exit {
-				To = Run.Depth + 1
+				To = Context.Run.Depth + 1
 			};
 
 			level.Area.Add(prop);

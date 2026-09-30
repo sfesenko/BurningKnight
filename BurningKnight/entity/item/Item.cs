@@ -68,8 +68,8 @@ namespace BurningKnight.entity.item {
 		public override void Init() {
 			base.Init();
 			
-			if (Run.Depth > 0 && (Type != ItemType.Scourge && Type != ItemType.Coin && Type != ItemType.Key && Type != ItemType.Bomb && Type != ItemType.Heart) 
-			  && Rnd.Chance(Scourge.IsEnabled(Scourge.OfScourged) ? 0.66f : (Run.Scourge * 10 + 0.5f))) {
+			if (Context.Run.Depth > 0 && (Type != ItemType.Scourge && Type != ItemType.Coin && Type != ItemType.Key && Type != ItemType.Bomb && Type != ItemType.Heart) 
+			  && Rnd.Chance(Scourge.IsEnabled(Scourge.OfScourged) ? 0.66f : (Context.Run.Scourge * 10 + 0.5f))) {
 				
 				Scourged = true;
 			}
@@ -108,7 +108,7 @@ namespace BurningKnight.entity.item {
 		}
 
 		private bool Interact(Entity entity) {
-			if (Masked && Run.Depth < 1) {
+			if (Masked && Context.Run.Depth < 1) {
 				return false;
 			}
 			
@@ -136,7 +136,7 @@ namespace BurningKnight.entity.item {
 					inventory.Pickup(this);
 					entity.GetComponent<InteractorComponent>().EndInteraction();	
 				}
-			} else if (!HasComponent<OwnerComponent>() && Run.Depth != -2) {
+			} else if (!HasComponent<OwnerComponent>() && Context.Run.Depth != -2) {
 				Engine.Instance.State.Ui.Add(new ItemPickupFx(this));
 			}			
 		}
@@ -308,7 +308,7 @@ namespace BurningKnight.entity.item {
 
 		public void CheckMasked() {
 			Masked = Unknown || 
-			         (Run.Depth == 0 
+			         (Context.Run.Depth == 0 
 			          && Data.Lockable 
 			          && Type != ItemType.Lamp
 			          && (Data.UnlockPrice == 0 || (TryGetComponent<OwnerComponent>(out var o) && o.Owner is PermanentStand)) 

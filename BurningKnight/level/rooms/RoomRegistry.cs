@@ -130,15 +130,15 @@ namespace BurningKnight.level.rooms {
 				RoomInfo.New<WellRoom>(0.3f),
 				RoomInfo.New<ProtoChestRoom>(0.1f),
 				
-				RoomInfo.New<RogerShopRoom>(1f, () => Run.Loop == 0 && GlobalSave.IsTrue(ShopNpc.Roger)),
-				RoomInfo.New<BoxyShopRoom>(1f, () => Run.Loop == 0 && GlobalSave.IsTrue(ShopNpc.Boxy)),
+				RoomInfo.New<RogerShopRoom>(1f, () => Context.Run.Loop == 0 && GlobalSave.IsTrue(ShopNpc.Roger)),
+				RoomInfo.New<BoxyShopRoom>(1f, () => Context.Run.Loop == 0 && GlobalSave.IsTrue(ShopNpc.Boxy)),
 				RoomInfo.New<TrashGoblinRoom>(1f),
-				RoomInfo.New<DuckRoom>(1f, () => Run.Loop == 0 && GlobalSave.IsTrue(ShopNpc.Duck)),
+				RoomInfo.New<DuckRoom>(1f, () => Context.Run.Loop == 0 && GlobalSave.IsTrue(ShopNpc.Duck)),
 				RoomInfo.New<NurseRoom>(1f, () => GlobalSave.IsTrue(ShopNpc.Nurse)),
 				RoomInfo.New<ElonRoom>(1f, () => GlobalSave.IsTrue(ShopNpc.Elon)),
-				RoomInfo.New<GobettaShopRoom>(1f, () => Run.Loop == 0 && GlobalSave.IsTrue(ShopNpc.Gobetta)),
-				RoomInfo.New<SnekRoom>(1f, () => Run.Loop == 0 && GlobalSave.IsTrue(ShopNpc.Snek)),
-				RoomInfo.New<VampireRoom>(1f, () => Run.Loop == 0 && GlobalSave.IsTrue(ShopNpc.Vampire)),
+				RoomInfo.New<GobettaShopRoom>(1f, () => Context.Run.Loop == 0 && GlobalSave.IsTrue(ShopNpc.Gobetta)),
+				RoomInfo.New<SnekRoom>(1f, () => Context.Run.Loop == 0 && GlobalSave.IsTrue(ShopNpc.Snek)),
+				RoomInfo.New<VampireRoom>(1f, () => Context.Run.Loop == 0 && GlobalSave.IsTrue(ShopNpc.Vampire)),
 
 				// Boss
 				RoomInfo.New<CollumnsBossRoom>(1f, Biome.Castle),
@@ -176,7 +176,7 @@ namespace BurningKnight.level.rooms {
 		}
 
 		public static RoomDef Generate(RoomType type, Biome biome) {
-			if (biome is IceBiome && type == RoomType.Connection && Run.Type != RunType.BossRush) {
+			if (biome is IceBiome && type == RoomType.Connection && Context.Run.Type != RunType.BossRush) {
 				return new IceConnectionRoom();
 			}
 			

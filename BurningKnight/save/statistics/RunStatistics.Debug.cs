@@ -31,7 +31,7 @@ namespace BurningKnight.save.statistics {
 				return;
 			}
 			
-			ImGui.Text($"Run Type: {Run.Type}");
+			ImGui.Text($"Run Type: {GameContext.Current.Run.Type}");
 
 			ImGui.Text($"World Time: {Weather.TimeOfDay}");
 			ImGui.Text($"Night: {Weather.IsNight}");
@@ -62,20 +62,20 @@ namespace BurningKnight.save.statistics {
 				Weather.RainLeft = 0;
 			}
 
-			Run.Statistics?.RenderWindow();
+			GameContext.Current.Run.Statistics?.RenderWindow();
 
 			ImGui.End();
 		}
 		public void RenderWindow() {
 			ImGui.Separator();
 			
-			ImGui.Text($"Time: {Math.Floor(Run.Time / 3600f)}h {Math.Floor(Run.Time / 60f % 60f)}m {Math.Floor(Run.Time % 60f)}s");
+			ImGui.Text($"Time: {Math.Floor(Context.Run.Time / 3600f)}h {Math.Floor(Context.Run.Time / 60f % 60f)}m {Math.Floor(Context.Run.Time % 60f)}s");
 			ImGui.Text($"Won: {Won}");
-			ImGui.Text($"Loop: {Run.Loop}");
+			ImGui.Text($"Loop: {Context.Run.Loop}");
 			ImGui.Text($"Max Depth: {MaxDepth}");
 			ImGui.Text($"Game Version: {GameVersion}");
-			Run.CalculateScore();
-			ImGui.Text($"Score: {Run.Score}");
+			Context.Run.CalculateScore();
+			ImGui.Text($"Score: {Context.Run.Score}");
 			ImGui.Separator();
 			
 			if (ImGui.TreeNode("Items")) {
@@ -118,8 +118,8 @@ namespace BurningKnight.save.statistics {
 			ImGui.Text($"Paintings Broke: {GlobalSave.GetInt("paintings_destroyed")}");
 
 			ImGui.Separator();
-			ImGui.Text($"Luck: {Run.Luck}");
-			ImGui.Text($"Scourge: {Run.Scourge}");
+			ImGui.Text($"Luck: {Context.Run.Luck}");
+			ImGui.Text($"Scourge: {Context.Run.Scourge}");
 
 			if (ImGui.TreeNode("Scourges")) {
 				foreach (var curse in Scourge.Defined) {

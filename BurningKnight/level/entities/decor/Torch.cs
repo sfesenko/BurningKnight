@@ -28,7 +28,7 @@ namespace BurningKnight.level.entities.decor {
 			Width = 10;
 			Sprite = "torch";
 			t = Rnd.Float(6);
-			AlwaysActive = Run.Depth < 1;
+			AlwaysActive = Context.Run.Depth < 1;
 		}
 
 		public override void AddComponents() {

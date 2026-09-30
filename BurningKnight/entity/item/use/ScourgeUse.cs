@@ -14,7 +14,7 @@ namespace BurningKnight.entity.item.use {
 			base.Use(entity, item);
 
 			for (var i = 0; i < amount; i++) {
-				Run.AddScourge();
+				Context.Run.AddScourge();
 			}
 		}
 

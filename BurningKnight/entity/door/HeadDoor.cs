@@ -56,7 +56,7 @@ namespace BurningKnight.entity.door {
 						}
 
             // fixme: played multiple time
-						if (Run.Scourge > 0 || p.GetComponent<ConsumablesComponent>().Coins >= 30) {
+						if (Context.Run.Scourge > 0 || p.GetComponent<ConsumablesComponent>().Coins >= 30) {
 							if (last <= 0) {
 								Audio.PlaySfx("level_door_head_success");
 								last = 0.3f;

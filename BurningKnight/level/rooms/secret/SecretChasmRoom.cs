@@ -23,7 +23,7 @@ namespace BurningKnight.level.rooms.secret {
 			}
 
 			if (GlobalSave.IsTrue("saved_npc")) {
-				for (var i = 0; i < Rnd.Int(1, Run.Depth); i++) {
+				for (var i = 0; i < Rnd.Int(1, Context.Run.Depth); i++) {
 					var item = Items.CreateAndAdd("bk:emerald", level.Area);
 					item.Center = GetCenter() * 16 + new Vector2(Rnd.Float(-4, 4), Rnd.Float(-4, 4));
 				}

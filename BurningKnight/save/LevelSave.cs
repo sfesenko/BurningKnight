@@ -37,11 +37,11 @@ namespace BurningKnight.save {
 
 		public override void Save(Area area, FileWriter writer, bool old) {
 			SmartSave(area.Tagged[Tags.LevelSave], writer);
-				var d = (old ? Run.LastDepth : Run.Depth);
+				var d = (old ? Context.Run.LastDepth : Context.Run.Depth);
 			
 			if (d > 0) {
-				Run.LastSavedDepth = d;
-				Log.Debug($"Set run last saved depth to {Run.LastSavedDepth}");
+				Context.Run.LastSavedDepth = d;
+				Log.Debug($"Set run last saved depth to {Context.Run.LastSavedDepth}");
 			}
 		}
 
@@ -50,23 +50,23 @@ namespace BurningKnight.save {
 				return path;
 			}
 			
-			return $"{path}level-{(old ? Run.LastDepth : Run.Depth)}-l{(old ? Run.LastLoop : Run.Loop)}.lvl";
+			return $"{path}level-{(old ? Context.Run.LastDepth : Context.Run.Depth)}-l{(old ? Context.Run.LastLoop : Context.Run.Loop)}.lvl";
 		}
 
 		private RegularLevel CreateLevel() {
-			if (Run.Depth < -2) {
+			if (Context.Run.Depth < -2) {
 				return new CutsceneLevel();
 			}
 			
-			if (Run.Depth == -2) {
+			if (Context.Run.Depth == -2) {
 				return new TutorialLevel();
 			}
 			
-			if (Run.Depth == 0) {
+			if (Context.Run.Depth == 0) {
 				return new HallLevel();
 			}
 			
-			return new RegularLevel(BiomeRegistry.GenerateForDepth(Run.Depth));
+			return new RegularLevel(BiomeRegistry.GenerateForDepth(Context.Run.Depth));
 		}
 
 		public static Biome BiomeGenerated;
@@ -82,7 +82,7 @@ namespace BurningKnight.save {
 			}
 
 			var a = new GameArea();
-			Rnd.Seed = $"{seed}{Run.Depth}{c}{Run.Loop}";
+			Rnd.Seed = $"{seed}{Context.Run.Depth}{c}{Context.Run.Loop}";
 			Log.Debug($"Thread seed is {Rnd.Seed} (int {Rnd.IntSeed})");
 		
 			try {
@@ -162,7 +162,7 @@ namespace BurningKnight.save {
 			// stack without bound.
 			while (true) {
 				if (sd == null) {
-					sd = Run.Seed;
+					sd = Context.Run.Seed;
 				}
 
 				var attempt = ++generation;
@@ -205,7 +205,7 @@ namespace BurningKnight.save {
 							" retrying while it may still be running");
 					}
 
-					Rnd.Seed = Run.Seed = Rnd.GenerateSeed();
+					Rnd.Seed = Context.Run.Seed = Rnd.GenerateSeed();
 					FailedAttempts++;
 
 					sd = null;
@@ -214,7 +214,7 @@ namespace BurningKnight.save {
 
 				stopwatch.Stop();
 
-				if (Run.Depth > 0) {
+				if (Context.Run.Depth > 0) {
 					Fails.Add(FailedAttempts);
 				}
 
@@ -230,7 +230,7 @@ namespace BurningKnight.save {
 		}
 
 		public override void Delete() {
-			var handle = Run.Depth > 0 ? GetHandle() : new FileHandle(SaveManager.SaveDir);
+			var handle = Context.Run.Depth > 0 ? GetHandle() : new FileHandle(SaveManager.SaveDir);
 
 			if (!handle.Exists()) {
 				return;

@@ -23,7 +23,7 @@ namespace BurningKnight.level.entities.statue {
 		}
 
 		protected override bool Interact(Entity e) {
-			if (Run.Scourge > 0) {
+			if (Context.Run.Scourge > 0) {
 				var c = e.GetComponent<ConsumablesComponent>();
 
 				if (c.Coins < 5) {
@@ -31,12 +31,12 @@ namespace BurningKnight.level.entities.statue {
 					GetComponent<DialogComponent>().StartAndClose("fountain_0", 5);
 				} else {
 					c.Coins -= 5;
-					Run.RemoveScourge();
+					Context.Run.RemoveScourge();
 					
 					// You've been cleaned completely/a bit
-					GetComponent<DialogComponent>().StartAndClose($"fountain_{(Run.Scourge == 0 ? 2 : 1)}", 5);
+					GetComponent<DialogComponent>().StartAndClose($"fountain_{(Context.Run.Scourge == 0 ? 2 : 1)}", 5);
 
-					if (Run.Scourge == 0) {
+					if (Context.Run.Scourge == 0) {
 						e.GetComponent<ActiveWeaponComponent>().Cleanse();
 						e.GetComponent<WeaponComponent>().Cleanse();
 					}

@@ -58,7 +58,7 @@ namespace BurningKnight.entity.creature.mob {
 		public SpawnChance GetChanceFor(string biome) {
 			foreach (var b in Spawns) {
 				foreach (var a in b.Areas) {
-					if (a == biome && (!b.LoopOnly || Run.Loop > 0)) {
+					if (a == biome && (!b.LoopOnly || Context.Run.Loop > 0)) {
 						return b;
 					}
 				}

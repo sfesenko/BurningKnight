@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using BurningKnight.assets.achievements;
 using BurningKnight.save;
+using BurningKnight;
 using BurningKnight.state;
 using BurningKnight.ui;
 using Lens;
@@ -69,7 +70,7 @@ namespace Desktop.integration.steam {
 					}
 				}
 
-				Run.SubmitScore += (score, board) => {
+				Context.Run.SubmitScore += (score, board) => {
 					if (Assets.DataModified) {
 						return;
 					}

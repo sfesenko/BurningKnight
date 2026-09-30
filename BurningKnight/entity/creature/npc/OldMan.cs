@@ -28,14 +28,14 @@ namespace BurningKnight.entity.creature.npc {
 			AddComponent(new AnimationComponent("old_man"));
 			AddComponent(new RectBodyComponent(-Padding, -Padding, Width + Padding * 2, Height + Padding * 2));
 
-			if (Run.Depth == 0) {
+			if (Context.Run.Depth == 0) {
 				AddComponent(new CloseDialogComponent("old_man_0"));
 				
 				// AddComponent(new InteractDialogComponent("old_man_1"));
-			} else if (Run.Depth == Run.ContentEndDepth) {
+			} else if (Context.Run.Depth == Context.Run.ContentEndDepth) {
 				GetComponent<DialogComponent>().Start("old_man_4");
 				// cycle = !BK.Version.Dev;;
-			} else if (Run.Depth == -2) {
+			} else if (Context.Run.Depth == -2) {
 				set = false;
 				AddComponent(new CloseDialogComponent("control_1") {
 						Radius = 64 * 64,

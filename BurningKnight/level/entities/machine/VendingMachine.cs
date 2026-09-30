@@ -75,7 +75,7 @@ namespace BurningKnight.level.entities.machine {
 			component.Coins -= 1;
 			coinsConsumed++;
 
-			if (Rnd.Float(100) > (coinsConsumed + Run.Luck - Run.Scourge) * 2) {
+			if (Rnd.Float(100) > (coinsConsumed + Context.Run.Luck - Context.Run.Scourge) * 2) {
 				Audio.PlaySfx("level_vending_machine_coin");
 
 				return false; // Did not pay enough :P
@@ -101,7 +101,7 @@ namespace BurningKnight.level.entities.machine {
 
 			Audio.PlaySfx("level_vending_machine");
 
-			if (spawnedCount > 1 && Rnd.Float(100) < spawnedCount * 30 - Run.Luck * 2) {
+			if (spawnedCount > 1 && Rnd.Float(100) < spawnedCount * 30 - Context.Run.Luck * 2) {
 				Break(false);
 				return true;
 			}

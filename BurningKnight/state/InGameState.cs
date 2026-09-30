@@ -200,7 +200,7 @@ namespace BurningKnight.state {
 		}
 
 		private void CaptureTime() {
-			timeWas = Run.Time;
+			timeWas = Context.Run.Time;
 			startTime = Engine.GameTime.TotalGameTime.TotalSeconds;
 		}
 
@@ -309,7 +309,7 @@ namespace BurningKnight.state {
 		private float emeraldY = -20;
 		
 		private string GetRunTime() {
-			var t = Run.Time;
+			var t = Context.Run.Time;
 			return $"{(Math.Floor(t / 3600f) + "").PadLeft(2, '0')}:{(Math.Floor(t / 60f % 60f) + "").PadLeft(2, '0')}:{(Math.Floor(t % 60f) + "").PadLeft(2, '0')}";
 		}
 
@@ -332,8 +332,8 @@ namespace BurningKnight.state {
 		}
 
 		private string GetScore() {
-			Run.CalculateScore();
-			return $"{Run.Score}".PadLeft(7, '0');
+			Context.Run.CalculateScore();
+			return $"{Context.Run.Score}".PadLeft(7, '0');
 		}
 
 		public Action OnPauseCallback;

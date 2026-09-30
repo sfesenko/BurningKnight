@@ -109,7 +109,7 @@ namespace BurningKnight.entity.creature.bk {
 			
 			Timer.Add(() => {
 				GetComponent<AudioEmitterComponent>().Emit("mob_bk_hovering_loop", 0.3f, looped: true, tween: true);
-				GetComponent<AudioEmitterComponent>().Emit(Run.Depth == 10 ? "mob_bk_fight_loop" : "mob_bk_flame_loop",  0.3f, looped: true, tween: true);
+				GetComponent<AudioEmitterComponent>().Emit(Context.Run.Depth == 10 ? "mob_bk_fight_loop" : "mob_bk_flame_loop",  0.3f, looped: true, tween: true);
 			}, 2f);
 		}
 
@@ -342,7 +342,7 @@ namespace BurningKnight.entity.creature.bk {
 				return;
 			}
 			
-			if (ForcedRage || Run.Scourge >= 10) {
+			if (ForcedRage || Context.Run.Scourge >= 10) {
 				Become<ChaseState>();
 			}
 		}
@@ -362,7 +362,7 @@ namespace BurningKnight.entity.creature.bk {
 				return;
 			}
 			
-			if (!ForcedRage && Run.Scourge < 10) {
+			if (!ForcedRage && Context.Run.Scourge < 10) {
 				Become<FollowState>();
 			}
 		}

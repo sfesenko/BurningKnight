@@ -102,7 +102,7 @@ namespace BurningKnight.level.entities.decor {
 				return true;
 			}
 
-			Run.AddScourge(true);
+			Context.Run.AddScourge(true);
 			
 			if (trigger != null) {
 				trigger.Interrupted = true;
@@ -160,7 +160,7 @@ namespace BurningKnight.level.entities.decor {
 					var exit = new Exit();
 					Area.Add(exit);
 				
-					exit.To = Run.Depth + 1;
+					exit.To = Context.Run.Depth + 1;
 
 					var x = (int) Math.Floor(CenterX / 16);
 					var y = (int) Math.Floor(Bottom / 16 + 0.6f);

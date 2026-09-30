@@ -18,11 +18,11 @@ namespace BurningKnight.debug {
 
 		public override void Run(Console Console, string[] Args) {
 			if (Args.Length > 0) {
-				state.Run.Depth = Int32.Parse(Args[0]);
-				state.Run.ActualDepth = -10;
+				Context.Run.Depth = Int32.Parse(Args[0]);
+				Context.Run.ActualDepth = -10;
 
 				if (Args.Length > 1) {
-					state.Run.Loop = Int32.Parse(Args[1]);
+					Context.Run.Loop = Int32.Parse(Args[1]);
 				}
 			}
 		}

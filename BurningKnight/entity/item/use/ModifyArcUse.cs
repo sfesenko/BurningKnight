@@ -49,7 +49,7 @@ namespace BurningKnight.entity.item.use {
 		}
 
 		public void ModifyProjectile(MeleeArc arc) {
-			if (Rnd.Float() > Chance + Run.Luck * 0.2f) {
+			if (Rnd.Float() > Chance + Context.Run.Luck * 0.2f) {
 				return;
 			}
 

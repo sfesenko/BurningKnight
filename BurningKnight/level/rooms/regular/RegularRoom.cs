@@ -29,7 +29,7 @@ namespace BurningKnight.level.rooms.regular {
 		}
 
 		protected bool SmallerRooms() {
-			return Run.Depth <= 2;
+			return Context.Run.Depth <= 2;
 		}
 		
 		public override int GetMinWidth() {

@@ -9,7 +9,7 @@ namespace BurningKnight.entity.item.use {
 		public override bool HandleEvent(Event e) {
 			if (e is ProjectileCreatedEvent pce) {
 				ProjectileCallbacks.AttachDeathCallback(pce.Projectile, (p, en, t) => {
-					if (Rnd.Chance(20 + Run.Luck * 10)) {
+					if (Rnd.Chance(20 + Context.Run.Luck * 10)) {
 						BlankMaker.Make(p.Center, p.Area, 18f);
 					}
 				});

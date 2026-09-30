@@ -36,7 +36,7 @@ namespace BurningKnight.ui {
 
 			Depth = 10;
 			
-			if (Run.Depth == 0) {
+			if (Context.Run.Depth == 0) {
 				if (Events.XMas) {
 					Items.Unlock("bk:xmas_hat");
 				}

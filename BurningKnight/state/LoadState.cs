@@ -62,8 +62,8 @@ namespace BurningKnight.state {
 				loading = true;
 			}
 
-			prefix = Locale.Get(loading || Run.Depth < 1 ? Locale.Get("loading") : Locale.Get("generating"));
-			title = new Random().NextDouble() > 0.3 ? LoadScreenJokes.Generate() : BiomeTitles.Generate(BiomeRegistry.GenerateForDepth(Run.Depth).Id);
+			prefix = Locale.Get(loading || Context.Run.Depth < 1 ? Locale.Get("loading") : Locale.Get("generating"));
+			title = new Random().NextDouble() > 0.3 ? LoadScreenJokes.Generate() : BiomeTitles.Generate(BiomeRegistry.GenerateForDepth(Context.Run.Depth).Id);
 			
 			Lights.Init();
 			Physics.Init();
@@ -81,10 +81,10 @@ namespace BurningKnight.state {
 				SaveManager.Load(gameArea, SaveType.Level, Path);
 				progress++;
 
-				Run.Luck = 0;
-				Run.ResetScourge();
+				Context.Run.Luck = 0;
+				Context.Run.ResetScourge();
 				
-				if (Run.Depth > 0) {
+				if (Context.Run.Depth > 0) {
 					SaveManager.Load(gameArea, SaveType.Player, Path);
 				} else {
 					SaveManager.Generate(gameArea, SaveType.Player);
@@ -120,7 +120,7 @@ namespace BurningKnight.state {
 			timer = Math.Min(timer, (progress + 1) * 0.345f);
 			
 			if (down) {
-				if (ready && ((Engine.Version.Dev || loading || Run.Depth == 0) || timer >= 1f)) {
+				if (ready && ((Engine.Version.Dev || loading || Context.Run.Depth == 0) || timer >= 1f)) {
 					timer = 1;
 					alpha -= dt * 5;
 				}
@@ -133,7 +133,7 @@ namespace BurningKnight.state {
 				}
 			}
 
-			if (ready && ((down && alpha < 0.05f) || (Engine.Version.Dev) || Run.Depth == 0)) {
+			if (ready && ((down && alpha < 0.05f) || (Engine.Version.Dev) || Context.Run.Depth == 0)) {
 				if (IntoCutscene) {
 					Engine.Instance.SetState(new CutsceneState(gameArea));
 				} else {

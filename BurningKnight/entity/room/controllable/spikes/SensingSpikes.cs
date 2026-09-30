@@ -25,10 +25,10 @@ namespace BurningKnight.entity.room.controllable.spikes {
 						if (!wasTriggered) {
 							wasTriggered = true;
 
-							if (Run.Statistics != null) {
-								Run.Statistics.SpikesTriggered++;
+							if (Context.Run.Statistics != null) {
+								Context.Run.Statistics.SpikesTriggered++;
 
-								if (Run.Statistics.SpikesTriggered >= 100) {
+								if (Context.Run.Statistics.SpikesTriggered >= 100) {
 									Achievements.Unlock("bk:spikes");
 								}
 							}

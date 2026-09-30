@@ -57,36 +57,36 @@ public class SaveRoundTripTests : IClassFixture<SaveHost> {
 		GameSave.Put("save_test_flag", true);
 		GameSave.Put("save_test_count", 7);
 
-		Run.Depth = 3;
-		Run.RealDepth = 3;
-		Run.Loop = 2;
-		Run.KillCount = 12;
-		Run.Time = 34.5f;
-		Run.Seed = "save-test-seed";
-		Run.Type = RunType.Regular;
-		Run.DailyId = 0;
-		Run.CustomSeed = true;
-		Run.HasRun = false;
+		Context.Run.Depth = 3;
+		Context.Run.RealDepth = 3;
+		Context.Run.Loop = 2;
+		Context.Run.KillCount = 12;
+		Context.Run.Time = 34.5f;
+		Context.Run.Seed = "save-test-seed";
+		Context.Run.Type = RunType.Regular;
+		Context.Run.DailyId = 0;
+		Context.Run.CustomSeed = true;
+		Context.Run.HasRun = false;
 
 		SaveManager.Save(area, SaveType.Game, path: dir);
 
 		GameSave.Values.Clear();
-		Run.KillCount = 0;
-		Run.Time = 0;
-		Run.Seed = null;
-		Run.Type = RunType.Regular;
-		Run.Loop = 0;
-		Run.CustomSeed = false;
-		Run.HasRun = false;
+		Context.Run.KillCount = 0;
+		Context.Run.Time = 0;
+		Context.Run.Seed = null;
+		Context.Run.Type = RunType.Regular;
+		Context.Run.Loop = 0;
+		Context.Run.CustomSeed = false;
+		Context.Run.HasRun = false;
 
 		SaveManager.Load(area, SaveType.Game, dir);
 
-		Assert.Equal(12, Run.KillCount);
-		Assert.Equal(34.5f, Run.Time);
-		Assert.Equal("save-test-seed", Run.Seed);
-		Assert.Equal(2, Run.Loop);
-		Assert.True(Run.CustomSeed);
-		Assert.Equal(3, Run.LastSavedDepth);
+		Assert.Equal(12, Context.Run.KillCount);
+		Assert.Equal(34.5f, Context.Run.Time);
+		Assert.Equal("save-test-seed", Context.Run.Seed);
+		Assert.Equal(2, Context.Run.Loop);
+		Assert.True(Context.Run.CustomSeed);
+		Assert.Equal(3, Context.Run.LastSavedDepth);
 		Assert.True(GameSave.IsTrue("save_test_flag"));
 		Assert.Equal(7, GameSave.GetInt("save_test_count"));
 	}
@@ -135,11 +135,11 @@ public class SaveRoundTripTests : IClassFixture<SaveHost> {
 	public void PlayerSaveRoundTrips() {
 		var area = new GameArea();
 
-		Run.Depth = 1;
-		Run.RealDepth = 1;
-		Run.Loop = 0;
-		Run.Type = RunType.Regular;
-		Run.NumPlayers = 1;
+		Context.Run.Depth = 1;
+		Context.Run.RealDepth = 1;
+		Context.Run.Loop = 0;
+		Context.Run.Type = RunType.Regular;
+		Context.Run.NumPlayers = 1;
 
 		SaveManager.ForType(SaveType.Player).Generate(area);
 		area.Entities.AddNew();

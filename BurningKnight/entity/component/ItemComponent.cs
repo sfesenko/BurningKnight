@@ -82,7 +82,7 @@ namespace BurningKnight.entity.component {
 			Item = item;
 
 			if (Entity is Player && !item.Touched && item.Scourged) {
-				Run.AddScourge(true);
+				Context.Run.AddScourge(true);
 			}
 
 			item.Done = false;

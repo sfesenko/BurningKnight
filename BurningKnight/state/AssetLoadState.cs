@@ -120,14 +120,14 @@ namespace BurningKnight.state {
 					SaveManager.Load(gameArea, SaveType.Game);
 				}, "Game saves");
 
-				Rnd.Seed = $"{Run.Seed}_{Run.Depth}";
+				Rnd.Seed = $"{Context.Run.Seed}_{Context.Run.Depth}";
 
 				LoadSection(() => {
 					SaveManager.Load(gameArea, SaveType.Level);
 				}, "Level saves");
 				
 				LoadSection(() => {
-					if (Run.Depth > 0) {
+					if (Context.Run.Depth > 0) {
 						SaveManager.Load(gameArea, SaveType.Player);
 					} else {
 						SaveManager.Generate(gameArea, SaveType.Player);

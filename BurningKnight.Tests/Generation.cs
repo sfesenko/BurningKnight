@@ -21,9 +21,9 @@ public static class Generation {
 		// `Run.Depth` is the requested depth (it only sets NextDepth, which the game's loop then
 		// promotes); the generation reads the private one through RealDepth. A test sets both —
 		// and the default differs by configuration, so it must not be left alone.
-		Run.Depth = depth;
-		Run.RealDepth = depth;
-		Run.Loop = loop;
+		Context.Run.Depth = depth;
+		Context.Run.RealDepth = depth;
+		Context.Run.Loop = loop;
 		Rnd.Seed = $"{seed}{depth}0{loop}";
 
 		Items.GeneratedOnFloor.Clear();

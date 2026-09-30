@@ -32,7 +32,7 @@ namespace BurningKnight.level.entities {
 
 				var room = GetComponent<RoomComponent>().Room;
 
-				if (Run.Depth < 1 || (room != null && room.Tagged[Tags.Player].Count > 0)) {
+				if (Context.Run.Depth < 1 || (room != null && room.Tagged[Tags.Player].Count > 0)) {
 					Area.Add(new FireParticle {
 						X = CenterX + Rnd.Float(-4, 4),
 						Y = CenterY

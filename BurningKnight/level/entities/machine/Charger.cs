@@ -138,7 +138,7 @@ namespace BurningKnight.level.entities.machine {
 			active.Charge(Rnd.Int(1, 3));
 			Audio.PlaySfx("item_charge");
 			
-			if (Rnd.Float(100) < timesUsed * 2 - Run.Luck * 0.5f) {
+			if (Rnd.Float(100) < timesUsed * 2 - Context.Run.Luck * 0.5f) {
 				Break(false);
 				ExplosionMaker.Make(p);
 				return true;

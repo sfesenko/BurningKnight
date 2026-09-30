@@ -55,13 +55,13 @@ namespace BurningKnight.entity.creature.npc {
 
 			saved = id == TrashGoblin || GlobalSave.IsTrue(id);
 			AlwaysActive = true;
-			Hidden = Run.Depth == 0 && !saved;
+			Hidden = Context.Run.Depth == 0 && !saved;
 		}
 
 		public override void PostInit() {
 			base.PostInit();
 			
-			if (Run.Depth == 0) {
+			if (Context.Run.Depth == 0) {
 				var h = GetComponent<HealthComponent>();
 				h.Unhittable = false;
 				h.InitMaxHealth = 50;
@@ -72,7 +72,7 @@ namespace BurningKnight.entity.creature.npc {
 		public override void AddComponents() {
 			base.AddComponents();
 			
-			if (Run.Depth == 0) {
+			if (Context.Run.Depth == 0) {
 				AddComponent(new CloseDialogComponent(GetDialog()) {
 					DecideVariant = e => GetDialog(),
 					Radius = 72 * 72,
@@ -165,7 +165,7 @@ namespace BurningKnight.entity.creature.npc {
 			
 			if (e is RoomChangedEvent rce) {
 				if (rce.Who is Player && rce.New == GetComponent<RoomComponent>().Room) {
-					if (Run.Depth > 0 && !saved) {
+					if (Context.Run.Depth > 0 && !saved) {
 						GetComponent<AudioEmitterComponent>().EmitRandomized("hi");
 
 						if ((rce.Who.TryGetComponent<ActiveWeaponComponent>(out var a) && a.Item != null && a.Item.Id == "bk:cage_key") ||
@@ -207,7 +207,7 @@ namespace BurningKnight.entity.creature.npc {
 		}
 
 		public void Save() {
-			if (Run.Depth > 0 && !saved) {
+			if (Context.Run.Depth > 0 && !saved) {
 				saved = true;
 				Remove = true;
 				GetComponent<DialogComponent>().StartAndClose("npc_1", 6);

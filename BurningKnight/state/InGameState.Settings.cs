@@ -401,9 +401,9 @@ namespace BurningKnight.state {
 						Settings.Save();
 						// languageBack.Click(languageBack);
 
-						var d = Run.Depth;
-						Run.RealDepth = -1;
-						Run.Depth = d;
+						var d = Context.Run.Depth;
+						Context.Run.RealDepth = -1;
+						Context.Run.Depth = d;
 					}
 				});
 			}

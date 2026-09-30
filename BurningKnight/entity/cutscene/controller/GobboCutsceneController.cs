@@ -91,7 +91,7 @@ namespace BurningKnight.entity.cutscene.controller {
 
 						Timer.Add(() => {
 							State.Transition(() => {
-								Run.Depth = -2;
+								Context.Run.Depth = -2;
 							});
 						}, 2f);
 					});

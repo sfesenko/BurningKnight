@@ -71,7 +71,7 @@ namespace BurningKnight.level.entities {
 			if (!set) {
 				set = true;
 
-				if (Run.Depth > 0) {
+				if (Context.Run.Depth > 0) {
 					GameSave.Put("saw_blackmarket", true);
 				}
 			}

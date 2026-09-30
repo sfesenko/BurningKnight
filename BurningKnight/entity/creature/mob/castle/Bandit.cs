@@ -18,7 +18,7 @@ namespace BurningKnight.entity.creature.mob.castle {
 			base.SetStats();
 			
 			AddAnimation("bandit");
-			SetMaxHp(Run.Depth);
+			SetMaxHp(Context.Run.Depth);
 			
 			Become<IdleState>();
 

@@ -179,10 +179,10 @@ namespace BurningKnight.save.statistics {
 		public override void PostInit() {
 			base.PostInit();
 
-			Run.Statistics = this;
+			Context.Run.Statistics = this;
 			AlwaysActive = true;
 			
-			MaxDepth = (byte) Math.Max(MaxDepth, Run.Depth);
+			MaxDepth = (byte) Math.Max(MaxDepth, Context.Run.Depth);
 		}
 
 		public override void Update(float dt) {

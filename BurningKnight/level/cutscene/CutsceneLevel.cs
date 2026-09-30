@@ -15,7 +15,7 @@ namespace BurningKnight.level.cutscene {
 
 		protected override List<RoomDef> CreateRooms() { 
 			return new List<RoomDef> {
-				new CutsceneRoom(Math.Abs(Run.Depth) - 3)
+				new CutsceneRoom(Math.Abs(Context.Run.Depth) - 3)
 			};
 		}
 

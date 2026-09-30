@@ -193,7 +193,7 @@ namespace BurningKnight.entity.creature.player {
 			}
 
 			GlobalSave.Put("next_tomb", pool[Rnd.Int(pool.Count)]);
-			GlobalSave.Put("tomb_depth", Run.Depth);
+			GlobalSave.Put("tomb_depth", Context.Run.Depth);
 			
 			Area.Add(stone);
 				

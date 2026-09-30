@@ -30,7 +30,7 @@ namespace BurningKnight.level.entities.exit {
     }
 
     protected override void Descend() {
-      Run.StartNew(id);
+      Context.Run.StartNew(id);
     }
 
     protected override string GetFxText() {

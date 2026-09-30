@@ -10,8 +10,8 @@ namespace BurningKnight.level.entities.exit {
 		private byte id;
 		
 		protected override void Descend() {
-			Run.ChallengeId = id;
-    	Run.StartNew(1, RunType.Challenge);
+			Context.Run.ChallengeId = id;
+    	Context.Run.StartNew(1, RunType.Challenge);
     }
 
     protected override string GetFxText() {

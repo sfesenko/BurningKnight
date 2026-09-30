@@ -105,7 +105,7 @@ namespace BurningKnight.entity.creature.mob.castle {
 							builder.AddFlags(ProjectileFlags.FlyOverStones);
 							builder.Move(angle, 8);
 
-							if (Run.Depth > 2 || Run.Loop > 0) {
+							if (GameContext.Current.Run.Depth > 2 || GameContext.Current.Run.Loop > 0) {
 								builder.RemoveFlags(ProjectileFlags.Reflectable, ProjectileFlags.BreakableByMelee);
 								builder.Scale *= 1.5f;
 							}

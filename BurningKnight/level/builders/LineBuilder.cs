@@ -126,7 +126,7 @@ namespace BurningKnight.level.builders {
 
 				PathTunnels[Tunnels]--;
 
-				if (I != 0 && Run.Depth != 0)
+				if (I != 0 && Context.Run.Depth != 0)
 					for (var J = 0; J < Tunnels; J++) {
 						var T = RoomRegistry.Generate(RoomType.Connection, LevelSave.BiomeGenerated);
 

@@ -48,8 +48,8 @@ namespace BurningKnight.level {
 			Variant = VariantRegistry.Generate(LevelSave.BiomeGenerated.Id) 
 			          ?? new RegularLevelVariant();
 
-			if (Run.Depth > 0) {
-				var c = Rnd.Int(1, Run.Depth);
+			if (Context.Run.Depth > 0) {
+				var c = Rnd.Int(1, Context.Run.Depth);
 
 				if (Context.Level.Biome is CaveBiome) {
 					c = Rnd.Int(5, 15);
@@ -143,16 +143,16 @@ namespace BurningKnight.level {
 		}
 
 		private bool IsFinal() {
-			return Run.Depth == Run.ContentEndDepth;
+			return Context.Run.Depth == Context.Run.ContentEndDepth;
 		}
 
 		protected virtual List<RoomDef> CreateRooms() {
 			var rooms = new List<RoomDef>();
 			var biome = LevelSave.BiomeGenerated;
 			var final = IsFinal();
-			var rush = Run.Type == RunType.BossRush;
-			var first = Run.Depth % 2 == 1;
-			var loop = Run.Loop > 0;
+			var rush = Context.Run.Type == RunType.BossRush;
+			var first = Context.Run.Depth % 2 == 1;
+			var loop = Context.Run.Loop > 0;
 			var cave = biome is CaveBiome;
 
 			if (!rush && biome is DesertBiome) {
@@ -171,7 +171,7 @@ namespace BurningKnight.level {
 			
 			rooms.Add(new EntranceRoom());
 			
-			if (Run.Depth == 5 && LevelSave.GenerateMarket && Run.Loop == 0) {
+			if (Context.Run.Depth == 5 && LevelSave.GenerateMarket && Context.Run.Loop == 0) {
 				rooms.Add(new ShopRoom());
 				rooms.Add(new ExitRoom());
 
@@ -204,9 +204,9 @@ namespace BurningKnight.level {
 			}
 
 			if (!rush && !loop) {
-				if (Run.Depth == 2) {
+				if (Context.Run.Depth == 2) {
 					rooms.Add(new SecretKeyRoom());
-				} else if (Run.Depth == 4) {
+				} else if (Context.Run.Depth == 4) {
 					rooms.Add(new ClawMinigameRoom());
 				}
 			}
@@ -238,7 +238,7 @@ namespace BurningKnight.level {
 					AddRoom(rooms, RoomType.Connection, biome);
 				}
 
-				if (!rush && !final && Run.Type != RunType.Challenge) {
+				if (!rush && !final && Context.Run.Type != RunType.Challenge) {
 					if (!loop && !LevelSave.GenerateShops && first) {
 						if (LevelSave.XL) {
 							AddRoom(rooms, RoomType.Treasure, biome);
@@ -256,7 +256,7 @@ namespace BurningKnight.level {
 					AddRoom(rooms, RoomType.Treasure, biome);
 				}
 
-				if (!LevelSave.GenerateShops && loop && Run.Depth == 1 && Run.Type != RunType.Challenge) {
+				if (!LevelSave.GenerateShops && loop && Context.Run.Depth == 1 && Context.Run.Type != RunType.Challenge) {
 					AddRoom(rooms, RoomType.Treasure, biome);
 				}
 
@@ -264,7 +264,7 @@ namespace BurningKnight.level {
 					AddRoom(rooms, RoomType.Boss, biome);
 					rooms.Add(new PrebossRoom());
 
-					if (Run.Depth < 11) {
+					if (Context.Run.Depth < 11) {
 						AddRoom(rooms, RoomType.Connection, biome);
 						AddRoom(rooms, RoomType.Shop, biome);
 					}
@@ -274,7 +274,7 @@ namespace BurningKnight.level {
 					AddRoom(rooms, RoomType.Boss, biome);
 					rooms.Add(new PrebossRoom());
 
-					if (Run.Depth < 10) {
+					if (Context.Run.Depth < 10) {
 						AddRoom(rooms, RoomType.Granny, biome);
 						AddRoom(rooms, RoomType.OldMan, biome);
 					}
@@ -286,7 +286,7 @@ namespace BurningKnight.level {
 				
 				if (!rush) {
 					if (Rnd.Chance(95)) {
-						if (Rnd.Chance(2 + Run.Scourge * 5)) {
+						if (Rnd.Chance(2 + Context.Run.Scourge * 5)) {
 							rooms.Add(new ScourgedRoom());
 						} else {
 							if (Rnd.Chance()) {
@@ -297,7 +297,7 @@ namespace BurningKnight.level {
 						}
 					}
 
-					var addDarkMarket = (Run.Depth > 2 && Rnd.Chance(10) && GameSave.IsFalse("saw_blackmarket"));
+					var addDarkMarket = (Context.Run.Depth > 2 && Rnd.Chance(10) && GameSave.IsFalse("saw_blackmarket"));
 
 					if (addDarkMarket) {
 						rooms.Add(new DarkMarketEntranceRoom());
@@ -351,7 +351,7 @@ namespace BurningKnight.level {
 		protected virtual Builder GetBuilder() {
 			Builder builder;
 
-			if (IsFinal() || Run.Type == RunType.BossRush) {
+			if (IsFinal() || Context.Run.Type == RunType.BossRush) {
 				builder = new LineBuilder();
 			} else {
 				builder = LevelSave.BiomeGenerated.GetBuilder();

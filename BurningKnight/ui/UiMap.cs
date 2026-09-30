@@ -146,7 +146,7 @@ namespace BurningKnight.ui {
 
 				var tp = room.Type;
 
-				if (tp == RoomType.Exit ? Run.Depth % 2 == 1 : RoomTypeHelper.ShouldBeDisplayOnMap(tp)) {
+				if (tp == RoomType.Exit ? Context.Run.Depth % 2 == 1 : RoomTypeHelper.ShouldBeDisplayOnMap(tp)) {
 					if (rect.Intersects(room.Rect)) {
 						var icon = RoomTypeHelper.Icons[(int) tp];
 						Graphics.Render(icon, new Vector2((int) Math.Floor(W * 0.5f + (int) Math.Floor(room.MapX + room.MapW * 0.5f) - fx), (int) Math.Floor(H * 0.5f + (int) Math.Floor(room.MapY + room.MapH * 0.5f) - fy)), 0, icon.Center);

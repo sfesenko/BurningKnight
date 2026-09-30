@@ -9,10 +9,10 @@ namespace BurningKnight.entity.item.use {
 		public override void Use(Entity entity, Item item) {
 			base.Use(entity, item);
 
-			var sc = Run.Scourge;
+			var sc = Context.Run.Scourge;
 			
 			for (var i = 0; i < sc; i++) {
-				Run.RemoveScourge();
+				Context.Run.RemoveScourge();
 			}
 
 			var inventory = entity.GetComponent<InventoryComponent>();

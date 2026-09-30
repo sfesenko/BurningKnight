@@ -112,7 +112,7 @@ namespace BurningKnight.entity.creature.mob {
 			return base.HandleEvent(e);
 		}
 		public void ModifyDrops(List<Item> drops) {
-			if (Rnd.Chance(Run.Scourge * 0.5f)) {
+			if (Rnd.Chance(Context.Run.Scourge * 0.5f)) {
 				var c = Rnd.Int(0, 3);
 				
 				for (var i = 0; i < c; i++) {

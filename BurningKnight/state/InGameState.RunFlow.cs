@@ -52,7 +52,7 @@ namespace BurningKnight.state {
 	public partial class InGameState {
 		public override void Destroy() {
 			if (Engine.Quiting) {
-				Run.SavingDepth = Run.Depth;
+				Context.Run.SavingDepth = Context.Run.Depth;
 			}
 			Item.Attact = false;
 
@@ -81,8 +81,8 @@ namespace BurningKnight.state {
 			SaveManager.Save(Area, SaveType.Global, old);
 			// SaveManager.Save(Area, SaveType.Secret);
 
-			if (!Run.StartedNew && !Died && !Run.Won) {
-				var d = (old ? Run.LastDepth : Run.Depth);
+			if (!Context.Run.StartedNew && !Died && !Context.Run.Won) {
+				var d = (old ? Context.Run.LastDepth : Context.Run.Depth);
 				
 				if (d > 0) {
 					if (IgnoreSave) {
@@ -110,7 +110,7 @@ namespace BurningKnight.state {
 		protected override void OnPause() {
 			base.OnPause();
 			
-			if (Died || InMenu || Run.Won) {
+			if (Died || InMenu || Context.Run.Won) {
 				return;
 			}
 
@@ -121,7 +121,7 @@ namespace BurningKnight.state {
 				currentBack = pauseBack;
 				
 				if (seedLabel != null) {
-					seedLabel.Label = $"{Locale.Get("seed")}: {Run.Seed}";
+					seedLabel.Label = $"{Locale.Get("seed")}: {Context.Run.Seed}";
 				}
 
 				if (scoreLabel != null) {
@@ -163,7 +163,7 @@ namespace BurningKnight.state {
 
 			base.OnResume();
 
-			if (Died || InMenu || Run.Won) {
+			if (Died || InMenu || Context.Run.Won) {
 				return;
 			}
 
@@ -244,12 +244,12 @@ namespace BurningKnight.state {
 				return false;
 			}
 			
-			if (Died || Run.Won) {
+			if (Died || Context.Run.Won) {
 				return false;
 			}
 			
 			if (e is DiedEvent { Who: Mob }) {
-				Run.KillCount++;
+				Context.Run.KillCount++;
 			}
 
 			return false;

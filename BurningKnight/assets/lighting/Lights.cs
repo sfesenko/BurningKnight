@@ -28,7 +28,7 @@ namespace BurningKnight.assets.lighting {
 		private static BlendState messBlend;
 		
 		public static void Init() {
-			var v = Run.Depth == 0 ? 0.9f : 0.25f;
+			var v = Context.Run.Depth == 0 ? 0.9f : 0.25f;
 			
 			ClearColor = new Color(v, v, v, 1f);
 			

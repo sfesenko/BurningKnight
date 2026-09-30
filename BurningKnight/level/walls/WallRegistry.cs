@@ -17,7 +17,7 @@ namespace BurningKnight.level.walls {
 			Clear();
 			SetupRooms();
 
-			if (Run.Type == RunType.BossRush) {
+			if (Context.Run.Type == RunType.BossRush) {
 				return;
 			}
 			

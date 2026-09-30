@@ -70,7 +70,7 @@ namespace BurningKnight.save {
 
 		public static string GetSavePath(SaveType saveType, bool old = false, string path = null) {
 			return ForType(saveType).GetPath((path ?? (saveType == SaveType.Statistics || saveType == SaveType.Global ||
-			                                           (saveType == SaveType.Level && (old ? Run.LastDepth : Run.Depth) < 1)
+			                                           (saveType == SaveType.Level && (old ? Context.Run.LastDepth : Context.Run.Depth) < 1)
 				? SaveDir
 				: SlotDir)), old);
 		}
@@ -92,7 +92,7 @@ namespace BurningKnight.save {
 			var file = new FileInfo(p);
 
 			if (saveType != SaveType.Secret || Engine.Version.Dev) {
-				Log.Info($"Saving {saveType} {(old ? Run.LastDepth : Run.Depth)} to {file.FullName}");
+				Log.Info($"Saving {saveType} {(old ? Context.Run.LastDepth : Context.Run.Depth)} to {file.FullName}");
 			}
 
 			file.Directory?.Create();
@@ -144,7 +144,7 @@ namespace BurningKnight.save {
 				Generate(area, saveType);
 			} else {
 				if (saveType != SaveType.Secret || Engine.Version.Dev) {
-					Log.Info($"Loading {saveType} {Run.Depth} l{Run.Loop}{(path == null ? $" from {save.FullPath}" : $" from {path}")}");
+					Log.Info($"Loading {saveType} {Context.Run.Depth} l{Context.Run.Loop}{(path == null ? $" from {save.FullPath}" : $" from {path}")}");
 				}
 
 				var stream = GetReader(save.FullPath);
@@ -189,12 +189,12 @@ namespace BurningKnight.save {
 
 		public static void Generate(Area area, SaveType saveType) {
 			if (saveType != SaveType.Secret || Engine.Version.Dev) {
-				Log.Info($"Generating {saveType} {Run.Depth}");
+				Log.Info($"Generating {saveType} {Context.Run.Depth}");
 			}
 
 			ForType(saveType).Generate(area);
 
-			if (Run.Depth > 0) {
+			if (Context.Run.Depth > 0) {
 				Save(area, saveType);
 			}
 		}

@@ -9,7 +9,7 @@ using Lens.entity;
 namespace BurningKnight.level.entities.exit {
 	public class BossRushExit : Exit {
 		protected override void Descend() {
-			Run.StartNew(1, RunType.BossRush);
+			Context.Run.StartNew(1, RunType.BossRush);
 		}
 
 		protected override bool Interact(Entity entity) {

@@ -130,7 +130,7 @@ namespace BurningKnight.state {
 			
 			Physics.Update(dt);
 			TopUi.Update(dt);
-			Run.Update();
+			Context.Run.Update();
 		}
 
 		public void Say(string what, Action callback = null) {

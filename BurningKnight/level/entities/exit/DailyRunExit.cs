@@ -8,8 +8,8 @@ namespace BurningKnight.level.entities.exit {
 		private bool hidden;
 		
 		protected override void Descend() {
-			Run.StartNew(1, RunType.Daily);
-			GlobalSave.Put($"daily_{Run.DailyId}", true);
+			Context.Run.StartNew(1, RunType.Daily);
+			GlobalSave.Put($"daily_{Context.Run.DailyId}", true);
 		}
 
 		protected override string GetFxText() {
@@ -18,7 +18,7 @@ namespace BurningKnight.level.entities.exit {
 
 		public override void Update(float dt) {
 			base.Update(dt);
-			hidden = GlobalSave.IsTrue($"daily_{Run.CalculateDailyId()}");
+			hidden = GlobalSave.IsTrue($"daily_{Context.Run.CalculateDailyId()}");
 		}
 
 		public override void Render() {

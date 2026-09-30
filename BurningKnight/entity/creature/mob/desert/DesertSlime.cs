@@ -19,7 +19,7 @@ namespace BurningKnight.entity.creature.mob.desert {
 			base.SetStats();
 			
 			AddComponent(new ZAnimationComponent("desert_slime"));
-			SetMaxHp(1 + (int) Math.Round(Run.Depth * 1.5f));
+			SetMaxHp(1 + (int) Math.Round(Context.Run.Depth * 1.5f));
 
 			var body = new RectBodyComponent(2, 12, 12, 1);
 			AddComponent(body);

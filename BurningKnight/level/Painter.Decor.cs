@@ -161,7 +161,7 @@ namespace BurningKnight.level {
 				}
 
 				
-				if (!(Room is SecretRoom || Room is TreasureRoom || Room is RegularRoom || Room is EntranceRoom || Room is ConnectionRoom) || Run.Depth < 1) {
+				if (!(Room is SecretRoom || Room is TreasureRoom || Room is RegularRoom || Room is EntranceRoom || Room is ConnectionRoom) || Context.Run.Depth < 1) {
 					continue;
 				}
 

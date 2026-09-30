@@ -157,9 +157,9 @@ namespace BurningKnight.state {
 						
 						// Synchronous: this writes the controls file and regenerates the
 						// settings — all main-thread state, a worker would race the frame.
-						var d = Run.Depth;
-						Run.RealDepth = -1;
-						Run.Depth = d;
+						var d = Context.Run.Depth;
+						Context.Run.RealDepth = -1;
+						Context.Run.Depth = d;
 						Controls.BindDefault();
 						Controls.Save();
 						Settings.Generate();
@@ -202,9 +202,9 @@ namespace BurningKnight.state {
 						Achievements.LoadState();
 						GlobalSave.Emeralds = 0;
 						
-						Run.StartingNew = true;
-						Run.NextDepth = 0;
-						Run.IntoMenu = true;
+						Context.Run.StartingNew = true;
+						Context.Run.NextDepth = 0;
+						Context.Run.IntoMenu = true;
 						Settings.Setup();
 					}, () => {
 						currentBack = gameBack;
@@ -234,12 +234,12 @@ namespace BurningKnight.state {
 					}
 			});
 			
-			if (Run.Depth == 0) {
+			if (Context.Run.Depth == 0) {
 				gameSettings.Add(new UiButton {
 						LocaleLabel = "tutorial",
 						RelativeCenterX = sx,
 						RelativeCenterY = sy + space * 7.5f,
-						Click = b => { Run.Depth = -2; }
+						Click = b => { Context.Run.Depth = -2; }
 				});
 			}
 

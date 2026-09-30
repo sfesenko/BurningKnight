@@ -170,7 +170,7 @@ namespace BurningKnight.entity.orbital {
 					if (e is Projectile p && p.Owner != orbital.Owner) {
 						p.Break();
 						
-						if (Rnd.Chance(20 - Run.Luck * 5)) {
+						if (Rnd.Chance(20 - Context.Run.Luck * 5)) {
 							or.Done = true;
 							AnimationUtil.Poof(or.Center);
 						}

@@ -13,17 +13,17 @@ using Lens.util;
 using Lens.util.math;
 
 namespace BurningKnight.state {
-	public static class Run {
-		public static Action<int, string> SubmitScore;
-		public static readonly int ContentEndDepth = BK.Demo ? 5 : 11;
+	public class Run {
+		public Action<int, string> SubmitScore;
+		public readonly int ContentEndDepth = BK.Demo ? 5 : 11;
 
-		private static int depth = BK.Version.Dev ? 1 : 0;
-		public static int NextDepth = depth;
-		public static int LastDepth = depth;
+		private int depth = BK.Version.Dev ? 1 : 0;
+		public int NextDepth;
+		public int LastDepth;
 
-		private static int loop;
+		private int loop;
 
-		public static int Loop {
+		public int Loop {
 			get => loop;
 
 			set {
@@ -32,50 +32,58 @@ namespace BurningKnight.state {
 			}
 		}
 
-		public static int LastLoop = Loop;
-		public static bool CustomSeed; // -934034507
-		public static int Id;
-		public static bool Redo;
-		public static int NumPlayers;
+		public int LastLoop;
+		public bool CustomSeed; // -934034507
+		public int Id;
+		public bool Redo;
+		public int NumPlayers;
 
-		public static int ActualDepth {
+		public int ActualDepth {
 			set => depth = value;
 		}
 		
-		public static int SavingDepth;
-		public static bool StartingNew;
-		public static int KillCount;
-		public static float Time;
-		public static bool StartedNew;
-		public static bool HasRun;
+		public int SavingDepth;
+		public bool StartingNew;
+		public int KillCount;
+		public float Time;
+		public bool StartedNew;
+		public bool HasRun;
 		
-		public static string Seed;
+		public string Seed;
 
-		public static bool IgnoreSeed;
-		public static int Luck;
-		public static int Scourge { get; private set; }
-		public static int PermanentScourge { get; internal set; }
-		public static bool IntoMenu;
-		public static RunStatistics Statistics;
-		public static string NextSeed;
-		public static int LastSavedDepth;
-		public static bool AlternateMusic;
-		public static RunType Type;
-		public static int Score;
-		public static int DailyId;
-		public static byte ChallengeId;
-		public static bool Won;
+		public bool IgnoreSeed;
+		public int Luck;
+		public int Scourge { get; private set; }
+		public int PermanentScourge { get; internal set; }
+		public bool IntoMenu;
+		public RunStatistics Statistics;
+		public string NextSeed;
+		public int LastSavedDepth;
+		public bool AlternateMusic;
+		public RunType Type;
+		public int Score;
+		public int DailyId;
+		public byte ChallengeId;
+		public bool Won;
+
+		// The initializers that used to read the statics at class-init time; an instance cannot
+		// reference its own fields in a field initializer, so they run here.
+		public Run() {
+			NextDepth = depth;
+			LastDepth = depth;
+			LastLoop = Loop;
+		}
 		
-		public static int Depth {
+		public int Depth {
 			get => depth;
 			set => NextDepth = value;
 		}
 
-		public static int RealDepth {
+		public int RealDepth {
 			set { depth = value; }
 		}
 
-		public static void Update() {
+		public void Update() {
 			if (Redo || StartingNew || depth != NextDepth) {
 				LastDepth = depth;
 				LastLoop = Loop;
@@ -99,7 +107,7 @@ namespace BurningKnight.state {
 			}
 		}
 
-		public static void StartNew(int depth = 1, RunType type = RunType.Regular) {
+		public void StartNew(int depth = 1, RunType type = RunType.Regular) {
 			if (Statistics != null) {
 				Statistics.Done = true;
 				Statistics = null;
@@ -160,12 +168,12 @@ namespace BurningKnight.state {
 			Log.Debug($"This run's seed is {Seed}");
 		}
 
-		public static int CalculateDailyId() {
+		public int CalculateDailyId() {
 			var date = DateTime.UtcNow;
 			return (date.Year - 2020) * 365 + (date.DayOfYear) - 81;
 		}
 
-		public static void ResetStats() {
+		public void ResetStats() {
 			KillCount = 0;
 			Time = 0;
 			HasRun = false;
@@ -178,11 +186,11 @@ namespace BurningKnight.state {
 			entity.item.Scourge.Clear();
 		}
 
-		public static string FormatTime() {
+		public string FormatTime() {
 			return $"{Math.Floor(Time / 3600f)}h {Math.Floor(Time / 60f % 60f)}m {Math.Floor(Time % 60f)}s";
 		}
 
-		public static void RemoveScourge() {
+		public void RemoveScourge() {
 			if (Scourge == 0) {
 				return;
 			}
@@ -199,7 +207,7 @@ namespace BurningKnight.state {
 			TextParticle.Add(player, Locale.Get("scourge"), 1, true, true);
 		}
 
-		public static void AddScourge(bool permanent = false) {
+		public void AddScourge(bool permanent = false) {
 			Scourge++;
 			Context.Audio.PlaySfx("player_cursed");
 
@@ -238,11 +246,11 @@ namespace BurningKnight.state {
 			}
 		}
 
-		public static void ResetScourge() {
+		public void ResetScourge() {
 			Scourge = PermanentScourge;
 		}
 
-		public static void CalculateScore() {
+		public void CalculateScore() {
 			if (Assets.DataModified || Statistics == null) {
 				Score = -696969;
 				return;
@@ -270,7 +278,7 @@ namespace BurningKnight.state {
 			Score = (int) (Score * multiplier);
 		}
 
-		public static void Win() {
+		public void Win() {
 			if (Won) {
 				return;
 			}
@@ -289,10 +297,10 @@ namespace BurningKnight.state {
 			((InGameState) Engine.Instance.State).AnimateDoneScreen(pl);
 		}
 
-		public static string GetLeaderboardId() {
+		public string GetLeaderboardId() {
 			switch (Type) {
 				case RunType.Daily: {
-					return $"daily_{Run.DailyId}";
+					return $"daily_{DailyId}";
 				}
 
 				case RunType.BossRush: {
@@ -300,7 +308,7 @@ namespace BurningKnight.state {
 				}
 
 				case RunType.Challenge: {
-					return $"challenge_{Run.ChallengeId}";
+					return $"challenge_{ChallengeId}";
 				}
 
 				default: case RunType.Regular: {
@@ -309,7 +317,7 @@ namespace BurningKnight.state {
 			}
 		}
 
-		public static void GoToTutorial() {
+		public void GoToTutorial() {
 			Depth = -3;
 		}
 	}

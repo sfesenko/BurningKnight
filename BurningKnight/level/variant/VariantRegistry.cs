@@ -39,7 +39,7 @@ namespace BurningKnight.level.variant {
 		}
 
 		public static LevelVariant Generate(string biome) {
-			if (Run.Depth == -2) {
+			if (Context.Run.Depth == -2) {
 				return new RegularLevelVariant();
 			}
 			

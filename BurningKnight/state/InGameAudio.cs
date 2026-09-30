@@ -46,7 +46,7 @@ namespace BurningKnight.state {
 			Subscribe<SpawnTrigger.TriggeredEvent>();
 
 			if (!InGameState.InMenu && Context.Level != null) {
-				Context.Audio.PlayMusic(Context.Level.GetMusic()/*, Run.Depth < 1 || Run.Depth % 2 == 1*/);
+				Context.Audio.PlayMusic(Context.Level.GetMusic()/*, Context.Run.Depth < 1 || Context.Run.Depth % 2 == 1*/);
 			}
 			
 			// Audio.PlayMusic("Disk 6", Camera.Instance.Listener, LocalPlayer.Locate(Area).GetComponent<AudioEmitterComponent>().Emitter);
@@ -106,7 +106,7 @@ namespace BurningKnight.state {
 					}
 					
 					case RoomType.DarkMarket: {
-						if (Run.AlternateMusic) {
+						if (Context.Run.AlternateMusic) {
 							Audio.PlayMusic("piano");
 							break;
 						}

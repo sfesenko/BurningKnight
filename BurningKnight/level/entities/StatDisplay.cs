@@ -48,7 +48,7 @@ namespace BurningKnight.level.entities {
 			var b = board;
 
 			if (board == "daily") {
-				b = $"daily_{Run.CalculateDailyId()}";
+				b = $"daily_{Context.Run.CalculateDailyId()}";
 			} else if (board == "challenge") {
 				b = $"challenge_{challengeId}";
 			}
@@ -65,7 +65,7 @@ namespace BurningKnight.level.entities {
 			if (!Engine.EditingLevel && !ch) {
 				ch = true;
 				
-				if (InGameState.SetupLeaderboard == null || (board == "daily" && !GlobalSave.IsTrue($"daily_{Run.CalculateDailyId()}"))) {
+				if (InGameState.SetupLeaderboard == null || (board == "daily" && !GlobalSave.IsTrue($"daily_{Context.Run.CalculateDailyId()}"))) {
 					Done = true;
 				}
 			}

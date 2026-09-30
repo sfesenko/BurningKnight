@@ -97,7 +97,7 @@ namespace BurningKnight.entity.component {
 			item.Use(Entity);
 
 			if (Entity is Player && !item.Touched && item.Scourged) {
-				Run.AddScourge(true);
+				Context.Run.AddScourge(true);
 			}
 			
 			var e = new ItemAddedEvent {

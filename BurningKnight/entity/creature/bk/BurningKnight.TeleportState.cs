@@ -57,7 +57,7 @@ namespace BurningKnight.entity.creature.bk {
 					}
 
 					Tween.To(1, graphics.Alpha, x => graphics.Alpha = x, 0.3f).OnEnd = () => {
-						if (Run.Depth == 1 && GlobalSave.IsFalse("bk_who")) {
+						if (GameContext.Current.Run.Depth == 1 && GlobalSave.IsFalse("bk_who")) {
 							Self.Become<CutsceneState>();
 							return;
 						}

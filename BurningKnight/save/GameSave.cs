@@ -66,15 +66,15 @@ namespace BurningKnight.save {
 				writer.WriteString(Pair.Value);
 			}
 		
-			writer.WriteSbyte((sbyte) Run.Depth);
-			writer.WriteInt32(Run.KillCount);
-			writer.WriteFloat(Run.Time);
-			writer.WriteByte((byte) Run.PermanentScourge);
-			writer.WriteString(Run.Seed);
-			writer.WriteString(Run.Type.ToString());
-			writer.WriteInt32(Run.DailyId);
-			writer.WriteInt32(Run.Loop);
-			writer.WriteBoolean(Run.CustomSeed);
+			writer.WriteSbyte((sbyte) Context.Run.Depth);
+			writer.WriteInt32(Context.Run.KillCount);
+			writer.WriteFloat(Context.Run.Time);
+			writer.WriteByte((byte) Context.Run.PermanentScourge);
+			writer.WriteString(Context.Run.Seed);
+			writer.WriteString(Context.Run.Type.ToString());
+			writer.WriteInt32(Context.Run.DailyId);
+			writer.WriteInt32(Context.Run.Loop);
+			writer.WriteBoolean(Context.Run.CustomSeed);
 		}
 
 		public override string GetPath(string path, bool old = false) {
@@ -82,7 +82,7 @@ namespace BurningKnight.save {
 		}
 
 		public override void Load(Area area, FileReader reader) {
-			if (Run.HasRun) {
+			if (Context.Run.HasRun) {
 				return;
 			}
 			
@@ -96,28 +96,28 @@ namespace BurningKnight.save {
 				Values[Key] = Val;
 			}
 
-			Run.HasRun = true;
-			Run.LastSavedDepth = reader.ReadSbyte();
+			Context.Run.HasRun = true;
+			Context.Run.LastSavedDepth = reader.ReadSbyte();
 			
-			Run.KillCount = reader.ReadInt32();
-			Run.Time = reader.ReadFloat();
+			Context.Run.KillCount = reader.ReadInt32();
+			Context.Run.Time = reader.ReadFloat();
 
-			Run.PermanentScourge = reader.ReadByte();
+			Context.Run.PermanentScourge = reader.ReadByte();
 
 			var seed = reader.ReadString();
-			if (Run.LastSavedDepth > 0) {
-				Rnd.Seed = Run.Seed = seed;
+			if (Context.Run.LastSavedDepth > 0) {
+				Rnd.Seed = Context.Run.Seed = seed;
 			}
 
 			if (Enum.TryParse<RunType>(reader.ReadString(), out var t)) {
-				Run.Type = t;
+				Context.Run.Type = t;
 			} else {
-				Run.Type = RunType.Regular;
+				Context.Run.Type = RunType.Regular;
 			}
 
-			Run.DailyId = reader.ReadInt32();
-			Run.Loop = reader.ReadInt32();
-			Run.CustomSeed = reader.ReadBoolean();
+			Context.Run.DailyId = reader.ReadInt32();
+			Context.Run.Loop = reader.ReadInt32();
+			Context.Run.CustomSeed = reader.ReadBoolean();
 		}
 
 		public static int PeekDepth(FileReader reader) {
@@ -126,14 +126,14 @@ namespace BurningKnight.save {
 		
 		public override void Generate(Area area) {
 			Values.Clear();
-			Run.ResetStats();
+			Context.Run.ResetStats();
 			
 			if (GlobalSave.IsFalse("finished_tutorial")) {
 				if (BK.Version.Dev) {
 					GlobalSave.Put("finished_tutorial", true);
-				} else if (Run.Depth != -2 && Run.Depth != -3) {
-					Run.Depth = -3;
-					Run.IntoMenu = true;
+				} else if (Context.Run.Depth != -2 && Context.Run.Depth != -3) {
+					Context.Run.Depth = -3;
+					Context.Run.IntoMenu = true;
 					Log.Info("Throwing the player into tutorial");
 				}
 			}

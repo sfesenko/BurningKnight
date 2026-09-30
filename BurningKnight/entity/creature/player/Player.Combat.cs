@@ -203,7 +203,7 @@ namespace BurningKnight.entity.creature.player {
 						if (!found) {
 							c.Old.CloseHiddenDoors();
 						}
-					} else if (c.Old.Type == RoomType.Treasure && Run.Type != RunType.BossRush && !Rnd.Chance(5)) {
+					} else if (c.Old.Type == RoomType.Treasure && Context.Run.Type != RunType.BossRush && !Rnd.Chance(5)) {
 						var found = false;
 
 						foreach (var p in c.Old.Tagged[Tags.Player]) {
@@ -317,7 +317,7 @@ namespace BurningKnight.entity.creature.player {
 				Context.Camera.Unfollow(rce.Room);
 				Audio.PlaySfx("level_room_cleared", 0.25f + Audio.Db3);
 
-				if (Run.Depth > 0 && !alerted && CheckClear(Area)) {
+				if (Context.Run.Depth > 0 && !alerted && CheckClear(Area)) {
 					alerted = true;
 					AnimationUtil.Confetti(Center);
 					Audio.PlaySfx("level_cleared");

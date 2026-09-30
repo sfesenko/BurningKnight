@@ -85,7 +85,7 @@ namespace BurningKnight.state {
 
 			var player = LocalPlayer.Locate(Area);
 
-			if (!Multiplayer && Run.Depth > 0) {
+			if (!Multiplayer && Context.Run.Depth > 0) {
 				Ui.Add(map = new UiMap(player));
 			}	
 			
@@ -102,7 +102,7 @@ namespace BurningKnight.state {
 			TopUi.Add(leaderMenu = new UiPane());
 
 			var space = 24f;
-			var start = Display.UiHeight * 0.5f + (Run.Depth > 0 ? -space * 0.5f : space);
+			var start = Display.UiHeight * 0.5f + (Context.Run.Depth > 0 ? -space * 0.5f : space);
 
 			pauseMenu.Add(new UiLabel {
 				Label = Level.GetDepthString(),
@@ -121,7 +121,7 @@ namespace BurningKnight.state {
 				AngleMod = 0
 			});
 
-			if (Run.Depth > 0) {
+			if (Context.Run.Depth > 0) {
 				scoreLabel = (UiLabel) pauseMenu.Add(new UiLabel {
 					Font = Font.Small,
 					Label = GetScore(),
@@ -132,11 +132,11 @@ namespace BurningKnight.state {
 				});
 			}
 
-			if (Run.Depth > 0) {
+			if (Context.Run.Depth > 0) {
 				pauseMenu.Add(seedLabel = new UiButton {
 					Font = Font.Small,
 					Selectable = false,
-					Label = $"Seed: {Run.Seed}",
+					Label = $"Seed: {Context.Run.Seed}",
 					RelativeCenterX = Display.UiWidth / 2f,
 					RelativeCenterY = BackY,
 					AngleMod = 0,
@@ -145,12 +145,12 @@ namespace BurningKnight.state {
 
 						try {
 							// Needs xclip on linux
-							Clipboard.SetText(Run.Seed);
+							Clipboard.SetText(Context.Run.Seed);
 						} catch (Exception e) {
 							Log.Error(e);
 						}
 
-						Timer.Add(() => { b.Label = $"{Locale.Get("seed")}: {Run.Seed}"; }, 0.5f);
+						Timer.Add(() => { b.Label = $"{Locale.Get("seed")}: {Context.Run.Seed}"; }, 0.5f);
 					}
 				});
 			}
@@ -172,7 +172,7 @@ namespace BurningKnight.state {
 				}
 			});
 			
-			if (Run.Depth > 0) {
+			if (Context.Run.Depth > 0) {
 			
 				pauseMenu.Add(new UiButton {
 					LocaleLabel = "inventory",
@@ -220,13 +220,13 @@ namespace BurningKnight.state {
 			
 				inventory.Enabled = false;
 			
-				if (Run.Type != RunType.Daily) {
+				if (Context.Run.Type != RunType.Daily) {
 					pauseMenu.Add(new UiButton {
 						LocaleLabel = "new_run",
 						RelativeCenterX = Display.UiWidth / 2f,
 						RelativeCenterY = start + space * 2,
 						Type = ButtonType.Exit,
-						Click = b => GoConfirm("start_new_run", () => { Run.StartNew(); }, () => {
+						Click = b => GoConfirm("start_new_run", () => { Context.Run.StartNew(); }, () => {
 							currentBack = pauseBack;
 							pauseMenu.Enabled = true;
 
@@ -238,7 +238,7 @@ namespace BurningKnight.state {
 						})
 					});
 				}
-			} else if (Run.Depth == 0) {
+			} else if (Context.Run.Depth == 0) {
 				pauseMenu.Add(new UiButton {
 					LocaleLabel = "exit",
 					Type = ButtonType.Exit,
@@ -250,13 +250,13 @@ namespace BurningKnight.state {
 				});
 			}
 
-			if (Run.Depth != 0) {
+			if (Context.Run.Depth != 0) {
 				pauseMenu.Add(new UiButton {
 					LocaleLabel = "back_to_town",
 					RelativeCenterX = Display.UiWidth / 2f,
 					RelativeCenterY = start + space * 3,
 					Type = ButtonType.Exit,
-					Click = b => Run.Depth = 0
+					Click = b => Context.Run.Depth = 0
 				});
 			}
 
@@ -286,7 +286,7 @@ namespace BurningKnight.state {
 				Clickable = false
 			});
 
-			var qr = Run.Depth > 0 && (Run.Type == RunType.Regular || Run.Type == RunType.Challenge || Run.Type == RunType.BossRush);
+			var qr = Context.Run.Depth > 0 && (Context.Run.Type == RunType.Regular || Context.Run.Type == RunType.Challenge || Context.Run.Type == RunType.BossRush);
 			
 			if (qr) {
 				gameOverMenu.Add(overQuickBack = new UiButton {
@@ -296,7 +296,7 @@ namespace BurningKnight.state {
 					RelativeCenterY = BackY - 6,
 
 					Click = b => {
-						if (Run.Type == RunType.BossRush) {
+						if (Context.Run.Type == RunType.BossRush) {
 							if (GlobalSave.Emeralds < 3) {
 								AnimationUtil.ActionFailed();
 								return;
@@ -306,7 +306,7 @@ namespace BurningKnight.state {
 						}
 
 						gameOverMenu.Enabled = false;
-						Run.StartNew(1, Run.Type);
+						Context.Run.StartNew(1, Context.Run.Type);
 					}
 				});
 			}
@@ -318,19 +318,19 @@ namespace BurningKnight.state {
 
 				Click = b => {
 					gameOverMenu.Enabled = false;
-					Run.StartNew(Run.Depth == -2 ? -2 : 0);
+					Context.Run.StartNew(Context.Run.Depth == -2 ? -2 : 0);
 				}
 			});
 
 			gameOverMenu.Setup();
 			gameOverMenu.Enabled = false;
 
-			if (Run.Depth > 0 && Context.Level != null && !Menu) {
+			if (Context.Run.Depth > 0 && Context.Level != null && !Menu) {
 				Ui.Add(new UiBanner(Level.GetDepthString()));
 			}
 			
 			leaderMenu.Add(boardType = new UiLabel {
-				Label = $"{Locale.Get($"run_{Run.Type.ToString().ToLower()}")} {Locale.Get("leaderboard")}",
+				Label = $"{Locale.Get($"run_{Context.Run.Type.ToString().ToLower()}")} {Locale.Get("leaderboard")}",
 				RelativeCenterX = Display.UiWidth * 0.5f,
 				RelativeCenterY = TitleY,
 				Clickable = false
@@ -359,7 +359,7 @@ namespace BurningKnight.state {
 				
 				d = (s) =>{
 					if (s == null) {
-						s = lastS ?? Run.GetLeaderboardId();
+						s = lastS ?? Context.Run.GetLeaderboardId();
 					}
 
 					lastS = s;
@@ -438,7 +438,7 @@ namespace BurningKnight.state {
 			leaderMenu.Enabled = false;
 			leaderMenu.Y = Display.UiHeight * 2;
 			
-			if (Run.Depth == 0) {
+			if (Context.Run.Depth == 0) {
 				TopUi.Add(statsMenu = new UiPane());
 				
 				placeLabel = (UiLabel) statsMenu.Add(new UiLabel {

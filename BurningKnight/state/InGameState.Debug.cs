@@ -124,77 +124,77 @@ namespace BurningKnight.state {
 
 			if (Input.Keyboard.WasPressed(Keys.Insert)) {
 				SaveManager.Delete(SaveType.Game, SaveType.Level, SaveType.Player);
-				Run.StartNew(1, Run.Type);
+				Context.Run.StartNew(1, Context.Run.Type);
 				Died = true;
 
-				Run.NextDepth = Run.Depth;
+				Context.Run.NextDepth = Context.Run.Depth;
 
 				return;
 			}
 
 			if (Input.Keyboard.IsDown(Keys.LeftControl)) {
 				if (Input.Keyboard.WasPressed(Keys.D0)) {
-					Run.Depth = 0;
+					Context.Run.Depth = 0;
 					
-					if (Run.Statistics != null) {
-						Run.Statistics.Done = true;
-						Run.Statistics = null;
+					if (Context.Run.Statistics != null) {
+						Context.Run.Statistics.Done = true;
+						Context.Run.Statistics = null;
 					}
 				}
 				
 				if (Input.Keyboard.WasPressed(Keys.D1)) {
-					Run.Depth = 1;
+					Context.Run.Depth = 1;
 				}
 				
 				if (Input.Keyboard.WasPressed(Keys.D2)) {
-					Run.Depth = 3;
+					Context.Run.Depth = 3;
 				}
 				
 				if (Input.Keyboard.WasPressed(Keys.D3)) {
-					Run.Depth = 5;
+					Context.Run.Depth = 5;
 				}
 				
 				if (Input.Keyboard.WasPressed(Keys.D4)) {
-					Run.Depth = 7;
+					Context.Run.Depth = 7;
 				}
 				
 				if (Input.Keyboard.WasPressed(Keys.D5)) {
-					Run.Depth = 9;
+					Context.Run.Depth = 9;
 				}
 				
 				if (Input.Keyboard.WasPressed(Keys.D6)) {
-					Run.Depth = 11;
+					Context.Run.Depth = 11;
 				}
 			}
 			
 			if (Input.Keyboard.IsDown(Keys.LeftAlt)) {
 				if (Input.Keyboard.WasPressed(Keys.D1)) {
-					Run.Depth = 2;
+					Context.Run.Depth = 2;
 					Player.ToBoss = true;
 				}
 				
 				if (Input.Keyboard.WasPressed(Keys.D2)) {
-					Run.Depth = 4;
+					Context.Run.Depth = 4;
 					Player.ToBoss = true;
 				}
 				
 				if (Input.Keyboard.WasPressed(Keys.D3)) {
-					Run.Depth = 6;
+					Context.Run.Depth = 6;
 					Player.ToBoss = true;
 				}
 				
 				if (Input.Keyboard.WasPressed(Keys.D4)) {
-					Run.Depth = 8;
+					Context.Run.Depth = 8;
 					Player.ToBoss = true;
 				}
 				
 				if (Input.Keyboard.WasPressed(Keys.D5)) {
-					Run.Depth = 10;
+					Context.Run.Depth = 10;
 					Player.ToBoss = true;
 				}
 				
 				if (Input.Keyboard.WasPressed(Keys.D6)) {
-					Run.Depth = 11;
+					Context.Run.Depth = 11;
 					Player.ToBoss = true;
 				}
 			}

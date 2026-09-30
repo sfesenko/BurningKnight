@@ -252,7 +252,7 @@ namespace BurningKnight.level.entities {
 			if (disk == 0) {
 				return null;
 			} else if (disk == 10) {
-				return Run.Depth == 0 ? "Hub" : "Shopkeeper";
+				return Context.Run.Depth == 0 ? "Hub" : "Shopkeeper";
 			}
 
 			return $"Disk {disk}";

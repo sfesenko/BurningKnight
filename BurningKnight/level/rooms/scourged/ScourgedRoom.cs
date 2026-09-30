@@ -35,7 +35,7 @@ namespace BurningKnight.level.rooms.scourged {
 				Painter.Set(level, new Dot(Left + 1, Bottom - 1), t);
 			}
 
-			if (Rnd.Chance(10 + Run.Scourge * 5)) {
+			if (Rnd.Chance(10 + Context.Run.Scourge * 5)) {
 				var cn = GetCenter() * 16;
 				var c = Rnd.Int(2, 4);
 

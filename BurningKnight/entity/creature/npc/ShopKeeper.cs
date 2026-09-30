@@ -117,7 +117,7 @@ namespace BurningKnight.entity.creature.npc {
 			
 			var h = GetComponent<HealthComponent>();
 
-			h.InitMaxHealth = 10 + Run.Depth * 10;
+			h.InitMaxHealth = 10 + Context.Run.Depth * 10;
 			h.Unhittable = false;
 
 			var b = new RectBodyComponent(4, 2, 10, 14);
@@ -198,7 +198,7 @@ namespace BurningKnight.entity.creature.npc {
 				Achievements.Unlock("bk:marauder");
 
 				for (var i = 0; i < 3; i++) {
-					Run.AddScourge(true);
+					Context.Run.AddScourge(true);
 				}
 			}
 

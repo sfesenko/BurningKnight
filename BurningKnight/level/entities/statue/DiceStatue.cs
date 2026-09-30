@@ -71,7 +71,7 @@ namespace BurningKnight.level.entities.statue {
 				// + Clear Scourge
 				{
 					"cleansed", (s, e) => {
-						Run.RemoveScourge();
+						GameContext.Current.Run.RemoveScourge();
 						return true;
 					}
 				},
@@ -79,7 +79,7 @@ namespace BurningKnight.level.entities.statue {
 				// - Add Scourge
 				{
 					"scourged", (s, e) => {
-						Run.AddScourge(true);
+						GameContext.Current.Run.AddScourge(true);
 						return false;
 					}
 				},

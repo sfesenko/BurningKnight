@@ -29,7 +29,7 @@ namespace BurningKnight.entity.creature.npc {
 			
 			AddComponent(new SensorBodyComponent(-Npc.Padding, -Npc.Padding, Width + Npc.Padding * 2, Height + Npc.Padding * 2, BodyType.Static));
 
-			cost = Math.Min(99, Run.Depth * 15);
+			cost = Math.Min(99, Context.Run.Depth * 15);
 			paid = GlobalSave.GetInt("builder_paid", 0);
 			
 			AddComponent(new AnimationComponent("builder"));
@@ -64,7 +64,7 @@ namespace BurningKnight.entity.creature.npc {
 
 					if (paid >= cost) {
 						GlobalSave.Put("builder_paid", 0);
-						GlobalSave.Put($"shortcut_{Run.Depth}", true);
+						GlobalSave.Put($"shortcut_{Context.Run.Depth}", true);
 
 						return Dialogs.Get("builder_3");
 					} else {
@@ -112,27 +112,27 @@ namespace BurningKnight.entity.creature.npc {
 		public override void PostInit() {
 			base.PostInit();
 
-			if (GlobalSave.IsTrue($"shortcut_{Run.Depth}")) {
+			if (GlobalSave.IsTrue($"shortcut_{Context.Run.Depth}")) {
 				Done = true;
 				return;
 			}
 			
-			if (Run.Depth > 0) {
+			if (Context.Run.Depth > 0) {
 				GameSave.Put("seen_builder", true);
 			}
 		}
 
 		public static bool ShouldAppear() {
-			if (Run.Type != RunType.Regular || GameSave.IsTrue("seen_builder")) {
+			if (GameContext.Current.Run.Type != RunType.Regular || GameSave.IsTrue("seen_builder")) {
 				return false;
 			}
 
-			if (Run.Depth == 5 && LevelSave.GenerateMarket && Run.Loop == 0) {
+			if (GameContext.Current.Run.Depth == 5 && LevelSave.GenerateMarket && GameContext.Current.Run.Loop == 0) {
 				return false;
 			}
 
-			if (Run.Depth == 3 || Run.Depth == 5 || Run.Depth == 7 || Run.Depth == 9) {
-				return GlobalSave.IsFalse($"shortcut_{Run.Depth}");
+			if (GameContext.Current.Run.Depth == 3 || GameContext.Current.Run.Depth == 5 || GameContext.Current.Run.Depth == 7 || GameContext.Current.Run.Depth == 9) {
+				return GlobalSave.IsFalse($"shortcut_{GameContext.Current.Run.Depth}");
 			}
 
 			return false;

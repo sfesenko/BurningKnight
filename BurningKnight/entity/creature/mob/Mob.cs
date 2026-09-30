@@ -89,8 +89,8 @@ namespace BurningKnight.entity.creature.mob {
 		}
 		
 		protected virtual void SetMaxHp(int hp) {
-			if (Run.Loop > 0 && !(this is DM)) {
-				hp *= (this is Boss ? 4 : 1) * (Run.Loop + 1);
+			if (Context.Run.Loop > 0 && !(this is DM)) {
+				hp *= (this is Boss ? 4 : 1) * (Context.Run.Loop + 1);
 			}
 		
 			var health = GetComponent<HealthComponent>();
@@ -229,7 +229,7 @@ namespace BurningKnight.entity.creature.mob {
 		}
 
 		public void GeneratePrefix() {
-			if (!Rnd.Chance(Run.Scourge * 10 + 0.5f)) {
+			if (!Rnd.Chance(Context.Run.Scourge * 10 + 0.5f)) {
 				return;
 			}
 

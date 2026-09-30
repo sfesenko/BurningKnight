@@ -51,7 +51,7 @@ namespace BurningKnight.entity.room.controllable.turret {
 			AddComponent(new AudioEmitterComponent());
 
 			AlwaysActive = true;
-			if (Run.Depth == -2) {
+			if (Context.Run.Depth == -2) {
 				On = false;
 			}
 		}
@@ -77,7 +77,7 @@ namespace BurningKnight.entity.room.controllable.turret {
 				Speed = 1f;
 			}
 
-			if (Run.Depth == -2 || Run.Depth == Run.ContentEndDepth) {
+			if (Context.Run.Depth == -2 || Context.Run.Depth == Context.Run.ContentEndDepth) {
 				TimingOffset = 0;
 				beforeNextBullet = 0;
 			}
@@ -96,7 +96,7 @@ namespace BurningKnight.entity.room.controllable.turret {
 			base.PostInit();
 			Angle = StartingAngle;
 			
-			if (Run.Depth == Run.ContentEndDepth) {
+			if (Context.Run.Depth == Context.Run.ContentEndDepth) {
 				Speed = 2.5f;
 				TimingOffset = 0;
 			}
@@ -134,7 +134,7 @@ namespace BurningKnight.entity.room.controllable.turret {
 			base.Update(dt);
 			
 			// Always enabled in tutorial
-			if (Run.Depth != -2 && On) {
+			if (Context.Run.Depth != -2 && On) {
 				var room = GetComponent<RoomComponent>().Room;
 
 				if (room != null && room.Type == RoomType.Regular) {
@@ -207,13 +207,13 @@ namespace BurningKnight.entity.room.controllable.turret {
 		}
 
 		public override void Render() {
-			if (Run.Depth != -2 || On) {
+			if (Context.Run.Depth != -2 || On) {
 				base.Render();
 			}
 		}
 
 		public void RenderShadow() {
-			if (Run.Depth != -2 || On) {
+			if (Context.Run.Depth != -2 || On) {
 				GraphicsComponent.Render(true);
 			}
 		}

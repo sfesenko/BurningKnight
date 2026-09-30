@@ -135,7 +135,7 @@ namespace BurningKnight.entity.projectile {
 			if (Owner is Mob) {
 				projectile.AddTag(Tags.MobProjectile);
 
-				if ((Owner is Boss && Run.Loop > 0) || Run.Loop > 1) {
+				if ((Owner is Boss && Context.Run.Loop > 0) || Context.Run.Loop > 1) {
 					projectile.AddFlags(ProjectileFlags.Scourged);
 				}
 			} else if (Owner is Player) {

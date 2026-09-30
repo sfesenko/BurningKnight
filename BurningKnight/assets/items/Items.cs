@@ -136,9 +136,9 @@ namespace BurningKnight.assets.items {
 				return false;
 			}
 			
-			return (Run.Type == RunType.Daily || !t.Lockable || GlobalSave.IsTrue(t.Id)) && (!t.Single || Run.Statistics == null ||
-			                                                    (!Run.Statistics.Items.Contains(t.Id) &&
-			                                                     !Run.Statistics.Banned.Contains(t.Id))) && t.Id != "bk:the_sword";
+			return (Context.Run.Type == RunType.Daily || !t.Lockable || GlobalSave.IsTrue(t.Id)) && (!t.Single || Context.Run.Statistics == null ||
+			                                                    (!Context.Run.Statistics.Items.Contains(t.Id) &&
+			                                                     !Context.Run.Statistics.Banned.Contains(t.Id))) && t.Id != "bk:the_sword";
 		}
 
 		public static readonly List<string> GeneratedOnFloor = [];

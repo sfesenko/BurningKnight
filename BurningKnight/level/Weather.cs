@@ -29,7 +29,7 @@ namespace BurningKnight.level {
 			t = Rnd.Float(1000);
 			Time = Rnd.Float(24);
 
-			if (Events.XMas && Run.Depth == 0) {
+			if (Events.XMas && Context.Run.Depth == 0) {
 				Snows = true;
 				return;
 			}
@@ -58,7 +58,7 @@ namespace BurningKnight.level {
 				var rained = Rains || Snows;
 				RainLeft = rained ? Rnd.Float(12f, 128f) : Rnd.Float(1f, 48f);
 
-				if (!(Events.XMas && Run.Depth == 0)) {
+				if (!(Events.XMas && Context.Run.Depth == 0)) {
 					if (rained) {
 						Rains = Snows = false;
 					} else {

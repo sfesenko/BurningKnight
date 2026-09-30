@@ -27,14 +27,14 @@ namespace BurningKnight.level.entities {
 		public override void Update(float dt) {
 			base.Update(dt);
 
-			if (!Engine.EditingLevel && Run.LastSavedDepth == 0) {
+			if (!Engine.EditingLevel && Context.Run.LastSavedDepth == 0) {
 				Done = true;
 			}
 		}
 
 		protected override bool Interact(Entity entity) {
-			Log.Debug($"Go to runs last saved depth to {Run.LastSavedDepth}");
-			Run.Depth = Run.LastSavedDepth;
+			Log.Debug($"Go to runs last saved depth to {Context.Run.LastSavedDepth}");
+			Context.Run.Depth = Context.Run.LastSavedDepth;
 			entity.RemoveComponent<PlayerInputComponent>();
 			
 			return true;

@@ -52,7 +52,7 @@ namespace BurningKnight.entity.creature.player {
 	public partial class Player {
 		private int lastDepth = -3;
 		public void FindSpawnPoint() {
-			if (Run.StartedNew && Run.Depth > 0) {
+			if (Context.Run.StartedNew && Context.Run.Depth > 0) {
 				var index = GetComponent<InputComponent>().Index;
 				
 				if (StartingLamps[index] != null) {
@@ -91,7 +91,7 @@ namespace BurningKnight.entity.creature.player {
 				}
 
 				if (DailyItems != null) {
-					if (Run.Type == RunType.Daily) {
+					if (Context.Run.Type == RunType.Daily) {
 						var inventory = GetComponent<InventoryComponent>();
 						
 						foreach (var id in DailyItems) {
@@ -106,14 +106,14 @@ namespace BurningKnight.entity.creature.player {
 
 			findASpawn = true;
 
-			if (lastDepth == Run.Depth) {
+			if (lastDepth == Context.Run.Depth) {
 				Log.Info("Old depth is the same as the current one");
 				return;
 			}
 
-			lastDepth = Run.Depth;
+			lastDepth = Context.Run.Depth;
 			
-			if (Run.Depth > 1 && !GetComponent<StatsComponent>().TookDamageOnLevel) {
+			if (Context.Run.Depth > 1 && !GetComponent<StatsComponent>().TookDamageOnLevel) {
 				Achievements.Unlock("bk:dodge_overlord");
 			}
 			

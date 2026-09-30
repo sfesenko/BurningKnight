@@ -121,7 +121,7 @@ namespace BurningKnight.entity.creature.mob.desert {
 						LightRadius = 30
 					};
 
-					if (Run.Depth > 4 || Run.Loop > 0) {
+					if (GameContext.Current.Run.Depth > 4 || GameContext.Current.Run.Loop > 0) {
 						builder.RemoveFlags(ProjectileFlags.Reflectable, ProjectileFlags.BreakableByMelee);
 						builder.Scale *= 1.5f;
 					}

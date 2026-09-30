@@ -31,7 +31,7 @@ namespace BurningKnight.level.rooms.treasure {
 				Painter.Clip = clip;
 			}
 			
-			scourged = Rnd.Chance(Run.Scourge * 2 + 2);
+			scourged = Rnd.Chance(Context.Run.Scourge * 2 + 2);
 			PaintInside(level);
 
 			if (scourged) {
@@ -144,7 +144,7 @@ namespace BurningKnight.level.rooms.treasure {
 		}
 
 		public override bool CanConnect(RoomDef r) {
-			if (Run.Type != RunType.BossRush && LevelSave.BiomeGenerated is JungleBiome && !(r is HiveRoom)) {
+			if (Context.Run.Type != RunType.BossRush && LevelSave.BiomeGenerated is JungleBiome && !(r is HiveRoom)) {
 				return false;
 			}
 			

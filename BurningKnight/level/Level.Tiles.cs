@@ -264,7 +264,7 @@ namespace BurningKnight.level {
 			WallDecor = new byte[Size];
 			Explored = new bool[Size];
 
-			var light = Run.Depth == 0;
+			var light = Context.Run.Depth == 0;
 			
 			for (var i = 0; i < Size; i++) {
 				if (Rnd.Chance(10)) {

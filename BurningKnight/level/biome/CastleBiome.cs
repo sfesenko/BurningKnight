@@ -17,7 +17,7 @@ namespace BurningKnight.level.biome {
 		}
 
 		public override string GetMusic() {
-			if (Run.AlternateMusic) {
+			if (Context.Run.AlternateMusic) {
 				return "chip";
 			}
 
@@ -32,7 +32,7 @@ namespace BurningKnight.level.biome {
 					return;
 				}
 				
-				var f = Run.Depth == 1;
+				var f = Context.Run.Depth == 1;
 				
 				var r = (byte) (f ? Tiles.RandomFloor() : Tile.Chasm);
 				

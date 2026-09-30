@@ -29,7 +29,7 @@ namespace BurningKnight.level.rooms.shop {
 				Painter.Clip = clip;
 			}
 			
-			var scourged = Rnd.Chance(Run.Scourge + 1);
+			var scourged = Rnd.Chance(Context.Run.Scourge + 1);
 		
 			if (Rnd.Chance(30)) {
 				var t = Tiles.Pick(Tile.FloorC, Tile.FloorD);
@@ -92,12 +92,12 @@ namespace BurningKnight.level.rooms.shop {
 				}
 			}
 			
-			var pool = Items.GeneratePool(Items.GetPool(Run.Type == RunType.BossRush ? ItemPool.BossRush : ItemPool.Shop));
+			var pool = Items.GeneratePool(Items.GetPool(Context.Run.Type == RunType.BossRush ? ItemPool.BossRush : ItemPool.Shop));
 			var consumablePool = Items.GeneratePool(Items.GetPool(ItemPool.ShopConsumable));
 
 			var con = Math.Max(1, Math.Ceiling(stands.Count / 4f));
 			var i = 0;
-			var g = (Run.Depth == 5 && Run.Loop == 0 && LevelSave.GenerateMarket) ? Rnd.Int(stands.Count) : -1;
+			var g = (Context.Run.Depth == 5 && Context.Run.Loop == 0 && LevelSave.GenerateMarket) ? Rnd.Int(stands.Count) : -1;
 
 			foreach (var s in stands) {
 				var stand = new ShopStand();
@@ -149,11 +149,11 @@ namespace BurningKnight.level.rooms.shop {
 				new Gramophone()
 			};
 
-			if (Rnd.Chance(40 + Run.Luck * 7)) {
+			if (Rnd.Chance(40 + Context.Run.Luck * 7)) {
 				props.Add(new RerollMachine());
 			}
 
-			if (Rnd.Chance(40 + Run.Luck * 7)) {
+			if (Rnd.Chance(40 + Context.Run.Luck * 7)) {
 				props.Add(new VendingMachine());
 			}
 
@@ -288,7 +288,7 @@ namespace BurningKnight.level.rooms.shop {
 
 		public override void SetupDoors(Level level) {
 			foreach (var door in Connected) {
-				door.Value.Type = door.Key is SubShopRoom || (Run.Depth == 5 && Run.Loop == 0 && LevelSave.GenerateMarket) || Run.Type == RunType.BossRush || Rnd.Chance(2) ? DoorPlaceholder.Variant.Enemy : DoorPlaceholder.Variant.Shop;
+				door.Value.Type = door.Key is SubShopRoom || (Context.Run.Depth == 5 && Context.Run.Loop == 0 && LevelSave.GenerateMarket) || Context.Run.Type == RunType.BossRush || Rnd.Chance(2) ? DoorPlaceholder.Variant.Enemy : DoorPlaceholder.Variant.Shop;
 			}
 		}
 		

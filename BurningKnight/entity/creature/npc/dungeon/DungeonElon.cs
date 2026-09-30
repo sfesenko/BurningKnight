@@ -43,7 +43,7 @@ namespace BurningKnight.entity.creature.npc.dungeon {
 				i.Done = true;
 				c.Set(Items.CreateAndAdd(id, Area));
 			
-				Run.AddScourge(true);
+				Context.Run.AddScourge(true);
 
 				return null;
 			});

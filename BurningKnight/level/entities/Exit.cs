@@ -45,19 +45,19 @@ namespace BurningKnight.level.entities {
 			entity.RemoveComponent<PlayerInputComponent>();
 			entity.GetComponent<HealthComponent>().Unhittable = true;
 			
-			if (Run.Depth == Run.ContentEndDepth || (Run.Type == RunType.BossRush && Run.Depth == 5)) {
-				if (Run.Type == RunType.Regular) {
-					Run.ActualDepth = -1;
-					Run.Depth = 1;
-					Run.Loop++;
+			if (Context.Run.Depth == Context.Run.ContentEndDepth || (Context.Run.Type == RunType.BossRush && Context.Run.Depth == 5)) {
+				if (Context.Run.Type == RunType.Regular) {
+					Context.Run.ActualDepth = -1;
+					Context.Run.Depth = 1;
+					Context.Run.Loop++;
 					
 					Achievements.Unlock("bk:loop");
 				} else {
-					Run.Win();
+					Context.Run.Win();
 				}
 			} else {
 				InGameState.TransitionToBlack(entity.Center, () => {
-					Run.NumPlayers = 0;
+					Context.Run.NumPlayers = 0;
 					Descend();
 				});
 			}
@@ -67,23 +67,23 @@ namespace BurningKnight.level.entities {
 		}
 		
 		protected virtual void Descend() {
-			if (Run.Depth == -2) {
+			if (Context.Run.Depth == -2) {
 				Achievements.Unlock("bk:tutorial");
 				GlobalSave.Put("finished_tutorial", true);
-				Run.Depth = 0;
+				Context.Run.Depth = 0;
 			} else if (To == 1 || this is BossRushExit) {
-				Run.NumPlayers = Area.Tagged[Tags.Player].Count;
-				Run.StartNew();
+				Context.Run.NumPlayers = Area.Tagged[Tags.Player].Count;
+				Context.Run.StartNew();
 				// Caves secret location
-			} else if (Run.Depth == 13) {
-				Run.Depth = 4;
+			} else if (Context.Run.Depth == 13) {
+				Context.Run.Depth = 4;
 			} else {
-				Run.Depth = To;
+				Context.Run.Depth = To;
 			}
 		}
 
 		protected virtual string GetFxText() {
-			return Locale.Get(Run.Depth == 0 ? "new_run" : "descend");
+			return Locale.Get(Context.Run.Depth == 0 ? "new_run" : "descend");
 		}
 
 		public override void AddComponents() {
@@ -93,12 +93,12 @@ namespace BurningKnight.level.entities {
 			Height = 14;
 
 			if (To != 13) {
-				To = Run.Depth + 1;
+				To = Context.Run.Depth + 1;
 			}
 
 			AddComponent(new InteractableComponent(Interact) {
 				OnStart = entity => {
-					if (entity is LocalPlayer && Run.Depth != -2) {
+					if (entity is LocalPlayer && Context.Run.Depth != -2) {
 						Engine.Instance.State.Ui.Add(new InteractFx(this, GetFxText()));
 					}
 				},

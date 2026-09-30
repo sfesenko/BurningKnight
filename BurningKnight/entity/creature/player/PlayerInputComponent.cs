@@ -138,7 +138,7 @@ namespace BurningKnight.entity.creature.player {
 				//}
 			}
 
-			if (Run.Depth == 0 && InGameState.Multiplayer && controller.Index > 0) {
+			if (Context.Run.Depth == 0 && InGameState.Multiplayer && controller.Index > 0) {
 				if (controller.GamepadData.CurrentState.Buttons.B == ButtonState.Pressed) {
 					if (holdTimer <= 0) {
 						holdTimer = 0;
@@ -180,8 +180,8 @@ namespace BurningKnight.entity.creature.player {
 				}
 			} 
 
-			if (Run.Depth > 0 && Run.Type != RunType.Daily && Input.Keyboard.WasPressed(Keys.P)) {
-				Run.StartNew(1, Run.Type);
+			if (Context.Run.Depth > 0 && Context.Run.Type != RunType.Daily && Input.Keyboard.WasPressed(Keys.P)) {
+				Context.Run.StartNew(1, Context.Run.Type);
 				Audio.PlaySfx("ui_moving");
 				return;
 			}
@@ -279,14 +279,14 @@ namespace BurningKnight.entity.creature.player {
 				}
 			}
 
-			if (BK.StandMode && idle && !Engine.Instance.State.Paused && Run.Depth > 0) {
+			if (BK.StandMode && idle && !Engine.Instance.State.Paused && Context.Run.Depth > 0) {
 				TimeIdle += dt;
 
 				if (TimeIdle >= 120f) {
 					TimeIdle = 0;
 					Log.Info("The game was idle for 120 seconds, restarting");
 					GlobalSave.ResetControlKnowldge();
-					Run.StartNew(0);
+					Context.Run.StartNew(0);
 				}
 			} else {
 				TimeIdle = 0;

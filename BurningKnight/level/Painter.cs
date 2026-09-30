@@ -92,7 +92,7 @@ namespace BurningKnight.level {
 
 					if (r <= 0.05f) {
 						l.Set(index, Tile.TintedRock);
-					} else if (Run.Depth > 0 && r <= 0.1f && !(rm is TreasureRoom)) {
+					} else if (Context.Run.Depth > 0 && r <= 0.1f && !(rm is TreasureRoom)) {
 						l.Set(index, Tile.BarrelTmp);
 					}
 				}
@@ -113,20 +113,20 @@ namespace BurningKnight.level {
 				return false;
 			}
 
-			Level.Rains = Run.Depth > 0 && Rnd.Chance(15);
+			Level.Rains = Context.Run.Depth > 0 && Rnd.Chance(15);
 
 			if (Level.Biome.Id == Biome.Ice) {
 				Level.Snows = true;
 				Level.Rains = false;
 			} else if (Level.Biome.Id == Biome.Castle) {
-				Level.Snows = Run.Depth > 0 && Rnd.Chance(10);
+				Level.Snows = Context.Run.Depth > 0 && Rnd.Chance(10);
 			} else if (Level.Biome.Id == Biome.Desert) {
 				Level.Rains = false;
 			}
 
 			// Level.Dark = Run.Depth > 1 && Rnd.Chance(5);
 
-			if (Run.Depth == 5 && LevelSave.GenerateMarket && Run.Loop == 0) {
+			if (Context.Run.Depth == 5 && LevelSave.GenerateMarket && Context.Run.Loop == 0) {
 				Level.Dark = true;
 			}
 			
@@ -207,7 +207,7 @@ namespace BurningKnight.level {
 				}	
 			}
 
-			if (Level.Biome is IceBiome || (Run.Depth > 0 && tile == Tile.Chasm)) {
+			if (Level.Biome is IceBiome || (Context.Run.Depth > 0 && tile == Tile.Chasm)) {
 				var z = Level.Biome is IceBiome ? Tile.WallB : Tile.WallA;
 				
 				for (var x = 0; x < Level.Width; x++) {
@@ -269,7 +269,7 @@ namespace BurningKnight.level {
 			}
 
 			// Not checking lib cuz teleporters
-			var check = Run.Depth > 0 && !(LevelSave.BiomeGenerated is LibraryBiome);
+			var check = Context.Run.Depth > 0 && !(LevelSave.BiomeGenerated is LibraryBiome);
 
 			if (check && (exit == null || entrance == null)) {
 				Log.Error("Exit or entrance not found, aborting");
@@ -293,7 +293,7 @@ namespace BurningKnight.level {
 				if (Room is SecretRoom) {
 					for (var Y = Room.Top + 1; Y < Room.Bottom; Y++) {
 						for (var X = Room.Left + 1; X < Room.Right; X++) {
-							if (Rnd.Chance(Run.Depth * 5)) {
+							if (Rnd.Chance(Context.Run.Depth * 5)) {
 								Level.MatrixLeak[Level.ToIndex(X, Y)] = true;
 							}
 						}
@@ -338,7 +338,7 @@ namespace BurningKnight.level {
 
 			PathFinder.SetMapSize(Level.Width, Level.Height);
 
-			if (Run.Depth > -1) {
+			if (Context.Run.Depth > -1) {
 				if (Dirt > 0) {
 					PaintDirt(Level, Rooms);
 				}
@@ -404,7 +404,7 @@ namespace BurningKnight.level {
 					item.Center = (rrms[Rnd.Int(rrms.Count)].GetRandomFreeCell() * 16) + new Vector2(8, 8);
 				}
 
-				if (Run.Depth == 1) {
+				if (Context.Run.Depth == 1) {
 					var crystal = new Crystal();
 					crystal.Center = (rrms[Rnd.Int(rrms.Count)].GetRandomFreeCell() * 16) + new Vector2(8, 8) + Rnd.Vector(-4, 4);
 					Level.Area.Add(crystal);

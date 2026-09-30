@@ -66,7 +66,7 @@ namespace BurningKnight.level.rooms.special {
 		}
 
 		private static string GenerateNpc() {
-			var d = Run.Depth;
+			var d = Context.Run.Depth;
 
 			foreach (var info in npcs) {
 				if (info.Depth == d && GlobalSave.IsFalse(info.Id)) {
@@ -148,7 +148,7 @@ namespace BurningKnight.level.rooms.special {
 		}
 
 		public static bool ShouldBeAdded() {
-			if (Run.Type != RunType.Regular || GameSave.IsTrue("npc_appeared")) {
+			if (Context.Run.Type != RunType.Regular || GameSave.IsTrue("npc_appeared")) {
 				return false;
 			}
 

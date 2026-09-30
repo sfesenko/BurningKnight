@@ -144,7 +144,7 @@ namespace BurningKnight.entity.item.stand {
 		}
 
 		protected virtual bool Interact(Entity entity) {
-			if (Item != null && Item.Masked && Run.Depth < 1) {
+			if (Item != null && Item.Masked && Context.Run.Depth < 1) {
 				return false;
 			}
 			
@@ -202,7 +202,7 @@ namespace BurningKnight.entity.item.stand {
 						}
 					}
 
-					return this is HatStand || this is ShopStand || Run.Depth == -2;
+					return this is HatStand || this is ShopStand || Context.Run.Depth == -2;
 				} else if (!(this is ShopStand) && entity.TryGetComponent<ActiveWeaponComponent>(out var weapon) && weapon.Item != null) {
 					if (weapon.Item.Scourged) {
 						AnimationUtil.ActionFailed();
@@ -223,14 +223,14 @@ namespace BurningKnight.entity.item.stand {
 				if (item.AutoPickup) {
 					item.OnInteractionStart(entity);
 					item = null;
-				} else if (Run.Depth != -2) {
+				} else if (Context.Run.Depth != -2) {
 					Engine.Instance.State.Ui.Add(new ItemPickupFx(item));
 				}
 			}
 		}
 
 		protected virtual bool CanInteract(Entity e) {
-			return !Hidden && (Item != null || Run.Depth != -2);
+			return !Hidden && (Item != null || Context.Run.Depth != -2);
 		}
 
 		public override void Render() {

@@ -20,7 +20,7 @@ namespace BurningKnight.entity.door {
 
 		private bool Scourge(ItemComponent component) {
 			if (component.Item != null && !component.Item.Scourged) {
-				Run.AddScourge();
+				Context.Run.AddScourge();
 				component.Item.Scourged = true;
 
 				return true;
@@ -39,7 +39,7 @@ namespace BurningKnight.entity.door {
 				var b = Scourge(p.GetComponent<WeaponComponent>());
 
 				if (!a && !b) {
-					Run.AddScourge();
+					Context.Run.AddScourge();
 				}
 
 				scourged = true;

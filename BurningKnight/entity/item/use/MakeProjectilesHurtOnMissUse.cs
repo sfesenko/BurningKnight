@@ -12,7 +12,7 @@ using Lens.entity;
 namespace BurningKnight.entity.item.use {
 	public class MakeProjectilesHurtOnMissUse : ItemUse {
 		public override bool HandleEvent(Event e) {
-			if (Run.Depth == 0) {
+			if (Context.Run.Depth == 0) {
 				return base.HandleEvent(e);
 			}
 			

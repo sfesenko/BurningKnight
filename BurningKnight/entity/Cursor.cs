@@ -82,7 +82,7 @@ namespace BurningKnight.entity {
 
 			var controller = input.GamepadEnabled ? input.GamepadData : null;
 			
-			if (controller != null && Engine.Instance.State is InGameState { Paused: false, Died: false } && !Run.Won) {
+			if (controller != null && Engine.Instance.State is InGameState { Paused: false, Died: false } && !Context.Run.Won) {
 				if (needsAdjusting) {
 					needsAdjusting = false;
 					Position = Context.Camera.CameraToUi(GamePosition = Player.Center);

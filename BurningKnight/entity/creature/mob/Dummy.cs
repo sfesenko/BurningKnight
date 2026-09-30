@@ -37,7 +37,7 @@ namespace BurningKnight.entity.creature.mob {
 				GraphicsComponent.Flipped = ev.From.CenterX > CenterX;
 				GetComponent<AudioEmitterComponent>().EmitRandomized(GetHurtSfx());
 
-				if (Run.Depth < 1 && Rnd.Chance(30)) {
+				if (Context.Run.Depth < 1 && Rnd.Chance(30)) {
 					var dialog = GetComponent<DialogComponent>();
 
 					if (dialog.Current == null) {

@@ -32,7 +32,7 @@ namespace BurningKnight.level.entities.plant {
 
 				var caves = Context.Level.Biome is CaveBiome;
 
-				if (Variant != 255 && (caves || Run.Depth != 0 || (s != "plant_k" && s != "plant_m"))) {
+				if (Variant != 255 && (caves || Context.Run.Depth != 0 || (s != "plant_k" && s != "plant_m"))) {
 					if (caves) {
 						AddComponent(new LightComponent(this, Rnd.Int(16, 32), new Color(0.4f, 0.1f, 0.4f, 1f)));
 					} else if (s == "plant_m") {

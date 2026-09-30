@@ -21,7 +21,7 @@ namespace BurningKnight.entity.creature.player {
 		public override void PostInit() {
 			base.PostInit();
 
-			if (Item != null && Run.Depth < 1) {
+			if (Item != null && Context.Run.Depth < 1) {
 				Item.Done = true;
 				Item = null;
 			}
@@ -45,7 +45,7 @@ namespace BurningKnight.entity.creature.player {
 		protected override void OnItemSet(Item previous) {
 			base.OnItemSet(previous);
 			
-			if (Run.Depth > 0 && GlobalSave.IsFalse("control_active") && GetComponent<DialogComponent>().Dialog?.Str != null) {
+			if (Context.Run.Depth > 0 && GlobalSave.IsFalse("control_active") && GetComponent<DialogComponent>().Dialog?.Str != null) {
 				var dialog = GetComponent<DialogComponent>();
 				
 				dialog.Dialog.Str.ClearIcons();
@@ -73,7 +73,7 @@ namespace BurningKnight.entity.creature.player {
 		public override void Update(float dt) {
 			base.Update(dt);
 
-			if (Run.Depth > 0 && Item != null && !Item.Done && Input.WasPressed(Controls.Active, GetComponent<InputComponent>())) {
+			if (Context.Run.Depth > 0 && Item != null && !Item.Done && Input.WasPressed(Controls.Active, GetComponent<InputComponent>())) {
 				if (GetComponent<PlayerInputComponent>().InDialog) {
 					return;
 				}
@@ -87,7 +87,7 @@ namespace BurningKnight.entity.creature.player {
 						Item.Delay = 0;
 					}
 					
-					if (Run.Depth > 0 && GlobalSave.IsFalse("control_active")) {
+					if (Context.Run.Depth > 0 && GlobalSave.IsFalse("control_active")) {
 						Entity.GetComponent<DialogComponent>().Close();
 						GlobalSave.Put("control_active", true);
 					}

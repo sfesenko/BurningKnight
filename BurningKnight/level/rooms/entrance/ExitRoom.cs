@@ -38,7 +38,7 @@ namespace BurningKnight.level.rooms.entrance {
 			WallRegistry.Paint(level, this, EntranceWallPool.Instance);
 			
 			var prop = new Exit {
-				To = Run.Depth + 1
+				To = Context.Run.Depth + 1
 			};
 
 			var where = GetCenter();
