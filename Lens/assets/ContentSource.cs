@@ -1,3 +1,5 @@
+#nullable enable
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,7 +14,7 @@ namespace Lens.assets {
 		bool Exists(string path);
 
 		// Null when the path is missing.
-		Stream Open(string path);
+		Stream? Open(string path);
 
 		// The immediate children of a directory; a directory's name ends with '/'.
 		IEnumerable<string> List(string path);
@@ -46,7 +48,7 @@ namespace Lens.assets {
 			return File.Exists(full) || Directory.Exists(full);
 		}
 
-		public Stream Open(string path) {
+		public Stream? Open(string path) {
 			var full = Resolve(path);
 
 			if (File.Exists(full)) {
@@ -105,7 +107,7 @@ namespace Lens.assets {
 			return entries.Keys.Any(key => key.StartsWith(prefix, StringComparison.Ordinal));
 		}
 
-		public Stream Open(string path) {
+		public Stream? Open(string path) {
 			return entries.TryGetValue(ContentPath.Normalize(path), out var entry) ? entry.Open() : null;
 		}
 
@@ -147,7 +149,7 @@ namespace Lens.assets {
 			return false;
 		}
 
-		public Stream Open(string path) {
+		public Stream? Open(string path) {
 			foreach (var layer in layers) {
 				var stream = layer.Open(path);
 

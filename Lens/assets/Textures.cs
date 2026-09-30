@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿#nullable enable
+
+using System.Collections.Generic;
 using System.IO;
 using Lens.graphics;
 using Lens.util;
@@ -9,7 +11,7 @@ using Microsoft.Xna.Framework.Graphics;
 namespace Lens.assets {
 	public static class Textures {
 		private static Dictionary<string, TextureRegion> textures = new();
-		public static TextureRegion Missing;
+		public static TextureRegion Missing = null!; // Load() sets it
 		
 		public static void Load() {
 			var textureDir = FileHandle.FromRoot("Textures/");

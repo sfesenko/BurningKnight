@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿#nullable enable
+
+using System.Collections.Generic;
 using Lens.util.file;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -33,7 +35,7 @@ namespace Lens.assets {
 			All.Clear();
 		}
 
-		public static Effect Get(string id) {
+		public static Effect? Get(string id) {
 			return All.TryGetValue(id, out var o) ? o : null;
 		}
 	}

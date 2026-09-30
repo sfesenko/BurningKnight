@@ -40,12 +40,12 @@ public class FileHandle {
 
 	public string ReadAll() {
 		using var stream = OpenRead();
-		using var reader = new StreamReader(stream);
+		using var reader = new StreamReader(stream!);
 
 		return reader.ReadToEnd();
 	}
 
-	public Stream OpenRead() {
+	public Stream? OpenRead() {
 		return relative == null ? File.OpenRead(path) : Assets.Source.Open(relative);
 	}
 
