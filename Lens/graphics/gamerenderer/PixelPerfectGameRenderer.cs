@@ -35,7 +35,7 @@ namespace Lens.graphics.gamerenderer {
 				return;
 			}
 			
-			Graphics.Batch.Begin(SpriteSortMode, BlendState, SamplerState, DepthStencilState, DefaultRasterizerState, SurfaceEffect, Camera.Instance?.Matrix ?? one);
+			Graphics.Batch.Begin(SpriteSortMode, BlendState, SamplerState, DepthStencilState, DefaultRasterizerState, SurfaceEffect, Engine.Instance.State?.Camera?.Matrix ?? one);
 		}
 
 		public override void End() {
@@ -44,7 +44,7 @@ namespace Lens.graphics.gamerenderer {
 		
 		public override void BeginShadows() {
 			Engine.GraphicsDevice.SetRenderTarget(UiTarget);
-			Graphics.Batch.Begin(SpriteSortMode, BlendState, SamplerState, DepthStencilState, EnableClip ? ClipRasterizerState : DefaultRasterizerState, SurfaceEffect, Camera.Instance?.Matrix ?? one);
+			Graphics.Batch.Begin(SpriteSortMode, BlendState, SamplerState, DepthStencilState, EnableClip ? ClipRasterizerState : DefaultRasterizerState, SurfaceEffect, Engine.Instance.State?.Camera?.Matrix ?? one);
 			Graphics.Clear(Color.Transparent);
 		}
 
@@ -103,9 +103,10 @@ namespace Lens.graphics.gamerenderer {
 
 			Engine.GraphicsDevice.SetRenderTarget(null);
 			var set = false;
+			var camera = Engine.Instance.State?.Camera;
 
-			if (EnableClip && Camera.Instance != null) {
-				var pos = Camera.Instance.CameraToScreen(ClipPosition) - new Vector2(Camera.Instance.Position.X % 1, Camera.Instance.Position.Y % 1) + Camera.Instance.GetComponent<ShakeComponent>()!.Position;
+			if (EnableClip && camera != null) {
+				var pos = camera.CameraToScreen(ClipPosition) - new Vector2(camera.Position.X % 1, camera.Position.Y % 1) + camera.GetComponent<ShakeComponent>()!.Position;
 				
 				Engine.GraphicsDevice.ScissorRectangle = new Rectangle((int) (pos.X * Engine.Instance.Upscale), (int) (pos.Y * Engine.Instance.Upscale), (int) (ClipSize.X * Engine.Instance.Upscale), (int) (ClipSize.Y * Engine.Instance.Upscale));
 			} else {
@@ -116,16 +117,16 @@ namespace Lens.graphics.gamerenderer {
 
 			Graphics.Batch.Begin(SpriteSortMode.Immediate, BlendState, SamplerState, DepthStencilState, ClipRasterizerState, GameEffect, one);
 
-			if (Camera.Instance != null) {
-				var shake = Camera.Instance.GetComponent<ShakeComponent>()!;
-				var scale = Engine.Instance.Upscale * Camera.Instance.TextureZoom;
+			if (camera != null) {
+				var shake = camera.GetComponent<ShakeComponent>()!;
+				var scale = Engine.Instance.Upscale * camera.TextureZoom;
 
 				Graphics.Render(GameTarget,
 					new Vector2(Engine.Viewport.X + Display.Width / 2f * Engine.Instance.Upscale + scale * shake.Position.X,
 						Engine.Viewport.Y + Display.Height / 2f * Engine.Instance.Upscale + scale * shake.Position.Y),
 					shake.Angle,
-					new Vector2(Camera.Instance.Position.X % 1 + Display.Width / 2f,
-						Camera.Instance.Position.Y % 1 + Display.Height / 2f),
+					new Vector2(camera.Position.X % 1 + Display.Width / 2f,
+						camera.Position.Y % 1 + Display.Height / 2f),
 					new Vector2(scale * GameScale));
 			}
 

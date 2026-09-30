@@ -20,7 +20,6 @@ using MonoGame.Extended;
 
 namespace BurningKnight.state {
 	public class CutsceneState : GameState {
-		public Camera Camera;
 		private float blackBarsSize = 50;
 		private TextureRegion black;
 		public Area TopUi;

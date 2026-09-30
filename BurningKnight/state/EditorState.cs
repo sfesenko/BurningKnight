@@ -25,7 +25,6 @@ namespace BurningKnight.state {
 	public class EditorState : GameState {
 		public Level Level;
 		public EditorWindow Editor;
-		public Camera Camera;
 		public Console Console;
 		
 		public override void Init() {

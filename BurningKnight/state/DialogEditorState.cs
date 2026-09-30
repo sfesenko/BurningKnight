@@ -12,8 +12,6 @@ using MonoGame.Extended;
 
 namespace BurningKnight.state {
 	public class DialogEditorState : GameState {
-		public Camera Camera;
-		
 		public override void Init() {
 			base.Init();
 			

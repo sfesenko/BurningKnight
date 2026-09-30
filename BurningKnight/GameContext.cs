@@ -38,7 +38,7 @@ namespace BurningKnight {
 		}
 
 		public Camera? Camera {
-			get => camera ?? Lens.util.camera.Camera.Instance;
+			get => camera ?? Engine.Instance.State?.Camera;
 			set => camera = value;
 		}
 

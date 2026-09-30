@@ -23,12 +23,12 @@ namespace BurningKnight.state {
 			frame = anim.GetSlice("frame");
 			fill = anim.GetSlice("fill");
 
-			var c = new Camera(new FollowingDriver());
+			Camera = new Camera(new FollowingDriver());
 			
-			Ui.Add(c);
+			Ui.Add(Camera);
 			Ui.Add(new Cursor());
 			
-			c.Position = new Vector2(Display.Width / 2f, Display.Height / 2f);
+			Camera.Position = new Vector2(Display.Width / 2f, Display.Height / 2f);
 		}
 
 		public override void Render() {

@@ -55,11 +55,11 @@ namespace BurningKnight.state {
 			
 			UiButton.LastId = 0;
 			
-			var cam = new Camera(new FollowingDriver());
-			TopUi.Add(cam);
+			Camera = new Camera(new FollowingDriver());
+			TopUi.Add(Camera);
 			// Ui.Add(new AchievementBanner());
 
-			CreateEditor(cam);
+			CreateEditor(Camera);
 
 			var id = Context.Level.Biome.Id;
 

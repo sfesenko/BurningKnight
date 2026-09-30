@@ -17,7 +17,7 @@ namespace Lens.graphics.gamerenderer {
 
 		public override void Begin() {
 			Graphics.Batch.Begin(SpriteSortMode, BlendState, SamplerState, DepthStencilState, DefaultRasterizerState, GameEffect, 
-				Camera.Instance == null ? Matrix.Identity : Camera.Instance.Matrix);
+				Engine.Instance.State?.Camera?.Matrix ?? Matrix.Identity);
 		}
 
 		public override void End() {

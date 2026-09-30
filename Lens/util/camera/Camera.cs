@@ -19,7 +19,6 @@ namespace Lens.util.camera {
 		public const int TargetPadding = 16;
 		
 		public static bool Debug = true;
-		public static Camera Instance;
 
 		public static Action OnShake;
 
@@ -83,7 +82,6 @@ namespace Lens.util.camera {
 		}
 
 		public Camera(CameraDriver driver) {
-			Instance = this;
 			Driver = driver;
 
 			Width = Display.Width;
@@ -195,7 +193,6 @@ namespace Lens.util.camera {
 		public override void Destroy() {
 			base.Destroy();
 			driver?.Destroy();
-			Instance = null;
 		}
 
 		public Vector2 ScreenToCamera(Vector2 position) {

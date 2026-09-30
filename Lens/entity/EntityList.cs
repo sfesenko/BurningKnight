@@ -31,11 +31,13 @@ namespace Lens.entity {
 		}
 		
 		private bool CheckOnScreen(Entity entity) {
-			if (Camera.Instance == null) {
+			var camera = Engine.Instance.State?.Camera;
+
+			if (camera == null) {
 				return true;
 			}
 
-			return Camera.Instance.Sees(entity);
+			return camera.Sees(entity);
 		}
 
 		public void AutoRemove() {

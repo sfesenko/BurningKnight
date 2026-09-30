@@ -54,9 +54,11 @@ namespace BurningKnight.state {
 			
 			Tilesets.Load();
 
-			Ui.Add(new Camera(new FollowingDriver()) {
+			Camera = new Camera(new FollowingDriver()) {
 				Position = new Vector2(Display.Width / 2f, Display.Height / 2f)
-			});
+			};
+			
+			Ui.Add(Camera);
 			
 			level = new RegularLevel {
 				Width = Display.Width / 16, 

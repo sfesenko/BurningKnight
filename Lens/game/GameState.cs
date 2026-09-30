@@ -1,4 +1,5 @@
 ﻿using Lens.entity;
+using Lens.util.camera;
 
 namespace Lens.game {
 	public class GameState {
@@ -6,6 +7,11 @@ namespace Lens.game {
 
 		public Area Area = new Area();
 		public Area Ui = new Area();
+
+		// The state's camera: the engine renders through the current state's, so the view belongs
+		// to the state that set it up instead of being a global "last created camera".
+		public Camera Camera;
+
 		public float Time;
 
 		private bool paused;
