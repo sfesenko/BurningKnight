@@ -27,7 +27,7 @@ public  class Tween
 		return task;
 	}
 
-	public static TweenTask To<T>(T target, object? values, float duration, Func<float, float>? ease = null, float delay = 0) {
+	public static TweenTask To<T>(T target, object? values, float duration, Func<float, float>? ease = null, float delay = 0) where T : notnull {
 		ease ??= Ease.QuadOut;
 		
 		var task = new TweenTask

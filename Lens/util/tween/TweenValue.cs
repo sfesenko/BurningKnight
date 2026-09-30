@@ -1,4 +1,6 @@
-﻿using System;
+﻿#nullable enable
+
+using System;
 using System.Linq;
 using System.Reflection;
 
@@ -20,18 +22,18 @@ namespace Lens.util.tween {
 		}
 
 		private static readonly Type[] NumericTypes;
-		private readonly FieldInfo field;
-		private readonly PropertyInfo prop;
+		private readonly FieldInfo? field;
+		private readonly PropertyInfo? prop;
 		private readonly bool isNumeric;
 		private readonly object target;
 
 		public string Name { get; private set; }
 
-		public object Value {
-			get { return field != null ? field.GetValue(target) : prop.GetValue(target, null); }
+		public object? Value {
+			get { return field != null ? field.GetValue(target) : prop!.GetValue(target, null); }
 			set {
 				if (isNumeric) {
-					Type type = null;
+					Type? type = null;
 					
 					if (field != null) {
 						type = field.FieldType;
@@ -84,7 +86,7 @@ namespace Lens.util.tween {
 				}
 			}
 
-			var valueType = Value.GetType();
+			var valueType = Value!.GetType();
 			isNumeric = AnyEquals(valueType, NumericTypes);
 			CheckPropertyType(valueType, property, targetType.Name);
 		}
@@ -123,7 +125,7 @@ namespace Lens.util.tween {
 			return isNumeric;
 		}
 
-		static bool AnyEquals<T>(T value, params T[] options) {
+		static bool AnyEquals<T>(T value, params T[] options) where T : notnull {
 			foreach (var option in options) {
 				if (value.Equals(option)) {
 					return true;
