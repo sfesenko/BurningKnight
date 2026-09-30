@@ -57,7 +57,7 @@ namespace BurningKnight.level {
 				return;
 			}
 			
-			var camera = Camera.Instance;
+			var camera = Context.Camera;
 			
 			// Cache the condition
 			var toX = GetRenderRight(camera);
@@ -97,7 +97,7 @@ namespace BurningKnight.level {
 			
 			manager.Update();
 
-			var camera = Camera.Instance;
+			var camera = Context.Camera;
 			
 			// Cache the condition
 			var toX = GetRenderRight(camera);
@@ -165,7 +165,7 @@ namespace BurningKnight.level {
 				return;
 			}
 			
-			var camera = Camera.Instance;
+			var camera = Context.Camera;
 
 			// Cache the condition
 			var toX = GetRenderRight(camera);
@@ -249,7 +249,7 @@ namespace BurningKnight.level {
 			if (Engine.Instance.StateRenderer.UiTarget != null) {
 				Graphics.Color = ShadowColor;
 
-				var c = Camera.Instance;
+				var c = Context.Camera;
 				var z = c.Zoom;
 				var n = Math.Abs(z - 1) > 0.01f;
 				
@@ -259,8 +259,8 @@ namespace BurningKnight.level {
 				}
 
 				Graphics.Render(Engine.Instance.StateRenderer.UiTarget,
-					Camera.Instance.TopLeft - new Vector2(Camera.Instance.Position.X % 1, 
-						Camera.Instance.Position.Y % 1));
+					Context.Camera.TopLeft - new Vector2(Context.Camera.Position.X % 1, 
+						Context.Camera.Position.Y % 1));
 
 				if (n) {
 					c.Zoom = z;
@@ -275,7 +275,7 @@ namespace BurningKnight.level {
 				return;
 			}
 			
-			var camera = Camera.Instance;
+			var camera = Context.Camera;
 
 			// Cache the condition
 			var toX = GetRenderRight(camera);

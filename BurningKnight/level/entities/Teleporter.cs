@@ -85,7 +85,7 @@ namespace BurningKnight.level.entities {
 						AnimationUtil.TeleportAway(c, () => {
 							tr.ignoreCollision = true;
 							c.BottomCenter = tr.Center;
-							Camera.Instance.Jump();
+							Context.Camera.Jump();
 							c.GetComponent<HealthComponent>().InvincibilityTimer = 1;
 							Audio.PlaySfx("level_teleport_arrive");
 							

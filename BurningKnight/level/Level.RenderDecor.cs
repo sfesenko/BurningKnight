@@ -42,7 +42,7 @@ namespace BurningKnight.level {
 				return;
 			}
 			
-			var camera = Camera.Instance;
+			var camera = Context.Camera;
 			var state = (PixelPerfectGameRenderer) Engine.Instance.StateRenderer;
 			state.End();
 
@@ -69,7 +69,7 @@ namespace BurningKnight.level {
 			Graphics.Batch.End();
 			Engine.GraphicsDevice.SetRenderTarget(state.GameTarget);
 			Graphics.Batch.Begin(SpriteSortMode.Immediate, messBlend, SamplerState.PointClamp, DepthStencilState.None, 
-				state.RasterizerState, null, Camera.Instance?.Matrix);
+				state.RasterizerState, null, Context.Camera?.Matrix);
 			
 			var region = new TextureRegion();
 
@@ -94,7 +94,7 @@ namespace BurningKnight.level {
 				return;
 			}
 
-			var camera = Camera.Instance;
+			var camera = Context.Camera;
 
 			// Cache the condition
 			var toX = GetRenderRight(camera);
@@ -126,7 +126,7 @@ namespace BurningKnight.level {
 				return;
 			}
 
-			var camera = Camera.Instance;
+			var camera = Context.Camera;
 
 			// Cache the condition
 			var toX = GetRenderRight(camera);
@@ -253,7 +253,7 @@ namespace BurningKnight.level {
 				return;
 			}
 			
-			var camera = Camera.Instance;
+			var camera = Context.Camera;
 
 			// Cache the condition
 			var toX = GetRenderRight(camera);
@@ -283,7 +283,7 @@ namespace BurningKnight.level {
 			Engine.GraphicsDevice.SetRenderTarget(state.GameTarget);
 			var shader = Shaders.Chasm;
 			Graphics.Batch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, SamplerState.PointClamp, DepthStencilState.None, 
-					state.RasterizerState, shader, Camera.Instance?.Matrix);
+					state.RasterizerState, shader, Context.Camera?.Matrix);
 
 			shader.Parameters["h"].SetValue(8f / Tileset.WallTopA.Texture.Height);
 			var sy = shader.Parameters["y"];
@@ -373,11 +373,11 @@ namespace BurningKnight.level {
 				return;
 			}
 			
-			var camera = Camera.Instance;
+			var camera = Context.Camera;
 			var state = (PixelPerfectGameRenderer) Engine.Instance.StateRenderer;
 
 			Graphics.Batch.Begin(SpriteSortMode.Immediate, messBlend, SamplerState.PointClamp, DepthStencilState.None, 
-				state.RasterizerState, null, Camera.Instance?.Matrix);
+				state.RasterizerState, null, Context.Camera?.Matrix);
 			
 			var region = new TextureRegion();
 

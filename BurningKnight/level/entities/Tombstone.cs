@@ -86,7 +86,7 @@ namespace BurningKnight.level.entities {
 			p.GetComponent<CursorComponent>().Cursor = cursor;
 			
 			AnimationUtil.Poof(where, 1);
-			Camera.Instance.Shake(16);
+			GameContext.Current.Camera.Shake(16);
 			
 			return p;
 		}
@@ -204,7 +204,7 @@ namespace BurningKnight.level.entities {
 			GetComponent<DialogComponent>().Close();
 			
 			AnimationUtil.Poof(Center);
-			Camera.Instance.Shake(16);
+			Context.Camera.Shake(16);
 			
 			// fixme: spawn ghosts, dialog should not appear when player is ded
 			

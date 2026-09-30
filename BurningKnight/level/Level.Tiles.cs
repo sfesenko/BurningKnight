@@ -341,7 +341,7 @@ namespace BurningKnight.level {
 			Animate(Area, tx, ty);
 		}
 		public static void Animate(Area area, int x, int y) {
-			if (!Camera.Instance.Overlaps(new Rectangle(x * 16, y * 16, 16, 16))) {
+			if (!GameContext.Current.Camera.Overlaps(new Rectangle(x * 16, y * 16, 16, 16))) {
 				return;
 			}
 
@@ -366,7 +366,7 @@ namespace BurningKnight.level {
 				area.Add(part);
 			}
 
-			Camera.Instance.Shake(2);
+			GameContext.Current.Camera.Shake(2);
 			
 			AudioEmitterComponent.Dummy(area, new Vector2(x, y) * 16).EmitRandomizedPrefixed("level_chair_break", 2, 0.75f);
 		}

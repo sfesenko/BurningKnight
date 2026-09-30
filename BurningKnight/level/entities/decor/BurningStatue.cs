@@ -114,9 +114,9 @@ namespace BurningKnight.level.entities.decor {
 
 			XSpread = 1;
 			
-			Tween.To(1f, Camera.Instance.Zoom, xx => Camera.Instance.Zoom = xx, 0.2f);
-			Tween.To(1.4f, Camera.Instance.TextureZoom, xx => Camera.Instance.TextureZoom = xx, 0.5f);
-			Camera.Instance.GetComponent<ShakeComponent>().Amount = 0;
+			Tween.To(1f, Context.Camera.Zoom, xx => Context.Camera.Zoom = xx, 0.2f);
+			Tween.To(1.4f, Context.Camera.TextureZoom, xx => Context.Camera.TextureZoom = xx, 0.5f);
+			Context.Camera.GetComponent<ShakeComponent>().Amount = 0;
 			GameSave.Put("statue_broken", true);
 
 			/*var torches = GetComponent<RoomComponent>().Room.Tagged[Tags.Torch];
@@ -136,7 +136,7 @@ namespace BurningKnight.level.entities.decor {
 						var t = (Torch) torches[i1];
 
 						t.Break();
-						Camera.Instance.Shake(5);
+						Context.Camera.Shake(5);
 					}, i);
 				}
 				
@@ -144,15 +144,15 @@ namespace BurningKnight.level.entities.decor {
 					Particles.BreakSprite(Area, GetComponent<InteractableSliceComponent>().Sprite, Position);
 					Broken = true;
 				
-					Camera.Instance.Unfollow(this);
-					Camera.Instance.Shake(10);
+					Context.Camera.Unfollow(this);
+					Context.Camera.Shake(10);
 
 					Timer.Add(() => {
-						Camera.Instance.GetComponent<ShakeComponent>().Amount = 0;
+						Context.Camera.GetComponent<ShakeComponent>().Amount = 0;
 					}, 0.5f);
 
-					Camera.Instance.Targets.Clear();
-					Camera.Instance.Follow(this, 0.5f);
+					Context.Camera.Targets.Clear();
+					Context.Camera.Follow(this, 0.5f);
 			
 					UpdateSprite();
 					RemoveComponent<LightComponent>();
@@ -175,7 +175,7 @@ namespace BurningKnight.level.entities.decor {
 					Run.Level.CreateBody();
 			
 					Timer.Add(() => {
-						Tween.To(1f, Camera.Instance.TextureZoom, xx => Camera.Instance.TextureZoom = xx, 0.8f);
+						Tween.To(1f, Context.Camera.TextureZoom, xx => Context.Camera.TextureZoom = xx, 0.8f);
 						((InGameState) BK.Instance.State).ResetFollowing();
 					}, 1f);
 				}, torches.Count + 1);
@@ -268,14 +268,14 @@ namespace BurningKnight.level.entities.decor {
 				Area.Add(bk);
 				bk.Center = target.Value;
 				
-				Camera.Instance.Targets.Clear();
-				Camera.Instance.Follow(bk, 0.1f);
+				Context.Camera.Targets.Clear();
+				Context.Camera.Follow(bk, 0.1f);
 					
 				Timer.Add(() => {
 					((InGameState) Engine.Instance.State).ResetFollowing();
 				}, 2f);
 					
-				Camera.Instance.Shake(10);
+				Context.Camera.Shake(10);
 
 				foreach (var t in torches) {
 					t.Done = true;
@@ -295,9 +295,9 @@ namespace BurningKnight.level.entities.decor {
 
 				if (rce.Who is LocalPlayer) {
 					if (rce.New == r) {
-						Camera.Instance?.Follow(this, 0.3f);
+						Context.Camera?.Follow(this, 0.3f);
 					} else if (rce.Old == r) {
-						Camera.Instance?.Unfollow(this);
+						Context.Camera?.Unfollow(this);
 					}
 				}
 			} else if (e is SpawnTrigger.TriggeredEvent stte) {

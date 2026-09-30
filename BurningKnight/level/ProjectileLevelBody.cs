@@ -86,7 +86,7 @@ namespace BurningKnight.level {
 				level.UpdateTile(x, y);
 				level.ReCreateBodyChunk(x, y);
 
-				Camera.Instance.ShakeMax(3);
+				Context.Camera.ShakeMax(3);
 
 				Level.Animate(level.Area, x, y);
 			} else if (level.Get(x, y, true).Matches(Tile.Rock, Tile.TintedRock, Tile.MetalBlock)) {
@@ -94,7 +94,7 @@ namespace BurningKnight.level {
 				level.UpdateTile(x, y);
 				level.ReCreateBodyChunk(x, y);
 
-				Camera.Instance.ShakeMax(3);
+				Context.Camera.ShakeMax(3);
 				
 				ExplosionMaker.BreakRock(level, new Dot(x * 16 + 8, y * 16 + 8), x, y, level.Get(x, y, true));
 			}
