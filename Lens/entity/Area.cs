@@ -1,4 +1,6 @@
-﻿using System;
+﻿#nullable enable
+
+using System;
 using System.Collections.Generic;
 using Lens.util;
 using Microsoft.Xna.Framework;
@@ -59,7 +61,7 @@ namespace Lens.entity {
 			entities.ToRemove.Clear();
 		}
 
-		public Entity Add(Entity entity, bool postInit = true) {
+		public Entity? Add(Entity? entity, bool postInit = true) {
 			if (entity == null) {
 				return null;
 			}
@@ -108,7 +110,7 @@ namespace Lens.entity {
 			return entities.Entities;
 		}
 
-		public List<Entity> GetEntitesInRadius(Vector2 from, float radius, Type component = null) {
+		public List<Entity> GetEntitesInRadius(Vector2 from, float radius, Type? component = null) {
 			var list = new List<Entity>();
 			var d = radius * radius;
 
@@ -129,9 +131,9 @@ namespace Lens.entity {
 			
 		}
 
-		public Entity FindClosest(Vector2 to, int tag, Func<Entity, bool> filter) {
+		public Entity? FindClosest(Vector2 to, int tag, Func<Entity, bool> filter) {
 			var min = float.MaxValue;
-			Entity en = null;
+			Entity? en = null;
 			
 			foreach (var e in Tagged[tag]) {
 				if (filter(e)) {
@@ -147,7 +149,7 @@ namespace Lens.entity {
 			return en;
 		}
 
-		public T Find<T>(Func<T, bool> filter = null) where T: Entity {
+		public T? Find<T>(Func<T, bool>? filter = null) where T: Entity {
 			foreach (var e in Entities.Entities) {
 				if (e is T t && (filter == null || filter(t))) {
 					return t;

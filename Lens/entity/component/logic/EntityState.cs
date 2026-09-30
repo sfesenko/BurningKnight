@@ -1,6 +1,8 @@
-﻿namespace Lens.entity.component.logic {
+﻿#nullable enable
+
+namespace Lens.entity.component.logic {
 	public class EntityState {
-		public Entity Self;
+		public Entity Self = null!; // assigned by StateComponent before the state runs
 		public float T;
 
 		public virtual void Assign(Entity self) {

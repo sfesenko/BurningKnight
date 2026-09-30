@@ -1,7 +1,11 @@
-﻿namespace Lens.entity.component;
+﻿using System.Diagnostics.CodeAnalysis;
+
+#nullable enable
+
+namespace Lens.entity.component;
 
 public class Component {
-	public Entity Entity;
+	public Entity Entity = null!; // set by the entity that owns the component
 
 	public virtual void Init() {
 			
@@ -27,6 +31,7 @@ public class Component {
 		return Entity.HandleEvent(e);
 	}
 
+	[return: MaybeNull]
 	public T GetComponent<T>() where T : Component {
 		return Entity.GetComponent<T>();
 	}
