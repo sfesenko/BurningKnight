@@ -6,7 +6,7 @@ using Lens.util.file;
 
 namespace BurningKnight.entity.door {
 	public partial class ConditionDoor : LockableDoor {
-		private static string[] conditions =
+		private static readonly string[] conditions =
 		[
 			"Played Once",
 			"Saved Hat Trader",

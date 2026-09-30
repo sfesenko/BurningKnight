@@ -6,7 +6,7 @@ using Lens.util;
 namespace BurningKnight.entity.item {
 	public class ItemPool {
 		public static Dictionary<string, ItemPool> ByName = new Dictionary<string, ItemPool>();
-		public static ItemPool[] ById = new ItemPool[32];
+		public static readonly ItemPool[] ById = new ItemPool[32];
 		public static string[] Names = new string[32];
 
 		static ItemPool() {

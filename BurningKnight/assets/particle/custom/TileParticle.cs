@@ -14,7 +14,7 @@ namespace BurningKnight.assets.particle.custom {
 	public class TileParticle : Entity {
 		private static Vector2 origin = new Vector2(8, 24);
 		private static Vector2 originB = new Vector2(8, 8);
-		public static float MaxZ = Display.Height;
+		public static readonly float MaxZ = Display.Height;
 		
 		public TextureRegion Top;
 		public TextureRegion TopTarget;

@@ -3,14 +3,14 @@ namespace BurningKnight.level.tile {
 		private static int[] flags = new int[(int) Tile.Total];
 		
 		public static int Passable = 0x1;
-		public static int Solid = 0x2;
-		public static int Hole = 0x4;
-		public static int Burns = 0x8;
-		public static int BreaksView = 0x10;
-		public static int FloorLayer = 0x20;
-		public static int LiquidLayer = 0x40;
-		public static int WallLayer = 0x80;
-		public static int Danger = 0x100;
+		public static readonly int Solid = 0x2;
+		public static readonly int Hole = 0x4;
+		public static readonly int Burns = 0x8;
+		public static readonly int BreaksView = 0x10;
+		public static readonly int FloorLayer = 0x20;
+		public static readonly int LiquidLayer = 0x40;
+		public static readonly int WallLayer = 0x80;
+		public static readonly int Danger = 0x100;
 		public static int HalfWall = 0x200;
 
 		static TileFlags() {

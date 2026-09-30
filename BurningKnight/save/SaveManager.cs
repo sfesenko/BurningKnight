@@ -16,7 +16,7 @@ namespace BurningKnight.save {
 		public const int MagicNumber = 894923782;
 		public const short Version = 3;
 
-		public static byte CurrentSlot = 0;
+		public static readonly byte CurrentSlot = 0;
 		public static string SlotDir = $"{SaveDir}slot-{CurrentSlot}/";
 
 		public static string BackupDir => Paths.DataDir;

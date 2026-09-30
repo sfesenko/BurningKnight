@@ -81,9 +81,9 @@ namespace BurningKnight.entity.creature.player {
 		public static bool InBuilding;
 		public static Color LightColor = new Color(1f, 0.8f, 0.6f, 1f);
 		
-		public static string[] StartingWeapons = new string[MaxPlayers];
-		public static string[] StartingItems = new string[MaxPlayers];
-		public static string[] StartingLamps = new string[MaxPlayers];
+		public static readonly string[] StartingWeapons = new string[MaxPlayers];
+		public static readonly string[] StartingItems = new string[MaxPlayers];
+		public static readonly string[] StartingLamps = new string[MaxPlayers];
 		public static List<string> DailyItems;
 		public string ProjectileTexture = "rect";
 

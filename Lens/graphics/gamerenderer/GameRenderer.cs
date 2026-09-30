@@ -8,7 +8,7 @@ namespace Lens.graphics.gamerenderer {
 		public RenderTarget2D GameTarget;
 		public RenderTarget2D UiTarget;
 
-		public static SpriteSortMode DefaultSortMode = SpriteSortMode.Deferred;
+		public static readonly SpriteSortMode DefaultSortMode = SpriteSortMode.Deferred;
 
 		// The display scale the game draws at (the "scale" setting; 1 or 2). One display, one
 		// scale, whichever renderer is active.

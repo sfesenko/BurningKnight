@@ -4,18 +4,18 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.projectile {
 	public static class ProjectileColor {
-		public static Color Yellow = Palette.Default[30];
+		public static readonly Color Yellow = Palette.Default[30];
 		public static Color BkRed = new Color(1f, 0f, 0f);
-		public static Color Red = Palette.Default[0];
-		public static Color Green = Palette.Default[35];
-		public static Color DarkGreen = Palette.Default[37];
-		public static Color Blue = Palette.Default[40];
-		public static Color Cyan = Palette.Default[42];
-		public static Color Purple = Palette.Default[54];
-		public static Color Orange = Palette.Default[28];
-		public static Color Pink = Palette.Default[59];
-		public static Color Brown = Palette.Default[19];
-		public static Color Gray = Palette.Default[6];
+		public static readonly Color Red = Palette.Default[0];
+		public static readonly Color Green = Palette.Default[35];
+		public static readonly Color DarkGreen = Palette.Default[37];
+		public static readonly Color Blue = Palette.Default[40];
+		public static readonly Color Cyan = Palette.Default[42];
+		public static readonly Color Purple = Palette.Default[54];
+		public static readonly Color Orange = Palette.Default[28];
+		public static readonly Color Pink = Palette.Default[59];
+		public static readonly Color Brown = Palette.Default[19];
+		public static readonly Color Gray = Palette.Default[6];
 		public static Color Black = Color.Black;
 		public static Color White = Color.White;
 

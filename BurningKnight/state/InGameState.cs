@@ -60,8 +60,8 @@ namespace BurningKnight.state {
 		private const float AutoSaveInterval = 60f;
 		private const float PaneTransitionTime = 0.2f;
 		private const float BarsSize = 50;
-		private static float TitleY = BarsSize / 2f;
-		private static float BackY = Display.UiHeight - BarsSize / 2f;
+		private static readonly float TitleY = BarsSize / 2f;
+		private static readonly float BackY = Display.UiHeight - BarsSize / 2f;
 
 		private float blur;
 		private static TextureRegion fog;

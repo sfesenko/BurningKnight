@@ -23,7 +23,7 @@ namespace Lens.util;
 public static class Log {
 	private static string LogName => Path.Combine(Paths.DataDir, "burning_log.txt");
 
-	public static bool WriteToFile = !Engine.Debug;
+	public static readonly bool WriteToFile = !Engine.Debug;
 
 	private static readonly object Lock = new();
 	private static StreamWriter? writer;

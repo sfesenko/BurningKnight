@@ -9,8 +9,8 @@ using Lens.util.math;
 
 namespace BurningKnight.level.rooms.regular {
 	public class JungleRoom : RegularRoom {
-		public static int DeathCondition = 4;
-		public static int BirthCondition = 4;
+		public static readonly int DeathCondition = 4;
+		public static readonly int BirthCondition = 4;
 
 		protected Tile Floor = Tile.FloorA;
 		protected Tile Floor2 = Tile.FloorB;
