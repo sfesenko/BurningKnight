@@ -82,7 +82,7 @@ namespace BurningKnight.level.entities {
 
 			if (l) {
 				try {
-					var id = byte.Parse(c!.Item.Id.Replace("bk:disk_", ""));
+					var id = byte.Parse(c!.Item.Id!.Replace("bk:disk_", ""));
 					var old = c.Item;
 
 					if (hd) {

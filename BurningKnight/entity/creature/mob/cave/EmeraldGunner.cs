@@ -32,7 +32,7 @@ namespace BurningKnight.entity.creature.mob.cave {
 			var body = new RectBodyComponent(1, 13, 15, 1);
 			AddComponent(body);
 
-			body!.Body.LinearDamping = 6;
+			body!.Body!.LinearDamping = 6;
 			
 			AddComponent(new SensorBodyComponent(1, 2, 15, 12));
 

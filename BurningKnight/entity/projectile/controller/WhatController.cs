@@ -17,7 +17,7 @@ namespace BurningKnight.entity.projectile.controller {
 
 					var builder = new ProjectileBuilder(p.Owner, "circle");
 
-					builder.Shoot(p!.GetAnyComponent<BodyComponent>().Velocity.ToAngle() + i / 4f * (float) Math.PI, 8f);
+					builder.Shoot(p!.GetAnyComponent<BodyComponent>()!.Velocity!.ToAngle() + i / 4f * (float) Math.PI, 8f);
 					builder.Range = 1f;
 
 					var projectile = builder.Build();

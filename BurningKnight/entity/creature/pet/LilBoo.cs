@@ -23,7 +23,7 @@ namespace BurningKnight.entity.creature.pet {
 			};
 			
 			AddComponent(b);
-			b!.Body.LinearDamping = 3;
+			b!.Body!.LinearDamping = 3;
 			
 			
 			Become<IdleState>();

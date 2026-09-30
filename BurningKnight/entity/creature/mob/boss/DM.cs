@@ -55,7 +55,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 			AddComponent(body);
 
 			body.KnockbackModifier = 0.5f;
-			body!.Body.LinearDamping = 3;
+			body!.Body!.LinearDamping = 3;
 
 			AddComponent(new ZComponent());
 			AddComponent(new ZAnimationComponent("dark_mage"));

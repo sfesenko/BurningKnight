@@ -31,7 +31,7 @@ namespace BurningKnight.entity.component {
 				f!.Follower = Follower;
 
 				if (Follower != null) {
-					f!.Follower.GetComponent<FollowerComponent>()!.Following = Following;
+					f!.Follower!.GetComponent<FollowerComponent>()!.Following = Following;
 				}
 			}
 

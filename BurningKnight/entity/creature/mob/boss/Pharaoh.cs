@@ -46,7 +46,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 			AddComponent(body);
 
 			body.KnockbackModifier = 0.1f;
-			body!.Body.LinearDamping = 4;
+			body!.Body!.LinearDamping = 4;
 
 			AddAnimation("pharaoh");
 			SetMaxHp(250);
@@ -317,7 +317,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 							var part = new TileParticle();
 
 							part.FromBottom = true;
-							part.Top = GameContext.Current.Level.Tileset.FloorA[0];
+							part.Top = GameContext.Current!.Level.Tileset.FloorA[0];
 							part.TopTarget = GameContext.Current.Level.Tileset.WallTopADecor;
 							part.Side = GameContext.Current.Level.Tileset.WallA[0];
 							part.Sides = GameContext.Current.Level.Tileset.WallSidesA[2];

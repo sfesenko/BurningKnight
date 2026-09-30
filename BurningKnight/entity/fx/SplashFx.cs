@@ -29,7 +29,7 @@ namespace BurningKnight.entity.fx {
 			
 			AddTag(Tags.Mess);
 
-			var list = Animations.Get("splash_fx").Layers.First().Value;
+			var list = Animations.Get("splash_fx")!.Layers.First()!.Value;
 			region = list[Rnd.Int(list.Count)].Texture;
 		}
 

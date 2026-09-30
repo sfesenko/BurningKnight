@@ -41,7 +41,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 			AddComponent(new AimComponent(AimComponent.AimType.Target));
 
 			var b = GetComponent<RectBodyComponent>();
-			b!.Body.LinearDamping = 2;
+			b!.Body!.LinearDamping = 2;
 			b.KnockbackModifier = 0;
 			
 			SetMaxHp(600);

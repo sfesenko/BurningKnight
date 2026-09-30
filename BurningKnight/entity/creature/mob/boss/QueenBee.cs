@@ -45,7 +45,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 			var body = new RectBodyComponent(2, 17, 19, 1);
 			AddComponent(body);
 
-			body!.Body.LinearDamping = 3;
+			body!.Body!.LinearDamping = 3;
 
 			AddAnimation("bigbee");
 			SetMaxHp(340);

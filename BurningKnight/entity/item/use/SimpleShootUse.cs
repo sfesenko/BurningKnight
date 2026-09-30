@@ -281,7 +281,7 @@ namespace BurningKnight.entity.item.use {
 						var f = (entity.CenterX > entity.GetComponent<CursorComponent>()!.Cursor.GamePosition.X ? 1 : -1);
 
 						p.Particle.Velocity =
-							new Vector2(f * Rnd.Float(40, 60), 0) + entity!.GetAnyComponent<BodyComponent>().Velocity;
+							new Vector2(f * Rnd.Float(40, 60), 0) + entity!.GetAnyComponent<BodyComponent>()!.Velocity;
 
 						p.Particle.Angle = 0;
 						p.Particle.Zv = Rnd.Float(1.5f, 2.5f);

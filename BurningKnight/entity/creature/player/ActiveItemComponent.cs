@@ -48,7 +48,7 @@ namespace BurningKnight.entity.creature.player {
 			if (Context.Run.Depth > 0 && GlobalSave.IsFalse("control_active") && GetComponent<DialogComponent>()!.Dialog?.Str != null) {
 				var dialog = GetComponent<DialogComponent>();
 				
-				dialog!.Dialog.Str.ClearIcons();
+				dialog!.Dialog.Str!.ClearIcons();
 				dialog.Dialog.Str.AddIcon(CommonAse.Ui.GetSlice(Controls.FindSlice(Controls.Active, false)));
 
 				if (GamepadComponent.Current != null && GamepadComponent.Current.Attached) {

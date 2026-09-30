@@ -12,7 +12,7 @@ namespace BurningKnight.entity.component {
 				Offset = new Vector2(w / 2, h / 2);
 			}
 
-			Body = Physics.World.CreateBody(Vector2.Zero, 0, type);
+			Body = Physics.World!.CreateBody(Vector2.Zero, 0, type);
 
 			Body.FixedRotation = true;
 			Body.UserData = this;

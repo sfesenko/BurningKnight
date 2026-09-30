@@ -145,7 +145,7 @@ namespace BurningKnight.level {
 			var tileset = (MatrixLeak[index] ? MatrixTileset : Tileset);
 			
 			if (t != Tile.Transition) {
-				var region = t == Tile.Planks ? Tilesets.Biome.PlanksTop : tileset.Tiles[tile][0];
+				var region = t == Tile.Planks ? Tilesets.Biome.PlanksTop : tileset!.Tiles[tile][0];
 				a = t == Tile.WallA || t == Tile.Piston || t == Tile.PistonDown;
 				var ab = a || t == Tile.GrannyWall || t == Tile.EvilWall;
 				var effect = Graphics.ParseEffect(x % 2 == 0, y % 2 == 0);

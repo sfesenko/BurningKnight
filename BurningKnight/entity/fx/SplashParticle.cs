@@ -35,7 +35,7 @@ namespace BurningKnight.entity.fx {
 			var f = Rnd.Float(60, 90);
 			var a = Rnd.AnglePI();
 			
-			body!.Body.LinearVelocity = new Vector2((float) Math.Cos(a) * f, (float) Math.Sin(a) * f);
+			body!.Body!.LinearVelocity = new Vector2((float) Math.Cos(a) * f, (float) Math.Sin(a) * f);
 			zv = Rnd.Float(1, 3);
 		}
 

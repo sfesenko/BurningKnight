@@ -17,7 +17,7 @@ namespace BurningKnight.entity.component {
 		}
 		
 		public ZSliceComponent(string image, string slice) {
-			Sprite = Animations.Get(image).GetSlice(slice);
+			Sprite = Animations.Get(image)!.GetSlice(slice);
 		}
 
 		public ZSliceComponent(AnimationData image, string slice) {

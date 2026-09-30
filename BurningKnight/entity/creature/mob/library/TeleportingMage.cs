@@ -24,7 +24,7 @@ namespace BurningKnight.entity.creature.mob.library {
 			AddComponent(body);
 
 			body.KnockbackModifier = 0f;
-			body!.Body.LinearDamping = 4f;
+			body!.Body!.LinearDamping = 4f;
 			
 			AddComponent(new SensorBodyComponent(1, 1, 8, 13));
 			AddComponent(new MobAnimationComponent("mage"));

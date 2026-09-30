@@ -28,7 +28,7 @@ namespace BurningKnight.entity.creature.npc.dungeon {
 			});
 
 			Dialogs.RegisterCallback("elon_4", (d, cm) => {
-				var c = cm!.To.GetComponent<ActiveWeaponComponent>();
+				var c = cm!.To!.GetComponent<ActiveWeaponComponent>();
 			
 				if (c!.Item == null) {
 					return Dialogs.Get("elon_7");

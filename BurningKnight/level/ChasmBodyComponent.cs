@@ -115,7 +115,7 @@ namespace BurningKnight.level {
 		private void RecreateChunk(int cx, int cy) {
 			var level = Context.Level;
 			
-			var body = Physics.World.CreateBody(Vector2.Zero, 0, BodyType.Static);
+			var body = Physics.World!.CreateBody(Vector2.Zero, 0, BodyType.Static);
 			body.FixedRotation = true;
 			body.UserData = this;
 			

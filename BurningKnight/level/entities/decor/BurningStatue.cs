@@ -189,7 +189,7 @@ namespace BurningKnight.level.entities.decor {
 				var s = GetComponent<InteractableSliceComponent>();
 
 				s!.Sprite = CommonAse.Props.GetSlice("broken_statue");
-				s.Offset.Y = Height - s!.Sprite.Height;
+				s.Offset.Y = Height - s!.Sprite!.Height;
 
 				if (fea != null) {
 					fea.Done = true;

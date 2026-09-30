@@ -43,7 +43,7 @@ namespace BurningKnight.entity.creature.npc.dungeon {
 
 			if (consumables!.Coins < price) {
 
-				d!.Dialog.Str.SetVariable("price", price);
+				d!.Dialog.Str!.SetVariable("price", price);
 				d.StartAndClose("nurse_1", 5);
 
 				return false;

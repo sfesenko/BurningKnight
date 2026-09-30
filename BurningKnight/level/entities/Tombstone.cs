@@ -86,7 +86,7 @@ namespace BurningKnight.level.entities {
 			p.GetComponent<CursorComponent>()!.Cursor = cursor;
 			
 			AnimationUtil.Poof(where, 1);
-			GameContext.Current.Camera.Shake(16);
+			GameContext.Current!.Camera.Shake(16);
 			
 			return p;
 		}

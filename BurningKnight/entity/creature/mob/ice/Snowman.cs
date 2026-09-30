@@ -27,7 +27,7 @@ namespace BurningKnight.entity.creature.mob.ice {
 			
 			var body = new RectBodyComponent(5, 21, 15, 1);
 			AddComponent(body);
-			body!.Body.LinearDamping = 10;
+			body!.Body!.LinearDamping = 10;
 			body.KnockbackModifier = 0.1f;
 			
 			AddComponent(new SensorBodyComponent(6, 2, 13, 19));

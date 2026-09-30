@@ -119,7 +119,7 @@ namespace BurningKnight.entity.creature.player {
 								dd.Finish();
 								Audio.PlaySfx("ui_moving");
 							} else {
-								dd!.Str.FinishTyping();
+								dd!.Str!.FinishTyping();
 								Audio.PlaySfx("ui_moving");
 							}
 						}
@@ -139,13 +139,13 @@ namespace BurningKnight.entity.creature.player {
 			}
 
 			if (Context.Run.Depth == 0 && InGameState.Multiplayer && controller.Index > 0) {
-				if (controller!.GamepadData.CurrentState.Buttons.B == ButtonState.Pressed) {
+				if (controller!.GamepadData.CurrentState!.Buttons!.B == ButtonState.Pressed) {
 					if (holdTimer <= 0) {
 						holdTimer = 0;
 						var dialog = GetComponent<DialogComponent>();
 
 						if (dialog!.Current == null) {
-							dialog!.Dialog.Str.ClearIcons();
+							dialog!.Dialog.Str!.ClearIcons();
 							dialog.Dialog.Str.AddIcon(CommonAse.Ui.GetSlice("button_b"));
 
 							dialog.StartAndClose("remove_player", 2);

@@ -28,7 +28,7 @@ namespace BurningKnight.entity.creature.pet {
 			AddComponent(new StateComponent());
 			GetComponent<StateComponent>()!.Become<IdleState>();
 
-			GetComponent<SensorBodyComponent>()!.Body.LinearDamping = 3;
+			GetComponent<SensorBodyComponent>()!.Body!.LinearDamping = 3;
 		}
 
 		public override void PostInit() {
@@ -43,7 +43,7 @@ namespace BurningKnight.entity.creature.pet {
 			public override void Update(float dt) {
 				base.Update(dt);
 
-				var r = Self!.Owner.GetComponent<RoomComponent>()!.Room;
+				var r = Self!.Owner!.GetComponent<RoomComponent>()!.Room;
 
 				if (r != null && r.Tagged[Tags.Item].Count > 0) {
 					var min = float.MaxValue;
@@ -87,7 +87,7 @@ namespace BurningKnight.entity.creature.pet {
 			public override void Update(float dt) {
 				base.Update(dt);
 
-				if (Self!.target.Done || Self.target.HasComponent<OwnerComponent>()) {
+				if (Self!.target!.Done || Self.target.HasComponent<OwnerComponent>()) {
 					Self.target = null;
 					Self.Become<IdleState>();
 					return;

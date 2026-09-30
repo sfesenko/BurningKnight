@@ -27,7 +27,7 @@ public class BkGraphicsComponent(string animationName, string layer = null, stri
 			var shader = Shaders.Bk;
 			var region = Animation!.GetCurrentTexture();
 
-			shader.Parameters["pos"].SetValue(new Vector2(region.Source.X / (float) region!.Texture.Width,
+			shader.Parameters["pos"].SetValue(new Vector2(region.Source.X / (float) region!.Texture!.Width,
 				region.Source.Y / (float) region.Texture.Height));
 			shader.Parameters["size"].SetValue(new Vector2(region.Width / (float) region.Texture.Width,
 				region.Height / (float) region.Texture.Height));

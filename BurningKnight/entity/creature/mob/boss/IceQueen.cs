@@ -49,7 +49,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 			AddComponent(body);
 
 			body.KnockbackModifier = 0.5f;
-			body!.Body.LinearDamping = 3;
+			body!.Body!.LinearDamping = 3;
 
 			AddAnimation("ice_queen");
 			SetMaxHp(550);
@@ -436,7 +436,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 					projectile.Center += MathUtils.CreateVector(aa, 8);
 
 					ProjectileCallbacks.AttachDeathCallback(projectile, (p, e, t) => {
-						var v = p!.GetAnyComponent<BodyComponent>().Velocity;
+						var v = p!.GetAnyComponent<BodyComponent>()!.Velocity;
 						var a = v.ToAngle() - (float) Math.PI;
 						var s = v.Length();
 						var c = p.HasComponent<CircleBodyComponent>();

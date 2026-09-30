@@ -24,7 +24,7 @@ namespace BurningKnight.entity.creature.bk {
 			
 			var body = new SensorBodyComponent(1, 2, 10, 10);
 			AddComponent(body);
-			body!.Body.LinearDamping = 4;
+			body!.Body!.LinearDamping = 4;
 			
 			AddComponent(new ZAnimationComponent("bk_orbital"));
 			AddComponent(new ZComponent());

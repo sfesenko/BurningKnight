@@ -17,7 +17,7 @@ namespace BurningKnight.entity.events {
 			}
 
 			foreach (var i in items) {
-				Context.Run.Statistics.Banned.Add(i);
+				Context.Run.Statistics!.Banned!.Add(i);
 			}
 		}
 

@@ -30,7 +30,7 @@ namespace BurningKnight.entity.creature.mob.ice {
 			var body = new RectBodyComponent(2, 19, 13, 1);
 			AddComponent(body);
 
-			body!.Body.LinearDamping = 6;
+			body!.Body!.LinearDamping = 6;
 			body.Body.Restitution = 1;
 			body.Body.Friction = 0;
 			

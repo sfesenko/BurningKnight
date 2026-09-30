@@ -116,14 +116,14 @@ namespace BurningKnight.entity.projectile {
 			var bodyComponent = GetAnyComponent<BodyComponent>();
 
 			if (!Dying && (Owner is Player || Owner is Sniper)) {
-				Position += bodyComponent!.Body.LinearVelocity * dt;
+				Position += bodyComponent!.Body!.LinearVelocity * dt;
 			}
 
 			if (!HasFlag(ProjectileFlags.ManualRotation)) {
 				if (HasFlag(ProjectileFlags.AutomaticRotation)) {
-					bodyComponent!.Body.Rotation += dt * 10;
+					bodyComponent!.Body!.Rotation += dt * 10;
 				} else {
-					bodyComponent!.Body.Rotation = VectorExtension.ToAngle(bodyComponent.Body.LinearVelocity);
+					bodyComponent!.Body!.Rotation = VectorExtension.ToAngle(bodyComponent.Body.LinearVelocity);
 				}
 			}
 

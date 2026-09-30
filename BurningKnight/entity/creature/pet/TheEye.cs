@@ -104,7 +104,7 @@ namespace BurningKnight.entity.creature.pet {
 		private class IdleState : SmartState<TheEye> {
 			public override void Init() {
 				base.Init();
-				Self!.Owner.GetComponent<FollowerComponent>()!.AddFollower(Self);
+				Self!.Owner!.GetComponent<FollowerComponent>()!.AddFollower(Self);
 			}
 
 			public override void Destroy() {
@@ -119,7 +119,7 @@ namespace BurningKnight.entity.creature.pet {
 					return;
 				}
 				
-				var r = Self!.Owner.GetComponent<RoomComponent>()!.Room;
+				var r = Self!.Owner!.GetComponent<RoomComponent>()!.Room;
 
 				if (r == null || r.Tagged[Tags.MustBeKilled].Count == 0) {
 					return;

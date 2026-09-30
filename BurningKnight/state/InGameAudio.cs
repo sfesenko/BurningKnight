@@ -63,7 +63,7 @@ namespace BurningKnight.state {
 			var c = Context.Camera;
 			
 			AudioEmitterComponent.ListenerPosition = new Vector2(c!.PositionX, c.PositionY);
-			AudioEmitterComponent.Listener.Position = new Vector3(c.PositionX * AudioEmitterComponent.PositionScale, 0, c.PositionY * AudioEmitterComponent.PositionScale);
+			AudioEmitterComponent.Listener!.Position = new Vector3(c.PositionX * AudioEmitterComponent.PositionScale, 0, c.PositionY * AudioEmitterComponent.PositionScale);
 		}
 
 		public override bool HandleEvent(Event e) {

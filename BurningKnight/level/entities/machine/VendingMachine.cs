@@ -95,7 +95,7 @@ namespace BurningKnight.level.entities.machine {
 			e.CenterX = CenterX;
 			e.CenterY = Bottom;
 
-			e!.GetAnyComponent<BodyComponent>().Velocity = new Vector2(0, 128);
+			e!.GetAnyComponent<BodyComponent>()!.Velocity = new Vector2(0, 128);
 
 			spawnedCount++;
 

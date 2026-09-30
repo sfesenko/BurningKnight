@@ -24,7 +24,7 @@ namespace BurningKnight.ui {
 		public UiError(string t, string desc) {
 			title = t;
 			description = desc;
-			icon = Animations.Get("items").GetSlice("bk:no_hat");
+			icon = Animations.Get("items")!.GetSlice("bk:no_hat");
 			iconBg = CommonAse.Ui.GetSlice("er_bg");
 
 			var titleSize = Font.Small.MeasureString(title);

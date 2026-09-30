@@ -41,7 +41,7 @@ namespace BurningKnight.entity.creature.player {
 			CustomFlip = true;
 			ShadowOffset = 8;
 
-			head = Animations.Get("gobbo").CreateAnimation("head");
+			head = Animations.Get("gobbo")!.CreateAnimation("head");
 			wing = CommonAse.Items.GetSlice("wing");
 		}
 
@@ -233,7 +233,7 @@ namespace BurningKnight.entity.creature.player {
 					var min = 1f;
 					var closest = MathUtils.CreateVector(MathUtils.Angle(to.X - from.X, to.Y - from.Y), Display.UiWidth) + from;
 
-					Physics.World.RayCast((fixture, point, normal, fraction) => {
+					Physics.World!.RayCast((fixture, point, normal, fraction) => {
 						if (min > fraction && fixture.Body.UserData is BodyComponent b && RayShouldCollide(b.Entity)) {
 							min = fraction;
 							closest = point;

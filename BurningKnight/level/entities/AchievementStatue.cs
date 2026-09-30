@@ -95,7 +95,7 @@ namespace BurningKnight.level.entities {
 		}
 
 		private void SetupSprite() {
-			achievementTexture = Animations.Get("achievements").GetSlice(id);
+			achievementTexture = Animations.Get("achievements")!.GetSlice(id);
 		}
 
 		private void UpdateState(string i = null) {
@@ -107,10 +107,10 @@ namespace BurningKnight.level.entities {
 
 			if (!achievement.Unlocked && achievement.Secret) {
 				hidden = true;
-				GetComponent<RectBodyComponent>()!.Body.IsSensor = true;
+				GetComponent<RectBodyComponent>()!.Body!.IsSensor = true;
 			} else {
 				hidden = false;
-				GetComponent<RectBodyComponent>()!.Body.IsSensor = false;
+				GetComponent<RectBodyComponent>()!.Body!.IsSensor = false;
 			}
 		}
 

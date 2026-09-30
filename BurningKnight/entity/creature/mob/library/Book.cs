@@ -18,7 +18,7 @@ namespace BurningKnight.entity.creature.mob.library {
 			AddComponent(body);
 
 			body.KnockbackModifier = 0.1f;
-			body!.Body.LinearDamping = 4f;
+			body!.Body!.LinearDamping = 4f;
 			
 			AddComponent(new SensorBodyComponent(0, 0, 14, 16));
 			AddComponent(new ZAnimationComponent("book"));

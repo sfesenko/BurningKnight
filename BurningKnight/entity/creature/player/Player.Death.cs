@@ -104,7 +104,7 @@ namespace BurningKnight.entity.creature.player {
 
 			if (ing.Killer.Slice == null && ing.Killer.Animation == null) {
 				ing.Killer.Slice = CommonAse.Items.GetSlice("unknown");
-				ing.Killer.Width = ing!.Killer.Slice.Width;
+				ing.Killer.Width = ing!.Killer!.Slice!.Width;
 				ing.Killer.Height = ing.Killer.Slice.Height;
 			}
 

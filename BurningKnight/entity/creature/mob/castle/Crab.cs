@@ -27,7 +27,7 @@ namespace BurningKnight.entity.creature.mob.castle {
 
 			var body = new RectBodyComponent(3, 13, 12, 1);
 			AddComponent(body);
-			body!.Body.LinearDamping = 10;
+			body!.Body!.LinearDamping = 10;
 
 			AddComponent(new SensorBodyComponent(3, 2, 12, 12));
 			AddDrops(new SingleDrop("bk:crabs_claw", 0.01f));

@@ -22,7 +22,7 @@ namespace BurningKnight.entity.creature.mob.castle {
 			AddComponent(body);
 
 			body.KnockbackModifier = 2;
-			body!.Body.LinearDamping = 0;
+			body!.Body!.LinearDamping = 0;
 			
 			AddComponent(new SensorBodyComponent(2, 2, 12, 12));
 			

@@ -107,7 +107,7 @@ namespace BurningKnight.level {
 			var shader = Shaders.Chasm;
 			Shaders.Begin(shader);
 
-			shader.Parameters["h"].SetValue(8f / Tileset!.WallTopA.Texture.Height);
+			shader.Parameters["h"].SetValue(8f / Tileset!.WallTopA!.Texture!.Height);
 			var enabled = shader.Parameters["enabled"];
 			enabled.SetValue(false);
 							

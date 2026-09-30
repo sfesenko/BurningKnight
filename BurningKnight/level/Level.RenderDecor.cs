@@ -146,7 +146,7 @@ namespace BurningKnight.level {
 			flow.SetValue(0f);
 			
 			shader.Parameters["time"].SetValue(time * 0.04f);
-			shader.Parameters["h"].SetValue(64f / Tilesets.Biome.WaterPattern.Texture.Height);
+			shader.Parameters["h"].SetValue(64f / Tilesets.Biome.WaterPattern!.Texture!.Height);
 
 			var sy = shader.Parameters["sy"];
 
@@ -205,12 +205,12 @@ namespace BurningKnight.level {
 							var edge = Tilesets.Biome.Edges[tile][LiquidVariants[index]];
 
 							edgePosition.SetValue(new Vector2(
-								(float) edge.Source.X / edge!.Texture.Width,
+								(float) edge.Source.X / edge!.Texture!.Width,
 								(float) edge.Source.Y / edge.Texture.Height
 							));
 							
 							tilePosition.SetValue(new Vector2(
-								(float) region.Source.X / region!.Texture.Width,
+								(float) region.Source.X / region!.Texture!.Width,
 								(float) region.Source.Y / region.Texture.Height
 							));
 							
@@ -285,7 +285,7 @@ namespace BurningKnight.level {
 			Graphics.Batch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, SamplerState.PointClamp, DepthStencilState.None, 
 					state.ClipRasterizerState, shader, Context.Camera?.Matrix);
 
-			shader.Parameters["h"].SetValue(8f / Tileset!.WallTopA.Texture.Height);
+			shader.Parameters["h"].SetValue(8f / Tileset!.WallTopA!.Texture!.Height);
 			var sy = shader.Parameters["y"];
 			var enabled = shader.Parameters["enabled"];
 			enabled.SetValue(true);
@@ -353,7 +353,7 @@ namespace BurningKnight.level {
 										break;
 								}
 								
-								sy.SetValue((float) textureRegion.Source.Y / textureRegion!.Texture.Height);
+								sy.SetValue((float) textureRegion.Source.Y / textureRegion!.Texture!.Height);
 								Graphics.Render(textureRegion, pos);
 							}
 						}

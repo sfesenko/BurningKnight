@@ -7,7 +7,7 @@ namespace BurningKnight.assets.particle.renderer {
 		public TextureRegion Region = null!;
 
 		public TexturedParticleRenderer(string slice) {
-			Region = Animations.Get("particles").GetSlice(slice);
+			Region = Animations.Get("particles")!.GetSlice(slice);
 		}
 
 		public TexturedParticleRenderer(TextureRegion r) {

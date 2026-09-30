@@ -84,7 +84,7 @@ namespace BurningKnight.level.entities {
 			} else if (e is CollisionStartedEvent c && hurts) {
 				if (c.Entity is Player) {
 					c.Entity.GetComponent<HealthComponent>()!.ModifyHealth(-1, this);
-					c!.Entity.GetAnyComponent<BodyComponent>().KnockbackFrom(this, 1);
+					c!.Entity.GetAnyComponent<BodyComponent>()!.KnockbackFrom(this, 1);
 				}
 			}
 			

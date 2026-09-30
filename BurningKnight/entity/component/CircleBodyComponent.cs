@@ -11,7 +11,7 @@ namespace BurningKnight.entity.component {
 				Offset = new Vector2(r, r);
 			}
 
-			Body = Physics.World.CreateBody(Vector2.Zero, 0, type);
+			Body = Physics.World!.CreateBody(Vector2.Zero, 0, type);
 			Body.FixedRotation = true;
 			Body.UserData = this;
 			Body.LinearDamping = 0;

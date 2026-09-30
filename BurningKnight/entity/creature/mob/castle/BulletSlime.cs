@@ -27,7 +27,7 @@ namespace BurningKnight.entity.creature.mob.castle {
 			var body = new RectBodyComponent(1, 15, 14, 1);
 			AddComponent(body);
 
-			body!.Body.LinearDamping = 2;
+			body!.Body!.LinearDamping = 2;
 			body.KnockbackModifier = 0.5f;
 			
 			AddComponent(new SensorBodyComponent(2, 7, 12, 9));

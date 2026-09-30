@@ -206,7 +206,7 @@ namespace BurningKnight.state {
 			stats.Add(Locale.Get("lamp"), Locale.Get(lamp));
 			stats.Add(Locale.Get("time"), GetRunTime());
 			stats.Add(Locale.Get("depth"), Level.GetDepthString(true));
-			stats.Add(Locale.Get("coins_collected"), Context.Run.Statistics.CoinsObtained.ToString());
+			stats.Add(Locale.Get("coins_collected"), Context.Run.Statistics!.CoinsObtained!.ToString());
 			stats.Add(Locale.Get("items_collected"), Context.Run.Statistics.Items.Count.ToString());
 			stats.Add(Locale.Get("damage_taken"), Context.Run.Statistics.DamageTaken.ToString());
 			stats.Add(Locale.Get("kills"), Context.Run.Statistics.MobsKilled.ToString());

@@ -40,7 +40,7 @@ namespace BurningKnight.entity.creature.mob.jungle {
 			
 			var body = GetComponent<RectBodyComponent>();
 			
-			body!.Body.LinearDamping = 0.5f;
+			body!.Body!.LinearDamping = 0.5f;
 			body.Body.Restitution = 1;
 			body.Body.Friction = 0;
 			body.KnockbackModifier = 2.5f;

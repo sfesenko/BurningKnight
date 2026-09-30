@@ -35,7 +35,7 @@ namespace BurningKnight.entity.cutscene.controller {
 						c.FinishCallback?.Invoke();
 						c.FinishCallback = null;
 					} else {
-						dd!.Str.FinishTyping();
+						dd!.Str!.FinishTyping();
 					}
 				}
 			}

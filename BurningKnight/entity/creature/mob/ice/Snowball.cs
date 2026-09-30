@@ -32,7 +32,7 @@ namespace BurningKnight.entity.creature.mob.ice {
 			var body = CreateBodyComponent();
 			AddComponent(body);
 
-			body!.Body.LinearDamping = 2;
+			body!.Body!.LinearDamping = 2;
 			body.KnockbackModifier = 0.7f;
 			
 			AddComponent(CreateSensorBodyComponent());
@@ -40,7 +40,7 @@ namespace BurningKnight.entity.creature.mob.ice {
 			JumpForce = 40;
 			ZVelocity = 3;
 
-			GetComponent<RectBodyComponent>()!.Body.LinearDamping = 1;
+			GetComponent<RectBodyComponent>()!.Body!.LinearDamping = 1;
 			GetComponent<AudioEmitterComponent>()!.PitchMod = 0.2f;
 		}
 

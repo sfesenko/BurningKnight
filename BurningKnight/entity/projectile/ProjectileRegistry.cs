@@ -58,12 +58,12 @@ namespace BurningKnight.entity.projectile {
 				p.Bounce += 10;
 				p.AddFlags(ProjectileFlags.HitsOwner);
 
-				p!.GetComponent<CircleBodyComponent>()!.Body.AngularVelocity = 10f;
+				p!.GetComponent<CircleBodyComponent>()!.Body!.AngularVelocity = 10f;
 			});
 			
 			Add("what", p => {
 				ProjectileCallbacks.AttachUpdateCallback(p, WhatController.Make());
-				p!.GetComponent<CircleBodyComponent>()!.Body.AngularVelocity = 10f;
+				p!.GetComponent<CircleBodyComponent>()!.Body!.AngularVelocity = 10f;
 			});
 			
 			Add("soap", p => {
@@ -178,7 +178,7 @@ namespace BurningKnight.entity.projectile {
 			
 			Add("portal", p => {
 				p.Center = p.Owner.GetComponent<CursorComponent>()!.Cursor.GamePosition;
-				p!.GetAnyComponent<BodyComponent>().Velocity *= -1;
+				p!.GetAnyComponent<BodyComponent>()!.Velocity *= -1;
 			});
 			
 			Add("axe", p => {

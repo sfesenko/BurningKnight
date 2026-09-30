@@ -30,7 +30,7 @@ namespace BurningKnight.entity.component {
 				return;
 			}
 			
-			Set(Animations.Get(image).GetSlice(slice));
+			Set(Animations.Get(image)!.GetSlice(slice));
 		}
 		
 		public virtual void Set(TextureRegion region) {

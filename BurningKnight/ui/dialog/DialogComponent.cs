@@ -125,7 +125,7 @@ namespace BurningKnight.ui.dialog {
 				Engine.Instance.State.Ui.Add(Dialog);
 			}
 
-			Dialog!.Str.FinishedTyping += s => {
+			Dialog!.Str!.FinishedTyping += s => {
 				Entity.HandleEvent(new Dialog.EndedEvent {
 					Dialog = Last ?? Current,
 					Owner = Entity

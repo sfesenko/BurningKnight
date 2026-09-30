@@ -18,7 +18,7 @@ namespace BurningKnight.entity.creature.mob.desert {
 			AddComponent(body);
 
 			body.KnockbackModifier = 2;
-			body!.Body.LinearDamping = 6;
+			body!.Body!.LinearDamping = 6;
 
 			AddComponent(new SensorBodyComponent(5, 4, 7, 11));
 			

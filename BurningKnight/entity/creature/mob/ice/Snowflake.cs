@@ -23,7 +23,7 @@ namespace BurningKnight.entity.creature.mob.ice {
 			
 			var body = new SensorBodyComponent(1, 1, 14, 15);
 			AddComponent(body);
-			body!.Body.LinearDamping = 0.3f;
+			body!.Body!.LinearDamping = 0.3f;
 			
 			AddComponent(new ZAnimationComponent("snowflake"));
 			AddComponent(new ZComponent() {

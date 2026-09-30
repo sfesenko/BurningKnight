@@ -49,7 +49,7 @@ namespace BurningKnight.entity.projectile {
 			RemoveFlags(ProjectileFlags.BreakableByMelee, ProjectileFlags.Reflectable);
 			AddComponent(new RectBodyComponent(0, 0, w, h));
 			
-			BodyComponent!.Body.IsBullet = true;
+			BodyComponent!.Body!.IsBullet = true;
 			BodyComponent.Body.LinearVelocity = new Vector2(0, -100f);
 
 			Owner.HandleEvent(new ProjectileCreatedEvent {
@@ -111,7 +111,7 @@ namespace BurningKnight.entity.projectile {
 				CenterX = target.CenterX;
 				toY = target.Bottom;
 				GraphicsComponent!.FlippedVerticaly = true;
-				BodyComponent!.Body.LinearVelocity = new Vector2(0, 100f);
+				BodyComponent!.Body!.LinearVelocity = new Vector2(0, 100f);
 
 				Tween.To(16, 0, x => shadowSize = x, 1f);
 			}

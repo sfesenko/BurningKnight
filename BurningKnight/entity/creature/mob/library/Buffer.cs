@@ -19,7 +19,7 @@ namespace BurningKnight.entity.creature.mob.library {
     	var body = new RectBodyComponent(3, 14, 6, 1);
     	AddComponent(body);
 
-    	body!.Body.LinearDamping = 4f;
+    	body!.Body!.LinearDamping = 4f;
     	
     	AddComponent(new SensorBodyComponent(2, 1, 7, 14));
     	AddComponent(new MobAnimationComponent("buffer"));

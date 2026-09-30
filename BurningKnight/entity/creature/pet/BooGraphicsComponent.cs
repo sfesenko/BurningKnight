@@ -18,7 +18,7 @@ namespace BurningKnight.entity.creature.pet {
 		private Vector2 scale = Vector2.One;
 		
 		public BooGraphicsComponent(string anim) {
-			animation = Animations.Get(anim).CreateAnimation();
+			animation = Animations.Get(anim)!.CreateAnimation();
 		}
 
 		public override void Update(float dt) {

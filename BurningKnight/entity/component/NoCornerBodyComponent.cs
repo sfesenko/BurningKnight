@@ -10,7 +10,7 @@ namespace BurningKnight.entity.component {
 				y -= h / 2;
 			}
 
-			Body = Physics.World.CreateBody(Vector2.Zero, 0, type);
+			Body = Physics.World!.CreateBody(Vector2.Zero, 0, type);
 			Body.FixedRotation = true;
 			Body.UserData = this;
 			Body.LinearDamping = 0;

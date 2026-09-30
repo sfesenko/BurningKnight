@@ -69,7 +69,7 @@ namespace BurningKnight.entity.creature {
 					zdid = true;
 
 					if (TryGetComponent<RectBodyComponent>(out var bd)) {
-						bd!.Body.LinearVelocity *= 0.5f;
+						bd!.Body!.LinearVelocity *= 0.5f;
 					}
 				}
 			}

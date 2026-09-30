@@ -39,7 +39,7 @@ namespace BurningKnight.entity.creature.mob.desert {
 				slime.Center = Center + new Vector2(Rnd.Float(-4, 4), Rnd.Float(-4, 4));
 				slime.GetComponent<HealthComponent>()!.InvincibilityTimer = 0.1f;
 
-				slime!.GetAnyComponent<BodyComponent>().KnockbackFrom(d.From, Rnd.Float(1f, 2f), 2);
+				slime!.GetAnyComponent<BodyComponent>()!.KnockbackFrom(d.From, Rnd.Float(1f, 2f), 2);
 			}
 			
 			return base.HandleDeath(d);

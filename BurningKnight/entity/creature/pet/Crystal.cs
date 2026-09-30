@@ -25,7 +25,7 @@ namespace BurningKnight.entity.creature.pet {
 			AddComponent(b);
 
 			b.KnockbackModifier = 0;
-			b!.Body.LinearDamping = 100;
+			b!.Body!.LinearDamping = 100;
 		}
 		
 		private float sinceLastTeleport;

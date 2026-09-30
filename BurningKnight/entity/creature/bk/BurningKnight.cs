@@ -70,7 +70,7 @@ namespace BurningKnight.entity.creature.bk {
 			};
 
 			AddComponent(b);
-			b!.Body.LinearDamping = 3;
+			b!.Body!.LinearDamping = 3;
 
 			AddComponent(new BkGraphicsComponent("old_burning_knight"));
 

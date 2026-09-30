@@ -37,7 +37,7 @@ namespace BurningKnight.level.entities {
 			var body = new SensorBodyComponent(-origin.X, -origin.Y, 15, 14);
 			AddComponent(body);
 
-			body!.Body.LinearDamping = 10;
+			body!.Body!.LinearDamping = 10;
 
 			var animation = CommonAse.Props;
 

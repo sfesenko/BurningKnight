@@ -22,7 +22,7 @@ namespace BurningKnight.entity.creature.mob.jungle {
 			var body = new RectBodyComponent(1, 9, 14, 1);
 			AddComponent(body);
 			
-			body!.Body.LinearDamping = 2;
+			body!.Body!.LinearDamping = 2;
 			body.Body.Restitution = 1;
 			body.Body.Friction = 0;
 

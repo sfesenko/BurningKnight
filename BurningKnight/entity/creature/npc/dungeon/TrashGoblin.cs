@@ -31,7 +31,7 @@ namespace BurningKnight.entity.creature.npc.dungeon {
 			var dl = GetComponent<DialogComponent>();
 
 			dl!.InitCallback = () => {
-				dl!.Dialog.Str.AddIcon(CommonAse.Ui.GetSlice("note_0"));
+				dl!.Dialog.Str!.AddIcon(CommonAse.Ui.GetSlice("note_0"));
 				dl.Dialog.Str.AddIcon(CommonAse.Ui.GetSlice("note_1"));
 			};
 		}

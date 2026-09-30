@@ -13,7 +13,7 @@ namespace BurningKnight.assets.particle.renderer {
 		private List<AnimationFrame> animation;
 
 		public RandomFrameRenderer(string anim) {
-			animation = Animations.Get(anim).Layers.First().Value;
+			animation = Animations.Get(anim)!.Layers.First()!.Value;
 		}
 
 		public override void Render(Particle particle) {

@@ -31,7 +31,7 @@ namespace BurningKnight.ui {
 			
 			title = Locale.Get(item ? id : $"ach_{id}");
 			description = Locale.Get(item ? "was_unlocked" : $"ach_{id}_desc");
-			icon = Animations.Get(item ? "items" : "achievements").GetSlice(id);
+			icon = Animations.Get(item ? "items" : "achievements")!.GetSlice(id);
 			iconBg = CommonAse.Ui.GetSlice("item_bg");
 
 			var titleSize = Font.Small.MeasureString(title);

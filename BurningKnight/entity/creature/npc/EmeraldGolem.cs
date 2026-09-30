@@ -49,7 +49,7 @@ namespace BurningKnight.entity.creature.npc {
 						GetComponent<DialogComponent>()!.StartAndClose(Locale.Get("eg_1"), 3);
 					}, 0.2f);
 
-					var inv = c!.To.GetComponent<InventoryComponent>();
+					var inv = c!.To!.GetComponent<InventoryComponent>();
 					var a = c.To.Area;
 			
 					for (var i = 0; i < Amount; i++) {
@@ -84,7 +84,7 @@ namespace BurningKnight.entity.creature.npc {
 						GetComponent<DialogComponent>()!.StartAndClose(Locale.Get("eg_1"), 3);
 					}, 0.2f);
 
-					var inv = c!.To.GetComponent<InventoryComponent>();
+					var inv = c!.To!.GetComponent<InventoryComponent>();
 					var a = c.To.Area;
 			
 					inv!.Pickup(Items.CreateAndAdd("bk:emerald_gun", a));

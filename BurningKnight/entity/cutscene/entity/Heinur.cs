@@ -21,7 +21,7 @@ namespace BurningKnight.entity.cutscene.entity {
 			AddComponent(new BkGraphicsComponent("heinur"));
 			AddComponent(new SensorBodyComponent(0, 0, 42, 42));
 
-			GetComponent<SensorBodyComponent>()!.Body.LinearDamping = 2;
+			GetComponent<SensorBodyComponent>()!.Body!.LinearDamping = 2;
 		}
 
 		public override void Update(float dt) {

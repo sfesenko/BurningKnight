@@ -58,7 +58,7 @@ namespace BurningKnight.level.paintings {
 			base.PostInit();
 
 			if (!HasComponent<AnimationComponent>()) {
-				big = Animations.Get("paintings").GetSlice(Id);
+				big = Animations.Get("paintings")!.GetSlice(Id);
 			}
 			
 			AddComponent(new InteractableSliceComponent("paintings", $"{Id}_small"));

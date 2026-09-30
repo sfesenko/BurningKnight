@@ -69,7 +69,7 @@ namespace BurningKnight.entity.creature.npc {
 				
 				var dialog = GetComponent<DialogComponent>();
 								
-				dialog!.Dialog.Str.ClearIcons();
+				dialog!.Dialog.Str!.ClearIcons();
 				dialog.Dialog.Str.AddIcon(CommonAse.Ui.GetSlice(Controls.FindSlice(Controls.Duck, false)));
 
 				if (GamepadComponent.Current != null && GamepadComponent.Current.Attached) {

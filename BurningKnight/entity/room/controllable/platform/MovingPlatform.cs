@@ -53,7 +53,7 @@ namespace BurningKnight.entity.room.controllable.platform {
 			var b = new RectBodyComponent(0.5f, 0.5f - 1, w - 1, h + 3);
 			AddComponent(b);
 			
-			b!.Body.Friction = 0;
+			b!.Body!.Friction = 0;
 			
 			Area!.Add(left = new PlatformBorder());
 			left.Setup(this, -12, 0, 8, th * 16);
@@ -139,7 +139,7 @@ namespace BurningKnight.entity.room.controllable.platform {
 					var x = (int) (Self.velocity.X > 0 ? (Math.Ceiling(Self.X / 16) + Self.tw - 1) : (Math.Floor(Self.X / 16)));
 					
 					for (var y = s; y < s + Self.th; y++) {
-						var t = GameContext.Current.Level.Get(x, y);
+						var t = GameContext.Current!.Level.Get(x, y);
 
 						if (t != Tile.Chasm) {
 							Self.RoundUp();
@@ -165,7 +165,7 @@ namespace BurningKnight.entity.room.controllable.platform {
 					var y = (int) (Self.velocity.Y > 0 ? (Math.Ceiling(Self.Y / 16) + Self.th - 1) : (Math.Floor(Self.Y / 16)));
 					
 					for (var x = s; x < s + Self.tw; x++) {
-						var t = GameContext.Current.Level.Get(x, y);
+						var t = GameContext.Current!.Level.Get(x, y);
 
 						if (t != Tile.Chasm) {
 							Self.RoundUp();

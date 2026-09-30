@@ -22,7 +22,7 @@ namespace BurningKnight.entity.creature.mob.desert {
 			AddComponent(body);
 
 			TouchDamage = 0;
-			body!.Body.LinearDamping = 4;
+			body!.Body!.LinearDamping = 4;
 			
 			AddComponent(new ZAnimationComponent("fly"));
 			AddComponent(new ZComponent());

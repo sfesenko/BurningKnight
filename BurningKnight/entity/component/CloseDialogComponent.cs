@@ -61,7 +61,7 @@ namespace BurningKnight.entity.component {
 			var min = 1f;
 			var found = false;
 			
-			Physics.World.RayCast((fixture, point, normal, fraction) => {
+			Physics.World!.RayCast((fixture, point, normal, fraction) => {
 				if (min > fraction && fixture.Body.UserData is BodyComponent b && RayShouldCollide(b.Entity)) {
 					min = fraction;
 					found = true;
