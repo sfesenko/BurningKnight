@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using BurningKnight.assets.achievements;
 using BurningKnight.save;
@@ -74,6 +75,8 @@ namespace Desktop.integration.steam {
 					}
 					
 					try {
+						// A Steam callback on a worker: I/O only, no game state, and the log is
+						// thread-safe (ADR-0001).
 						new Thread(() => {
 							try {
 								Log.Info($"Submitting score {score} to board {board}");
@@ -95,51 +98,57 @@ namespace Desktop.integration.steam {
 				};
 
 				InGameState.SetupLeaderboard += (stats, boardId, type, offset, end) => {
-					try {
-						new Thread(() => {
-							try {
-								var i = 0;
-								var count = 0;
-								var name = SteamClient.Name;
+					new Thread(() => {
+						var rows = new List<(string Name, string Score, bool Highlight)>();
 
-								var board = SteamUserStats
-									.FindOrCreateLeaderboardAsync(boardId, LeaderboardSort.Descending, LeaderboardDisplay.Numeric)
-									.GetAwaiter().GetResult().Value;
+						try {
+							var i = 0;
+							var count = 0;
+							var name = SteamClient.Name;
 
-								LeaderboardEntry[] scores;
+							var board = SteamUserStats
+								.FindOrCreateLeaderboardAsync(boardId, LeaderboardSort.Descending, LeaderboardDisplay.Numeric)
+								.GetAwaiter().GetResult().Value;
 
-								if (type == "global") {
-									scores = board.GetScoresAsync(10, Math.Max(1, offset)).GetAwaiter().GetResult();
-								} else if (type == "friends") {
-									scores = board.GetScoresFromFriendsAsync().GetAwaiter().GetResult();
-									i = Math.Max(0, offset);
-								} else {
-									scores = board.GetScoresAroundUserAsync(-5 + offset, 5 + offset).GetAwaiter().GetResult();
-								}
+							LeaderboardEntry[] scores;
 
-								if (scores != null) {
-									for (; i < scores.Length && count < 10; i++) {
-										var score = scores[i];
-
-										var n = score.User.Name;
-										n = n.Substring(0, Math.Min(n.Length, 18));
-
-										stats.Add($"#{score.GlobalRank} {n}", score.Score.ToString(), score.User.Name == name);
-
-										count++;
-									}
-								} else {
-									stats.Add(Locale.Get("no_scores_yet"), ":(");
-								}
-
-								end();
-							} catch (Exception e) {
-								Log.Error(e);
+							if (type == "global") {
+								scores = board.GetScoresAsync(10, Math.Max(1, offset)).GetAwaiter().GetResult();
+							} else if (type == "friends") {
+								scores = board.GetScoresFromFriendsAsync().GetAwaiter().GetResult();
+								i = Math.Max(0, offset);
+							} else {
+								scores = board.GetScoresAroundUserAsync(-5 + offset, 5 + offset).GetAwaiter().GetResult();
 							}
-						}).Start();
-					} catch (Exception e) {
-						Log.Error(e);
-					}
+
+							if (scores != null) {
+								for (; i < scores.Length && count < 10; i++) {
+									var score = scores[i];
+
+									var n = score.User.Name;
+									n = n.Substring(0, Math.Min(n.Length, 18));
+
+									rows.Add(($"#{score.GlobalRank} {n}", score.Score.ToString(), score.User.Name == name));
+									count++;
+								}
+							}
+						} catch (Exception e) {
+							Log.Error(e);
+						}
+
+						// The table belongs to the game state; the worker only collects the rows.
+						Lens.util.timer.Timer.Post(() => {
+							foreach (var row in rows) {
+								stats.Add(row.Name, row.Score, row.Highlight);
+							}
+
+							if (rows.Count == 0) {
+								stats.Add(Locale.Get("no_scores_yet"), ":(");
+							}
+
+							end();
+						});
+					}).Start();
 				};
 
 				Achievements.PostLoadCallback += () => {

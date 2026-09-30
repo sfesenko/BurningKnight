@@ -31,6 +31,13 @@ public static class Timer
         return t;
     }
 
+    // Runs fn on the next Update — i.e. on the main thread. The hand-off for a worker that
+    // produced something the game state has to apply.
+    public static void Post(Action fn)
+    {
+        Tasks.Enqueue(new TimerTask(fn), _time);
+    }
+
     public static void Clear()
     {
         Tasks.Clear();
