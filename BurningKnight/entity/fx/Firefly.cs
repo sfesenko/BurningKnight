@@ -24,14 +24,21 @@ namespace BurningKnight.entity.fx {
 			base.Save(stream);
 		}
 
+		// Set here, not in PostInit: PostInit runs after Load, and X/Y are centered-relative
+		// properties — the size must be known before the saved position is applied.
+		public override void AddComponents() {
+			base.AddComponents();
+
+			Width = 192;
+			Height = 192;
+			Centered = true;
+		}
+
 		public override void PostInit() {
 			base.PostInit();
 
 			start = Position;
-			Width = 192;
-			Height = 192;
-			Centered = true;
-			
+
 			if (region == null) {
 				region = CommonAse.Particles.GetSlice("circ");
 			}
