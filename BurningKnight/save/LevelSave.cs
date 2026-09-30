@@ -95,7 +95,7 @@ namespace BurningKnight.save {
 				a.Add(level);
 
 				if (!level.Generate()) {
-					throw new Exception("Failed to paint");
+					throw new LevelGenerationException("Failed to paint");
 				}
 
 				if (attempt != generation) {
@@ -114,7 +114,7 @@ namespace BurningKnight.save {
 				area.EventListener.Copy(a.EventListener);
 				area.Entities.AddNew();
 				I = 0;
-			} catch (Exception e) {
+			} catch (LevelGenerationException e) {
 				if (attempt != generation) {
 					// The watchdog gave up while this attempt was failing. Tear down quietly
 					// instead of logging an error and retrying a generation nobody is waiting for.

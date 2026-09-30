@@ -63,7 +63,7 @@ namespace BurningKnight.level {
 						R.Connected.Remove(N);
 						N.Connected.Remove(R);
 
-						throw new Exception($"Failed to connect rooms {R.GetType().Name} and {N.GetType().Name}");
+						throw new LevelGenerationException($"Failed to connect rooms {R.GetType().Name} and {N.GetType().Name}");
 					}
 				}
 			}
