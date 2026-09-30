@@ -80,6 +80,8 @@ let strictExclusions : Set<string> =
           // universal meme/loanword/tech terms
           "bk:broken_bucket_desc"
           "bk:donut"
+          "bk:sudoku"
+          "son_0"
           "tech" ]
 
 let readMap (path: string) =
