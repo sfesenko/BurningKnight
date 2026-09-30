@@ -31,7 +31,30 @@ let fontFiles =
 
 // Keys that are deliberately absent or English by policy, so --strict ignores them.
 // Triage more here as translation work lands (painting proper nouns especially).
-let strictExclusions : Set<string> = set []
+let strictExclusions : Set<string> =
+    set
+        [ // maanex thinking sounds: universal across languages
+          "maanex_0"
+          "maanex_1"
+          "maanex_2"
+          "maanex_4"
+          // painting titles that are proper nouns, puns or gibberish: kept in English
+          "painting_balbo"
+          "painting_coce"
+          "painting_kobra_throne"
+          "painting_liko"
+          "painting_mahula"
+          "painting_mori"
+          "painting_nat"
+          "painting_ne_furdje_le"
+          "painting_new"
+          "painting_olpi"
+          "painting_pico"
+          "painting_qrilin"
+          "painting_raj"
+          "painting_tofulama"
+          "painting_totemori"
+          "painting_totemori_redux" ]
 
 let readMap (path: string) =
     let text = File.ReadAllText(path).TrimStart('\uFEFF')
