@@ -80,7 +80,7 @@ namespace BurningKnight.assets.particle.custom {
 				pos -= new Vector2(0, z.Z);
 			}
 			
-			Center = Camera.Instance.CameraToUi(pos) + new Vector2(x, scale.X - Display.UiScale - 8);
+			Center = Context.Camera.CameraToUi(pos) + new Vector2(x, scale.X - Display.UiScale - 8);
 
 			Graphics.Render(region, Position + origin, 0, origin, scale);
 		}

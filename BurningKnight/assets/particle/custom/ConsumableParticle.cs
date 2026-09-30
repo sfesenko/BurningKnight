@@ -53,13 +53,13 @@ namespace BurningKnight.assets.particle.custom {
 		public override void PostInit() {
 			base.PostInit();
 
-			if (player == null || Camera.Instance == null) {
+			if (player == null || Context.Camera == null) {
 				Done = true;
 
 				return;
 			}
 
-			Center = Camera.Instance.CameraToUi(player.TopCenter) - offset;
+			Center = Context.Camera.CameraToUi(player.TopCenter) - offset;
 
 			Timer.Add(() => {
 				tweened = true;
@@ -92,7 +92,7 @@ namespace BurningKnight.assets.particle.custom {
 					pos -= new Vector2(0, z.Z);
 				}
 				
-				Center = Camera.Instance.CameraToUi(pos) - offset;
+				Center = Context.Camera.CameraToUi(pos) - offset;
 			}
 		}
 

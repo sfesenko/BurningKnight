@@ -212,7 +212,7 @@ namespace BurningKnight.ui.editor {
 
 			if (Grid) {
 				const int gridSize = 16;
-				var off = (Camera.Instance.TopLeft - new Vector2(0, 8));
+				var off = (Context.Camera.TopLeft - new Vector2(0, 8));
 				color = new Color(1f, 1f, 1f, 0.5f);
 
 				for (var x = Math.Max(0, off.X - off.X % gridSize); x <= off.X + Display.Width && x <= Editor.Level.Width * 16; x += gridSize) {

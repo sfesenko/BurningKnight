@@ -18,7 +18,7 @@ namespace BurningKnight.util {
 		private static Audio Audio => Audio.Instance;
 
 		public static void ActionFailed() {
-			Camera.Instance.Shake(10);
+			Context.Camera.Shake(10);
 			Audio.PlaySfx("item_nocash");
 		}
 

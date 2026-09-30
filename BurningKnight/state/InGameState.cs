@@ -128,8 +128,8 @@ namespace BurningKnight.state {
 		private static Audio Audio => Audio.Instance;
 
 		public static void TransitionToBlack(Vector2 position, Action callback = null) {
-			Camera.Instance.Targets.Clear();
-			var v = Camera.Instance.CameraToScreen(position);
+			Context.Camera.Targets.Clear();
+			var v = Context.Camera.CameraToScreen(position);
 
 			Shaders.Ui.Parameters["bx"].SetValue(v.X / Display.UiWidth);
 			Shaders.Ui.Parameters["by"].SetValue(v.Y / Display.UiHeight);
@@ -298,10 +298,10 @@ namespace BurningKnight.state {
 			shader.Parameters["time"].SetValue(Engine.Time * 0.01f);
 			shader.Parameters["tx"].SetValue(wind.X * -0.1f);
 			shader.Parameters["ty"].SetValue(wind.Y * -0.1f);
-			shader.Parameters["cx"].SetValue(Camera.Instance.Position.X / 512f);
-			shader.Parameters["cy"].SetValue(Camera.Instance.Position.Y / 512f);
+			shader.Parameters["cx"].SetValue(Context.Camera.Position.X / 512f);
+			shader.Parameters["cy"].SetValue(Context.Camera.Position.Y / 512f);
 		
-			Graphics.Render(fog, Camera.Instance.TopLeft);
+			Graphics.Render(fog, Context.Camera.TopLeft);
 			
 			Shaders.End();
 		}

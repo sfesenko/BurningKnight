@@ -297,11 +297,11 @@ namespace BurningKnight.state {
 
 					Tween.To(this, new {blur = 0}, 0.5f).OnEnd = () => {
 						foreach (var e in TopUi.Tagged[Tags.Cursor]) {
-							Camera.Instance.Follow(e, CursorPriority);
+							Context.Camera.Follow(e, CursorPriority);
 						}
 					};
 
-					Camera.Instance.Detached = false;
+					Context.Camera.Detached = false;
 					Tween.To(-Display.UiHeight, offset, x => offset = x, 0.5f, Ease.QuadIn).OnEnd = () => {
 						Menu = false;
 

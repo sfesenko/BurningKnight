@@ -136,11 +136,11 @@ namespace BurningKnight.ui.dialog {
 		public override void Update(float dt) {
 			base.Update(dt);
 
-			if (Camera.Instance == null) {
+			if (Context.Camera == null) {
 				return;
 			}
 			
-			Position = Camera.Instance.CameraToUi(new Vector2(Owner.CenterX, Owner.Y - 4 - (!(Owner is Player) && Owner.TryGetComponent<ZComponent>(out var z) ? z.Z : 0)));
+			Position = Context.Camera.CameraToUi(new Vector2(Owner.CenterX, Owner.Y - 4 - (!(Owner is Player) && Owner.TryGetComponent<ZComponent>(out var z) ? z.Z : 0)));
 			var s = dt * 10;
 
 			if (DoneSaying || JustStarted) {

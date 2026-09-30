@@ -89,7 +89,7 @@ namespace BurningKnight.assets.particle.custom {
 		public override void Update(float dt) {
 			base.Update(dt);
 
-			if (Camera.Instance == null) {
+			if (Context.Camera == null) {
 				Done = true;
 				return;
 			}
@@ -129,7 +129,7 @@ namespace BurningKnight.assets.particle.custom {
 				}
 			}
 
-			Center = Camera.Instance.CameraToUi(gamePosition) + offset;
+			Center = Context.Camera.CameraToUi(gamePosition) + offset;
 		}
 
 		public override void Render() {

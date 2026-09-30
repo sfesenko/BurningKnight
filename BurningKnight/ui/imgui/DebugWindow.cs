@@ -53,7 +53,7 @@ namespace BurningKnight.ui.imgui {
 			ImGui.Text(Input.Blocked > 0 ? "Input blocked" : "Input free");
 
 			ImGui.Text($"Multiplayer: {InGameState.Multiplayer}");
-			ImGui.Text($"Camera targets: {Camera.Instance?.Targets?.Count ?? 0}");
+			ImGui.Text($"Camera targets: {Context.Camera?.Targets?.Count ?? 0}");
 
 			var current = 0;
 			var t = Engine.Instance.State.GetType();
@@ -165,7 +165,7 @@ namespace BurningKnight.ui.imgui {
 			}
 
 			if (ImGui.CollapsingHeader("Camera")) {
-				var c = Camera.Instance;
+				var c = Context.Camera;
 				var v = c.X;
 
 				if (ImGui.DragFloat("X", ref v)) {

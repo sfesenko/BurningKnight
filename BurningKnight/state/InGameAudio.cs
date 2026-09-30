@@ -60,7 +60,7 @@ namespace BurningKnight.state {
 		public override void Update(float dt) {
 			base.Update(dt);
 
-			var c = Camera.Instance;
+			var c = Context.Camera;
 			
 			AudioEmitterComponent.ListenerPosition = new Vector2(c.PositionX, c.PositionY);
 			AudioEmitterComponent.Listener.Position = new Vector3(c.PositionX * AudioEmitterComponent.PositionScale, 0, c.PositionY * AudioEmitterComponent.PositionScale);

@@ -246,7 +246,7 @@ namespace BurningKnight.ui.dialog {
 			wasUnhittable = health.Unhittable;
 			health.Unhittable = true;
 			
-			Tween.To(2, Camera.Instance.TextureZoom, x => Camera.Instance.TextureZoom = x, 0.3f, Ease.QuadInOut);
+			Tween.To(2, Context.Camera.TextureZoom, x => Context.Camera.TextureZoom = x, 0.3f, Ease.QuadInOut);
 						
 			p.GetComponent<StateComponent>().Become<Player.IdleState>();
 			((InGameState) Engine.Instance.State).OpenBlackBars();
@@ -266,7 +266,7 @@ namespace BurningKnight.ui.dialog {
 				wasUnhittable = false;
 			}
 
-			Tween.To(1, Camera.Instance.TextureZoom, x => Camera.Instance.TextureZoom = x, 0.3f, Ease.QuadInOut);
+			Tween.To(1, Context.Camera.TextureZoom, x => Context.Camera.TextureZoom = x, 0.3f, Ease.QuadInOut);
 			((InGameState) Engine.Instance.State).CloseBlackBars();
 
 			Talking = null;

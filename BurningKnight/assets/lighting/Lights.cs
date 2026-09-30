@@ -80,7 +80,7 @@ namespace BurningKnight.assets.lighting {
 			Engine.GraphicsDevice.SetRenderTarget(surface);
 			
 			Graphics.Batch.Begin(SpriteSortMode.Immediate, BlendState.Opaque, SamplerState.PointClamp, DepthStencilState.None, 
-				state.RasterizerState, null, Camera.Instance?.Matrix);
+				state.RasterizerState, null, Context.Camera?.Matrix);
 			Graphics.Clear(Color.Transparent);
 
 			Graphics.Color.A = AuraAlpha;
@@ -97,17 +97,17 @@ namespace BurningKnight.assets.lighting {
 			
 			Engine.GraphicsDevice.SetRenderTarget(state.GameTarget);
 			Graphics.Batch.Begin(SpriteSortMode.Immediate, BlendState.Additive, SamplerState.PointClamp, DepthStencilState.None, 
-				state.RasterizerState, null, Camera.Instance?.Matrix);
+				state.RasterizerState, null, Context.Camera?.Matrix);
 			
 			
-			Graphics.Render(surface, Camera.Instance.TopLeft - new Vector2(Camera.Instance.Position.X % 1, Camera.Instance.Position.Y % 1));
+			Graphics.Render(surface, Context.Camera.TopLeft - new Vector2(Context.Camera.Position.X % 1, Context.Camera.Position.Y % 1));
 			
 			state.End();
 			Graphics.Color.A = 255;
 			
 			Engine.GraphicsDevice.SetRenderTarget(surface);
 			Graphics.Batch.Begin(SpriteSortMode.Immediate, lightBlend, SamplerState.PointClamp, DepthStencilState.None, 
-				state.RasterizerState, null, Camera.Instance?.Matrix);
+				state.RasterizerState, null, Context.Camera?.Matrix);
 
 			Graphics.Clear(ClearColor);
 
@@ -123,7 +123,7 @@ namespace BurningKnight.assets.lighting {
 			Graphics.Batch.End();
 			Engine.GraphicsDevice.SetRenderTarget(state.GameTarget);
 			
-			var c = Camera.Instance;
+			var c = Context.Camera;
 			var z = c.Zoom;
 			var n = Math.Abs(z - 1) > 0.01f;
 				
@@ -133,12 +133,12 @@ namespace BurningKnight.assets.lighting {
 			}
 			
 			Graphics.Batch.Begin(SpriteSortMode.Immediate, surfaceBlend, SamplerState.PointClamp, DepthStencilState.None, 
-				state.RasterizerState, null, Camera.Instance?.Matrix);
+				state.RasterizerState, null, Context.Camera?.Matrix);
 			
 			Graphics.Color = new Color(color.X, color.Y, color.Z, alpha);
 
-			Graphics.Render(surface, Camera.Instance.TopLeft - new Vector2(Camera.Instance.Position.X % 1, 
-			Camera.Instance.Position.Y % 1));
+			Graphics.Render(surface, Context.Camera.TopLeft - new Vector2(Context.Camera.Position.X % 1, 
+			Context.Camera.Position.Y % 1));
 			Graphics.Color = Color.White;
 			Graphics.Batch.End();
 			
