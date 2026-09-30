@@ -75,7 +75,8 @@ let strictExclusions : Set<string> =
           "twitch_4"
           // ABBA lyric and UI term identical across languages
           "bk:gold_lamp_desc"
-          "normal" ]
+          "normal"
+          "total_votes" ]
 
 let readMap (path: string) =
     let text = File.ReadAllText(path).TrimStart('\uFEFF')
