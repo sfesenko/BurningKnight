@@ -107,19 +107,25 @@ namespace Desktop.integration.steam {
 							var count = 0;
 							var name = SteamClient.Name;
 
-							var board = SteamUserStats
+							var found = SteamUserStats
 								.FindOrCreateLeaderboardAsync(boardId, LeaderboardSort.Descending, LeaderboardDisplay.Numeric)
-								.GetAwaiter().GetResult().Value;
+								.GetAwaiter().GetResult();
 
-							LeaderboardEntry[] scores;
+							LeaderboardEntry[]? scores = null;
 
-							if (type == "global") {
-								scores = board.GetScoresAsync(10, Math.Max(1, offset)).GetAwaiter().GetResult();
-							} else if (type == "friends") {
-								scores = board.GetScoresFromFriendsAsync().GetAwaiter().GetResult();
-								i = Math.Max(0, offset);
+							if (found != null) {
+								var board = found.Value;
+
+								if (type == "global") {
+									scores = board.GetScoresAsync(10, Math.Max(1, offset)).GetAwaiter().GetResult();
+								} else if (type == "friends") {
+									scores = board.GetScoresFromFriendsAsync().GetAwaiter().GetResult();
+									i = Math.Max(0, offset);
+								} else {
+									scores = board.GetScoresAroundUserAsync(-5 + offset, 5 + offset).GetAwaiter().GetResult();
+								}
 							} else {
-								scores = board.GetScoresAroundUserAsync(-5 + offset, 5 + offset).GetAwaiter().GetResult();
+								Log.Error($"Leaderboard {boardId} was not found");
 							}
 
 							if (scores != null) {

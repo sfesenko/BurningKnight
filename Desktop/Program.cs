@@ -88,7 +88,7 @@ namespace Desktop {
 			}
 
 			try {
-				Directory.CreateDirectory(Path.GetDirectoryName(InstanceFile));
+				Directory.CreateDirectory(Path.GetDirectoryName(InstanceFile)!);
 				File.WriteAllText(InstanceFile, $"{current.Id} {current.StartTime.Ticks}");
 			} catch (Exception e) {
 				Console.WriteLine($"Failed to write the instance file: {e.Message}");
@@ -123,7 +123,7 @@ namespace Desktop {
 			Assets.SetRoot(content);
 			Assets.SetSource(ContentRoot.BuildSource(content));
 			ContentRoot.LinkNextToExecutable(content);
-			Directory.SetCurrentDirectory(Path.GetDirectoryName(Path.TrimEndingDirectorySeparator(content)));
+			Directory.SetCurrentDirectory(Path.GetDirectoryName(Path.TrimEndingDirectorySeparator(content))!);
 			
 			TryToRemove(Path.Combine(DataDir, "burning_log.txt"));
 			TryToRemove(Path.Combine(DataDir, "crashes.txt"));

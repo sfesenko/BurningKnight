@@ -6,7 +6,7 @@ namespace Desktop.services {
 			ClipboardService.SetText(text);
 		}
 
-		public string GetText() {
+		public string? GetText() {
 			return ClipboardService.GetText();
 		}
 	}

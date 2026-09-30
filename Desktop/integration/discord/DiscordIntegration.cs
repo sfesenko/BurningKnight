@@ -11,7 +11,7 @@ using Lens.util;
 
 namespace Desktop.integration.discord {
 	public class DiscordIntegration : Integration {
-		public static string CurrentPlayer;
+		public static string? CurrentPlayer;
 		
 		private float lastUpdate;
 		private long startTime;
@@ -73,7 +73,7 @@ namespace Desktop.integration.discord {
 				var p = LocalPlayer.Locate(Engine.Instance.State.Area);
 
 				if (p != null) {
-					var h = p.GetComponent<HatComponent>().Item;
+					var h = p.GetComponent<HatComponent>()?.Item;
 
 					if (h != null && h.Id != "bk:no_hat") {
 						status.state = $"{Locale.GetEnglish(h.Id)}";
