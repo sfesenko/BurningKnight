@@ -47,7 +47,7 @@ namespace Lens.entity {
 						entity.Destroy();
 					}
 
-					entity.Area.Tagged.Remove(entity);
+					entity.Area!.Tagged.Remove(entity);
 					Entities.Remove(entity);
 				}
 

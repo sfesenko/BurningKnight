@@ -1,5 +1,8 @@
-﻿using System;
+﻿#nullable enable
+
+using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Lens.assets;
 using Lens.entity.component;
@@ -12,7 +15,9 @@ namespace Lens.entity {
 	
 	public class Entity : Subscriber, IComparable {
 		protected static Audio Audio => Audio.Instance;
-		public Area Area;
+
+		// Set by Area.Add; null before that and after RemoveSelf.
+		public Area? Area;
 		
 		public bool Active = true;
 		public bool Visible = true;
@@ -40,7 +45,7 @@ namespace Lens.entity {
 			set => position = value;
 		}
 		
-		public event PositionChanged PositionChanged;
+		public event PositionChanged? PositionChanged;
 		public float Width = 16;
 		public float Height = 16;
 		public bool Centered;
@@ -182,8 +187,11 @@ namespace Lens.entity {
 		
 		#region Entity logic
 
-		public GraphicsComponent GraphicsComponent;
-		public Dictionary<Type, Component> Components;
+		public GraphicsComponent? GraphicsComponent;
+
+		// Built by Init(); the null check there is the re-entrancy guard, and nothing else sees
+		// it null.
+		public Dictionary<Type, Component> Components = null!;
 		
 		public virtual void Init() {
 			if (Components == null) {
@@ -230,7 +238,7 @@ namespace Lens.entity {
 
 			e.WasInEL = true;
 
-			if (Area.EventListener.Handle(e)) {
+			if (Area!.EventListener.Handle(e)) {
 				e.Handled = true;
 			}
 
@@ -274,19 +282,23 @@ namespace Lens.entity {
 			}
 		}
 
-		public void Subscribe<T>(Area area = null) where T : Event {
-			(area ?? Area).EventListener.Subscribe<T>(this);
+		public void Subscribe<T>(Area? area = null) where T : Event {
+			(area ?? Area)!.EventListener.Subscribe<T>(this);
 		}
 
-		public void Unsubscribe<T>(Area area = null) where T : Event {
-			(area ?? Area).EventListener.Unsubscribe<T>(this);
+		public void Unsubscribe<T>(Area? area = null) where T : Event {
+			(area ?? Area)!.EventListener.Unsubscribe<T>(this);
 		}
-				
+
+		// Absence is not an exception: the accessor cannot throw, and a missing component comes
+		// back as null. TryGetComponent is the form for callers that expect absence. The
+		// attribute rather than `T?` because an override cannot restate the type constraint.
+		[return: MaybeNull]
 		public virtual T GetComponent<T>() where T : Component {
-			return (T) Components[typeof(T)];
+			return Components.TryGetValue(typeof(T), out var component) ? (T) component : null;
 		}
 		
-		public T GetAnyComponent<T>() where T : Component {
+		public T? GetAnyComponent<T>() where T : Component {
 			var type = typeof(T);
 
 			foreach (var component in Components.Values) {
@@ -308,14 +320,14 @@ namespace Lens.entity {
 			return Components.ContainsKey(typeof(T));
 		}
 
-		public bool TryGetComponent<T>(out T t) where T : Component {
+		public bool TryGetComponent<T>([MaybeNullWhen(false)] out T t) where T : Component {
 			if (Components.TryGetValue(typeof(T), out var tmp)) {
 				t = (T) tmp;
 				return true;
 			}
 
 
-			t = default(T);
+			t = default!;
 			return false;
 		}
 
@@ -410,7 +422,7 @@ namespace Lens.entity {
 		
 		#endregion
 
-		public int CompareTo(object obj) {
+		public int CompareTo(object? obj) {
 			return obj == null ? 1 : GetType().FullName!.CompareTo(obj.GetType().FullName);
 		}
 

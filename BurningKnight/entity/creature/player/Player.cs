@@ -1,5 +1,6 @@
 using BurningKnight.debug;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Collections.Generic;
 using BurningKnight.assets;
 using BurningKnight.assets.achievements;
@@ -301,10 +302,12 @@ namespace BurningKnight.entity.creature.player {
 			return null;
 		}
 
+		[return: MaybeNull]
 		public T ForceGetComponent<T>() where T : Component {
 			return base.GetComponent<T>();
 		}
 
+		[return: MaybeNull]
 		public override T GetComponent<T>() {
 			var minIndex = 1024;
 			var pl = this;
