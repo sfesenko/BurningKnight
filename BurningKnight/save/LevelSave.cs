@@ -99,7 +99,7 @@ namespace BurningKnight.save {
 				}
 
 				if (attempt != generation) {
-					// Tear down our own scratch area, but leave Run.Level alone: the retry may
+					// Tear down our own scratch area, but leave the run's level alone: the retry may
 					// already own it. Destroying our level clears it through its own identity
 					// check while it is still ours.
 					a.Entities.AddNew();
@@ -118,7 +118,7 @@ namespace BurningKnight.save {
 				if (attempt != generation) {
 					// The watchdog gave up while this attempt was failing. Tear down quietly
 					// instead of logging an error and retrying a generation nobody is waiting for.
-					// Run.Level is left alone for the same reason as above.
+					// The run's level is left alone for the same reason as above.
 					a.Entities.AddNew();
 					a.Destroy();
 					return false;

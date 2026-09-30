@@ -109,7 +109,7 @@ public class SaveRoundTripTests : IClassFixture<SaveHost> {
 			var before = ReadEntities(dir + $"level-{depth}-l0.lvl", SaveType.Level);
 
 			var loaded = new GameArea();
-			Run.Level = null;
+			Context.Level = null;
 			SaveManager.Load(loaded, SaveType.Level, dir);
 			loaded.Entities.AddNew();
 

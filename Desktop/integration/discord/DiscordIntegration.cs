@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using BurningKnight;
 using BurningKnight.entity.component;
 using BurningKnight.entity.creature.player;
 using BurningKnight.level;
@@ -61,13 +62,13 @@ namespace Desktop.integration.discord {
 		}
 		
 		private void UpdateStatus() {
-			if (Run.Level?.Biome == null || Broken) {
+			if (Context.Level?.Biome == null || Broken) {
 				return;
 			}
 			
 			var status = new DiscordRpc.RichPresence();
 
-			if (Run.Level != null) {
+			if (Context.Level != null) {
 				status.details = $"{Level.GetDepthString(true)}";
 				var p = LocalPlayer.Locate(Engine.Instance.State.Area);
 

@@ -46,7 +46,6 @@ namespace BurningKnight.state {
 		public static bool StartingNew;
 		public static int KillCount;
 		public static float Time;
-		public static Level Level;
 		public static bool StartedNew;
 		public static bool HasRun;
 		
@@ -226,7 +225,7 @@ namespace BurningKnight.state {
 						
 				part.Position = center + Rnd.Vector(-4, 4);
 				part.Particle.Scale = Rnd.Float(0.4f, 0.8f);
-				Level.Area.Add(part);
+				Context.Level.Area.Add(part);
 				part.Depth = 1;
 			}
 			

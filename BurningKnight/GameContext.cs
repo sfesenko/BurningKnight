@@ -1,7 +1,6 @@
 #nullable enable
 
 using BurningKnight.level;
-using BurningKnight.state;
 using Lens;
 using Lens.assets;
 using Lens.entity;
@@ -49,10 +48,13 @@ namespace BurningKnight {
 			set => audio = value;
 		}
 
-		// Still the run's static; WS-5 moves the backing in here.
+		private Level? level;
+
+		// The run's level. Owned here since WS-5 moved it off Run: the field is the source, not a
+		// forwarding read.
 		public Level? Level {
-			get => Run.Level;
-			set => Run.Level = value;
+			get => level;
+			set => level = value;
 		}
 	}
 
