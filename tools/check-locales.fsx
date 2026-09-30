@@ -78,6 +78,7 @@ let strictExclusions : Set<string> =
           "normal"
           "total_votes"
           // universal meme/loanword/tech terms
+          "ach_bk:maanex"
           "bk:broken_bucket_desc"
           "bk:donut"
           "bk:sudoku"
