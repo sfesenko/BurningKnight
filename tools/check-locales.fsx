@@ -83,7 +83,142 @@ let strictExclusions : Set<string> =
           "bk:donut"
           "bk:sudoku"
           "son_0"
-          "tech" ]
+          "tech"
+          // ---- identical-to-en keep-class (adjudicated in round3_identity) ----
+          // Every key below is byte-identical to en in at least one locale on purpose:
+          // emotes/kaomoji, gamer+tech tokens, proper nouns, cited titles, or a native
+          // homograph (the locale's own word merely looks English). Each block says which
+          // locales keep it, so a later pass can audit instead of re-filing.
+          //
+          // A. universal emotes / kaomoji / marker-only strings
+          "ach_bk:egor_no_more_desc" // ???
+          "bk:dunce_hat_desc" // @-@
+          "bk:eye_desc" // @
+          "bk:eyes_desc" // @ @
+          "boxy_3" // ^^:wave:^^
+          "duck_10_0"
+          "duck_10_1"
+           // 0 / 1
+          "gobetta_0"
+          "gobetta_1"
+          "gobetta_2"
+          "gobetta_3"
+          "isaac_2" // :sob:
+          "shopkeeper_9" // %%^^$$$^^%%
+          "ach_bk:quackers"
+          "ach_bk:quackers_desc"
+          "duck_17_1"
+          // B. gamer/tech tokens, abbreviations, notation
+          "bk:led"
+          "bk:mana"
+          "bk:null_hat"
+          "bk:rip"
+          "bk:sale_coupon_desc"
+          "bk:mustache_desc"
+          "bk:mustache_hat_desc"
+          "bk:random_bullets_desc"
+          "bk:d2"
+          "bk:d4"
+          "bk:d6"
+          "km"
+          "max_hp"
+          "vsync"
+          "audio"
+          "pixel_perfect"
+          "nullptr_0"
+          // C. vocalizations / interjections (may stay English; never space-split)
+          "bk:maanex_head_desc"
+          "bk:villager_head_desc"
+          "maanex_3"
+          "maanex_10"
+          "charger_5"
+          "vampire_0"
+          "vampire_4"
+          "bk:snek_desc"
+           // Snack?
+          // D. names / proper nouns / cited titles
+          "ach_bk:van_no_gogh"
+          "bk:ankh"
+          "bk:arkhalis"
+          "bk:batman"
+          "bk:maanex"
+          "bk_7" // EDWARD
+          "ach_bk:ice_boss" // Let It Go (Frozen title; cn/de/it keep)
+          "ach_bk:tutorial" // Guru
+          "bk:snek" // meme-source snake name (cn/de/fr/pt)
+          "painting_code"
+          "painting_whoops"
+          "painting_sushi_sushi"
+          "trash_goblin_2" // ABBA lyric (it/pt)
+          "bk:wings_desc" // Celine Dion lyric (de/fr)
+          // E. mode / genre labels kept in English (documented house convention)
+          "ach_bk:10_challenges"
+          "ach_bk:20_challenges"
+          "ach_bk:30_challenges"
+          "ach_bk:boss_rush"
+          "boss_rush"
+          "run_bossrush"
+          // F. the duck/quack meme family — provisional; re-open with the duck-label call
+          "control_4"
+          "quack"
+          "duck_6_1"
+          "duck_7_1"
+          "duck_20"
+          "bk:duck_gun_desc"
+          // G. native homographs / loanwords: the value a locale ships IS its own word
+          "bk:boomerang"
+          "bk:hotdog"
+          "bk:katana"
+          "bk:fez"
+          "bk:idol"
+          "bk:pass"
+          "bk:saturn"
+          "bk:follower"
+          "bk:magnet"
+          "bk:hammer"
+          "bk:ushanka"
+          "bk:revolver"
+          "bk:missile"
+          "bk:grenade"
+          "bk:parachute"
+          "bk:halo"
+          "bk:slime"
+          "bk:shawarma"
+          "bk:detonator"
+          "bk:dagger_desc"
+          "bk:glass_gun_desc"
+          "bk:headshot_gun_desc"
+          "bk:sword_orbital_desc"
+          "bk:bill_desc"
+          "bk:scourge_of_lost_desc"
+          "bk:viking_hat_desc"
+          "bk:cap_desc" // Cool @-@
+          "pause"
+          "global"
+          "score"
+          "restart"
+          "run"
+          "top"
+          "seed"
+          "minutes"
+          "on"
+          "off"
+          "no"
+          "gamepad"
+          "tutorial"
+          "vibration"
+          "happening_bk:confused"
+          "happening_bk:rage"
+          "happening_bk:regular_tp"
+          "twitch_1_1"
+          "twitch_5_1"
+          "painting_null"
+          // residuals adjudicated as deliberate keeps
+          "bk:gamepad"     // de/fr/it loanword; pl "Pad", pt "Controle"
+          "bk:marshmallow" // de/fr/it/pt loanword + the en X_X kaomoji
+          "mob_0"          // "Hmmmm" is a sound, not a word
+          // it keeps the loanword "Dungeon" (valid in Italian games)
+          "painting_dungeon" ]
 
 let readMap (path: string) =
     let text = File.ReadAllText(path).TrimStart('\uFEFF')
@@ -151,9 +286,13 @@ for loc in localeFiles do
         let missing = Set.difference enKeys keys |> Set.toList |> List.sort
         let extra = Set.difference keys enKeys |> Set.toList |> List.sort
 
+        // Deliberate keeps (strictExclusions) are subtracted here too, not just from the
+        // missing-key check: a value that is byte-identical to en on purpose must not be
+        // re-reported by every future pass (plan item T0.4).
         let identical =
             Set.intersect enKeys keys
             |> Set.filter (fun k -> map.[k] = en.[k])
+            |> Set.filter (fun k -> not (strictExclusions.Contains k))
             |> Set.toList
 
         let trivial, same = identical |> List.partition (fun k -> isTrivial en.[k])
