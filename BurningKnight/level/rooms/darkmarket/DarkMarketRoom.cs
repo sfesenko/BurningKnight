@@ -24,7 +24,7 @@ namespace BurningKnight.level.rooms.darkmarket {
 			var exit = new HiddenExit {
 				id = "dm"
 			};
-			level.Area.Add(exit);
+			level.Area!.Add(exit);
 			exit.BottomCenter = GetCenter() * 16 + new Vector2(8, 8);
 			
 			var points = new List<Vector2>();

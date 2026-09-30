@@ -198,7 +198,7 @@ namespace BurningKnight.entity.projectile {
 				p.T = 5;
 
 				ProjectileCallbacks.AttachCollisionCallback(p, (projectile, e) => {
-					if (Context.Level.Biome is IceBiome && e is ProjectileLevelBody lvl) {
+					if (Context.Level!.Biome is IceBiome && e is ProjectileLevelBody lvl) {
 						if (lvl.Break(projectile.CenterX, projectile.CenterY)) {
 							AudioEmitterComponent.Dummy(projectile.Area, projectile.Center).EmitRandomizedPrefixed("level_snow_break", 3);
 						}
@@ -276,18 +276,18 @@ namespace BurningKnight.entity.projectile {
 							var zx = (int) xx + x;
 							var zy = (int) yy + y;
 							
-							if (Math.Sqrt(xx * xx + yy * yy) <= r && Context.Level.Get(zx, zy).IsPassable()) {
-								Context.Level.Set(zx, zy, Tile.Lava);
+							if (Math.Sqrt(xx * xx + yy * yy) <= r && Context.Level!.Get(zx, zy).IsPassable()) {
+								Context.Level!.Set(zx, zy, Tile.Lava);
 
 								Timer.Add(() => {
-									Context.Level.Set(zx, zy, Tile.Ember);
-									Context.Level.UpdateTile(zx, zy);
+									Context.Level!.Set(zx, zy, Tile.Ember);
+									Context.Level!.UpdateTile(zx, zy);
 								}, Rnd.Float(5f, 15f));
 							}
 						}
 					}
 					
-					Context.Level.TileUp();
+					Context.Level!.TileUp();
 				});
 			});
 
@@ -317,13 +317,13 @@ namespace BurningKnight.entity.projectile {
 							var zx = (int) xx + x;
 							var zy = (int) yy + y;
 							
-							if (Math.Sqrt(xx * xx + yy * yy) <= r && Context.Level.Get(zx, zy).IsPassable()) {
-								Context.Level.Set(zx, zy, Tile.Cobweb);
+							if (Math.Sqrt(xx * xx + yy * yy) <= r && Context.Level!.Get(zx, zy).IsPassable()) {
+								Context.Level!.Set(zx, zy, Tile.Cobweb);
 							}
 						}
 					}
 					
-					Context.Level.TileUp();
+					Context.Level!.TileUp();
 				});
 			});
 		}

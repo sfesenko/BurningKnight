@@ -85,7 +85,7 @@ namespace BurningKnight.entity.creature.mob.castle {
 
 				if (!away && Self.Target != null && Self.DistanceTo(Self.Target) < 32) {
 					var bomb = new Bomb(Self, 1);
-					Self.Area.Add(bomb);
+					Self.Area!.Add(bomb);
 					bomb.Center = Self.Center;
 					bomb.VelocityTo(Self.AngleTo(Self.Target));
 

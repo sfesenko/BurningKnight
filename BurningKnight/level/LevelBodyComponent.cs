@@ -205,7 +205,7 @@ namespace BurningKnight.level {
 				return;
 			}
 			
-			toUpdate.Add(x + y * Context.Level.Width);
+			toUpdate.Add(x + y * Context.Level!.Width);
 		}
 
 		protected virtual bool Check(Level level, int x, int y) {

@@ -19,7 +19,7 @@ namespace BurningKnight.level.rooms.regular {
 			var center = GetTileCenter();
 			var stand = new ItemStand();
 			
-			level.Area.Add(stand);
+			level.Area!.Add(stand);
 			stand.Center = center * 16 + new Vector2(8, 8);
 			stand.SetItem(Items.CreateAndAdd(Items.Generate(ItemPool.Treasure), level.Area), null);
 

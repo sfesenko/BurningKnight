@@ -49,7 +49,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 					Self.GetComponent<BkGraphicsComponent>()!.Animate();
 
 					var m = new Missile(Self, Self.Target);
-					Self.Area.Add(m);
+					Self.Area!.Add(m);
 
 					m.HurtOwner = false;
 
@@ -70,7 +70,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 							}
 				
 							pp.Launch(an, 40);
-							Self.Area.Add(pp);
+							Self.Area!.Add(pp);
 						}
 
 						var aa = Self.AngleTo(Self.Target);

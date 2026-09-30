@@ -261,7 +261,7 @@ namespace BurningKnight.entity.creature.mob {
 
 			if (NextPathPoint != null) {
 				Graphics.Batch.DrawLine(CenterX, Bottom, NextPathPoint.X, NextPathPoint.Y, Color.Red);
-				Graphics.Batch.DrawLine(CenterX, Bottom, Context.Level.FromIndexX(prevStepBack) * 16 + 8, Context.Level.FromIndexY(prevStepBack) * 16 + 8, Color.Blue);
+				Graphics.Batch.DrawLine(CenterX, Bottom, Context.Level!.FromIndexX(prevStepBack) * 16 + 8, Context.Level!.FromIndexY(prevStepBack) * 16 + 8, Color.Blue);
 			}
 		}
 

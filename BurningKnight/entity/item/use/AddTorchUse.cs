@@ -33,7 +33,7 @@ namespace BurningKnight.entity.item.use {
 				if (lastFlame >= 0.3f) {
 					lastFlame = 0;
 					
-					entity.Area.Add(new FireParticle {
+					entity.Area!.Add(new FireParticle {
 						Position = entity.Center + MathUtils.CreateVector(entity.AngleTo(entity.GetComponent<AimComponent>()!.Aim), 13),
 						Depth = Layers.Wall + 1
 					});

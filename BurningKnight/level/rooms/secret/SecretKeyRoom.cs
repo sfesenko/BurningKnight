@@ -8,7 +8,7 @@ namespace BurningKnight.level.rooms.secret {
 			var c = GetTileCenter();
 			var stand = new ItemStand();
 			
-			level.Area.Add(stand);
+			level.Area!.Add(stand);
 			stand.Center = c * 16 + new Vector2(8);
 			stand.SetItem(Items.CreateAndAdd("bk:treasure_key", level.Area), null);
 		}

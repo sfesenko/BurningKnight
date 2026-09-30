@@ -97,7 +97,7 @@ namespace BurningKnight.level.entities {
 			if (from != null && TryGetComponent<HealthComponent>(out var h) && h.InvincibilityTimer <= 0.45f) {
 				Done = true;
 
-				if (!Context.Camera.Overlaps(this)) {
+				if (!Context.Camera!.Overlaps(this)) {
 					return;
 				}
 
@@ -123,7 +123,7 @@ namespace BurningKnight.level.entities {
 				}
 
 				Particles.BreakSprite(Area, GetComponent<SliceComponent>()!.Sprite, Position);
-				Context.Camera.Shake(2f);
+				Context.Camera!.Shake(2f);
 			}
 		}
 

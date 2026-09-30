@@ -38,14 +38,14 @@ namespace BurningKnight.entity.orbital {
 
 			Define("prism", o => {
 				var orbital = new Prism();
-				o.Area.Add(orbital);
+				o.Area!.Add(orbital);
 				
 				return orbital;
 			});
 		
 			Define("goo", o => {
 				var orbital = new Orbital();
-				o.Area.Add(orbital);
+				o.Area!.Add(orbital);
 
 				var g = new ScalableSliceComponent("items", "bk:goo") {
 					ShadowZ = 2
@@ -68,7 +68,7 @@ namespace BurningKnight.entity.orbital {
 			
 			Define("bullet_stone", o => {
 				var orbital = new Orbital();
-				o.Area.Add(orbital);
+				o.Area!.Add(orbital);
 
 				var g = new ScalableSliceComponent("items", "bk:bullet_stone") {
 					ShadowZ = 2
@@ -129,7 +129,7 @@ namespace BurningKnight.entity.orbital {
 			
 			Define("sword", o => {
 				var orbital = new Orbital();
-				o.Area.Add(orbital);
+				o.Area!.Add(orbital);
 
 				var g = new ScalableSliceComponent("items", "bk:sword_orbital") {
 					ShadowZ = 2
@@ -154,7 +154,7 @@ namespace BurningKnight.entity.orbital {
 			
 			Define("broken_stone", o => {
 				var orbital = new Orbital();
-				o.Area.Add(orbital);
+				o.Area!.Add(orbital);
 				
 				var g = new ScalableSliceComponent("items", "bk:broken_stone") {
 					ShadowZ = 2
@@ -182,7 +182,7 @@ namespace BurningKnight.entity.orbital {
 			
 			Define("jelly", o => {
 				var orbital = new Orbital();
-				o.Area.Add(orbital);
+				o.Area!.Add(orbital);
 
 				var g = new ScalableSliceComponent("items", "bk:jelly") {
 					ShadowZ = 2
@@ -215,7 +215,7 @@ namespace BurningKnight.entity.orbital {
 			
 			Define("nano_orb", o => {
 				var orbital = new Orbital();
-				o.Area.Add(orbital);
+				o.Area!.Add(orbital);
 
 				var g = new ScalableSliceComponent("items", "bk:nano_orb") {
 					ShadowZ = 2
@@ -238,7 +238,7 @@ namespace BurningKnight.entity.orbital {
 			
 			Define("planet", o => {
 				var orbital = new Orbital();
-				o.Area.Add(orbital);
+				o.Area!.Add(orbital);
 
 				var g = new ScalableSliceComponent("items", "bk:earth") {
 					ShadowZ = 2
@@ -278,7 +278,7 @@ namespace BurningKnight.entity.orbital {
 		
 			Define("marshmallow", o => {
 				var orbital = new Marshmallow();
-				o.Area.Add(orbital);
+				o.Area!.Add(orbital);
 				return orbital;
 			});
 		}

@@ -278,7 +278,7 @@ namespace BurningKnight.entity.projectile {
 
 				var mute = false;
 
-				if (Context.Level.Biome is IceBiome && !(Owner is creature.bk.BurningKnight) && cse.Entity is ProjectileLevelBody lvl) {
+				if (Context.Level!.Biome is IceBiome && !(Owner is creature.bk.BurningKnight) && cse.Entity is ProjectileLevelBody lvl) {
 					if (lvl.Break(CenterX, CenterY)) {
 						mute = true;
 						AudioEmitterComponent.Dummy(Area, Center).EmitRandomizedPrefixed("level_snow_break", 3);
@@ -344,14 +344,14 @@ namespace BurningKnight.entity.projectile {
 							Position = Center
 						};
 
-						Context.Level.Area.Add(part);
+						Context.Level!.Area!.Add(part);
 						part.Particle.Velocity = MathUtils.CreateVector(a + Rnd.Float(-0.4f, 0.4f), l);
 						part.Depth = Layers.WindFx;
 						part.Particle.Scale = 0.7f;
 					}
 				}
 
-				Context.Camera.ShakeMax(4);
+				Context.Camera!.ShakeMax(4);
 				Callbacks?.OnDeath?.Invoke(this, from, timeout);
 
 				bodyComponent.Velocity = Vector2.Zero;

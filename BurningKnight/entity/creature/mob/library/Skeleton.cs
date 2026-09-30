@@ -67,7 +67,7 @@ namespace BurningKnight.entity.creature.mob.library {
 
 					Self.GetComponent<MobAnimationComponent>()!.Animate(() => {
 						var summon = new Mummy();
-						Self.Area.Add(summon);
+						Self.Area!.Add(summon);
 					
 						summon.BottomCenter = Self.BottomCenter + new Vector2(0, 2);
 						summon.Target = Self.Target;	

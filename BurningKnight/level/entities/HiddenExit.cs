@@ -27,7 +27,7 @@ namespace BurningKnight.level.entities {
 						}
 
 						state.ResetFollowing();
-						Context.Camera.Jump();
+						Context.Camera!.Jump();
 						InGameState.TransitionToOpen();
 					});
 					

@@ -16,59 +16,59 @@ namespace BurningKnight.level.walls {
 
 			if (Rnd.Chance()) {
 				if (Rnd.Chance()) {
-					level.Area.Add(new QuadRotatingTurret {
+					level.Area!.Add(new QuadRotatingTurret {
 						Position = c
 					});
 				} else {
-					level.Area.Add(new QuadTurret {
+					level.Area!.Add(new QuadTurret {
 						Position = c
 					});
 				}
 			} else {
 				if (Rnd.Chance()) {
-					level.Area.Add(new Turret {
+					level.Area!.Add(new Turret {
 						Position = c + new Vector2(m, m),
 						StartingAngle = 1,
 						ReverseDirection = t ? !r : r
 					});
 
-					level.Area.Add(new Turret {
+					level.Area!.Add(new Turret {
 						Position = c + new Vector2(m, -m),
 						StartingAngle = 7,
 						ReverseDirection = r
 					});
 
-					level.Area.Add(new Turret {
+					level.Area!.Add(new Turret {
 						Position = c + new Vector2(-m, m),
 						StartingAngle = 3,
 						ReverseDirection = t ? !r : r
 					});
 
-					level.Area.Add(new Turret {
+					level.Area!.Add(new Turret {
 						Position = c + new Vector2(-m, -m),
 						StartingAngle = 5,
 						ReverseDirection = r
 					});
 				} else {
-					level.Area.Add(new Turret {
+					level.Area!.Add(new Turret {
 						Position = c + new Vector2(m, m),
 						StartingAngle = 1,
 						ReverseDirection = t ? !r : r
 					});
 
-					level.Area.Add(new RotatingTurret {
+					level.Area!.Add(new RotatingTurret {
 						Position = c + new Vector2(m, -m),
 						StartingAngle = 7,
 						ReverseDirection = r
 					});
 
-					level.Area.Add(new RotatingTurret {
+					level.Area!.Add(new RotatingTurret {
 						Position = c + new Vector2(-m, m),
 						StartingAngle = 3,
 						ReverseDirection = t ? !r : r
 					});
 
-					level.Area.Add(new RotatingTurret {
+					level.Area!.Add(new RotatingTurret {
 						Position = c + new Vector2(-m, -m),
 						StartingAngle = 5,
 						ReverseDirection = r

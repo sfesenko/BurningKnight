@@ -85,7 +85,7 @@ namespace BurningKnight.entity.creature.player {
 				Owner = Entity
 			};
 
-			Entity.Area.Add(pet);
+			Entity.Area!.Add(pet);
 			pet.Center = Entity.Center + MathUtils.CreateVector(Rnd.AnglePI(), Rnd.Float(16f, 48f));
 			AnimationUtil.Poof(pet.Center);
 		}

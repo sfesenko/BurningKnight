@@ -190,7 +190,7 @@ namespace BurningKnight.entity.creature.player {
 					ev.Item.RemoveDroppedComponents();
 					
 					for (var i = 0; i < 4; i++) {
-						Entity.Area.Add(new ParticleEntity(Particles.Dust()) {
+						Entity.Area!.Add(new ParticleEntity(Particles.Dust()) {
 							Position = ev.Item.Center, 
 							Particle = {
 								Scale = Rnd.Float(0.4f, 0.8f)
@@ -246,7 +246,7 @@ namespace BurningKnight.entity.creature.player {
 
 			if (spawn) {
 				var bomb = new Bomb(Entity);
-				Entity.Area.Add(bomb);
+				Entity.Area!.Add(bomb);
 				bomb.Center = Entity.Center;
 				bomb.MoveToMouse();
 			} else {

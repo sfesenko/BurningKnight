@@ -109,7 +109,7 @@ namespace BurningKnight.level {
 				return;
 			}
 			
-			toUpdate.Add(x + y * Context.Level.Width);
+			toUpdate.Add(x + y * Context.Level!.Width);
 		}
 		
 		private void RecreateChunk(int cx, int cy) {

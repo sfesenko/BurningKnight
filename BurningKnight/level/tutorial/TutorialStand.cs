@@ -28,7 +28,7 @@ namespace BurningKnight.level.tutorial {
 
 		public override bool HandleEvent(Event e) {
 			if (e is ItemTakenEvent) {
-				Context.Camera.Shake(8);
+				Context.Camera!.Shake(8);
 				var r = GetComponent<RoomComponent>()!.Room;
 				
 				foreach (var c in r.Controllable) {

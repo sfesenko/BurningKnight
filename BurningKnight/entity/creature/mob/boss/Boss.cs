@@ -192,9 +192,9 @@ namespace BurningKnight.entity.creature.mob.boss {
 									var part = new TileParticle();
 
 									part.Top = t == Tile.GrannyFloor ? Tilesets.Biome.GrannyFloor[0] : Tilesets.Biome.EvilFloor[0];
-									part.TopTarget = Context.Level.Tileset.WallTopADecor;
-									part.Side = Context.Level.Tileset.FloorSidesD[0];
-									part.Sides = Context.Level.Tileset.WallSidesA[2];
+									part.TopTarget = Context.Level!.Tileset.WallTopADecor;
+									part.Side = Context.Level!.Tileset.FloorSidesD[0];
+									part.Sides = Context.Level!.Tileset.WallSidesA[2];
 									part.Tile = t;
 
 									part.X = x * 16;
@@ -225,7 +225,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 					if (lastExplosion <= 0) {
 						lastExplosion = 0.3f;
 						AnimationUtil.Explosion(Center + new Vector2(Rnd.Float(-16, 16), Rnd.Float(-16, 16)));
-						Context.Camera.Shake(10);
+						Context.Camera!.Shake(10);
 						Audio.PlaySfx($"level_explosion_{Rnd.Int(1, 4)}");
 					}
 
@@ -283,8 +283,8 @@ namespace BurningKnight.entity.creature.mob.boss {
 						Died = true;
 						HealthBar?.Remove();
 
-						Context.Camera.Targets.Clear();
-						Context.Camera.Follow(this, 1f);
+						Context.Camera!.Targets.Clear();
+						Context.Camera!.Follow(this, 1f);
 						Become<DefeatedState>();
 
 						Audio.Stop();
@@ -317,7 +317,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 			Painter.Fill(Context.Level, x - 1, y - 1, 3, 3, Tiles.RandomFloor());
 			Painter.Fill(Context.Level, x - 1, y - 3, 3, 3, Tiles.RandomFloor());
 
-			Context.Level.ReTileAndCreateBodyChunks(x - 1, y - 1, 3, 7);
+			Context.Level!.ReTileAndCreateBodyChunks(x - 1, y - 1, 3, 7);
 			var w = p - new Vector2(0, 32f);
 
 			if (!(this is DM || this is BkHead || Context.Run.Type == RunType.BossRush)) {

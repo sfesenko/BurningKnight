@@ -162,27 +162,27 @@ namespace BurningKnight.entity.creature.mob.boss {
 				p.RemoveComponent<PlayerInputComponent>();
 			}
 			
-			Context.Camera.Targets.Clear();
-			Context.Camera.Follow(dm, 1f);
-			Context.Camera.Follow(heinur, 1f);
+			Context.Camera!.Targets.Clear();
+			Context.Camera!.Follow(dm, 1f);
+			Context.Camera!.Follow(heinur, 1f);
 			
 			dmDialog.Start("dm_5", null, () => Timer.Add(() => {
 				dmDialog.Close();
-				Context.Camera.Targets.Clear();
-				Context.Camera.Follow(dm, 1f);
-				Context.Camera.Follow(heinur, 1f);
+				Context.Camera!.Targets.Clear();
+				Context.Camera!.Follow(dm, 1f);
+				Context.Camera!.Follow(heinur, 1f);
 				
 				heinurDialog.Start("heinur_0", null, () => Timer.Add(() => {
 					heinurDialog.Close();
 					heinur.Attract = true;
-					Context.Camera.Targets.Clear();
-					Context.Camera.Follow(dm, 1f);
-					Context.Camera.Follow(heinur, 1f);
+					Context.Camera!.Targets.Clear();
+					Context.Camera!.Follow(dm, 1f);
+					Context.Camera!.Follow(heinur, 1f);
 
 					heinur.Callback = () => {
-						Context.Camera.Targets.Clear();
-						Context.Camera.Follow(dm, 1f);
-						Context.Camera.MainTarget = dm;
+						Context.Camera!.Targets.Clear();
+						Context.Camera!.Follow(dm, 1f);
+						Context.Camera!.MainTarget = dm;
 
 						foreach (var p in Area.Tagged[Tags.Player]) {
 							p.GetComponent<PlayerGraphicsComponent>()!.Hidden = true;
@@ -197,19 +197,19 @@ namespace BurningKnight.entity.creature.mob.boss {
 						bk.Center = Center;
 
 						bk.GetComponent<BkGraphicsComponent>()!.Animate();
-						Context.Camera.Follow(bk, 1f);
+						Context.Camera!.Follow(bk, 1f);
 						
 						dmDialog.Start("dm_6", null, () => Timer.Add(() => {
 							dmDialog.Close();
-							Context.Camera.Targets.Clear();
-							Context.Camera.Follow(bk, 1f);
+							Context.Camera!.Targets.Clear();
+							Context.Camera!.Follow(bk, 1f);
 							
 							var nbkDialog = bk.GetComponent<DialogComponent>();
 						
 							nbkDialog.Start("nbk_0", null, () => Timer.Add(() => {
 								nbkDialog.Close();
-								Context.Camera.Targets.Clear();
-								Context.Camera.Follow(bk, 1f);
+								Context.Camera!.Targets.Clear();
+								Context.Camera!.Follow(bk, 1f);
 								Context.Run.Win();
 							}, 2f));
 						}, 2f));

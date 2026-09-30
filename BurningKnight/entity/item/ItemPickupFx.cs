@@ -62,7 +62,7 @@ namespace BurningKnight.entity.item {
 				yy = ItemGraphicsComponent.CalculateMove(c.T) * Display.UiScale;
 			}
 			
-			Center = Context.Camera.CameraToUi(new Vector2(item.CenterX, item.Y - 8 + y + yy));
+			Center = Context.Camera!.CameraToUi(new Vector2(item.CenterX, item.Y - 8 + y + yy));
 			GetComponent<TextGraphicsComponent>()!.Angle = (float) (Math.Cos(Engine.Instance.State.Time) * 0.05f);
 		}
 		

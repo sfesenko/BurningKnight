@@ -25,7 +25,7 @@ namespace BurningKnight.level.rooms.trap {
 			var where = GetTileCenter();
 			Painter.Set(level, where, Tiles.RandomFloor());
 
-			level.Area.Add(new Button {
+			level.Area!.Add(new Button {
 				Position = where * 16
 			});
 		}

@@ -394,8 +394,8 @@ namespace BurningKnight.level {
 			Graphics.Batch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None,
 				state.ClipRasterizerState, null, Context.Camera?.Matrix);
 			
-			Graphics.Render(WallSurface, Context.Camera.TopLeft - new Vector2(Context.Camera.Position.X % 1, 
-				                             Context.Camera.Position.Y % 1));
+			Graphics.Render(WallSurface, Context.Camera!.TopLeft - new Vector2(Context.Camera!.Position.X % 1, 
+				                             Context.Camera!.Position.Y % 1));
 			
 			Graphics.Batch.End();
 

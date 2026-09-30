@@ -13,7 +13,7 @@ namespace BurningKnight.entity.item.use {
 			var level = Context.Level;
 			Context.Audio.PlaySfx("item_map");
 			
-			foreach (var e in entity.Area.Tagged[Tags.Room]) {
+			foreach (var e in entity.Area!.Tagged[Tags.Room]) {
 				var room = (Room) e;
 				
 				if (room.Type == RoomType.DarkMarket || room.Type == RoomType.Hidden) {

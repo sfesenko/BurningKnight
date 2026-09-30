@@ -6,11 +6,11 @@ using Microsoft.Xna.Framework;
 namespace BurningKnight.level {
 	public class Patch {
 		public static bool[] Generate(float Seed, int Octaves) {
-			return Generate(Context.Level.Width, Context.Level.Height, Seed, Octaves);
+			return Generate(Context.Level!.Width, Context.Level!.Height, Seed, Octaves);
 		}
 
 		public static bool[] Noise(float seed, float s = 0.1f) {
-			return Noise(Context.Level.Width, Context.Level.Height, seed, s);
+			return Noise(Context.Level!.Width, Context.Level!.Height, seed, s);
 		}
 
 		public static bool[] Noise(int w, int h, float seed, float s) {

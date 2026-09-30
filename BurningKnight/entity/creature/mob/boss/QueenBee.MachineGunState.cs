@@ -53,7 +53,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 								}
 
 								pp.Launch(a, 80);
-								Self.Area.Add(pp);
+								Self.Area!.Add(pp);
 							} else {
 								var builder = new ProjectileBuilder(Self, "circle") {
 									Scale = Rnd.Float(0.8f, 1f),

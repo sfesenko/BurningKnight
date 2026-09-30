@@ -53,7 +53,7 @@ namespace BurningKnight.entity.fx {
 			var w = Display.Width * -0.75f;
 			var d = Rnd.Float(-w / 2, w / 2);
 
-			Position = Context.Camera.Position + wind * w;
+			Position = Context.Camera!.Position + wind * w;
 			X += (float) Math.Cos(a) * d;
 			Y += (float) Math.Sin(a) * d;
 				
@@ -63,7 +63,7 @@ namespace BurningKnight.entity.fx {
 
 		public override void Update(float dt) {
 			base.Update(dt);
-			var overlaps = Context.Camera.Overlaps(this);
+			var overlaps = Context.Camera!.Overlaps(this);
 
 			if (delay > 0) {
 				if (overlaps) {
@@ -84,7 +84,7 @@ namespace BurningKnight.entity.fx {
 				Position += velocity * (dt * speed);
 			}
 
-			Position += Context.Camera.PositionDelta * (speed * 0.01f);
+			Position += Context.Camera!.PositionDelta * (speed * 0.01f);
 
 			angle += angleSpeed * dt * w;
 			

@@ -151,8 +151,8 @@ namespace BurningKnight.entity.door {
 				var x = (int) Math.Floor(CenterX / 16);
 				var y = (int) Math.Floor(Bottom / 16);
 
-				if (Context.Level.IsInside(x, y)) {
-					Context.Level.Passable[Context.Level.ToIndex(x, y)] = false;
+				if (Context.Level!.IsInside(x, y)) {
+					Context.Level!.Passable[Context.Level!.ToIndex(x, y)] = false;
 				}
 			}
 			

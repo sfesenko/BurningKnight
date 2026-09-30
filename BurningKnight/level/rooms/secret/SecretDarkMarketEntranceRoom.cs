@@ -10,7 +10,7 @@ namespace BurningKnight.level.rooms.secret {
 				id = "dm"
 			};
 			
-			level.Area.Add(entrance);
+			level.Area!.Add(entrance);
 			entrance.Position = new Vector2(Left + (int) ((GetWidth() - 1) / 2f), Top + (int) ((GetHeight() - 1) / 2f)) * 16;
 		}
 

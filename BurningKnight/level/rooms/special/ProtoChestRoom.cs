@@ -14,7 +14,7 @@ namespace BurningKnight.level.rooms.special {
 			PaintTunnel(level, Tiles.RandomFloor(), GetCenterRect());
 
 			var chest = new ProtoChest();
-			level.Area.Add(chest);
+			level.Area!.Add(chest);
 			chest.BottomCenter = GetTileCenter() * 16 + new Vector2(8);
 		}
 		

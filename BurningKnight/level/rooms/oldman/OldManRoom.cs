@@ -33,14 +33,14 @@ namespace BurningKnight.level.rooms.oldman {
 			PaintTunnel(level, Tile.EvilFloor, GetCenterRect(), false, false, false);
 			
 			var dm = new DarkMage();
-			level.Area.Add(dm);
+			level.Area!.Add(dm);
 
 			var w = new Vector2(GetCenterVector().X, (Top + 3) * 16);
 			dm.BottomCenter = w;
 
 			for (var i = 0; i < 2; i++) {
 				var campfire = new Campfire();
-				level.Area.Add(campfire);
+				level.Area!.Add(campfire);
 				campfire.BottomCenter = w + new Vector2(24 * (i == 0 ? -1 : 1), 0);
 			}
 
@@ -49,7 +49,7 @@ namespace BurningKnight.level.rooms.oldman {
 
 			for (var i = 0; i < count; i++) {
 				var stand = new DarkMageStand();
-				level.Area.Add(stand);
+				level.Area!.Add(stand);
 				stand.Center = new Vector2(Left + 3.5f + i * 2, Top + 4.5f) * 16;
 				
 				stand.SetItem(Items.CreateAndAdd(Items.GenerateAndRemove(pool), level.Area, false), null);

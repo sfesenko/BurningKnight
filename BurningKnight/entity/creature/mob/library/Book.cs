@@ -110,7 +110,7 @@ namespace BurningKnight.entity.creature.mob.library {
 								Position = Self.Center
 							};
 
-							Self.Area.Add(p);
+							Self.Area!.Add(p);
 
 							ProjectileTemplate.MakeFast(Self, sprite, Self.Center, a, (pr) => {
 								p.Add(pr);

@@ -39,7 +39,7 @@ namespace BurningKnight.entity.creature.mob.boss.rooms {
 		}
 
 		private void Platform(Level level, int x, int y, bool vertical = false) {
-			level.Area.Add(new MovingPlatform {
+			level.Area!.Add(new MovingPlatform {
 				Controller = vertical ? PlatformController.UpDown : PlatformController.LeftRight,
 				Position = new Vector2(x, y) * 16
 			});

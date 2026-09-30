@@ -233,7 +233,7 @@ namespace BurningKnight.state {
 						
 				part.Position = center + Rnd.Vector(-4, 4);
 				part.Particle.Scale = Rnd.Float(0.4f, 0.8f);
-				Context.Level.Area.Add(part);
+				Context.Level!.Area!.Add(part);
 				part.Depth = 1;
 			}
 			
@@ -287,7 +287,7 @@ namespace BurningKnight.state {
 			Statistics.Won = true;
 			Player pl = null;
 
-			foreach (var p in Context.Area.Tagged[Tags.Player]) {
+			foreach (var p in Context.Area!.Tagged[Tags.Player]) {
 				p.RemoveComponent<PlayerInputComponent>();
 				p.GetComponent<HealthComponent>()!.Unhittable = true;
 

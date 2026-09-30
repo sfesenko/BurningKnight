@@ -113,7 +113,7 @@ namespace BurningKnight.level.rooms.trap {
 			
 			Painter.Set(level, x, y, Tile.FloorA);
 
-			level.Area.Add(new Turret {
+			level.Area!.Add(new Turret {
 				Position = new Vector2(x, y) * 16,
 				StartingAngle = a,
 				TimingOffset = offset,
@@ -128,7 +128,7 @@ namespace BurningKnight.level.rooms.trap {
 
 			var input = new Button();
 			input.Position = where * 16;
-			level.Area.Add(input);
+			level.Area!.Add(input);
 		}
 	}
 }

@@ -76,7 +76,7 @@ namespace BurningKnight.entity {
 
 				if (pos != lastPos) {
 					lastPos = pos;
-					Position = Context.Camera.CameraToUi(GamePosition = Context.Camera.ScreenToCamera(pos));
+					Position = Context.Camera!.CameraToUi(GamePosition = Context.Camera!.ScreenToCamera(pos));
 				}
 			}
 
@@ -85,7 +85,7 @@ namespace BurningKnight.entity {
 			if (controller != null && Engine.Instance.State is InGameState { Paused: false, Died: false } && !Context.Run.Won) {
 				if (needsAdjusting) {
 					needsAdjusting = false;
-					Position = Context.Camera.CameraToUi(GamePosition = Player.Center);
+					Position = Context.Camera!.CameraToUi(GamePosition = Player.Center);
 				}
 				
 				var stick = controller.GetRightStick();
@@ -119,7 +119,7 @@ namespace BurningKnight.entity {
 					}
 
 					stickOffset += l * new Vector2(dx, dy) * dt * 10f * Settings.Sensivity;
-					Position = Context.Camera.CameraToUi(GamePosition = (Player.Center + stickOffset * (48 * Settings.CursorRadius)));
+					Position = Context.Camera!.CameraToUi(GamePosition = (Player.Center + stickOffset * (48 * Settings.CursorRadius)));
 
 					double a = 0;
 					var pressed = false;
@@ -138,7 +138,7 @@ namespace BurningKnight.entity {
 					}
 
 					if (pressed) {
-						Position = Context.Camera.CameraToUi(GamePosition = (Player.Center + MathUtils.CreateVector(a, 48)));
+						Position = Context.Camera!.CameraToUi(GamePosition = (Player.Center + MathUtils.CreateVector(a, 48)));
 					}
 				}
 			}

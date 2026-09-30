@@ -94,7 +94,7 @@ namespace BurningKnight.entity.creature.mob.castle {
 					lastPart = 0;
 
 					var p = new ProjectileParticle();
-					pr.Area.Add(p);
+					pr.Area!.Add(p);
 					p.Center = pr.Center; // + Random.Vector(3, 3);
 					// give some velocity too??
 				}

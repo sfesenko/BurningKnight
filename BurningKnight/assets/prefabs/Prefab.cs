@@ -22,7 +22,7 @@ namespace BurningKnight.assets.prefabs {
 
 				var e = (SaveableEntity) Activator.CreateInstance(d.Type);
 				
-				level.Area.Add(e, false);
+				level.Area!.Add(e, false);
 				reader.SetData(d.Data);
 
 				e.Load(reader);

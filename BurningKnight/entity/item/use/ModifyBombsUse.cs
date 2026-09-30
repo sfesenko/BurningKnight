@@ -45,7 +45,7 @@ namespace BurningKnight.entity.item.use {
 
 						for (var i = 0; i < 4; i++) {
 							var bm = new Bomb(b.Owner, Bomb.ExplosionTime, b);
-							b.Area.Add(bm);
+							b.Area!.Add(bm);
 							bm.Center = b.Center + Rnd.Vector(-4, 4);
 							bm.VelocityTo(i / 2f * (float) Math.PI, 300f);
 						}

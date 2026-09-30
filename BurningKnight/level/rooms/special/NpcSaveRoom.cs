@@ -103,7 +103,7 @@ namespace BurningKnight.level.rooms.special {
 
 			var d = Connected.Values.First();
 			var npc = ShopNpc.FromId(id);
-			level.Area.Add(npc);
+			level.Area!.Add(npc);
 
 			var fl = Tiles.RandomFloorOrSpike();
 			
@@ -121,7 +121,7 @@ namespace BurningKnight.level.rooms.special {
 				};
 				
 				dr.Center = door * 16 + new Vector2(12, 0);
-				level.Area.Add(dr);
+				level.Area!.Add(dr);
 				
 				var v = (d.X == Left ? -1 : 1);
 				
@@ -138,7 +138,7 @@ namespace BurningKnight.level.rooms.special {
 				
 				var dr = new CageDoor();
 				dr.Center = door * 16 + new Vector2(7, 8);
-				level.Area.Add(dr);
+				level.Area!.Add(dr);
 
 				var v = (d.Y == Top ? -1 : 1);
 				

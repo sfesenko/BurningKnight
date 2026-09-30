@@ -11,7 +11,7 @@ namespace BurningKnight.entity {
 		}
 		
 		public void Add(RenderTrigger trigger) {
-			entity.Area.Add(trigger);
+			entity.Area!.Add(trigger);
 			triggers.Add(trigger);
 		}
 
@@ -26,7 +26,7 @@ namespace BurningKnight.entity {
 					t.Done = false;
 					t.Area = null;
 					t.Components = null;
-					entity.Area.Add(t);
+					entity.Area!.Add(t);
 				}
 			} 
 		}
@@ -34,7 +34,7 @@ namespace BurningKnight.entity {
 		public void Destroy() {
 			foreach (var t in triggers) {
 				t.Done = true;
-				entity.Area.Remove(t);
+				entity.Area!.Remove(t);
 			}
 		}
 	}

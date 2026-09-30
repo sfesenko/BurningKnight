@@ -41,7 +41,7 @@ namespace BurningKnight.level.rooms.scourged {
 
 				for (var i = 0; i < c; i++) {
 					var stand = new ScourgedStand();
-					level.Area.Add(stand);
+					level.Area!.Add(stand);
 					stand.Center = cn + new Vector2(16 + (i - c / 2f) * 32, 8);
 
 					stand.SetItem(Items.CreateAndAdd(Scourge.GenerateItemId(), level.Area), stand);
@@ -54,7 +54,7 @@ namespace BurningKnight.level.rooms.scourged {
 
 			if (Rnd.Chance(5)) {
 				var chest = new ProtoChest();
-				level.Area.Add(chest);
+				level.Area!.Add(chest);
 				chest.BottomCenter = center;
 
 				return;
@@ -79,7 +79,7 @@ namespace BurningKnight.level.rooms.scourged {
 
 				case 2: {
 					var stand = new ItemStand();
-					level.Area.Add(stand);
+					level.Area!.Add(stand);
 					stand.BottomCenter = center;
 					stand.SetItem(Items.CreateAndAdd(Items.Generate(ItemPool.Treasure), level.Area), null);
 
@@ -92,7 +92,7 @@ namespace BurningKnight.level.rooms.scourged {
 
 					for (var i = 0; i < c; i++) {
 						var chest = a ? (Chest) new StoneChest() : new RedChest();
-						level.Area.Add(chest);
+						level.Area!.Add(chest);
 						chest.BottomCenter = center - new Vector2((c / 2f - i) * 20, 0);
 					}
 

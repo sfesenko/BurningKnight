@@ -22,7 +22,7 @@ namespace BurningKnight.level.rooms.secret {
 				prop = new Safe();
 			}
 
-			Level.Area.Add(prop);
+			Level.Area!.Add(prop);
 			prop.Center = GetCenter() * 16 + new Vector2(Rnd.Float(-8, 8), Rnd.Float(-8, 8));
 			
 			for (var i = 0; i < Rnd.Int(1, Context.Run.Depth); i++) {

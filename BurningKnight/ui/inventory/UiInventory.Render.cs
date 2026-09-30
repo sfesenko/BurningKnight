@@ -40,7 +40,7 @@ namespace BurningKnight.ui.inventory {
 				var point = Player.Center + new Vector2((float) Math.Cos(a) * dd, (float) Math.Sin(a) * dd);
 				var center = new Vector2(Display.UiWidth, Display.UiHeight) * 0.5f;
 					
-				point = Context.Camera.CameraToUi(point);
+				point = Context.Camera!.CameraToUi(point);
 				point.X = MathUtils.Clamp((float) -Math.Cos(a) * (center.X - 16) + center.X, (float) Math.Cos(a) * (center.X - 16) + center.X, point.X);
 				point.Y = MathUtils.Clamp((float) -Math.Sin(a) * (center.Y - 16) + center.Y,  (float) Math.Sin(a) * (center.Y - 16) + center.Y, point.Y);
 				point -= MathUtils.CreateVector(a, m);

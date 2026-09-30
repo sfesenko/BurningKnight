@@ -58,7 +58,7 @@ namespace BurningKnight.entity.item.util {
 			AddComponent(new LightComponent(this, 32f, Color.White));
 
 			GetComponent<AnimationComponent>()!.OriginY = 12;
-			Context.Camera.Push(Angle - (float) Math.PI, 4f);
+			Context.Camera!.Push(Angle - (float) Math.PI, 4f);
 		}
 
 		public void AdjustSize() {
@@ -87,7 +87,7 @@ namespace BurningKnight.entity.item.util {
 						ProjectileLevelBody.Mine(Context.Level, hitbox.Center.X, hitbox.Center.Y);
 					}
 					
-					if (Context.Level.Biome is IceBiome) {
+					if (Context.Level!.Biome is IceBiome) {
 						var hitbox = ev.Fixture.GetAABB();
 
 						if (bd.Break(hitbox.Center.X, hitbox.Center.Y)) {
@@ -117,7 +117,7 @@ namespace BurningKnight.entity.item.util {
 
 							p.Color = ProjectileColor.Yellow;
 
-							Context.Camera.ShakeMax(4f);
+							Context.Camera!.ShakeMax(4f);
 							Owner.GetComponent<AudioEmitterComponent>()!.EmitRandomizedPrefixed("projectile_reflected", 2);
 						} else if (p.HasFlag(ProjectileFlags.BreakableByMelee)) {
 							p.Break();

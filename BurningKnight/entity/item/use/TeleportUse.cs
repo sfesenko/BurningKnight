@@ -12,7 +12,7 @@ using Microsoft.Xna.Framework;
 namespace BurningKnight.entity.item.use {
 	public class TeleportUse : DoWithTagUse {
 		protected override void DoAction(Entity entity, Item item, List<Entity> entities) {
-			var rooms = entity.Area.Tagged[Tags.Room];
+			var rooms = entity.Area!.Tagged[Tags.Room];
 
 			if (rooms.Count < 2) {
 				return;
@@ -25,7 +25,7 @@ namespace BurningKnight.entity.item.use {
 				if (newRoom != null) {
 					AnimationUtil.TeleportAway(e, () => {
 						e.Center = newRoom.GetRandomFreeTile() * 16 + new Vector2(8);
-						Context.Camera.Jump();
+						Context.Camera!.Jump();
 						AnimationUtil.TeleportIn(e);
 						e.GetComponent<HealthComponent>()!.Unhittable = false;
 					});

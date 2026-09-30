@@ -70,7 +70,7 @@ namespace BurningKnight.entity.creature.bk {
 						var y = (int) Math.Floor(p.CenterY / 16);
 						
 						var mob = new WallCrawler();
-						Self.Area.Add(mob);
+						Self.Area!.Add(mob);
 						mob.X = x * 16;
 						mob.Y = y * 16 - 8;
 						mob.GeneratePrefix();

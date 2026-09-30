@@ -24,7 +24,7 @@ namespace BurningKnight.entity.item.use {
 				var hurt = false;
 
 				ProjectileCallbacks.AttachCollisionCallback(pce.Projectile, (p, en) => {
-					if (en.HasComponent<HealthComponent>() || (en is ProjectileLevelBody && Context.Level.Biome is IceBiome)) {
+					if (en.HasComponent<HealthComponent>() || (en is ProjectileLevelBody && Context.Level!.Biome is IceBiome)) {
 						hurt = true;
 					}
 					
@@ -44,7 +44,7 @@ namespace BurningKnight.entity.item.use {
 				var hurt = false;
 
 				mac.Arc.OnHurt += (m, en) => {
-					if (en.HasComponent<HealthComponent>() || (en is ProjectileLevelBody && Context.Level.Biome is IceBiome)) {
+					if (en.HasComponent<HealthComponent>() || (en is ProjectileLevelBody && Context.Level!.Biome is IceBiome)) {
 						hurt = true;
 					}
 				};

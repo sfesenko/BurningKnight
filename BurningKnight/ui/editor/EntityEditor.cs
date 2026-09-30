@@ -131,7 +131,7 @@ namespace BurningKnight.ui.editor {
 				var mouse = Input.Mouse.GamePosition;
 				Entity selected = null;
 					
-				foreach (var e in Editor.Area.Entities.Entities) {
+				foreach (var e in Editor.Area!.Entities.Entities) {
 					if (e.OnScreen && AreaDebug.PassFilter(e) && !(e is Firefly || e is WindFx || e is Lock)) {
 						if (e.Contains(mouse)) {
 							selected = e;
@@ -213,7 +213,7 @@ namespace BurningKnight.ui.editor {
 
 			try {
 				entity = (Entity) Activator.CreateInstance(currentType);
-				Editor.Area.Add(entity);
+				Editor.Area!.Add(entity);
 				entity.Position = Input.Mouse.GamePosition;
 				// somethig wrong here
 			} catch (Exception e) {

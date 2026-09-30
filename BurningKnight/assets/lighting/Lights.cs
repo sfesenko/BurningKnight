@@ -85,11 +85,11 @@ namespace BurningKnight.assets.lighting {
 
 			Graphics.Color.A = AuraAlpha;
 
-			foreach (var p in Context.Level.Area.Tagged[Tags.Projectile]) {
+			foreach (var p in Context.Level!.Area!.Tagged[Tags.Projectile]) {
 				((BasicProjectileGraphicsComponent) p.GraphicsComponent).RenderLight();
 			}
 			
-			foreach (var p in Context.Level.Area.Tagged[Tags.Laser]) {
+			foreach (var p in Context.Level!.Area!.Tagged[Tags.Laser]) {
 				((LaserGraphicsComponent) p.GraphicsComponent).RenderTopLight();
 			}
 			
@@ -100,7 +100,7 @@ namespace BurningKnight.assets.lighting {
 				state.ClipRasterizerState, null, Context.Camera?.Matrix);
 			
 			
-			Graphics.Render(surface, Context.Camera.TopLeft - new Vector2(Context.Camera.Position.X % 1, Context.Camera.Position.Y % 1));
+			Graphics.Render(surface, Context.Camera!.TopLeft - new Vector2(Context.Camera!.Position.X % 1, Context.Camera!.Position.Y % 1));
 			
 			state.End();
 			Graphics.Color.A = 255;
@@ -137,8 +137,8 @@ namespace BurningKnight.assets.lighting {
 			
 			Graphics.Color = new Color(color.X, color.Y, color.Z, alpha);
 
-			Graphics.Render(surface, Context.Camera.TopLeft - new Vector2(Context.Camera.Position.X % 1, 
-			Context.Camera.Position.Y % 1));
+			Graphics.Render(surface, Context.Camera!.TopLeft - new Vector2(Context.Camera!.Position.X % 1, 
+			Context.Camera!.Position.Y % 1));
 			Graphics.Color = Color.White;
 			Graphics.Batch.End();
 			

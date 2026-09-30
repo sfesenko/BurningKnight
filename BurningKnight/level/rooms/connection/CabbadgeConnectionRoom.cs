@@ -18,7 +18,7 @@ namespace BurningKnight.level.rooms.connection {
 					
 					for (var y = Top + 1; y < Bottom; y++) {
 						var p = new Plant();
-						level.Area.Add(p);
+						level.Area!.Add(p);
 						p.Variant = 255; // Cabbadge
 						p.Position = new Vector2(x * 16 + 1, y * 16 - 2) + Rnd.Vector(-2, 2);
 					}
@@ -29,7 +29,7 @@ namespace BurningKnight.level.rooms.connection {
 					
 					for (var x = Left + 1; x < Right; x++) {
 						var p = new Plant();
-						level.Area.Add(p);
+						level.Area!.Add(p);
 						p.Variant = 255; // Cabbadge
 						p.Position = new Vector2(x * 16 + 1, y * 16 - 2) + Rnd.Vector(-2, 2);
 					}

@@ -155,7 +155,7 @@ namespace BurningKnight.entity.component {
 					
 					part.Position = Entity.Center;
 					part.Particle.Scale = Rnd.Float(0.4f, 0.8f);
-					Entity.Area.Add(part);
+					Entity.Area!.Add(part);
 				}
 			}
 		}

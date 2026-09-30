@@ -41,7 +41,7 @@ namespace BurningKnight.level.entities {
 					exit.Center = p;
 
 					Painter.Fill(Context.Level, x - 1, y - 1, 3, 3, Tiles.RandomFloor());
-					Context.Level.ReTileAndCreateBodyChunks(x - 1, y - 1, 3, 3);
+					Context.Level!.ReTileAndCreateBodyChunks(x - 1, y - 1, 3, 3);
 				}
 			}
 			

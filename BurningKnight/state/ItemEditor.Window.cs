@@ -74,7 +74,7 @@ namespace BurningKnight.state {
 
 				if (ImGui.Button("Spawn on stand")) {
 					var stand = new ItemStand();
-					Context.Area.Add(stand);
+					Context.Area!.Add(stand);
 					var item = Items.CreateAndAdd(
 						Selected.Id, Context.Area, false
 					);

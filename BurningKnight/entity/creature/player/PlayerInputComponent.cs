@@ -45,13 +45,13 @@ namespace BurningKnight.entity.creature.player {
 						// Tween.To(1f, Camera.Instance.TextureZoom, x => Camera.Instance.TextureZoom = x, 1f);
 					}
 				} else if (dialog != null) {
-					Context.Camera.Targets.Clear();
+					Context.Camera!.Targets.Clear();
 
 					if (old == null) {				
 						// Tween.To(2f, Camera.Instance.TextureZoom, x => Camera.Instance.TextureZoom = x, 0.35f);
 					}
 					
-					Context.Camera.Follow(dialog.Entity, 1f);
+					Context.Camera!.Follow(dialog.Entity, 1f);
 				}
 			}
 		}
@@ -160,11 +160,11 @@ namespace BurningKnight.entity.creature.player {
 						((Player) Entity).Dead = true;
 						
 						((InGameState) Engine.Instance.State).ResetFollowing();
-						Context.Camera.Shake(10);
+						Context.Camera!.Shake(10);
 
 						var count = 0;
 
-						foreach (var p in Entity.Area.Tagged[Tags.Player]) {
+						foreach (var p in Entity.Area!.Tagged[Tags.Player]) {
 							if (p != Entity) {
 								count++;
 							}

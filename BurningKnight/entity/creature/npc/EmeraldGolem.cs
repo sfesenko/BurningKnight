@@ -64,14 +64,14 @@ namespace BurningKnight.entity.creature.npc {
 						GetComponent<AnimationComponent>()!.Animate(() => {
 							Done = true;
 							Engine.Instance.Flash = 1f;
-							Context.Camera.Shake(8);
+							Context.Camera!.Shake(8);
 							
 							for (var i = 0; i < 4; i++) {
 								var part = new ParticleEntity(Particles.Dust());
 						
 								part.Position = Center + Rnd.Vector(-16, 16);
 								part.Particle.Scale = Rnd.Float(1f, 2f);
-								Context.Level.Area.Add(part);
+								Context.Level!.Area!.Add(part);
 								part.Depth = 1;
 							}
 						});
@@ -97,14 +97,14 @@ namespace BurningKnight.entity.creature.npc {
 						GetComponent<AnimationComponent>()!.Animate(() => {
 							Done = true;
 							Engine.Instance.Flash = 1f;
-							Context.Camera.Shake(8);
+							Context.Camera!.Shake(8);
 							
 							for (var i = 0; i < 4; i++) {
 								var part = new ParticleEntity(Particles.Dust());
 						
 								part.Position = Center + Rnd.Vector(-16, 16);
 								part.Particle.Scale = Rnd.Float(1f, 2f);
-								Context.Level.Area.Add(part);
+								Context.Level!.Area!.Add(part);
 								part.Depth = 1;
 							}
 						});

@@ -48,7 +48,7 @@ namespace BurningKnight.entity.component {
 						
 									part.Position = center + Rnd.Vector(-4, 4);
 									part.Particle.Scale = Rnd.Float(0.4f, 0.8f);
-									Entity.Area.Add(part);
+									Entity.Area!.Add(part);
 									part.Depth = 1;
 								}
 							}	
@@ -64,7 +64,7 @@ namespace BurningKnight.entity.component {
 			}
 			
 			item.Unknown = false;
-			Entity.Area.Remove(item);
+			Entity.Area!.Remove(item);
 			item.Done = false;
 
 			return true;
@@ -135,7 +135,7 @@ namespace BurningKnight.entity.component {
 			}
 			
 			item.Center = Entity.Center;
-			Entity.Area.Add(item);
+			Entity.Area!.Add(item);
 			item.AddDroppedComponents();
 			item.RemoveComponent<OwnerComponent>();
 		}
@@ -182,14 +182,14 @@ namespace BurningKnight.entity.component {
 			for (var i = 0; i < count; i++) {
 				var item = new Item();
 
-				Entity.Area.Add(item, false);
+				Entity.Area!.Add(item, false);
 				
 				item.Load(stream);
 				item.LoadedSelf = false;
 				item.PostInit();
 				
 				Pickup(item, false);
-				Entity.Area.Remove(item);
+				Entity.Area!.Remove(item);
 
 				item.Done = false;
 			}

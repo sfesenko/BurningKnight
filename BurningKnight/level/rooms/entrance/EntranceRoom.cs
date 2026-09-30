@@ -33,7 +33,7 @@ namespace BurningKnight.level.rooms.entrance {
 				Painter.Fill(level, this, Tile.WallA);
 				Painter.FillEllipse(level, this, 3, Tiles.RandomFloor());
 				
-				level.Area.Add(new Turret {
+				level.Area!.Add(new Turret {
 					Position = GetTileCenter() * 16 + new Vector2(32, 0),
 					StartingAngle = 0
 				});
@@ -49,7 +49,7 @@ namespace BurningKnight.level.rooms.entrance {
 			
 			Painter.Fill(level, where.X - 1, where.Y - 1, 3, 3, Tiles.RandomFloor());
 
-			level.Area.Add(prop);
+			level.Area!.Add(prop);
 			prop.Center = (where * 16 + new Vector2(8));
 
 			MakeSafe(level);
@@ -58,7 +58,7 @@ namespace BurningKnight.level.rooms.entrance {
 				if (Builder.ShouldAppear()) {
 					var b = new Builder();
 					b.BottomCenter = where * 16 + new Vector2(8 + Rnd.Float(-16, 16), 20);
-					level.Area.Add(b);
+					level.Area!.Add(b);
 				}
 			} catch (Exception e) {
 				Log.Error(e);

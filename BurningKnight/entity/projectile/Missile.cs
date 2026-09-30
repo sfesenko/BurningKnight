@@ -105,7 +105,7 @@ namespace BurningKnight.entity.projectile {
 				if (Bottom >= toY && !exploded) {
 					Break();
 				}
-			} else if (T <= 1f && Bottom < Context.Camera.Y) {
+			} else if (T <= 1f && Bottom < Context.Camera!.Y) {
 				T = MinUpTime + 1;
 				goingDown = true;
 				CenterX = target.CenterX;

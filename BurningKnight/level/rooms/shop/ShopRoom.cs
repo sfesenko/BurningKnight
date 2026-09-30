@@ -64,7 +64,7 @@ namespace BurningKnight.level.rooms.shop {
 				var rp = GetCenter();
 				var rsk = new ShopKeeper();
 
-				level.Area.Add(rsk);
+				level.Area!.Add(rsk);
 				rsk.Center = new Vector2(rp.X * 16 + 8, rp.Y * 16 + 16);
 				
 				return;
@@ -101,7 +101,7 @@ namespace BurningKnight.level.rooms.shop {
 
 			foreach (var s in stands) {
 				var stand = new ShopStand();
-				level.Area.Add(stand);
+				level.Area!.Add(stand);
 				stand.Center = new Vector2(s.X * 16 + 8, s.Y * 16 + 8);
 
 				var id = g == i ? "bk:bucket" : Items.GenerateAndRemove(i < con && consumablePool.Count > 0 ? consumablePool : pool, null, true);
@@ -123,7 +123,7 @@ namespace BurningKnight.level.rooms.shop {
 			var p = stands[Rnd.Int(stands.Count)];
 			var sk = new ShopKeeper();
 
-			level.Area.Add(sk);
+			level.Area!.Add(sk);
 			sk.Center = new Vector2(p.X * 16 + 8, p.Y * 16 + 16);
 
 			// Painter.DrawLine(level, new Dot(Left + 1, Top + 1), new Dot(Right - 1, Top + 1), Tiles.RandomFloor());
@@ -161,7 +161,7 @@ namespace BurningKnight.level.rooms.shop {
 				var pl = points[Rnd.Int(points.Count)];
 				points.Remove(pl);
 				
-				level.Area.Add(prop);
+				level.Area!.Add(prop);
 				prop.CenterX = pl.X * 16 + 8 + Rnd.Int(-4, 4);
 				prop.Bottom = pl.Y * 16;
 
@@ -188,7 +188,7 @@ namespace BurningKnight.level.rooms.shop {
 
 				var door = pair.Value;
 				var mat = new SlicedProp(spr, Layers.Entrance);
-				level.Area.Add(mat);
+				level.Area!.Add(mat);
 
 				if (door.X == Left) {
 					PlaceSign(level, new Vector2(door.X * 16 - 8, door.Y * 16 - 5));
@@ -206,7 +206,7 @@ namespace BurningKnight.level.rooms.shop {
 
 		private void PlaceSign(Level level, Vector2 where) {
 			var sign = new ShadowedProp("shop_sign");
-			level.Area.Add(sign);
+			level.Area!.Add(sign);
 			sign.BottomCenter = where;
 		}
 

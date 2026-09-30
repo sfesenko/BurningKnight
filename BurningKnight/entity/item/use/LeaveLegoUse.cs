@@ -21,7 +21,7 @@ namespace BurningKnight.entity.item.use {
 			if (t >= 5f) {
 				t = 0;
 				var lego = new Lego();
-				entity.Area.Add(lego);
+				entity.Area!.Add(lego);
 				lego.BottomCenter = entity.BottomCenter;
 				AnimationUtil.Ash(lego.Center);
 			}

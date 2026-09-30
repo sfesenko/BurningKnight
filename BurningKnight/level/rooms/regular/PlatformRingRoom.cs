@@ -31,7 +31,7 @@ namespace BurningKnight.level.rooms.regular {
 				
 				platform.Controller = d;
 
-				level.Area.Add(platform);
+				level.Area!.Add(platform);
 			}
 		}
 

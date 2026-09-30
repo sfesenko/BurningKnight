@@ -33,12 +33,12 @@ namespace BurningKnight.level.rooms.preboss {
 					}
 
 					var ta = new Torch();
-					level.Area.Add(ta);
+					level.Area!.Add(ta);
 					ta.CenterX = a.X * 16 + 8;
 					ta.Bottom = a.Y * 16 + 12;
 					
 					var tb = new Torch();
-					level.Area.Add(tb);
+					level.Area!.Add(tb);
 					tb.CenterX = b.X * 16 + 8;
 					tb.Bottom = b.Y * 16 + 12;
 					

@@ -61,7 +61,7 @@ namespace BurningKnight.entity.creature.mob.library {
 						Position = Self.Center
 					};
 					
-					Self.Area.Add(p);
+					Self.Area!.Add(p);
 					var sa = Rnd.AnglePI();
 					var count = 5;
 

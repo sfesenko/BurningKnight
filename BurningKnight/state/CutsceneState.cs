@@ -113,19 +113,19 @@ namespace BurningKnight.state {
 			float speed = dt * 120f;
 				
 			if (Input.Keyboard.IsDown(Keys.NumPad4)) {
-				Context.Camera.PositionX -= speed;
+				Context.Camera!.PositionX -= speed;
 			}
 				
 			if (Input.Keyboard.IsDown(Keys.NumPad6)) {
-				Context.Camera.PositionX += speed;
+				Context.Camera!.PositionX += speed;
 			}
 				
 			if (Input.Keyboard.IsDown(Keys.NumPad8)) {
-				Context.Camera.PositionY -= speed;
+				Context.Camera!.PositionY -= speed;
 			}
 				
 			if (Input.Keyboard.IsDown(Keys.NumPad2)) {
-				Context.Camera.PositionY += speed;
+				Context.Camera!.PositionY += speed;
 			}
 			
 			Physics.Update(dt);
@@ -137,7 +137,7 @@ namespace BurningKnight.state {
 			text = what;
 			textW = Font.Medium.MeasureString(what).Width;
 			
-			Context.Camera.Targets.Clear();
+			Context.Camera!.Targets.Clear();
 			Shaders.Ui.Parameters["bx"].SetValue(0.333f);
 			Shaders.Ui.Parameters["by"].SetValue(0.333f);
 
@@ -163,7 +163,7 @@ namespace BurningKnight.state {
 		}
 
 		public void Transition(Action callback) {
-			Context.Camera.Targets.Clear();
+			Context.Camera!.Targets.Clear();
 			Shaders.Ui.Parameters["bx"].SetValue(0.333f);
 			Shaders.Ui.Parameters["by"].SetValue(0.333f);
 

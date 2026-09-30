@@ -129,7 +129,7 @@ namespace BurningKnight.assets.particle.custom {
 				}
 			}
 
-			Center = Context.Camera.CameraToUi(gamePosition) + offset;
+			Center = Context.Camera!.CameraToUi(gamePosition) + offset;
 		}
 
 		public override void Render() {

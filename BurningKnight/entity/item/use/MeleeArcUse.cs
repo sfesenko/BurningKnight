@@ -38,7 +38,7 @@ namespace BurningKnight.entity.item.use {
 				By = item
 			});
 			
-			entity.Area.Add(arc);
+			entity.Area!.Add(arc);
 		}
 
 		public override void Setup(JsonValue settings) {

@@ -61,11 +61,11 @@ namespace BurningKnight.state {
 
 			CreateEditor(Camera);
 
-			var id = Context.Level.Biome.Id;
+			var id = Context.Level!.Biome.Id;
 
 			if (id != Biome.Castle && id != Biome.Hub) {
 				Achievements.Unlock($"bk:{id}");
-				var i = Context.Level.Biome.GetItemUnlock();
+				var i = Context.Level!.Biome.GetItemUnlock();
 
 				if (i != null) {
 					Items.Unlock(i);

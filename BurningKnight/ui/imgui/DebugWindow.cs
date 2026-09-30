@@ -81,7 +81,7 @@ namespace BurningKnight.ui.imgui {
 				ImGui.Text($"Render time: {Engine.RenderTime} ms");
 
 				if (Engine.Instance?.State?.Area?.Tagged?[Tags.Projectile] != null) {
-					ImGui.Text($"Projectiles: {Context.Area.Tagged[Tags.Projectile].Count}");
+					ImGui.Text($"Projectiles: {Context.Area!.Tagged[Tags.Projectile].Count}");
 				}
 
 				float mem;
@@ -207,13 +207,13 @@ namespace BurningKnight.ui.imgui {
 			ImGui.SameLine();
 
 			if (ImGui.Button("Kill")) {
-				LocalPlayer.Locate(Context.Level.Area)?.GetComponent<HealthComponent>()!.Kill(null);
+				LocalPlayer.Locate(Context.Level!.Area)?.GetComponent<HealthComponent>()!.Kill(null);
 			}
 
 			ImGui.Separator();
 
 			if (Context.Level != null) {
-				var player = LocalPlayer.Locate(Context.Level.Area);
+				var player = LocalPlayer.Locate(Context.Level!.Area);
 
 				if (player != null) {
 					ImGui.Checkbox("Unhittable", ref player.GetComponent<HealthComponent>()!.Unhittable);

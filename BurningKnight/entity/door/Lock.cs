@@ -56,7 +56,7 @@ namespace BurningKnight.entity.door {
 				return true;
 			}
 
-			Context.Camera.Shake(3);
+			Context.Camera!.Shake(3);
 			shake = 1f;
 			
 			return false;

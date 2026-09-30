@@ -182,7 +182,7 @@ namespace BurningKnight.state {
 				Clickable = false
 			});
 
-			Context.Camera.Targets.Clear();
+			Context.Camera!.Targets.Clear();
 
 			var stats = new UiTable();
 

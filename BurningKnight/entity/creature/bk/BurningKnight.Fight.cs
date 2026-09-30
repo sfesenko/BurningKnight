@@ -50,7 +50,7 @@ namespace BurningKnight.entity.creature.bk {
 					}
 				}
 
-				if (Context.Level.Biome is LibraryBiome) {
+				if (Context.Level!.Biome is LibraryBiome) {
 					BeginFight();
 					return;
 				}

@@ -65,7 +65,7 @@ namespace BurningKnight.level.entities.statue {
 				return;
 			}
 
-			Context.Camera.Shake(8);
+			Context.Camera!.Shake(8);
 			Broken = true;
 			UpdateSprite();
 

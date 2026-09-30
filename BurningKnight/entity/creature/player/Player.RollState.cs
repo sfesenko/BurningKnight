@@ -86,7 +86,7 @@ namespace BurningKnight.entity.creature.player {
 						
 					part.Position = Self.Center;
 					part.Particle.Scale = Rnd.Float(0.4f, 0.8f);
-					Self.Area.Add(part);
+					Self.Area!.Add(part);
 				}
 			}
 
@@ -117,7 +117,7 @@ namespace BurningKnight.entity.creature.player {
 						
 					part.Position = Self.Center;
 					part.Particle.Scale = Rnd.Float(0.4f, 0.8f);
-					Self.Area.Add(part);
+					Self.Area!.Add(part);
 				}
 			}
 

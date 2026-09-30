@@ -42,7 +42,7 @@ namespace BurningKnight.level.rooms.challenge {
 			
 			if (Rnd.Chance(20)) {
 				var stand = new ItemStand();
-				level.Area.Add(stand);
+				level.Area!.Add(stand);
 				stand.Center = center;
 
 				stand.SetItem(Items.CreateAndAdd(Items.Generate(ItemPool.Treasure), level.Area), null);
@@ -90,7 +90,7 @@ namespace BurningKnight.level.rooms.challenge {
 				var cn = chests.Count;
 				
 				foreach (var c in chests) {
-					level.Area.Add(c);
+					level.Area!.Add(c);
 					c.Center = center + new Vector2((j - cn / 2f) * 16, 0);
 					
 					j++;

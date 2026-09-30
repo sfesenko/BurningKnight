@@ -22,7 +22,7 @@ namespace BurningKnight.entity.room.controller {
 		public override void Init() {
 			base.Init();
 
-			var e = Room.Area.EventListener;
+			var e = Room.Area!.EventListener;
 			
 			e.Subscribe<Chest.OpenedEvent>(this);
 			e.Subscribe<ItemTakenEvent>(this);
@@ -54,14 +54,14 @@ namespace BurningKnight.entity.room.controller {
 
 		private void SpawnWave(Entity entity) {
 			var filter = CheckDistance(entity);
-			MobRegistry.SetupForBiome(Context.Level.Biome.Id);
+			MobRegistry.SetupForBiome(Context.Level!.Biome.Id);
 
 			var c = Rnd.Int(5, 11);
 			
 			for (var i = 0; i < c; i++) {
 				Timer.Add(() => {
 					var mob = MobRegistry.Generate();
-					entity.Area.Add(mob);
+					entity.Area!.Add(mob);
 					var v = MobRegistry.FindFor(mob.GetType());
 
 					if (v?.NearWall ?? false) {
@@ -91,7 +91,7 @@ namespace BurningKnight.entity.room.controller {
 							}
 						};
 
-						Context.Level.Area.Add(part);
+						Context.Level!.Area!.Add(part);
 						part.Depth = 1;
 					}
 					

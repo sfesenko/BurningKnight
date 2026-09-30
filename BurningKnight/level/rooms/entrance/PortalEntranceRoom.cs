@@ -19,7 +19,7 @@ namespace BurningKnight.level.rooms.entrance {
 			Painter.Set(level, d.X, d.Y + 1, Tiles.RandomFloor());
 
 			var door = new LevelDoor();
-			level.Area.Add(door);
+			level.Area!.Add(door);
 
 			door.X = d.X * 16;
 			door.Y = d.Y * 16 + 16;
@@ -35,7 +35,7 @@ namespace BurningKnight.level.rooms.entrance {
 				To = Context.Run.Depth + 1
 			};
 
-			level.Area.Add(prop);
+			level.Area!.Add(prop);
 			prop.Center = (where * 16 + new Vector2(8));
 		}
 
@@ -44,7 +44,7 @@ namespace BurningKnight.level.rooms.entrance {
 				To = -1
 			};
 
-			level.Area.Add(prop);
+			level.Area!.Add(prop);
 			prop.Center = (where * 16 + new Vector2(8));
 		}
 

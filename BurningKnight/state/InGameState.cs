@@ -128,8 +128,8 @@ namespace BurningKnight.state {
 		private static Audio Audio => Context.Audio;
 
 		public static void TransitionToBlack(Vector2 position, Action callback = null) {
-			Context.Camera.Targets.Clear();
-			var v = Context.Camera.CameraToScreen(position);
+			Context.Camera!.Targets.Clear();
+			var v = Context.Camera!.CameraToScreen(position);
 
 			Shaders.Ui.Parameters["bx"].SetValue(v.X / Display.UiWidth);
 			Shaders.Ui.Parameters["by"].SetValue(v.Y / Display.UiHeight);
@@ -298,10 +298,10 @@ namespace BurningKnight.state {
 			shader.Parameters["time"].SetValue(Engine.Time * 0.01f);
 			shader.Parameters["tx"].SetValue(wind.X * -0.1f);
 			shader.Parameters["ty"].SetValue(wind.Y * -0.1f);
-			shader.Parameters["cx"].SetValue(Context.Camera.Position.X / 512f);
-			shader.Parameters["cy"].SetValue(Context.Camera.Position.Y / 512f);
+			shader.Parameters["cx"].SetValue(Context.Camera!.Position.X / 512f);
+			shader.Parameters["cy"].SetValue(Context.Camera!.Position.Y / 512f);
 		
-			Graphics.Render(fog, Context.Camera.TopLeft);
+			Graphics.Render(fog, Context.Camera!.TopLeft);
 			
 			Shaders.End();
 		}
@@ -359,7 +359,7 @@ namespace BurningKnight.state {
 				rainSound.Volume = (Player.InBuilding ? 0.1f : 0.5f) * Settings.MusicVolume * Settings.MasterVolume;
 			}
 
-			Context.Level.UpdateRainVolume();
+			Context.Level!.UpdateRainVolume();
 		}
 
 		private static readonly string[] Languages =
@@ -417,7 +417,7 @@ namespace BurningKnight.state {
 		}
 
 		public static bool EveryoneDied(Player pl = null) {
-			foreach (var p in Context.Area.Tagged[Tags.Player]) {
+			foreach (var p in Context.Area!.Tagged[Tags.Player]) {
 				if (!((Player) p).Dead && p != pl) {
 					return false;
 				}

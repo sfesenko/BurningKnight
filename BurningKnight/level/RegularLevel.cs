@@ -51,7 +51,7 @@ namespace BurningKnight.level {
 			if (Context.Run.Depth > 0) {
 				var c = Rnd.Int(1, Context.Run.Depth);
 
-				if (Context.Level.Biome is CaveBiome) {
+				if (Context.Level!.Biome is CaveBiome) {
 					c = Rnd.Int(5, 15);
 				}
 				

@@ -18,7 +18,7 @@ namespace BurningKnight.level.rooms.special {
 				id = "dm"
 			};
 			
-			level.Area.Add(entrance);
+			level.Area!.Add(entrance);
 			entrance.Position = new Vector2(Left + hw, Top + 2) * 16;
 
 			if (Rnd.Chance()) {
@@ -33,7 +33,7 @@ namespace BurningKnight.level.rooms.special {
 
 			var door = new HeadDoor();
 			
-			level.Area.Add(door);
+			level.Area!.Add(door);
 
 			var offset = door.GetOffset();
 
@@ -41,7 +41,7 @@ namespace BurningKnight.level.rooms.special {
 			door.Bottom = d.Y * 16 + 17.01f + offset.Y - 8; // .1f so that it's depth sorted to the front of the wall
 
 			var sign = new Sign();
-			level.Area.Add(sign);
+			level.Area!.Add(sign);
 			sign.SetMessage("darkmarket_tip");
 			sign.Bottom = d.Y * 16 + 24;
 			sign.CenterX = d.X * 16 - 16;

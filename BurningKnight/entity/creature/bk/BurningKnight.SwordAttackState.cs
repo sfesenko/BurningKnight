@@ -49,7 +49,7 @@ namespace BurningKnight.entity.creature.bk {
 						Position = Self.Center
 					};
 
-					Self.Area.Add(p);
+					Self.Area!.Add(p);
 					
 					ProjectileTemplate.MakeFast(Self, "small", Self.Center, a, (pr) => {
 						pr.RemoveFlags(ProjectileFlags.Reflectable, ProjectileFlags.BreakableByMelee);

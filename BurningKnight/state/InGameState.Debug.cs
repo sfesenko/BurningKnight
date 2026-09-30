@@ -249,30 +249,30 @@ namespace BurningKnight.state {
 			}
 
 			if (Input.Keyboard.WasPressed(Keys.PageDown)) {
-				Context.Camera.Detached = !Context.Camera.Detached;
+				Context.Camera!.Detached = !Context.Camera!.Detached;
 
-				if (!Context.Camera.Detached) {
+				if (!Context.Camera!.Detached) {
 					ResetFollowing();
 				}
 			}
 
-			if (Context.Camera.Detached) {
+			if (Context.Camera!.Detached) {
 				float speed = dt * 120f;
 				
 				if (Input.Keyboard.IsDown(Keys.NumPad4)) {
-					Context.Camera.PositionX -= speed;
+					Context.Camera!.PositionX -= speed;
 				}
 				
 				if (Input.Keyboard.IsDown(Keys.NumPad6)) {
-					Context.Camera.PositionX += speed;
+					Context.Camera!.PositionX += speed;
 				}
 				
 				if (Input.Keyboard.IsDown(Keys.NumPad8)) {
-					Context.Camera.PositionY -= speed;
+					Context.Camera!.PositionY -= speed;
 				}
 				
 				if (Input.Keyboard.IsDown(Keys.NumPad2)) {
-					Context.Camera.PositionY += speed;
+					Context.Camera!.PositionY += speed;
 				}
 			}
 		}

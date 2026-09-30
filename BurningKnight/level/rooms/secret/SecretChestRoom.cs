@@ -21,7 +21,7 @@ namespace BurningKnight.level.rooms.secret {
 				}
 			}
 
-			level.Area.Add(chest);
+			level.Area!.Add(chest);
 			chest.BottomCenter = GetCenter() * 16 + new Vector2(8, 8);
 		}
 	}

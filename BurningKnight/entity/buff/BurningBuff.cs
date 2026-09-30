@@ -28,7 +28,7 @@ namespace BurningKnight.entity.buff {
 			if (lastParticle >= 0.5f) {
 				lastParticle = 0;
 
-				Entity.Area.Add(new FireParticle {
+				Entity.Area!.Add(new FireParticle {
 					Owner = Entity
 				});
 			}

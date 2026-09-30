@@ -40,7 +40,7 @@ namespace BurningKnight.level.rooms.trap {
 			
 			var input = new Button();
 			input.Position = c * 16;
-			level.Area.Add(input);
+			level.Area!.Add(input);
 		}
 
 		public override void ModifyRoom(Room room) {

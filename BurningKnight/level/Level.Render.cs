@@ -259,8 +259,8 @@ namespace BurningKnight.level {
 				}
 
 				Graphics.Render(Engine.Instance.StateRenderer.UiTarget,
-					Context.Camera.TopLeft - new Vector2(Context.Camera.Position.X % 1, 
-						Context.Camera.Position.Y % 1));
+					Context.Camera!.TopLeft - new Vector2(Context.Camera!.Position.X % 1, 
+						Context.Camera!.Position.Y % 1));
 
 				if (n) {
 					c.Zoom = z;

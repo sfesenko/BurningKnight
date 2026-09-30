@@ -58,7 +58,7 @@ namespace BurningKnight.entity.component {
 		protected override void OnItemSet(Item previous) {
 			base.OnItemSet(previous);
 			
-			foreach (var i in Entity.Area.Tagged[Tags.Item]) {
+			foreach (var i in Entity.Area!.Tagged[Tags.Item]) {
 				if (i is EmeraldStand st) {
 					st.RecalculatePrice();
 				}

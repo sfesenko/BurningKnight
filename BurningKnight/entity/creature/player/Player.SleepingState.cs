@@ -78,7 +78,7 @@ namespace BurningKnight.entity.creature.player {
 									part.Position -= new Vector2(0, z.Z);
 								}
 
-								Self.Area.Add(part);
+								Self.Area!.Add(part);
 
 								part.Particle.Velocity = new Vector2(Rnd.Float(8, 16) * (Rnd.Chance() ? -1 : 1), -Rnd.Float(30, 56));
 								part.Particle.Angle = 0;

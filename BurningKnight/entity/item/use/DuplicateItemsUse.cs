@@ -26,7 +26,7 @@ namespace BurningKnight.entity.item.use {
 					}
 
 					var st = new ItemStand();
-					entity.Area.Add(st);
+					entity.Area!.Add(st);
 
 					ist.X -= ist.Width / 2f + 1;
 

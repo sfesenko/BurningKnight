@@ -55,7 +55,7 @@ namespace BurningKnight.entity.room {
 
 			for (var x = MapX + 1; x < MapX + MapW - 1; x++) {
 				for (var y = MapY + 1; y < MapY + MapH - 1; y++) {
-					if (Context.Level.IsPassable(x, y) && (filter == null || filter(x, y))) {
+					if (Context.Level!.IsPassable(x, y) && (filter == null || filter(x, y))) {
 						list.Add(new Point(x, y));
 					}
 				}
@@ -75,10 +75,10 @@ namespace BurningKnight.entity.room {
 		}
 		public Vector2 GetRandomFreeTileNearWall(Func<int, int, bool> filter = null) {
 			return GetRandomFreeTile((x, y) => {
-				if (Context.Level.CheckFor(x - 1, y, TileFlags.Passable)
-				&& Context.Level.CheckFor(x + 1, y, TileFlags.Passable)
-				&& Context.Level.CheckFor(x, y - 1, TileFlags.Passable)
-				&& Context.Level.CheckFor(x, y + 1, TileFlags.Passable)) {
+				if (Context.Level!.CheckFor(x - 1, y, TileFlags.Passable)
+				&& Context.Level!.CheckFor(x + 1, y, TileFlags.Passable)
+				&& Context.Level!.CheckFor(x, y - 1, TileFlags.Passable)
+				&& Context.Level!.CheckFor(x, y + 1, TileFlags.Passable)) {
 					// No wall here :/
 					return false;
 				}
@@ -88,10 +88,10 @@ namespace BurningKnight.entity.room {
 		}
 		public Vector2 GetRandomWallFreeTile(Func<int, int, bool> filter = null) {
 			return GetRandomFreeTile((x, y) => {
-				if (!Context.Level.CheckFor(x - 1, y, TileFlags.Passable)
-				    || !Context.Level.CheckFor(x + 1, y, TileFlags.Passable)
-				    || !Context.Level.CheckFor(x, y - 1, TileFlags.Passable)
-				    || !Context.Level.CheckFor(x, y + 1, TileFlags.Passable)) {
+				if (!Context.Level!.CheckFor(x - 1, y, TileFlags.Passable)
+				    || !Context.Level!.CheckFor(x + 1, y, TileFlags.Passable)
+				    || !Context.Level!.CheckFor(x, y - 1, TileFlags.Passable)
+				    || !Context.Level!.CheckFor(x, y + 1, TileFlags.Passable)) {
 					// Wall here :/
 					return false;
 				}
@@ -139,7 +139,7 @@ namespace BurningKnight.entity.room {
 
 					Hide();
 
-					Context.Camera.Shake(10);
+					Context.Camera!.Shake(10);
 				}
 			}
 		}

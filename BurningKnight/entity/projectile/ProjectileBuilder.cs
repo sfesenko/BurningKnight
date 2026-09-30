@@ -106,7 +106,7 @@ namespace BurningKnight.entity.projectile {
 		}
 
 		public Projectile Build() {
-			if (empty || ((Owner is Mob && !(Owner is creature.bk.BurningKnight)) && Owner.Area.Tagged[Tags.MobProjectile].Count >= 199)) {
+			if (empty || ((Owner is Mob && !(Owner is creature.bk.BurningKnight)) && Owner.Area!.Tagged[Tags.MobProjectile].Count >= 199)) {
 				return null;
 			}
 
@@ -130,7 +130,7 @@ namespace BurningKnight.entity.projectile {
 				Item = item
 			};
 
-			Owner.Area.Add(projectile);
+			Owner.Area!.Add(projectile);
 
 			if (Owner is Mob) {
 				projectile.AddTag(Tags.MobProjectile);
@@ -187,7 +187,7 @@ namespace BurningKnight.entity.projectile {
 			Velocity *= 10f;
 			body.LinearVelocity = Velocity;
 
-			var count = Owner.Area.Tagged[Tags.Projectile].Count;
+			var count = Owner.Area!.Tagged[Tags.Projectile].Count;
 
 			if (count < 99) {
 				if (LightRadius > 0) {

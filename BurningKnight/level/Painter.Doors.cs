@@ -131,7 +131,7 @@ namespace BurningKnight.level {
 				}
 
 				door.Vertical = vertical;
-				Level.Area.Add(door);
+				Level.Area!.Add(door);
 
 				var offset = door.GetOffset();
 

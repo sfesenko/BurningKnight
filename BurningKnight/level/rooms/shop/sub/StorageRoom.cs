@@ -36,7 +36,7 @@ namespace BurningKnight.level.rooms.shop.sub {
 						Sprite = infos[Rnd.Int(infos.Length)]
 					};
 
-					level.Area.Add(prop);
+					level.Area!.Add(prop);
 					prop.BottomCenter = new Vector2(x + 0.5f, y + 1f) * 16 + Rnd.Vector(-4, 4);
 				}
 			}

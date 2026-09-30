@@ -35,7 +35,7 @@ namespace BurningKnight.entity {
 				var part = new ParticleEntity(Particles.Dust());
 
 				part.Position = ww;
-				level.Area.Add(part);
+				level.Area!.Add(part);
 			}
 
 			Particles.BreakSprite(level.Area, (l == Tile.TintedRock ? level.Tileset.TintedRock : (l == Tile.MetalBlock ? level.Tileset.MetalBlock : level.Tileset.Rock))[Rnd.Int(4)], ww);
@@ -46,7 +46,7 @@ namespace BurningKnight.entity {
 		}
 
 		public static void Make(Entity whoHurts, float hurtRadius = 32f, bool leave = true, Vec2 where = null, float damage = 16, float scale = 1, bool damageOwner = true) {
-			Context.Camera.Shake(10 * scale);
+			Context.Camera!.Shake(10 * scale);
 			
 			Context.Audio.SfxVolumeBuffer = 0.5f;
 			Context.Audio.SfxVolumeBufferResetTimer = 1f;
@@ -58,7 +58,7 @@ namespace BurningKnight.entity {
 			for (var i = 0; i < 4; i++) {
 				var explosion = new ParticleEntity(Particles.Animated("explosion", "smoke"));
 				explosion.Position = w;
-				whoHurts.Area.Add(explosion);
+				whoHurts.Area!.Add(explosion);
 				explosion.Depth = 31;
 				explosion.Particle.Scale = scale;
 				explosion.Particle.AngleVelocity = 0;
@@ -82,7 +82,7 @@ namespace BurningKnight.entity {
 				var part = new ParticleEntity(Particles.Dust());
 						
 				part.Position = w + new Vector2(Rnd.Int(-4, 4), Rnd.Int(-4, 4));
-				whoHurts.Area.Add(part);
+				whoHurts.Area!.Add(part);
 				part.Depth = 30;
 				part.Particle.Velocity = MathUtils.CreateVector(Rnd.AnglePI(), 80);
 			}
@@ -96,7 +96,7 @@ namespace BurningKnight.entity {
 				damager = b.Owner;
 			}
 					
-			foreach (var e in whoHurts.Area.GetEntitesInRadius(w, hurtRadius, typeof(ExplodableComponent))) {
+			foreach (var e in whoHurts.Area!.GetEntitesInRadius(w, hurtRadius, typeof(ExplodableComponent))) {
 				if (e == whoHurts && !damageOwner) {
 					continue;
 				}
@@ -106,12 +106,12 @@ namespace BurningKnight.entity {
 			}
 
 			if (Settings.Flashes) {
-				Context.Camera.TextureZoom -= 0.05f;
-				Tween.To(1f, Context.Camera.TextureZoom, x => Context.Camera.TextureZoom = x, 0.2f);
+				Context.Camera!.TextureZoom -= 0.05f;
+				Tween.To(1f, Context.Camera!.TextureZoom, x => Context.Camera!.TextureZoom = x, 0.2f);
 			}
 
 			if (leave) {
-				whoHurts.Area.Add(new ExplosionLeftOver {
+				whoHurts.Area!.Add(new ExplosionLeftOver {
 					Center = w
 				});
 			}

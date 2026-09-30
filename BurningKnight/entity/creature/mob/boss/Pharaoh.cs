@@ -328,7 +328,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 							part.Target.X = (to.X + x1) * 16;
 							part.Target.Y = (to.Y + y1) * 16 + 8;
 
-							Self.Area.Add(part);
+							Self.Area!.Add(part);
 						}, Rnd.Float(1f));
 					}
 				}
@@ -399,7 +399,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 							Self.GetComponent<AudioEmitterComponent>()!.EmitRandomized("mob_pharaoh_summon");
 							
 							var mummy = new Mummy();
-							Self.Area.Add(mummy);
+							Self.Area!.Add(mummy);
 							mummy.BottomCenter = Self.BottomCenter + MathUtils.CreateVector(i1 / (float) amount * Math.PI * 2, d);
 							mummy.GetComponent<StateComponent>()!.Become<Mummy.SummonedState>();
 						}, i * 0.5f);

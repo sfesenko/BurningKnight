@@ -6,7 +6,7 @@ namespace BurningKnight.level.rooms.special {
 			base.Paint(level);
 			
 			var machine = new VendingMachine();
-			level.Area.Add(machine);
+			level.Area!.Add(machine);
 			machine.BottomCenter = GetCenterVector();
 		}
 

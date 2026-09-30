@@ -59,7 +59,7 @@ namespace BurningKnight.assets.particle.custom {
 				return;
 			}
 
-			Center = Context.Camera.CameraToUi(player.TopCenter) - offset;
+			Center = Context.Camera!.CameraToUi(player.TopCenter) - offset;
 
 			Timer.Add(() => {
 				tweened = true;
@@ -92,7 +92,7 @@ namespace BurningKnight.assets.particle.custom {
 					pos -= new Vector2(0, z.Z);
 				}
 				
-				Center = Context.Camera.CameraToUi(pos) - offset;
+				Center = Context.Camera!.CameraToUi(pos) - offset;
 			}
 		}
 

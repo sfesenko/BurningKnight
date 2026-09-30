@@ -152,7 +152,7 @@ namespace BurningKnight.entity.item.use {
 				var am = toCursor ? entity.GetComponent<CursorComponent>()!.Cursor.GamePosition : aim.RealAim;
 
 				if (toEnemy) {
-					var target = entity.Area.FindClosest(from, Tags.MustBeKilled, e => true);
+					var target = entity.Area!.FindClosest(from, Tags.MustBeKilled, e => true);
 
 					if (target != null) {
 						am = target.Center;
@@ -211,7 +211,7 @@ namespace BurningKnight.entity.item.use {
 						builder.Range *= 3;
 					}
 
-					Context.Camera.Push(antiAngle, 4f);
+					Context.Camera!.Push(antiAngle, 4f);
 					entity.GetComponent<RectBodyComponent>()?.KnockbackFrom(antiAngle, 0.4f * knockback);
 
 					if (!string.IsNullOrEmpty(color) && ProjectileColor.Colors.TryGetValue(color, out var clr)) {
@@ -276,7 +276,7 @@ namespace BurningKnight.entity.item.use {
 						p.Position = entity.Center;
 						p.Y += Rnd.Float(-4, 10);
 
-						entity.Area.Add(p);
+						entity.Area!.Add(p);
 
 						var f = (entity.CenterX > entity.GetComponent<CursorComponent>()!.Cursor.GamePosition.X ? 1 : -1);
 

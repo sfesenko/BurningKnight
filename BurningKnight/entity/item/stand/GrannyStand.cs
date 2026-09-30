@@ -30,7 +30,7 @@ namespace BurningKnight.entity.item.stand {
 			}
 			
 			Done = true;
-			Context.Camera.Shake(10);
+			Context.Camera!.Shake(10);
 			Achievements.Unlock("bk:grannys_gift");
 		}
 

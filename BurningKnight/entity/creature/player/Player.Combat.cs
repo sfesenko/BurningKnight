@@ -228,22 +228,22 @@ namespace BurningKnight.entity.creature.player {
 									level.ReCreateBodyChunk(x, y);
 									level.LoadPassable();
 
-									Context.Camera.Shake(10);
+									Context.Camera!.Shake(10);
 								}
 							}
 
 							c.Old.ApplyToEachTile((x, y) => {
-								if (Context.Level.Get(x, y).IsWall()) {
+								if (Context.Level!.Get(x, y).IsWall()) {
 									return;
 								}
 
 								Timer.Add(() => {
 									var part = new TileParticle();
 
-									part.Top = Context.Level.Tileset.WallTopADecor;
-									part.TopTarget = Context.Level.Tileset.WallTopADecor;
-									part.Side = Context.Level.Tileset.FloorSidesD[0];
-									part.Sides = Context.Level.Tileset.WallSidesA[2];
+									part.Top = Context.Level!.Tileset.WallTopADecor;
+									part.TopTarget = Context.Level!.Tileset.WallTopADecor;
+									part.Side = Context.Level!.Tileset.FloorSidesD[0];
+									part.Sides = Context.Level!.Tileset.WallSidesA[2];
 									part.Tile = Tile.WallA;
 
 									part.X = x * 16;
@@ -314,7 +314,7 @@ namespace BurningKnight.entity.creature.player {
 					}
 				}
 			} else if (e is RoomClearedEvent rce) {
-				Context.Camera.Unfollow(rce.Room);
+				Context.Camera!.Unfollow(rce.Room);
 				Audio.PlaySfx("level_room_cleared", 0.25f + Audio.Db3);
 
 				if (Context.Run.Depth > 0 && !alerted && CheckClear(Area)) {
@@ -335,7 +335,7 @@ namespace BurningKnight.entity.creature.player {
 			} else if (e is RevivedEvent re) {
 				AnimationUtil.TeleportAway(this, () => {
 					FindSpawn();
-					Context.Camera.Jump();
+					Context.Camera!.Jump();
 					AnimationUtil.TeleportIn(this);
 				});
 			} else if (e is CollisionStartedEvent cse) {

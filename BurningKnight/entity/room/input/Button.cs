@@ -52,7 +52,7 @@ namespace BurningKnight.entity.room.input {
 			base.UpdateState();			
 			
 			ApplyState();
-			Context.Camera.ShakeMax(6);
+			Context.Camera!.ShakeMax(6);
 		}
 
 		public override void Load(FileReader stream) {

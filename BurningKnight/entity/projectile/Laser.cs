@@ -55,7 +55,7 @@ namespace BurningKnight.entity.projectile {
 				Item = item
 			};
 
-			owner.Area.Add(projectile);
+			owner.Area!.Add(projectile);
 
 			var graphics = new LaserGraphicsComponent("projectiles", "laser");
 			projectile.AddComponent(graphics);

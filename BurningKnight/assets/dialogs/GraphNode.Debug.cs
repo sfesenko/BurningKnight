@@ -179,7 +179,7 @@ namespace BurningKnight.assets.dialogs {
 				Position = RealPosition + Offset;
 			}
 
-			if (readPosition && Context.Camera != null && (Position.X + Size.X < 0 || Position.X > Context.Camera.Width || Position.Y + Size.Y < 0 || Position.Y > Context.Camera.Height)) {
+			if (readPosition && Context.Camera != null && (Position.X + Size.X < 0 || Position.X > Context.Camera!.Width || Position.Y + Size.Y < 0 || Position.Y > Context.Camera!.Height)) {
 				OnScreen = false;
 				RenderConnections();
 				return;

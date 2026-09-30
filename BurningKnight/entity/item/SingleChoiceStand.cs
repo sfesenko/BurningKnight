@@ -47,7 +47,7 @@ namespace BurningKnight.entity.item {
 				}
 			}
 					
-			Context.Camera.Shake(10);
+			Context.Camera!.Shake(10);
 		}
 
 		public override bool HandleEvent(Event e) {

@@ -211,7 +211,7 @@ namespace BurningKnight.level {
 
 				if (Rains) {
 					for (var i = 0; i < 40; i++) {
-						Context.Level.Area.Add(new RainParticle());
+						Context.Level!.Area!.Add(new RainParticle());
 					}
 
 					if (Assets.LoadSfx) {
@@ -242,7 +242,7 @@ namespace BurningKnight.level {
 
 				if (Snows) {
 					for (var i = 0; i < 120; i++) {
-						Context.Level.Area.Add(new SnowParticle());
+						Context.Level!.Area!.Add(new SnowParticle());
 					}
 				}
 			} catch (Exception e) {

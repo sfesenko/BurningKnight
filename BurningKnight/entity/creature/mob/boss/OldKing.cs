@@ -280,7 +280,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 					}
 				
 					pp.Launch(an, 40);
-					Self.Area.Add(pp);
+					Self.Area!.Add(pp);
 				}
 
 				var aa = Self.AngleTo(Self.Target);

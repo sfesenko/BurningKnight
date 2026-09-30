@@ -56,8 +56,8 @@ namespace BurningKnight.level.entities {
 			region = CommonAse.Ui.GetSlice("button_x");
 			Engine.Instance.State.Ui.Add(ib = new InteractFx(this, null, region, 5));
 			
-			Context.Camera.Targets.Clear();
-			Context.Camera.Follow(claw, 1f);
+			Context.Camera!.Targets.Clear();
+			Context.Camera!.Follow(claw, 1f);
 			Payed = false;
 			
 			return false;

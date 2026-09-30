@@ -89,7 +89,7 @@ namespace BurningKnight.state {
 			foreach (var p in Area.Tagged[Tags.Player]) {
 				if (p is LocalPlayer) {
 					bool imp = p.GetComponent<InputComponent>()!.Index == 0;
-					Context.Camera.Follow(p, imp ? 1f : 0.5f, imp);
+					Context.Camera!.Follow(p, imp ? 1f : 0.5f, imp);
 					
 					if (imp && Assets.ImGuiEnabled) {
 						FocusAreaDebug(p);
@@ -101,11 +101,11 @@ namespace BurningKnight.state {
 
 			if (!Menu) {
 				foreach (var e in TopUi.Tagged[Tags.Cursor]) {
-					Context.Camera.Follow(e, CursorPriority);
+					Context.Camera!.Follow(e, CursorPriority);
 				}
 			}
 
-			Context.Camera.Jump();
+			Context.Camera!.Jump();
 			
 			if (Context.Run.Depth == 0) {
 				if (Events.Halloween) {
@@ -137,7 +137,7 @@ namespace BurningKnight.state {
 				});
 			}
 			
-			Context.Level.Prepare();
+			Context.Level!.Prepare();
 
 			if (Context.Run.Depth < 1) {
 				Scourge.Clear();
@@ -154,8 +154,8 @@ namespace BurningKnight.state {
 			CaptureTime();
 		}
 		public void ResetFollowing() {
-			Context.Camera.Targets.Clear();
-			Context.Camera.MainTarget = null;
+			Context.Camera!.Targets.Clear();
+			Context.Camera!.MainTarget = null;
 
 			var min = 16;
 			
@@ -172,13 +172,13 @@ namespace BurningKnight.state {
 			foreach (var p in Area.Tagged[Tags.Player]) {
 				if (p is LocalPlayer) {
 					var imp = !Multiplayer || p.GetComponent<InputComponent>()!.Index == min;
-					Context.Camera.Follow(p, imp ? 1f : 0.5f, imp);
+					Context.Camera!.Follow(p, imp ? 1f : 0.5f, imp);
 				}
 			}
 
 			if (!Menu) {
 				foreach (var e in TopUi.Tagged[Tags.Cursor]) {
-					Context.Camera.Follow(e, CursorPriority);
+					Context.Camera!.Follow(e, CursorPriority);
 				}
 			}
 		}
@@ -203,13 +203,13 @@ namespace BurningKnight.state {
 				}
 				
 				for (var i = 0; i < 40; i++) {
-					particles.Add(Context.Level.Area.Add(new RainParticle {
+					particles.Add(Context.Level!.Area!.Add(new RainParticle {
 						Custom = true
 					}));
 				}
 			} else if (Weather.Snows) {
 				for (var i = 0; i < 100; i++) {
-					particles.Add(Context.Level.Area.Add(new SnowParticle {
+					particles.Add(Context.Level!.Area!.Add(new SnowParticle {
 						Custom = true
 					}));
 				}

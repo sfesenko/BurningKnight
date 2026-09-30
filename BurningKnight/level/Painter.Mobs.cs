@@ -98,7 +98,7 @@ namespace BurningKnight.level {
 
 			for (var y = parent.Top + 1; y < parent.Bottom; y++) {
 				for (var x = parent.Left + 1; x < parent.Right; x++) {
-					patch[toIndex(x, y)] = !Context.Level.IsPassable(x, y, true);
+					patch[toIndex(x, y)] = !Context.Level!.IsPassable(x, y, true);
 				}
 			}
 
@@ -166,15 +166,15 @@ namespace BurningKnight.level {
 
 					var dt = new Dot(x, y);
 
-					if ((Context.Level.IsPassable(x - 1, y) || Context.Level.IsPassable(x + 1, y)) && (Context.Level.IsPassable(x, y + 1) || Context.Level.IsPassable(x, y - 1))) {
+					if ((Context.Level!.IsPassable(x - 1, y) || Context.Level!.IsPassable(x + 1, y)) && (Context.Level!.IsPassable(x, y + 1) || Context.Level!.IsPassable(x, y - 1))) {
 						points.Add(dt);
 						
-						if (Context.Level.IsPassable(x - 1, y) && Context.Level.IsPassable(x + 1, y) && Context.Level.IsPassable(x, y + 1) && Context.Level.IsPassable(x, y - 1)) {
+						if (Context.Level!.IsPassable(x - 1, y) && Context.Level!.IsPassable(x + 1, y) && Context.Level!.IsPassable(x, y + 1) && Context.Level!.IsPassable(x, y - 1)) {
 							wallFreePoints.Add(dt);
 						}
 					}
 
-					if (Context.Level.Get(x - 1, y).IsWall() || Context.Level.Get(x + 1, y).IsWall() || Context.Level.Get(x, y - 1).IsWall() || Context.Level.Get(x , y + 1).IsWall()) {
+					if (Context.Level!.Get(x - 1, y).IsWall() || Context.Level!.Get(x + 1, y).IsWall() || Context.Level!.Get(x, y - 1).IsWall() || Context.Level!.Get(x , y + 1).IsWall()) {
 						wallPoints.Add(dt);
 					}
 				}
@@ -238,7 +238,7 @@ namespace BurningKnight.level {
 				var mob = (Mob) Activator.CreateInstance(type.Type);
 				
 				weight -= type.Weight;
-				level.Area.Add(mob);
+				level.Area!.Add(mob);
 				
 				if (type.NearWall) {
 					mob.Position = new Vector2(point.X * 16, point.Y * 16 - 8);

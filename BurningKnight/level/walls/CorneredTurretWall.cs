@@ -9,22 +9,22 @@ namespace BurningKnight.level.walls {
 		public override void Paint(Level level, RoomDef room, Rect inside) {
 			base.Paint(level, room, inside);
 
-			level.Area.Add(new Turret {
+			level.Area!.Add(new Turret {
 				Position = new Vector2(room.Left + 2, room.Top + 2) * 16,
 				StartingAngle = 1
 			});
 			
-			level.Area.Add(new Turret {
+			level.Area!.Add(new Turret {
 				Position = new Vector2(room.Right - 2, room.Top + 2) * 16,
 				StartingAngle = 3
 			});
 			
-			level.Area.Add(new Turret {
+			level.Area!.Add(new Turret {
 				Position = new Vector2(room.Right - 2, room.Bottom - 2) * 16,
 				StartingAngle = 5
 			});
 
-			level.Area.Add(new Turret {
+			level.Area!.Add(new Turret {
 				Position = new Vector2(room.Left + 2, room.Bottom - 2) * 16,
 				StartingAngle = 7
 			});

@@ -45,7 +45,7 @@ namespace BurningKnight.entity.component {
 				return;
 			}
 			
-			Entity.Area.Remove(item);
+			Entity.Area!.Remove(item);
 			item.RemoveDroppedComponents();
 			item.AddComponent(new OwnerComponent(Entity));
 
@@ -108,7 +108,7 @@ namespace BurningKnight.entity.component {
 			Send(e);
 
 			Item.Center = Entity.Center - new Vector2(0, 4);
-			Entity.Area.Add(Item);
+			Entity.Area!.Add(Item);
 			Item.RemoveComponent<OwnerComponent>();
 			Item.AddDroppedComponents();
 
@@ -181,7 +181,7 @@ namespace BurningKnight.entity.component {
 			if (stream.ReadBoolean()) {
 				var item = new Item();
 
-				Entity.Area.Add(item, false);
+				Entity.Area!.Add(item, false);
 				
 				item.Load(stream);
 				item.LoadedSelf = false;

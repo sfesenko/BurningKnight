@@ -15,7 +15,7 @@ namespace BurningKnight.level.rooms.secret {
 			Painter.Fill(level, this, 1, Tile.EvilFloor);
 
 			var stand = new ScourgedStand();
-			level.Area.Add(stand);
+			level.Area!.Add(stand);
 			stand.Center = GetCenter() * 16 + new Vector2(8);
 
 			stand.SetItem(Items.CreateAndAdd(Scourge.GenerateItemId(), level.Area), stand);

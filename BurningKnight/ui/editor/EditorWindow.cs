@@ -76,7 +76,7 @@ namespace BurningKnight.ui.editor {
 		}
 		
 		private void Load() {
-			Editor.Area.Destroy();
+			Editor.Area!.Destroy();
 			Editor.Area = new GameArea();
 			Engine.Instance.State.Area = Editor.Area;
 			
@@ -91,7 +91,7 @@ namespace BurningKnight.ui.editor {
 				};
 
 				Editor.Level = level;
-				Editor.Area.Add(level);
+				Editor.Area!.Add(level);
 
 				level.SetBiome(BiomeRegistry.Get(Biome.Castle));
 				level.Setup();
@@ -237,11 +237,11 @@ namespace BurningKnight.ui.editor {
 
 						ImGui.CloseCurrentPopup();
 
-						foreach (var e in Editor.Area.Tagged[Tags.LevelSave]) {
+						foreach (var e in Editor.Area!.Tagged[Tags.LevelSave]) {
 							e.Done = true;
 						}
 
-						Editor.Area.AutoRemove();
+						Editor.Area!.AutoRemove();
 						Context.Level = null;
 
 						var level = new RegularLevel {
@@ -252,7 +252,7 @@ namespace BurningKnight.ui.editor {
 						};
 
 						Editor.Level = level;
-						Editor.Area.Add(level);
+						Editor.Area!.Add(level);
 
 						level.SetBiome(BiomeRegistry.Get(Biome.Castle));
 						level.Setup();

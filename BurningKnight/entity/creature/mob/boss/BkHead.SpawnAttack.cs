@@ -60,7 +60,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 						var y = (int) Math.Floor(p.CenterY / 16);
 						
 						var mob = Rnd.Chance(40) ? (Mob) new DesertBulletSlime() : new Gunner();
-						Self.Area.Add(mob);
+						Self.Area!.Add(mob);
 						mob.X = x * 16;
 						mob.Y = y * 16 - 8;
 						mob.GeneratePrefix();

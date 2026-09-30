@@ -28,7 +28,7 @@ namespace BurningKnight.entity.item.use {
 				}
 
 				var stand = new ItemStand();
-				entity.Area.Add(stand);
+				entity.Area!.Add(stand);
 				stand.Center = entity.Center - new Vector2(0, 8);
 				stand.SetItem(i, null);
 				

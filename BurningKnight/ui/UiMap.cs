@@ -89,7 +89,7 @@ namespace BurningKnight.ui {
 			Graphics.Render(slice, Vector2.Zero, 0, Vector2.Zero, new Vector2(W, H));
 			Graphics.Color.A = 255;
 
-			foreach (var rm in level.Area.Tagged[Tags.Room]) {
+			foreach (var rm in level.Area!.Tagged[Tags.Room]) {
 				var room = (Room) rm;
 
 				if (room.Explored && rect.Intersects(room.Rect)) {
@@ -105,10 +105,10 @@ namespace BurningKnight.ui {
 				}
 			}
 
-			var cl = Context.Level.Biome.GetMapColor();
+			var cl = Context.Level!.Biome.GetMapColor();
 			Graphics.Color = cl;
 
-			foreach (var rm in level.Area.Tagged[Tags.Room]) {
+			foreach (var rm in level.Area!.Tagged[Tags.Room]) {
 				var room = (Room) rm;
 
 				if (room.Explored && rect.Intersects(room.Rect)) {
@@ -137,7 +137,7 @@ namespace BurningKnight.ui {
 
 			Graphics.Color = ColorUtils.WhiteColor;
 
-			foreach (var rm in level.Area.Tagged[Tags.Room]) {
+			foreach (var rm in level.Area!.Tagged[Tags.Room]) {
 				var room = (Room) rm;
 
 				if (!room.Explored) {

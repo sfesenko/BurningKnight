@@ -35,7 +35,7 @@ namespace BurningKnight.level.rooms {
 
 			for (var x = Left + 1; x < Right; x++) {
 				for (var y = Top + 1; y < Bottom; y++) {
-					if (Context.Level.IsPassable(x, y)) {
+					if (Context.Level!.IsPassable(x, y)) {
 						passable.Add(new Dot(x, y));
 					}
 				}
@@ -53,7 +53,7 @@ namespace BurningKnight.level.rooms {
 
 			for (var x = Left + 1; x < Right; x++) {
 				for (var y = Top + 1; y < Bottom; y++) {
-					if (Context.Level.IsPassable(x, y)) {
+					if (Context.Level!.IsPassable(x, y)) {
 						var found = false;
 						
 						foreach (var Door in Connected.Values) {

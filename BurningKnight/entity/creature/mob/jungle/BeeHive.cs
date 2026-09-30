@@ -79,7 +79,7 @@ namespace BurningKnight.entity.creature.mob.jungle {
 						
 						var bee = GenerateBee();
 						Self.GetComponent<MobAnimationComponent>()!.Animate();
-						Self.Area.Add(bee);
+						Self.Area!.Add(bee);
 						bee.BottomCenter = Self.BottomCenter;
 						AnimationUtil.Ash(bee.Center);
 						
@@ -126,7 +126,7 @@ namespace BurningKnight.entity.creature.mob.jungle {
 
 					for (var i = 0; i < Rnd.Int(4, 10); i++) {
 						var bee = GenerateBee();
-						Self.Area.Add(bee);
+						Self.Area!.Add(bee);
 						bee.Center = Self.Center;
 					}
 				};

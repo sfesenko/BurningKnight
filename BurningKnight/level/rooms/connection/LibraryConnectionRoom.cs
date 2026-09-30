@@ -44,7 +44,7 @@ namespace BurningKnight.level.rooms.connection {
 				Id = "a"
 			};
 			
-			level.Area.Add(t);
+			level.Area!.Add(t);
 			t.Position = dot * 16;
 		}
 

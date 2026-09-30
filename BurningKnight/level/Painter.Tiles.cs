@@ -58,7 +58,7 @@ namespace BurningKnight.level {
 							spikes.X = X * 16;
 							spikes.Y = Y * 16;
 
-							Level.Area.Add(spikes);
+							Level.Area!.Add(spikes);
 						} else if (Level.Tiles[I] == (byte) Tile.SpikeOffTmp) {
 							Level.Tiles[I] = (byte) Tile.FloorA;
 							Level.Liquid[I] = 0;
@@ -68,7 +68,7 @@ namespace BurningKnight.level {
 							spikes.X = X * 16;
 							spikes.Y = Y * 16;
 
-							Level.Area.Add(spikes);
+							Level.Area!.Add(spikes);
 						} else if (Level.Tiles[I] == (byte) Tile.FireTrapTmp) {
 							Level.Tiles[I] = (byte) Tile.FloorA;
 							Level.Liquid[I] = 0;
@@ -78,7 +78,7 @@ namespace BurningKnight.level {
 							trap.X = X * 16;
 							trap.Y = Y * 16;
 
-							Level.Area.Add(trap);
+							Level.Area!.Add(trap);
 						} else if (Level.Tiles[I] == (byte) Tile.SpikeOnTmp) {
 							Level.Tiles[I] = (byte) Tile.FloorA;
 							Level.Liquid[I] = 0;
@@ -88,7 +88,7 @@ namespace BurningKnight.level {
 							spikes.X = X * 16;
 							spikes.Y = Y * 16;
 
-							Level.Area.Add(spikes);
+							Level.Area!.Add(spikes);
 						}
 					}
 
@@ -101,13 +101,13 @@ namespace BurningKnight.level {
 						plate.X = X * 16;
 						plate.Y = Y * 16;
 
-						Level.Area.Add(plate);
+						Level.Area!.Add(plate);
 					} else if (Level.Tiles[I] == (byte) Tile.BarrelTmp) {
 						Level.Tiles[I] = (byte) Tile.FloorA;
 						Level.Liquid[I] = 0;
 						
 						var barrel = new ExplodingBarrel();
-						Level.Area.Add(barrel);
+						Level.Area!.Add(barrel);
 
 						barrel.CenterX = X * 16 + 8;
 						barrel.Bottom = Y * 16 + 16;
