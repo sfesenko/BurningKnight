@@ -101,7 +101,7 @@ namespace BurningKnight.ui.editor {
 				Editor.Camera.Position = Vector2.Zero;
 			} else {
 				SaveManager.Load(Editor.Area, SaveType.Level, $"Content/Prefabs/{levels[currentLevel]}.lvl");
-				Editor.Level = Run.Level;
+				Editor.Level = Context.Level;
 			}
 
 			for (var i = 0; i < Editor.Level.Size; i++) {

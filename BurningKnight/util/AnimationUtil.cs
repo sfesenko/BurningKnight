@@ -37,7 +37,7 @@ namespace BurningKnight.util {
 					}
 				};
 
-				Run.Level.Area.Add(part);
+				Context.Level.Area.Add(part);
 				part.Depth = depth;
 			}
 		}
@@ -48,7 +48,7 @@ namespace BurningKnight.util {
 			}
 			
 			for (var i = 0; i < 15; i++) {
-				var p = Run.Level.Area.Add(new ConfettiParticle());
+				var p = Context.Level.Area.Add(new ConfettiParticle());
 				p.Center = where;
 			}
 		}
@@ -64,7 +64,7 @@ namespace BurningKnight.util {
 				part.Position = where;
 				part.Particle.Scale = Rnd.Float(1f, 2f);
 				part.Particle.Velocity = new Vector2(Rnd.Float(20, 30) * (Rnd.Chance() ? -1 : 1), -Rnd.Float(40, 66));
-				Run.Level.Area.Add(part);
+				Context.Level.Area.Add(part);
 				part.Depth = depth;
 			}
 		}
@@ -75,7 +75,7 @@ namespace BurningKnight.util {
 						
 				part.Position = where;
 				part.Particle.Scale = Rnd.Float(0.4f, 0.8f);
-				Run.Level.Area.Add(part);
+				Context.Level.Area.Add(part);
 				part.Depth = depth;
 				part.Particle.Velocity = MathUtils.CreateVector((where - from).ToAngle(), 80);
 			}
@@ -84,7 +84,7 @@ namespace BurningKnight.util {
 		public static void Explosion(Vector2 where, float scale = 1) {
 			var explosion = new ParticleEntity(Particles.Animated("explosion", "explosion"));
 			explosion.Position = where;
-			Run.Level.Area.Add(explosion);
+			Context.Level.Area.Add(explosion);
 			explosion.Depth = 32;
 			explosion.Particle.Velocity = Vector2.Zero;
 			explosion.Particle.Scale = scale;

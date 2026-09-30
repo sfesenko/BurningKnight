@@ -77,7 +77,7 @@ namespace BurningKnight.state {
 			
 			SetupUi();
 
-			if (Run.Level?.Biome is CastleBiome) {
+			if (Context.Level?.Biome is CastleBiome) {
 				for (var i = 0; i < 30; i++) {
 					Area.Add(new WindFx());
 				}
@@ -137,7 +137,7 @@ namespace BurningKnight.state {
 				});
 			}
 			
-			Run.Level.Prepare();
+			Context.Level.Prepare();
 
 			if (Run.Depth < 1) {
 				Scourge.Clear();
@@ -203,13 +203,13 @@ namespace BurningKnight.state {
 				}
 				
 				for (var i = 0; i < 40; i++) {
-					particles.Add(Run.Level.Area.Add(new RainParticle {
+					particles.Add(Context.Level.Area.Add(new RainParticle {
 						Custom = true
 					}));
 				}
 			} else if (Weather.Snows) {
 				for (var i = 0; i < 100; i++) {
-					particles.Add(Run.Level.Area.Add(new SnowParticle {
+					particles.Add(Context.Level.Area.Add(new SnowParticle {
 						Custom = true
 					}));
 				}

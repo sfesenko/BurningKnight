@@ -61,11 +61,11 @@ namespace BurningKnight.state {
 
 			CreateEditor(cam);
 
-			var id = Run.Level.Biome.Id;
+			var id = Context.Level.Biome.Id;
 
 			if (id != Biome.Castle && id != Biome.Hub) {
 				Achievements.Unlock($"bk:{id}");
-				var i = Run.Level.Biome.GetItemUnlock();
+				var i = Context.Level.Biome.GetItemUnlock();
 
 				if (i != null) {
 					Items.Unlock(i);
@@ -325,7 +325,7 @@ namespace BurningKnight.state {
 			gameOverMenu.Setup();
 			gameOverMenu.Enabled = false;
 
-			if (Run.Depth > 0 && Run.Level != null && !Menu) {
+			if (Run.Depth > 0 && Context.Level != null && !Menu) {
 				Ui.Add(new UiBanner(Level.GetDepthString()));
 			}
 			

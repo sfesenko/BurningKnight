@@ -85,11 +85,11 @@ namespace BurningKnight.assets.lighting {
 
 			Graphics.Color.A = AuraAlpha;
 
-			foreach (var p in Run.Level.Area.Tagged[Tags.Projectile]) {
+			foreach (var p in Context.Level.Area.Tagged[Tags.Projectile]) {
 				((BasicProjectileGraphicsComponent) p.GraphicsComponent).RenderLight();
 			}
 			
-			foreach (var p in Run.Level.Area.Tagged[Tags.Laser]) {
+			foreach (var p in Context.Level.Area.Tagged[Tags.Laser]) {
 				((LaserGraphicsComponent) p.GraphicsComponent).RenderTopLight();
 			}
 			
@@ -118,7 +118,7 @@ namespace BurningKnight.assets.lighting {
 
 			Graphics.Color = ColorUtils.WhiteColor;
 
-			Run.Level?.RenderTileLights();
+			Context.Level?.RenderTileLights();
 
 			Graphics.Batch.End();
 			Engine.GraphicsDevice.SetRenderTarget(state.GameTarget);

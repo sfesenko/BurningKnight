@@ -36,7 +36,7 @@ namespace BurningKnight.assets.particle.custom {
 			AlwaysActive = true;
 
 			if (FromBottom) {
-				var level = Run.Level;
+				var level = Context.Level;
 				var x = (int) (X / 16);
 				var y = (int) ((Y + 8) / 16);
 
@@ -118,7 +118,7 @@ namespace BurningKnight.assets.particle.custom {
 		}
 		
 		private void Finish() {
-			var level = Run.Level;
+			var level = Context.Level;
 			var x = (int) (CenterX / 16);
 			var y = (int) ((Y + 8) / 16);
 

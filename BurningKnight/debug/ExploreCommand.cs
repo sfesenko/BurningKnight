@@ -6,7 +6,7 @@ namespace BurningKnight.debug {
 		}
 		
 		public override void Run(Console Console, string[] Args) {
-			var level = state.Run.Level;
+			var level = Context.Level;
 
 			for (var i = 0; i < level.Explored.Length; i++) {
 				level.Explored[i] = true;

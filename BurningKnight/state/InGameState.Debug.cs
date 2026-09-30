@@ -75,7 +75,7 @@ namespace BurningKnight.state {
 			if (Assets.ImGuiEnabled) {
 				editor = new EditorWindow(new Editor {
 					Area = Area,
-					Level = Run.Level,
+					Level = Context.Level,
 					Camera = camera
 				});
 			}
@@ -237,7 +237,7 @@ namespace BurningKnight.state {
 			}
 
 			if (Input.Keyboard.WasPressed(Keys.PageUp)) {
-				var level = Run.Level;
+				var level = Context.Level;
 
 				for (var i = 0; i < level.Explored.Length; i++) {
 					level.Explored[i] = true;

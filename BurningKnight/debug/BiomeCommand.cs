@@ -9,7 +9,7 @@ namespace BurningKnight.debug {
 		
 		public override void Run(Console Console, string[] Args) {
 			if (Args.Length == 1) {
-				state.Run.Level.SetBiome(BiomeRegistry.Get(Args[0]));
+				Context.Level.SetBiome(BiomeRegistry.Get(Args[0]));
 			} else {
 				Console.Print("/biome [id]");
 			}

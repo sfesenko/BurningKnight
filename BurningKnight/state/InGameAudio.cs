@@ -45,8 +45,8 @@ namespace BurningKnight.state {
 
 			Subscribe<SpawnTrigger.TriggeredEvent>();
 
-			if (!InGameState.InMenu && Run.Level != null) {
-				Context.Audio.PlayMusic(Run.Level.GetMusic()/*, Run.Depth < 1 || Run.Depth % 2 == 1*/);
+			if (!InGameState.InMenu && Context.Level != null) {
+				Context.Audio.PlayMusic(Context.Level.GetMusic()/*, Run.Depth < 1 || Run.Depth % 2 == 1*/);
 			}
 			
 			// Audio.PlayMusic("Disk 6", Camera.Instance.Listener, LocalPlayer.Locate(Area).GetComponent<AudioEmitterComponent>().Emitter);
@@ -90,11 +90,11 @@ namespace BurningKnight.state {
 			} else if (e is RoomChangedEvent { Who: LocalPlayer } re) {
 				switch (re.New.Type) {
 					case RoomType.Boss: {
-						if (Run.Level.Biome is TechBiome) {
-							Audio.PlayMusic(Run.Level.Biome.GetMusic());
+						if (Context.Level.Biome is TechBiome) {
+							Audio.PlayMusic(Context.Level.Biome.GetMusic());
 						} else {
 							if (Area.Tagged[Tags.Boss].Count > 0 && ((Boss) Area.Tagged[Tags.Boss][0]).Awoken) {
-								Audio.PlayMusic((Run.Level.Biome is LibraryBiome || Run.Level.Biome is LibraryBiome)
+								Audio.PlayMusic((Context.Level.Biome is LibraryBiome || Context.Level.Biome is LibraryBiome)
 									? "Last chance"
 									: "Fatiga");
 							} else {
@@ -141,7 +141,7 @@ namespace BurningKnight.state {
 					}
 
 					default: {
-						Audio.PlayMusic(Run.Level.GetMusic());
+						Audio.PlayMusic(Context.Level.GetMusic());
 						break;
 					}
 				}

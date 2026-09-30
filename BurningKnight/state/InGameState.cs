@@ -359,7 +359,7 @@ namespace BurningKnight.state {
 				rainSound.Volume = (Player.InBuilding ? 0.1f : 0.5f) * Settings.MusicVolume * Settings.MasterVolume;
 			}
 
-			Run.Level.UpdateRainVolume();
+			Context.Level.UpdateRainVolume();
 		}
 
 		private static readonly string[] Languages =

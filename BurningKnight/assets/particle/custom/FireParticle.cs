@@ -84,7 +84,7 @@ namespace BurningKnight.assets.particle.custom {
 			T += dt;
 
 			if (T > 0.3f) {
-				if (Run.Level != null && Run.Level.Biome is CaveBiome) {
+				if (Context.Level != null && Context.Level.Biome is CaveBiome) {
 					R = Math.Max(0, R - dt * 3 * Mod);
 					G = Math.Max(0, G - dt * 0.3f * Mod);
 					B = Math.Max(0, B - dt * Mod);

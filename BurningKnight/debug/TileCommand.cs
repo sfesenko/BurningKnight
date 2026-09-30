@@ -6,7 +6,7 @@ namespace BurningKnight.debug {
 		}
 		
 		public override void Run(Console Console, string[] Args) {
-			var level = state.Run.Level;
+			var level = Context.Level;
 
 			if (level != null) {
 				// level.Resize(level.Width, level.Height);
