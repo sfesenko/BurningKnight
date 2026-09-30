@@ -1,6 +1,4 @@
-﻿#nullable enable
-
-using Lens.entity;
+﻿using Lens.entity;
 using Lens.util.camera;
 
 namespace Lens.game {

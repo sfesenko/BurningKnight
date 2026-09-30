@@ -1,6 +1,4 @@
-﻿#nullable enable
-
-using System;
+﻿using System;
 using Microsoft.Xna.Framework;
 
 namespace Lens.core;

@@ -1,6 +1,4 @@
-﻿#nullable enable
-
-using Lens.util.math;
+﻿using Lens.util.math;
 using Microsoft.Xna.Framework;
 
 namespace Lens.graphics.animation {

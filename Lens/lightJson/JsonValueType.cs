@@ -1,4 +1,6 @@
-﻿namespace Lens.lightJson
+﻿#nullable disable
+
+namespace Lens.lightJson
 {
 	/// <summary>
 	/// Enumerates the types of Json values.

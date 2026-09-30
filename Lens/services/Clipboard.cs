@@ -1,5 +1,3 @@
-#nullable enable
-
 namespace Lens.services;
 
 public interface IClipboard {

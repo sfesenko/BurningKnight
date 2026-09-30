@@ -1,6 +1,4 @@
-﻿#nullable enable
-
-using System;
+﻿using System;
 using System.IO;
 using Lens.util;
 using Microsoft.Xna.Framework.Audio;

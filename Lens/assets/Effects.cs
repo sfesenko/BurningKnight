@@ -1,6 +1,4 @@
-﻿#nullable enable
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Lens.util.file;
 using Microsoft.Xna.Framework.Graphics;
 

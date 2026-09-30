@@ -1,6 +1,4 @@
-﻿#nullable enable
-
-using System;
+﻿using System;
 using System.Runtime.InteropServices;
 using Lens.assets;
 using Lens.core;

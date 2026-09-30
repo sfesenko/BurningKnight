@@ -1,4 +1,6 @@
-﻿namespace Lens.lightJson.Serialization
+﻿#nullable disable
+
+namespace Lens.lightJson.Serialization
 {
 	/// <summary>
 	/// Represents a position within a plain text resource.

@@ -1,6 +1,4 @@
-﻿#nullable enable
-
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Lens.graphics.gamerenderer {

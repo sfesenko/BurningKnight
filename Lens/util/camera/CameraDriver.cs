@@ -1,6 +1,4 @@
-﻿#nullable enable
-
-namespace Lens.util.camera {
+﻿namespace Lens.util.camera {
 	public class CameraDriver {
 		public Camera Camera = null!; // set by the Camera that owns this driver
 		
