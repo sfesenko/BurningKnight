@@ -14,7 +14,7 @@ namespace Lens.entity {
 	public delegate void PositionChanged();
 	
 	public class Entity : Subscriber, IComparable {
-		protected static Audio Audio => Audio.Instance;
+		protected static Audio Audio => Engine.Instance.Audio;
 
 		// Set by Area.Add; null before that and after RemoveSelf.
 		public Area? Area;

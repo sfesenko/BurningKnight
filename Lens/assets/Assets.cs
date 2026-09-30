@@ -132,7 +132,7 @@ namespace Lens.assets {
 			progress++;
 			
 			if (LoadSfx) {
-				Audio.Instance.Load();
+				Engine.Instance.Audio.Load();
 			}
 
 			progress++;
@@ -147,7 +147,7 @@ namespace Lens.assets {
 			Effects.Destroy();
 			Textures.Destroy();
 			Animations.Destroy();
-			Audio.Instance.Destroy();
+			Engine.Instance.Audio.Destroy();
 		}
 
 		public static void Update(float dt) {
@@ -187,7 +187,7 @@ namespace Lens.assets {
 						if (!reloadedSfx) {
 							Log.Debug("Reloading sfx...");
 
-							Audio.Instance.Load();
+							Engine.Instance.Audio.Load();
 							
 							reloadedSfx = true;
 						}

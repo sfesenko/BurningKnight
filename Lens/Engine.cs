@@ -45,6 +45,11 @@ namespace Lens
         public static bool Flashes = true;
 
         public GameRenderer StateRenderer;
+
+        // The audio device: one per process, owned here rather than by a static on the Audio
+        // class. The game's context points at it.
+        public readonly Audio Audio = new();
+
         public GameState State { get; private set; }
         protected GameState NewState;
 
@@ -174,7 +179,7 @@ namespace Lens
             Delta = dt;
             Time += dt;
 
-            Audio.Instance.Update(dt);
+            Audio.Update(dt);
 
             Split = Math.Max(0, Split - dt);
 

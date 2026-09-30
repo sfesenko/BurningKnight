@@ -42,7 +42,12 @@ namespace BurningKnight {
 			set => camera = value;
 		}
 
-		public Audio Audio { get; set; } = Lens.assets.Audio.Instance;
+		private Audio? audio;
+
+		public Audio Audio {
+			get => audio ??= Engine.Instance.Audio;
+			set => audio = value;
+		}
 
 		// Still the run's static; WS-5 moves the backing in here.
 		public Level? Level {

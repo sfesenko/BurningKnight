@@ -13,8 +13,6 @@ namespace Lens.assets;
 
 public class Audio
 {
-    public static readonly Audio Instance = new Audio();
-    
     public float MasterVolume = 1;
     public float SfxVolume = 1;
     public float SfxVolumeBuffer = 1f;
@@ -36,7 +34,7 @@ public class Audio
 
     public float Speed = 1;
 
-    private Audio()
+    public Audio()
     {
     }
 
