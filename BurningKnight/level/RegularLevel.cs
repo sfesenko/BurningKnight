@@ -160,7 +160,7 @@ namespace BurningKnight.level {
 			}
 
 			if (cave) {
-				rooms.Add(RoomRegistry.Generate(RoomType.Treasure, biome));
+				AddRoom(rooms, RoomType.Treasure, biome);
 			}
 
 			if (final) {
@@ -196,7 +196,7 @@ namespace BurningKnight.level {
 				}
 				
 				if (Rnd.Chance(30)) {
-					rooms.Add(RoomRegistry.Generate(RoomType.Secret, biome));
+					AddRoom(rooms, RoomType.Secret, biome);
 				}
 				
 				rooms.Add(new EmptyRoom());
@@ -223,61 +223,60 @@ namespace BurningKnight.level {
 				Log.Info($"Creating r{regular} sp{special} c{connection} sc{secret} t{trap} rooms");
 
 				for (var I = 0; I < regular; I++) {
-					rooms.Add(RoomRegistry.Generate(RoomType.Regular, biome));
+					AddRoom(rooms, RoomType.Regular, biome);
 				}
 
 				for (var i = 0; i < trap; i++) {
-					rooms.Add(RoomRegistry.Generate(RoomType.Trap, biome));
+					AddRoom(rooms, RoomType.Trap, biome);
 				}
 
 				for (var I = 0; I < special; I++) {
-					var room = RoomRegistry.Generate(RoomType.Special, biome);
-					if (room != null) rooms.Add(room);
+					AddRoom(rooms, RoomType.Special, biome);
 				}
 
 				for (var I = 0; I < connection; I++) {
-					rooms.Add(RoomRegistry.Generate(RoomType.Connection, biome));
+					AddRoom(rooms, RoomType.Connection, biome);
 				}
 
 				if (!rush && !final && Run.Type != RunType.Challenge) {
 					if (!loop && !LevelSave.GenerateShops && first) {
 						if (LevelSave.XL) {
-							rooms.Add(RoomRegistry.Generate(RoomType.Treasure, biome));
+							AddRoom(rooms, RoomType.Treasure, biome);
 						}
 
-						rooms.Add(RoomRegistry.Generate(RoomType.Treasure, biome));
+						AddRoom(rooms, RoomType.Treasure, biome);
 					}
 
 					if (!LevelSave.GenerateTreasure && (!first || LevelSave.GenerateShops)) {
-						rooms.Add(RoomRegistry.Generate(RoomType.Shop, biome));
+						AddRoom(rooms, RoomType.Shop, biome);
 					}
 				}
 
 				if (!LevelSave.GenerateShops && LevelSave.GenerateTreasure && !first) {
-					rooms.Add(RoomRegistry.Generate(RoomType.Treasure, biome));
+					AddRoom(rooms, RoomType.Treasure, biome);
 				}
 
 				if (!LevelSave.GenerateShops && loop && Run.Depth == 1 && Run.Type != RunType.Challenge) {
-					rooms.Add(RoomRegistry.Generate(RoomType.Treasure, biome));
+					AddRoom(rooms, RoomType.Treasure, biome);
 				}
 
 				if (rush) {
-					rooms.Add(RoomRegistry.Generate(RoomType.Boss, biome));
+					AddRoom(rooms, RoomType.Boss, biome);
 					rooms.Add(new PrebossRoom());
 
 					if (Run.Depth < 11) {
-						rooms.Add(RoomRegistry.Generate(RoomType.Connection, biome));
-						rooms.Add(RoomRegistry.Generate(RoomType.Shop, biome));
+						AddRoom(rooms, RoomType.Connection, biome);
+						AddRoom(rooms, RoomType.Shop, biome);
 					}
 				} else if (first) {
 					rooms.Add(new ExitRoom());
 				} else {
-					rooms.Add(RoomRegistry.Generate(RoomType.Boss, biome));
+					AddRoom(rooms, RoomType.Boss, biome);
 					rooms.Add(new PrebossRoom());
 
 					if (Run.Depth < 10) {
-						rooms.Add(RoomRegistry.Generate(RoomType.Granny, biome));
-						rooms.Add(RoomRegistry.Generate(RoomType.OldMan, biome));
+						AddRoom(rooms, RoomType.Granny, biome);
+						AddRoom(rooms, RoomType.OldMan, biome);
 					}
 				}
 
@@ -312,11 +311,11 @@ namespace BurningKnight.level {
 					}
 
 					for (var I = 0; I < secret; I++) {
-						rooms.Add(RoomRegistry.Generate(RoomType.Secret, biome));
+						AddRoom(rooms, RoomType.Secret, biome);
 					}
 
 					if (Rnd.Chance(30)) {
-						rooms.Add(RoomRegistry.Generate(RoomType.SubShop, biome));
+						AddRoom(rooms, RoomType.SubShop, biome);
 					}
 
 					if (NpcSaveRoom.ShouldBeAdded()) {
@@ -328,11 +327,21 @@ namespace BurningKnight.level {
 					biome.ModifyRooms(rooms);
 				}
 			} else {
-				rooms.Add(RoomRegistry.Generate(RoomType.Boss, biome));
+				AddRoom(rooms, RoomType.Boss, biome);
 				rooms.Add(new PrebossRoom());
 			}
 
 			return rooms;
+		}
+
+		// RoomRegistry.Generate returns null when no room of the type fits the biome, and a null
+		// must never enter the list: the builder and the painter both walk it.
+		private static void AddRoom(List<RoomDef> rooms, RoomType type, Biome biome) {
+			var room = RoomRegistry.Generate(type, biome);
+
+			if (room != null) {
+				rooms.Add(room);
+			}
 		}
 
 		protected virtual Painter GetPainter() {

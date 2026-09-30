@@ -209,7 +209,7 @@ namespace BurningKnight.level.rooms {
 				}
 			}
 			
-			Log.Error($"Failed to generate a room with type {type}");
+			Log.Error($"Failed to generate a room with type {type} for biome {biome.Id}");
 
 			return null;
 		}
