@@ -54,11 +54,23 @@ namespace BurningKnight.level.rooms {
 			return Total;
 		}
 		public virtual bool CanConnect(RoomDef r, Dot p) {
-			return ((int) p.X == Left || (int) p.X == Right) != ((int) p.Y == Top || (int) p.Y == Bottom);
+			// The point must sit on an edge of this room and inside it. The intersection of two
+			// rooms that do not touch produces points in the gap between them, and a loose
+			// edge-equality test would happily turn one of those into a door.
+			var vertical = ((int) p.X == Left || (int) p.X == Right) && p.Y > Top && p.Y < Bottom;
+			var horizontal = ((int) p.Y == Top || (int) p.Y == Bottom) && p.X > Left && p.X < Right;
+
+			return vertical != horizontal;
 		}
 		public bool ConnectTo(RoomDef Other) {
 			if (Neighbours.Contains(Other)) {
 				return true;
+			}
+
+			// Intersect normalises an inverted rect, so the width/height test below cannot tell a
+			// shared wall from the gap between two rooms that never touch. Check the rectangles.
+			if (Left > Other.Right || Other.Left > Right || Top > Other.Bottom || Other.Top > Bottom) {
+				return false;
 			}
 
 			var I = Intersect(Other);

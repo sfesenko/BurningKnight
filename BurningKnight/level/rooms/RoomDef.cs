@@ -95,6 +95,10 @@ namespace BurningKnight.level.rooms {
 		}
 
 		public virtual bool CanConnect(RoomDef r) {
+			if (Left > r.Right || r.Left > Right || Top > r.Bottom || r.Top > Bottom) {
+				return false;
+			}
+
 			var I = Intersect(r);
 			var FoundPoint = false;
 
