@@ -1,6 +1,5 @@
 #nullable enable
 
-using System.Threading;
 using BurningKnight.level;
 using BurningKnight.state;
 using Lens;
@@ -11,21 +10,23 @@ using Lens.util.camera;
 namespace BurningKnight {
 	// The handful of things game code reaches for, behind one explicit accessor. It is an instance
 	// so a state or a test can own and replace it; `GameContext.Current` is the one justified static
-	// (the running game), and it is ambient — a worker thread sees the context its spawner had.
+	// (the running game).
+	//
+	// A plain static, not AsyncLocal: there is one run per process, and the level generation worker
+	// reads the same context its spawner does. If contexts ever need to differ per thread, AsyncLocal
+	// is the mechanism — nothing needs that today.
 	//
 	// This is not a service locator: the members are the seams, and nothing else belongs here.
-	// Area and camera fall back to the state and the singleton they are retiring from until those
-	// move in (R16); reads already go through here, so the backing can change without touching
+	// Every member falls back to the state, singleton or static it is retiring from until those
+	// move in (R16/R17); reads already go through here, so the backing can change without touching
 	// the call sites.
 	public class GameContext {
-		private static readonly AsyncLocal<GameContext> current = new();
+		private static GameContext? current;
 
 		// Created on first use, replaced by a state or a test when it has something better.
-		// AsyncLocal rather than a plain static so the value follows the work that was spawned
-		// with it (the level generation thread).
 		public static GameContext Current {
-			get => current.Value ??= new GameContext();
-			set => current.Value = value;
+			get => current ??= new GameContext();
+			set => current = value;
 		}
 
 		private Area? area;
