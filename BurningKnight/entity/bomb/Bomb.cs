@@ -38,7 +38,7 @@ namespace BurningKnight.entity.bomb {
 
 			Scale = parent?.Scale * 0.7f ?? 1;
 			
-			Camera.Instance.Shake(6);
+			Context.Camera.Shake(6);
 		}
 		
 		public override void AddComponents() {

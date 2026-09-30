@@ -426,7 +426,7 @@ namespace BurningKnight.entity.projectile {
 					}
 				}
 				
-				Camera.Instance.ShakeMax(4);
+				Context.Camera.ShakeMax(4);
 				
 				OnDeath?.Invoke(this, from, timeout);
 				BodyComponent.Velocity = Vector2.Zero;

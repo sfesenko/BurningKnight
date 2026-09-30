@@ -24,7 +24,7 @@ namespace BurningKnight.entity.item.use {
 			if (newRoom != null) {
 				AnimationUtil.TeleportAway(e, () => {
 					e.Center = newRoom.GetRandomFreeTile() * 16 + new Vector2(8);
-					Camera.Instance.Jump();
+					Context.Camera.Jump();
 					AnimationUtil.TeleportIn(e);
 				});
 			}

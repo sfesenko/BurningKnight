@@ -65,8 +65,8 @@ namespace BurningKnight.entity.pc {
 			
 			on = true;
 
-			Camera.Instance.Targets.Clear();
-			Camera.Instance.Position = Position + new Vector2(Display.Width * 0.25f, 0);// + new Vector2(5 + 64, 16 + 64);
+			Context.Camera.Targets.Clear();
+			Context.Camera.Position = Position + new Vector2(Display.Width * 0.25f, 0);// + new Vector2(5 + 64, 16 + 64);
 
 			LoadCart();
 		}
@@ -85,7 +85,7 @@ namespace BurningKnight.entity.pc {
 			Entity.AddComponent(new PlayerInputComponent());
 			Entity = null;
 			
-			Camera.Instance.Targets.Clear();
+			Context.Camera.Targets.Clear();
 			((InGameState) Engine.Instance.State).ResetFollowing();
 
 			on = false;

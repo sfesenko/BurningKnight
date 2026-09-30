@@ -139,7 +139,7 @@ namespace BurningKnight.entity.room {
 
 					Hide();
 
-					Camera.Instance.Shake(10);
+					Context.Camera.Shake(10);
 				}
 			}
 		}

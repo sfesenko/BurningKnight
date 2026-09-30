@@ -211,7 +211,7 @@ namespace BurningKnight.entity.item.use {
 						builder.Range *= 3;
 					}
 
-					Camera.Instance.Push(antiAngle, 4f);
+					Context.Camera.Push(antiAngle, 4f);
 					entity.GetComponent<RectBodyComponent>()?.KnockbackFrom(antiAngle, 0.4f * knockback);
 
 					if (!string.IsNullOrEmpty(color) && ProjectileColor.Colors.TryGetValue(color, out var clr)) {

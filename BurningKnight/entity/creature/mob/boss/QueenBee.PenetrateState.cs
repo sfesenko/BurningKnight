@@ -36,7 +36,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 					sign = 1;
 				}
 
-				Camera.Instance.Shake(10);
+				GameContext.Current.Camera.Shake(10);
 			}
 
 			public override void Destroy() {

@@ -42,7 +42,7 @@ namespace BurningKnight.entity.cutscene.entity {
 					Done = true;
 					Callback();
 
-					Camera.Instance.Shake(20);
+					Context.Camera.Shake(20);
 					Engine.Instance.Flash = 2;
 					
 					var ba = GetComponent<SensorBodyComponent>();

@@ -21,7 +21,7 @@ namespace BurningKnight.entity.item.use {
 				}
 			}
 
-			Camera.Instance.ShakeMax(1.5f);
+			Context.Camera.ShakeMax(1.5f);
 		}
 
 		public override void Setup(JsonValue settings) {

@@ -54,8 +54,8 @@ namespace BurningKnight.entity.creature.player {
 
 						((InGameState) Engine.Instance.State).HandleDeath();
 
-						Camera.Instance.Targets.Clear();
-						Camera.Instance.Follow(this, 1);
+						Context.Camera.Targets.Clear();
+						Context.Camera.Follow(this, 1);
 
 						Tween.To(0.3f, Engine.Instance.Speed, x => Engine.Instance.Speed = x, 0.5f).OnEnd = () => {
 							var t = Tween.To(1, Engine.Instance.Speed, x => Engine.Instance.Speed = x, 0.5f);
@@ -79,11 +79,11 @@ namespace BurningKnight.entity.creature.player {
 				Engine.Instance.Split = 1f;
 				Engine.Instance.Flash = 1f;
 
-				Camera.Instance.Shake(4);
+				Context.Camera.Shake(4);
 
-				if (Camera.Instance != null && Settings.Flashes) {
-					Camera.Instance.TextureZoom -= 0.2f;
-					Tween.To(1f, Camera.Instance.TextureZoom, x => Camera.Instance.TextureZoom = x, 0.3f);					
+				if (Context.Camera != null && Settings.Flashes) {
+					Context.Camera.TextureZoom -= 0.2f;
+					Tween.To(1f, Context.Camera.TextureZoom, x => Context.Camera.TextureZoom = x, 0.3f);					
 				}	
 			}
 			

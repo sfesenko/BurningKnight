@@ -40,16 +40,16 @@ namespace BurningKnight.entity.creature.bk {
 			base.Update(dt);
 
 			if (!did && Triggered) {
-				Camera.Instance.Shake(0.5f);
+				Context.Camera.Shake(0.5f);
 				t += dt;
 
 				if (t >= 1f) {
 					did = true;
 					var r = (int) Math.Ceiling(Math.Sqrt((RoomWidth + 1) * (RoomWidth + 1) + (RoomHeight + 1) * (RoomHeight + 1)));
 
-					Camera.Instance.Targets.Clear();
-					Camera.Instance.Follow(this, 3f);
-					Tween.To(0.5f, Camera.Instance.Zoom, x => Camera.Instance.Zoom = x, 0.3f);
+					Context.Camera.Targets.Clear();
+					Context.Camera.Follow(this, 3f);
+					Tween.To(0.5f, Context.Camera.Zoom, x => Context.Camera.Zoom = x, 0.3f);
 
 					for (var j = 1; j < r; j++) {
 						var level = Run.Level;
@@ -103,7 +103,7 @@ namespace BurningKnight.entity.creature.bk {
 								}
 							}
 				
-							Camera.Instance.Shake(2);
+							Context.Camera.Shake(2);
 						}, j * 0.05f);
 					}
 
@@ -112,7 +112,7 @@ namespace BurningKnight.entity.creature.bk {
 							return;
 						}
 							
-						Tween.To(1f, Camera.Instance.Zoom, x => Camera.Instance.Zoom = x, 0.3f);
+						Tween.To(1f, Context.Camera.Zoom, x => Context.Camera.Zoom = x, 0.3f);
 
 						Timer.Add(() => {
 							if (Interrupted) {

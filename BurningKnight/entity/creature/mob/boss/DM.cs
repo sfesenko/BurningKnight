@@ -109,7 +109,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 				}, 0.5f);
 			}
 
-			Camera.Instance.Shake(6);
+			Context.Camera.Shake(6);
 
 			AnimationUtil.TeleportAway(this, () => {
 				GetComponent<RoomComponent>().Room.Hide();

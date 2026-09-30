@@ -36,7 +36,7 @@ namespace BurningKnight.entity.item.stand {
 						}
 					}
 					
-					Camera.Instance.Shake(10);
+					Context.Camera.Shake(10);
 				}
 			}
 			

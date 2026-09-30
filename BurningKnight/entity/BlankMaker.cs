@@ -37,7 +37,7 @@ namespace BurningKnight.entity {
 				AnimationUtil.PoofFrom(where + MathUtils.CreateVector(a, d), where);
 			}			
 			
-			Camera.Instance.Shake(6);
+			Context.Camera.Shake(6);
 		}
 	}
 }

@@ -64,7 +64,7 @@ namespace BurningKnight.entity.creature.npc {
 						GetComponent<AnimationComponent>().Animate(() => {
 							Done = true;
 							Engine.Instance.Flash = 1f;
-							Camera.Instance.Shake(8);
+							Context.Camera.Shake(8);
 							
 							for (var i = 0; i < 4; i++) {
 								var part = new ParticleEntity(Particles.Dust());
@@ -97,7 +97,7 @@ namespace BurningKnight.entity.creature.npc {
 						GetComponent<AnimationComponent>().Animate(() => {
 							Done = true;
 							Engine.Instance.Flash = 1f;
-							Camera.Instance.Shake(8);
+							Context.Camera.Shake(8);
 							
 							for (var i = 0; i < 4; i++) {
 								var part = new ParticleEntity(Particles.Dust());

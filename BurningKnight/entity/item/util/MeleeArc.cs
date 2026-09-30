@@ -58,7 +58,7 @@ namespace BurningKnight.entity.item.util {
 			AddComponent(new LightComponent(this, 32f, Color.White));
 
 			GetComponent<AnimationComponent>().OriginY = 12;
-			Camera.Instance.Push(Angle - (float) Math.PI, 4f);
+			Context.Camera.Push(Angle - (float) Math.PI, 4f);
 		}
 
 		public void AdjustSize() {
@@ -117,7 +117,7 @@ namespace BurningKnight.entity.item.util {
 
 							p.Color = ProjectileColor.Yellow;
 
-							Camera.Instance.ShakeMax(4f);
+							Context.Camera.ShakeMax(4f);
 							Owner.GetComponent<AudioEmitterComponent>().EmitRandomizedPrefixed("projectile_reflected", 2);
 						} else if (p.HasFlag(ProjectileFlags.BreakableByMelee)) {
 							p.Break();

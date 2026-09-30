@@ -33,7 +33,7 @@ namespace BurningKnight.entity {
 			{
 				AnimationUtil.Ash(Center);
 				Done = true;
-				Camera.Instance.Shake(5);
+				Context.Camera.Shake(5);
 			}
 
 			return base.HandleEvent(e);

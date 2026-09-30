@@ -87,7 +87,7 @@ namespace BurningKnight.entity.creature.player {
 					Area.Add(part);
 				}
 			} else if (e is RoomChangedEvent c) {
-				if (c.New == null || Run.Level == null || Camera.Instance == null) {
+				if (c.New == null || Run.Level == null || Context.Camera == null) {
 					return base.HandleEvent(e);
 				}
 				
@@ -228,7 +228,7 @@ namespace BurningKnight.entity.creature.player {
 									level.ReCreateBodyChunk(x, y);
 									level.LoadPassable();
 
-									Camera.Instance.Shake(10);
+									Context.Camera.Shake(10);
 								}
 							}
 
@@ -314,7 +314,7 @@ namespace BurningKnight.entity.creature.player {
 					}
 				}
 			} else if (e is RoomClearedEvent rce) {
-				Camera.Instance.Unfollow(rce.Room);
+				Context.Camera.Unfollow(rce.Room);
 				Audio.PlaySfx("level_room_cleared", 0.25f + Audio.Db3);
 
 				if (Run.Depth > 0 && !alerted && CheckClear(Area)) {
@@ -335,7 +335,7 @@ namespace BurningKnight.entity.creature.player {
 			} else if (e is RevivedEvent re) {
 				AnimationUtil.TeleportAway(this, () => {
 					FindSpawn();
-					Camera.Instance.Jump();
+					Context.Camera.Jump();
 					AnimationUtil.TeleportIn(this);
 				});
 			} else if (e is CollisionStartedEvent cse) {

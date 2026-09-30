@@ -31,7 +31,7 @@ namespace BurningKnight.entity.item.stand {
 			base.Update(dt);
 			
 			if (!did && triggered) {
-				Camera.Instance.Shake(0.5f);
+				Context.Camera.Shake(0.5f);
 				t += dt;
 
 				if (t >= 1f) {
@@ -59,7 +59,7 @@ namespace BurningKnight.entity.item.stand {
 						Area.Add(bk);
 						bk.Center = target;
 				
-						Camera.Instance.Shake(10);
+						Context.Camera.Shake(10);
 
 						foreach (var t in torches) {
 							t.Done = true;
@@ -75,7 +75,7 @@ namespace BurningKnight.entity.item.stand {
 			if (e is ItemTakenEvent && !triggered) {
 				Timer.Add(() => { triggered = true; }, 1f);
 				
-				Camera.Instance.Shake(12);
+				Context.Camera.Shake(12);
 				
 				var xx = (int) Math.Floor(CenterX / 16) * 16;
 				var xy = (int) Math.Floor(CenterY / 16) * 16;

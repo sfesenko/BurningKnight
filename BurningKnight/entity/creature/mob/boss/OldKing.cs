@@ -158,7 +158,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 								return;
 							}
 
-							Camera.Instance.ShakeMax(8);
+							GameContext.Current.Camera.ShakeMax(8);
 
 							var b = new ProjectileBuilder(Self, "small");
 							b.RemoveFlags(ProjectileFlags.Reflectable, ProjectileFlags.BreakableByMelee);
@@ -253,7 +253,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 				var a = Self.GetComponent<ZAnimationComponent>();
 				a.SetAutoStop(true);
 
-				Camera.Instance.ShakeMax(12);
+				GameContext.Current.Camera.ShakeMax(12);
 				
 				Self.GetComponent<AudioEmitterComponent>().EmitRandomized("mob_oldking_land");
 				

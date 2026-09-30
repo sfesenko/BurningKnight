@@ -246,7 +246,7 @@ namespace BurningKnight.entity.room.controllable.platform {
 			}
 			
 			if (OnScreen) {
-				Camera.Instance.ShakeMax(4);
+				Context.Camera.ShakeMax(4);
 			}
 		}
 

@@ -30,7 +30,7 @@ namespace BurningKnight.entity.component {
 					return;
 				}
 
-				var am = Camera.Instance.GetComponent<ShakeComponent>().Amount;
+				var am = Context.Camera.GetComponent<ShakeComponent>().Amount;
 
 				if (am < 5) {
 					return;

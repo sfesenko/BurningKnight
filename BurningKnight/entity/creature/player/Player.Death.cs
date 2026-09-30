@@ -201,8 +201,8 @@ namespace BurningKnight.entity.creature.player {
 			stone.Bottom = Bottom;
 
 			if (InGameState.EveryoneDied(this)) {
-				Camera.Instance.Targets.Clear();
-				Camera.Instance.Follow(stone, 0.5f);
+				Context.Camera.Targets.Clear();
+				Context.Camera.Follow(stone, 0.5f);
 			} else {
 				((InGameState) Engine.Instance.State).ResetFollowing();
 			}

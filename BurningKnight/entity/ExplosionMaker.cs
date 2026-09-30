@@ -46,7 +46,7 @@ namespace BurningKnight.entity {
 		}
 
 		public static void Make(Entity whoHurts, float hurtRadius = 32f, bool leave = true, Vec2 where = null, float damage = 16, float scale = 1, bool damageOwner = true) {
-			Camera.Instance.Shake(10 * scale);
+			Context.Camera.Shake(10 * scale);
 			
 			Audio.Instance.SfxVolumeBuffer = 0.5f;
 			Audio.Instance.SfxVolumeBufferResetTimer = 1f;
@@ -106,8 +106,8 @@ namespace BurningKnight.entity {
 			}
 
 			if (Settings.Flashes) {
-				Camera.Instance.TextureZoom -= 0.05f;
-				Tween.To(1f, Camera.Instance.TextureZoom, x => Camera.Instance.TextureZoom = x, 0.2f);
+				Context.Camera.TextureZoom -= 0.05f;
+				Tween.To(1f, Context.Camera.TextureZoom, x => Context.Camera.TextureZoom = x, 0.2f);
 			}
 
 			if (leave) {

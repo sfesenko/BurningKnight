@@ -40,7 +40,7 @@ namespace BurningKnight.entity.item.use {
 
 					p.Color = ProjectileColor.Yellow;
 
-					Camera.Instance.ShakeMax(4f);
+					Context.Camera.ShakeMax(4f);
 					owner.GetComponent<AudioEmitterComponent>().EmitRandomizedPrefixed("projectile_reflected", 2);
 				}
 			}

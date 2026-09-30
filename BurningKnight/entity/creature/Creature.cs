@@ -184,7 +184,7 @@ namespace BurningKnight.entity.creature {
 		}
 
 		protected virtual void CreateGore(DiedEvent d) {
-			Camera.Instance.ShakeMax(5);
+			Context.Camera.ShakeMax(5);
 			
 
 			if (!Settings.Blood) {

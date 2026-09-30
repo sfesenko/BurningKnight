@@ -71,7 +71,7 @@ namespace BurningKnight.entity.fx {
 				return;
 			}
 			
-			Center = Camera.Instance.CameraToUi(new Vector2(entity.CenterX + offset, entity.Y - 8 + y));
+			Center = Context.Camera.CameraToUi(new Vector2(entity.CenterX + offset, entity.Y - 8 + y));
 
 			if (region == null) {
 				GetComponent<TextGraphicsComponent>().Angle = (float) (Math.Cos(Engine.Instance.State.Time) * 0.05f);

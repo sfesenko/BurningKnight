@@ -42,12 +42,12 @@ namespace BurningKnight.entity.creature.bk {
 			public override void Init() {
 				base.Init();
 
-				Camera.Instance.Shake(20);
+				GameContext.Current.Camera.Shake(20);
 				Self.Position = Vector2.Zero;
 
 				Timer.Add(() => {
 					((InGameState) Engine.Instance.State).ResetFollowing();
-					Camera.Instance.Shake(10);
+					GameContext.Current.Camera.Shake(10);
 				}, 1);
 			}
 

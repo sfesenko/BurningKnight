@@ -225,7 +225,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 					if (lastExplosion <= 0) {
 						lastExplosion = 0.3f;
 						AnimationUtil.Explosion(Center + new Vector2(Rnd.Float(-16, 16), Rnd.Float(-16, 16)));
-						Camera.Instance.Shake(10);
+						Context.Camera.Shake(10);
 						Audio.PlaySfx($"level_explosion_{Rnd.Int(1, 4)}");
 					}
 
@@ -283,8 +283,8 @@ namespace BurningKnight.entity.creature.mob.boss {
 						Died = true;
 						HealthBar?.Remove();
 
-						Camera.Instance.Targets.Clear();
-						Camera.Instance.Follow(this, 1f);
+						Context.Camera.Targets.Clear();
+						Context.Camera.Follow(this, 1f);
 						Become<DefeatedState>();
 
 						Audio.Stop();

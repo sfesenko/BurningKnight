@@ -40,10 +40,10 @@ namespace BurningKnight.entity.creature.bk {
 			public override void Init() {
 				base.Init();
 
-				Camera.Instance.Targets.Clear();
-				Camera.Instance.Follow(Self, 0.3f);
+				GameContext.Current.Camera.Targets.Clear();
+				GameContext.Current.Camera.Follow(Self, 0.3f);
 
-				Timer.Add(() => { Camera.Instance.Follow(Self.captured, 0.3f); }, 0.5f);
+				Timer.Add(() => { GameContext.Current.Camera.Follow(Self.captured, 0.3f); }, 0.5f);
 			}
 
 			public override void Update(float dt) {
@@ -57,7 +57,7 @@ namespace BurningKnight.entity.creature.bk {
 					// PREPARE TO DIE!
 					Self.captured.GetComponent<DialogComponent>().StartAndClose(Self.captured.GetScream(), 5);
 					Self.captured.GetComponent<AudioEmitterComponent>().EmitRandomized("mob_bk_capture");
-					Camera.Instance.Unfollow(Self);
+					GameContext.Current.Camera.Unfollow(Self);
 
 					Become<HiddenState>();
 					Self.captured.SelectAttack();
