@@ -232,24 +232,36 @@ namespace BurningKnight.level.builders {
 				foreach (var r in SubShop) {
 					var a = Rnd.Angle();
 					var i = 0;
+					var placed = false;
 
 					while (true) {
 						var an = PlaceRoom(Collision, Next, r, a % 360);
 
 						if ((int) an != -1) {
+							placed = true;
 							break;
 						}
 
 						i++;
 
 						if (i > 36) {
-							Log.Error("Failed.");
-							return -1;
+							break;
 						}
 
 						a += 10;
 					}
+
+					if (!placed) {
+						// The branch code removes a room it cannot place and carries on; failing
+						// the shop here would leave it moved with a stale connection to Prev.
+						Log.Error($"Could not place {r.GetType().Name}, skipping it");
+						Collision.Remove(r);
+					}
 				}
+
+				// They belong to the shop they were just placed with; a second shop in the level
+				// must not re-place them, or it moves rooms that are already connected.
+				SubShop.Clear();
 
 				/*if (SubShop.Count > 0) {
 					for (var i = 0; i < SubShop.Count - 1; i++) {

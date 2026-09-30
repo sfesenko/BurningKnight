@@ -133,16 +133,6 @@ namespace BurningKnight.level.rooms {
 			return false;
 		}
 
-		// A room can be placed more than once while a builder retries: the move breaks the
-		// adjacency the earlier placement's connections were made under. Drop them on both sides.
-		public void Disconnect() {
-			foreach (var other in Connected.Keys) {
-				other.Connected.Remove(this);
-			}
-
-			Connected.Clear();
-		}
-
 		public bool ConnectWithRoom(RoomDef roomDef) {
 			if ((Neighbours.Contains(roomDef) || ConnectTo(roomDef)) && !Connected.ContainsKey(roomDef) && CanConnect(roomDef)) {
 				Connected[roomDef] = null;

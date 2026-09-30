@@ -145,11 +145,7 @@ namespace BurningKnight.level.builders {
 				Log.Error("Null next room");
 				return -1;
 			}
-
-			// A retry can hand us a room that was already placed and connected; moving it now
-			// would leave those connections pointing at rooms it no longer touches.
-			Next.Disconnect();
-
+			
 			Angle %= 360f;
 
 			if (Angle < 0) {
