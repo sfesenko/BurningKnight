@@ -196,21 +196,26 @@ let whiteCoreHeight (pngPath: string) (rect: int * int * int * int) =
 let build (spec: FontSpec) =
     let fntPath = Path.Combine(fontsDir, spec.Fnt)
 
-    // Strip this script's previous output first, so rebuilds (and format
-    // self-heals) start from the pristine descriptor every time.
-    let mutable fnt = File.ReadAllText fntPath
-    fnt <- Regex("[ \t]*<page id=\"1\"[^>]*\\/>\r?\n").Replace(fnt, "")
-    fnt <- Regex("[ \t]*<char [^>]*page=\"1\"[^>]*\\/>\r?\n").Replace(fnt, "")
-    fnt <- Regex("\n[ \t]*</pages>").Replace(fnt, "\n  </pages>")
-    fnt <- Regex("\n[ \t]*</chars>").Replace(fnt, "\n  </chars>")
-    fnt <- Regex("pages=\"\\d+\"").Replace(fnt, "pages=\"1\"")
-    let kept = Regex("<char ").Matches(fnt).Count
-    fnt <- Regex("<chars count=\"\\d+\">").Replace(fnt, $"<chars count=\"{kept}\">")
-
-    if fnt <> File.ReadAllText fntPath then
-        File.WriteAllText(fntPath, fnt)
-
+    // Previous extension output stays put: rebuilds only append genuinely new
+    // glyphs below the existing rows, so committed diffs stay reviewable.
     let doc, chars, existing = loadFnt spec
+
+    let kept =
+        chars
+        |> Array.filter (fun e -> e.Attribute(xn "page").Value = "1")
+        |> Array.map (fun e ->
+            (Int32.Parse(e.Attribute(xn "id").Value),
+             Int32.Parse(e.Attribute(xn "x").Value),
+             Int32.Parse(e.Attribute(xn "y").Value),
+             Int32.Parse(e.Attribute(xn "width").Value),
+             Int32.Parse(e.Attribute(xn "height").Value)))
+        |> Array.toList
+
+    let extPath = Path.Combine(fontsDir, spec.ExtPage)
+
+    if not kept.IsEmpty && not (File.Exists extPath) then
+        fail $"{spec.ExtPage} referenced by {spec.Fnt} but missing on disk"
+
     let needed = inventory existing
 
     printfn $"{spec.Fnt}: {needed.Length} glyphs to add"
@@ -257,10 +262,16 @@ let build (spec: FontSpec) =
                         fail $"U+{int c:X4} ({c}) renders empty and is not a known space")
 
         // Shelf packing, tallest first, 2px gutters against any filtering bleed.
+        // Incremental runs continue below the kept rows.
         let gutter = 2
 
+        let startY =
+            match kept with
+            | [] -> gutter
+            | _ -> (kept |> List.map (fun (_, _, y, _, h) -> y + h) |> List.max) + gutter
+
         let pack width =
-            let mutable px, py, rowH = gutter, gutter, 0
+            let mutable px, py, rowH = gutter, startY, 0
             let placed = ResizeArray()
 
             for cell in cells |> List.sortByDescending (fun c -> c.Pixels.GetLength 1) do
@@ -278,24 +289,43 @@ let build (spec: FontSpec) =
             placed |> Seq.toList, py + rowH + gutter
 
         let mutable width = 1024
+
+        // Incremental runs keep the previous page width; fresh pages may widen.
+        let oldBmp = if kept.IsEmpty then None else Some(SKBitmap.Decode extPath)
+
+        match oldBmp with
+        | Some bmp -> width <- bmp.Width
+        | None -> ()
+
         let p1, h1 = pack width
         let mutable placed = p1
         let mutable height = h1
 
-        if height > 1024 then
-            width <- 2048
-            let p2, h2 = pack width
-            placed <- p2
-            height <- h2
+        match oldBmp with
+        | Some bmp ->
+            height <- max height bmp.Height
 
-        if height > 2048 then
-            fail $"atlas overflow at 2048px for {spec.Fnt}"
+            if height > 2048 then
+                fail $"atlas overflow at 2048px for {spec.Fnt}"
+        | None ->
+            if height > 1024 then
+                width <- 2048
+                let p2, h2 = pack width
+                placed <- p2
+                height <- h2
+
+            if height > 2048 then
+                fail $"atlas overflow at 2048px for {spec.Fnt}"
 
         printfn $"  page {width}x{height}"
 
         use surface = SKSurface.Create(new SKImageInfo(width, height))
         let canvas = surface.Canvas
         canvas.Clear(SKColors.Transparent)
+
+        match oldBmp with
+        | Some bmp -> canvas.DrawBitmap(bmp, 0f, 0f)
+        | None -> ()
 
         use white = new SKPaint(Color = SKColors.White)
         use black = new SKPaint(Color = SKColors.Black)
@@ -336,13 +366,15 @@ let build (spec: FontSpec) =
         use out = File.OpenWrite(Path.Combine(fontsDir, spec.ExtPage))
         halo.Encode(out, SKEncodedImageFormat.Png, 100) |> ignore
 
-        // Append the fresh page to the pristine descriptor with plain text surgery,
-        // so the original lines stay byte-identical and reviewable.
+        // Append to the descriptor with plain text surgery, so the original
+        // lines stay byte-identical and reviewable. The page element goes in
+        // once; every run only appends its own new char lines.
         let mutable fnt = File.ReadAllText fntPath
         fnt <- Regex("pages=\"\\d+\"").Replace(fnt, "pages=\"2\"")
 
-        let pageLine = $"    <page id=\"1\" file=\"{spec.ExtPage}\" />\n"
-        fnt <- fnt.Replace("  </pages>", pageLine + "  </pages>")
+        if kept.IsEmpty then
+            let pageLine = $"    <page id=\"1\" file=\"{spec.ExtPage}\" />\n"
+            fnt <- fnt.Replace("  </pages>", pageLine + "  </pages>")
 
         let charLine (cell: Cell) (px: int) (py: int) =
             let cp = Char.ConvertToUtf32(string cell.Char, 0)
@@ -350,8 +382,8 @@ let build (spec: FontSpec) =
 
         let charLines = placed |> List.map (fun (cell, px, py) -> charLine cell px py) |> String.concat ""
 
-        let page0count = chars |> Array.filter (fun e -> e.Attribute(xn "page").Value = "0") |> Array.length
-        fnt <- Regex("""<chars count="\d+">""").Replace(fnt, $"<chars count=\"{page0count + placed.Length}\">")
+        let total = (doc.Descendants(xn "char") |> Seq.length) + placed.Length
+        fnt <- Regex("""<chars count="\d+">""").Replace(fnt, $"<chars count=\"{total}\">")
         fnt <- fnt.Replace("  </chars>", charLines + "  </chars>")
 
         File.WriteAllText(fntPath, fnt)
