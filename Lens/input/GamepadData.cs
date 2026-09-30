@@ -1,4 +1,6 @@
-﻿using System;
+﻿#nullable enable
+
+using System;
 using Lens.util;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
@@ -13,7 +15,7 @@ namespace Lens.input {
 		public bool WasAttached;
 		public bool Attached;
 
-		public static string[] Identifiers;
+		public static string[] Identifiers = [];
 		
 		private float rumbleStrength;
 		private float rumbleTime;

@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿#nullable enable
+
+using System.Collections.Generic;
 using Lens.util;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
@@ -13,9 +15,9 @@ namespace Lens.input {
 
 		public static bool EnableImGuiFocus;
 
-		public static KeyboardData Keyboard;
-		public static MouseData Mouse;
-		public static GamepadData[] Gamepads;
+		public static KeyboardData Keyboard = null!; // Init() sets them
+		public static MouseData Mouse = null!;
+		public static GamepadData[] Gamepads = null!;
 		public static int Blocked;
 
 		private static Dictionary<string, InputButton> Buttons = new Dictionary<string, InputButton>();
@@ -93,7 +95,7 @@ namespace Lens.input {
 			Buttons[id] = button;
 		}
 
-		private static bool Check(string id, CheckType type, GamepadData data = null, bool ignoreBlock = false) {
+		private static bool Check(string id, CheckType type, GamepadData? data = null, bool ignoreBlock = false) {
 			if (Blocked > 0 && !ignoreBlock) {
 				return false;
 			}
@@ -181,15 +183,15 @@ namespace Lens.input {
 			return false;
 		}
 
-		public static bool WasPressed(string id, GamepadData data = null, bool ignoreBlock = false) {
+		public static bool WasPressed(string id, GamepadData? data = null, bool ignoreBlock = false) {
 			return Check(id, CheckType.PRESSED, data, ignoreBlock);
 		}
 
-		public static bool WasReleased(string id, GamepadData data = null, bool ignoreBlock = false) {
+		public static bool WasReleased(string id, GamepadData? data = null, bool ignoreBlock = false) {
 			return Check(id, CheckType.RELEASED, data, ignoreBlock);
 		}
 
-		public static bool IsDown(string id, GamepadData data = null, bool ignoreBlock = false) {
+		public static bool IsDown(string id, GamepadData? data = null, bool ignoreBlock = false) {
 			return Check(id, CheckType.DOWN, data, ignoreBlock);
 		}
 

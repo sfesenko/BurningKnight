@@ -1,3 +1,5 @@
+#nullable enable
+
 using System;
 using Lens.entity.component;
 using Lens.util.file;
@@ -8,8 +10,8 @@ namespace Lens.input {
 		public bool GamepadEnabled = true;
 		public bool KeyboardEnabled = true;
 
-		public GamepadData GamepadData;
-		public Action InitCallback;
+		public GamepadData? GamepadData;
+		public Action? InitCallback;
 
 		public override void Update(float dt) {
 			base.Update(dt);
