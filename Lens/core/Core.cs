@@ -1,11 +1,13 @@
-﻿using System;
+﻿#nullable enable
+
+using System;
 using Microsoft.Xna.Framework;
 
 namespace Lens.core;
 
 public class Core {
-	protected GameWindow Window;
-	protected GraphicsDeviceManager Graphics;
+	protected GameWindow Window = null!; // Core.Create assigns them
+	protected GraphicsDeviceManager Graphics = null!;
 		
 	public virtual void Init(int width, int height, bool fullscreen) {
 			

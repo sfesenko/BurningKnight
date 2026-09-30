@@ -1,4 +1,6 @@
-﻿using Lens.entity;
+﻿#nullable enable
+
+using Lens.entity;
 using Lens.util.camera;
 
 namespace Lens.game {
@@ -10,7 +12,7 @@ namespace Lens.game {
 
 		// The state's camera: the engine renders through the current state's, so the view belongs
 		// to the state that set it up instead of being a global "last created camera".
-		public Camera Camera;
+		public Camera? Camera;
 
 		public float Time;
 
