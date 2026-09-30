@@ -53,8 +53,12 @@ let strictExclusions : Set<string> =
           "painting_qrilin"
           "painting_raj"
           "painting_tofulama"
+          // painting-title exclusions above; universal tokens below
           "painting_totemori"
-          "painting_totemori_redux" ]
+          "painting_totemori_redux"
+          // localhost joke and proper-noun game term: identical in every language
+          "bk:mask_desc"
+          "happening_bk:sudoku" ]
 
 let readMap (path: string) =
     let text = File.ReadAllText(path).TrimStart('\uFEFF')
