@@ -16,7 +16,7 @@ namespace BurningKnight.level.walls {
 		}
 
 		protected void Setup(Level level, RoomDef room, float fill, int clustering, bool ensurePath) {
-			Run.Level = level;
+			Context.Level = level;
 			var w = room.GetWidth() - 2;
 			var h = room.GetHeight() - 2;
 			

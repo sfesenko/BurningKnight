@@ -42,7 +42,7 @@ namespace BurningKnight.level {
 		}
 
 		public bool Generate() {
-			Run.Level = this;
+			Context.Level = this;
 			rooms = null;
 			ItemsToSpawn = [];
 			Variant = VariantRegistry.Generate(LevelSave.BiomeGenerated.Id) 

@@ -22,7 +22,7 @@ namespace BurningKnight.assets.prefabs {
 		
 		public static void Load() {
 			Load(FileHandle.FromRoot("Prefabs/"));
-			Run.Level = null;
+			Context.Level = null;
 		}
 
 		public static Prefab Get(string id) {
@@ -82,7 +82,7 @@ namespace BurningKnight.assets.prefabs {
 				saver.Datas.Clear();
 
 				loaded[handle.NameWithoutExtension] = prefab;
-				Run.Level = null;
+				Context.Level = null;
 			} catch (Exception e) {
 				Log.Error($"Failed to load prefab {handle.NameWithoutExtension}");
 				Log.Error(e);

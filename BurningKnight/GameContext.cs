@@ -44,8 +44,11 @@ namespace BurningKnight {
 
 		public Audio Audio { get; set; } = Lens.assets.Audio.Instance;
 
-		// Still the run's static; WS-5 moves it in here.
-		public Level? Level => Run.Level;
+		// Still the run's static; WS-5 moves the backing in here.
+		public Level? Level {
+			get => Run.Level;
+			set => Run.Level = value;
+		}
 	}
 
 	// The reads: `Context.Camera`, `Context.Level`. Entities have their own `Context` property
@@ -54,6 +57,9 @@ namespace BurningKnight {
 		public static Area? Area => GameContext.Current.Area;
 		public static Camera? Camera => GameContext.Current.Camera;
 		public static Audio Audio => GameContext.Current.Audio;
-		public static Level? Level => GameContext.Current.Level;
+		public static Level? Level {
+			get => GameContext.Current.Level;
+			set => GameContext.Current.Level = value;
+		}
 	}
 }

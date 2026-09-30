@@ -85,7 +85,7 @@ namespace BurningKnight.state {
 
 			gameArea = new GameArea();
 
-			Run.Level = null;
+			Context.Level = null;
 			Tilesets.Load();
 			;
 			progress++;

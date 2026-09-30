@@ -69,7 +69,7 @@ namespace BurningKnight.state {
 			Physics.Init();
 			gameArea = new GameArea();
 
-			Run.Level = null;
+			Context.Level = null;
 			progress = 0;
 
 			var thread = new Thread(() => {

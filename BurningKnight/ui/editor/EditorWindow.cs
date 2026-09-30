@@ -80,7 +80,7 @@ namespace BurningKnight.ui.editor {
 			Editor.Area = new GameArea();
 			Engine.Instance.State.Area = Editor.Area;
 			
-			Run.Level = null;
+			Context.Level = null;
 
 			if (levels.Length == 0) {
 				var level = new RegularLevel {
@@ -242,7 +242,7 @@ namespace BurningKnight.ui.editor {
 						}
 
 						Editor.Area.AutoRemove();
-						Run.Level = null;
+						Context.Level = null;
 
 						var level = new RegularLevel {
 							Width = levelWidth,

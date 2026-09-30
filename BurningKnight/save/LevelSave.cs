@@ -129,7 +129,7 @@ namespace BurningKnight.save {
 
 				a.Entities.AddNew();
 				a.Destroy();
-				Run.Level = null;
+				Context.Level = null;
 
 				if (I > 10) {
 					I = 0;

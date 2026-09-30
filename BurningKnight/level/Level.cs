@@ -97,7 +97,7 @@ namespace BurningKnight.level {
 		public Level(BiomeInfo biome) {
 			SetBiome(biome);
 			
-			Run.Level = this;
+			Context.Level = this;
 		}
 
 		public override void Destroy() {
@@ -121,7 +121,7 @@ namespace BurningKnight.level {
 			}
 
 			if (Context.Level == this) {
-				Run.Level = null;
+				Context.Level = null;
 			}
 
 			if (WallSurface != null) {

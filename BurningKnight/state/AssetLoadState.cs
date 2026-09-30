@@ -111,7 +111,7 @@ namespace BurningKnight.state {
 				}, "Lights & physics");
 				
 				gameArea = new GameArea();
-				Run.Level = null;
+				Context.Level = null;
 
 				LoadSection(Tilesets.Load, "Tilesets");
 				LoadSection(Achievements.Load, "Achievements");
