@@ -6,6 +6,7 @@ using BurningKnight.level.walls;
 using BurningKnight.physics;
 using BurningKnight.save;
 using BurningKnight.state;
+using Lens;
 using Lens.entity;
 using Lens.util.math;
 
@@ -49,5 +50,10 @@ public static class Generation {
 	public static void Release(RegularLevel level) {
 		level.Area.Destroy();
 		Physics.World.Clear();
+
+		// The game presents every frame, and that is what lets the driver release the GL objects
+		// a level's render targets were backed by. A test host that never draws has to present
+		// itself, or a long run leaks until the machine runs out of memory.
+		Engine.GraphicsDevice.Present();
 	}
 }
