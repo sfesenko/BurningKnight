@@ -110,7 +110,7 @@ namespace BurningKnight.state {
 					Physics.Init();
 				}, "Lights & physics");
 				
-				gameArea = new Area();
+				gameArea = new GameArea();
 				Run.Level = null;
 
 				LoadSection(Tilesets.Load, "Tilesets");

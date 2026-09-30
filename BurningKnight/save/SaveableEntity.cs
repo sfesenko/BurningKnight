@@ -1,10 +1,19 @@
 using System.Linq;
+using Lens.assets;
 using Lens.entity;
 using Lens.entity.component;
 using Lens.util.file;
 
 namespace BurningKnight.save {
 	public class SaveableEntity : Entity {
+		// The context of the world this entity lives in, or the current game's when it is in a
+		// plain Area (prefabs, the test harness).
+		public GameContext Context => (Area as GameArea)?.Context ?? GameContext.Current;
+
+		// The game's audio, through the context rather than the engine's singleton; the engine's
+		// own code keeps its property (it is the device, and there is one per process).
+		protected static new Audio Audio => GameContext.Current.Audio;
+
 		public override void AddComponents() {
 			base.AddComponents();
 			

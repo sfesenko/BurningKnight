@@ -16,7 +16,7 @@ public static class Generation {
 	// Mirrors LevelSave.GenerationThread without its thread, watchdog or retry plumbing: the
 	// seed, the biome, the wall registry, the area, then Generate().
 	public static RegularLevel Create(string seed, int depth = 1, int loop = 0) {
-		var area = new Area();
+		var area = new GameArea();
 
 		// `Run.Depth` is the requested depth (it only sets NextDepth, which the game's loop then
 		// promotes); the generation reads the private one through RealDepth. A test sets both —

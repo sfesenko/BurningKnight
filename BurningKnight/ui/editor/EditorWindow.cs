@@ -77,7 +77,7 @@ namespace BurningKnight.ui.editor {
 		
 		private void Load() {
 			Editor.Area.Destroy();
-			Editor.Area = new Area();
+			Editor.Area = new GameArea();
 			Engine.Instance.State.Area = Editor.Area;
 			
 			Run.Level = null;

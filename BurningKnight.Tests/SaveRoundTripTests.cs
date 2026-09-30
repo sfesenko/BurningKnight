@@ -23,7 +23,7 @@ public class SaveRoundTripTests : IClassFixture<SaveHost> {
 
 	[Fact]
 	public void GlobalSaveRoundTrips() {
-		var area = new Area();
+		var area = new GameArea();
 		var dir = host.NewDir("global");
 
 		GlobalSave.Values.Clear();
@@ -50,7 +50,7 @@ public class SaveRoundTripTests : IClassFixture<SaveHost> {
 
 	[Fact]
 	public void GameSaveRoundTrips() {
-		var area = new Area();
+		var area = new GameArea();
 		var dir = host.NewDir("game");
 
 		GameSave.Values.Clear();
@@ -108,7 +108,7 @@ public class SaveRoundTripTests : IClassFixture<SaveHost> {
 			SaveManager.Save(level.Area, SaveType.Level, path: dir);
 			var before = ReadEntities(dir + $"level-{depth}-l0.lvl", SaveType.Level);
 
-			var loaded = new Area();
+			var loaded = new GameArea();
 			Run.Level = null;
 			SaveManager.Load(loaded, SaveType.Level, dir);
 			loaded.Entities.AddNew();
@@ -133,7 +133,7 @@ public class SaveRoundTripTests : IClassFixture<SaveHost> {
 
 	[Fact]
 	public void PlayerSaveRoundTrips() {
-		var area = new Area();
+		var area = new GameArea();
 
 		Run.Depth = 1;
 		Run.RealDepth = 1;
@@ -149,7 +149,7 @@ public class SaveRoundTripTests : IClassFixture<SaveHost> {
 			SaveManager.Save(area, SaveType.Player, path: dir);
 			var before = ReadEntities(dir + "player.sv", SaveType.Player);
 
-			var loaded = new Area();
+			var loaded = new GameArea();
 			SaveManager.Load(loaded, SaveType.Player, dir);
 			loaded.Entities.AddNew();
 

@@ -67,7 +67,7 @@ namespace BurningKnight.state {
 			
 			Lights.Init();
 			Physics.Init();
-			gameArea = new Area();
+			gameArea = new GameArea();
 
 			Run.Level = null;
 			progress = 0;

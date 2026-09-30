@@ -81,7 +81,7 @@ namespace BurningKnight.save {
 				return false;
 			}
 
-			var a = new Area();
+			var a = new GameArea();
 			Rnd.Seed = $"{seed}{Run.Depth}{c}{Run.Loop}";
 			Log.Debug($"Thread seed is {Rnd.Seed} (int {Rnd.IntSeed})");
 		
