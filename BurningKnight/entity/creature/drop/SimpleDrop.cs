@@ -13,7 +13,7 @@ namespace BurningKnight.entity.creature.drop {
 
 
 		
-		public string[] Items;
+		public string[]? Items;
 		public int Min = 1;
 		public int Max = 1;
 

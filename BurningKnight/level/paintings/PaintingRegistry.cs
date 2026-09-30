@@ -135,10 +135,10 @@ namespace BurningKnight.level.paintings {
 		}
 
 		private class Info {
-			public string Id;
-			public string Author;
+			public string Id = null!;
+			public string Author = null!;
 			public float Chance;
-			public string[] Biomes;
+			public string[] Biomes = null!;
 			public bool Animated;
 		}
 	}

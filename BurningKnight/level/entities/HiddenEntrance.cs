@@ -14,7 +14,7 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.level.entities {
 	public partial class HiddenEntrance : SaveableEntity, PlaceableEntity {
-		internal string id;
+		internal string? id;
 		
 		private bool Interact(Entity entity) {
 			foreach (var e in Area.Tagged[Tags.HiddenEntrance]) {

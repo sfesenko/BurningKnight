@@ -5,8 +5,8 @@ using MonoGame.Extended;
 
 namespace BurningKnight.ui {
 	public class UiAnimation : UiEntity {
-		public Animation Animation;
-		public TextureRegion Slice;
+		public Animation? Animation;
+		public TextureRegion? Slice;
 		public bool UseSlice;
 
 		public override void AddComponents() {

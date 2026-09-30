@@ -238,7 +238,7 @@ namespace BurningKnight.entity.creature.npc {
 		}
 
 		public class SavedEvent : Event {
-			public ShopNpc Npc;
+			public ShopNpc Npc = null!;
 		}
 		
 		public static ShopNpc FromId(string id) {

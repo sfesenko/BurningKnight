@@ -7,7 +7,7 @@ using Lens.util;
 
 namespace BurningKnight.entity.item.use {
 	public partial class SpawnDropUse : ItemUse {
-		private static string drop;
+		private static string drop = null!;
 
 		public override void Use(Entity entity, Item item) {
 			base.Use(entity, item);

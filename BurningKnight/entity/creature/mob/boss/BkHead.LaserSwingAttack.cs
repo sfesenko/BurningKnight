@@ -28,7 +28,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 	public partial class BkHead {
 		public class LaserSwingAttack : SmartState<BkHead> {
 			private class Data {
-				public Laser Laser;
+				public Laser? Laser;
 				public float Vy;
 				public float Angle;
 			}

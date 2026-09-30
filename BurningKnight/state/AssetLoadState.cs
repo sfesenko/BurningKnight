@@ -25,9 +25,9 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.state {
 	public class AssetLoadState : GameState {
-		private PhotoCard logoCard;
+		private PhotoCard logoCard = null!;
 
-		private TextureRegion pixel;
+		private TextureRegion pixel = null!;
 		// private PhotoCard[] cards = new PhotoCard[3];
 
 		// Set by the loading worker; the main thread only reads it to decide when the loaded
@@ -38,7 +38,7 @@ namespace BurningKnight.state {
 		// ref into the loader, so it cannot be volatile. The hand-off is `ready`.
 		private int progress;
 
-		private Area gameArea;
+		private Area gameArea = null!;
 		private float t;
 		private bool added;
 		private bool removed;
@@ -47,9 +47,9 @@ namespace BurningKnight.state {
 		private volatile bool checkFullscreen;
 
 		private float lastV;
-		private UiString tipLabel;
+		private UiString tipLabel = null!;
 		private bool exitTweenDone;
-		private string currentlyLoadingLabel;
+		private string currentlyLoadingLabel = null!;
 
 		private static readonly bool SectionalLoadTimeLogging = false;
 		

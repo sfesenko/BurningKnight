@@ -3,6 +3,6 @@ using Lens.entity;
 
 namespace BurningKnight.entity.events {
 	public class GramophoneBrokenEvent : Event {
-		public Gramophone Gramophone;
+		public Gramophone Gramophone = null!;
 	}
 }

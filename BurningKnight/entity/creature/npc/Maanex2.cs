@@ -19,7 +19,7 @@ using Lens.util.timer;
 namespace BurningKnight.entity.creature.npc {
 	public class Maanex2 : Npc {
 		private const int Cost = 8;
-		internal ClawControll clawControll;
+		internal ClawControll clawControll = null!;
 		
 		public override void AddComponents() {
 			base.AddComponents();

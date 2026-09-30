@@ -9,12 +9,12 @@ namespace BurningKnight.level.tile {
 		public TextureRegion[] WallB = new TextureRegion[12];
 		public TextureRegion[] WallAExtensions = new TextureRegion[4];
 		public TextureRegion[] WallBExtensions = new TextureRegion[4];
-		public TextureRegion WallTopA;
-		public TextureRegion WallTopB;
-		public TextureRegion WallTopADecor;
-		public TextureRegion WallTopBDecor;
-		public TextureRegion WallCrackA;
-		public TextureRegion WallCrackB;
+		public TextureRegion WallTopA = null!;
+		public TextureRegion WallTopB = null!;
+		public TextureRegion WallTopADecor = null!;
+		public TextureRegion WallTopBDecor = null!;
+		public TextureRegion WallCrackA = null!;
+		public TextureRegion WallCrackB = null!;
 		public TextureRegion[] WallTopsA = new TextureRegion[36];
 		public TextureRegion[] WallTopsB = new TextureRegion[36];
 		public TextureRegion[] WallTopsTransition = new TextureRegion[36];
@@ -36,7 +36,7 @@ namespace BurningKnight.level.tile {
 		public TextureRegion[] MetalBlock = new TextureRegion[4];
 		public TextureRegion[] Rock = new TextureRegion[4];
 		public TextureRegion[] TintedRock = new TextureRegion[4];
-		public TextureRegion MetalBlockShadow;
+		public TextureRegion MetalBlockShadow = null!;
 		
 		public TextureRegion[][] Tiles = new TextureRegion[(int) Tile.Total][];
 

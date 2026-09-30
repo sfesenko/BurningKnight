@@ -5,7 +5,7 @@ using Lens.util.math;
 
 namespace BurningKnight.entity.fx {
 	public class TileFx : Entity {
-		private TextureRegion region;
+		private TextureRegion region = null!;
 		private float t;
 		
 		public override void Init() {

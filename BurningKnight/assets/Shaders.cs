@@ -5,14 +5,14 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace BurningKnight.assets {
 	public class Shaders {
-		public static Effect Ui;
-		public static Effect Entity;
-		public static Effect Terrain;
-		public static Effect Screen;
-		public static Effect Fog;
-		public static Effect Chasm;
-		public static Effect Item;
-		public static Effect Bk;
+		public static Effect Ui = null!;
+		public static Effect Entity = null!;
+		public static Effect Terrain = null!;
+		public static Effect Screen = null!;
+		public static Effect Fog = null!;
+		public static Effect Chasm = null!;
+		public static Effect Item = null!;
+		public static Effect Bk = null!;
 		
 		public static void Load() {
 			Ui = Effects.Get("ui");

@@ -14,10 +14,10 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.component {
 	public class AnimationComponent : GraphicsComponent {
-		public Animation Animation;
+		public Animation? Animation;
 		public Color Tint = Color.White;
 		private string name;
-		private ColorMap colorMap;
+		private ColorMap? colorMap;
 
 		public float ShadowOffset;
 		public Vector2 Scale = Vector2.One;

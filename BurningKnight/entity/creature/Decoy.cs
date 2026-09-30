@@ -4,7 +4,7 @@ using BurningKnight.entity.events;
 
 namespace BurningKnight.entity.creature {
 	public class Decoy : Creature {
-		public Action OnDeath;
+		public Action? OnDeath;
 		
 		public override void AddComponents() {
 			base.AddComponents();

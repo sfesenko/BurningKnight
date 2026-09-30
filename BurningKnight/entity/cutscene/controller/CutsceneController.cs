@@ -8,8 +8,8 @@ using Lens.input;
 
 namespace BurningKnight.entity.cutscene.controller {
 	public class CutsceneController : Entity {
-		public DialogComponent Current;
-		public CutsceneState State;
+		public DialogComponent? Current;
+		public CutsceneState State = null!;
 
 		public override void Init() {
 			base.Init();

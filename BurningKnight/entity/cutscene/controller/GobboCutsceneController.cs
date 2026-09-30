@@ -11,9 +11,9 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.cutscene.controller {
 	public class GobboCutsceneController : CutsceneController {
-		private BabyGobbo baby;
-		private OldGobbo dad;
-		private Gobbo gobbo;
+		private BabyGobbo baby = null!;
+		private OldGobbo dad = null!;
+		private Gobbo gobbo = null!;
 		private Vector2 dadStart;
 		
 		public override void PostInit() {

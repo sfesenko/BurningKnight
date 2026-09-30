@@ -4,7 +4,7 @@ using Lens.entity;
 
 namespace BurningKnight.entity.item.use {
 	public class DoOnNewFloorUse : DoUsesUse {
-		private Entity e;
+		private Entity e = null!;
 		
 		protected override void DoAction(Entity entity, Item item, ItemUse use) {
 			e = entity;

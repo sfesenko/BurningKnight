@@ -4,7 +4,7 @@ using Lens.util.camera;
 
 namespace BurningKnight.entity.item.use {
 	public class ShootUse : ItemUse {
-		public Action<Entity, Item> SpawnProjectile;
+		public Action<Entity, Item> SpawnProjectile = null!;
 
 		public override void Use(Entity entity, Item item) {
 			SpawnProjectile(entity, item);

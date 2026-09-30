@@ -13,7 +13,7 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.room.controllable.spikes {
 	public class Spikes : RoomControllable {
-		private static TextureRegion tile;
+		private static TextureRegion? tile;
 		private static Vector2 offset = new Vector2(0, 5);
 		
 		protected List<Entity> Colliding = new List<Entity>();

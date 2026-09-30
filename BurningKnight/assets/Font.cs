@@ -10,9 +10,9 @@ using MonoGame.Extended.Graphics;
 
 namespace BurningKnight.assets {
 	public abstract class Font {
-		public static BitmapFont Small;
-		public static BitmapFont Medium;
-		public static SpriteFont Test;
+		public static BitmapFont Small = null!;
+		public static BitmapFont Medium = null!;
+		public static SpriteFont Test = null!;
 		
 		public static void Load() {
 			Small = LoadFont("Fonts/small_font");

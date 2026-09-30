@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.level.rooms.regular {
 	public class TwoSidesRoom : RegularRoom {
-		private Rect rect;
+		private Rect? rect;
 		private bool vertical;
 
 		public TwoSidesRoom() {

@@ -21,10 +21,10 @@ using MonoGame.Extended;
 namespace BurningKnight.state {
 	public class CutsceneState : GameState {
 		private float blackBarsSize = 50;
-		private TextureRegion black;
-		public Area TopUi;
+		private TextureRegion black = null!;
+		public Area TopUi = null!;
 
-		private string text;
+		private string text = null!;
 		private float textW;
 		private bool saying;
 		private float a;

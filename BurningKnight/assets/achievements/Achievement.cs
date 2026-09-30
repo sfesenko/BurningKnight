@@ -38,7 +38,7 @@ namespace BurningKnight.assets.achievements {
 		}
 
 		public class UnlockedEvent : Event {
-			public Achievement Achievement;
+			public Achievement Achievement = null!;
 		}
 
 		public class LockedEvent : Event {

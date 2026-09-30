@@ -6,21 +6,21 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.util {
 	public class PathFinder {
-		public static int[] Distance;
-		public static int[] Neighbours4;
-		public static int[] Neighbours8;
-		public static int[] Neighbours9;
-		public static int[] Circle4;
-		public static int[] Corner;
+		public static int[] Distance = null!;
+		public static int[] Neighbours4 = null!;
+		public static int[] Neighbours8 = null!;
+		public static int[] Neighbours9 = null!;
+		public static int[] Circle4 = null!;
+		public static int[] Corner = null!;
 		public static Vector2[] VCircle4 = new[] {new Vector2(0, -1), new Vector2(1, 0), new Vector2(0, 1), new Vector2(-1, 0)};
 		public static Vector2[] VCorner = new[] {new Vector2(1, -1), new Vector2(1, 1), new Vector2(-1, 1), new Vector2(-1, -1)};
-		public static int[] Circle8; 
-		private static bool[] Goals;
-		private static int[] Queue;
+		public static int[] Circle8 = null!; 
+		private static bool[] Goals = null!;
+		private static int[] Queue = null!;
 		private static int Size;
 		private static int Width;
-		private static int[] Dir;
-		private static int[] DirLR;
+		private static int[] Dir = null!;
+		private static int[] DirLR = null!;
 
 		public static void SetMapSize(int Width, int Height) {
 			PathFinder.Width = Width;

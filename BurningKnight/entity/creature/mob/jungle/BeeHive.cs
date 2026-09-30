@@ -16,7 +16,7 @@ namespace BurningKnight.entity.creature.mob.jungle {
 	public class BeeHive : Mob {
 		private const float ZHeight = 8;
 		private bool loaded;
-		private Tree tree;
+		private Tree? tree;
 		
 		protected override void SetStats() {
 			base.SetStats();

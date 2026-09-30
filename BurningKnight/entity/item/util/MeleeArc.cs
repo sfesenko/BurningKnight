@@ -26,15 +26,15 @@ namespace BurningKnight.entity.item.util {
 		
 		public float LifeTime = 0.1f;
 		public float Damage;
-		public Entity Owner;
+		public Entity Owner = null!;
 		public float Angle;
 		public string Sound = "item_sword_hit";
 		public Color Color = ColorUtils.WhiteColor;
 		public bool Mines;
 		public float Knockback;
 
-		public ArcHurtCallback OnHurt;
-		public ArcDeathCallback OnDeath;
+		public ArcHurtCallback? OnHurt;
+		public ArcDeathCallback? OnDeath;
 
 		private float t;
 		private Vector2 velocity;
@@ -162,9 +162,9 @@ namespace BurningKnight.entity.item.util {
 		}
 		
 		public class CreatedEvent : Event {
-			public MeleeArc Arc;
+			public MeleeArc Arc = null!;
 			public Entity Owner;
-			public Item By;
+			public Item By = null!;
 		}
 	}
 }

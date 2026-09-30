@@ -18,8 +18,8 @@ using Microsoft.Xna.Framework;
 namespace BurningKnight.level.entities {
 	public partial class AchievementStatue : Prop {
 		private string id = "bk:rip";
-		private Achievement achievement;
-		private TextureRegion achievementTexture;
+		private Achievement? achievement;
+		private TextureRegion achievementTexture = null!;
 		private float offset;
 		private bool hidden;
 

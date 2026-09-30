@@ -15,10 +15,10 @@ namespace BurningKnight.entity.component {
 		public bool UseLineOfSight = true;
 
 		public string[] Variants;
-		private Entity trigger;
+		private Entity? trigger;
 
-		public Func<Entity, bool> CanTalk;
-		public Func<Entity, string> DecideVariant;
+		public Func<Entity, bool>? CanTalk;
+		public Func<Entity, string>? DecideVariant;
 
 		public CloseDialogComponent(params string[] vars) {
 			Variants = vars;

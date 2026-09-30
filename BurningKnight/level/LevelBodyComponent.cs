@@ -13,10 +13,10 @@ namespace BurningKnight.level {
 	public class LevelBodyComponent : BodyComponent {
 		public const byte ChunkSize = 8;
 
-		public Level Level;
+		public Level Level = null!;
 		
 		private bool dirty;
-		protected IPhysicsBody[] chunks;
+		protected IPhysicsBody[]? chunks;
 		protected int cw;
 		private int ch;
 		private int cs;

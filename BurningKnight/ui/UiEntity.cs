@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.ui {
 	public class UiEntity : Entity {
-		public UiEntity Super;
+		public UiEntity Super = null!;
 		public bool Clickable = true;
 
 		public bool Enabled {

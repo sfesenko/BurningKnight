@@ -23,7 +23,7 @@ using Vector2 = Microsoft.Xna.Framework.Vector2;
 namespace BurningKnight.entity.creature.npc {
 	public class ShopKeeper : Npc {
 		private sbyte _mood = 3;
-		private Item shotgun;
+		private Item? shotgun;
 
 		public sbyte Mood {
 			get => _mood;
@@ -407,7 +407,7 @@ namespace BurningKnight.entity.creature.npc {
 		}
 
 		public class EnragedEvent : Event {
-			public ShopKeeper ShopKeeper;
+			public ShopKeeper ShopKeeper = null!;
 		}
 	}
 }

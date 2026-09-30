@@ -10,7 +10,7 @@ namespace BurningKnight.entity.door {
 	public class Lock : Entity {
 		protected bool LockedByDefault = true;
 
-		public Entity Owner;
+		public Entity Owner = null!;
 		public bool IsLocked { get; private set; }
 
 		public void SetLocked(bool value, Entity entity) {

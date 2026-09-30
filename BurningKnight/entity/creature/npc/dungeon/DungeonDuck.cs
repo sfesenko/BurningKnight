@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework;
 namespace BurningKnight.entity.creature.npc.dungeon {
 	public class DungeonDuck : DungeonShopNpc {
 		private bool interacted;
-		private Chest chest;
+		private Chest? chest;
 		
 		public override void AddComponents() {
 			base.AddComponents();

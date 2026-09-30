@@ -14,7 +14,7 @@ using Vector2 = Microsoft.Xna.Framework.Vector2;
 
 namespace BurningKnight.assets.particle.custom {
 	public class SnowParticle : Entity {
-		private static TextureRegion region;
+		private static TextureRegion? region;
 
 		private Color color;
 		private float target;

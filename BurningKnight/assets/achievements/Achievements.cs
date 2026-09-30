@@ -28,10 +28,10 @@ namespace BurningKnight.assets.achievements {
 
 		private static readonly System.Numerics.Vector2 size = new(300, 400);
 
-		public static AchievementUnlockedCallback UnlockedCallback;
-		public static AchievementLockedCallback LockedCallback;
-		public static AchievementProgressSetCallback ProgressSetCallback;
-		public static Action PostLoadCallback;
+		public static AchievementUnlockedCallback? UnlockedCallback;
+		public static AchievementLockedCallback? LockedCallback;
+		public static AchievementProgressSetCallback? ProgressSetCallback;
+		public static Action PostLoadCallback = null!;
 
 		// Created on first use: a field initializer would make an ImGui native call as soon as the
 		// class is touched, and a release run must not touch ImGui at all.

@@ -5,8 +5,8 @@ using Lens.entity;
 
 namespace BurningKnight.entity.item.stand {
 	public class VampireStand : CustomStand {
-		private Entity payer;
-		private Item takenItem;
+		private Entity payer = null!;
+		private Item takenItem = null!;
 		private int lastPrice;
 
 		public override void Init() {

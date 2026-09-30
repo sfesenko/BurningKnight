@@ -8,8 +8,8 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.assets.prefabs {
 	public class Prefab {
-		public PrefabData[] Datas;
-		public Level Level;
+		public PrefabData[] Datas = null!;
+		public Level Level = null!;
 
 		public void Place(Level level, int x, int y) {
 			var pos = new Vector2(x * 16, y * 16);

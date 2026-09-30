@@ -13,7 +13,7 @@ using Microsoft.Xna.Framework.Audio;
 
 namespace BurningKnight.entity.component {
 	public class AudioEmitterComponent : Component {
-		public static AudioListener Listener;
+		public static AudioListener? Listener;
 		public static Vector2 ListenerPosition;
 		
 		public static float PositionScale = 0.00000001f;
@@ -28,7 +28,7 @@ namespace BurningKnight.entity.component {
 		private static Audio Audio => Context.Audio;
 		
 		public class Sfx {
-			public SoundEffectInstance Effect;
+			public SoundEffectInstance Effect = null!;
 			public float BaseVolume = 1f;
 			public bool KeepAround;
 			public bool ApplyBuffer;

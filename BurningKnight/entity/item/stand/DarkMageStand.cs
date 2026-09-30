@@ -14,11 +14,11 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.item.stand {
 	public class DarkMageStand : ShopStand {
-		private TextureRegion heart;
+		private TextureRegion heart = null!;
 		private float priceWidth;
 
-		private Entity payer;
-		private Item takenItem;
+		private Entity payer = null!;
+		private Item takenItem = null!;
 		private int lastPrice;
 
 		protected override int CalculatePrice() {

@@ -6,7 +6,7 @@ namespace BurningKnight.entity.component {
 	public class InteractDialogComponent(string dialog) : Component
 	{
 		private bool started;
-		private Entity toStart;
+		private Entity? toStart;
 
 		public override void Init() {
 			base.Init();

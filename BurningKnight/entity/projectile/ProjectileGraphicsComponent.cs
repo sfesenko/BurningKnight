@@ -10,11 +10,11 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.projectile {
 	public class ProjectileGraphicsComponent : BasicProjectileGraphicsComponent {
-		public static TextureRegion Flash;
+		public static TextureRegion? Flash;
 		public bool IgnoreRotation;
 		public float Rotation => IgnoreRotation ? 0 : ((Projectile) Entity).GetAnyComponent<BodyComponent>().Body.Rotation;
-		public TextureRegion Aura;
-		public TextureRegion Light;
+		public TextureRegion? Aura;
+		public TextureRegion? Light;
 
 		public ProjectileGraphicsComponent(string image, string slice) : base(image, slice) {
 			if (Flash == null) {

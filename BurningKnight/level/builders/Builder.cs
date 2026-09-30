@@ -136,7 +136,7 @@ namespace BurningKnight.level.builders {
 			return Angle;
 		}
 
-		protected Rect LastSpace;
+		protected Rect LastSpace = null!;
 		
 		protected virtual float PlaceRoom(List<RoomDef> Collision, RoomDef Prev, RoomDef Next, float Angle) {
 			LastSpace = null;

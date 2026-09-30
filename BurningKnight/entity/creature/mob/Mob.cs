@@ -38,7 +38,7 @@ using MonoGame.Extended;
 
 namespace BurningKnight.entity.creature.mob {
 	public partial class Mob : Creature, DropModifier {
-		public Entity Target;
+		public Entity? Target;
 		public bool HasPrefix => prefix != null;
 		public Prefix Prefix => prefix;
 		
@@ -46,7 +46,7 @@ namespace BurningKnight.entity.creature.mob {
 		protected int TouchDamage = 1;
 		protected bool TargetEverywhere;
 		
-		private Prefix prefix;
+		private Prefix? prefix;
 		
 		public override void AddComponents() {
 			base.AddComponents();
@@ -195,7 +195,7 @@ namespace BurningKnight.entity.creature.mob {
 		}
 
 		#region Path finding
-		protected Vec2 NextPathPoint;
+		protected Vec2? NextPathPoint;
 		private int lastStepBack;
 		private int prevStepBack;
 

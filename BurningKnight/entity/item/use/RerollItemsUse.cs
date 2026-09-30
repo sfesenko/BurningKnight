@@ -12,7 +12,7 @@ namespace BurningKnight.entity.item.use {
 		private bool rerollStands;
 		private bool spawnNewItems;
 		private bool ignore;
-		private ItemType[] types;
+		private ItemType[] types = null!;
 		private float consumeChance;
 		private bool d2;
 		

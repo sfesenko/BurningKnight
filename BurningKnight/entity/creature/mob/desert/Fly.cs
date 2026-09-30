@@ -71,7 +71,7 @@ namespace BurningKnight.entity.creature.mob.desert {
 		#region Fly States
 		public class IdleState : SmartState<Fly> {
 			private bool searched;
-			private Entity target;
+			private Entity? target;
 
 			public override void Init() {
 				base.Init();

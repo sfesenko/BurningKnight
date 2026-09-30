@@ -15,7 +15,7 @@ using MonoGame.Extended;
 
 namespace BurningKnight.level.entities.building {
 	public partial class Thing : Prop, CollisionFilterEntity {
-		private TextureRegion shadow;
+		private TextureRegion shadow = null!;
 		// A shadow-rendering mode nothing sets; the branches below are kept for it.
 #pragma warning disable CS0649
 		private bool separateShadow;

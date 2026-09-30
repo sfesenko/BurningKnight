@@ -31,18 +31,18 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.item {
 	public partial class Item : SaveableEntity, CollisionFilterEntity, PlaceableEntity {
-		public static TextureRegion UnknownRegion;
+		public static TextureRegion UnknownRegion = null!;
 		public static bool Attact;
 		
 		public ItemType Type;
-		public string Id;
-		public string LastId;
+		public string Id = null!;
+		public string LastId = null!;
 		public string IdUnderScourge => Type != ItemType.Scourge && Scourge.IsEnabled(Scourge.OfEgg) ? Items.Datas.Values.ElementAt(Rnd.Int(Items.Datas.Count)).Id : Id;
 		public string Name => Masked ? "???" : Locale.Get(IdUnderScourge);
 		public string Description => Locale.Get($"{IdUnderScourge}_desc");
 		public float UseTime = 0.3f;
 		public float Delay;
-		public string Animation;
+		public string? Animation;
 		public bool AutoPickup;
 		public bool LoadedSelf;
 		public bool Used;
@@ -52,9 +52,9 @@ namespace BurningKnight.entity.item {
 		public bool Scourged;
 		public bool Hide;
 		
-		public ItemUse[] Uses;
+		public ItemUse[]? Uses;
 		public ItemUseCheck UseCheck = ItemUseChecks.Default;
-		public ItemRenderer Renderer;
+		public ItemRenderer Renderer = null!;
 
 		public bool Hidden => (Type != ItemType.Mana && Type != ItemType.Coin && Type != ItemType.Heart && Type != ItemType.Key && Type != ItemType.Bomb && (!TryGetComponent<OwnerComponent>(out var o) || !(o.Owner is Player)) && Scourge.IsEnabled(Scourge.OfUnknown));
 		public TextureRegion Region => (Hidden) ? UnknownRegion : (Animation != null ? GetComponent<AnimatedItemGraphicsComponent>()!.Animation.GetCurrentTexture() : GetComponent<ItemGraphicsComponent>()!.Sprite);
@@ -347,7 +347,7 @@ namespace BurningKnight.entity.item {
 		#endif
 
 		public class UnlockedEvent : Event {
-			public ItemData Data;
+			public ItemData Data = null!;
 		}
 	}
 }

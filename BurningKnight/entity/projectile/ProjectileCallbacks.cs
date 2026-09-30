@@ -7,10 +7,10 @@ namespace BurningKnight.entity.projectile {
 		public delegate void HurtCallback(Projectile p, Entity e);
 		public delegate bool CollisionCallback(Projectile p, Entity e);
 
-		public UpdateCallback OnUpdate;
-		public DeathCallback OnDeath;
-		public HurtCallback OnHurt;
-		public CollisionCallback OnCollision;
+		public UpdateCallback OnUpdate = null!;
+		public DeathCallback OnDeath = null!;
+		public HurtCallback OnHurt = null!;
+		public CollisionCallback OnCollision = null!;
 
 		public static void AttachUpdateCallback(Projectile p, UpdateCallback callback) {
 			if (p.Callbacks == null) {

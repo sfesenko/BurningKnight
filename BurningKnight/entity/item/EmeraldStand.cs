@@ -20,11 +20,11 @@ namespace BurningKnight.entity.item {
 	public class EmeraldStand : ItemStand {
 		public static List<string> AlreadyOnStand = new List<string>();
 
-		private TextureRegion emerald;
+		private TextureRegion emerald = null!;
 		
 		private int price;
 		private float priceWidth;
-		private string priceString;
+		private string priceString = null!;
 		private float priceX;
 		
 		public EmeraldStand() {

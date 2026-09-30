@@ -21,7 +21,7 @@ namespace BurningKnight.save {
 
 		public static string BackupDir => Paths.DataDir;
 
-		public static Saver[] Savers;
+		public static Saver[] Savers = null!;
 
 		public static void Init() {
 			Migrate();

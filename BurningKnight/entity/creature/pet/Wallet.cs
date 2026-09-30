@@ -36,7 +36,7 @@ namespace BurningKnight.entity.creature.pet {
 			Owner.GetComponent<ConsumablesComponent>()!.MaxCoins = 255;
 		}
 
-		private Item target;
+		private Item? target;
 		
 		#region Wallet States
 		private class IdleState : SmartState<Wallet> {

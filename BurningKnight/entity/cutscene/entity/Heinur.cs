@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework;
 namespace BurningKnight.entity.cutscene.entity {
 	public class Heinur : CutsceneEntity {
 		public bool Attract;
-		public Action Callback;
+		public Action Callback = null!;
 		
 		public override void AddComponents() {
 			base.AddComponents();

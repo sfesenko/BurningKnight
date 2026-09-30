@@ -10,7 +10,7 @@ using Lens.util;
 
 namespace BurningKnight.entity.item.use {
 	public class PokemonUse : ItemUse {
-		private Type type;
+		private Type? type;
 
 		public override void Use(Entity entity, Item item) {
 			base.Use(entity, item);

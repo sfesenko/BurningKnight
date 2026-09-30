@@ -11,7 +11,7 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.fx {
 	public class WindFx : Entity {
-		private static TextureRegion region;
+		private static TextureRegion? region;
 		private const float MaxSpeed = 0.5f;
 		
 		private float angle;

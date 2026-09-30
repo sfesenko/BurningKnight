@@ -9,14 +9,14 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.ui {
 	public class UiAchievement : FrameRenderer {
-		public static UiAchievement Current;
+		public static UiAchievement Current = null!;
 		
 		private const int Padding = 6;
 		
 		private string title;
 		private string description;
 		private TextureRegion icon;
-		private TextureRegion iconBg;
+		private TextureRegion iconBg = null!;
 
 		private Vector2 bgOffset;
 		private Vector2 iconOffset;

@@ -6,7 +6,7 @@ using Lens.util.math;
 
 namespace BurningKnight.entity.creature.drop {
 	public partial class OneOfDrop : Drop {
-		public static string[] DropNames;
+		public static string[] DropNames = null!;
 		public static int CurrentDrop;
 		
 		public Drop[] Drops;

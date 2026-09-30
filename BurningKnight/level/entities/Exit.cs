@@ -16,7 +16,7 @@ using Lens.physics;
 namespace BurningKnight.level.entities {
 	public partial class Exit : SaveableEntity, PlaceableEntity {
 		public int To;
-		public static Exit Instance;
+		public static Exit Instance = null!;
 		
 		public override void Init() {
 			base.Init();

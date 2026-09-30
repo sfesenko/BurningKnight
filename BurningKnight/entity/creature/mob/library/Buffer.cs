@@ -47,7 +47,7 @@ namespace BurningKnight.entity.creature.mob.library {
     	}
     }
 
-    private Mob mob;
+    private Mob? mob;
 
     public class SummonState : SmartState<Buffer> {
 	    public override void Init() {

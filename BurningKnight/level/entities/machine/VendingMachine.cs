@@ -169,7 +169,7 @@ namespace BurningKnight.level.entities.machine {
 		}
 		
 		public class BrokenEvent : Event {
-			public VendingMachine Machine;
+			public VendingMachine Machine = null!;
 		}
 	}
 }

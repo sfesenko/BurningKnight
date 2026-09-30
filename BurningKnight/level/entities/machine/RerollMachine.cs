@@ -163,7 +163,7 @@ namespace BurningKnight.level.entities.machine {
 		}
 		
 		public class BrokenEvent : Event {
-			public RerollMachine Machine;
+			public RerollMachine Machine = null!;
 		}
 	}
 }

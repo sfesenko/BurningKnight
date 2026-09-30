@@ -26,10 +26,10 @@ namespace BurningKnight.ui {
 		private static Color doorColor = new Color(93, 44, 40);
 
 		private Player player;
-		private TextureRegion slice;
+		private TextureRegion slice = null!;
 
-		private TextureRegion playerIcon;
-		private TextureRegion frame;
+		private TextureRegion playerIcon = null!;
+		private TextureRegion frame = null!;
 
 		private RenderTarget2D target;
 

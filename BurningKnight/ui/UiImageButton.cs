@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.ui {
 	public class UiImageButton : UiButton {
-		private string id;
+		private string? id;
 		public float Size = 2;
 
 		public new string Id {
@@ -24,7 +24,7 @@ namespace BurningKnight.ui {
 			}
 		}
 
-		public TextureRegion Region;
+		public TextureRegion Region = null!;
 
 		public override void Render() {
 			Graphics.Render(Region, Center, 0, Region.Center, new Vector2(scale * Size));

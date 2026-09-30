@@ -98,7 +98,7 @@ namespace BurningKnight.entity.creature.pet {
 			return base.HandleEvent(e);
 		}
 
-		private Entity target;
+		private Entity? target;
 		
 		#region Eye States
 		private class IdleState : SmartState<TheEye> {

@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.level.entities.chest {
 	public class GlassChest : Chest {
-		private Item item;
+		private Item? item;
 		private float t;
 
 		public override string GetSprite() {

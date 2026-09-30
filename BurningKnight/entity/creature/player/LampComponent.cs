@@ -9,9 +9,9 @@ using Lens.util.math;
 
 namespace BurningKnight.entity.creature.player {
 	public class LampComponent : ItemComponent {
-		private FollowerPet pet;
+		private FollowerPet? pet;
 		private bool loaded;
-		private Item prev;
+		private Item? prev;
 		
 		public override void Set(Item item, bool animate = true) {
 			base.Set(item, (item == null || item.Id != "bk:no_lamp") && animate);

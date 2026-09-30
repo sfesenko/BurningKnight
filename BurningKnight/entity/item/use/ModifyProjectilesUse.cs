@@ -22,7 +22,7 @@ namespace BurningKnight.entity.item.use {
 		public float Chance;
 		public bool ToAny;
 		public bool EventCreated = true;
-		public string BuffToApply;
+		public string? BuffToApply;
 		public bool InfiniteBuff;
 		public float BuffDuration;
 		public bool Explosive;

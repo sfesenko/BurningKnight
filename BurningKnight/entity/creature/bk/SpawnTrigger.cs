@@ -22,8 +22,8 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.creature.bk {
 	public class SpawnTrigger : SaveableEntity {
-		public byte[] Tiles;
-		public byte[] Liquid;
+		public byte[] Tiles = null!;
+		public byte[] Liquid = null!;
 		public ushort RoomX;
 		public ushort RoomY;
 		public byte RoomWidth;
@@ -293,8 +293,8 @@ namespace BurningKnight.entity.creature.bk {
 		}
 
 		public class TriggeredEvent : Event {
-			public SpawnTrigger Trigger;
-			public Player Who;
+			public SpawnTrigger Trigger = null!;
+			public Player Who = null!;
 		}
 	}
 }

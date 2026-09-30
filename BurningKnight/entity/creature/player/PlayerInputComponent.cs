@@ -25,7 +25,7 @@ namespace BurningKnight.entity.creature.player {
 		public static bool EnableUpdates;
 		
 		private const float Speed = 20f;
-		private DialogComponent dialog;
+		private DialogComponent? dialog;
 		private bool wasSitting;
 
 		public static float TimeIdle;

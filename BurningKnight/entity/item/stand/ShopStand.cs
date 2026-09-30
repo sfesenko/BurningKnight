@@ -21,7 +21,7 @@ namespace BurningKnight.entity.item.stand {
 		public bool Free;
 
 		protected int Price;
-		protected string PriceString;
+		protected string PriceString = null!;
 		protected float PriceX;
 		protected bool OnSale;
 		protected bool HasSale;

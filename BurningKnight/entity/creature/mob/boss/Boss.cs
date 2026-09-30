@@ -36,7 +36,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 		public bool Awoken;
 		
 		protected bool HasHealthbar = true;
-		protected HealthBar HealthBar;
+		protected HealthBar? HealthBar;
 
 		protected bool Died;
 		private float deathTimer;
@@ -394,7 +394,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 		}
 
 		public class DefeatedEvent : Event {
-			public Boss Boss;
+			public Boss Boss = null!;
 		}
 		
 		public override void Kill(Entity w, DamageType type = DamageType.Regular) {

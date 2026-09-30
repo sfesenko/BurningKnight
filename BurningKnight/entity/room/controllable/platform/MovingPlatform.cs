@@ -29,10 +29,10 @@ namespace BurningKnight.entity.room.controllable.platform {
 		private int step;
 		private Vector2 velocity;
 
-		private PlatformBorder left;
-		private PlatformBorder right;
-		private PlatformBorder up;
-		private PlatformBorder down;
+		private PlatformBorder left = null!;
+		private PlatformBorder right = null!;
+		private PlatformBorder up = null!;
+		private PlatformBorder down = null!;
 
 		protected virtual string GetAnimation() {
 			return "moving_platform";

@@ -5,7 +5,7 @@ using Lens.physics;
 
 namespace BurningKnight.entity.pc {
 	public class Controller : Entity {
-		public Pico Pico;
+		public Pico Pico = null!;
 		
 		public override void AddComponents() {
 			base.AddComponents();

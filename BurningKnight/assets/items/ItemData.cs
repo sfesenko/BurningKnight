@@ -11,12 +11,12 @@ namespace BurningKnight.assets.items {
 		public bool AutoPickup;
 		public bool Automatic;
 		public bool SingleUse;
-		public string Animation;
-		public string Id;
+		public string Animation = null!;
+		public string Id = null!;
 		public float UseTime;
 		public ItemType Type;
 		public ItemQuality Quality;
-		public Chance Chance;
+		public Chance Chance = null!;
 		public int Pools;
 		public bool Single = true;
 		public bool Lockable;

@@ -18,11 +18,11 @@ namespace BurningKnight.ui {
 		private const float ChangeDelay = 1f;
 		private static Vector2 barOffset = new Vector2(1, 6);
 		
-		private TextureRegion frame;
-		private TextureRegion fill;
-		private TextureRegion damage;
-		private TextureRegion phase;
-		private TextureRegion phaseB;
+		private TextureRegion frame = null!;
+		private TextureRegion fill = null!;
+		private TextureRegion damage = null!;
+		private TextureRegion phase = null!;
+		private TextureRegion phaseB = null!;
 		
 		private float lastHp;
 		private float sinceLastDamage;

@@ -12,8 +12,8 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.assets.particle.custom {
 	public class EpicSpawn : Entity {
-		private TextureRegion region;
-		private TextureRegion ray;
+		private TextureRegion region = null!;
+		private TextureRegion ray = null!;
 		private float scale;
 		private float angle;
 		private float t;
@@ -21,7 +21,7 @@ namespace BurningKnight.assets.particle.custom {
 		private float tt;
 		private float lastRay = 0.25f;
 
-		public Action OnEnd;
+		public Action? OnEnd;
 
 		public override void AddComponents() {
 			base.AddComponents();

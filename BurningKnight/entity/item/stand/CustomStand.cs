@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.item.stand {
 	public class CustomStand : ShopStand {
-		private TextureRegion icon;
+		private TextureRegion icon = null!;
 		private float priceWidth;
 		private float iconY;
 

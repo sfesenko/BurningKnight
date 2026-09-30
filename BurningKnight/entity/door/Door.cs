@@ -38,7 +38,7 @@ namespace BurningKnight.entity.door {
 		protected List<Entity> Colliding = new List<Entity>();
 		private float lastCollisionTimer;
 		private bool lit;
-		internal Room[] Rooms;
+		internal Room[]? Rooms;
 
 		public virtual Vector2 GetOffset() {
 			return new Vector2(0, Vertical ? -7 : -7);

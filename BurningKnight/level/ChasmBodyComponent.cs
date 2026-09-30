@@ -11,7 +11,7 @@ using Microsoft.Xna.Framework;
 namespace BurningKnight.level {
 	public class ChasmBodyComponent : BodyComponent {
 		private bool dirty;
-		private IPhysicsBody[] chunks;
+		private IPhysicsBody[]? chunks;
 		private int cw;
 		private int ch;
 		private int cs;

@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.physics {
 	public class Physics {
-		public static IPhysicsWorld World;
+		public static IPhysicsWorld? World;
 		public static bool RenderDebug = false;
 
 		public static void Init() {

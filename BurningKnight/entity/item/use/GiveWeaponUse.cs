@@ -6,7 +6,7 @@ using Lens.util;
 
 namespace BurningKnight.entity.item.use {
 	public partial class GiveWeaponUse : ItemUse {
-		public new string Item;
+		public new string Item = null!;
 
 		public override void Use(Entity entity, Item item) {
 			var i = Items.CreateAndAdd(Item, entity.Area);

@@ -11,10 +11,10 @@ namespace BurningKnight.state {
 	public class PhotoCard : Entity {
 		private static Color tint = new Color(0.6f, 0.6f, 0.6f, 1f);
 		
-		public TextureRegion Region;
-		public string Name;
-		public string Tasks;
-		public string Url;
+		public TextureRegion Region = null!;
+		public string? Name;
+		public string? Tasks;
+		public string Url = null!;
 		public Vector2 Target;
 		public float Angle;
 		public bool GoAway;

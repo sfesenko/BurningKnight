@@ -9,9 +9,9 @@ using Microsoft.Xna.Framework.Input;
 
 namespace BurningKnight.entity.component {
 	public class GamepadComponent : Component {
-		public static GamepadData Current;
+		public static GamepadData? Current;
 
-		private GamepadData controller;
+		private GamepadData controller = null!;
 
 		public GamepadData Controller {
 			get => controller;
@@ -22,7 +22,7 @@ namespace BurningKnight.entity.component {
 			}
 		}
 
-		public string GamepadId;
+		public string GamepadId = null!;
 
 		static GamepadComponent() {
 			Camera.OnShake += () => {

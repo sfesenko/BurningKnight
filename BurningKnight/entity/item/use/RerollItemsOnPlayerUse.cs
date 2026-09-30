@@ -53,7 +53,7 @@ namespace BurningKnight.entity.item.use {
 		}
 
 		public class RerolledEvent : Event {
-			public Entity Entity;
+			public Entity Entity = null!;
 		}
 	}
 }

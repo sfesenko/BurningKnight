@@ -13,7 +13,7 @@ namespace BurningKnight.level.entities.decor {
 		public float XSpread = 0.5f;
 		public Vector2? Target;
 		
-		private FireEmitter emitter;
+		private FireEmitter emitter = null!;
 		
 		public override void Init() {
 			base.Init();

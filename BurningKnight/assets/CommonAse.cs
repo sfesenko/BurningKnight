@@ -5,11 +5,11 @@ using Lens.graphics.animation;
 namespace BurningKnight.assets;
 
 public static class CommonAse {
-	public static AnimationData Items;
-	public static AnimationData Ui;
-	public static AnimationData Projectiles;
-	public static AnimationData Particles;
-	public static AnimationData Props;
+	public static AnimationData Items = null!;
+	public static AnimationData Ui = null!;
+	public static AnimationData Projectiles = null!;
+	public static AnimationData Particles = null!;
+	public static AnimationData Props = null!;
 	
 	public static void Load() {
 		Items = Animations.Get("items");

@@ -51,7 +51,7 @@ namespace BurningKnight.entity.item {
 		private static int count;
 		public static int Count => count;
 		
-		public readonly string Name;
+		public readonly string Name = null!;
 		public readonly int Id;
 
 		public ItemPool(string name) {

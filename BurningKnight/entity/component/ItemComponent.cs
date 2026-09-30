@@ -20,7 +20,7 @@ namespace BurningKnight.entity.component {
 	public class ItemComponent : SaveableComponent {
 		protected static Audio Audio => Context.Audio;
 		
-		public Item Item { get; protected set; }
+		public Item? Item { get; protected set; }
 		public bool DontSave;
 		public bool UpdateItem;
 

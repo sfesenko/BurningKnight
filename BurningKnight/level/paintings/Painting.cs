@@ -22,20 +22,20 @@ namespace BurningKnight.level.paintings {
 	public class Painting : SaveableEntity {
 		private const float Padding = 64f;
 		
-		public string Id;
-		public string Author;
+		public string Id = null!;
+		public string Author = null!;
 		
-		private Entity from;
+		private Entity? from;
 		private float scale;
 		private float uiY;
 
-		private string name;
-		private string author;
+		private string name = null!;
+		private string author = null!;
 		
 		private float nameWidth;
 		private float authorWidth;
 
-		private TextureRegion big;
+		private TextureRegion big = null!;
 		
 		protected virtual TextureRegion GetRegion() {
 			return big;

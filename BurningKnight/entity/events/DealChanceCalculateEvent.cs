@@ -9,6 +9,6 @@ namespace BurningKnight.entity.events {
 
 		public bool OpenBoth;
 
-		public Entity Who;
+		public Entity Who = null!;
 	}
 }

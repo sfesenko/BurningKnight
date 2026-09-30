@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.component {
 	public class ZSliceComponent : GraphicsComponent {
-		public TextureRegion Sprite;
+		public TextureRegion Sprite = null!;
 		public Vector2 Scale = Vector2.One;
 		public Vector2 Origin;
 		

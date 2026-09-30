@@ -4,7 +4,7 @@ using Lens.entity;
 
 namespace BurningKnight.level {
 	public class HalfProjectileLevel : Entity, CollisionFilterEntity {
-		public Level Level;
+		public Level Level = null!;
 
 		public override void AddComponents() {
 			base.AddComponents();

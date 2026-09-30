@@ -37,14 +37,14 @@ namespace BurningKnight.entity.projectile {
 	public class Projectile : Entity, CollisionFilterEntity {
 		public const ProjectileFlags DefaultFlags = ProjectileFlags.Reflectable | ProjectileFlags.BreakableByMelee | ProjectileFlags.Fresh;
 
-		public Projectile Parent; // Potentially not needed
-		public Entity Owner;
-		public Entity FirstOwner; // Potentially not needed
-		public Item Item;
+		public Projectile Parent = null!; // Potentially not needed
+		public Entity Owner = null!;
+		public Entity FirstOwner = null!; // Potentially not needed
+		public Item Item = null!;
 		public Color Color = ProjectileColor.Red;
 		public ProjectileFlags Flags = DefaultFlags;
-		public ProjectileCallbacks Callbacks;
-		public string Slice;
+		public ProjectileCallbacks? Callbacks;
+		public string Slice = null!;
 
 		public List<Entity> EntitiesHurt = new List<Entity>(); // can we get rid of it?
 

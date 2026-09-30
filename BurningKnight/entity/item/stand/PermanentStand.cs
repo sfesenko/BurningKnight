@@ -6,7 +6,7 @@ using Lens.util.file;
 
 namespace BurningKnight.entity.item.stand {
 	public partial class PermanentStand : ItemStand {
-		protected string SavedItem;
+		protected string? SavedItem;
 
 		public override void PostInit() {
 			base.PostInit();

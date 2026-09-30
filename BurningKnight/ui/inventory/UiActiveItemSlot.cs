@@ -15,17 +15,17 @@ namespace BurningKnight.ui.inventory {
 	public class UiActiveItemSlot : UiEntity {
 		private UiInventory inventory;
 
-		private TextureRegion activeSide;
-		private TextureRegion activeBorder;
-		private TextureRegion activeEmpty;
-		private TextureRegion activeFull;
+		private TextureRegion activeSide = null!;
+		private TextureRegion activeBorder = null!;
+		private TextureRegion activeEmpty = null!;
+		private TextureRegion activeFull = null!;
 
 		private Vector2 activeScale = new Vector2(1);
 
 		public float ActivePosition = -1f;
 		private bool tweened;
 
-		private UiItem uiItem;
+		private UiItem uiItem = null!;
 		
 		public UiActiveItemSlot(UiInventory inv) {
 			inventory = inv;

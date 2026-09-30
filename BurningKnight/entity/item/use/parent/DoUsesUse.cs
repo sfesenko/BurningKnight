@@ -5,7 +5,7 @@ using Lens.lightJson;
 
 namespace BurningKnight.entity.item.use.parent {
 	public abstract partial class DoUsesUse : ItemUse {
-		protected ItemUse[] Uses;
+		protected ItemUse[] Uses = null!;
 
 		public override void Use(Entity entity, Item item) {
 			base.Use(entity, item);

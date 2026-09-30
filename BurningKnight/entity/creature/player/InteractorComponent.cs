@@ -18,7 +18,7 @@ using Lens.util;
 
 namespace BurningKnight.entity.creature.player {
 	public class InteractorComponent : Component {
-		public Entity CurrentlyInteracting;
+		public Entity? CurrentlyInteracting;
 		public List<Entity> InteractionCandidates = new List<Entity>();
 
 		public override void Update(float dt) {
@@ -104,7 +104,7 @@ namespace BurningKnight.entity.creature.player {
 			return base.HandleEvent(e);
 		}
 
-		public Func<Entity, bool> CanInteractCallback;
+		public Func<Entity, bool>? CanInteractCallback;
 		
 		public virtual bool CanInteract(Entity e) {
 			return e.TryGetComponent<InteractableComponent>(out var component) && (component.CanInteract?.Invoke(Entity) ?? true) && (CanInteractCallback == null || CanInteractCallback(e));

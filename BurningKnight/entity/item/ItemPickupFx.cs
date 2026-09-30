@@ -14,7 +14,7 @@ namespace BurningKnight.entity.item {
 		private Item item;
 		private bool tweened;
 		private float y;
-		private TweenTask task;
+		private TweenTask task = null!;
 		
 		public ItemPickupFx(Item it) {
 			item = it;

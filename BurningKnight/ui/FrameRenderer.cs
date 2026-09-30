@@ -5,17 +5,17 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.ui {
 	public class FrameRenderer : Entity {
-		protected TextureRegion Top;
-		protected TextureRegion TopLeft;
-		protected TextureRegion TopRight;
+		protected TextureRegion Top = null!;
+		protected TextureRegion TopLeft = null!;
+		protected TextureRegion TopRight = null!;
 		
-		protected TextureRegion RCenter;
-		protected TextureRegion CenterLeft;
-		protected TextureRegion CenterRight;
+		protected TextureRegion RCenter = null!;
+		protected TextureRegion CenterLeft = null!;
+		protected TextureRegion CenterRight = null!;
 		
-		protected TextureRegion RBottom;
-		protected TextureRegion BottomLeft;
-		protected TextureRegion BottomRight;
+		protected TextureRegion RBottom = null!;
+		protected TextureRegion BottomLeft = null!;
+		protected TextureRegion BottomRight = null!;
 
 		public Color Tint = Color.White;
 		

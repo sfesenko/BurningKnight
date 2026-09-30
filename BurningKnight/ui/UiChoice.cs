@@ -24,7 +24,7 @@ namespace BurningKnight.ui {
 		}
 		
 		public string Name = "";
-		public string[] Options;
+		public string[]? Options;
 
 		public override void Init() {
 			base.Init();
@@ -49,7 +49,7 @@ namespace BurningKnight.ui {
 			}
 		}
 
-		public Action<UiChoice> OnUpdate;
+		public Action<UiChoice>? OnUpdate;
 
 		public override void Update(float dt) {
 			OnUpdate?.Invoke(this);

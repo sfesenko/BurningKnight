@@ -214,8 +214,8 @@ namespace BurningKnight.level.entities.chest {
 
 
 		public class OpenedEvent : Event {
-			public Chest Chest;
-			public Entity Who;
+			public Chest Chest = null!;
+			public Entity Who = null!;
 		}
 
 		public virtual bool ShouldCollide(Entity entity) {

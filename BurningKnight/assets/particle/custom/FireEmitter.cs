@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.assets.particle.custom {
 	public class FireEmitter : Entity {
-		private TextureRegion region;
+		private TextureRegion region = null!;
 		private float t;
 		
 		public float Scale = 1;

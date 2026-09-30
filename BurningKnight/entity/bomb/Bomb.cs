@@ -20,8 +20,8 @@ namespace BurningKnight.entity.bomb {
 		public const float ExplosionTime = 1f;
 		private readonly float explosionTime; 
 
-		public BombUpdateCallback Controller;
-		public BombDeathCallback OnDeath;
+		public BombUpdateCallback? Controller;
+		public BombDeathCallback? OnDeath;
 
 		public Bomb Parent;
 		public Entity Owner;

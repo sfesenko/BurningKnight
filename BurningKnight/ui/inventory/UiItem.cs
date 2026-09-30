@@ -15,9 +15,9 @@ using MonoGame.Extended;
 
 namespace BurningKnight.ui.inventory {
 	public class UiItem : UiEntity {
-		public static UiItem Hovered;
+		public static UiItem Hovered = null!;
 
-		private string id;
+		private string? id;
 		public float TextA;
 
 		public string Id {
@@ -46,14 +46,14 @@ namespace BurningKnight.ui.inventory {
 			}
 		}
 
-		public string Name;
-		public string Description;
+		public string Name = null!;
+		public string Description = null!;
 		public Vector2 NameSize;
 		public Vector2 DescriptionSize;
 		public bool OnTop;
 
-		public TextureRegion Region;
-		private string countStr;
+		public TextureRegion Region = null!;
+		private string countStr = null!;
 		private int count;
 		private int countW;
 		private int countH;

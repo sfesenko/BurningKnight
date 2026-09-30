@@ -27,9 +27,9 @@ using Microsoft.Xna.Framework;
 namespace BurningKnight.level.entities.decor {
 	public class BurningStatue : SolidProp {
 		public bool Broken;
-		private FireEmitter fea;
-		private FireEmitter feb;
-		private SpawnTrigger trigger;
+		private FireEmitter? fea;
+		private FireEmitter feb = null!;
+		private SpawnTrigger? trigger;
 		private float XSpread = 0.1f;
 		// Only the disabled SetupSpawn assigns it; the emitters below read it as null.
 #pragma warning disable CS0649
@@ -311,7 +311,7 @@ namespace BurningKnight.level.entities.decor {
 		}
 
 		public class BrokenEvent : Event {
-			public BurningStatue BurningStatue;
+			public BurningStatue BurningStatue = null!;
 		}
 	}
 }

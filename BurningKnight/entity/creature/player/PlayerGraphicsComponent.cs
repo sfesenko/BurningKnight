@@ -34,7 +34,7 @@ namespace BurningKnight.entity.creature.player {
 		private Vector2 scale = Vector2.One;
 		private Animation head;
 
-		private TextureRegion wing;
+		private TextureRegion wing = null!;
 		public bool Hidden;
 		
 		public PlayerGraphicsComponent() : base("gobbo", "body") {

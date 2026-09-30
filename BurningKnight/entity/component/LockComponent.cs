@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework;
 namespace BurningKnight.entity.component {
 	public class LockComponent : Component, Subscriber {
 		public Lock Lock;
-		public Action<Entity> OnOpen;
+		public Action<Entity>? OnOpen;
 
 		private Vector2 offset;
 		

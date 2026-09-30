@@ -23,7 +23,7 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.level.entities {
 	public partial class Tombstone : Prop {
-		public string Item;
+		public string? Item;
 		public bool DisableDialog;
 		public byte Index;
 		public bool HasPlayer;

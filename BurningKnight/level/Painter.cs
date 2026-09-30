@@ -46,7 +46,7 @@ namespace BurningKnight.level {
 		public List<Action<Level, RoomDef>> RoomModifiers = new List<Action<Level, RoomDef>>();
 		public List<Action<Level, RoomDef, int, int>> Modifiers = new List<Action<Level, RoomDef, int, int>>();
 		public Tile DirtTile = Tile.Dirt;
-		public Action<List<MobInfo>> ModifyMobs;
+		public Action<List<MobInfo>> ModifyMobs = null!;
 
 		public Painter() {
 			AllGold = false;

@@ -4,7 +4,7 @@ using Lens.lightJson;
 
 namespace BurningKnight.entity.item.use {
 	public partial class ModifyGameSaveValueUse : ItemUse {
-		private string id;
+		private string id = null!;
 		private float amount;
 		private bool over;
 

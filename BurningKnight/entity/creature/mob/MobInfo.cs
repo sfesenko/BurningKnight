@@ -3,8 +3,8 @@ using BurningKnight.state;
 
 namespace BurningKnight.entity.creature.mob {
 	public class MobInfo {
-		public Type Type;
-		public SpawnChance[] Spawns;
+		public Type Type = null!;
+		public SpawnChance[] Spawns = null!;
 		public bool SpawnsOnFirst = true;
 		public bool NearWall;
 		public bool Single;

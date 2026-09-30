@@ -16,7 +16,7 @@ using Color = Microsoft.Xna.Framework.Color;
 
 namespace BurningKnight.entity {
 	public class Cursor : Entity, CustomCameraJumper {
-		private static TextureRegion[] regions;
+		private static TextureRegion[] regions = null!;
 
 		private Vector2 scale = new Vector2(1);
 		private Vector2 stickOffset;
@@ -25,7 +25,7 @@ namespace BurningKnight.entity {
 		private Color tint;
 		private Vector2 lastPos;
 
-		public Player Player;
+		public Player Player = null!;
 		public Vector2 GamePosition;
 
 		public override void Init() {

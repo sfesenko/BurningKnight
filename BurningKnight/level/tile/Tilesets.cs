@@ -6,7 +6,7 @@ using Lens.util;
 namespace BurningKnight.level.tile {
 	public class Tilesets {
 		public static Dictionary<string, Tileset> Loaded = new Dictionary<string, Tileset>();
-		public static BiomeAssets Biome;
+		public static BiomeAssets? Biome;
 
 		public static void Load() {
 			if (Biome == null) {

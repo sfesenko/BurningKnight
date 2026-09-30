@@ -47,9 +47,9 @@ namespace BurningKnight.entity.room {
 		public RoomType Type;
 		public bool Explored;
 		public bool Cleared;
-		public string Id;
-		public RoomDef Parent;
-		public Rect Rect;
+		public string Id = null!;
+		public RoomDef Parent = null!;
+		public Rect Rect = null!;
 		
 		public List<RoomControllable> Controllable = new List<RoomControllable>();
 		public List<RoomInput> Inputs = new List<RoomInput>();
@@ -58,7 +58,7 @@ namespace BurningKnight.entity.room {
 		public List<Door> Doors = new List<Door>();
 
 		private bool checkCleared;
-		private Entity cleared;
+		private Entity cleared = null!;
 		private float t;
 
 		public void CheckCleared(Entity entity) {

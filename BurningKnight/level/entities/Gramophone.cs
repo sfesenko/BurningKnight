@@ -20,9 +20,9 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.level.entities {
 	public partial class Gramophone : Prop {
-		private TextureRegion top;
-		private TextureRegion bottom;
-		private TextureRegion tdisk;
+		private TextureRegion top = null!;
+		private TextureRegion bottom = null!;
+		private TextureRegion tdisk = null!;
 		private float t;
 		private float tillNext;
 		private bool broken;
@@ -259,7 +259,7 @@ namespace BurningKnight.level.entities {
 		}
 		
 		public class DiskChangedEvent : Event {
-			public Gramophone Gramophone;
+			public Gramophone Gramophone = null!;
 			public int Disk;
 		}
 

@@ -34,11 +34,11 @@ namespace BurningKnight.level.biome {
 		public TextureRegion PathPattern;
 		public TextureRegion[] Path;
 		
-		public TextureRegion SandPattern;
-		public TextureRegion[] Sand;
+		public TextureRegion SandPattern = null!;
+		public TextureRegion[] Sand = null!;
 		
-		public TextureRegion SnowPattern;
-		public TextureRegion[] Snow;
+		public TextureRegion SnowPattern = null!;
+		public TextureRegion[] Snow = null!;
 		
 		public TextureRegion ChasmPattern;
 		public TextureRegion[] ChasmTop = new TextureRegion[3];

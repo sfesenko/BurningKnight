@@ -16,7 +16,7 @@ namespace BurningKnight.entity.fx {
 		private string text;
 		private Entity entity;
 		private float y;
-		private TweenTask task;
+		private TweenTask task = null!;
 		private TextureRegion region;
 		private float offset;
 		

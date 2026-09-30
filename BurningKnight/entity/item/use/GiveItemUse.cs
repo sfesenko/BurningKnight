@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework;
 namespace BurningKnight.entity.item.use {
 	public partial class GiveItemUse : ItemUse {
 		public int Amount;
-		public new string Item;
+		public new string Item = null!;
 		public bool OnStand;
 		public bool Random;
 		public bool Animate;

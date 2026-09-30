@@ -37,7 +37,7 @@ using Vector2 = Microsoft.Xna.Framework.Vector2;
 namespace BurningKnight.entity.creature.bk {
 	public partial class BurningKnight {
 		public class LaserSwingAttack : SmartState<BurningKnight> {
-			private Laser laser;
+			private Laser? laser;
 			private float vy;
 			private float angle;
 			

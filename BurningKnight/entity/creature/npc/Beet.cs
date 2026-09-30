@@ -13,7 +13,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace BurningKnight.entity.creature.npc {
 	public class Beet : Npc {
-		private Entity interactingWith;
+		private Entity interactingWith = null!;
 
 		static Beet() {
 			Dialogs.RegisterCallback("beet_0", (d, c) => {

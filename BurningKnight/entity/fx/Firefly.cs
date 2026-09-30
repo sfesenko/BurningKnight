@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.fx {
 	public class Firefly : SaveableEntity, PlaceableEntity {
-		private static TextureRegion region;
+		private static TextureRegion? region;
 
 		private Vector2 size;
 		private Vector2 lightSize;

@@ -20,12 +20,12 @@ namespace BurningKnight.level.entities {
 		private static Vector2 rightOrigin = new Vector2(-0.5f, 1);
 		private static Vector2 topOrigin = new Vector2(7 / 2f, 31);
 
-		private TextureRegion leftClaw;
-		private TextureRegion rightClaw;
-		private TextureRegion top;
+		private TextureRegion leftClaw = null!;
+		private TextureRegion rightClaw = null!;
+		private TextureRegion top = null!;
 		private float angle;
 		private float z = TopZ;
-		private RoundItem grabbed;
+		private RoundItem? grabbed;
 		internal Vector2 start;
 		
 		public override void AddComponents() {

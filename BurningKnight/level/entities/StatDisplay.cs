@@ -11,7 +11,7 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.level.entities {
 	public partial class StatDisplay : SolidProp {
-		private string board;
+		private string board = null!;
 		private int challengeId;
 
 		protected override Rectangle GetCollider() {

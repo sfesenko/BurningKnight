@@ -80,11 +80,11 @@ namespace BurningKnight {
 		public static bool Vegan;
 		public static bool Autopause;
 		public static bool Autosave;
-		public static string Gamepad;
+		public static string Gamepad = null!;
 		public static bool Vibrate;
 		public static float Sensivity;
 		public static float CursorRadius;
-		public static string Language;
+		public static string Language = null!;
 	
 		// Not saved
 		public static bool HideUi;

@@ -11,7 +11,7 @@ namespace BurningKnight.entity.item.use {
 		private int damage;
 		private float speed;
 		private float range;
-		private string slice;
+		private string slice = null!;
 		private int amount;
 		
 		public override void Use(Entity entity, Item item) {

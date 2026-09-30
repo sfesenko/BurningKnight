@@ -4,8 +4,8 @@ using Lens.physics;
 
 namespace BurningKnight.entity.events {
 	public class CollisionStartedEvent : Event {
-		public Entity Entity;
-		public BodyComponent Body;
-		public IFixture Fixture;
+		public Entity Entity = null!;
+		public BodyComponent Body = null!;
+		public IFixture Fixture = null!;
 	}
 }

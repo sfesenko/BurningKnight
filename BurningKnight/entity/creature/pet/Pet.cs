@@ -4,8 +4,8 @@ using Lens.entity;
 
 namespace BurningKnight.entity.creature.pet {
 	public class Pet : Creature {
-		public Entity Owner;
-		public Action<float> Controller;
+		public Entity? Owner;
+		public Action<float>? Controller;
 
 		protected bool Saveable;
 

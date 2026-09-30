@@ -9,7 +9,7 @@ using Lens.util.math;
 
 namespace BurningKnight.entity.item.use {
 	public partial class SpawnPetUse : ItemUse {
-		private string pet;
+		private string pet = null!;
 		private bool random;
 		private bool onlyIfHasNone;
 

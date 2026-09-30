@@ -16,9 +16,9 @@ using MathUtils = Lens.util.MathUtils;
 
 namespace BurningKnight.assets.particle.custom {
 	public class FireParticle : Entity {
-		public static TextureRegion Region;
+		public static TextureRegion? Region;
 		
-		public Entity Owner;
+		public Entity? Owner;
 		public float Delay;
 
 		public float T;

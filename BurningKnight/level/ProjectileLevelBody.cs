@@ -12,7 +12,7 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.level {
 	public class ProjectileLevelBody : Entity, CollisionFilterEntity {
-		public Level Level;
+		public Level Level = null!;
 
 		public override void AddComponents() {
 			base.AddComponents();

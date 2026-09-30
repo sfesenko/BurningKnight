@@ -44,7 +44,7 @@ namespace BurningKnight.ui.str {
 	 * [tg a]test[dl a]
 	 */
 	public partial class UiString : Entity {
-		private string label;
+		private string label = null!;
 		private BitmapFont font;
 		private List<Glyph> glyphs = [];
 		private List<GlyphEffect> effects = [];
@@ -60,11 +60,11 @@ namespace BurningKnight.ui.str {
 		public int WidthLimit;
 		public bool Finished => progress >= glyphs.Count;
 
-		public StartedTyping StartedTyping;
-		public FinishedTyping FinishedTyping;
-		public EventFired EventFired;
-		public CharTyped CharTyped;
-		public Action<Vector2, int> Renderer;
+		public StartedTyping? StartedTyping;
+		public FinishedTyping? FinishedTyping;
+		public EventFired EventFired = null!;
+		public CharTyped? CharTyped;
+		public Action<Vector2, int> Renderer = null!;
 		public readonly Dictionary<string, object> Variables = new();
 		public readonly List<TextureRegion> Icons = [];
 

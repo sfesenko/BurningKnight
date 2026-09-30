@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.level.entities.building {
 	public class House : SolidProp {
-		private TextureRegion shadow;
+		private TextureRegion shadow = null!;
 		
 		public override void AddComponents() {
 			base.AddComponents();

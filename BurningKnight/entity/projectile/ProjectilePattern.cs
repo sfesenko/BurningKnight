@@ -91,7 +91,7 @@ namespace BurningKnight.entity.projectile {
 		}
 
 		public class ProjectileData {
-			public Projectile Projectile;
+			public Projectile Projectile = null!;
 			public int Id;
 			public float Angle;
 			public float Distance;

@@ -13,7 +13,7 @@ namespace BurningKnight.save {
 			}
 		}
 
-		public static readonly Comparer DefaultComparer;
+		public static readonly Comparer DefaultComparer = null!;
 		public static bool Loading;
 		
 		public void SmartSave(List<Entity> a, FileWriter writer) {

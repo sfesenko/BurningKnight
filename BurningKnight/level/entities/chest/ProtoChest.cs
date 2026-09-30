@@ -18,8 +18,8 @@ using Microsoft.Xna.Framework;
 namespace BurningKnight.level.entities.chest {
 	public class ProtoChest : AnimatedChest {
 		private List<Player> colling = new List<Player>();
-		private InteractFx fx;
-		private TextureRegion itemRegion;
+		private InteractFx? fx;
+		private TextureRegion? itemRegion;
 
 		public override void AddComponents() {
 			base.AddComponents();

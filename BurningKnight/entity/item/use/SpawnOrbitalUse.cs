@@ -8,7 +8,7 @@ using Lens.util;
 
 namespace BurningKnight.entity.item.use {
 	public partial class SpawnOrbitalUse : ItemUse {
-		private string orbital;
+		private string orbital = null!;
 		private bool random;
 		private bool onlyIfHasNone;
 

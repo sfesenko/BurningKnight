@@ -37,7 +37,7 @@ using Vector2 = Microsoft.Xna.Framework.Vector2;
 namespace BurningKnight.entity.creature.bk {
 	public partial class BurningKnight : Boss {
 		private static Color tint = new Color(234, 50, 60, 200);
-		private Boss captured;
+		private Boss captured = null!;
 		private bool raging;
 		private int timesRaged;
 

@@ -3,6 +3,6 @@ using Lens.entity;
 
 namespace BurningKnight.entity.events {
 	public class BuffRemovedEvent : Event {
-		public Buff Buff;
+		public Buff Buff = null!;
 	}
 }

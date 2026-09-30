@@ -14,7 +14,7 @@ using Lens.util.math;
 
 namespace BurningKnight.state {
 	public class Run {
-		public Action<int, string> SubmitScore;
+		public Action<int, string> SubmitScore = null!;
 		public readonly int ContentEndDepth = BK.Demo ? 5 : 11;
 
 		private int depth = BK.Version.Dev ? 1 : 0;
@@ -49,15 +49,15 @@ namespace BurningKnight.state {
 		public bool StartedNew;
 		public bool HasRun;
 		
-		public string Seed;
+		public string Seed = null!;
 
 		public bool IgnoreSeed;
 		public int Luck;
 		public int Scourge { get; private set; }
 		public int PermanentScourge { get; internal set; }
 		public bool IntoMenu;
-		public RunStatistics Statistics;
-		public string NextSeed;
+		public RunStatistics? Statistics;
+		public string? NextSeed;
 		public int LastSavedDepth;
 		public bool AlternateMusic;
 		public RunType Type;

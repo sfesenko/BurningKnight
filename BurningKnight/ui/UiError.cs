@@ -14,7 +14,7 @@ namespace BurningKnight.ui {
 		private string title;
 		private string description;
 		private TextureRegion icon;
-		private TextureRegion iconBg;
+		private TextureRegion iconBg = null!;
 
 		private Vector2 bgOffset;
 		private Vector2 iconOffset;

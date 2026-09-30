@@ -40,16 +40,16 @@ namespace BurningKnight.level {
 		public static Color ShadowColor = new Color(0f, 0f, 0f, 0.5f);
 		public static Color FloorColor = new Color(1f, 1f, 1f, 1f);
 		
-		public Tileset Tileset;
-		public Tileset MatrixTileset;
-		public Biome Biome;
+		public Tileset? Tileset;
+		public Tileset? MatrixTileset;
+		public Biome? Biome;
 		public bool DrawLight = true;
 		public bool NoLightNoRender = true;
 		public bool Dark;
 		public bool Rains;
 		public bool Snows;
 
-		public List<string> ItemsToSpawn;
+		public List<string> ItemsToSpawn = null!;
 
 		private int width;
 		private int height;
@@ -74,25 +74,25 @@ namespace BurningKnight.level {
 		}
 		
 		public int Size;
-		public byte[] Tiles;
-		public byte[] Liquid;
-		public byte[] Variants;
-		public byte[] LiquidVariants;
-		public byte[] Flags;
-		public byte[] WallDecor;
-		public bool[] Explored;
-		public bool[] Passable;
-		public bool[] MatrixLeak;
-		public float[] Light;
+		public byte[] Tiles = null!;
+		public byte[] Liquid = null!;
+		public byte[] Variants = null!;
+		public byte[] LiquidVariants = null!;
+		public byte[] Flags = null!;
+		public byte[] WallDecor = null!;
+		public bool[] Explored = null!;
+		public bool[] Passable = null!;
+		public bool[] MatrixLeak = null!;
+		public float[] Light = null!;
 
-		public Chasm Chasm;
-		public HalfWall HalfWall;
-		public HalfProjectileLevel HalfProjectile;
-		public ProjectileLevelBody ProjectileLevelBody;
-		public RenderTarget2D WallSurface;
-		public RenderTarget2D MessSurface;
+		public Chasm? Chasm;
+		public HalfWall HalfWall = null!;
+		public HalfProjectileLevel HalfProjectile = null!;
+		public ProjectileLevelBody ProjectileLevelBody = null!;
+		public RenderTarget2D? WallSurface;
+		public RenderTarget2D? MessSurface;
 
-		public LevelVariant Variant;
+		public LevelVariant? Variant;
 
 		public Level(BiomeInfo biome) {
 			SetBiome(biome);
@@ -152,7 +152,7 @@ namespace BurningKnight.level {
 			}
 		}
 
-		private RenderTriggerManager manager;
+		private RenderTriggerManager? manager;
 
 		public override void Init() {
 			base.Init();
@@ -199,7 +199,7 @@ namespace BurningKnight.level {
 			manager.Add(new RenderTrigger(this, RenderRocks, Layers.Rocks));
 		}
 
-		private SoundEffectInstance rainSound;
+		private SoundEffectInstance? rainSound;
 		
 		public void Prepare() {
 			try {
@@ -271,8 +271,8 @@ namespace BurningKnight.level {
 			}
 		}
 
-		private BlendState blend;
-		private BlendState messBlend;
+		private BlendState blend = null!;
+		private BlendState messBlend = null!;
 
 		public override void Update(float dt) {
 			base.Update(dt);

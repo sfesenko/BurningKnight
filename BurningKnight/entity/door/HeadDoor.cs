@@ -13,7 +13,7 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.door {
 	public class HeadDoor : CustomDoor {
-		private Trigger trigger;
+		private Trigger trigger = null!;
 		private float last;
 		
 		protected override void SetSize() {
@@ -102,7 +102,7 @@ namespace BurningKnight.entity.door {
 		}
 
 		private class Trigger : Entity {
-			public Action<Entity> Callback;
+			public Action<Entity> Callback = null!;
 			
 			public override void AddComponents() {
 				base.AddComponents();

@@ -2,8 +2,8 @@ using System;
 
 namespace BurningKnight.entity.creature.mob.boss {
 	public class BossInfo {
-		public Type Type;
-		public SpawnChance[] Spawns;
+		public Type Type = null!;
+		public SpawnChance[] Spawns = null!;
 
 		public static BossInfo New<T>(params SpawnChance[] spawns) where T : Mob {
 			return new BossInfo {

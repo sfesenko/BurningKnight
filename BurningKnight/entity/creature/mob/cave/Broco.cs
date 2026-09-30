@@ -49,7 +49,7 @@ namespace BurningKnight.entity.creature.mob.cave {
 			private float fireDelay;
 			private bool fired;
 			private bool firedLaser;
-			private Laser laser;
+			private Laser? laser;
 
 			public override void Init() {
 				base.Init();

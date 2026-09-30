@@ -10,8 +10,8 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.component {
 	public class FollowerComponent : Component {
-		public Entity Following;
-		public Entity Follower;
+		public Entity? Following;
+		public Entity? Follower;
 		public float MaxDistance = 16;
 		public float Pause = -1;
 		public bool Paused;

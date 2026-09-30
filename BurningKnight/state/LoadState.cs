@@ -18,8 +18,8 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.state {
 	public partial class LoadState : GameState {
-		public string Path;
-		private Area gameArea;
+		public string Path = null!;
+		private Area gameArea = null!;
 
 		// Set by the loading worker; the main thread only reads it to decide when the loaded
 		// area may be touched. Volatile: the write publishes `gameArea` and everything in it.
@@ -27,8 +27,8 @@ namespace BurningKnight.state {
 
 		private bool down;
 		private float alpha;
-		private string title;
-		private string prefix;
+		private string title = null!;
+		private string prefix = null!;
 		private float titleX;
 		private float prefixX;
 		private float t;
@@ -43,7 +43,7 @@ namespace BurningKnight.state {
 		
 		public bool Menu;
 
-		private Animation animation;
+		private Animation animation = null!;
 		
 		public override void Init() {
 			base.Init();

@@ -2,11 +2,11 @@ using System;
 
 namespace BurningKnight.level.rooms {
 	public class RoomInfo {
-		public Type Room;
+		public Type Room = null!;
 		public float Chance;
 		public RoomType Type;
-		public string[] Biomes;
-		public Func<bool> CanAppear;
+		public string[] Biomes = null!;
+		public Func<bool> CanAppear = null!;
 
 		public static RoomInfo New<T>(float chance, params string[] biomes) where T : RoomDef {
 			return New<T>(chance, null, biomes);

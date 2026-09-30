@@ -20,7 +20,7 @@ namespace BurningKnight.entity.projectile {
 	public class ProjectileBuilder {
 		public Entity Owner;
 
-		private Projectile parent;
+		private Projectile parent = null!;
 
 		public Projectile Parent {
 			get => parent;

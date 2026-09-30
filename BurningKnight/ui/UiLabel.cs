@@ -10,7 +10,7 @@ namespace BurningKnight.ui {
 	public class UiLabel : UiEntity {
 		public const float DefaultTint = 0.7f;
 		
-		protected string label;
+		protected string label = null!;
 		public BitmapFont Font = assets.Font.Medium;
 		public float Tint = DefaultTint;
 		public bool Tints = true;

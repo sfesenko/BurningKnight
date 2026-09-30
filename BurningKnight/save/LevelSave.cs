@@ -69,7 +69,7 @@ namespace BurningKnight.save {
 			return new RegularLevel(BiomeRegistry.GenerateForDepth(Context.Run.Depth));
 		}
 
-		public static Biome BiomeGenerated;
+		public static Biome BiomeGenerated = null!;
 
 		private bool GenerationThread(string seed, Area area, int attempt, int c = 0) {
 			// Checked on entry so an abandoned attempt stops before it starts, and again after the
@@ -143,7 +143,7 @@ namespace BurningKnight.save {
 			return true;
 		}
 
-		private string sd;
+		private string? sd;
 
 		// How long level generation may run before it is abandoned and retried with a new seed.
 		private const int GenerationTimeout = 7500;

@@ -5,8 +5,8 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.door {
 	public class CustomDoor : LockableDoor {
-		private TextureRegion bar;
-		private TextureRegion pad;
+		private TextureRegion? bar;
+		private TextureRegion pad = null!;
 		
 		public CustomDoor() {
 			OpenByDefault = true;

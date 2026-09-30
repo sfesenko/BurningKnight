@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.fx {
 	public class SplashFx : Entity {
-		private TextureRegion region;
+		private TextureRegion region = null!;
 		private float angle;
 		private Vector2 scale;
 		private float targetScale;

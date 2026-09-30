@@ -39,7 +39,7 @@ namespace BurningKnight.level.entities {
 			"gift_c"
 		};
 
-		private Entity from;
+		private Entity? from;
 		private bool hurts;
 
 		public override void AddComponents() {

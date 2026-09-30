@@ -20,11 +20,11 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.item.stand {
 	public partial class ItemStand : Prop, CollisionFilterEntity {
-		private static TextureRegion itemShadow;
-		private static TextureRegion standShadow;
+		private static TextureRegion? itemShadow;
+		private static TextureRegion standShadow = null!;
 		private static Vector2 shadowOffset = new Vector2(3, 3);
 
-		protected Item item;
+		protected Item? item;
 		
 		public Item Item => item;
 		public bool Hidden;

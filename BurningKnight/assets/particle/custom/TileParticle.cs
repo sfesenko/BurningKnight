@@ -16,10 +16,10 @@ namespace BurningKnight.assets.particle.custom {
 		private static Vector2 originB = new Vector2(8, 8);
 		public static readonly float MaxZ = Display.Height;
 		
-		public TextureRegion Top;
-		public TextureRegion TopTarget;
-		public TextureRegion Side;
-		public TextureRegion Sides;
+		public TextureRegion Top = null!;
+		public TextureRegion TopTarget = null!;
+		public TextureRegion Side = null!;
+		public TextureRegion Sides = null!;
 		public Vector2 Scale = new Vector2(0, 3);
 		public float Z;
 		public Tile Tile;

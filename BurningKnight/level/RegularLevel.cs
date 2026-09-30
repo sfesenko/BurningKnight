@@ -27,7 +27,7 @@ using Builder = BurningKnight.level.builders.Builder;
 
 namespace BurningKnight.level {
 	public class RegularLevel : Level {
-		private List<RoomDef> rooms;
+		private List<RoomDef>? rooms;
 
 		public RegularLevel(BiomeInfo biome) : base(biome) {
 			

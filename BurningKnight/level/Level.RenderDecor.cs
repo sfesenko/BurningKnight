@@ -247,7 +247,7 @@ namespace BurningKnight.level {
 			Shaders.End();
 			RenderMess();
 		}
-		private TextureRegion clear;
+		private TextureRegion? clear;
 		private void RenderChasms() {
 			if (!LevelLayerDebug.Chasms) {
 				return;

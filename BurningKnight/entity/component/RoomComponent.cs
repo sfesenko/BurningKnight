@@ -7,7 +7,7 @@ using Lens.entity.component;
 
 namespace BurningKnight.entity.component {
 	public partial class RoomComponent : Component {
-		public Room Room;
+		public Room? Room;
 
 		public override void Init() {
 			base.Init();

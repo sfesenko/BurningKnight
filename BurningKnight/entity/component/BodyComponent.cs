@@ -12,7 +12,7 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.component {
 	public partial class BodyComponent : SaveableComponent {
-		public IPhysicsBody Body;
+		public IPhysicsBody? Body;
 		public Vector2 Acceleration;
 		public Vector2 Knockback;
 		public float KnockbackModifier = 1;

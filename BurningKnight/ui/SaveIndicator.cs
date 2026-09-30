@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.ui {
 	public class SaveIndicator : Entity {
-		private TextureRegion region;
+		private TextureRegion region = null!;
 		private bool saving;
 		private float timer;
 		

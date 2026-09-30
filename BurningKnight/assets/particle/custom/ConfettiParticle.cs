@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.assets.particle.custom {
 	public class ConfettiParticle : Entity {
-		private TextureRegion region;
+		private TextureRegion region = null!;
 		private float t;
 		private float rotationOffset;
 		private float z;

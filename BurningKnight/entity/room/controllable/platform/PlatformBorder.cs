@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.room.controllable.platform {
 	public class PlatformBorder : Entity, CollisionFilterEntity {
-		public Support Super;
+		public Support? Super;
 		public Vector2 Offset;
 		
 		private bool on = true;

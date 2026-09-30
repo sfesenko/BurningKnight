@@ -10,7 +10,7 @@ using Lens.lightJson;
 
 namespace BurningKnight.entity.item.use {
 	public partial class MakeProjectilesKillWithBuffUse : ItemUse {
-		private Type buff;
+		private Type buff = null!;
 		
 		public override bool HandleEvent(Event e) {
 			if (e is ProjectileCreatedEvent pce) {

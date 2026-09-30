@@ -17,9 +17,9 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.creature.pet {
 	public class Backpack : Pet {
-		private InteractFx fx;
+		private InteractFx? fx;
 		private bool open;
-		private TextureRegion itemRegion;
+		private TextureRegion? itemRegion;
 		
 		public override void AddComponents() {
 			base.AddComponents();

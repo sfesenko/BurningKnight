@@ -38,20 +38,20 @@ namespace BurningKnight.entity.item.use {
 		private float range;
 		private float scaleMin;
 		private float scaleMax;
-		private string slice;
+		private string slice = null!;
 		private float accuracy;
 		private int count;
-		private string prefab;
+		private string prefab = null!;
 		private bool light;
 		private float knockback;
 		private bool rect;
-		private string sfx;
+		private string sfx = null!;
 		private int sfxNumber;
 		private int manaUsage;
 		protected bool wait;
 		private bool toCursor;
 		private bool toEnemy;
-		private string color;
+		private string color = null!;
 		public bool ReloadSfx;
 		private bool shells;
 		private int manaDrop;
@@ -59,7 +59,7 @@ namespace BurningKnight.entity.item.use {
 		private bool emeralds;
 		
 		public bool ProjectileDied = true;
-		private ItemUse[] modifiers;
+		private ItemUse[]? modifiers;
 
 		public override void Setup(JsonValue settings) {
 			base.Setup(settings);

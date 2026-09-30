@@ -27,47 +27,47 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.ui.inventory {
 	public partial class UiInventory : UiEntity {
-		public TextureRegion ItemSlot;
-		public TextureRegion UseSlot;
+		public TextureRegion ItemSlot = null!;
+		public TextureRegion UseSlot = null!;
 		
-		private TextureRegion question;		
-		private TextureRegion bomb;
-		private TextureRegion key;
-		private TextureRegion coin;
-		private TextureRegion pointer;
-		private TextureRegion exitPointer;
+		private TextureRegion question = null!;		
+		private TextureRegion bomb = null!;
+		private TextureRegion key = null!;
+		private TextureRegion coin = null!;
+		private TextureRegion pointer = null!;
+		private TextureRegion exitPointer = null!;
 		
-		private UiString description;
-		private UiItem lastItem;
+		private UiString description = null!;
+		private UiItem lastItem = null!;
 
-		public static TextureRegion Heart;
-		public static TextureRegion HalfHeart;
-		public static TextureRegion HeartBackground;
-		private TextureRegion changedHeartBackground;
-		private static TextureRegion halfHeartBackground;
-		private TextureRegion changedHalfHeartBackground;
+		public static TextureRegion Heart = null!;
+		public static TextureRegion HalfHeart = null!;
+		public static TextureRegion HeartBackground = null!;
+		private TextureRegion changedHeartBackground = null!;
+		private static TextureRegion halfHeartBackground = null!;
+		private TextureRegion changedHalfHeartBackground = null!;
 
-		public static TextureRegion veganHeart;
-		public static TextureRegion veganHalfHeart;
-		public static TextureRegion veganHeartBackground;
-		private TextureRegion veganchangedHeartBackground;
-		private static TextureRegion veganhalfHeartBackground;
-		private TextureRegion veganchangedHalfHeartBackground;
+		public static TextureRegion veganHeart = null!;
+		public static TextureRegion veganHalfHeart = null!;
+		public static TextureRegion veganHeartBackground = null!;
+		private TextureRegion veganchangedHeartBackground = null!;
+		private static TextureRegion veganhalfHeartBackground = null!;
+		private TextureRegion veganchangedHalfHeartBackground = null!;
 		
-		public static TextureRegion Mana;
-		public static TextureRegion HalfMana;
-		public static TextureRegion ManaBackground;
-		public static TextureRegion ChangedManaBackground;
+		public static TextureRegion Mana = null!;
+		public static TextureRegion HalfMana = null!;
+		public static TextureRegion ManaBackground = null!;
+		public static TextureRegion ChangedManaBackground = null!;
 		
-		public static TextureRegion Bomb;
-		public static TextureRegion BombBg;
-		public static TextureRegion ChangedBombBg;
+		public static TextureRegion Bomb = null!;
+		public static TextureRegion BombBg = null!;
+		public static TextureRegion ChangedBombBg = null!;
 		
-		public static TextureRegion ShieldBackground;
-		private TextureRegion changedShieldBackground;
-		private static TextureRegion halfShieldBackground;
-		private TextureRegion changedHalfShieldBackground;
-		private UiButton more;
+		public static TextureRegion ShieldBackground = null!;
+		private TextureRegion changedShieldBackground = null!;
+		private static TextureRegion halfShieldBackground = null!;
+		private TextureRegion changedHalfShieldBackground = null!;
+		private UiButton more = null!;
 		
 		public Player Player;
 
@@ -81,7 +81,7 @@ namespace BurningKnight.ui.inventory {
 
 		private List<UiItem> items = new List<UiItem>();
 		private UiActiveItemSlot activeSlot;
-		private UiWeaponSlot weaponSlot;
+		private UiWeaponSlot? weaponSlot;
 		private UiWeaponSlot activeWeaponSlot;
 
 		private bool multiplayer;

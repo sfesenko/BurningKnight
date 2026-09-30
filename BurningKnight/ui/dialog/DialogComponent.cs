@@ -18,17 +18,17 @@ namespace BurningKnight.ui.dialog {
 	public delegate void DialogCallback(DialogComponent d);
 	
 	public partial class DialogComponent : Component {
-		public static DialogComponent Talking;
+		public static DialogComponent Talking = null!;
 		
-		public UiDialog Dialog;
-		public Dialog Last;
-		public Dialog Current;
+		public UiDialog? Dialog;
+		public Dialog Last = null!;
+		public Dialog? Current;
 		public bool AnimateTyping = true;
 
-		public DialogCallback OnNext;
-		public Entity To;
-		public Action InitCallback;
-		public Action FinishCallback;
+		public DialogCallback? OnNext;
+		public Entity? To;
+		public Action? InitCallback;
+		public Action? FinishCallback;
 
 		private bool added;
 		private float tillClose = -1;

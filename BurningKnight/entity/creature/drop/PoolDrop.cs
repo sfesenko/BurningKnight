@@ -7,7 +7,7 @@ using Lens.util.math;
 
 namespace BurningKnight.entity.creature.drop {
 	public partial class PoolDrop : Drop {
-		public ItemPool Pool;
+		public ItemPool Pool = null!;
 		public int Min;
 		public int Max;
 

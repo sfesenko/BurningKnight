@@ -19,7 +19,7 @@ namespace BurningKnight.level.entities.decor {
 		public Vector2? Target;
 		
 		private bool broken;
-		private FireEmitter emitter;
+		private FireEmitter? emitter;
 		private float t;
 		
 		public override void Init() {

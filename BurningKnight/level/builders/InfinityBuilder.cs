@@ -8,14 +8,14 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.level.builders {
 	public class InfinityBuilder : RegularBuilder {
-		private RoomDef landmarkRoom;
+		private RoomDef? landmarkRoom;
 		private int curveExponent;
     private float curveIntensity = 1;
     private float curveOffset;
     
     
-		private List<RoomDef> firstLoop;
-		private List<RoomDef> secondLoop;
+		private List<RoomDef> firstLoop = null!;
+		private List<RoomDef> secondLoop = null!;
 		private Vector2 firstLoopCenter;
 		private Vector2 secondLoopCenter;
     

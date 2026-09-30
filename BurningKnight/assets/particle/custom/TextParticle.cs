@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.assets.particle.custom {
 	public class TextParticle : Entity {
-		private string text;
+		private string text = null!;
 		
 		public string Text {
 			get => text;
@@ -52,7 +52,7 @@ namespace BurningKnight.assets.particle.custom {
 		public bool Negative;
 		public bool Stacks = true;
 		
-		private string fullText;
+		private string? fullText;
 		private Vector2 start;
 		private Vector2 origin;
 		private Vector2 scale;

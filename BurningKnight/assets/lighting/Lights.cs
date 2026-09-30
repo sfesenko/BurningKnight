@@ -19,13 +19,13 @@ namespace BurningKnight.assets.lighting {
 		public static float Flash;
 		public const byte AuraAlpha = 100;
 		
-		private static TextureRegion region;
+		private static TextureRegion? region;
 
 		private static List<Light> lights = new List<Light>();
-		private static RenderTarget2D surface;
+		private static RenderTarget2D? surface;
 
-		public static BlendState Blend;
-		private static BlendState messBlend;
+		public static BlendState Blend = null!;
+		private static BlendState messBlend = null!;
 		
 		public static void Init() {
 			var v = Context.Run.Depth == 0 ? 0.9f : 0.25f;

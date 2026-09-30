@@ -15,8 +15,8 @@ using MonoGame.Extended;
 namespace BurningKnight.entity.door {
 	public partial class TeleportTrigger : SaveableEntity, PlaceableEntity {
 		private sbyte depth;
-		private string id;
-		private string toId;
+		private string id = null!;
+		private string toId = null!;
 		private bool ignoreCollision;
 		private bool toTop;
 		

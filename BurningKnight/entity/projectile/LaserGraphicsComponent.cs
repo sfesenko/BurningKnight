@@ -10,9 +10,9 @@ namespace BurningKnight.entity.projectile {
 	public class LaserGraphicsComponent : BasicProjectileGraphicsComponent {
 		private TextureRegion aura;
 		private TextureRegion light;
-		private TextureRegion end;
-		private TextureRegion endAura;
-		private TextureRegion endLight;
+		private TextureRegion end = null!;
+		private TextureRegion endAura = null!;
+		private TextureRegion endLight = null!;
 		
 		private Vector2 origin;
 		private Vector2 centerOrigin;

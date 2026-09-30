@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.component {
 	public class SliceComponent : GraphicsComponent {
-		public TextureRegion Sprite;
+		public TextureRegion Sprite = null!;
 		public int ShadowZ;
 		public float Angle;
 		

@@ -59,7 +59,7 @@ namespace BurningKnight.entity.room.input {
 		}
 		
 		public class ChangedEvent : Event {
-			public RoomInput Input;
+			public RoomInput Input = null!;
 		}
 
 		private bool added;

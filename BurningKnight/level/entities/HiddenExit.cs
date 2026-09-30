@@ -13,7 +13,7 @@ using Lens.physics;
 
 namespace BurningKnight.level.entities {
 	public partial class HiddenExit : SaveableEntity, PlaceableEntity {
-		internal string id;
+		internal string? id;
 		
 		private bool Interact(Entity entity) {
 			foreach (var e in Area.Tagged[Tags.HiddenEntrance]) {

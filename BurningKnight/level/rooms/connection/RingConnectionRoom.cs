@@ -32,7 +32,7 @@ namespace BurningKnight.level.rooms.connection {
 			Painter.Set(level, ring.Left, ring.Top, Tiles.RandomSolid());
 		}
 
-		private Rect space;
+		private Rect? space;
 
 		public override Rect GetConnectionSpace() {
 			if (space == null) {

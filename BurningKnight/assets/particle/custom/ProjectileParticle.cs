@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.assets.particle.custom {
 	public class ProjectileParticle : Entity {
-		private TextureRegion region;
+		private TextureRegion region = null!;
 		private float scale;
 		private float angle;
 		private Color color = new Color(0.5f, 0.5f, 1f, 1f);

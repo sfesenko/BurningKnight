@@ -61,7 +61,7 @@ namespace BurningKnight.entity.creature.mob.ice {
 		#region Snowflake States
 		public class IdleState : SmartState<Snowflake> {
 			private bool searched;
-			private Entity target;
+			private Entity? target;
 
 			public override void Init() {
 				base.Init();

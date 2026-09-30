@@ -3,8 +3,8 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.creature.mob.prefix {
 	public abstract class Prefix {
-		public Mob Mob;
-		public string Id;
+		public Mob Mob = null!;
+		public string Id = null!;
 		
 		public virtual void Init() {
 			

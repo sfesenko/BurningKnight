@@ -5,7 +5,7 @@ using Lens.lightJson;
 
 namespace BurningKnight.entity.item.use {
 	public partial class ModifyProjectileTextureUse : ItemUse {
-		private string texture;
+		private string texture = null!;
 		
 		public override void Use(Entity entity, Item item) {
 			if (entity is Player p) {

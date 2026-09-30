@@ -15,21 +15,21 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.ui.dialog {
 	public class UiDialog : FrameRenderer {
-		public Entity Owner;
+		public Entity Owner = null!;
 
-		private TextureRegion triangle;
-		public UiString Str;
+		private TextureRegion triangle = null!;
+		public UiString? Str;
 		public bool ShowArrow;
 		public bool AlwaysShowArrow;
 
 		public bool Saying { get; private set; }
 		public bool DoneSaying { get; private set; }
 
-		public Func<bool> OnEnd;
+		public Func<bool>? OnEnd;
 		public bool JustStarted;
 		public int Voice = 5;
 		
-		private string toSay;
+		private string? toSay;
 		
 		public override void Init() {
 			base.Init();

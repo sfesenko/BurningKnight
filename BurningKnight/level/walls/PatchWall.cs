@@ -9,7 +9,7 @@ using Lens.util.math;
 
 namespace BurningKnight.level.walls {
 	public class PatchWall : WallPainter {
-		protected bool[] Patch;
+		protected bool[]? Patch;
 
 		protected int ToIndex(RoomDef room, int x, int y) {
 			return (x - room.Left - 1) + (y - room.Top - 1) * (room.GetWidth() - 2);

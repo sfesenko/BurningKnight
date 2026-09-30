@@ -14,7 +14,7 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.room.controllable {
 	public class FireTrap : RoomControllable {
-		private static TextureRegion tile;
+		private static TextureRegion? tile;
 		private float timer;
 		private bool flaming;
 		private float lastParticle;

@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.fx {
 	public class WaterfallFx : Entity {
-		private static TextureRegion region;
+		private static TextureRegion? region;
 
 		private float angle;
 		private float angleSpeed;

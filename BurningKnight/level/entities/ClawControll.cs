@@ -18,10 +18,10 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.level.entities {
 	public class ClawControll : Prop {
-		private Claw claw;
-		private Entity interacting;
+		private Claw claw = null!;
+		private Entity? interacting;
 		public bool Payed;
-		private Maanex2 maanex;
+		private Maanex2? maanex;
 		
 		public override void AddComponents() {
 			base.AddComponents();
@@ -37,8 +37,8 @@ namespace BurningKnight.level.entities {
 			AddComponent(new RoomComponent());
 		}
 
-		private InteractFx ia;
-		private InteractFx ib;
+		private InteractFx ia = null!;
+		private InteractFx ib = null!;
 
 		private bool Interact(Entity e) {
 			if (!Payed) {
