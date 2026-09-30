@@ -10,7 +10,7 @@ namespace BurningKnight.entity.item.use {
 
 		public override void Use(Entity entity, Item item)
 		{
-			var audio = Audio.Instance;
+			var audio = Context.Audio;
 			Tween.To(speed, audio.Speed, x => audio.Speed = x, 0.4f);
 		}
 

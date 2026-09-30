@@ -10,7 +10,7 @@ namespace BurningKnight {
 	public class Settings {
 		
 		
-		private static Audio Audio => Audio.Instance;
+		private static Audio Audio => Context.Audio;
 
 		// Audio
 		public static float MasterVolume {

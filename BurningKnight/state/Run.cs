@@ -202,7 +202,7 @@ namespace BurningKnight.state {
 
 		public static void AddScourge(bool permanent = false) {
 			Scourge++;
-			Audio.Instance.PlaySfx("player_cursed");
+			Context.Audio.PlaySfx("player_cursed");
 
 			if (Scourge >= 10) {
 				Achievements.Unlock("bk:scourge_king");

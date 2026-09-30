@@ -23,7 +23,7 @@ namespace BurningKnight.entity.item.use {
 				var r = entity.GetComponent<RoomComponent>().Room;
 
 				if (r != null) {
-					Audio.Instance.Stop();
+					Context.Audio.Stop();
 					foreach (var b in r.Tagged[Tags.Boss]) {
 						if (b is BkHead { CanBeSaved: true } h) {
 							h.Save();

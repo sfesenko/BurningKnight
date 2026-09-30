@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Input;
 namespace BurningKnight.ui.dialog {
 	public class AnswerDialog(string id, AnswerType type, string[] next = null) : Dialog(id, next)
 	{
-		private static Audio Audio => Audio.Instance;
+		private static Audio Audio => Context.Audio;
 		
 		public static string[] Types = Enum.GetNames<AnswerType>();
 		

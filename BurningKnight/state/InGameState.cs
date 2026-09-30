@@ -125,7 +125,7 @@ namespace BurningKnight.state {
 		public static bool Ready;
 		public static bool InMenu;
 		
-		private static Audio Audio => Audio.Instance;
+		private static Audio Audio => Context.Audio;
 
 		public static void TransitionToBlack(Vector2 position, Action callback = null) {
 			Context.Camera.Targets.Clear();

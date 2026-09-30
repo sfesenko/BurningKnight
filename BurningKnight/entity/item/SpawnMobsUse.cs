@@ -57,7 +57,7 @@ namespace BurningKnight.entity.item {
 						part.Depth = 1;
 					}
 					
-					Audio.Instance.PlaySfx("scroll");
+					Context.Audio.PlaySfx("scroll");
 				}, (i - 1) * 0.2f);
 			}
 		}

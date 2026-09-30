@@ -95,7 +95,7 @@ namespace BurningKnight.entity.room.controller {
 						part.Depth = 1;
 					}
 					
-					Audio.Instance.PlaySfx("scroll");
+					Context.Audio.PlaySfx("scroll");
 				}, (i) * 0.2f);
 			}
 

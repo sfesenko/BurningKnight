@@ -15,7 +15,7 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.util {
 	public static class AnimationUtil {
-		private static Audio Audio => Audio.Instance;
+		private static Audio Audio => Context.Audio;
 
 		public static void ActionFailed() {
 			Context.Camera.Shake(10);

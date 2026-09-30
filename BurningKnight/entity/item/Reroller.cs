@@ -77,7 +77,7 @@ namespace BurningKnight.entity.item {
 				}
 			}
 			
-			Audio.Instance.PlaySfx("item_reroll");
+			Context.Audio.PlaySfx("item_reroll");
 		}
 
 		public static bool Reroll(Item item, ItemPool pool, Func<ItemData, bool> filter = null) {

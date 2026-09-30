@@ -48,8 +48,8 @@ namespace BurningKnight.entity {
 		public static void Make(Entity whoHurts, float hurtRadius = 32f, bool leave = true, Vec2 where = null, float damage = 16, float scale = 1, bool damageOwner = true) {
 			Context.Camera.Shake(10 * scale);
 			
-			Audio.Instance.SfxVolumeBuffer = 0.5f;
-			Audio.Instance.SfxVolumeBufferResetTimer = 1f;
+			Context.Audio.SfxVolumeBuffer = 0.5f;
+			Context.Audio.SfxVolumeBufferResetTimer = 1f;
 			
 			var w = where == null ? whoHurts.Center : new Vector2(where.X, where.Y);
 

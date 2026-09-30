@@ -77,7 +77,7 @@ namespace BurningKnight.ui.imgui {
 			ImGui.InputFloat("Position scale", ref v);
 			AudioEmitterComponent.PositionScale = v / 100;
 			ImGui.InputFloat("Distance", ref AudioEmitterComponent.Distance);
-			ImGui.InputFloat("Speed", ref Audio.Instance.Speed);
+			ImGui.InputFloat("Speed", ref Context.Audio.Speed);
 
 			ImGui.End();
 		}

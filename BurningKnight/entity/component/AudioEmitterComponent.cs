@@ -25,7 +25,7 @@ namespace BurningKnight.entity.component {
 
 		public Dictionary<string, Sfx> Playing = new();
 
-		private static Audio Audio => Audio.Instance;
+		private static Audio Audio => Context.Audio;
 		
 		public class Sfx {
 			public SoundEffectInstance Effect;
