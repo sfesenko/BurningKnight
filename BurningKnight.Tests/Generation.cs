@@ -43,8 +43,9 @@ public static class Generation {
 		return level;
 	}
 
-	// The world's Clear() exists on the seam but nothing in the game calls it; a process that
-	// generates hundreds of levels has to, or it keeps whatever a level did not remove.
+	// The game gets a fresh world per level (LoadState calls Physics.Init) and clears it on state
+	// teardown (Physics.Destroy), so it never accumulates; this harness generates hundreds of
+	// levels into one world, so it has to clear per generation.
 	public static void Release(RegularLevel level) {
 		level.Area.Destroy();
 		Physics.World.Clear();
