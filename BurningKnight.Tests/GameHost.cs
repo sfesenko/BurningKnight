@@ -53,9 +53,9 @@ public static class GameHost {
 		var engine = new TestEngine();
 		engine.RunOneFrame();
 
-		// The game runs these through AsyncUtils.RunSync; a test keeps them on the main thread,
-		// where the GL context lives — a texture upload from a pool thread hangs while the main
-		// thread waits on it.
+		// The game loads these on its loading thread; a test keeps them on the main thread, where
+		// the GL context lives — a texture upload from a worker while the main thread waits on it
+		// hangs.
 		Locale.Load(Locale.PrefferedClientLanguage);
 		Effects.Load();
 		Textures.Load();

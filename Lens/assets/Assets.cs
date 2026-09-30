@@ -120,19 +120,19 @@ namespace Lens.assets {
 
 		private static void LoadAssets(ref int progress) {
 			if (Locale.Map == null) {
-				AsyncUtils.RunSync("Locale.Load", () => Locale.Load(Locale.PrefferedClientLanguage));
+				Locale.Load(Locale.PrefferedClientLanguage);
 			}
 
 			progress++;
-			AsyncUtils.RunSync("Effects.Load()", Effects.Load);
+			Effects.Load();
 			progress++;
-			AsyncUtils.RunSync("Textures.Load()", Textures.Load);
+			Textures.Load();
 			progress++;
-			AsyncUtils.RunSync("Animations.Load()", Animations.Load);
+			Animations.Load();
 			progress++;
 			
 			if (LoadSfx) {
-				AsyncUtils.RunSync("Audio.Instance.Load()", Audio.Instance.Load);
+				Audio.Instance.Load();
 			}
 
 			progress++;

@@ -26,9 +26,15 @@ namespace BurningKnight.state {
 		private const bool LoadEditor = false;
 		public const bool LoadCutscene = !LoadEditor && false;
 		
+		// Display-only: the progress bar may read a slightly stale value; the hand-off is `ready`.
 		private int progress;
-		private bool ready;
-		private bool checkFullscreen;
+
+		// Set by the loading worker; the main thread only reads it to decide when the loaded
+		// area may be touched. Volatile: the write publishes `gameArea` and everything in it.
+		private volatile bool ready;
+
+		// Set by the worker once the saves are in, applied by the main thread.
+		private volatile bool checkFullscreen;
 		private Area gameArea;
 		private float t;
 		
@@ -38,74 +44,74 @@ namespace BurningKnight.state {
 			progress = 0;
 			Log.Info("Init: progress = 0");
 
-			// Not awaited: Update polls 'progress' while this loads. RunAsync logs any failure.
-			_ = AsyncUtils.RunAsync("Load", Load);
+			// Update polls 'progress' while this loads; `ready` is the hand-off.
+			new Thread(Load).Start();
 		}
 		
 		private void Load() {
 			Log.Info("Starting asset loading thread");
 
-			AsyncUtils.RunSync("SaveManager.Load", () => SaveManager.Load(gameArea, SaveType.Global) );
+			SaveManager.Load(gameArea, SaveType.Global);
 			
 			checkFullscreen = true;
 			progress++;
 			
-			AsyncUtils.RunSync("Assets.Load", () => Assets.Load(ref progress) );
+			Assets.Load(ref progress);
 
-			AsyncUtils.RunSync("Dialogs.Load", Dialogs.Load ); 
+			Dialogs.Load(); 
 			progress++;
-			AsyncUtils.RunSync("CommonAse.Load()", CommonAse.Load );
+			CommonAse.Load();
 			
 			progress++;
-			AsyncUtils.RunSync("ImGuiHelper.BindTextures()", ImGuiHelper.BindTextures );
+			ImGuiHelper.BindTextures();
 			
 			progress++;
-			AsyncUtils.RunSync("Shaders.Load()", Shaders.Load );
+			Shaders.Load();
 			progress++;
-			AsyncUtils.RunSync("Prefabs.Load()", Prefabs.Load );
+			Prefabs.Load();
 			progress++;
-			AsyncUtils.RunSync("Items.Load()", Items.Load );
+			Items.Load();
 			progress++;
-			AsyncUtils.RunSync("LootTables.Load()", LootTables.Load );
+			LootTables.Load();
 			progress++;
-			AsyncUtils.RunSync("Mods.Load()", Mods.Load );
+			Mods.Load();
 			;
 			progress++; // Should be 13 here
 
 			Log.Info("Done loading assets! Loading level now.");
 			
-			AsyncUtils.RunSync("Lights.Init()", Lights.Init );
-			AsyncUtils.RunSync("Physics.Init()", Physics.Init );
+			Lights.Init();
+			Physics.Init();
 
 			gameArea = new Area();
 
 			Run.Level = null;
-			AsyncUtils.RunSync("Tilesets.Load()", Tilesets.Load );
+			Tilesets.Load();
 			;
 			progress++;
 			
-			AsyncUtils.RunSync("Achievements.Load()", Achievements.Load );
+			Achievements.Load();
 
 			if (!LoadEditor)
 			{
-				AsyncUtils.RunSync("SaveManager.Load", () => SaveManager.Load(gameArea, SaveType.Game)); 
+				SaveManager.Load(gameArea, SaveType.Game); 
 				progress++;
 
 				Rnd.Seed = $"{Run.Seed}_{Run.Depth}";
-				AsyncUtils.RunSync("SaveManager.Load", () => SaveManager.Load(gameArea, SaveType.Level));
+				SaveManager.Load(gameArea, SaveType.Level);
 				progress++;
 
 				if (Run.Depth > 0) {
-					AsyncUtils.RunSync("SaveManager.Load", () => SaveManager.Load(gameArea, SaveType.Player));
+					SaveManager.Load(gameArea, SaveType.Player);
 				} else
 				{
-					AsyncUtils.RunSync("SaveManager.Generate", () => SaveManager.Generate(gameArea, SaveType.Player));
+					SaveManager.Generate(gameArea, SaveType.Player);
 				}
 			}
 
 			progress++; // Should be 18 here
 
-			AsyncUtils.RunSync("Engine.AssetsLoaded?.Invoke()", () => Engine.AssetsLoaded?.Invoke());
+			Engine.AssetsLoaded?.Invoke();
 			ready = true;
 		}
 
