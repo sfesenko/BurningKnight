@@ -417,7 +417,7 @@ namespace BurningKnight.state {
 		}
 
 		public static bool EveryoneDied(Player pl = null) {
-			foreach (var p in Engine.Instance.State.Area.Tagged[Tags.Player]) {
+			foreach (var p in Context.Area.Tagged[Tags.Player]) {
 				if (!((Player) p).Dead && p != pl) {
 					return false;
 				}

@@ -195,7 +195,7 @@ namespace BurningKnight.assets.items {
 
 			try {
 				Engine.Instance.State.Ui.EventListener.Handle(e);
-				Engine.Instance.State.Area.EventListener.Handle(e);
+				Context.Area.EventListener.Handle(e);
 
 				if (!Achievements.ItemBuffer.Contains(id)) {
 					Achievements.ItemBuffer.Add(id);

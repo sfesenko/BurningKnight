@@ -17,7 +17,7 @@ namespace BurningKnight.debug {
 
 			var path = args[0];
 			var saveType = args.Length == 1 ? "all" : args[1];
-			var area = Engine.Instance.State.Area;
+			var area = Context.Area;
 
 			// Synchronous: a console command, and the savers serialise the live area.
 			switch (saveType) {

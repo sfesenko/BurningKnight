@@ -29,7 +29,7 @@ namespace BurningKnight.state {
 			}
 			
 			var show = true;
-			var player = LocalPlayer.Locate(Engine.Instance.State.Area);
+			var player = LocalPlayer.Locate(Context.Area);
 
 			if (!ImGui.Begin("Item editor", ref show, ImGuiWindowFlags.AlwaysAutoResize)) {
 				ImGui.End();
@@ -52,10 +52,10 @@ namespace BurningKnight.state {
 			ImGui.Text(Selected.Id);
 
 			if (ImGui.Button("Give")) {
-				LocalPlayer.Locate(Engine.Instance.State.Area)
+				LocalPlayer.Locate(Context.Area)
 					?.GetComponent<InventoryComponent>()
 					.Pickup(Items.CreateAndAdd(
-						Selected.Id, Engine.Instance.State.Area
+						Selected.Id, Context.Area
 					));
 			}
 
@@ -64,7 +64,7 @@ namespace BurningKnight.state {
 
 				if (ImGui.Button("Spawn")) {
 					var item = Items.CreateAndAdd(
-						Selected.Id, Engine.Instance.State.Area, false
+						Selected.Id, Context.Area, false
 					);
 
 					item.Center = player.Center;
@@ -74,9 +74,9 @@ namespace BurningKnight.state {
 
 				if (ImGui.Button("Spawn on stand")) {
 					var stand = new ItemStand();
-					Engine.Instance.State.Area.Add(stand);
+					Context.Area.Add(stand);
 					var item = Items.CreateAndAdd(
-						Selected.Id, Engine.Instance.State.Area, false
+						Selected.Id, Context.Area, false
 					);
 
 					stand.Center = player.Center;

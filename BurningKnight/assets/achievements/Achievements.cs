@@ -234,7 +234,7 @@ namespace BurningKnight.assets.achievements {
 				Achievement = a
 			};
 			
-			Engine.Instance.State.Area.EventListener.Handle(e);
+			Context.Area.EventListener.Handle(e);
 			Engine.Instance.State.Ui.EventListener.Handle(e);
 			
 			try {

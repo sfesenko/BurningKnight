@@ -191,7 +191,7 @@ namespace BurningKnight.state {
 			PermanentScourge = Math.Max(0, PermanentScourge - 1);
 			Scourge--;
 			
-			var player = LocalPlayer.Locate(Engine.Instance.State.Area);
+			var player = LocalPlayer.Locate(Context.Area);
 
 			if (player == null) {
 				return;
@@ -212,7 +212,7 @@ namespace BurningKnight.state {
 				Scourge = 10;
 			}
 			
-			var player = LocalPlayer.Locate(Engine.Instance.State.Area);
+			var player = LocalPlayer.Locate(Context.Area);
 
 			if (player == null) {
 				return;
@@ -280,7 +280,7 @@ namespace BurningKnight.state {
 			Statistics.Won = true;
 			Player pl = null;
 
-			foreach (var p in Engine.Instance.State.Area.Tagged[Tags.Player]) {
+			foreach (var p in Context.Area.Tagged[Tags.Player]) {
 				p.RemoveComponent<PlayerInputComponent>();
 				p.GetComponent<HealthComponent>().Unhittable = true;
 

@@ -82,7 +82,7 @@ namespace BurningKnight.ui.imgui {
 				ImGui.Text($"Render time: {Engine.RenderTime} ms");
 
 				if (Engine.Instance?.State?.Area?.Tagged?[Tags.Projectile] != null) {
-					ImGui.Text($"Projectiles: {Engine.Instance.State.Area.Tagged[Tags.Projectile].Count}");
+					ImGui.Text($"Projectiles: {Context.Area.Tagged[Tags.Projectile].Count}");
 				}
 
 				float mem;

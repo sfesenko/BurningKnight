@@ -21,7 +21,7 @@ namespace BurningKnight.debug {
 				return;
 			}
 
-			var player = LocalPlayer.Locate(Engine.Instance.State.Area);
+			var player = LocalPlayer.Locate(Context.Area);
 
 			if (player != null) {
 				ImGui.Checkbox("God Mode", ref player.GetComponent<HealthComponent>().Unhittable);

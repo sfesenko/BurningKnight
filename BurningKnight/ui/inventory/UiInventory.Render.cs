@@ -66,7 +66,7 @@ namespace BurningKnight.ui.inventory {
 					if (target != null && (!(target is Mob mb) || mb.Target != null) && target is Creature c && c.GetComponent<HealthComponent>().Health >= 1f && r.Contains(c.Center)) {
 						RenderArrow(target.Center);
 					}
-				} else if (Run.Depth > 0 && r.Tagged[Tags.MustBeKilled].Count == 0 && Exit.Instance != null && Player.CheckClear(Engine.Instance.State.Area)) {
+				} else if (Run.Depth > 0 && r.Tagged[Tags.MustBeKilled].Count == 0 && Exit.Instance != null && Player.CheckClear(Context.Area)) {
 					RenderArrow(Exit.Instance.Center, true);
 				}
 			}

@@ -189,10 +189,10 @@ namespace BurningKnight.assets.achievements {
 
 						if (ImGui.IsMouseDown(ImGuiMouseButton.Right)) {
 							if (ImGui.Button("Give")) {
-								LocalPlayer.Locate(Engine.Instance.State.Area)
+								LocalPlayer.Locate(Context.Area)
 									?.GetComponent<InventoryComponent>()
 									.Pickup(Items.CreateAndAdd(
-										_selected.Id, Engine.Instance.State.Area
+										_selected.Id, Context.Area
 									), true);
 							}
 						}
