@@ -26,7 +26,7 @@ namespace BurningKnight.save {
 			if (t == null) {
 				Log.Error($"Unknown entity {type} in prefab, skipping it");
 
-				var unknownSize = reader.ReadUint16();
+				var unknownSize = ReadSize(reader);
 				reader.Position += unknownSize;
 
 				return;
@@ -40,7 +40,7 @@ namespace BurningKnight.save {
 			var prefab = new PrefabData();
 			prefab.Type = t;
 
-			var size = reader.ReadUint16();
+			var size = ReadSize(reader);
 			prefab.Data = new byte[size];
 			
 			for (var i = 0; i < size; i++) {

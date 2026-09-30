@@ -63,6 +63,7 @@ namespace BurningKnight.assets.prefabs {
 				}
 
 				var version = stream.ReadInt16();
+				stream.SaveVersion = version;
 
 				if (version > SaveManager.Version) {
 					Log.Error($"Unknown version {version}");

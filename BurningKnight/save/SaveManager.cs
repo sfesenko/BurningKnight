@@ -15,7 +15,7 @@ namespace BurningKnight.save {
 		// writable state lives, and the saves live inside it.
 		public static string SaveDir => Path.Combine(Paths.DataDir, "saves") + Path.DirectorySeparatorChar;
 		public const int MagicNumber = 894923782;
-		public const short Version = 2;
+		public const short Version = 3;
 
 		public static byte CurrentSlot = 0;
 		public static string SlotDir = $"{SaveDir}slot-{CurrentSlot}/";
@@ -168,6 +168,7 @@ namespace BurningKnight.save {
 				}
 
 				var version = stream.ReadInt16();
+				stream.SaveVersion = version;
 
 				if (version > Version) {
 					if (saveType != SaveType.Global && saveType != SaveType.Game) {
@@ -176,7 +177,8 @@ namespace BurningKnight.save {
 
 						return;
 					}
-				} else if (version < Version) {
+				} else if (version < 2) {
+					// Version 2 is still read — only the entity size field changed width in 3.
 					if (saveType != SaveType.Global && saveType != SaveType.Game && !(path ?? save.FullPath).StartsWith("Content")) {
 						Log.Error($"Old version {version}, generating new");
 						Generate(area, saveType);

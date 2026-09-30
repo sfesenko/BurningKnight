@@ -7,6 +7,10 @@ namespace Lens.util.file {
 		protected byte[] read;
 		public byte[] Data => read;
 
+		// The save format the data was written in; whoever reads a file's header sets it before
+		// parsing, and readers that branch on the layout consult it. 0 means the current format.
+		public int SaveVersion { get; set; }
+
 		private int position;
 
 		public int Position {
