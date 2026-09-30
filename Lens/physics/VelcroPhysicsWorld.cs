@@ -48,12 +48,7 @@ public class VelcroPhysicsWorld : IPhysicsWorld {
 	}
 
 	public void Step(float dt) {
-		try {
-			RemoveBodies();
-		} catch (Exception e) {
-			Log.Error(e);
-			return;
-		}
+		RemoveBodies();
 
 		// Cleared even when a contact callback throws, otherwise the world stays locked and
 		// RemoveBodies silently stops draining for the rest of the process.
@@ -61,8 +56,6 @@ public class VelcroPhysicsWorld : IPhysicsWorld {
 
 		try {
 			world.Step(dt);
-		} catch (Exception e) {
-			Log.Error(e);
 		} finally {
 			locked = false;
 		}
@@ -73,13 +66,8 @@ public class VelcroPhysicsWorld : IPhysicsWorld {
 			Log.Error("World was locked when destroying");
 		}
 
-		try {
-			RemoveBodies();
-			world.Clear();
-		} catch (Exception e) {
-			Log.Error(e);
-		}
-
+		RemoveBodies();
+		world.Clear();
 		bodies.Clear();
 	}
 
@@ -116,14 +104,10 @@ public class VelcroPhysicsWorld : IPhysicsWorld {
 		}
 
 		foreach (var wrapped in toRemove) {
-			try {
-				var body = ((VelcroPhysicsBody) wrapped).Body;
+			var body = ((VelcroPhysicsBody) wrapped).Body;
 
-				world.RemoveBody(body);
-				bodies.Remove(body);
-			} catch (Exception e) {
-				Log.Error(e);
-			}
+			world.RemoveBody(body);
+			bodies.Remove(body);
 		}
 
 		toRemove.Clear();

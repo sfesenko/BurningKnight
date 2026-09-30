@@ -40,38 +40,30 @@ namespace Lens.entity {
 
 		public void AutoRemove() {
 			if (ToRemove.Count > 0) {
-				try {
-					for (var i = ToRemove.Count - 1; i >= 0; i--) {
-						var entity = ToRemove[i];
+				for (var i = ToRemove.Count - 1; i >= 0; i--) {
+					var entity = ToRemove[i];
 
-						if (entity.Area == Area) {
-							entity.Destroy();
-						}
-
-						entity.Area.Tagged.Remove(entity);
-						Entities.Remove(entity);
+					if (entity.Area == Area) {
+						entity.Destroy();
 					}
 
-					ToRemove.Clear();
-				} catch (Exception e) {
-					Log.Error(e);
+					entity.Area.Tagged.Remove(entity);
+					Entities.Remove(entity);
 				}
+
+				ToRemove.Clear();
 			}
 		}
 
 		public void AddNew() {
 			if (ToAdd.Count > 0) {
 				for (int i = 0; i < ToAdd.Count; i++) {
-					try {
-						var entity = ToAdd[i];
-						Entities.Add(entity);
+					var entity = ToAdd[i];
+					Entities.Add(entity);
 
-						if (!Area.NoInit && entity.Components == null) {
-							entity.Area = Area;
-							entity.Init();
-						}
-					} catch (Exception e) {
-						Log.Error(e);
+					if (!Area.NoInit && entity.Components == null) {
+						entity.Area = Area;
+						entity.Init();
 					}
 				}
 
@@ -87,11 +79,7 @@ namespace Lens.entity {
 				entity.OnScreen = CheckOnScreen(entity);
 
 				if ((entity.OnScreen || entity.AlwaysActive) && entity.Active) {
-					try {
-						entity.Update(dt);
-					} catch (Exception e) {
-						Log.Error(e);
-					}
+					entity.Update(dt);
 				}
 
 				if (entity.Done) {
@@ -105,11 +93,7 @@ namespace Lens.entity {
 		public void Render() {
 			foreach (var entity in Entities) {
 				if ((entity.OnScreen || entity.AlwaysVisible) && entity.Visible) {
-					try {
-						entity.Render();
-					} catch (Exception e) {
-						Log.Error(e);
-					}
+					entity.Render();
 				}
 			}
 		}
