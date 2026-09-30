@@ -5,6 +5,7 @@
         <TargetFramework>net10.0</TargetFramework>
         <EnableDefaultItems>false</EnableDefaultItems>
         <IncludeBuildOutput>false</IncludeBuildOutput>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
         <!-- Where PackContent writes the archive; the host overrides this to stage the game. -->
         <PackOutput Condition="'$(PackOutput)' == ''">$(MSBuildThisFileDirectory)bin/Pack/Content.zip</PackOutput>
         <!-- Written by ProbeFfmpeg: installing or losing ffmpeg must repack, and a timestamp

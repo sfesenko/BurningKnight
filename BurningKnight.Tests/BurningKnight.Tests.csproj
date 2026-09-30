@@ -5,6 +5,7 @@
     <IsPackable>false</IsPackable>
     <RootNamespace>BurningKnight.Tests</RootNamespace>
     <Nullable>disable</Nullable>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
   <ItemGroup>
