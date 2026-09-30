@@ -6,7 +6,7 @@
     <page id="0" file="large.png" />
     <page id="1" file="large_ext.png" />
   </pages>
-  <chars count="1447">
+  <chars count="1448">
     <char id="0" x="299" y="36" width="7" height="13" xoffset="-1" yoffset="0" xadvance="6" page="0" chnl="0" />
     <char id="32" x="0" y="0" width="0" height="0" xoffset="-1" yoffset="11" xadvance="5" page="0" chnl="0" />
     <char id="33" x="249" y="0" width="4" height="13" xoffset="-1" yoffset="0" xadvance="3" page="0" chnl="0" />
@@ -1454,5 +1454,6 @@
     <char id="38498" x="162" y="463" width="18" height="18" xoffset="-1" yoffset="-2" xadvance="17" page="1" chnl="0" />
     <char id="39578" x="182" y="463" width="18" height="18" xoffset="-1" yoffset="-2" xadvance="17" page="1" chnl="0" />
     <char id="40517" x="202" y="463" width="18" height="18" xoffset="-1" yoffset="-2" xadvance="17" page="1" chnl="0" />
+    <char id="39746" x="2" y="483" width="18" height="18" xoffset="-1" yoffset="-2" xadvance="17" page="1" chnl="0" />
   </chars>
 </font>
