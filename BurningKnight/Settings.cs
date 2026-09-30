@@ -69,8 +69,8 @@ namespace BurningKnight {
 		}
 
 		public static float GameScale {
-			get => PixelPerfectGameRenderer.GameScale;
-			set => PixelPerfectGameRenderer.GameScale = value;
+			get => GameRenderer.GameScale;
+			set => GameRenderer.GameScale = value;
 		}
 
 		// Game

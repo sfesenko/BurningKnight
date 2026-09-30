@@ -59,7 +59,7 @@ namespace BurningKnight.entity.creature.player {
 			public override void Destroy() {
 				base.Destroy();
 				
-				var pr = (PixelPerfectGameRenderer) Engine.Instance.StateRenderer;
+				var pr = Engine.Instance.StateRenderer;
 				pr.EnableClip = false;
 				Self.GetComponent<PlayerGraphicsComponent>().Animate();
 			}

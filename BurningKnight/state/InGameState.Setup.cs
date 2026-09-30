@@ -216,7 +216,7 @@ namespace BurningKnight.state {
 			}
 		}
 		private void PrerenderShadows() {
-			var renderer = (PixelPerfectGameRenderer) Engine.Instance.StateRenderer;
+			var renderer = Engine.Instance.StateRenderer;
 			
 			renderer.End();
 			

@@ -310,7 +310,7 @@ namespace Lens.util.camera {
 				new Vector3(new Vector2((int) Math.Floor(origin.X), (int) Math.Floor(origin.Y)), 0));
 			
 			matrix = a * Matrix.CreateScale(new Vector3(zoom, zoom, 1)) * b;
-			scaledMatrix = a * Matrix.CreateScale(new Vector3(zoom * PixelPerfectGameRenderer.GameScale, zoom * PixelPerfectGameRenderer.GameScale, 1)) * b;
+			scaledMatrix = a * Matrix.CreateScale(new Vector3(zoom * GameRenderer.GameScale, zoom * GameRenderer.GameScale, 1)) * b;
 			               
 			inverse = Matrix.Invert(matrix);
 			scaledInverseMatrix = Matrix.Invert(scaledMatrix);

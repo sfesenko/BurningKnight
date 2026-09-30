@@ -46,9 +46,8 @@ namespace BurningKnight.ui.imgui {
 				return;
 			}
 
-			if (Engine.Instance.StateRenderer is PixelPerfectGameRenderer pr) {
-				ImGui.Checkbox("Enable Clip", ref pr.EnableClip);
-			}
+			var renderer = Engine.Instance.StateRenderer;
+			ImGui.Checkbox("Enable Clip", ref renderer.EnableClip);
 
 			ImGui.Text(Input.Blocked > 0 ? "Input blocked" : "Input free");
 

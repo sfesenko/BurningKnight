@@ -339,7 +339,7 @@ namespace BurningKnight.level {
 			}
 			
 			var camera = Context.Camera;
-			var state = (PixelPerfectGameRenderer) Engine.Instance.StateRenderer;
+			var state = Engine.Instance.StateRenderer;
 			state.End();
 			
 			var effect = state.SurfaceEffect;
@@ -348,7 +348,7 @@ namespace BurningKnight.level {
 			Engine.GraphicsDevice.SetRenderTarget(WallSurface);
 
 			Graphics.Batch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, 
-				state.RasterizerState, null, Context.Camera?.Matrix);
+				state.ClipRasterizerState, null, Context.Camera?.Matrix);
 			Graphics.Clear(Color.Transparent);
 
 			Graphics.Color = ColorUtils.WhiteColor;
@@ -373,7 +373,7 @@ namespace BurningKnight.level {
 			Graphics.Batch.End();
 			RenderBlood();
 			Graphics.Batch.Begin(SpriteSortMode.Immediate, blend, SamplerState.PointClamp, DepthStencilState.None, 
-				state.RasterizerState, null, Context.Camera?.Matrix);
+				state.ClipRasterizerState, null, Context.Camera?.Matrix);
 			
 			foreach (var p in Area.Tagged[Tags.Player]) {
 				((Player) p).RenderOutline();
@@ -392,7 +392,7 @@ namespace BurningKnight.level {
 			}
 
 			Graphics.Batch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None,
-				state.RasterizerState, null, Context.Camera?.Matrix);
+				state.ClipRasterizerState, null, Context.Camera?.Matrix);
 			
 			Graphics.Render(WallSurface, Context.Camera.TopLeft - new Vector2(Context.Camera.Position.X % 1, 
 				                             Context.Camera.Position.Y % 1));

@@ -105,7 +105,7 @@ namespace BurningKnight.entity.creature.player {
 
 				((InGameState) Engine.Instance.State).ResetFollowing();
 
-				var pr = (PixelPerfectGameRenderer) Engine.Instance.StateRenderer;
+				var pr = Engine.Instance.StateRenderer;
 
 				if (c.Old != null) {
 					if (Scourge.IsEnabled(Scourge.OfLost)) {

@@ -74,13 +74,13 @@ namespace BurningKnight.assets.lighting {
 				InGameState.RenderFog();
 			}
 
-			var state = (PixelPerfectGameRenderer) Engine.Instance.StateRenderer;
+			var state = Engine.Instance.StateRenderer;
 			state.End();
 			
 			Engine.GraphicsDevice.SetRenderTarget(surface);
 			
 			Graphics.Batch.Begin(SpriteSortMode.Immediate, BlendState.Opaque, SamplerState.PointClamp, DepthStencilState.None, 
-				state.RasterizerState, null, Context.Camera?.Matrix);
+				state.ClipRasterizerState, null, Context.Camera?.Matrix);
 			Graphics.Clear(Color.Transparent);
 
 			Graphics.Color.A = AuraAlpha;
@@ -97,7 +97,7 @@ namespace BurningKnight.assets.lighting {
 			
 			Engine.GraphicsDevice.SetRenderTarget(state.GameTarget);
 			Graphics.Batch.Begin(SpriteSortMode.Immediate, BlendState.Additive, SamplerState.PointClamp, DepthStencilState.None, 
-				state.RasterizerState, null, Context.Camera?.Matrix);
+				state.ClipRasterizerState, null, Context.Camera?.Matrix);
 			
 			
 			Graphics.Render(surface, Context.Camera.TopLeft - new Vector2(Context.Camera.Position.X % 1, Context.Camera.Position.Y % 1));
@@ -107,7 +107,7 @@ namespace BurningKnight.assets.lighting {
 			
 			Engine.GraphicsDevice.SetRenderTarget(surface);
 			Graphics.Batch.Begin(SpriteSortMode.Immediate, lightBlend, SamplerState.PointClamp, DepthStencilState.None, 
-				state.RasterizerState, null, Context.Camera?.Matrix);
+				state.ClipRasterizerState, null, Context.Camera?.Matrix);
 
 			Graphics.Clear(ClearColor);
 
@@ -133,7 +133,7 @@ namespace BurningKnight.assets.lighting {
 			}
 			
 			Graphics.Batch.Begin(SpriteSortMode.Immediate, surfaceBlend, SamplerState.PointClamp, DepthStencilState.None, 
-				state.RasterizerState, null, Context.Camera?.Matrix);
+				state.ClipRasterizerState, null, Context.Camera?.Matrix);
 			
 			Graphics.Color = new Color(color.X, color.Y, color.Z, alpha);
 

@@ -26,12 +26,12 @@ namespace BurningKnight.entity.cutscene.controller {
 			dad.GraphicsComponent.Flipped = true;
 
 			Timer.Add(() => FirstPart(), 1);
-			PixelPerfectGameRenderer.GameScale = 2;
+			GameRenderer.GameScale = 2;
 		}
 
 		public override void Destroy() {
 			base.Destroy();
-			PixelPerfectGameRenderer.GameScale = 1;
+			GameRenderer.GameScale = 1;
 		}
 
 		private void FirstPart() {

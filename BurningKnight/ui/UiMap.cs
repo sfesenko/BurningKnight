@@ -77,7 +77,7 @@ namespace BurningKnight.ui {
 			var ty = MathUtils.Clamp(0, level.Height - 1, y + H / 2);
 			var rect = new Rect(sx, sy, tx, ty);
 
-			var r = (PixelPerfectGameRenderer) Engine.Instance.StateRenderer;
+			var r = Engine.Instance.StateRenderer;
 
 			r.End();
 			Engine.GraphicsDevice.SetRenderTarget(target);

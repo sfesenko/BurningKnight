@@ -7,7 +7,6 @@ using MonoGame.Extended.Graphics;
 
 namespace Lens.graphics.gamerenderer {
 	public class PixelPerfectGameRenderer : GameRenderer {
-		public static float GameScale;
 		public Batcher2D Batcher2D;
 
 		private Matrix one = Matrix.Identity;
@@ -16,9 +15,6 @@ namespace Lens.graphics.gamerenderer {
 		private bool inUi;
 
 		public RasterizerState RasterizerState;
-		public bool EnableClip = false;
-		public Vector2 ClipPosition;
-		public Vector2 ClipSize;
 
 		public RasterizerState GetState => EnableClip ? RasterizerState : DefaultRasterizerState;
 
@@ -46,13 +42,13 @@ namespace Lens.graphics.gamerenderer {
 			Graphics.Batch.End();
 		}
 		
-		public void BeginShadows() {
+		public override void BeginShadows() {
 			Engine.GraphicsDevice.SetRenderTarget(UiTarget);
 			Graphics.Batch.Begin(SpriteSortMode, BlendState, SamplerState, DepthStencilState, EnableClip ? ClipRasterizerState : DefaultRasterizerState, SurfaceEffect, Camera.Instance?.Matrix ?? one);
 			Graphics.Clear(Color.Transparent);
 		}
 
-		public void EndShadows() {
+		public override void EndShadows() {
 			Graphics.Batch.End();
 			Engine.GraphicsDevice.SetRenderTarget(GameTarget);
 		}
@@ -65,7 +61,7 @@ namespace Lens.graphics.gamerenderer {
 			End();
 		}
 
-		public void BeginUi(bool force = false) {
+		public override void BeginUi(bool force = false) {
 			if (!force) {
 				Engine.GraphicsDevice.SetRenderTarget(UiTarget);
 			}
