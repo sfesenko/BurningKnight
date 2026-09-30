@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using BurningKnight.assets;
 using BurningKnight.assets.achievements;
 using BurningKnight.assets.input;
@@ -123,15 +122,8 @@ namespace BurningKnight.state {
 				RelativeCenterX = sx,
 				RelativeCenterY = BackY,
 				Click = b => {
-					new Thread(() => {
-						try {
-							SaveManager.Save(Area, SaveType.Global);
-						} catch (Exception e) {
-							Log.Error(e);
-						}
-					}) {
-						Priority = ThreadPriority.Lowest
-					}.Start();
+					// Synchronous: the global save is a dictionary, and a worker would race it.
+					SaveManager.Save(Area, SaveType.Global);
 					
 					currentBack = pauseBack;
 					pauseMenu.Enabled = true;

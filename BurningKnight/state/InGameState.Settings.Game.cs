@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using BurningKnight.assets;
 using BurningKnight.assets.achievements;
 using BurningKnight.assets.input;
@@ -156,20 +155,14 @@ namespace BurningKnight.state {
 						currentBack = settingsBack;
 						gameSettings.Enabled = true;
 						
-						new Thread(() => {
-							try {
-								var d = Run.Depth;
-								Run.RealDepth = -1;
-								Run.Depth = d;
-								Controls.BindDefault();
-								Controls.Save();
-								Settings.Generate();
-							} catch (Exception e) {
-								Log.Error(e);
-							}
-						}) {
-							Priority = ThreadPriority.Lowest
-						}.Start();
+						// Synchronous: this writes the controls file and regenerates the
+						// settings — all main-thread state, a worker would race the frame.
+						var d = Run.Depth;
+						Run.RealDepth = -1;
+						Run.Depth = d;
+						Controls.BindDefault();
+						Controls.Save();
+						Settings.Generate();
 					}, () => {
 						currentBack = gameBack;
 						gameSettings.Enabled = true;
@@ -195,30 +188,24 @@ namespace BurningKnight.state {
 						Achievements.ItemBuffer.Clear();
 						Achievements.AchievementBuffer.Clear();
 						
-						new Thread(() => {
-							try {
-								SaveManager.Delete(SaveType.Player, SaveType.Level, SaveType.Game, SaveType.Global);
-								CloudSave.Delete();
+						// Synchronous: deleting the saves and resetting the run state are quick,
+						// and a worker would race every frame that reads Run.
+						SaveManager.Delete(SaveType.Player, SaveType.Level, SaveType.Game, SaveType.Global);
+						CloudSave.Delete();
 
-								try {
-									Stats.Reset();
-								} catch (Exception e) {
-									Log.Error(e);
-								}
-								
-								Achievements.LoadState();
-								GlobalSave.Emeralds = 0;
-								
-								Run.StartingNew = true;
-								Run.NextDepth = 0;
-								Run.IntoMenu = true;
-								Settings.Setup();
-							} catch (Exception e) {
-								Log.Error(e);
-							}
-						}) {
-							Priority = ThreadPriority.Lowest
-						}.Start();
+						try {
+							Stats.Reset();
+						} catch (Exception e) {
+							Log.Error(e);
+						}
+						
+						Achievements.LoadState();
+						GlobalSave.Emeralds = 0;
+						
+						Run.StartingNew = true;
+						Run.NextDepth = 0;
+						Run.IntoMenu = true;
+						Settings.Setup();
 					}, () => {
 						currentBack = gameBack;
 						gameSettings.Enabled = true;

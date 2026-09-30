@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using BurningKnight.assets;
 using BurningKnight.assets.achievements;
 using BurningKnight.assets.input;
@@ -303,11 +302,10 @@ namespace BurningKnight.state {
 				killedLabel.Done = true;
 				Killer.Done = true;
 
-				new Thread(() => {
-					// SaveManager.Save(Area, SaveType.Statistics);
-					SaveManager.Delete(SaveType.Player, SaveType.Level, SaveType.Game);
-					SaveManager.Backup();
-				}).Start();
+				// Synchronous: a handful of small files, and Backup is a no-op.
+				// SaveManager.Save(Area, SaveType.Statistics);
+				SaveManager.Delete(SaveType.Player, SaveType.Level, SaveType.Game);
+				SaveManager.Backup();
 			}
 			
 			Audio.PlayMusic("Nostalgia", true);
