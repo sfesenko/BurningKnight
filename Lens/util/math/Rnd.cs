@@ -1,4 +1,6 @@
-﻿using System;
+﻿#nullable enable
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,7 +9,7 @@ using Microsoft.Xna.Framework;
 
 namespace Lens.util.math {
 	public static class Rnd {
-		private static string seed;
+		private static string seed = null!; // the static constructor sets it through Seed
 
 		public static Random Generator { get; private set; } = new(Guid.NewGuid().GetHashCode());
 
@@ -191,7 +193,7 @@ namespace Lens.util.math {
 			return Chance() ? -1 : 1;
 		}
 
-		public static T Element<T>(List<T> list, Func<T, bool> filter) where T : Entity {
+		public static T? Element<T>(List<T> list, Func<T, bool> filter) where T : Entity {
 			var length = list.Count;
 			var sum = list.Count(filter);
 

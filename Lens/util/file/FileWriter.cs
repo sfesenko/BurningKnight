@@ -1,3 +1,5 @@
+#nullable enable
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -5,7 +7,7 @@ using BinaryWriter = System.IO.BinaryWriter;
 
 namespace Lens.util.file {
 	public class FileWriter {
-		private BinaryWriter stream;
+		private BinaryWriter stream = null!; // opened by the constructor
 		private List<byte> cache = [];
 
 		public int CacheSize => cache.Count;

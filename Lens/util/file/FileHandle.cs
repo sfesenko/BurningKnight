@@ -1,4 +1,6 @@
-﻿using System;
+﻿#nullable enable
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -8,7 +10,7 @@ namespace Lens.util.file;
 
 public class FileHandle {
 	private readonly string path;
-	private readonly string relative;
+	private readonly string? relative;
 
 	public FileHandle(string path) {
 		this.path = path;
@@ -25,8 +27,8 @@ public class FileHandle {
 	public string NameWithoutExtension => Path.GetFileNameWithoutExtension(path);
 	public string Name => Path.GetFileName(path);
 	public string Extension => Path.GetExtension(path);
-	private string ParentName => Path.GetDirectoryName(path);
-	public FileHandle Parent => new(ParentName);
+	private string? ParentName => Path.GetDirectoryName(path);
+	public FileHandle Parent => new(ParentName!);
 
 	public static FileHandle FromRoot(string path) {
 		return new FileHandle(Assets.Root + path, path);
