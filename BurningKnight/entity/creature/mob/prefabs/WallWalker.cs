@@ -48,7 +48,7 @@ namespace BurningKnight.entity.creature.mob.prefabs {
 
 				var x = (int) Math.Round(X / 16f);
 				var y = (int) Math.Round((Y + 8) / 16f);
-				var level = Run.Level;
+				var level = Context.Level;
 
 				if (level.Get(x + 1, y).IsWall()) {
 					dirs.Add(Direction.Left);
@@ -171,7 +171,7 @@ namespace BurningKnight.entity.creature.mob.prefabs {
 				var x = (int) Math.Round(mx / 16f);
 				var y = (int) Math.Round(my / 16f);
 
-				if (Run.Level.IsInside(x, y) && Run.Level.Get(x, y).IsWall()) {
+				if (Context.Level.IsInside(x, y) && Context.Level.Get(x, y).IsWall()) {
 					Log.Debug("Killing walker");
 					Timer.Add(() => {
 						Self.Done = true;
@@ -182,7 +182,7 @@ namespace BurningKnight.entity.creature.mob.prefabs {
 				var mx = Self.X + (this.mx) * 16;
 				var my = Self.CenterY + (this.my) * 16;
 
-				if (!Run.Level.Get((int) Math.Round(mx / 16f), (int) Math.Round(my / 16f)).IsWall()) {
+				if (!GameContext.Current.Level.Get((int) Math.Round(mx / 16f), (int) Math.Round(my / 16f)).IsWall()) {
 					Self.GetComponent<HealthComponent>().Kill(Self);
 					return;
 				}
@@ -193,7 +193,7 @@ namespace BurningKnight.entity.creature.mob.prefabs {
 				var tx = (int) Math.Round(mx / 16f);
 				var ty = (int) Math.Round(my / 16f);
 
-				if (!Run.Level.Get(tx, ty).IsWall()) {
+				if (!GameContext.Current.Level.Get(tx, ty).IsWall()) {
 					Flip();
 					return;
 				}
@@ -204,7 +204,7 @@ namespace BurningKnight.entity.creature.mob.prefabs {
 				tx = (int) Math.Round(mx / 16f);
 				ty = (int) Math.Round(my / 16f);
 				
-				if (Run.Level.Get(tx, ty).IsWall()) {
+				if (GameContext.Current.Level.Get(tx, ty).IsWall()) {
 					Flip();
 					return;
 				}

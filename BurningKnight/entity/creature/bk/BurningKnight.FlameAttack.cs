@@ -58,7 +58,7 @@ namespace BurningKnight.entity.creature.bk {
 				Tween.To(1, graphics.Alpha, x => graphics.Alpha = x, 0.3f);
 
 				foreach (var l in last) {
-					Run.Level.SetFlag(l, Flag.Burning, false);
+					GameContext.Current.Level.SetFlag(l, Flag.Burning, false);
 				}
 			}
 
@@ -78,15 +78,15 @@ namespace BurningKnight.entity.creature.bk {
 				for (var xx = (int) -r; xx <= r; xx++) {
 					for (var yy = (int) -r; yy <= r; yy++) {
 						if (Math.Sqrt(xx * xx + yy * yy) <= r) {
-							var i = Run.Level.ToIndex(x + xx, y + yy);
+							var i = GameContext.Current.Level.ToIndex(x + xx, y + yy);
 
-							if (!Run.Level.CheckFlag(i, Flag.Burning)) {
-								Run.Level.SetFlag(i, Flag.Burning, true);
+							if (!GameContext.Current.Level.CheckFlag(i, Flag.Burning)) {
+								GameContext.Current.Level.SetFlag(i, Flag.Burning, true);
 								last.Add(i);
 
 								Timer.Add(() => {
 									last.Remove(i);
-									Run.Level.SetFlag(i, Flag.Burning, false);
+									GameContext.Current.Level.SetFlag(i, Flag.Burning, false);
 								}, Rnd.Float(1.5f, 2.5f));
 							}
 						}

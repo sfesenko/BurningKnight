@@ -359,7 +359,7 @@ namespace BurningKnight.entity.projectile {
 
 				var mute = false;
 				
-				if (Run.Level.Biome is IceBiome && !(Owner is creature.bk.BurningKnight) && ev.Entity is ProjectileLevelBody lvl) {
+				if (Context.Level.Biome is IceBiome && !(Owner is creature.bk.BurningKnight) && ev.Entity is ProjectileLevelBody lvl) {
 					if (lvl.Break(CenterX, CenterY)) {
 						mute = true;
 						AudioEmitterComponent.Dummy(Area, Center).EmitRandomizedPrefixed("level_snow_break", 3);
@@ -419,7 +419,7 @@ namespace BurningKnight.entity.projectile {
 						var part = new ParticleEntity(Particles.Dust());
 						
 						part.Position = Center;
-						Run.Level.Area.Add(part);
+						Context.Level.Area.Add(part);
 						part.Particle.Velocity = MathUtils.CreateVector(a + Rnd.Float(-0.4f, 0.4f), l);
 						part.Depth = Layers.WindFx;
 						part.Particle.Scale = 0.7f;

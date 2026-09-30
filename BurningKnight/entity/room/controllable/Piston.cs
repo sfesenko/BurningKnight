@@ -12,14 +12,14 @@ namespace BurningKnight.entity.room.controllable {
 		}
 
 		public bool IsOn() {
-			return Run.Level.Get(X, Y) == Tile.Piston;
+			return Context.Level.Get(X, Y) == Tile.Piston;
 		}
 
 		public void Set(bool value) {
 			if (IsOn() != value) {
-				Run.Level.Set(X, Y, value ? Tile.Piston : Tile.PistonDown);
-				Run.Level.ReCreateBodyChunk(X, Y);
-				Run.Level.UpdateTile(X, Y);
+				Context.Level.Set(X, Y, value ? Tile.Piston : Tile.PistonDown);
+				Context.Level.ReCreateBodyChunk(X, Y);
+				Context.Level.UpdateTile(X, Y);
 			}
 		}
 

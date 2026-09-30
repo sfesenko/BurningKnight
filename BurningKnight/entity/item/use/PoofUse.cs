@@ -15,7 +15,7 @@ namespace BurningKnight.entity.item.use {
 						
 				part.Position = where + Rnd.Vector(-16, 16);
 				part.Particle.Scale = Rnd.Float(1, 2f);
-				Run.Level.Area.Add(part);
+				Context.Level.Area.Add(part);
 			}
 		}
 	}

@@ -165,7 +165,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 
 					if (doors.Count > 0) {
 						var rm = GetComponent<RoomComponent>().Room;
-						var level = Run.Level;
+						var level = Context.Level;
 						var cx = rm.MapX + rm.MapW / 2f;
 						var cy = rm.MapY + rm.MapH / 2f;
 						var grannyDoors = new List<Door>();
@@ -192,9 +192,9 @@ namespace BurningKnight.entity.creature.mob.boss {
 									var part = new TileParticle();
 
 									part.Top = t == Tile.GrannyFloor ? Tilesets.Biome.GrannyFloor[0] : Tilesets.Biome.EvilFloor[0];
-									part.TopTarget = Run.Level.Tileset.WallTopADecor;
-									part.Side = Run.Level.Tileset.FloorSidesD[0];
-									part.Sides = Run.Level.Tileset.WallSidesA[2];
+									part.TopTarget = Context.Level.Tileset.WallTopADecor;
+									part.Side = Context.Level.Tileset.FloorSidesD[0];
+									part.Sides = Context.Level.Tileset.WallSidesA[2];
 									part.Tile = t;
 
 									part.X = x * 16;
@@ -314,10 +314,10 @@ namespace BurningKnight.entity.creature.mob.boss {
 
 			exit.Center = p;
 
-			Painter.Fill(Run.Level, x - 1, y - 1, 3, 3, Tiles.RandomFloor());
-			Painter.Fill(Run.Level, x - 1, y - 3, 3, 3, Tiles.RandomFloor());
+			Painter.Fill(Context.Level, x - 1, y - 1, 3, 3, Tiles.RandomFloor());
+			Painter.Fill(Context.Level, x - 1, y - 3, 3, 3, Tiles.RandomFloor());
 
-			Run.Level.ReTileAndCreateBodyChunks(x - 1, y - 1, 3, 7);
+			Context.Level.ReTileAndCreateBodyChunks(x - 1, y - 1, 3, 7);
 			var w = p - new Vector2(0, 32f);
 
 			if (!(this is DM || this is BkHead || Run.Type == RunType.BossRush)) {

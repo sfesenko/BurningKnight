@@ -136,7 +136,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 					}
 					
 					var rm = GetComponent<RoomComponent>().Room;
-					var level = Run.Level;
+					var level = Context.Level;
 					Type type;
 
 					if (GetComponent<HealthComponent>().Health <= 0) {

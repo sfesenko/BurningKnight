@@ -79,7 +79,7 @@ namespace BurningKnight.entity.component {
 		}
 
 		private void InspectTile(int index, int x, int y) {
-			var level = Run.Level;
+			var level = Context.Level;
 
 			if (!level.IsInside(x, y)) {
 				return;
@@ -123,7 +123,7 @@ namespace BurningKnight.entity.component {
 			var endX = (int) Math.Floor((ex + ew) / 16f);
 			var endY = (int) Math.Floor((ey + eh) / 16f);
 
-			var level = Run.Level;
+			var level = Context.Level;
 			
 			for (int x = startX; x <= endX; x++) {
 				for (int y = startY; y <= endY; y++) {

@@ -317,10 +317,10 @@ namespace BurningKnight.entity.creature.mob.boss {
 							var part = new TileParticle();
 
 							part.FromBottom = true;
-							part.Top = Run.Level.Tileset.FloorA[0];
-							part.TopTarget = Run.Level.Tileset.WallTopADecor;
-							part.Side = Run.Level.Tileset.WallA[0];
-							part.Sides = Run.Level.Tileset.WallSidesA[2];
+							part.Top = GameContext.Current.Level.Tileset.FloorA[0];
+							part.TopTarget = GameContext.Current.Level.Tileset.WallTopADecor;
+							part.Side = GameContext.Current.Level.Tileset.WallA[0];
+							part.Sides = GameContext.Current.Level.Tileset.WallSidesA[2];
 							part.Tile = Tile.WallA;
 
 							part.X = (spot.X + x1) * 16;

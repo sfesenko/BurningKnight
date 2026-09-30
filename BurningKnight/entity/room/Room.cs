@@ -155,7 +155,7 @@ namespace BurningKnight.entity.room {
 		private bool settedUp;
 		
 		private void Setup() {
-			var level = Run.Level;
+			var level = Context.Level;
 			Explored = level.Explored[level.ToIndex(MapX + 1, MapY + 1)];
 			
 			ApplyToEachTile((x, y) => {
@@ -187,7 +187,7 @@ namespace BurningKnight.entity.room {
 			Explored = true;
 			
 			ApplyToEachTile((x, y) => {
-				Run.Level.Explored[Run.Level.ToIndex(x, y)] = true;
+				Context.Level.Explored[Context.Level.ToIndex(x, y)] = true;
 			});
 		}
 
@@ -195,15 +195,15 @@ namespace BurningKnight.entity.room {
 			Explored = false;
 			
 			ApplyToEachTile((x, y) => {
-				var i = Run.Level.ToIndex(x, y);
+				var i = Context.Level.ToIndex(x, y);
 
-				if (!Run.Level.Get(i).IsWall() || !Run.Level.Get(i + Run.Level.Width).IsWall()) {
-					Run.Level.Explored[i] = false;
+				if (!Context.Level.Get(i).IsWall() || !Context.Level.Get(i + Context.Level.Width).IsWall()) {
+					Context.Level.Explored[i] = false;
 
 					if (fast) {
-						Run.Level.Light[i] = 0;
+						Context.Level.Light[i] = 0;
 					} else {
-						Tween.To(0, 1f, xx => Run.Level.Light[i] = xx, 0.5f);
+						Tween.To(0, 1f, xx => Context.Level.Light[i] = xx, 0.5f);
 					}
 				}
 			}, Type == RoomType.DarkMarket || Type == RoomType.Hidden ? 1 : 0);

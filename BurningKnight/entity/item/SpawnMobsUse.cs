@@ -27,7 +27,7 @@ namespace BurningKnight.entity.item {
 			}
 
 			var filter = CheckDistance(entity);
-			MobRegistry.SetupForBiome(Run.Level.Biome.Id);
+			MobRegistry.SetupForBiome(Context.Level.Biome.Id);
 			
 			for (var i = 0; i < Count; i++) {
 				Timer.Add(() => {
@@ -53,7 +53,7 @@ namespace BurningKnight.entity.item {
 							}
 						};
 
-						Run.Level.Area.Add(part);
+						Context.Level.Area.Add(part);
 						part.Depth = 1;
 					}
 					

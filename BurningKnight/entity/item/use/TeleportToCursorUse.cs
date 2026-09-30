@@ -12,7 +12,7 @@ namespace BurningKnight.entity.item.use {
 			var tileX = (int) (position.X / 16);
 			var tileY = (int) (position.Y / 16);
 
-			var level = Run.Level;
+			var level = Context.Level;
 
 			if (!level.IsInside(tileX, tileY)) {
 				return;

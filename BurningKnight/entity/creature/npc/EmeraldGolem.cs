@@ -71,7 +71,7 @@ namespace BurningKnight.entity.creature.npc {
 						
 								part.Position = Center + Rnd.Vector(-16, 16);
 								part.Particle.Scale = Rnd.Float(1f, 2f);
-								Run.Level.Area.Add(part);
+								Context.Level.Area.Add(part);
 								part.Depth = 1;
 							}
 						});
@@ -104,7 +104,7 @@ namespace BurningKnight.entity.creature.npc {
 						
 								part.Position = Center + Rnd.Vector(-16, 16);
 								part.Particle.Scale = Rnd.Float(1f, 2f);
-								Run.Level.Area.Add(part);
+								Context.Level.Area.Add(part);
 								part.Depth = 1;
 							}
 						});

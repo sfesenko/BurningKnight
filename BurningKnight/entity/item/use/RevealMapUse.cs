@@ -10,7 +10,7 @@ namespace BurningKnight.entity.item.use {
 		public override void Use(Entity entity, Item item) {
 			base.Use(entity, item);
 			
-			var level = Run.Level;
+			var level = Context.Level;
 			Context.Audio.PlaySfx("item_map");
 			
 			foreach (var e in entity.Area.Tagged[Tags.Room]) {

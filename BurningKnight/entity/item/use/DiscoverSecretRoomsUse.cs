@@ -14,7 +14,7 @@ namespace BurningKnight.entity.item.use {
 		private float chance;
 
 		public override void Use(Entity entity, Item item) {				
-			ExplosionMaker.CheckForCracks(Run.Level, entity.GetComponent<RoomComponent>().Room, entity);
+			ExplosionMaker.CheckForCracks(Context.Level, entity.GetComponent<RoomComponent>().Room, entity);
 		}
 
 		public override bool HandleEvent(Event e) {
@@ -23,7 +23,7 @@ namespace BurningKnight.entity.item.use {
 					return base.HandleEvent(e);
 				}
 
-				ExplosionMaker.CheckForCracks(Run.Level, rce.New, rce.Who);
+				ExplosionMaker.CheckForCracks(Context.Level, rce.New, rce.Who);
 			}
 			
 			return base.HandleEvent(e);

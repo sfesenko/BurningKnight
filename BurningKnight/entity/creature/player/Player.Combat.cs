@@ -75,7 +75,7 @@ namespace BurningKnight.entity.creature.player {
 				}
 
 				if (!GetComponent<BuffsComponent>().PitImmunity) {
-					GetComponent<HealthComponent>().ModifyHealth(-1, Run.Level);
+					GetComponent<HealthComponent>().ModifyHealth(-1, Context.Level);
 				}
 				
 
@@ -87,7 +87,7 @@ namespace BurningKnight.entity.creature.player {
 					Area.Add(part);
 				}
 			} else if (e is RoomChangedEvent c) {
-				if (c.New == null || Run.Level == null || Context.Camera == null) {
+				if (c.New == null || Context.Level == null || Context.Camera == null) {
 					return base.HandleEvent(e);
 				}
 				
@@ -139,7 +139,7 @@ namespace BurningKnight.entity.creature.player {
 				}
 				
 				c.New.Discover();
-				var level = Run.Level;
+				var level = Context.Level;
 
 				if (InGameState.Ready) {
 					switch (c.New.Type) {
@@ -233,17 +233,17 @@ namespace BurningKnight.entity.creature.player {
 							}
 
 							c.Old.ApplyToEachTile((x, y) => {
-								if (Run.Level.Get(x, y).IsWall()) {
+								if (Context.Level.Get(x, y).IsWall()) {
 									return;
 								}
 
 								Timer.Add(() => {
 									var part = new TileParticle();
 
-									part.Top = Run.Level.Tileset.WallTopADecor;
-									part.TopTarget = Run.Level.Tileset.WallTopADecor;
-									part.Side = Run.Level.Tileset.FloorSidesD[0];
-									part.Sides = Run.Level.Tileset.WallSidesA[2];
+									part.Top = Context.Level.Tileset.WallTopADecor;
+									part.TopTarget = Context.Level.Tileset.WallTopADecor;
+									part.Side = Context.Level.Tileset.FloorSidesD[0];
+									part.Sides = Context.Level.Tileset.WallSidesA[2];
 									part.Tile = Tile.WallA;
 
 									part.X = x * 16;
@@ -330,7 +330,7 @@ namespace BurningKnight.entity.creature.player {
 				}
 			} else if (e is FlagCollisionStartEvent fcse) {
 				if (fcse.Flag == Flag.Burning) {
-					GetComponent<HealthComponent>().ModifyHealth(-1, Run.Level);
+					GetComponent<HealthComponent>().ModifyHealth(-1, Context.Level);
 				}
 			} else if (e is RevivedEvent re) {
 				AnimationUtil.TeleportAway(this, () => {

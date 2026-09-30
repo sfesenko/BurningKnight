@@ -40,7 +40,7 @@ using MonoGame.Extended;
 namespace BurningKnight.entity.room {
 	public partial class Room {
 		public void ApplyToEachTile(Action<int, int> callback, int offset = 0) {
-			var level = Run.Level;
+			var level = Context.Level;
 			
 			for (int y = MapY + offset; y < MapY + MapH - 1 - offset; y++) {
 				for (int x = MapX + offset; x < MapX + MapW - offset; x++) {
@@ -55,7 +55,7 @@ namespace BurningKnight.entity.room {
 
 			for (var x = MapX + 1; x < MapX + MapW - 1; x++) {
 				for (var y = MapY + 1; y < MapY + MapH - 1; y++) {
-					if (Run.Level.IsPassable(x, y) && (filter == null || filter(x, y))) {
+					if (Context.Level.IsPassable(x, y) && (filter == null || filter(x, y))) {
 						list.Add(new Point(x, y));
 					}
 				}
@@ -75,10 +75,10 @@ namespace BurningKnight.entity.room {
 		}
 		public Vector2 GetRandomFreeTileNearWall(Func<int, int, bool> filter = null) {
 			return GetRandomFreeTile((x, y) => {
-				if (Run.Level.CheckFor(x - 1, y, TileFlags.Passable)
-				&& Run.Level.CheckFor(x + 1, y, TileFlags.Passable)
-				&& Run.Level.CheckFor(x, y - 1, TileFlags.Passable)
-				&& Run.Level.CheckFor(x, y + 1, TileFlags.Passable)) {
+				if (Context.Level.CheckFor(x - 1, y, TileFlags.Passable)
+				&& Context.Level.CheckFor(x + 1, y, TileFlags.Passable)
+				&& Context.Level.CheckFor(x, y - 1, TileFlags.Passable)
+				&& Context.Level.CheckFor(x, y + 1, TileFlags.Passable)) {
 					// No wall here :/
 					return false;
 				}
@@ -88,10 +88,10 @@ namespace BurningKnight.entity.room {
 		}
 		public Vector2 GetRandomWallFreeTile(Func<int, int, bool> filter = null) {
 			return GetRandomFreeTile((x, y) => {
-				if (!Run.Level.CheckFor(x - 1, y, TileFlags.Passable)
-				    || !Run.Level.CheckFor(x + 1, y, TileFlags.Passable)
-				    || !Run.Level.CheckFor(x, y - 1, TileFlags.Passable)
-				    || !Run.Level.CheckFor(x, y + 1, TileFlags.Passable)) {
+				if (!Context.Level.CheckFor(x - 1, y, TileFlags.Passable)
+				    || !Context.Level.CheckFor(x + 1, y, TileFlags.Passable)
+				    || !Context.Level.CheckFor(x, y - 1, TileFlags.Passable)
+				    || !Context.Level.CheckFor(x, y + 1, TileFlags.Passable)) {
 					// Wall here :/
 					return false;
 				}
@@ -100,7 +100,7 @@ namespace BurningKnight.entity.room {
 			});
 		}
 		public void OpenHiddenDoors() {
-			var level = Run.Level;
+			var level = Context.Level;
 			
 			foreach (var door in Doors) {
 				var x = (int) Math.Floor(door.CenterX / 16);
@@ -122,7 +122,7 @@ namespace BurningKnight.entity.room {
 			}
 		}
 		public void CloseHiddenDoors() {
-			var level = Run.Level;
+			var level = Context.Level;
 			
 			foreach (var door in Doors) {
 				var x = (int) Math.Floor(door.CenterX / 16);
@@ -148,7 +148,7 @@ namespace BurningKnight.entity.room {
 				return;
 			}
 
-			var Level = Run.Level;
+			var Level = Context.Level;
 			var C = space;
 
 			if (C == null) {

@@ -86,7 +86,7 @@ namespace BurningKnight.entity.creature.mob {
 			OnTargetChange(closest);
 		}
 		private void BuildPath(Vector2 to, bool back = false) {
-			var level = Run.Level;
+			var level = Context.Level;
 			var fp = level.ToIndex((int) Math.Floor(CenterX / 16f), (int) Math.Floor(Bottom / 16f));
 			var tp = level.ToIndex((int) Math.Floor(to.X / 16f), (int) Math.Floor(to.Y / 16f));
 

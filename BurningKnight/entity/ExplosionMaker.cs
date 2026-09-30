@@ -119,7 +119,7 @@ namespace BurningKnight.entity {
 			var xx = (int) Math.Floor(w.X / 16f);
 			var yy = (int) Math.Floor(w.Y / 16f);
 			var r = (int) Math.Floor(hurtRadius / 16f);
-			var level = Run.Level;
+			var level = Context.Level;
 			var ice = level.Biome is IceBiome;
 				
 			for (int x = -r; x <= r; x++) {
@@ -190,7 +190,7 @@ namespace BurningKnight.entity {
 					var ds = Math.Sqrt(xx * xx + yy * yy);
 
 					if (ds <= d) {
-						var level = Run.Level;
+						var level = Context.Level;
 						var index = level.ToIndex(xx + x, yy + y);
 
 						level.Light[index] = (float) Math.Max(level.Light[index], Math.Max(0.1f, (d - ds) / d));

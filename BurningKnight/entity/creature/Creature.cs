@@ -108,7 +108,7 @@ namespace BurningKnight.entity.creature {
 				}
 			} else if (e is TileCollisionStartEvent tce) {
 				if (tce.Tile == Tile.Lava) {
-					if (GetComponent<HealthComponent>().ModifyHealth(-1, Run.Level)) {
+					if (GetComponent<HealthComponent>().ModifyHealth(-1, Context.Level)) {
 						// GetComponent<BuffsComponent>().Add(BurningBuff.Id);
 
 						var set = false;
@@ -116,7 +116,7 @@ namespace BurningKnight.entity.creature {
 						var count = 0;
 
 						GetComponent<TileInteractionComponent>().ApplyForAllTouching((i, x, y) => {
-							if (Run.Level.Get(x, y, true) == Tile.Lava) {
+							if (Context.Level.Get(x, y, true) == Tile.Lava) {
 								var v = new Vector2(x * 16, y * 16);
 								count++;
 
@@ -165,7 +165,7 @@ namespace BurningKnight.entity.creature {
 				part.Position = Center;
 				part.Particle.Scale = Rnd.Float(1.5f, 2f);
 				part.Particle.Velocity = new Vector2(Rnd.Float(20, 30) * (Rnd.Chance() ? -1 : 1), -Rnd.Float(40, 66));
-				Run.Level.Area.Add(part);
+				Context.Level.Area.Add(part);
 				part.Depth = 1;
 			}
 

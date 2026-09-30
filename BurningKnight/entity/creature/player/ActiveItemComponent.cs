@@ -58,7 +58,7 @@ namespace BurningKnight.entity.creature.player {
 				dialog.StartAndClose("control_6", 5);
 			}
 
-			if (Item.Id == "bk:snow_bucket" && !(Run.Level.Biome is IceBiome)) {
+			if (Item.Id == "bk:snow_bucket" && !(Context.Level.Biome is IceBiome)) {
 				Timer.Add(() => {
 					var i = Item;
 				

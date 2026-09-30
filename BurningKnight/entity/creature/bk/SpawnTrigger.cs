@@ -52,7 +52,7 @@ namespace BurningKnight.entity.creature.bk {
 					Tween.To(0.5f, Context.Camera.Zoom, x => Context.Camera.Zoom = x, 0.3f);
 
 					for (var j = 1; j < r; j++) {
-						var level = Run.Level;
+						var level = Context.Level;
 						var j1 = j;
 
 						Timer.Add(() => {
@@ -198,7 +198,7 @@ namespace BurningKnight.entity.creature.bk {
 					var xx = (int) Math.Floor(CenterX / 16);
 					var xy = (int) Math.Floor(CenterY / 16);
 
-					Painter.Rect(Run.Level, xx - 3, xy - 3, 6, 6, Tile.Chasm);
+					Painter.Rect(Context.Level, xx - 3, xy - 3, 6, 6, Tile.Chasm);
 
 					/*var torches = GetComponent<RoomComponent>().Room.Tagged[Tags.Torch];
 

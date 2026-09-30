@@ -89,10 +89,10 @@ namespace BurningKnight.entity.room {
 					Timer.Add(() => {
 						var part = new TileParticle();
 
-						part.Top = Run.Level.Tileset.FloorD[0];
-						part.TopTarget = Run.Level.Tileset.WallTopADecor;
-						part.Side = Run.Level.Tileset.FloorSidesD[0];
-						part.Sides = Run.Level.Tileset.WallSidesA[2];
+						part.Top = Context.Level.Tileset.FloorD[0];
+						part.TopTarget = Context.Level.Tileset.WallTopADecor;
+						part.Side = Context.Level.Tileset.FloorSidesD[0];
+						part.Sides = Context.Level.Tileset.WallSidesA[2];
 						part.Tile = Tile.FloorD;
 
 						part.X = (where.X + x1) * 16;

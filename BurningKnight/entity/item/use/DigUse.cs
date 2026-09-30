@@ -12,7 +12,7 @@ namespace BurningKnight.entity.item.use {
 			var x = (int) Math.Floor(cursor.X / 16f);
 			var y = (int) Math.Floor((cursor.Y) / 16f);
 
-			var level = Run.Level;
+			var level = Context.Level;
 
 			if (!level.IsInside(x, y)) {
 				return;
