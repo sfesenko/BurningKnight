@@ -30,7 +30,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 		
 		protected override void AddPhases() {
 			base.AddPhases();
-			HealthBar.AddPhase(0.2f);
+			HealthBar!.AddPhase(0.2f);
 		}
 
 		public override void AddComponents() {
@@ -41,7 +41,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 			AddComponent(new AimComponent(AimComponent.AimType.Target));
 
 			var b = GetComponent<RectBodyComponent>();
-			b.Body.LinearDamping = 2;
+			b!.Body.LinearDamping = 2;
 			b.KnockbackModifier = 0;
 			
 			SetMaxHp(600);
@@ -135,12 +135,12 @@ namespace BurningKnight.entity.creature.mob.boss {
 			}
 			
 			var heinur = new Heinur();
-			Area.Add(heinur);
+			Area!.Add(heinur);
 			heinur.Center = Center - new Vector2(0, 32);
 
 			var g = heinur.GetComponent<BkGraphicsComponent>();
 			
-			g.Scale = Vector2.Zero;
+			g!.Scale = Vector2.Zero;
 			
 			Timer.Add(() => {
 				Tween.To(1, 0, x => g.Scale.X = x, 3f);
@@ -166,13 +166,13 @@ namespace BurningKnight.entity.creature.mob.boss {
 			Context.Camera!.Follow(dm, 1f);
 			Context.Camera!.Follow(heinur, 1f);
 			
-			dmDialog.Start("dm_5", null, () => Timer.Add(() => {
+			dmDialog!.Start("dm_5", null, () => Timer.Add(() => {
 				dmDialog.Close();
 				Context.Camera!.Targets.Clear();
 				Context.Camera!.Follow(dm, 1f);
 				Context.Camera!.Follow(heinur, 1f);
 				
-				heinurDialog.Start("heinur_0", null, () => Timer.Add(() => {
+				heinurDialog!.Start("heinur_0", null, () => Timer.Add(() => {
 					heinurDialog.Close();
 					heinur.Attract = true;
 					Context.Camera!.Targets.Clear();
@@ -206,7 +206,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 							
 							var nbkDialog = bk.GetComponent<DialogComponent>();
 						
-							nbkDialog.Start("nbk_0", null, () => Timer.Add(() => {
+							nbkDialog!.Start("nbk_0", null, () => Timer.Add(() => {
 								nbkDialog.Close();
 								Context.Camera!.Targets.Clear();
 								Context.Camera!.Follow(bk, 1f);

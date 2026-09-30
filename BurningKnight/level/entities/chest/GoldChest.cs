@@ -34,7 +34,7 @@ namespace BurningKnight.level.entities.chest {
 					Scale = Scale * 0.9f
 				};
 
-				Area.Add(chest);
+				Area!.Add(chest);
 				chest.TopCenter = BottomCenter;
 				
 				return;

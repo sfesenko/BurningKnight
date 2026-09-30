@@ -57,7 +57,7 @@ namespace BurningKnight.entity.item.stand {
 			}
 		
 			var ht = entity.GetComponent<HatComponent>();
-			var old = ht.Item;
+			var old = ht!.Item;
 			
 			ht.Set(item, true);
 			item = null;

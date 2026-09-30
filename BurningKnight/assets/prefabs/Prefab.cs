@@ -25,7 +25,7 @@ namespace BurningKnight.assets.prefabs {
 				level.Area!.Add(e, false);
 				reader.SetData(d.Data);
 
-				e.Load(reader);
+				e!.Load(reader);
 
 				if (e is Room r) {
 					r.MapX += x;

@@ -33,7 +33,7 @@ namespace BurningKnight.entity.creature.mob.castle {
 			var body = new SensorBodyComponent(2, 2, 12, 12);
 			AddComponent(body);
 
-			body.Body.LinearDamping = 3;
+			body!.Body.LinearDamping = 3;
 			
 			GetComponent<MobAnimationComponent>()!.Tint.A = Alpha;
 		}

@@ -49,7 +49,7 @@ namespace BurningKnight.level.entities {
 		}
 
 		private void RenderShadow() {
-			GraphicsComponent.Render(true);
+			GraphicsComponent!.Render(true);
 		}
 
 		public override void Load(FileReader stream) {

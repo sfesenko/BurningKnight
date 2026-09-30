@@ -41,7 +41,7 @@ namespace BurningKnight.level.entities {
 				
 				case Direction.Right: {
 					AddComponent(new AnimationComponent("belt"));
-					GraphicsComponent.Flipped = true;
+					GraphicsComponent!.Flipped = true;
 
 					break;
 				}

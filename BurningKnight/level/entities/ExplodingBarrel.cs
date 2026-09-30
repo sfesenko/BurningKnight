@@ -49,7 +49,7 @@ namespace BurningKnight.level.entities {
 			base.PostInit();
 			var s = GetComponent<ScalableSliceComponent>();
 
-			s.Origin.Y = s.Sprite.Height;
+			s!.Origin.Y = s.Sprite.Height;
 			s.ShadowZ = -6;
 		}
 
@@ -58,7 +58,7 @@ namespace BurningKnight.level.entities {
 				if (!Done) {
 					PrepareToExplode();
 					var h = GetComponent<HealthComponent>();
-					h.InvincibilityTimer = h.InvincibilityTimerMax;
+					h!.InvincibilityTimer = h.InvincibilityTimerMax;
 				}
 
 				return true;
@@ -103,7 +103,7 @@ namespace BurningKnight.level.entities {
 
 			var a = GetComponent<ScalableSliceComponent>();
 			
-			Tween.To(1.4f, a.Scale.X, x => a.Scale.X = x, 0.4f);
+			Tween.To(1.4f, a!.Scale.X, x => a.Scale.X = x, 0.4f);
 			Tween.To(0.7f, a.Scale.Y, x => a.Scale.Y = x, 0.4f);
 
 			if (!HasComponent<AudioEmitterComponent>()) {

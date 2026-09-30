@@ -35,7 +35,7 @@ namespace BurningKnight.entity.creature.mob.desert {
 				var i = 0;
 
 				do {
-					var spot = Self.GetComponent<RoomComponent>()!.Room.GetRandomFreeTile() * 16;
+					var spot = Self!.GetComponent<RoomComponent>()!.Room.GetRandomFreeTile() * 16;
 
 					if (Self.Target == null || Self.Target.DistanceTo(spot) > 32f) {
 						target = new Vector2(spot.X + 8, spot.Y);
@@ -84,7 +84,7 @@ namespace BurningKnight.entity.creature.mob.desert {
 			public override void Update(float dt) {
 				base.Update(dt);
 
-				if (Self.GetComponent<MobAnimationComponent>()!.Animation.Paused) {
+				if (Self!.GetComponent<MobAnimationComponent>()!.Animation.Paused) {
 					Become<HiddenState>();
 				}
 			}
@@ -104,7 +104,7 @@ namespace BurningKnight.entity.creature.mob.desert {
 			public override void Update(float dt) {
 				base.Update(dt);
 
-				if (Self.GetComponent<MobAnimationComponent>()!.Animation.Paused) {
+				if (Self!.GetComponent<MobAnimationComponent>()!.Animation.Paused) {
 					Become<IdleState>();
 				}
 
@@ -143,7 +143,7 @@ namespace BurningKnight.entity.creature.mob.desert {
 
 					var a = Self.GetComponent<MobAnimationComponent>();
 					
-					Tween.To(0.6f, a.Scale.X, x => a.Scale.X = x, 0.2f);
+					Tween.To(0.6f, a!.Scale.X, x => a.Scale.X = x, 0.2f);
 					Tween.To(1.6f, a.Scale.Y, x => a.Scale.Y = x, 0.2f).OnEnd = () => {
 
 						Tween.To(1.8f, a.Scale.X, x => a.Scale.X = x, 0.1f);

@@ -31,7 +31,7 @@ namespace BurningKnight.entity.creature.pet {
 			if (Sprite == "bk:led") {
 				if (!HasComponent<OrbitalComponent>()) {
 					AddComponent(new OrbitalComponent());
-					Owner.GetComponent<OrbitGiverComponent>()!.AddOrbiter(this);
+					Owner!.GetComponent<OrbitGiverComponent>()!.AddOrbiter(this);
 				}
 			} else {
 				base.Follow();
@@ -49,7 +49,7 @@ namespace BurningKnight.entity.creature.pet {
 			lastFlame += dt;
 
 			if (lastFlame > 0.3f) {
-				Area.Add(new FireParticle {
+				Area!.Add(new FireParticle {
 					X = CenterX,
 					Y = Y + 1,
 					Depth = Layers.Wall + 1

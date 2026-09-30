@@ -107,7 +107,7 @@ namespace BurningKnight.entity.component {
 			
 			Send(e);
 
-			Item.Center = Entity.Center - new Vector2(0, 4);
+			Item!.Center = Entity.Center - new Vector2(0, 4);
 			Entity.Area!.Add(Item);
 			Item.RemoveComponent<OwnerComponent>();
 			Item.AddDroppedComponents();

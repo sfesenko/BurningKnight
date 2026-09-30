@@ -95,7 +95,7 @@ namespace BurningKnight.level.entities.machine {
 			var p = e ?? LocalPlayer.Locate(Area);
 			var active = p.GetComponent<ActiveItemComponent>();
 			
-			if (active.Item == null) {
+			if (active!.Item == null) {
 				GetComponent<DialogComponent>()!.StartAndClose("charger_0", 3);
 				AnimationUtil.ActionFailed();
 				
@@ -112,14 +112,14 @@ namespace BurningKnight.level.entities.machine {
 			if (e != null) {
 				var component = p.GetComponent<ConsumablesComponent>();
 
-				if (component.Coins == 0) {
+				if (component!.Coins == 0) {
 					if (noMoneyAttempt == 0) {
 						GetComponent<DialogComponent>()!.StartAndClose("charger_2", 3);
 					} else if (noMoneyAttempt == 1) {
 						GetComponent<DialogComponent>()!.StartAndClose("charger_3", 3);
 					} else {
 						var hp = p.GetComponent<HealthComponent>();
-						hp.ModifyHealth(-1, this);
+						hp!.ModifyHealth(-1, this);
 						GetComponent<DialogComponent>()!.StartAndClose($"charger_{(hp.HasNoHealth ? 5 : 4)}", 3);
 					}
 

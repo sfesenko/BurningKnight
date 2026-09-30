@@ -32,18 +32,18 @@ namespace BurningKnight.entity.creature.npc.dungeon {
 			var health = e.GetComponent<HealthComponent>();
 			var d = GetComponent<DialogComponent>();
 
-			if (health.IsFull()) {
+			if (health!.IsFull()) {
 				// Ya look pretty good
-				d.StartAndClose("nurse_0", 3);
+				d!.StartAndClose("nurse_0", 3);
 				return false;
 			}
 
 			var price = (int) (health.MaxHealth - health.Health) * 4;
 			var consumables = e.GetComponent<ConsumablesComponent>();
 
-			if (consumables.Coins < price) {
+			if (consumables!.Coins < price) {
 
-				d.Dialog.Str.SetVariable("price", price);
+				d!.Dialog.Str.SetVariable("price", price);
 				d.StartAndClose("nurse_1", 5);
 
 				return false;
@@ -52,7 +52,7 @@ namespace BurningKnight.entity.creature.npc.dungeon {
 			health.ModifyHealth(health.MaxHealth, this);
 			TextParticle.Add(e, Locale.Get("coins"), price, true, true);
 			
-			d.StartAndClose("nurse_2", 5);
+			d!.StartAndClose("nurse_2", 5);
 			return false;
 		}
 

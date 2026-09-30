@@ -24,7 +24,7 @@ namespace BurningKnight.entity.creature.bk {
 			
 			var body = new SensorBodyComponent(1, 2, 10, 10);
 			AddComponent(body);
-			body.Body.LinearDamping = 4;
+			body!.Body.LinearDamping = 4;
 			
 			AddComponent(new ZAnimationComponent("bk_orbital"));
 			AddComponent(new ZComponent());
@@ -51,7 +51,7 @@ namespace BurningKnight.entity.creature.bk {
 			GetComponent<AudioEmitterComponent>()!.EmitRandomized("mob_fire");
 			var a = GetComponent<ZAnimationComponent>();
 					
-			Tween.To(0.6f, a.Scale.X, x => a.Scale.X = x, 0.2f);
+			Tween.To(0.6f, a!.Scale.X, x => a.Scale.X = x, 0.2f);
 			Tween.To(1.6f, a.Scale.Y, x => a.Scale.Y = x, 0.2f).OnEnd = () => {
 				Tween.To(1.8f, a.Scale.X, x => a.Scale.X = x, 0.1f);
 				Tween.To(0.2f, a.Scale.Y, x => a.Scale.Y = x, 0.1f).OnEnd = () => {
@@ -86,7 +86,7 @@ namespace BurningKnight.entity.creature.bk {
 				T = Self.Id * 1f;
 				
 				var component = Self.GetComponent<ZComponent>();
-				Tween.To(DefaultZ, component.Z, x => component.Z = x, 0.4f, Ease.BackOut);
+				Tween.To(DefaultZ, component!.Z, x => component.Z = x, 0.4f, Ease.BackOut);
 			}
 
 			public override void Update(float dt) {

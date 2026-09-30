@@ -35,7 +35,7 @@ namespace BurningKnight.entity.orbital {
 				builder.AddFlags(ProjectileFlags.Artificial);
 
 				for (var i = 0; i < tt; i++) {
-					builder.Shoot(body.Angle + (i - tt * 0.5f) * 0.1f, body.Velocity.Length() * 0.05f);
+					builder.Shoot(body!.Angle + (i - tt * 0.5f) * 0.1f, body.Velocity.Length() * 0.05f);
 
 					var pr = builder.Build();
 					

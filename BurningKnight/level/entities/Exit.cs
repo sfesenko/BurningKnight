@@ -72,7 +72,7 @@ namespace BurningKnight.level.entities {
 				GlobalSave.Put("finished_tutorial", true);
 				Context.Run.Depth = 0;
 			} else if (To == 1 || this is BossRushExit) {
-				Context.Run.NumPlayers = Area.Tagged[Tags.Player].Count;
+				Context.Run.NumPlayers = Area!.Tagged[Tags.Player].Count;
 				Context.Run.StartNew();
 				// Caves secret location
 			} else if (Context.Run.Depth == 13) {

@@ -13,7 +13,7 @@ namespace BurningKnight.entity.item.stand {
 		protected override void DoStuff() {
 			base.DoStuff();
 			
-			foreach (var i in Area.Tagged[Tags.Item].ToArray()) {
+			foreach (var i in Area!.Tagged[Tags.Item].ToArray()) {
 				if (i is GarderobeStand gs) {
 					gs.UpdateItem();
 				}

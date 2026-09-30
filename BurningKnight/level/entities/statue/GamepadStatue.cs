@@ -21,7 +21,7 @@ namespace BurningKnight.level.entities.statue {
 		}
 
 		protected override bool CanInteract(Entity e) {
-			return Area.Tagged[Tags.Player].Count < 2 && base.CanInteract(e);
+			return Area!.Tagged[Tags.Player].Count < 2 && base.CanInteract(e);
 		}
 
 		protected override Rectangle GetCollider() {
@@ -50,10 +50,10 @@ namespace BurningKnight.level.entities.statue {
 					var index = ((int) gamepad.PlayerIndex) + 1;
 					var found = false;
 
-					foreach (var p in Area.Tagged[Tags.Player]) {
+					foreach (var p in Area!.Tagged[Tags.Player]) {
 						var i = p.GetComponent<InputComponent>();
 					
-						if (i.Index == index) {
+						if (i!.Index == index) {
 							found = true;
 							break;
 						}
@@ -66,7 +66,7 @@ namespace BurningKnight.level.entities.statue {
 					foreach (var p in Area.Tagged[Tags.Player]) {
 						var i = p.GetComponent<InputComponent>();
 
-						if (i.Index == 0 && i.KeyboardEnabled) {
+						if (i!.Index == 0 && i.KeyboardEnabled) {
 							i.GamepadEnabled = false;
 							break;
 						}

@@ -70,12 +70,12 @@ namespace BurningKnight.entity.creature.bk {
 			};
 
 			AddComponent(b);
-			b.Body.LinearDamping = 3;
+			b!.Body.LinearDamping = 3;
 
 			AddComponent(new BkGraphicsComponent("old_burning_knight"));
 
 			var health = GetComponent<HealthComponent>();
-			health.Unhittable = true;
+			health!.Unhittable = true;
 			SetMaxHp(300);
 			// health.AutoKill = false;
 
@@ -86,7 +86,7 @@ namespace BurningKnight.entity.creature.bk {
 
 			var buffs = GetComponent<BuffsComponent>();
 
-			buffs.AddImmunity<FrozenBuff>();
+			buffs!.AddImmunity<FrozenBuff>();
 			buffs.AddImmunity<BurningBuff>();
 			buffs.AddImmunity<BleedingBuff>();
 
@@ -140,7 +140,7 @@ namespace BurningKnight.entity.creature.bk {
 			}
 
 			var graphics = GetComponent<BkGraphicsComponent>();
-			graphics.Alpha = 0;
+			graphics!.Alpha = 0;
 
 			Center = captured.Center;
 			GetComponent<HealthComponent>()!.Unhittable = true;
@@ -214,7 +214,7 @@ namespace BurningKnight.entity.creature.bk {
 					GetComponent<DialogComponent>()!.StartAndClose("bk_1", 5);
 					var state = GetComponent<StateComponent>();
 
-					if (!(state.StateInstance is HiddenState)) {
+					if (!(state!.StateInstance is HiddenState)) {
 						Timer.Add(() => {
 							timesRaged++;
 							GetComponent<AudioEmitterComponent>()!.Emit("mob_bk_roar_1", 0.8f);
@@ -231,7 +231,7 @@ namespace BurningKnight.entity.creature.bk {
 				// I WOULDN'T BOTHER EVEN TALKING TO THEM
 				Timer.Add(() => { GetComponent<DialogComponent>()!.StartAndClose("bk_5", 5); }, 2f);
 			} else if (e is ShopKeeper.EnragedEvent skee) {
-				if (skee.ShopKeeper.GetComponent<RoomComponent>()!.Room.Explored) {
+				if (skee!.ShopKeeper.GetComponent<RoomComponent>()!.Room.Explored) {
 					// KILL HIM, EDWARD!
 					GetComponent<DialogComponent>()!.StartAndClose("bk_6", 5);
 				}
@@ -310,7 +310,7 @@ namespace BurningKnight.entity.creature.bk {
 				lastFadingParticle = 0.2f;
 
 				var particle = new FadingParticle(GetComponent<BkGraphicsComponent>()!.Animation.GetCurrentTexture(), tint);
-				Area.Add(particle);
+				Area!.Add(particle);
 
 				particle.Depth = Depth - 1;
 				particle.Center = Center;

@@ -56,7 +56,7 @@ namespace BurningKnight.entity {
 			base.Update(dt);
 
 			if (Player.Dead) {
-				var found = Area.Entities.Entities.Any(e => e is Cursor && e != this);
+				var found = Area!.Entities.Entities.Any(e => e is Cursor && e != this);
 
 				if (found) {
 					Done = true;
@@ -71,7 +71,7 @@ namespace BurningKnight.entity {
 
 			var input = Player.GetComponent<InputComponent>();
 			
-			if (input.KeyboardEnabled && (Input.Mouse.WasMoved || !input.GamepadEnabled || input.GamepadData == null || input.GamepadData.Attached)) {
+			if (input!.KeyboardEnabled && (Input.Mouse.WasMoved || !input.GamepadEnabled || input.GamepadData == null || input.GamepadData.Attached)) {
 				var pos = Input.Mouse.ScreenPosition;
 
 				if (pos != lastPos) {

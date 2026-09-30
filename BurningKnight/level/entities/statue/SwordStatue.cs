@@ -24,7 +24,7 @@ namespace BurningKnight.level.entities.statue {
 		protected override bool Interact(Entity e) {
 			var h = e.GetComponent<HealthComponent>();
 
-			if (h.Health > 1) {
+			if (h!.Health > 1) {
 				TextParticle.Add(this, "HP", (int) h.Health - 1, true, true);
 			}
 			

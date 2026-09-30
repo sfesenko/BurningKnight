@@ -69,7 +69,7 @@ namespace BurningKnight.entity.creature.drop {
 
 			var items = new JsonArray();
 
-			foreach (var item in Items) {
+			foreach (var item in Items!) {
 				items.Add(item);
 			}
 			

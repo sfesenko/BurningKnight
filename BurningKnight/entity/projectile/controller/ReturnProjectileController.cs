@@ -17,7 +17,7 @@ namespace BurningKnight.entity.projectile.controller {
 					return;
 				}
 
-				b.Velocity = MathUtils.CreateVector(MathUtils.LerpAngle(b.Velocity.ToAngle(), Math.Atan2(dy, dx), dt * 50 * speed), b.Velocity.Length());
+				b!.Velocity = MathUtils.CreateVector(MathUtils.LerpAngle(b.Velocity.ToAngle(), Math.Atan2(dy, dx), dt * 50 * speed), b.Velocity.Length());
 			};
 		}
 	}

@@ -74,7 +74,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 				var t = T + Math.PI * 0.5f;
 				var r = Self.GetComponent<RoomComponent>()!.Room;
 
-				var x = r.CenterX + (float) Math.Cos(t) * (r.Width * 0.4f);
+				var x = r!.CenterX + (float) Math.Cos(t) * (r.Width * 0.4f);
 				var y = r.CenterY - r.Height * 0.2f + (float) Math.Sin(t * 2) * (r.Height * 0.2f);
 				
 				
@@ -85,7 +85,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 				
 				Self.CenterX += dx * s;
 				Self.CenterY += dy * s;
-				Self.GraphicsComponent.Flipped = dx < 0;
+				Self!.GraphicsComponent.Flipped = dx < 0;
 				
 
 				if (t >= Math.PI * 4.5f) {

@@ -113,7 +113,7 @@ namespace BurningKnight.assets.lighting {
 
 			foreach (var light in lights) {
 				Graphics.Color = light.Color;
-				Graphics.Render(region, light.GetPosition(), 0, region.Center, light.Scale * RadiusMod);	
+				Graphics.Render(region, light.GetPosition(), 0, region!.Center, light.Scale * RadiusMod);	
 			}
 
 			Graphics.Color = ColorUtils.WhiteColor;
@@ -124,7 +124,7 @@ namespace BurningKnight.assets.lighting {
 			Engine.GraphicsDevice.SetRenderTarget(state.GameTarget);
 			
 			var c = Context.Camera;
-			var z = c.Zoom;
+			var z = c!.Zoom;
 			var n = Math.Abs(z - 1) > 0.01f;
 				
 			if (n) {

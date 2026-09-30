@@ -8,7 +8,7 @@ namespace BurningKnight.entity.room.controllable.turret {
 
 			var a = GetComponent<AnimationComponent>();
 			
-			a.Animation.Tag = "four";
+			a!.Animation.Tag = "four";
 			a.Animation.Paused = true;
 		}
 

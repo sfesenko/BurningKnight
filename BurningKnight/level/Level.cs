@@ -108,7 +108,7 @@ namespace BurningKnight.level {
 
 			if (Chasm != null) {
 				HalfProjectile.Done = true;
-				Area.Remove(HalfProjectile);
+				Area!.Remove(HalfProjectile);
 				
 				HalfWall.Done = true;
 				Area.Remove(HalfWall);
@@ -135,7 +135,7 @@ namespace BurningKnight.level {
 		public void SetBiome(BiomeInfo biome) {
 			if (biome != null) {
 				Biome = (Biome) Activator.CreateInstance(biome.Type);
-				Tileset = Tilesets.Get(Biome.Tileset);
+				Tileset = Tilesets.Get(Biome!.Tileset);
 
 				if (Tilesets.Biome != null && Tileset != null) {
 					Tileset.Tiles[(int) Tile.EvilFloor] = Tilesets.Biome.EvilFloor;
@@ -286,7 +286,7 @@ namespace BurningKnight.level {
 		}
 		
 		public virtual Tile GetFilling() {
-			return Biome.GetFilling();
+			return Biome!.GetFilling();
 		}
 
 		public virtual int GetPadding() {
@@ -344,7 +344,7 @@ namespace BurningKnight.level {
 		}
 
 		public virtual string GetMusic() {
-			return Biome.GetMusic();
+			return Biome!.GetMusic();
 		}
 
 		public static string GetDepthString(bool eng = false) {

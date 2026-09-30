@@ -50,7 +50,7 @@ namespace BurningKnight.entity.item.use {
 					var st = (Entity) Activator.CreateInstance(i.GetType());
 					i.X -= i.Width / 2f + 1;
 
-					st.X = i.X + i.Width + 2;
+					st!.X = i.X + i.Width + 2;
 					st.Y = i.Y;
 				} catch (Exception e) {
 					Log.Error(e);

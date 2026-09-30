@@ -28,10 +28,10 @@ namespace BurningKnight.entity.component {
 			if (Following != null) {
 				var f = Following.GetComponent<FollowerComponent>();
 
-				f.Follower = Follower;
+				f!.Follower = Follower;
 
 				if (Follower != null) {
-					f.Follower.GetComponent<FollowerComponent>()!.Following = Following;
+					f!.Follower.GetComponent<FollowerComponent>()!.Following = Following;
 				}
 			}
 

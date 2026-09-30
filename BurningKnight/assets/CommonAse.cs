@@ -18,7 +18,7 @@ public static class CommonAse {
 		Particles = Animations.Get("particles");
 		Props = Animations.Get("props");
 
-		Textures.Missing = Items.GetSlice("missing");
+		Textures.Missing = Items!.GetSlice("missing");
 		Item.UnknownRegion = Items.GetSlice("unknown");
 	}
 }

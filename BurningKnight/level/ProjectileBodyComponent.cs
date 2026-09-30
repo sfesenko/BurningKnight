@@ -17,7 +17,7 @@ namespace BurningKnight.level {
 			body.UserData = this;
 
 			var i = cx + cy * cw;
-			var c = chunks[i];
+			var c = chunks![i];
 
 			if (c != null) {
 				Physics.RemoveBody(c);

@@ -67,7 +67,7 @@ namespace BurningKnight.entity.creature.bk {
 		}
 		public override void PlaceRewards() {
 			var head = new BkHead();
-			Area.Add(head);
+			Area!.Add(head);
 			head.Center = Center;
 			Audio.PlayMusic("Last chance");
 		}
@@ -81,7 +81,7 @@ namespace BurningKnight.entity.creature.bk {
 					Id = i
 				};
 				
-				Area.Add(orbital);
+				Area!.Add(orbital);
 				orbital.Center = Center;
 				GetComponent<OrbitGiverComponent>()!.AddOrbiter(orbital);
 			}
@@ -135,7 +135,7 @@ namespace BurningKnight.entity.creature.bk {
 
 			GetComponent<HealthComponent>()!.Unhittable = false;
 			TouchDamage = 2;
-			Center = Target.GetComponent<RoomComponent>()!.Room.Center;
+			Center = Target!.GetComponent<RoomComponent>()!.Room.Center;
 		}
 		protected override void Become<T>() {
 			if (!Passive || typeof(T) == typeof(IdleState)) {
@@ -143,7 +143,7 @@ namespace BurningKnight.entity.creature.bk {
 			}
 		}
 		protected override void AddPhases() {
-			HealthBar.AddPhase(0.5f);
+			HealthBar!.AddPhase(0.5f);
 		}
 		private int count;
 		public bool Raging => GetComponent<HealthComponent>()!.Percent <= 0.5f;

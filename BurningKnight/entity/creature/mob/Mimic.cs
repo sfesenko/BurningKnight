@@ -33,7 +33,7 @@ namespace BurningKnight.entity.creature.mob {
 			var body = CreateBodyComponent();
 			AddComponent(body);
 
-			body.Body.LinearDamping = 2;
+			body!.Body.LinearDamping = 2;
 			body.KnockbackModifier = 0.5f;
 
 			AddComponent(CreateSensorBodyComponent());
@@ -147,7 +147,7 @@ namespace BurningKnight.entity.creature.mob {
 		protected override void AnimateJump(Action callback) {
 			var anim = GetComponent<InteractableSliceComponent>();
 				
-			Tween.To(2f, anim.Scale.X, x => anim.Scale.X = x, 0.2f);
+			Tween.To(2f, anim!.Scale.X, x => anim.Scale.X = x, 0.2f);
 			Tween.To(0.3f, anim.Scale.Y, x => anim.Scale.Y = x, 0.2f).OnEnd = () => {
 				Tween.To(0.5f, anim.Scale.X, x => anim.Scale.X = x, 0.3f);
 
@@ -163,7 +163,7 @@ namespace BurningKnight.entity.creature.mob {
 		protected override void AnimateLand() {
 			var anim = GetComponent<InteractableSliceComponent>();
 
-			anim.Scale.X = 2f;
+			anim!.Scale.X = 2f;
 			anim.Scale.Y = 0.3f;
 			Tween.To(1, anim.Scale.X, x => anim.Scale.X = x, 0.3f);
 			Tween.To(1, anim.Scale.Y, x => anim.Scale.Y = x, 0.3f);

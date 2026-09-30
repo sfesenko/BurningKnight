@@ -221,7 +221,7 @@ namespace BurningKnight.state {
 			renderer.End();
 			
 			var c = Context.Camera;
-			var z = c.Zoom;
+			var z = c!.Zoom;
 			var n = Math.Abs(z - 1) > 0.01f;
 				
 			if (n) {
@@ -290,7 +290,7 @@ namespace BurningKnight.state {
 			}
 
 			var iv = player.GetComponent<InventoryComponent>();
-			var offset = Math.Min(iv.Items.Count, 10) * 24 * 0.5f; 
+			var offset = Math.Min(iv!.Items.Count, 10) * 24 * 0.5f; 
 
 			for (var i = 0; i < iv.Items.Count; i++) {
 				var item = new UiItem();

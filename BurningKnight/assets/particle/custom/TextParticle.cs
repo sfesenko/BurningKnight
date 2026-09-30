@@ -108,7 +108,7 @@ namespace BurningKnight.assets.particle.custom {
 			}
 
 			if (!tweened) {
-				foreach (var p in Area.Tagged[Tags.TextParticle]) {
+				foreach (var p in Area!.Tagged[Tags.TextParticle]) {
 					var part = (TextParticle) p;
 
 					if (part == this) {

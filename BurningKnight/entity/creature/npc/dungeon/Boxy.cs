@@ -55,7 +55,7 @@ namespace BurningKnight.entity.creature.npc.dungeon {
 
 			var d = GetComponent<DialogComponent>();
 			
-			d.StartAndClose("boxy_9", 3);
+			d!.StartAndClose("boxy_9", 3);
 
 			Timer.Add(() => {
 				AnimationUtil.Poof(Center);
@@ -64,7 +64,7 @@ namespace BurningKnight.entity.creature.npc.dungeon {
 
 				open = true;
 				var a = GetComponent<AnimationComponent>();
-				a.Animation.Tag = "open";
+				a!.Animation.Tag = "open";
 				a.Animate();
 				
 				Achievements.Unlock("bk:open_up");

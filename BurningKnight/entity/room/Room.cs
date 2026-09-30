@@ -156,7 +156,7 @@ namespace BurningKnight.entity.room {
 		
 		private void Setup() {
 			var level = Context.Level;
-			Explored = level.Explored[level.ToIndex(MapX + 1, MapY + 1)];
+			Explored = level!.Explored[level.ToIndex(MapX + 1, MapY + 1)];
 			
 			ApplyToEachTile((x, y) => {
 				var tile = level.Get(x, y);

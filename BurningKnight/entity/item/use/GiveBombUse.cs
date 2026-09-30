@@ -11,7 +11,7 @@ namespace BurningKnight.entity.item.use {
 			var h = entity.GetComponent<HeartsComponent>();
 			var a = Amount;
 
-			if (h.Bombs < h.BombsMax) {
+			if (h!.Bombs < h.BombsMax) {
 				var t = Math.Min(Amount, h.BombsMax - h.Bombs);
 				h.ModifyBombs(t, null);
 				a -= t;

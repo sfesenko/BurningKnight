@@ -22,15 +22,15 @@ namespace BurningKnight.entity.projectile {
 		public LaserGraphicsComponent(string image, string slice) : base(image, slice) {
 			var a = Animations.Get(image);
 			
-			aura = a.GetSlice($"{slice}_aura", false);
+			aura = a!.GetSlice($"{slice}_aura", false);
 			light = a.GetSlice($"{slice}_light", false);
 			end = a.GetSlice("end_aura", false);
 			endAura = a.GetSlice("end", false);
 			endLight = a.GetSlice("end_light", false);
 
-			origin = new Vector2(0, aura.Height * 0.5f);
+			origin = new Vector2(0, aura!.Height * 0.5f);
 			centerOrigin = new Vector2(0, Sprite.Height * 0.5f);
-			lightOrigin = new Vector2(0, light.Height * 0.5f);
+			lightOrigin = new Vector2(0, light!.Height * 0.5f);
 		}
 
 		public override void Render(bool shadow) {

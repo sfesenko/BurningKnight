@@ -12,7 +12,7 @@ namespace BurningKnight.level.entities {
 			base.Save(stream);
 			
 			var d = GetComponent<CloseDialogComponent>(); 
-			stream.WriteString(d.Variants.Length == 0 ? "" : d.Variants[0]);
+			stream.WriteString(d!.Variants.Length == 0 ? "" : d.Variants[0]);
 			stream.WriteString(Region);
 			stream.WriteBoolean(DemoOnly);
 		}

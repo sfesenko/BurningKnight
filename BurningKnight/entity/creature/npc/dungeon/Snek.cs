@@ -35,7 +35,7 @@ namespace BurningKnight.entity.creature.npc.dungeon {
 
 			var d = GetComponent<DialogComponent>();
 			
-			d.StartAndClose("snek_6", 3);
+			d!.StartAndClose("snek_6", 3);
 
 			Timer.Add(() => {
 				d.StartAndClose("snek_7", 3);
@@ -45,7 +45,7 @@ namespace BurningKnight.entity.creature.npc.dungeon {
 					Done = true;
 
 					var stand = new SnekStand();
-					Area.Add(stand);
+					Area!.Add(stand);
 					stand.Center = Center;
 					stand.SetItem(Items.CreateAndAdd("bk:snek", Area), this);
 				}, 4f);

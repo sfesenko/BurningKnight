@@ -72,7 +72,7 @@ namespace BurningKnight.entity.creature.mob.ice {
 			public override void Update(float dt) {
 				base.Update(dt);
 
-				if (!fired && Self.GetComponent<WallAnimationComponent>()!.Animation.Paused) {
+				if (!fired && Self!.GetComponent<WallAnimationComponent>()!.Animation.Paused) {
 					fired = true;
 					T = 0;
 
@@ -82,7 +82,7 @@ namespace BurningKnight.entity.creature.mob.ice {
 
 					var a = Self.GetComponent<WallAnimationComponent>();
 
-					Tween.To(0.6f, a.Scale.X, x => a.Scale.X = x, 0.2f);
+					Tween.To(0.6f, a!.Scale.X, x => a.Scale.X = x, 0.2f);
 					Tween.To(1.6f, a.Scale.Y, x => a.Scale.Y = x, 0.2f).OnEnd = () => {
 
 						Tween.To(1.8f, a.Scale.X, x => a.Scale.X = x, 0.1f);

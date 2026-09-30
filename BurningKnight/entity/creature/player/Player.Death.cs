@@ -52,7 +52,7 @@ namespace BurningKnight.entity.creature.player {
 	public partial class Player {
 		public void RenderOutline() {
 			var component = GetComponent<PlayerGraphicsComponent>();
-			var color = component.Tint;
+			var color = component!.Tint;
 			
 			component.Tint = new Color(0f, 0f, 0f, 0.65f);
 			component.SimpleRender(false);
@@ -69,7 +69,7 @@ namespace BurningKnight.entity.creature.player {
 
 			var b = GetComponent<RectBodyComponent>();
 			
-			b.Knockback = Vector2.Zero;
+			b!.Knockback = Vector2.Zero;
 			b.Velocity = Vector2.Zero;
 			
 			if (d.From != null && d.From != this) {
@@ -104,7 +104,7 @@ namespace BurningKnight.entity.creature.player {
 
 			if (ing.Killer.Slice == null && ing.Killer.Animation == null) {
 				ing.Killer.Slice = CommonAse.Items.GetSlice("unknown");
-				ing.Killer.Width = ing.Killer.Slice.Width;
+				ing.Killer.Width = ing!.Killer.Slice.Width;
 				ing.Killer.Height = ing.Killer.Slice.Height;
 			}
 
@@ -122,7 +122,7 @@ namespace BurningKnight.entity.creature.player {
 			base.AnimateDeath(d);
 			
 			for (var i = 0; i < 6; i++) {
-				Area.Add(new ParticleEntity(Particles.Dust()) {
+				Area!.Add(new ParticleEntity(Particles.Dust()) {
 					Position = Center + new Vector2(Rnd.Int(-4, 4), Rnd.Int(-4, 4)), 
 					Depth = 30
 				});
@@ -143,7 +143,7 @@ namespace BurningKnight.entity.creature.player {
 					var minIndex = 1024;
 					Player pl = null;
 
-					foreach (var p in Area.Tagged[Tags.Player]) {
+					foreach (var p in Area!.Tagged[Tags.Player]) {
 						var i = p.GetComponent<InputComponent>()!.Index;
 
 						if (p != this && i < minIndex) {
@@ -154,7 +154,7 @@ namespace BurningKnight.entity.creature.player {
 
 					if (pl != null) {
 						var c = ForceGetComponent<ConsumablesComponent>();
-						c.Entity = pl;
+						c!.Entity = pl;
 						Components.Remove(typeof(ConsumablesComponent));
 						pl.Components[typeof(ConsumablesComponent)] = c;
 						AddComponent(new ConsumablesComponent());
@@ -195,7 +195,7 @@ namespace BurningKnight.entity.creature.player {
 			GlobalSave.Put("next_tomb", pool[Rnd.Int(pool.Count)]);
 			GlobalSave.Put("tomb_depth", Context.Run.Depth);
 			
-			Area.Add(stone);
+			Area!.Add(stone);
 				
 			stone.CenterX = CenterX;
 			stone.Bottom = Bottom;

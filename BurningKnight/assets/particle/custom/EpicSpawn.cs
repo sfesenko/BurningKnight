@@ -35,7 +35,7 @@ namespace BurningKnight.assets.particle.custom {
 			region = CommonAse.Particles.GetSlice("epic_spawn");
 			ray = CommonAse.Particles.GetSlice("ray");
 			
-			Width = region.Width;
+			Width = region!.Width;
 			Height = region.Height;
 
 			AddComponent(new LightComponent(this, 64f, ColorUtils.WhiteColor));

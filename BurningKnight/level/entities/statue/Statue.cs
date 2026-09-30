@@ -48,7 +48,7 @@ namespace BurningKnight.level.entities.statue {
 			AddSensor();
 
 			if (TryGetComponent<DialogComponent>(out var c)) {
-				c.Dialog.Voice = 30;
+				c!.Dialog.Voice = 30;
 			}
 		}
 

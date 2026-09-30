@@ -25,7 +25,7 @@ namespace BurningKnight.entity.creature.mob {
 
 			var health = GetComponent<HealthComponent>();
 
-			health.InvincibilityTimerMax = 0;
+			health!.InvincibilityTimerMax = 0;
 			health.RenderInvt = false;
 
 			TouchDamage = 0;
@@ -34,13 +34,13 @@ namespace BurningKnight.entity.creature.mob {
 		public override bool HandleEvent(Event e) {
 			if (e is HealthModifiedEvent ev && ev.Amount < 0) {
 				Become<HurtState>();
-				GraphicsComponent.Flipped = ev.From.CenterX > CenterX;
+				GraphicsComponent!.Flipped = ev.From.CenterX > CenterX;
 				GetComponent<AudioEmitterComponent>()!.EmitRandomized(GetHurtSfx());
 
 				if (Context.Run.Depth < 1 && Rnd.Chance(30)) {
 					var dialog = GetComponent<DialogComponent>();
 
-					if (dialog.Current == null) {
+					if (dialog!.Current == null) {
 						dialog.StartAndClose($"npc_hurt_{Rnd.Int(3)}", 2);
 					}
 				}
@@ -70,7 +70,7 @@ namespace BurningKnight.entity.creature.mob {
 			public override void Update(float dt) {
 				base.Update(dt);
 				
-				if (Self.GetComponent<MobAnimationComponent>()!.Animation.Paused) {
+				if (Self!.GetComponent<MobAnimationComponent>()!.Animation.Paused) {
 					Self.GetComponent<StateComponent>()!.Become<IdleState>(true);
 				}
 			}

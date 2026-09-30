@@ -24,7 +24,7 @@ namespace BurningKnight.entity.item.use {
 				try {
 					var m = (Mob) Activator.CreateInstance(mob.GetType());
 					entity.Area!.Add(m);
-					m.Center = mob.Center;
+					m!.Center = mob.Center;
 
 					if (!(MobRegistry.FindFor(m.GetType())?.NearWall ?? false)) {
 						m.Center += Rnd.Vector(-8, 8);

@@ -85,7 +85,7 @@ namespace BurningKnight.level.entities.chest {
 
 			var body = GetComponent<RectBodyComponent>()!.Body;
 
-			body.LinearDamping = 100;
+			body!.LinearDamping = 100;
 			body.Mass = 1000000;
 
 			GetComponent<RectBodyComponent>()!.KnockbackModifier = 0.1f;
@@ -95,7 +95,7 @@ namespace BurningKnight.level.entities.chest {
 		protected virtual void Animate() {
 			var a = GetComponent<InteractableSliceComponent>();
 
-			a.Scale.X = 0.6f * Scale;
+			a!.Scale.X = 0.6f * Scale;
 			a.Scale.Y = 1.7f * Scale;
 					
 			Tween.To(1.8f * Scale, a.Scale.X, x => a.Scale.X = x, 0.15f);
@@ -158,7 +158,7 @@ namespace BurningKnight.level.entities.chest {
 		protected virtual void Animate(Action callback) {
 			var a = GetComponent<InteractableSliceComponent>();
 					
-			Tween.To(1.8f * Scale, a.Scale.X, x => a.Scale.X = x, 0.2f);
+			Tween.To(1.8f * Scale, a!.Scale.X, x => a.Scale.X = x, 0.2f);
 			Tween.To(0.2f * Scale, a.Scale.Y, x => a.Scale.Y = x, 0.2f).OnEnd = () => {
 				callback();
 				

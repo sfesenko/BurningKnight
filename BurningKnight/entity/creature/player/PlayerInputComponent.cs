@@ -73,7 +73,7 @@ namespace BurningKnight.entity.creature.player {
 			
 			var idle = true;
 			var controller = GetComponent<InputComponent>();
-			var data = controller.GamepadData;
+			var data = controller!.GamepadData;
 
 			if (data != null && data.WasAttached && !data.Attached) {
 				data.WasAttached = false;
@@ -86,7 +86,7 @@ namespace BurningKnight.entity.creature.player {
 				var dd = dialog?.Dialog;
 
 				if (dd != null) {
-					var isAnswer = dialog.Current is AnswerDialog;
+					var isAnswer = dialog!.Current is AnswerDialog;
 					var a = isAnswer ? (AnswerDialog) dialog.Current : null;
 					
 					if (dd.DoneSaying) {
@@ -114,12 +114,12 @@ namespace BurningKnight.entity.creature.player {
 					}
 
 					if (dd.Saying && !dd.JustStarted) {
-						if ((!isAnswer && (Input.WasPressed(Controls.Interact, controller, true) || Input.WasPressed(Controls.UiSelect, controller, true))) || (isAnswer && !a.Focused)) {
+						if ((!isAnswer && (Input.WasPressed(Controls.Interact, controller, true) || Input.WasPressed(Controls.UiSelect, controller, true))) || (isAnswer && !a!.Focused)) {
 							if (dd.DoneSaying) {
 								dd.Finish();
 								Audio.PlaySfx("ui_moving");
 							} else {
-								dd.Str.FinishTyping();
+								dd!.Str.FinishTyping();
 								Audio.PlaySfx("ui_moving");
 							}
 						}
@@ -139,13 +139,13 @@ namespace BurningKnight.entity.creature.player {
 			}
 
 			if (Context.Run.Depth == 0 && InGameState.Multiplayer && controller.Index > 0) {
-				if (controller.GamepadData.CurrentState.Buttons.B == ButtonState.Pressed) {
+				if (controller!.GamepadData.CurrentState.Buttons.B == ButtonState.Pressed) {
 					if (holdTimer <= 0) {
 						holdTimer = 0;
 						var dialog = GetComponent<DialogComponent>();
 
-						if (dialog.Current == null) {
-							dialog.Dialog.Str.ClearIcons();
+						if (dialog!.Current == null) {
+							dialog!.Dialog.Str.ClearIcons();
 							dialog.Dialog.Str.AddIcon(CommonAse.Ui.GetSlice("button_b"));
 
 							dialog.StartAndClose("remove_player", 2);
@@ -187,7 +187,7 @@ namespace BurningKnight.entity.creature.player {
 			}
 			
 			var state = Entity.GetComponent<StateComponent>();
-			var duck = state.StateInstance is Player.DuckState;
+			var duck = state!.StateInstance is Player.DuckState;
 			
 			if (duck) {
 				if (Input.WasReleased(Controls.Duck, controller)) {
@@ -305,12 +305,12 @@ namespace BurningKnight.entity.creature.player {
 			var s = Speed;
 			var sp = 20;
 
-			if (((Player) Entity).Sliding || !b.IceImmunity && i.Touching[(int) Tile.Ice]) {
+			if (((Player) Entity).Sliding || !b!.IceImmunity && i!.Touching[(int) Tile.Ice]) {
 				sp -= 19;
 				s *= 0.25f;
 			}
 
-			if (i.Touching[(int) Tile.Cobweb]) {
+			if (i!.Touching[(int) Tile.Cobweb]) {
 				s *= 0.6f;
 			}
 
@@ -321,7 +321,7 @@ namespace BurningKnight.entity.creature.player {
 			var ac = acceleration * s;
 			var st = (GetComponent<StatsComponent>()!.Speed);
 			
-			body.Acceleration = ac * st * 1.5f;
+			body!.Acceleration = ac * st * 1.5f;
 			body.Velocity -= body.Velocity * dt * sp * 1.5f - body.Acceleration;
 
 			if (st > 1) {

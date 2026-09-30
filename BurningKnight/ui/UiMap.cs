@@ -71,7 +71,7 @@ namespace BurningKnight.ui {
 			var y = (int) Math.Floor(fy);
 			var level = Context.Level;
 
-			var sx = MathUtils.Clamp(0, level.Width - 1, x - W / 2);
+			var sx = MathUtils.Clamp(0, level!.Width - 1, x - W / 2);
 			var sy = MathUtils.Clamp(0, level.Height - 1, y - H / 2);
 			var tx = MathUtils.Clamp(0, level.Width - 1, x + W / 2);
 			var ty = MathUtils.Clamp(0, level.Height - 1, y + H / 2);
@@ -105,7 +105,7 @@ namespace BurningKnight.ui {
 				}
 			}
 
-			var cl = Context.Level!.Biome.GetMapColor();
+			var cl = Context.Level.Biome.GetMapColor();
 			Graphics.Color = cl;
 
 			foreach (var rm in level.Area!.Tagged[Tags.Room]) {

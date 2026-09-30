@@ -29,7 +29,7 @@ namespace BurningKnight.ui {
 		public void Setup(string ase, string prefix) {
 			var anim = Animations.Get(ase);
 
-			Top = anim.GetSlice($"{prefix}top");
+			Top = anim!.GetSlice($"{prefix}top");
 			TopLeft = anim.GetSlice($"{prefix}top_left");
 			TopRight = anim.GetSlice($"{prefix}top_right");
 			

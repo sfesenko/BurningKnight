@@ -43,8 +43,8 @@ namespace BurningKnight.entity.creature.pet {
 
 			var component = GetComponent<FollowerComponent>();
 
-			if (component.Following == null || component.Following == this) {
-				Owner.GetComponent<FollowerComponent>()!.AddFollower(this);
+			if (component!.Following == null || component.Following == this) {
+				Owner!.GetComponent<FollowerComponent>()!.AddFollower(this);
 			} else if (component.Following == Owner) {
 				var room = GetComponent<RoomComponent>()!.Room;
 

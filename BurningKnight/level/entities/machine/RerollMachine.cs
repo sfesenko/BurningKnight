@@ -75,7 +75,7 @@ namespace BurningKnight.level.entities.machine {
 			if (consumeCoin) {
 				var component = entity.GetComponent<ConsumablesComponent>();
 
-				if (component.Coins == 0) {
+				if (component!.Coins == 0) {
 					GetComponent<DialogComponent>()!.StartAndClose("machine_0", 3);
 					AnimationUtil.ActionFailed();
 					return;
@@ -134,7 +134,7 @@ namespace BurningKnight.level.entities.machine {
 		private void UpdateSprite() {
 			var component = GetComponent<InteractableSliceComponent>();
 
-			component.Sprite = CommonAse.Props.GetSlice("reroll_machine_broken");
+			component!.Sprite = CommonAse.Props.GetSlice("reroll_machine_broken");
 			component.Offset.Y += Height - 14;
 			
 			GetComponent<AudioEmitterComponent>()!.EmitRandomizedPrefixed("level_explosion", 3);
@@ -149,7 +149,7 @@ namespace BurningKnight.level.entities.machine {
 		}
 
 		private void RenderShadow() {
-			GraphicsComponent.Render(true);
+			GraphicsComponent!.Render(true);
 		}
 
 		public override void Load(FileReader stream) {

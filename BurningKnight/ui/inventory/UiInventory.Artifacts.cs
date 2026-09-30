@@ -87,7 +87,7 @@ namespace BurningKnight.ui.inventory {
 				old = new UiItem();
 				old.Id = item.Id;
 				old.Scourged = item.Scourged;
-				Area.Add(old);
+				Area!.Add(old);
 				items.Add(old);
 
 				old.Right = x;

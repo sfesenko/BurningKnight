@@ -27,7 +27,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 
 				var r = Self.GetComponent<RoomComponent>()!.Room;
 
-				if (r.CenterX > Self.CenterX) {
+				if (r!.CenterX > Self.CenterX) {
 					x = r.X + 32;
 				} else {
 					x = r.Right - 32;
@@ -46,15 +46,15 @@ namespace BurningKnight.entity.creature.mob.boss {
 				}
 
 				var body = Self.GetComponent<RectBodyComponent>();
-				body.Velocity += new Vector2((x > Self.CenterX ? 1 : -1) * dt * 360, 0);
+				body!.Velocity += new Vector2((x > Self.CenterX ? 1 : -1) * dt * 360, 0);
 
-				var py = Self.Target.CenterY;
+				var py = Self!.Target.CenterY;
 				var sy = Self.CenterY;
 				
 				body.Velocity += new Vector2(0, (py > sy ? 1 : -1) * dt * 360);
 
 				if (Math.Abs(py - sy) < 6 && Math.Abs(x - Self.CenterX) < 16) {
-					Self.GraphicsComponent.Flipped = !Self.GraphicsComponent.Flipped;
+					Self!.GraphicsComponent.Flipped = !Self.GraphicsComponent.Flipped;
 					locked = true;
 					T = 0;
 					body.Velocity = Vector2.Zero;

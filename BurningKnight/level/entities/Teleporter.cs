@@ -74,7 +74,7 @@ namespace BurningKnight.level.entities {
 					return base.HandleEvent(e);
 				}
 
-				var l = Id == "a" ? Area.Tagged[Tags.Teleport] : room.Tagged[Tags.Teleport];
+				var l = Id == "a" ? Area!.Tagged[Tags.Teleport] : room!.Tagged[Tags.Teleport];
 				
 				foreach (var t in l) {
 					var tr = (Teleporter) t;

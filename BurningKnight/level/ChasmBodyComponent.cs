@@ -38,7 +38,7 @@ namespace BurningKnight.level {
 				var level = Context.Level;
 
 				foreach (var u in toUpdate) {
-					var cx = (int) Math.Floor(level.FromIndexX(u) / (float) LevelBodyComponent.ChunkSize);
+					var cx = (int) Math.Floor(level!.FromIndexX(u) / (float) LevelBodyComponent.ChunkSize);
 					var cy = (int) Math.Floor(level.FromIndexY(u) / (float) LevelBodyComponent.ChunkSize);
 					var ci = cx + cy * cw;
 
@@ -47,7 +47,7 @@ namespace BurningKnight.level {
 					}
 
 					updated.Add(ci);
-					Physics.RemoveBody(chunks[ci]);
+					Physics.RemoveBody(chunks![ci]);
 					RecreateChunk(cx, cy);
 				}
 
@@ -81,7 +81,7 @@ namespace BurningKnight.level {
 		private void Create() {
 			var level = Context.Level;
 			
-			cw = (int) Math.Floor(level.Width / (float) LevelBodyComponent.ChunkSize + 0.5f);
+			cw = (int) Math.Floor(level!.Width / (float) LevelBodyComponent.ChunkSize + 0.5f);
 			ch = (int) Math.Floor(level.Height / (float) LevelBodyComponent.ChunkSize + 0.5f);
 			cs = cw * ch;
 			
@@ -105,7 +105,7 @@ namespace BurningKnight.level {
 			var cy = (int) Math.Floor(y / (float) LevelBodyComponent.ChunkSize);
 			var ci = cx + cy * cw;
 
-			if (ci < 0 || ci / LevelBodyComponent.ChunkSize >= chunks.Length) {
+			if (ci < 0 || ci / LevelBodyComponent.ChunkSize >= chunks!.Length) {
 				return;
 			}
 			
@@ -120,7 +120,7 @@ namespace BurningKnight.level {
 			body.UserData = this;
 			
 			var i = cx + cy * cw;
-			var c = chunks[i];
+			var c = chunks![i];
 
 			if (c != null) {
 				Physics.RemoveBody(c);
@@ -132,7 +132,7 @@ namespace BurningKnight.level {
 
 			for (int y = cy * LevelBodyComponent.ChunkSize; y < (cy + 1) * LevelBodyComponent.ChunkSize; y++) {
 				for (int x = cx * LevelBodyComponent.ChunkSize; x < (cx + 1) * LevelBodyComponent.ChunkSize; x++) {
-					if (!level.IsInside(x, y)) {
+					if (!level!.IsInside(x, y)) {
 						continue;
 					}
 					

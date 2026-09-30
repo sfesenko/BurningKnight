@@ -19,7 +19,7 @@ namespace BurningKnight.entity.door {
 			if (p != null) {
 				pad = CommonAse.Props.GetSlice(p);
 				
-				Area.Add(new RenderTrigger(this, () => {
+				Area!.Add(new RenderTrigger(this, () => {
 					Graphics.Render(pad, Position);
 				}, -1));
 			}
@@ -31,7 +31,7 @@ namespace BurningKnight.entity.door {
 			}
 			
 			bar = CommonAse.Props.GetSlice(b);
-			Area.Add(new RenderTrigger(this, () => RenderFrame(false), Layers.FlyingMob));
+			Area!.Add(new RenderTrigger(this, () => RenderFrame(false), Layers.FlyingMob));
 		}
 
 		protected override float GetShadowOffset() {

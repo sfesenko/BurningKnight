@@ -44,7 +44,7 @@ namespace BurningKnight.level {
 				loadMarked = true;
 			}
 
-			var rooms = Area.Tagged[Tags.Room];
+			var rooms = Area!.Tagged[Tags.Room];
 			var f = GetFilling() == Tile.Chasm;
 			
 			for (var i = 0; i < Size - Width; i++) {
@@ -191,7 +191,7 @@ namespace BurningKnight.level {
 		public override void Save(FileWriter stream) {
 			base.Save(stream);
 			
-			stream.WriteString(Biome.Id);
+			stream.WriteString(Biome!.Id);
 			stream.WriteInt32(width);
 			stream.WriteInt32(height);
 

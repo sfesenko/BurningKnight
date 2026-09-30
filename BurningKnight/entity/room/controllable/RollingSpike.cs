@@ -24,7 +24,7 @@ namespace BurningKnight.entity.room.controllable {
 			var b = new CircleBodyComponent(0, 0, 8);
 			AddComponent(b);
 			
-			b.Body.Restitution = 1;
+			b!.Body.Restitution = 1;
 			b.Body.Friction = 0;
 			b.Body.Mass = 100000f;
 			

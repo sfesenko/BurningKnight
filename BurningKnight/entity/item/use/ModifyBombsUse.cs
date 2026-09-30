@@ -31,7 +31,7 @@ namespace BurningKnight.entity.item.use {
 				var bomb = bpe.Bomb;
 				var c = bomb.GetComponent<ExplodeComponent>();
 
-				c.Radius *= RadiusMod;
+				c!.Radius *= RadiusMod;
 				
 				if (SetFuseTime) {
 					c.Timer = FuseTime + Rnd.Float(-0.1f, 1f);

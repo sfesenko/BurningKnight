@@ -33,7 +33,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 		protected override void AddPhases() {
 			base.AddPhases();
 			
-			HealthBar.AddPhase(0.33f);
+			HealthBar!.AddPhase(0.33f);
 			HealthBar.AddPhase(0.66f);
 		}
 		
@@ -49,7 +49,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 			AddComponent(body);
 
 			body.KnockbackModifier = 0.5f;
-			body.Body.LinearDamping = 3;
+			body!.Body.LinearDamping = 3;
 
 			AddAnimation("ice_queen");
 			SetMaxHp(550);
@@ -84,7 +84,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 			base.Update(dt);
 
 			if (Target != null) {
-				GraphicsComponent.Flipped = Target.CenterX < CenterX;
+				GraphicsComponent!.Flipped = Target.CenterX < CenterX;
 			}
 			
 			lastFadingParticle -= dt;
@@ -93,7 +93,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 				lastFadingParticle = 0.2f;
 
 				var particle = new FadingParticle(GetComponent<MobAnimationComponent>()!.Animation.GetCurrentTexture(), tint);
-				Area.Add(particle);
+				Area!.Add(particle);
 
 				particle.Depth = Depth - 1;
 				particle.Center = Center;
@@ -412,7 +412,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 			
 			public override void Init() {
 				base.Init();
-				to = Self.Target.Center;
+				to = Self!.Target.Center;
 				Self.Animate();
 			}
 
@@ -436,7 +436,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 					projectile.Center += MathUtils.CreateVector(aa, 8);
 
 					ProjectileCallbacks.AttachDeathCallback(projectile, (p, e, t) => {
-						var v = p.GetAnyComponent<BodyComponent>().Velocity;
+						var v = p!.GetAnyComponent<BodyComponent>().Velocity;
 						var a = v.ToAngle() - (float) Math.PI;
 						var s = v.Length();
 						var c = p.HasComponent<CircleBodyComponent>();

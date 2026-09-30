@@ -124,7 +124,7 @@ namespace BurningKnight.level.paintings {
 
 				var h = GetComponent<HealthComponent>();
 
-				if (h.Health + ev.Amount == 0) {
+				if (h!.Health + ev.Amount == 0) {
 					if (Id != "egor") {
 						from = ev.From;
 					} else {
@@ -158,7 +158,7 @@ namespace BurningKnight.level.paintings {
 					part.Position = Center;
 					part.Particle.Scale = Lens.util.math.Rnd.Float(0.4f, 0.8f);
 					
-					Area.Add(part);
+					Area!.Add(part);
 
 					part.Depth = Depth;
 				}

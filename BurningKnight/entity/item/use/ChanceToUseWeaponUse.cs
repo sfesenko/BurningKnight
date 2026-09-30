@@ -26,7 +26,7 @@ namespace BurningKnight.entity.item.use {
 					}
 
 					var aim = Item.Owner.GetComponent<AimComponent>();
-					var a = (aim.RealAim - aim.Center).ToAngle();
+					var a = (aim!.RealAim - aim.Center).ToAngle();
 
 					if (up) {
 						aim.RealAim = aim.Aim = MathUtils.CreateVector(a + Math.PI * 0.5f, 48) + aim.Center;

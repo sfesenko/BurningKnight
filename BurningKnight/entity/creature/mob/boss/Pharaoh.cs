@@ -46,7 +46,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 			AddComponent(body);
 
 			body.KnockbackModifier = 0.1f;
-			body.Body.LinearDamping = 4;
+			body!.Body.LinearDamping = 4;
 
 			AddAnimation("pharaoh");
 			SetMaxHp(250);
@@ -55,7 +55,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 		protected override void AddPhases() {
 			base.AddPhases();
 			
-			HealthBar.AddPhase(0.33f);
+			HealthBar!.AddPhase(0.33f);
 			HealthBar.AddPhase(0.66f);
 		}
 
@@ -72,7 +72,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 				lastParticle = 0.1f;
 
 				if (!IsFriendly()) {
-					Area.Add(new FireParticle {
+					Area!.Add(new FireParticle {
 						Offset = new Vector2(-2, -11),
 						Owner = this,
 						Size = 0.5f,
@@ -265,7 +265,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 				var toCheck = new List<Entity>();
 
 				toCheck.Add(Self);
-				toCheck.AddRange(room.Tagged[Tags.Player]);
+				toCheck.AddRange(room!.Tagged[Tags.Player]);
 
 				Dot spot;
 
@@ -417,7 +417,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 				Self.GetComponent<AudioEmitterComponent>()!.EmitRandomized("mob_pharaoh_adidos");
 
 				Tween.To(0, 255, x => Self.GetComponent<MobAnimationComponent>()!.Tint.A = (byte) x, 0.5f).OnEnd = () => {
-					var tile = Self.GetComponent<RoomComponent>()!.Room.GetRandomWallFreeTile() * 16;
+					var tile = Self!.GetComponent<RoomComponent>()!.Room.GetRandomWallFreeTile() * 16;
 
 					Self.BottomCenter = tile + new Vector2(8, 8); 
 					Self.GetComponent<AudioEmitterComponent>()!.EmitRandomized("mob_pharaoh_appear");

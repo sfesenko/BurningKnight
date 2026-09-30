@@ -112,7 +112,7 @@ namespace BurningKnight.entity.item.use {
 				if (manaUsage > 0) {
 					var mana = entity.GetComponent<ManaComponent>();
 
-					if (mana.Mana < manaUsage) {
+					if (mana!.Mana < manaUsage) {
 						AnimationUtil.ActionFailed();
 						return;
 					}
@@ -148,8 +148,8 @@ namespace BurningKnight.entity.item.use {
 				}
 
 				var aim = entity.GetComponent<AimComponent>();
-				var from = toCursor ? entity.Center : aim.Center;
-				var am = toCursor ? entity.GetComponent<CursorComponent>()!.Cursor.GamePosition : aim.RealAim;
+				var from = toCursor ? entity.Center : aim!.Center;
+				var am = toCursor ? entity.GetComponent<CursorComponent>()!.Cursor.GamePosition : aim!.RealAim;
 
 				if (toEnemy) {
 					var target = entity.Area!.FindClosest(from, Tags.MustBeKilled, e => true);
@@ -281,7 +281,7 @@ namespace BurningKnight.entity.item.use {
 						var f = (entity.CenterX > entity.GetComponent<CursorComponent>()!.Cursor.GamePosition.X ? 1 : -1);
 
 						p.Particle.Velocity =
-							new Vector2(f * Rnd.Float(40, 60), 0) + entity.GetAnyComponent<BodyComponent>().Velocity;
+							new Vector2(f * Rnd.Float(40, 60), 0) + entity!.GetAnyComponent<BodyComponent>().Velocity;
 
 						p.Particle.Angle = 0;
 						p.Particle.Zv = Rnd.Float(1.5f, 2.5f);

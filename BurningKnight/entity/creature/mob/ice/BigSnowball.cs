@@ -23,7 +23,7 @@ namespace BurningKnight.entity.creature.mob.ice {
 			var body = new RectBodyComponent(3, 19, 10, 5);
 			AddComponent(body);
 			
-			body.Body.LinearDamping = 1f;
+			body!.Body.LinearDamping = 1f;
 			body.KnockbackModifier = 2f;
 			body.Body.Restitution = 1;
 			body.Body.Friction = 0;
@@ -52,7 +52,7 @@ namespace BurningKnight.entity.creature.mob.ice {
 					Become<RollState>();
 				}
 				
-				var v = Self.GetComponent<RectBodyComponent>()!.Body.LinearVelocity;
+				var v = Self!.GetComponent<RectBodyComponent>()!.Body.LinearVelocity;
 
 				if (v.LengthSquared() > 15f) {
 					Become<RollState>();
@@ -68,7 +68,7 @@ namespace BurningKnight.entity.creature.mob.ice {
 			public override void Init() {
 				base.Init();
 
-				if (Self.GetComponent<RectBodyComponent>()!.Body.LinearVelocity.LengthSquared() < 15f) {
+				if (Self!.GetComponent<RectBodyComponent>()!.Body.LinearVelocity.LengthSquared() < 15f) {
 					angle = Rnd.Chance() || Self.Target == null ? Rnd.AnglePI() : Self.AngleTo(Self.Target);
 
 					var a = angle + Rnd.Float(-Accuracy, Accuracy);
@@ -80,29 +80,29 @@ namespace BurningKnight.entity.creature.mob.ice {
 					velocity.Y = (float) Math.Sin(a) * force;
 
 					Self.GetComponent<RectBodyComponent>()!.Velocity = velocity;
-					Self.GetComponent<MobAnimationComponent>()!.Animation.Reverse = velocity.Y < 0;
+					Self!.GetComponent<MobAnimationComponent>()!.Animation.Reverse = velocity.Y < 0;
 				}
 			}
 
 			public override void Destroy() {
 				base.Destroy();
 				Self.GetComponent<RectBodyComponent>()!.Velocity = Vector2.Zero;
-				Self.GetComponent<MobAnimationComponent>()!.Animation.Reverse = false;
+				Self!.GetComponent<MobAnimationComponent>()!.Animation.Reverse = false;
 			}
 
 			public override void Update(float dt) {
 				base.Update(dt);
 
-				var v = Self.GetComponent<RectBodyComponent>()!.Body.LinearVelocity;
+				var v = Self!.GetComponent<RectBodyComponent>()!.Body.LinearVelocity;
 
 				if (v.LengthSquared() < 15f) {
 					Become<IdleState>();
-					Self.GetComponent<RectBodyComponent>()!.Body.LinearVelocity = Vector2.Zero;
+					Self!.GetComponent<RectBodyComponent>()!.Body.LinearVelocity = Vector2.Zero;
 					
 					return;
 				}
 				
-				Self.GetComponent<MobAnimationComponent>()!.Animation.Reverse = v.Y < 0;
+				Self!.GetComponent<MobAnimationComponent>()!.Animation.Reverse = v.Y < 0;
 			}
 		}
 		#endregion

@@ -36,7 +36,7 @@ namespace BurningKnight.level.entities.chest {
 		}
 
 		protected override void SpawnDrops() {
-			item.AddDroppedComponents();
+			item!.AddDroppedComponents();
 			item.TopCenter = BottomCenter;
 			item = null;
 		}

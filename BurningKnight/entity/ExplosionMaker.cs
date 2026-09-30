@@ -38,7 +38,7 @@ namespace BurningKnight.entity {
 				level.Area!.Add(part);
 			}
 
-			Particles.BreakSprite(level.Area, (l == Tile.TintedRock ? level.Tileset.TintedRock : (l == Tile.MetalBlock ? level.Tileset.MetalBlock : level.Tileset.Rock))[Rnd.Int(4)], ww);
+			Particles.BreakSprite(level.Area, (l == Tile.TintedRock ? level!.Tileset.TintedRock : (l == Tile.MetalBlock ? level!.Tileset.MetalBlock : level!.Tileset.Rock))[Rnd.Int(4)], ww);
 
 			level.Set(x, y, Tile.Ember);
 			level.UpdateTile(x, y);
@@ -120,7 +120,7 @@ namespace BurningKnight.entity {
 			var yy = (int) Math.Floor(w.Y / 16f);
 			var r = (int) Math.Floor(hurtRadius / 16f);
 			var level = Context.Level;
-			var ice = level.Biome is IceBiome;
+			var ice = level!.Biome is IceBiome;
 				
 			for (int x = -r; x <= r; x++) {
 				for (int y = -r; y <= r; y++) {
@@ -191,7 +191,7 @@ namespace BurningKnight.entity {
 
 					if (ds <= d) {
 						var level = Context.Level;
-						var index = level.ToIndex(xx + x, yy + y);
+						var index = level!.ToIndex(xx + x, yy + y);
 
 						level.Light[index] = (float) Math.Max(level.Light[index], Math.Max(0.1f, (d - ds) / d));
 					}

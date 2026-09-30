@@ -31,7 +31,7 @@ namespace BurningKnight.level.tutorial {
 				Context.Camera!.Shake(8);
 				var r = GetComponent<RoomComponent>()!.Room;
 				
-				foreach (var c in r.Controllable) {
+				foreach (var c in r!.Controllable) {
 					c.TurnOn();
 					AnimationUtil.Poof(c.Center);
 				}

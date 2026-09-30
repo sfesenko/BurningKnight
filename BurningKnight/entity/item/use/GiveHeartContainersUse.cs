@@ -8,7 +8,7 @@ namespace BurningKnight.entity.item.use {
 
 		public override void Use(Entity entity, Item item) {
 			var component = entity.GetComponent<HealthComponent>();
-			component.MaxHealth += Amount;
+			component!.MaxHealth += Amount;
 			
 			if (!item.Used && Amount > 0) {
 				component.ModifyHealth(Amount, entity);

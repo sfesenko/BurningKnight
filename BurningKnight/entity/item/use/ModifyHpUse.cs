@@ -18,7 +18,7 @@ namespace BurningKnight.entity.item.use {
 
 			if (SetToMax) {
 				var h = entity.GetComponent<HealthComponent>();
-				h.ModifyHealth(h.MaxHealth, item);
+				h!.ModifyHealth(h.MaxHealth, item);
 				return;
 			}
 		

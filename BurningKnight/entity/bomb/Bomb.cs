@@ -67,7 +67,7 @@ namespace BurningKnight.entity.bomb {
 		}
 
 		private void RenderShadow() {
-			GraphicsComponent.Render(true);
+			GraphicsComponent!.Render(true);
 		}
 
 		public void MoveToMouse() {
@@ -80,7 +80,7 @@ namespace BurningKnight.entity.bomb {
 			
 			Position += vec * 0.05f;
 			
-			component.Body.LinearDamping = 5;
+			component!.Body.LinearDamping = 5;
 			component.Velocity = vec;
 		}
 

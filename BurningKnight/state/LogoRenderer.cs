@@ -92,7 +92,7 @@ namespace BurningKnight.state {
 			
 			var anim = Animations.Get("logo");
 
-			letterB = anim.GetSlice("b");
+			letterB = anim!.GetSlice("b");
 			letterU = anim.GetSlice("u");
 			letterR = anim.GetSlice("r");
 			letterN1 = anim.GetSlice("n1");
@@ -109,7 +109,7 @@ namespace BurningKnight.state {
 			
 			anim = Animations.Get("logobg");
 
-			letterWB = anim.GetSlice("b");
+			letterWB = anim!.GetSlice("b");
 			letterWU = anim.GetSlice("u");
 			letterWR = anim.GetSlice("r");
 			letterWN1 = anim.GetSlice("n1");

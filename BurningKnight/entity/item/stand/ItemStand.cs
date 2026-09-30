@@ -116,7 +116,7 @@ namespace BurningKnight.entity.item.stand {
 			
 			var body = new RectBodyComponent(0, 4, 14, 10);
 			AddComponent(body);
-			body.Body.Mass = 100000000f;
+			body!.Body.Mass = 100000000f;
 			
 			AddComponent(new SensorBodyComponent(-2, -2, Width + 4, Height + 4, BodyType.Static));
 
@@ -158,7 +158,7 @@ namespace BurningKnight.entity.item.stand {
 							return true;
 						} else if (this is PermanentStand && Item != null && Item.Type == ItemType.Weapon) {
 							var c = entity.GetComponent<ActiveWeaponComponent>();
-							var item = c.Item;
+							var item = c!.Item;
 
 							c.Set(Items.CreateAndAdd(Item.Id, Area), false);
 							Audio.PlaySfx("item_pickup");
@@ -170,7 +170,7 @@ namespace BurningKnight.entity.item.stand {
 							return true;
 						} else if (this is PermanentStand && Item != null && Item.Type == ItemType.Active) {
 							var c = entity.GetComponent<ActiveItemComponent>();
-							var item = c.Item;
+							var item = c!.Item;
 
 							c.Set(Items.CreateAndAdd(Item.Id, Area), false);
 							Audio.PlaySfx("item_pickup");
@@ -182,7 +182,7 @@ namespace BurningKnight.entity.item.stand {
 							return true;
 						} else if (this is LampStand && Item != null && Item.Type == ItemType.Lamp) {
 							var c = entity.GetComponent<LampComponent>();
-							var item = c.Item;
+							var item = c!.Item;
 
 							c.Set(Items.CreateAndAdd(Item.Id, Area), false);
 							Audio.PlaySfx("item_pickup");
@@ -257,7 +257,7 @@ namespace BurningKnight.entity.item.stand {
 				Shaders.End();
 			}
 
-			GraphicsComponent.Render(false);
+			GraphicsComponent!.Render(false);
 			
 			if (item == null) {
 				return;
@@ -321,7 +321,7 @@ namespace BurningKnight.entity.item.stand {
 			if (stream.ReadBoolean()) {
 				var item = new Item();
 
-				Area.Add(item, false);
+				Area!.Add(item, false);
 				
 				item.Load(stream);
 				item.LoadedSelf = false;

@@ -60,7 +60,7 @@ namespace BurningKnight.entity.room {
 
 			if (id == "bk:troll_bomb") {
 				var bomb = new Bomb(null);
-				Area.Add(bomb);
+				Area!.Add(bomb);
 				
 				return bomb;
 			}
@@ -89,7 +89,7 @@ namespace BurningKnight.entity.room {
 					Timer.Add(() => {
 						var part = new TileParticle();
 
-						part.Top = Context.Level!.Tileset.FloorD[0];
+						part.Top = Context!.Level!.Tileset.FloorD[0];
 						part.TopTarget = Context.Level!.Tileset.WallTopADecor;
 						part.Side = Context.Level!.Tileset.FloorSidesD[0];
 						part.Sides = Context.Level!.Tileset.WallSidesA[2];
@@ -101,7 +101,7 @@ namespace BurningKnight.entity.room {
 						part.Target.Y = (where.Y + y1) * 16 + 8;
 						part.TargetZ = -8f;
 
-						Area.Add(part);
+						Area!.Add(part);
 					}, Rnd.Float(1f));
 				}
 			}

@@ -14,7 +14,7 @@ namespace BurningKnight.entity.creature.mob.jungle {
 		}
 
 		protected override bool HandleDeath(DiedEvent d) {
-			GetAnyComponent<BodyComponent>().KnockbackFrom(d.From, 2f);
+			GetAnyComponent<BodyComponent>()!.KnockbackFrom(d.From, 2f);
 
 			if (d.DamageType != DamageType.Melee && d.DamageType != DamageType.Explosive) {
 				ExplosionMaker.Make(this, 16);

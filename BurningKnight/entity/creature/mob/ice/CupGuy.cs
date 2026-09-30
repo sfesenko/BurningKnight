@@ -28,7 +28,7 @@ namespace BurningKnight.entity.creature.mob.ice {
 
 			var body = new RectBodyComponent(3, 13, 9, 1);
 			AddComponent(body);
-			body.Body.LinearDamping = 10;
+			body!.Body.LinearDamping = 10;
 
 			AddComponent(new SensorBodyComponent(3, 1, 9, 13));
 
@@ -68,7 +68,7 @@ namespace BurningKnight.entity.creature.mob.ice {
 
 					var a = Self.GetComponent<MobAnimationComponent>();
 					
-					Tween.To(0.6f, a.Scale.X, x => a.Scale.X = x, 0.2f);
+					Tween.To(0.6f, a!.Scale.X, x => a.Scale.X = x, 0.2f);
 					Tween.To(1.6f, a.Scale.Y, x => a.Scale.Y = x, 0.2f).OnEnd = () => {
 
 						Tween.To(1.8f, a.Scale.X, x => a.Scale.X = x, 0.1f);

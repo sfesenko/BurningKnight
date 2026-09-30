@@ -32,7 +32,7 @@ namespace BurningKnight.level.entities.statue {
 		protected override bool Interact(Entity e) {
 			var c = e.GetComponent<ConsumablesComponent>();
 
-			if (c.Coins < 1) {
+			if (c!.Coins < 1) {
 				AnimationUtil.ActionFailed();
 				TextParticle.Add(e, Locale.Get("no_coins"));
 				

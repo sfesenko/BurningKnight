@@ -19,7 +19,7 @@ namespace BurningKnight.entity.creature.mob.desert {
 			AddComponent(body);
 
 			body.KnockbackModifier = 3;
-			body.Body.LinearDamping = 6;
+			body!.Body.LinearDamping = 6;
 			
 			AddComponent(new SensorBodyComponent(3, 3, 7, 13));
 			
@@ -71,7 +71,7 @@ namespace BurningKnight.entity.creature.mob.desert {
 				velocity.Y = (float) Math.Sin(angle) * force;
 
 				Self.GetComponent<RectBodyComponent>()!.Velocity = velocity;
-				Self.GetComponent<MobAnimationComponent>()!.Animation.Tag = "run";
+				Self!.GetComponent<MobAnimationComponent>()!.Animation.Tag = "run";
 			}
 
 			public override void Destroy() {
@@ -103,7 +103,7 @@ namespace BurningKnight.entity.creature.mob.desert {
 				
 				Self.TouchDamage = 0;
 				var a = Self.GetComponent<MobAnimationComponent>();
-				a.Scale.X = 3f;
+				a!.Scale.X = 3f;
 				a.Scale.Y = 0f;
 
 				Tween.To(1, a.Scale.X, x => a.Scale.X = x, 0.5f, Ease.BackOut);

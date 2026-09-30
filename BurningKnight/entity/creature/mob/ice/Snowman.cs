@@ -27,7 +27,7 @@ namespace BurningKnight.entity.creature.mob.ice {
 			
 			var body = new RectBodyComponent(5, 21, 15, 1);
 			AddComponent(body);
-			body.Body.LinearDamping = 10;
+			body!.Body.LinearDamping = 10;
 			body.KnockbackModifier = 0.1f;
 			
 			AddComponent(new SensorBodyComponent(6, 2, 13, 19));
@@ -48,7 +48,7 @@ namespace BurningKnight.entity.creature.mob.ice {
 			GetComponent<AudioEmitterComponent>()!.EmitRandomized("mob_fire");
 			var a = GetComponent<MobAnimationComponent>();
 					
-			Tween.To(0.6f, a.Scale.X, x => a.Scale.X = x, 0.2f);
+			Tween.To(0.6f, a!.Scale.X, x => a.Scale.X = x, 0.2f);
 			Tween.To(1.6f, a.Scale.Y, x => a.Scale.Y = x, 0.2f).OnEnd = () => {
 				Tween.To(1.8f, a.Scale.X, x => a.Scale.X = x, 0.1f);
 				Tween.To(0.2f, a.Scale.Y, x => a.Scale.Y = x, 0.1f).OnEnd = () => {
@@ -101,7 +101,7 @@ namespace BurningKnight.entity.creature.mob.ice {
 
 		protected override void CreateGore(DiedEvent d) {
 			var head = new Snowball();
-			Area.Add(head);
+			Area!.Add(head);
 			head.TopCenter = TopCenter;
 
 			var body = new SnowmanBody();

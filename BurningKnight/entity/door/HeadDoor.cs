@@ -48,7 +48,7 @@ namespace BurningKnight.entity.door {
 		public override void PostInit() {
 			base.PostInit();
 
-			Area.Add(trigger = new Trigger {
+			Area!.Add(trigger = new Trigger {
 				Callback = (e) => {
 					if (e is Player p) {
 						if (p.GetComponent<RectBodyComponent>()!.Velocity.Y >= 0 || p.Y > trigger.Y + 4) {
@@ -78,7 +78,7 @@ namespace BurningKnight.entity.door {
 
 						var b = p.GetComponent<RectBodyComponent>();
 						
-						b.Acceleration = Vector2.Zero;
+						b!.Acceleration = Vector2.Zero;
 						b.Velocity = Vector2.Zero;
 
 						p.GetComponent<BuffsComponent>()!.Add(new FrozenBuff() {

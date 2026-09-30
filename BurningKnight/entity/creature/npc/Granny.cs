@@ -40,7 +40,7 @@ namespace BurningKnight.entity.creature.npc {
 
 			if (delay <= 0) {
 				delay = Rnd.Float(1, 4);
-				GraphicsComponent.Flipped = !GraphicsComponent.Flipped;
+				GraphicsComponent!.Flipped = !GraphicsComponent.Flipped;
 			}
 		}
 

@@ -42,7 +42,7 @@ namespace BurningKnight.entity.creature.mob {
 			List<Entity> targets;
 
 			if (TargetEverywhere) {
-				targets = Area.Tagged[IsFriendly() ? Tags.Mob : Tags.PlayerTarget];
+				targets = Area!.Tagged[IsFriendly() ? Tags.Mob : Tags.PlayerTarget];
 			} else {
 				var room = GetComponent<RoomComponent>()!.Room;
 
@@ -87,7 +87,7 @@ namespace BurningKnight.entity.creature.mob {
 		}
 		private void BuildPath(Vector2 to, bool back = false) {
 			var level = Context.Level;
-			var fp = level.ToIndex((int) Math.Floor(CenterX / 16f), (int) Math.Floor(Bottom / 16f));
+			var fp = level!.ToIndex((int) Math.Floor(CenterX / 16f), (int) Math.Floor(Bottom / 16f));
 			var tp = level.ToIndex((int) Math.Floor(to.X / 16f), (int) Math.Floor(to.Y / 16f));
 
 			var p = back ? PathFinder.GetStepBack(fp, tp, level.Passable, prevStepBack) : PathFinder.GetStep(fp, tp, level.Passable);
@@ -139,7 +139,7 @@ namespace BurningKnight.entity.creature.mob {
 			}
 
 			speed *= Engine.Delta * 60;
-			GetAnyComponent<BodyComponent>().Velocity = new Vector2(dx / d * speed, dy / d * speed);
+			GetAnyComponent<BodyComponent>()!.Velocity = new Vector2(dx / d * speed, dy / d * speed);
 
 			return false;
 		}

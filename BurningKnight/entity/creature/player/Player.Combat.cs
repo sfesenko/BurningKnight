@@ -84,7 +84,7 @@ namespace BurningKnight.entity.creature.player {
 						
 					part.Position = Center;
 					part.Particle.Scale = Rnd.Float(0.4f, 0.8f);
-					Area.Add(part);
+					Area!.Add(part);
 				}
 			} else if (e is RoomChangedEvent c) {
 				if (c.New == null || Context.Level == null || Context.Camera == null) {
@@ -94,7 +94,7 @@ namespace BurningKnight.entity.creature.player {
 				if (c.New.Tagged[Tags.MustBeKilled].Count > 0) {
 					Audio.PlaySfx("level_door_shut");
 
-					foreach (var p in Area.Tagged[Tags.Player]) {
+					foreach (var p in Area!.Tagged[Tags.Player]) {
 						if (p.GetComponent<RoomComponent>()!.Room != c.New) {
 							AnimationUtil.Poof(p.Center);
 							p.Center = Center;
@@ -150,7 +150,7 @@ namespace BurningKnight.entity.creature.player {
 						case RoomType.Treasure: {
 							foreach (var door in c.New.Doors) {
 								if (door.TryGetComponent<LockComponent>(out var component) && component.Lock is GoldLock) {
-									if (!(c.New.Type == RoomType.Shop && ((door.Rooms[0] != null && door.Rooms[0].Type == RoomType.SubShop) ||
+									if (!(c.New.Type == RoomType.Shop && ((door!.Rooms[0] != null && door.Rooms[0].Type == RoomType.SubShop) ||
 									                                    (door.Rooms[1] != null && door.Rooms[1].Type == RoomType.SubShop)))) {
 									
 										component.Lock.SetLocked(false, this);
@@ -170,7 +170,7 @@ namespace BurningKnight.entity.creature.player {
 							
 							c.New.OpenHiddenDoors();
 							
-							foreach (var r in Area.Tagged[Tags.Room]) {
+							foreach (var r in Area!.Tagged[Tags.Room]) {
 								var room = (Room) r;
 
 								if (room.Type == (c.New.Type == RoomType.OldMan ? RoomType.Granny : RoomType.OldMan)) {
@@ -240,7 +240,7 @@ namespace BurningKnight.entity.creature.player {
 								Timer.Add(() => {
 									var part = new TileParticle();
 
-									part.Top = Context.Level!.Tileset.WallTopADecor;
+									part.Top = Context!.Level!.Tileset.WallTopADecor;
 									part.TopTarget = Context.Level!.Tileset.WallTopADecor;
 									part.Side = Context.Level!.Tileset.FloorSidesD[0];
 									part.Sides = Context.Level!.Tileset.WallSidesA[2];
@@ -252,7 +252,7 @@ namespace BurningKnight.entity.creature.player {
 									part.Target.Y = y * 16;
 									part.TargetZ = -8f;
 
-									Area.Add(part);
+									Area!.Add(part);
 								}, Rnd.Float(0.5f));
 							});
 
@@ -300,14 +300,14 @@ namespace BurningKnight.entity.creature.player {
 
 						if (Rnd.Chance(30)) {
 							for (var i = 0; i < Rnd.Int(1, 3); i++) {
-								Area.Add(new SplashParticle {
+								Area!.Add(new SplashParticle {
 									Position = Center - new Vector2(2.5f),
 									Color = cl
 								});
 							}
 						}
 
-						Area.Add(new SplashFx {
+						Area!.Add(new SplashFx {
 							Position = Center,
 							Color = ColorUtils.Mod(cl)
 						});

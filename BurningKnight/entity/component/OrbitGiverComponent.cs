@@ -40,7 +40,7 @@ namespace BurningKnight.entity.component {
 			for (var i = Orbiting.Count - 1; i >= 0; i--) {
 				var e = Orbiting[i];
 				var component = e.GetComponent<OrbitalComponent>();
-				var d = component.Radius * RadiusMultiplier;
+				var d = component!.Radius * RadiusMultiplier;
 				var a = i / count * Math.PI * 2 - T * 1.5f;
 
 				if (e.Done) {

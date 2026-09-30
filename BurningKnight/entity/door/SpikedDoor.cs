@@ -26,10 +26,10 @@ namespace BurningKnight.entity.door {
 				var h = p.GetComponent<HealthComponent>();
 				
 				if (rolling && Rnd.Chance(95)) {
-					h.Unhittable = false;
+					h!.Unhittable = false;
 				}
 				
-				h.ModifyHealth(-1, this);
+				h!.ModifyHealth(-1, this);
 				
 				if (rolling) {
 					h.Unhittable = true;

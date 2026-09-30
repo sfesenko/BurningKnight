@@ -62,7 +62,7 @@ namespace BurningKnight.entity.creature.player {
 				base.Init();
 
 				var z = Self.GetComponent<ZComponent>();
-				var start = z.Z;
+				var start = z!.Z;
 
 				Tween.To(start + 8, start, x => z.Z = x, 0.15f, Ease.QuadIn).OnEnd = () => {
 					Tween.To(start, z.Z, x => z.Z = x, 0.15f, Ease.QuadIn);
@@ -71,11 +71,11 @@ namespace BurningKnight.entity.creature.player {
 				Self.GetComponent<AudioEmitterComponent>()!.EmitRandomized("player_roll", 0.5f);
 				var hp = Self.GetComponent<HealthComponent>();
 
-				wasUnhittable = hp.Unhittable;
+				wasUnhittable = hp!.Unhittable;
 				hp.Unhittable = true;
 
 				var body = Self.GetComponent<RectBodyComponent>();
-				var angle = body.Acceleration.LengthSquared() > 0.1f 
+				var angle = body!.Acceleration.LengthSquared() > 0.1f 
 					?	body.Acceleration.ToAngle()
 					: (GameContext.Current.Camera.ScreenToCamera(Input.Mouse.ScreenPosition) - Self.Center).ToAngle();
 
@@ -105,7 +105,7 @@ namespace BurningKnight.entity.creature.player {
 				}
 				
 				var body = Self.GetComponent<RectBodyComponent>();
-				body.Velocity += direction * (RollTime - T * 0.5f);
+				body!.Velocity += direction * (RollTime - T * 0.5f);
 				body.Position += body.Velocity * dt * 0.1f;
 
 				lastParticle -= dt;

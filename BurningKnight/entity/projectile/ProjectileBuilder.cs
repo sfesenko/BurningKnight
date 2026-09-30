@@ -170,7 +170,7 @@ namespace BurningKnight.entity.projectile {
 
 			var body = bodyComponent.Body;
 
-			body.Restitution = 1;
+			body!.Restitution = 1;
 			body.Friction = 0;
 			body.IsBullet = true;
 			body.Rotation = Velocity.ToAngle();

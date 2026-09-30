@@ -42,7 +42,7 @@ namespace BurningKnight.entity.creature.player {
 		}
 
 		public void EndInteraction() {
-			if (CurrentlyInteracting.TryGetComponent<InteractableComponent>(out var component)) {
+			if (CurrentlyInteracting!.TryGetComponent<InteractableComponent>(out var component)) {
 				component.OnEnd?.Invoke(Entity);
 				component.CurrentlyInteracting = null;
 			}
@@ -57,7 +57,7 @@ namespace BurningKnight.entity.creature.player {
 		}
 
 		private void OnStart() {
-			if (!CurrentlyInteracting.TryGetComponent<InteractableComponent>(out var component)) {
+			if (!CurrentlyInteracting!.TryGetComponent<InteractableComponent>(out var component)) {
 				return;
 			}
 

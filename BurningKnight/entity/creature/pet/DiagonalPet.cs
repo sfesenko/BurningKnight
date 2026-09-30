@@ -20,7 +20,7 @@ namespace BurningKnight.entity.creature.pet {
 
 			var body = GetComponent<RectBodyComponent>()!.Body;
 			
-			body.Restitution = 1;
+			body!.Restitution = 1;
 			body.Friction = 0;
 			
 			GetComponent<RectBodyComponent>()!.Velocity = MathUtils.CreateVector(angles[Rnd.Int(angles.Length)], 50);

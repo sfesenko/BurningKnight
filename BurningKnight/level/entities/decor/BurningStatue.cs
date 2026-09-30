@@ -81,7 +81,7 @@ namespace BurningKnight.level.entities.decor {
 			UpdateSprite();
 
 			if (!Broken) {
-				Area.Add(fea = new FireEmitter {
+				Area!.Add(fea = new FireEmitter {
 					Depth = Depth + 1,
 					Position = new Vector2(X + 11, Y + 15),
 					Scale = 0.8f
@@ -188,8 +188,8 @@ namespace BurningKnight.level.entities.decor {
 			if (Broken) {
 				var s = GetComponent<InteractableSliceComponent>();
 
-				s.Sprite = CommonAse.Props.GetSlice("broken_statue");
-				s.Offset.Y = Height - s.Sprite.Height;
+				s!.Sprite = CommonAse.Props.GetSlice("broken_statue");
+				s.Offset.Y = Height - s!.Sprite.Height;
 
 				if (fea != null) {
 					fea.Done = true;
@@ -214,7 +214,7 @@ namespace BurningKnight.level.entities.decor {
 		public override void Update(float dt) {
 			base.Update(dt);
 
-			if (Area.Tagged[Tags.BurningKnight].Count > 0) {
+			if (Area!.Tagged[Tags.BurningKnight].Count > 0) {
 				Done = true;
 				return;
 			}

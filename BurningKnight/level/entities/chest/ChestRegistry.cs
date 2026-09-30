@@ -29,7 +29,7 @@ namespace BurningKnight.level.entities.chest {
 				
 				if (!(chest is GlassChest || chest is ProtoChest) && Rnd.Chance(LevelSave.MimicChance)) {
 					var mimic = new Mimic {
-						Kind = chest.GetSprite(),
+						Kind = chest!.GetSprite(),
 						Pool = chest.GetPool()
 					};
 
@@ -40,7 +40,7 @@ namespace BurningKnight.level.entities.chest {
 				}
 				
 				area.Add(chest);
-				chest.BottomCenter = where;
+				chest!.BottomCenter = where;
 
 				return chest;
 			} catch (Exception ex) {

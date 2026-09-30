@@ -52,7 +52,7 @@ namespace BurningKnight.entity.item.stand {
 				
 			var r = GetComponent<RoomComponent>()!.Room;
 
-			foreach (var p in r.Tagged[Tags.Player]) {
+			foreach (var p in r!.Tagged[Tags.Player]) {
 				if (p.GetComponent<HealthComponent>()!.MaxHealth + p.GetComponent<HeartsComponent>()!.Total < Price * 2) {
 					Graphics.Color *= 0.6f;
 					break;
@@ -79,7 +79,7 @@ namespace BurningKnight.entity.item.stand {
 			
 			var stats = entity.GetComponent<StatsComponent>();
 			
-			stats.TookDeal = true;
+			stats!.TookDeal = true;
 			stats.HeartsPayed += Price;
 			
 			Achievements.Unlock("bk:deal");
@@ -91,7 +91,7 @@ namespace BurningKnight.entity.item.stand {
 			if ((e is ItemUsedEvent ite && ite.Who == payer && ite.Item == takenItem) || (e is ItemAddedEvent iae && iae.Who == payer && iae.Item == takenItem)) {
 				var component = payer.GetComponent<HealthComponent>();
 				var hearts = payer.GetComponent<HeartsComponent>();
-				var a = Math.Min(component.MaxHealth, lastPrice);
+				var a = Math.Min(component!.MaxHealth, lastPrice);
 
 				if (a > 0) {
 					component.ModifyHealth(-a, this, DamageType.Custom);
@@ -104,7 +104,7 @@ namespace BurningKnight.entity.item.stand {
 				var d = lastPrice - a;
 
 				if (d > 0) {
-					hearts.Hurt(-d, this, DamageType.Custom);
+					hearts!.Hurt(-d, this, DamageType.Custom);
 				}
 
 				TextParticle.Add(payer, Locale.Get("max_hp"), lastPrice, true, true);

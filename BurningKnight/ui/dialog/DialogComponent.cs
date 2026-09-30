@@ -52,7 +52,7 @@ namespace BurningKnight.ui.dialog {
 			Dialog.OnEnd += () => {
 				Dialog next = null;
 				
-				foreach (var c in Current.Callbacks) {
+				foreach (var c in Current!.Callbacks) {
 					var d = c(Current, this);
 
 					if (d != null) {
@@ -88,7 +88,7 @@ namespace BurningKnight.ui.dialog {
 		public override void Destroy() {
 			base.Destroy();
 			
-			Dialog.Close(() => { Dialog.Done = true; });
+			Dialog!.Close(() => { Dialog.Done = true; });
 			Engine.Instance.Window.TextInput -= HandleInput;
 
 			if (Talking == this) {
@@ -101,7 +101,7 @@ namespace BurningKnight.ui.dialog {
 		public override void Update(float dt) {
 			base.Update(dt);
 
-			if (tillClose > -1 && Dialog.DoneSaying) {
+			if (tillClose > -1 && Dialog!.DoneSaying) {
 				tillClose -= dt;
 
 				if (tillClose <= 0) {
@@ -125,7 +125,7 @@ namespace BurningKnight.ui.dialog {
 				Engine.Instance.State.Ui.Add(Dialog);
 			}
 
-			Dialog.Str.FinishedTyping += s => {
+			Dialog!.Str.FinishedTyping += s => {
 				Entity.HandleEvent(new Dialog.EndedEvent {
 					Dialog = Last ?? Current,
 					Owner = Entity
@@ -204,7 +204,7 @@ namespace BurningKnight.ui.dialog {
 			var c = Locale.Get(dialog.Id);
 			var s = dialog.Modify(c);
 			
-			Dialog.Say(s);
+			Dialog!.Say(s);
 			
 			if (Dialog.Str != null) {
 				Dialog.Str.Renderer = RenderChoice;
@@ -236,14 +236,14 @@ namespace BurningKnight.ui.dialog {
 		private void OnStart() {
 			var p = (Player) To;
 
-			if (p.TryGetComponent<PlayerInputComponent>(out var input)) {
+			if (p!.TryGetComponent<PlayerInputComponent>(out var input)) {
 				input.InDialog = true;
 				input.Dialog = this;
-				Dialog.ShowArrow = true;
+				Dialog!.ShowArrow = true;
 			}
 
-			var health = To.GetComponent<HealthComponent>();
-			wasUnhittable = health.Unhittable;
+			var health = To!.GetComponent<HealthComponent>();
+			wasUnhittable = health!.Unhittable;
 			health.Unhittable = true;
 			
 			Tween.To(2, Context.Camera!.TextureZoom, x => Context.Camera!.TextureZoom = x, 0.3f, Ease.QuadInOut);
@@ -259,7 +259,7 @@ namespace BurningKnight.ui.dialog {
 				if (To.TryGetComponent<PlayerInputComponent>(out var input)) {
 					input.InDialog = false;
 					input.Dialog = null;
-					Dialog.ShowArrow = false;
+					Dialog!.ShowArrow = false;
 				}
 				
 				To.GetComponent<HealthComponent>()!.Unhittable = wasUnhittable;

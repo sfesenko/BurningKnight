@@ -16,10 +16,10 @@ namespace BurningKnight.entity.item.use {
 						return;
 					}
 				
-					var v = p.GetAnyComponent<BodyComponent>().Velocity;
+					var v = p!.GetAnyComponent<BodyComponent>().Velocity;
 
 					if (p is Laser l) {
-						var a = l.BodyComponent.Body.Rotation;
+						var a = l!.BodyComponent.Body.Rotation;
 						var end = l.End - MathUtils.CreateVector(a, 5);
 						
 						for (var i = 0; i < 2; i++) {

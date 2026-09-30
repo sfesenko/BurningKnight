@@ -26,7 +26,7 @@ namespace BurningKnight.level.entities.statue {
 			if (Context.Run.Scourge > 0) {
 				var c = e.GetComponent<ConsumablesComponent>();
 
-				if (c.Coins < 5) {
+				if (c!.Coins < 5) {
 					// Dude where ma money?
 					GetComponent<DialogComponent>()!.StartAndClose("fountain_0", 5);
 				} else {

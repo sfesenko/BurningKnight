@@ -77,7 +77,7 @@ namespace BurningKnight.entity.projectile {
 		}
 
 		protected virtual void RenderShadow() {
-			GraphicsComponent.Render(true);
+			GraphicsComponent!.Render(true);
 		}
 
 		public override void Update(float dt) {
@@ -116,26 +116,26 @@ namespace BurningKnight.entity.projectile {
 			var bodyComponent = GetAnyComponent<BodyComponent>();
 
 			if (!Dying && (Owner is Player || Owner is Sniper)) {
-				Position += bodyComponent.Body.LinearVelocity * dt;
+				Position += bodyComponent!.Body.LinearVelocity * dt;
 			}
 
 			if (!HasFlag(ProjectileFlags.ManualRotation)) {
 				if (HasFlag(ProjectileFlags.AutomaticRotation)) {
-					bodyComponent.Body.Rotation += dt * 10;
+					bodyComponent!.Body.Rotation += dt * 10;
 				} else {
-					bodyComponent.Body.Rotation = VectorExtension.ToAngle(bodyComponent.Body.LinearVelocity);
+					bodyComponent!.Body.Rotation = VectorExtension.ToAngle(bodyComponent.Body.LinearVelocity);
 				}
 			}
 
 			if (Owner is Mob) {
-				if (Area.Tagged[Tags.Player].Count == 0) {
+				if (Area!.Tagged[Tags.Player].Count == 0) {
 					Break();
 
 					// Future proofing return, do not remove
 					return;
 				}
 			} else if (Owner is Player) {
-				if (Area.Tagged[Tags.PlayerProjectile].Count >= 69 && HasTag(Tags.PlayerProjectile)) {
+				if (Area!.Tagged[Tags.PlayerProjectile].Count >= 69 && HasTag(Tags.PlayerProjectile)) {
 					RemoveTag(Tags.PlayerProjectile);
 					Break();
 
@@ -310,7 +310,7 @@ namespace BurningKnight.entity.projectile {
 		public virtual void Resize(float scale) {
 			var graphics = GetComponent<ProjectileGraphicsComponent>();
 
-			var w = graphics.Sprite.Source.Width * scale;
+			var w = graphics!.Sprite.Source.Width * scale;
 			var h = graphics.Sprite.Source.Height * scale;
 			var center = Center;
 
@@ -334,9 +334,9 @@ namespace BurningKnight.entity.projectile {
 
 			try {
 				var bodyComponent = GetAnyComponent<BodyComponent>();
-				var l = Math.Min(15, bodyComponent.Velocity.Length());
+				var l = Math.Min(15, bodyComponent!.Velocity.Length());
 
-				if (l > 1f && Area.Tagged[Tags.Projectile].Count < 99) {
+				if (l > 1f && Area!.Tagged[Tags.Projectile].Count < 99) {
 					var a = VectorExtension.ToAngle(bodyComponent.Velocity);
 
 					for (var i = 0; i < 4; i++) {

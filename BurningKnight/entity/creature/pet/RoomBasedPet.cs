@@ -19,11 +19,11 @@ namespace BurningKnight.entity.creature.pet {
 				}
 				
 				var r = GetComponent<RoomComponent>()!.Room;
-				var rm = Owner.GetComponent<RoomComponent>()!.Room;
+				var rm = Owner!.GetComponent<RoomComponent>()!.Room;
 
 				if (r != rm) {
 					AnimationUtil.Poof(Center);
-					Center = rm.GetRandomFreeTile() * 16 + new Vector2(8);
+					Center = rm!.GetRandomFreeTile() * 16 + new Vector2(8);
 					AnimationUtil.Poof(Center);
 					GetComponent<AnimationComponent>()!.Animate();
 					OnJump();

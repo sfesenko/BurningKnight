@@ -115,7 +115,7 @@ namespace BurningKnight.level {
 
 			Level.Rains = Context.Run.Depth > 0 && Rnd.Chance(15);
 
-			if (Level.Biome.Id == Biome.Ice) {
+			if (Level!.Biome.Id == Biome.Ice) {
 				Level.Snows = true;
 				Level.Rains = false;
 			} else if (Level.Biome.Id == Biome.Castle) {
@@ -362,13 +362,13 @@ namespace BurningKnight.level {
 			UpdateTransition(Level);
 
 			if (check) {
-				var c = exit.GetCenter();
+				var c = exit!.GetCenter();
 				Level.CreatePassable(true);
 				PathFinder.SetMapSize(Level.Width, Level.Height);
 				var i1 = Level.ToIndex(c.X, c.Y);
 				
 				PathFinder.BuildDistanceMap(i1, Level.Passable);
-				c = entrance.GetCenter();
+				c = entrance!.GetCenter();
 
 				var i2 = Level.ToIndex(c.X, c.Y);
 				if (PathFinder.Distance[i2] == Int32.MaxValue) {

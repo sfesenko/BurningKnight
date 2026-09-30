@@ -23,7 +23,7 @@ namespace BurningKnight.entity.projectile {
 
 			var a = Animations.Get(image);
 
-			Aura = a.GetSlice($"{slice}_aura", false);
+			Aura = a!.GetSlice($"{slice}_aura", false);
 			Light = a.GetSlice($"{slice}_light", false);
 		}
 
@@ -45,7 +45,7 @@ namespace BurningKnight.entity.projectile {
 			var a = Rotation;
 			var b = false; // p.FlashTimer > 0; // future egor: do we really need this frame that no one notices anyway? think about it, requires extra 4 bytes per bullet
 			var spr = b ? Flash : Sprite;
-			var or = spr.Center;
+			var or = spr!.Center;
 
 			if (shadow) {
 				Graphics.Render(spr, Entity.Center + new Vector2(0, 6), a, or, scale);

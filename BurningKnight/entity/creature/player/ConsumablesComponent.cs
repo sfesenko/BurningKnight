@@ -113,7 +113,7 @@ namespace BurningKnight.entity.creature.player {
 							if (Context.Run.Depth > 0 && GlobalSave.IsFalse("control_bomb")) {
 								var dialog = GetComponent<DialogComponent>();
 
-								dialog.Dialog.Str.ClearIcons();
+								dialog!.Dialog.Str.ClearIcons();
 								dialog.Dialog.Str.AddIcon(CommonAse.Ui.GetSlice(Controls.FindSlice(Controls.Bomb, false)));
 
 								if (GamepadComponent.Current != null && GamepadComponent.Current.Attached) {
@@ -238,7 +238,7 @@ namespace BurningKnight.entity.creature.player {
 			} else {
 				var h = GetComponent<HeartsComponent>();
 
-				if (h.Bombs > 0) {
+				if (h!.Bombs > 0) {
 					h.ModifyBombs(-1, Entity, true);
 					spawn = true;
 				}

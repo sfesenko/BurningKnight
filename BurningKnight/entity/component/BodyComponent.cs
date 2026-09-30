@@ -22,18 +22,18 @@ namespace BurningKnight.entity.component {
 		public bool Confused;
 		
 		public Vector2 Velocity {
-			get => Slow ? Body.LinearVelocity * 2 : Body.LinearVelocity;
-			set => Body.LinearVelocity = Slow ? value / 2 : value;
+			get => Slow ? Body!.LinearVelocity * 2 : Body!.LinearVelocity;
+			set => Body!.LinearVelocity = Slow ? value / 2 : value;
 		}
 
 		public Vector2 Position {
-			get => Body.Position;
-			set => Body.Position = value;
+			get => Body!.Position;
+			set => Body!.Position = value;
 		}
 
 		public float Angle {
-			get => Body.Rotation;
-			set => Body.Rotation = value;
+			get => Body!.Rotation;
+			set => Body!.Rotation = value;
 		}
 		
 		protected virtual void PositionChangedListener() {

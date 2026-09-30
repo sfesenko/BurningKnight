@@ -69,7 +69,7 @@ namespace BurningKnight.entity.creature.npc {
 				
 				var dialog = GetComponent<DialogComponent>();
 								
-				dialog.Dialog.Str.ClearIcons();
+				dialog!.Dialog.Str.ClearIcons();
 				dialog.Dialog.Str.AddIcon(CommonAse.Ui.GetSlice(Controls.FindSlice(Controls.Duck, false)));
 
 				if (GamepadComponent.Current != null && GamepadComponent.Current.Attached) {
@@ -89,7 +89,7 @@ namespace BurningKnight.entity.creature.npc {
 			public override void Update(float dt) {
 				base.Update(dt);
 
-				Self.GraphicsComponent.Flipped = toLeft;
+				Self!.GraphicsComponent.Flipped = toLeft;
 
 				if (pauseTimer > 0) {
 					pauseTimer -= dt;

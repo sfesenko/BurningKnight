@@ -59,7 +59,7 @@ namespace BurningKnight.entity.item {
 			
 			if (item.Animation == null) {
 				var c = item.GetComponent<ItemGraphicsComponent>();
-				yy = ItemGraphicsComponent.CalculateMove(c.T) * Display.UiScale;
+				yy = ItemGraphicsComponent.CalculateMove(c!.T) * Display.UiScale;
 			}
 			
 			Center = Context.Camera!.CameraToUi(new Vector2(item.CenterX, item.Y - 8 + y + yy));

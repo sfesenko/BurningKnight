@@ -60,7 +60,7 @@ namespace BurningKnight.entity.item {
 
 			if (GlobalSave.Emeralds < price) {
 				AnimationUtil.ActionFailed();
-				var npc = Area.FindClosest(Center, Tags.Npc, n => n is ShopNpc);
+				var npc = Area!.FindClosest(Center, Tags.Npc, n => n is ShopNpc);
 
 				if (npc != null && npc.TryGetComponent<DialogComponent>(out var c)) {
 					c.StartAndClose($"shopkeeper_{Rnd.Int(15, 18)}", 3);
@@ -91,7 +91,7 @@ namespace BurningKnight.entity.item {
 				Stand = this
 			});
 
-			foreach (var i in Area.Tagged[Tags.Item]) {
+			foreach (var i in Area!.Tagged[Tags.Item]) {
 				if (i is Item it) {
 					it.CheckMasked();
 				} else if (i is ItemStand its) {

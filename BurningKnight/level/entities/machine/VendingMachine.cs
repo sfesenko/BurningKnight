@@ -64,7 +64,7 @@ namespace BurningKnight.level.entities.machine {
 
 			var component = entity.GetComponent<ConsumablesComponent>();
 
-			if (component.Coins == 0) {
+			if (component!.Coins == 0) {
 				GetComponent<DialogComponent>()!.StartAndClose("machine_0", 3);
 				AnimationUtil.ActionFailed();
 				return false;
@@ -95,7 +95,7 @@ namespace BurningKnight.level.entities.machine {
 			e.CenterX = CenterX;
 			e.CenterY = Bottom;
 
-			e.GetAnyComponent<BodyComponent>().Velocity = new Vector2(0, 128);
+			e!.GetAnyComponent<BodyComponent>().Velocity = new Vector2(0, 128);
 
 			spawnedCount++;
 
@@ -150,7 +150,7 @@ namespace BurningKnight.level.entities.machine {
 		private void UpdateSprite() {
 			var component = GetComponent<InteractableSliceComponent>();
 
-			component.Sprite = CommonAse.Props.GetSlice("vending_machine_broken");
+			component!.Sprite = CommonAse.Props.GetSlice("vending_machine_broken");
 			component.Offset.Y += Height - 15;
 		}
 
@@ -165,7 +165,7 @@ namespace BurningKnight.level.entities.machine {
 		}
 
 		private void RenderShadow() {
-			GraphicsComponent.Render(true);
+			GraphicsComponent!.Render(true);
 		}
 		
 		public class BrokenEvent : Event {

@@ -19,7 +19,7 @@ namespace BurningKnight.entity.item.stand {
 
 		protected virtual void Heal(Entity entity) {
 			var h = entity.GetComponent<HealthComponent>();
-			h.ModifyHealth(h.MaxHealth, this);
+			h!.ModifyHealth(h.MaxHealth, this);
 		}
 
 		protected override bool Interact(Entity entity) {

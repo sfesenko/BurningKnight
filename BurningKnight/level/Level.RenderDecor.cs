@@ -60,7 +60,7 @@ namespace BurningKnight.level {
 
 			Graphics.Color = ColorUtils.WhiteColor;
 			
-			foreach (var p in Area.Tagged[Tags.Mess]) {
+			foreach (var p in Area!.Tagged[Tags.Mess]) {
 				((SplashFx) p).RenderInSurface();
 			}
 			
@@ -74,7 +74,7 @@ namespace BurningKnight.level {
 			var region = new TextureRegion();
 
 			region.Texture = MessSurface;
-			region.Source.X = (int) Math.Floor(camera.X);
+			region.Source.X = (int) Math.Floor(camera!.X);
 			region.Source.Y = (int) Math.Floor(camera.Y);
 			region.Source.Width = Display.Width + 1;
 			region.Source.Height = Display.Height + 1;
@@ -115,7 +115,7 @@ namespace BurningKnight.level {
 						var tt = (Tile) tile;
 
 						if (tt.IsHalfWall()) {
-							Graphics.Render(Tileset.Tiles[tile][LiquidVariants[index]], new Vector2(x * 16, y * 16));
+							Graphics.Render(Tileset!.Tiles[tile][LiquidVariants[index]], new Vector2(x * 16, y * 16));
 						}
 					}
 				}
@@ -205,12 +205,12 @@ namespace BurningKnight.level {
 							var edge = Tilesets.Biome.Edges[tile][LiquidVariants[index]];
 
 							edgePosition.SetValue(new Vector2(
-								(float) edge.Source.X / edge.Texture.Width,
+								(float) edge.Source.X / edge!.Texture.Width,
 								(float) edge.Source.Y / edge.Texture.Height
 							));
 							
 							tilePosition.SetValue(new Vector2(
-								(float) region.Source.X / region.Texture.Width,
+								(float) region.Source.X / region!.Texture.Width,
 								(float) region.Source.Y / region.Texture.Height
 							));
 							
@@ -225,7 +225,7 @@ namespace BurningKnight.level {
 								}
 								
 								if (Get(index + width) == Tile.Chasm && Rnd.Chance(6)) {
-									Area.Add(new WaterfallFx {
+									Area!.Add(new WaterfallFx {
 										Position = pos + new Vector2(Rnd.Float(16), 16),
 										Lava = t == Tile.Lava
 									});
@@ -285,7 +285,7 @@ namespace BurningKnight.level {
 			Graphics.Batch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, SamplerState.PointClamp, DepthStencilState.None, 
 					state.ClipRasterizerState, shader, Context.Camera?.Matrix);
 
-			shader.Parameters["h"].SetValue(8f / Tileset.WallTopA.Texture.Height);
+			shader.Parameters["h"].SetValue(8f / Tileset!.WallTopA.Texture.Height);
 			var sy = shader.Parameters["y"];
 			var enabled = shader.Parameters["enabled"];
 			enabled.SetValue(true);
@@ -298,7 +298,7 @@ namespace BurningKnight.level {
 						var pos = new Vector2(x * 16, y * 16);
 
 						if (active && Rnd.Chance(0.1f)) {
-							Area.Add(new ChasmFx {
+							Area!.Add(new ChasmFx {
 								Position = pos + new Vector2(Rnd.Float(16), Rnd.Float(16))
 							});
 						}
@@ -323,7 +323,7 @@ namespace BurningKnight.level {
 							
 								switch (tt) {
 									case Tile.WallA: case Tile.Piston: case Tile.PistonDown:
-										textureRegion = tileset.WallA[ind];
+										textureRegion = tileset!.WallA[ind];
 										break;
 									case Tile.Planks:
 										textureRegion = Tilesets.Biome.Planks[ind];
@@ -335,25 +335,25 @@ namespace BurningKnight.level {
 										textureRegion = Tilesets.Biome.GrannyWall[ind];
 										break;
 									case Tile.FloorA:
-										textureRegion = tileset.FloorSidesA[ind];
+										textureRegion = tileset!.FloorSidesA[ind];
 										break;
 									case Tile.FloorB:
-										textureRegion = tileset.FloorSidesB[ind];
+										textureRegion = tileset!.FloorSidesB[ind];
 										break;
 									case Tile.FloorC:
-										textureRegion = tileset.FloorSidesC[ind];
+										textureRegion = tileset!.FloorSidesC[ind];
 										break;
 									case Tile.FloorD:
-										textureRegion = tileset.FloorSidesD[ind];
+										textureRegion = tileset!.FloorSidesD[ind];
 										break;
 
 									default:
 									case Tile.WallB:
-										textureRegion = tileset.WallB[ind];
+										textureRegion = tileset!.WallB[ind];
 										break;
 								}
 								
-								sy.SetValue((float) textureRegion.Source.Y / textureRegion.Texture.Height);
+								sy.SetValue((float) textureRegion.Source.Y / textureRegion!.Texture.Height);
 								Graphics.Render(textureRegion, pos);
 							}
 						}
@@ -382,7 +382,7 @@ namespace BurningKnight.level {
 			var region = new TextureRegion();
 
 			region.Texture = MessSurface;
-			region.Source.X = (int) Math.Floor(camera.X);
+			region.Source.X = (int) Math.Floor(camera!.X);
 			region.Source.Y = (int) Math.Floor(camera.Y) + 8;
 			region.Source.Width = Display.Width + 1;
 			region.Source.Height = Display.Height + 1;

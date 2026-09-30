@@ -56,7 +56,7 @@ namespace BurningKnight.level.entities {
 		}
 
 		private void RenderShadow() {
-			GraphicsComponent.Render(true);
+			GraphicsComponent!.Render(true);
 		}
 
 		protected override Rectangle GetCollider() {
@@ -78,13 +78,13 @@ namespace BurningKnight.level.entities {
 			if (e is HealthModifiedEvent ev) {
 				var h = GetComponent<HealthComponent>();
 				
-				if (Math.Abs(h.Health + ev.Amount) < 0.1f) {
+				if (Math.Abs(h!.Health + ev.Amount) < 0.1f) {
 					from = ev.From;
 				}
 			} else if (e is CollisionStartedEvent c && hurts) {
 				if (c.Entity is Player) {
 					c.Entity.GetComponent<HealthComponent>()!.ModifyHealth(-1, this);
-					c.Entity.GetAnyComponent<BodyComponent>().KnockbackFrom(this, 1);
+					c!.Entity.GetAnyComponent<BodyComponent>().KnockbackFrom(this, 1);
 				}
 			}
 			
@@ -111,7 +111,7 @@ namespace BurningKnight.level.entities {
 					part.Position = Center;
 					part.Particle.Scale = Lens.util.math.Rnd.Float(0.4f, 0.8f);
 					
-					Area.Add(part);
+					Area!.Add(part);
 				}
 
 				var d = AudioEmitterComponent.Dummy(Area, Center);

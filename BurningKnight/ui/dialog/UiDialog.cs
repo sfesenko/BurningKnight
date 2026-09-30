@@ -41,7 +41,7 @@ namespace BurningKnight.ui.dialog {
 			triangle = CommonAse.Ui.GetSlice("dialog_tri");
 			
 			Str = new UiString(Font.Small);
-			Area.Add(Str);
+			Area!.Add(Str);
 
 			Depth = 2;
 			Str.Paused = true;
@@ -85,7 +85,7 @@ namespace BurningKnight.ui.dialog {
 
 		public override void Destroy() {
 			base.Destroy();
-			Str.Done = true;
+			Str!.Done = true;
 		}
 
 		public void Say(string s) {
@@ -147,7 +147,7 @@ namespace BurningKnight.ui.dialog {
 				s = 1;
 			}
 
-			Height += (Str.Height + 12 - Height) * s;
+			Height += (Str!.Height + 12 - Height) * s;
 			Width += (Str.Width + 16 - Width) * s;
 			X -= Width / 2;
 			Y -= Height;

@@ -61,7 +61,7 @@ namespace BurningKnight.state {
 
 			CreateEditor(Camera);
 
-			var id = Context.Level!.Biome.Id;
+			var id = Context.Level.Biome.Id;
 
 			if (id != Biome.Castle && id != Biome.Hub) {
 				Achievements.Unlock($"bk:{id}");
@@ -370,7 +370,7 @@ namespace BurningKnight.state {
 					leaderStats.Clear();
 					offset = Math.Max(0, offset);
 
-					SetupLeaderboard(leaderStats, s, choice.Options[choice.Option], offset, () => {
+					SetupLeaderboard(leaderStats, s, choice!.Options[choice.Option], offset, () => {
 						leaderStats.Prepare();
 
 						leaderStats.RelativeCenterX = Display.UiWidth * 0.5f;

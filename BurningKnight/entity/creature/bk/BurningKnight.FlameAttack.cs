@@ -45,7 +45,7 @@ namespace BurningKnight.entity.creature.bk {
 				
 				var graphics = Self.GetComponent<BkGraphicsComponent>();
 				Self.GetComponent<HealthComponent>()!.Unhittable = true;
-				Tween.To(0, graphics.Alpha, x => graphics.Alpha = x, 0.3f);
+				Tween.To(0, graphics!.Alpha, x => graphics.Alpha = x, 0.3f);
 				Self.TouchDamage = 0;
 			}
 
@@ -55,7 +55,7 @@ namespace BurningKnight.entity.creature.bk {
 				var graphics = Self.GetComponent<BkGraphicsComponent>();
 				Self.GetComponent<HealthComponent>()!.Unhittable = false;
 				Self.TouchDamage = 2;
-				Tween.To(1, graphics.Alpha, x => graphics.Alpha = x, 0.3f);
+				Tween.To(1, graphics!.Alpha, x => graphics.Alpha = x, 0.3f);
 
 				foreach (var l in last) {
 					GameContext.Current.Level.SetFlag(l, Flag.Burning, false);

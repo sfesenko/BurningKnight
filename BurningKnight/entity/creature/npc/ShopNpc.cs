@@ -63,7 +63,7 @@ namespace BurningKnight.entity.creature.npc {
 			
 			if (Context.Run.Depth == 0) {
 				var h = GetComponent<HealthComponent>();
-				h.Unhittable = false;
+				h!.Unhittable = false;
 				h.InitMaxHealth = 50;
 				h.SetHealth(50, this);
 			}
@@ -83,7 +83,7 @@ namespace BurningKnight.entity.creature.npc {
 					Timer.Add(() => {
 						var d = GetComponent<DialogComponent>();
 
-						if (d.Current != null && d.Current.Id != "quack") {
+						if (d!.Current != null && d.Current.Id != "quack") {
 							d.StartAndClose("quack", 3);
 						}
 
@@ -98,7 +98,7 @@ namespace BurningKnight.entity.creature.npc {
 				if (!hided) {
 					hided = true;
 
-					foreach (var item in Area.Tagged[Tags.Item]) {
+					foreach (var item in Area!.Tagged[Tags.Item]) {
 						if (item is ItemStand stand && OwnsStand(stand)) {
 							stand.Done = true;
 						}
@@ -113,7 +113,7 @@ namespace BurningKnight.entity.creature.npc {
 				Hidden = true;
 
 				var stand = new ItemStand();
-				Area.Add(stand);
+				Area!.Add(stand);
 				stand.Center = Center;
 				stand.SetItem(Items.CreateAndAdd("bk:emerald", Area), null);
 				
@@ -130,7 +130,7 @@ namespace BurningKnight.entity.creature.npc {
 
 			if (delay <= 0) {
 				delay = Rnd.Float(1, 10);
-				GraphicsComponent.Flipped = !GraphicsComponent.Flipped;
+				GraphicsComponent!.Flipped = !GraphicsComponent.Flipped;
 			}
 		}
 

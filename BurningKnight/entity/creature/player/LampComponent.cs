@@ -49,7 +49,7 @@ namespace BurningKnight.entity.creature.player {
 
 				var hp = Entity.GetComponent<HealthComponent>();
 					
-				hp.InitMaxHealth = 6;
+				hp!.InitMaxHealth = 6;
 				hp.SaveMaxHp = true;
 				hp.MaxHealthCap = 32;
 				hp.InvincibilityTimerMax = 1f;

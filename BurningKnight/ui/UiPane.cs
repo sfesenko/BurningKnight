@@ -52,7 +52,7 @@ namespace BurningKnight.ui {
 			Entities.Add(entity);
 			entity.Super = this;
 
-			Area.Add(entity);
+			Area!.Add(entity);
 
 			return entity;
 		}

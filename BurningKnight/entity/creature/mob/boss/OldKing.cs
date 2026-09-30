@@ -20,7 +20,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 
 		protected override void AddPhases() {
 			base.AddPhases();
-			HealthBar.AddPhase(0.25f);
+			HealthBar!.AddPhase(0.25f);
 		}
 
 		public override void AddComponents() {
@@ -35,7 +35,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 			AddComponent(body);
 
 			body.KnockbackModifier = 0.05f;
-			body.Body.LinearDamping = 1;
+			body!.Body.LinearDamping = 1;
 
 			AddComponent(new ZComponent {
 				Gravity = 2
@@ -56,7 +56,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 				lastParticle = 0.1f;
 
 				if (!IsFriendly()) {
-					Area.Add(new FireParticle {
+					Area!.Add(new FireParticle {
 						Offset = new Vector2(-2, -13),
 						Owner = this,
 						Size = 0.5f,
@@ -136,7 +136,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 					var a = Self.GetComponent<ZAnimationComponent>();
 					Self.GetComponent<AudioEmitterComponent>()!.EmitRandomized("mob_oldking_shoot");
 
-					Tween.To(1.8f, a.Scale.X, x => a.Scale.X = x, 0.2f);
+					Tween.To(1.8f, a!.Scale.X, x => a.Scale.X = x, 0.2f);
 					Tween.To(0.2f, a.Scale.Y, x => a.Scale.Y = x, 0.2f).OnEnd = () => {
 
 						Tween.To(1, a.Scale.X, x => a.Scale.X = x, 0.3f);
@@ -194,7 +194,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 			public override void Update(float dt) {
 				base.Update(dt);
 
-				if (Self.GetComponent<ZAnimationComponent>()!.Animation.Paused) {
+				if (Self!.GetComponent<ZAnimationComponent>()!.Animation.Paused) {
 					Become<UpState>();
 					Self.GetComponent<AudioEmitterComponent>()!.EmitRandomized("mob_oldking_jump");
 				}
@@ -251,7 +251,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 				base.Init();
 				
 				var a = Self.GetComponent<ZAnimationComponent>();
-				a.SetAutoStop(true);
+				a!.SetAutoStop(true);
 
 				GameContext.Current.Camera.ShakeMax(12);
 				
@@ -309,7 +309,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 
 				var animation = Self.GetComponent<ZAnimationComponent>()!.Animation;
 
-				if (animation.Paused) {
+				if (animation!.Paused) {
 					if (Self.Raging) {
 						if (Self.jumpCounter < 2) {
 							Become<JumpState>();

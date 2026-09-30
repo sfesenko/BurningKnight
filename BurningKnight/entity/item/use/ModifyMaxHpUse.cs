@@ -19,9 +19,9 @@ namespace BurningKnight.entity.item.use {
 				var component = entity.GetComponent<HeartsComponent>();
 
 				if (Set) {
-					component.BombsMax = Amount;
+					component!.BombsMax = Amount;
 				} else {
-					component.BombsMax += Amount;
+					component!.BombsMax += Amount;
 				}
 
 				if (GiveHp && Amount > 0) {
@@ -38,7 +38,7 @@ namespace BurningKnight.entity.item.use {
 						var c = entity.GetComponent<HeartsComponent>();
 						Amount = (int) Math.Ceiling(Amount / 2f);
 
-						c.BombsMax += Amount;
+						c!.BombsMax += Amount;
 
 						if (GiveHp) {
 							c.ModifyBombs(Amount, entity);
@@ -52,9 +52,9 @@ namespace BurningKnight.entity.item.use {
 				var component = entity.GetComponent<HealthComponent>();
 
 				if (Set) {
-					component.MaxHealth = Amount;
+					component!.MaxHealth = Amount;
 				} else {
-					component.MaxHealth += Amount;
+					component!.MaxHealth += Amount;
 				}
 
 				if (GiveHp && Amount > 0) {

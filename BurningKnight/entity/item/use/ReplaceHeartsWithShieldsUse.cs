@@ -10,7 +10,7 @@ namespace BurningKnight.entity.item.use {
 			base.Use(entity, item);
 
 			var h = entity.GetComponent<HealthComponent>();
-			var amount = h.MaxHealth;
+			var amount = h!.MaxHealth;
 
 			if (amount == 0) {
 				return;

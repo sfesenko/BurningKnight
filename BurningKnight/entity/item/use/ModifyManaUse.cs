@@ -17,7 +17,7 @@ namespace BurningKnight.entity.item.use {
 
 			if (SetToMax) {
 				var h = entity.GetComponent<ManaComponent>();
-				h.ModifyMana(h.ManaMax);
+				h!.ModifyMana(h.ManaMax);
 				
 				return;
 			}

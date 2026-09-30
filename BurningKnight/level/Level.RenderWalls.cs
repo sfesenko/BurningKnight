@@ -63,7 +63,7 @@ namespace BurningKnight.level {
 							}
 
 							var tileset = (MatrixLeak[index] ? MatrixTileset : Tileset);
-							var ar = tileset.WallA;
+							var ar = tileset!.WallA;
 							var arr = tileset.WallSidesA;
 
 							if (!a) {
@@ -154,14 +154,14 @@ namespace BurningKnight.level {
 					var v = WallDecor[index];
 
 					if (!t.Matches(Tile.Piston, Tile.PistonDown) && v > 0) {
-						region = Tileset.WallVariants[v - 1];
+						region = Tileset!.WallVariants[v - 1];
 					}
 				} else if (t == Tile.Crack) {
 					ab = (IsInside(index + 1) && Get(index + 1) == Tile.WallA) ||
 					     (IsInside(index + width) && Get(index + width) == Tile.WallA);
 					region = ab
-						? tileset.WallTopA
-						: tileset.WallTopB;
+						? tileset!.WallTopA
+						: tileset!.WallTopB;
 				} else {
 					effect = SpriteEffects.None;
 				}
@@ -192,7 +192,7 @@ namespace BurningKnight.level {
 							lv += 8;
 						}
 
-						var ar = tileset.WallTopsA;
+						var ar = tileset!.WallTopsA;
 
 						if (!a) {
 							switch (t) {
@@ -291,7 +291,7 @@ namespace BurningKnight.level {
 				}
 
 				if (t != Tile.Transition) {
-					var ar = tileset.WallAExtensions;
+					var ar = tileset!.WallAExtensions;
 
 					switch (t) {
 						case Tile.WallB: {
@@ -375,7 +375,7 @@ namespace BurningKnight.level {
 			Graphics.Batch.Begin(SpriteSortMode.Immediate, blend, SamplerState.PointClamp, DepthStencilState.None, 
 				state.ClipRasterizerState, null, Context.Camera?.Matrix);
 			
-			foreach (var p in Area.Tagged[Tags.Player]) {
+			foreach (var p in Area!.Tagged[Tags.Player]) {
 				((Player) p).RenderOutline();
 			}
 			
@@ -383,7 +383,7 @@ namespace BurningKnight.level {
 			Engine.GraphicsDevice.SetRenderTarget(state.GameTarget);
 			
 			var c = Context.Camera;
-			var z = c.Zoom;
+			var z = c!.Zoom;
 			var n = Math.Abs(z - 1) > 0.01f;
 			
 			if (n) {

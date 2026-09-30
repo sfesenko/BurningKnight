@@ -51,7 +51,7 @@ namespace BurningKnight.level.entities.decor {
 			base.PostInit();
 
 			if (!broken) {
-				Area.Add(emitter = new FireEmitter {
+				Area!.Add(emitter = new FireEmitter {
 					Depth = Depth + 1,
 					Position = new Vector2(CenterX, Y + 3),
 					Scale = 0.5f
@@ -65,7 +65,7 @@ namespace BurningKnight.level.entities.decor {
 			if (broken) {
 				var s = GetComponent<SliceComponent>();
 
-				s.Sprite = CommonAse.Props.GetSlice("broken_torch");
+				s!.Sprite = CommonAse.Props.GetSlice("broken_torch");
 				s.Offset = new Vector2(0, 5);
 			}
 		}
@@ -102,7 +102,7 @@ namespace BurningKnight.level.entities.decor {
 			lastFlame += dt;
 
 			if (lastFlame > 0.1f) {
-				Area.Add(new FireParticle {
+				Area!.Add(new FireParticle {
 					X = CenterX,
 					Y = Y + 2,
 					Target = Target,

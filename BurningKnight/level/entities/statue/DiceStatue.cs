@@ -98,7 +98,7 @@ namespace BurningKnight.level.entities.statue {
 				{
 					"robbed", (s, e) => {
 						var c = e.GetComponent<ConsumablesComponent>();
-						var cn = (int) Math.Ceiling(c.Coins * Rnd.Float(0.2f, 0.5f));
+						var cn = (int) Math.Ceiling(c!.Coins * Rnd.Float(0.2f, 0.5f));
 						e.GetComponent<ConsumablesComponent>()!.Coins -= cn;
 						TextParticle.Add(e, Locale.Get("coins"), cn, true, true);
 						return false;
@@ -121,8 +121,8 @@ namespace BurningKnight.level.entities.statue {
 				{
 					"unlucky", (s, e) => {
 						var c = e.GetComponent<ActiveWeaponComponent>();
-						var item = c.Item;
-						TextParticle.Add(e, item.Name, 1, true, true);
+						var item = c!.Item;
+						TextParticle.Add(e, item!.Name, 1, true, true);
 
 						c.Drop();
 						item.Done = true;

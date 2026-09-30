@@ -38,7 +38,7 @@ namespace BurningKnight.ui.inventory {
 				OnTop = true
 			};
 			
-			Area.Add(uiItem);
+			Area!.Add(uiItem);
 			
 			var area = inventory.Player.Area;
 			
@@ -47,7 +47,7 @@ namespace BurningKnight.ui.inventory {
 			
 			var anim = Animations.Get("ui");
 
-			activeSide = anim.GetSlice("active_side");
+			activeSide = anim!.GetSlice("active_side");
 			activeBorder = anim.GetSlice("active_border");
 			activeEmpty = anim.GetSlice("active_empty");
 			activeFull = anim.GetSlice("active_full");
@@ -63,7 +63,7 @@ namespace BurningKnight.ui.inventory {
 			}
 			
 			var component = inventory.Player.GetComponent<ActiveItemComponent>();
-			var item = component.Item;
+			var item = component!.Item;
 			
 			if (item != null && item.Id != uiItem.Id) {
 				uiItem.Id = item.Id;

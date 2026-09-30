@@ -18,7 +18,7 @@ namespace BurningKnight.entity.item.use {
 			var inventory = entity.GetComponent<InventoryComponent>();
 			var toRemove = new List<Item>();
 
-			foreach (var i in inventory.Items) {
+			foreach (var i in inventory!.Items) {
 				if (i.Scourged) {
 					i.Scourged = false;
 				}

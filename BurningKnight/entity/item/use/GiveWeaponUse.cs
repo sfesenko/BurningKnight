@@ -19,14 +19,14 @@ namespace BurningKnight.entity.item.use {
 			var o = entity.GetComponent<WeaponComponent>();
 			var c = (WeaponComponent) entity.GetComponent<ActiveWeaponComponent>();
 
-			if (o.Item == item) {
+			if (o!.Item == item) {
 				c = o;
 			}
 			
-			var old = c.Item;
+			var old = c!.Item;
 
 			c.Set(i, false);
-			old.Done = true;
+			old!.Done = true;
 		}
 
 		public override void Setup(JsonValue settings) {

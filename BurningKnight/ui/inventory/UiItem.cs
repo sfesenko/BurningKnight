@@ -42,7 +42,7 @@ namespace BurningKnight.ui.inventory {
 				NameSize = Font.Small.MeasureString(Name);
 				DescriptionSize = Font.Small.MeasureString(Description);
 
-				Width = Region.Width;
+				Width = Region!.Width;
 			}
 		}
 

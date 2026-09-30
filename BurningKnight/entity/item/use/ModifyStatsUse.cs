@@ -37,9 +37,9 @@ namespace BurningKnight.entity.item.use {
 				TextParticle.Add(entity, Locale.Get("speed"), Math.Abs(Speed), true, Speed < 0);
 				
 				if (AddSpeed) {
-					stats.Speed += Speed;
+					stats!.Speed += Speed;
 				} else {
-					stats.Speed *= Speed;
+					stats!.Speed *= Speed;
 				}
 			}
 
@@ -47,9 +47,9 @@ namespace BurningKnight.entity.item.use {
 				TextParticle.Add(entity, Locale.Get("damage"), Math.Abs(Damage), true, Damage < 0);
 
 				if (AddDamage) {
-					stats.Damage += Damage;
+					stats!.Damage += Damage;
 				} else {
-					stats.Damage *= Damage;
+					stats!.Damage *= Damage;
 				}
 			}
 
@@ -57,9 +57,9 @@ namespace BurningKnight.entity.item.use {
 				TextParticle.Add(entity, Locale.Get("fire_rate"), Math.Abs(FireRate), true, FireRate < 0);
 				
 				if (AddFireRate) {
-					stats.FireRate += FireRate;
+					stats!.FireRate += FireRate;
 				} else {
-					stats.FireRate *= FireRate;
+					stats!.FireRate *= FireRate;
 				}
 			}
 
@@ -67,9 +67,9 @@ namespace BurningKnight.entity.item.use {
 				TextParticle.Add(entity, Locale.Get("fire_rate"), Math.Abs(RangedRate), true, RangedRate < 0);
 				
 				if (AddRangedRate) {
-					stats.RangedRate += RangedRate;
+					stats!.RangedRate += RangedRate;
 				} else {
-					stats.RangedRate *= RangedRate;
+					stats!.RangedRate *= RangedRate;
 				}
 			}
 
@@ -77,9 +77,9 @@ namespace BurningKnight.entity.item.use {
 				TextParticle.Add(entity, Locale.Get("accuracy"), Math.Abs(Accuracy), true, Accuracy < 0);
 
 				if (AddAccuracy) {
-					stats.Accuracy += Accuracy;
+					stats!.Accuracy += Accuracy;
 				} else {
-					stats.Accuracy *= Accuracy;
+					stats!.Accuracy *= Accuracy;
 				}
 			}
 
@@ -87,9 +87,9 @@ namespace BurningKnight.entity.item.use {
 				TextParticle.Add(entity, Locale.Get("range"), Math.Abs(Range), true, Range < 0);
 
 				if (AddRange) {
-					stats.Range += Range;
+					stats!.Range += Range;
 				} else {
-					stats.Range *= Range;
+					stats!.Range *= Range;
 				}
 			}
 		}

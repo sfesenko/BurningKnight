@@ -30,7 +30,7 @@ namespace BurningKnight.entity.item.use {
 					// p.Pattern?.Remove(p);
 
 					var b = p.GetAnyComponent<BodyComponent>();
-					var d = Math.Max(400, b.Velocity.Length() * 1.8f);
+					var d = Math.Max(400, b!.Velocity.Length() * 1.8f);
 
 					b.Velocity = MathUtils.CreateVector(a, d);
 					

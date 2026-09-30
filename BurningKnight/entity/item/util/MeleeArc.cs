@@ -67,7 +67,7 @@ namespace BurningKnight.entity.item.util {
 
 		public override void Render() {
 			var component = GetComponent<AnimationComponent>();
-			var region = component.Animation.GetCurrentTexture();
+			var region = component!.Animation.GetCurrentTexture();
 
 			Graphics.Color = Color;
 			Graphics.Render(region, Position, Angle, component.Offset, component.Scale);
@@ -106,7 +106,7 @@ namespace BurningKnight.entity.item.util {
 							// p.Pattern?.Remove(p);
 
 							var b = p.GetAnyComponent<BodyComponent>();
-							var d = Math.Max(400, b.Velocity.Length() * 1.8f);
+							var d = Math.Max(400, b!.Velocity.Length() * 1.8f);
 							var a = Owner.AngleTo(p);
 
 							b.Velocity = new Vector2((float) Math.Cos(a) * d, (float) Math.Sin(a) * d);

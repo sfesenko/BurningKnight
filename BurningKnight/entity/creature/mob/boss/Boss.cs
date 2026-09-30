@@ -50,7 +50,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 			AddComponent(new DialogComponent());
 
 			var b = GetComponent<BuffsComponent>();
-			b.AddImmunity<CharmedBuff>();
+			b!.AddImmunity<CharmedBuff>();
 			b.AddImmunity<FrozenBuff>();
 
 			if (!(this is BkHead || this is DM)) {
@@ -73,7 +73,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 					cleared = true;
 					GetComponent<DialogComponent>()!.Close();
 					
-					foreach (var p in Area.Tagged[Tags.Projectile]) {
+					foreach (var p in Area!.Tagged[Tags.Projectile]) {
 						AnimationUtil.Poof(p.Center);
 						((Projectile) p).Break(null);
 					}
@@ -110,7 +110,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 						var stats = player.GetComponent<StatsComponent>();
 						var e = new DealChanceCalculateEvent();
 						
-						if (!stats.TookDamageInRoom) {
+						if (!stats!.TookDamageInRoom) {
 							Achievements.Unlock("bk:dodge_master");
 						}
 						
@@ -166,7 +166,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 					if (doors.Count > 0) {
 						var rm = GetComponent<RoomComponent>()!.Room;
 						var level = Context.Level;
-						var cx = rm.MapX + rm.MapW / 2f;
+						var cx = rm!.MapX + rm.MapW / 2f;
 						var cy = rm.MapY + rm.MapH / 2f;
 						var grannyDoors = new List<Door>();
 						var evilDoors = new List<Door>();
@@ -183,7 +183,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 						rm.PaintTunnel(evilDoors, Tile.EvilFloor);
 
 						rm.ApplyToEachTile((x, y) => {
-							var t = level.Get(x, y);
+							var t = level!.Get(x, y);
 							
 							if (t == Tile.GrannyFloor || t == Tile.EvilFloor) {
 								level.Set(x, y, Tile.FloorA);
@@ -192,7 +192,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 									var part = new TileParticle();
 
 									part.Top = t == Tile.GrannyFloor ? Tilesets.Biome.GrannyFloor[0] : Tilesets.Biome.EvilFloor[0];
-									part.TopTarget = Context.Level!.Tileset.WallTopADecor;
+									part.TopTarget = Context!.Level!.Tileset.WallTopADecor;
 									part.Side = Context.Level!.Tileset.FloorSidesD[0];
 									part.Sides = Context.Level!.Tileset.WallSidesA[2];
 									part.Tile = t;
@@ -208,7 +208,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 							}
 						}, -1);
 						
-						level.TileUp();
+						level!.TileUp();
 						level.CreateBody();
 					}
 
@@ -266,7 +266,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 				var c = GetAnyComponent<AnimationComponent>();
 
 				if (c != null) {
-					c.Animation.Tag = "idle";
+					c!.Animation.Tag = "idle";
 				}
 			} else {
 				Awoken = true;
@@ -302,7 +302,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 			var exit = new Exit();
 
 			Exploding = false;
-			Area.Add(exit);
+			Area!.Add(exit);
 
 			exit.To = Context.Run.Depth + 1;
 

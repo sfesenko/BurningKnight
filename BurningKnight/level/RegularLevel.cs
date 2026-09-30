@@ -125,7 +125,7 @@ namespace BurningKnight.level {
 					rooms = null;
 				
 					Log.Error($"Failed! {Builder.GetType().Name}");
-					Area.Destroy();
+					Area!.Destroy();
 					Area.Add(Context.Level);
 					LevelSave.FailedAttempts++;
 					Builder = GetBuilder();

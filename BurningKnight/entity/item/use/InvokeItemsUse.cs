@@ -17,7 +17,7 @@ namespace BurningKnight.entity.item.use {
 			var inventory = entity.GetComponent<InventoryComponent>();
 			var items = new List<string>();
 
-			foreach (var i in inventory.Items) {
+			foreach (var i in inventory!.Items) {
 				var use = any;
 
 				if (!use) {

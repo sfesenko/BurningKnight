@@ -47,7 +47,7 @@ namespace BurningKnight.entity.creature.mob.jungle {
 				tree = new Tree();
 				tree.Id = 5;
 				tree.AlwaysShow = true;
-				Area.Add(tree);
+				Area!.Add(tree);
 			}
 
 			Timer.Add(() => { 
@@ -101,7 +101,7 @@ namespace BurningKnight.entity.creature.mob.jungle {
 				var y = Self.Y;
 				var c = Self.GetComponent<MobAnimationComponent>();
 				
-				Tween.To(0, c.ShadowOffset, x => c.ShadowOffset = x, 0.4f, Ease.QuadIn);
+				Tween.To(0, c!.ShadowOffset, x => c.ShadowOffset = x, 0.4f, Ease.QuadIn);
 				Tween.To(y + ZHeight, y, x => Self.Y = x, 0.4f, Ease.QuadIn).OnEnd = () => {
 					Audio.PlaySfx("mob_hive_release");
 					

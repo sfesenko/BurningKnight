@@ -69,7 +69,7 @@ namespace BurningKnight.level.entities {
 
 		private bool Interact(Entity entity) {
 			var h = entity.TryGetComponent<ActiveWeaponComponent>(out var c);
-			var l = h && c.Item != null && c.Item.Id.StartsWith("bk:disk_");
+			var l = h && c!.Item != null && c.Item.Id.StartsWith("bk:disk_");
 			var hd = false;
 
 			if (disk > 0) {
@@ -82,7 +82,7 @@ namespace BurningKnight.level.entities {
 
 			if (l) {
 				try {
-					var id = byte.Parse(c.Item.Id.Replace("bk:disk_", ""));
+					var id = byte.Parse(c!.Item.Id.Replace("bk:disk_", ""));
 					var old = c.Item;
 
 					if (hd) {
@@ -124,7 +124,7 @@ namespace BurningKnight.level.entities {
 				
 				var part = new ParticleEntity(new Particle(Controllers.Float, new TexturedParticleRenderer(CommonAse.Particles.GetSlice($"note_{Rnd.Int(1, 3)}"))));
 				part.Position = Center;
-				Area.Add(part);
+				Area!.Add(part);
 				
 				part.Particle.Velocity = new Vector2(Rnd.Float(8, 16) * (Rnd.Chance() ? -1 : 1), -Rnd.Float(40, 66));
 				part.Particle.Angle = 0;
@@ -175,7 +175,7 @@ namespace BurningKnight.level.entities {
 			var stopShader = false;
 			var h = GetComponent<HealthComponent>();
 			
-			if (h.RenderInvt) {
+			if (h!.RenderInvt) {
 				var i = h.InvincibilityTimer;
 
 				if (i > h.InvincibilityTimerMax / 2f || i % 0.1f > 0.05f) {

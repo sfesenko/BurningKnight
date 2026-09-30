@@ -199,7 +199,7 @@ namespace BurningKnight.entity.creature {
 				return;
 			}
 			
-			Area.Add(gore);
+			Area!.Add(gore);
 			
 			gore.Position = Position;
 			gore.AddComponent(new ZSliceComponent(r));
@@ -211,7 +211,7 @@ namespace BurningKnight.entity.creature {
 			
 			gore.AddComponent(b);
 			
-			b.Body.LinearDamping = 2f;
+			b!.Body.LinearDamping = 2f;
 			b.Body.Restitution = 1;
 			b.Body.Friction = 0;
 

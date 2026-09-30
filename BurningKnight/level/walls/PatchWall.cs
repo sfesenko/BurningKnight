@@ -88,7 +88,7 @@ namespace BurningKnight.level.walls {
 			
 			for (var y = 0; y < room.GetHeight() - 2; y++) {
 				for (var x = 0; x < w; x++) {
-					if (Patch[x + y * w]) {
+					if (Patch![x + y * w]) {
 						level.Set(room.Left + x + 1, room.Top + y + 1, Tile.FloorA);						
 						level.Set(room.Left + x + 1, room.Top + y + 1, tile);						
 					}
@@ -160,8 +160,8 @@ namespace BurningKnight.level.walls {
 					}
 				}
 
-				for (var i = 0; i < Patch.Length; i++) {
-					if (oldPatch[i]) {
+				for (var i = 0; i < Patch!.Length; i++) {
+					if (oldPatch![i]) {
 						Patch[i] = true;
 					}
 				}

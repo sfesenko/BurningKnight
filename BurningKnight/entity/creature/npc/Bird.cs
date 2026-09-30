@@ -19,7 +19,7 @@ namespace BurningKnight.entity.creature.npc {
 				Timer.Add(() => {
 					var d = GetComponent<DialogComponent>();
 
-					if (d.Current != null && d.Current.Id != "quack") {
+					if (d!.Current != null && d.Current.Id != "quack") {
 						d.StartAndClose("quack", 3);
 					}
 

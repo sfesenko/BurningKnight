@@ -72,7 +72,7 @@ namespace BurningKnight.level.entities {
 			if (maanex == null) {
 				var room = GetComponent<RoomComponent>()!.Room;
 
-				foreach (var n in room.Tagged[Tags.Npc]) {
+				foreach (var n in room!.Tagged[Tags.Npc]) {
 					if (n is Maanex2 m) {
 						maanex = m;
 						maanex.clawControll = this;
@@ -102,9 +102,9 @@ namespace BurningKnight.level.entities {
 					grabbing = false;
 
 					if (won) {
-						maanex.GetComponent<DialogComponent>()!.StartAndClose(Locale.Get(mega ? "m2_0" : "m2_1"), 2);
+						maanex!.GetComponent<DialogComponent>()!.StartAndClose(Locale.Get(mega ? "m2_0" : "m2_1"), 2);
 					} else {
-						maanex.GetComponent<DialogComponent>()!.StartAndClose("F", 2);
+						maanex!.GetComponent<DialogComponent>()!.StartAndClose("F", 2);
 					}
 					
 					((InGameState) Engine.Instance.State).ResetFollowing();
@@ -120,7 +120,7 @@ namespace BurningKnight.level.entities {
 
 			if (Input.IsDown(Controls.Right, controller) || Input.IsDown(Controls.UiRight, controller)) {
 				wasDown = true;
-				body.LinearVelocity += new Vector2(speed, 0);
+				body!.LinearVelocity += new Vector2(speed, 0);
 			} else {
 				wasDown = false;
 			}
@@ -145,7 +145,7 @@ namespace BurningKnight.level.entities {
 				Position = new Vector2(((int) Math.Floor(CenterX / 16) - 0.5f) * 16, (int) (Math.Floor(CenterY / 16) - 3) * 16)
 			};
 
-			Area.Add(claw);
+			Area!.Add(claw);
 		}
 	}
 }

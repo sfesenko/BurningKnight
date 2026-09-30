@@ -29,7 +29,7 @@ namespace BurningKnight.entity.creature.mob.ice {
 			
 			var body = new RectBodyComponent(4, 14, 17, 1);
 			AddComponent(body);
-			body.Body.LinearDamping = 10;
+			body!.Body.LinearDamping = 10;
 			body.KnockbackModifier = 0.1f;
 			
 			AddComponent(new SensorBodyComponent(5, 2, 15, 12));
@@ -52,7 +52,7 @@ namespace BurningKnight.entity.creature.mob.ice {
 			GetComponent<AudioEmitterComponent>()!.EmitRandomized("mob_fire");
 			var a = GetComponent<MobAnimationComponent>();
 					
-			Tween.To(1.8f, a.Scale.X, x => a.Scale.X = x, 0.1f);
+			Tween.To(1.8f, a!.Scale.X, x => a.Scale.X = x, 0.1f);
 			Tween.To(0.2f, a.Scale.Y, x => a.Scale.Y = x, 0.1f).OnEnd = () => {
 
 				Tween.To(1, a.Scale.X, x => a.Scale.X = x, 0.4f);

@@ -20,7 +20,7 @@ namespace BurningKnight.ui {
 			AlwaysActive = true;
 			region = CommonAse.Ui.GetSlice("save");
 
-			X = Display.UiWidth - region.Width * 2;
+			X = Display.UiWidth - region!.Width * 2;
 			Y = Display.UiHeight - region.Height * 2;
 		}
 		

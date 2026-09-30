@@ -52,10 +52,10 @@ namespace BurningKnight.entity.item.use {
 
 		private void ReplaceItem(Entity entity, string id) {
 			var c = entity.GetComponent<ActiveItemComponent>();
-			var i = c.Item;
+			var i = c!.Item;
 				
 			c.Drop();
-			i.Done = true;
+			i!.Done = true;
 
 			entity.GetComponent<InventoryComponent>()!.Pickup(Items.CreateAndAdd(id, entity.Area));
 		}

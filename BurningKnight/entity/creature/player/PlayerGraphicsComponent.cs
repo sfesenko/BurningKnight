@@ -61,7 +61,7 @@ namespace BurningKnight.entity.creature.player {
 				return;
 			}
 
-			var region = Animation.GetCurrentTexture();
+			var region = Animation!.GetCurrentTexture();
 			var origin = new Vector2(region.Source.Width / 2f, FlippedVerticaly ? 0 : region.Source.Height);
 			var s = scale * Scale;
 
@@ -94,7 +94,7 @@ namespace BurningKnight.entity.creature.player {
 			}
 
 			var h = GetComponent<HatComponent>();
-			var hat = h.Item;
+			var hat = h!.Item;
 
 			if (hat != null && !h.DoNotRender) {
 				var duck = Entity.GetComponent<StateComponent>()!.StateInstance is Player.DuckState 
@@ -102,7 +102,7 @@ namespace BurningKnight.entity.creature.player {
 
 				var r = $"{hat.Id}_{duck}";
 				var region1 = CommonAse.Items.GetSlice(r);
-				origin = new Vector2(region1.Width / 2, region1.Height + 4);
+				origin = new Vector2(region1!.Width / 2, region1.Height + 4);
 
 				var m = shadow ? -4 : 4;
 
@@ -169,7 +169,7 @@ namespace BurningKnight.entity.creature.player {
 				return;
 			}
 
-			var o = (shadow ? -1 : 1) * (offsets[Math.Min(offsets.Length - 1, Animation.Frame + Animation.StartFrame)] - 11);
+			var o = (shadow ? -1 : 1) * (offsets[Math.Min(offsets.Length - 1, Animation!.Frame + Animation.StartFrame)] - 11);
 			var s = GetComponent<StateComponent>()!.StateInstance;
 			var w = !(s is Player.RollState || s is Player.SleepingState);
 			var z = GetComponent<ZComponent>();
@@ -179,7 +179,7 @@ namespace BurningKnight.entity.creature.player {
 				var a = (float) (Math.Sin(Engine.Time * 5f) * 0.5f) * (shadow ? -1 : 1);
 
 				if (!shadow) {
-					z.Z = -a * 3 + 4;
+					z!.Z = -a * 3 + 4;
 				}
 
 				a -= (float) Math.PI / 4 * (shadow ? -1 : 1);
@@ -194,7 +194,7 @@ namespace BurningKnight.entity.creature.player {
 					shadow ? MathUtils.InvertXY : MathUtils.InvertX);
 			}
 
-			var g = shadow ? 0 : (int) z.Z;
+			var g = shadow ? 0 : (int) z!.Z;
 
 			if (w) {
 				GetComponent<WeaponComponent>()!.Render(shadow, o - g);
@@ -227,7 +227,7 @@ namespace BurningKnight.entity.creature.player {
 			if (!shadow) {
 				var aim = GetComponent<AimComponent>();
 				
-				if (aim.ShowLaserLine) {
+				if (aim!.ShowLaserLine) {
 					var from = aim.Center;
 					var to = aim.RealAim;
 					var min = 1f;

@@ -23,7 +23,7 @@ namespace BurningKnight.entity.component {
 			if (toStart != null) {
 				var d = GetComponent<DialogComponent>();
 
-				d.OnNext += OnNext;
+				d!.OnNext += OnNext;
 				d.Start(dialog, toStart);
 			
 				started = true;

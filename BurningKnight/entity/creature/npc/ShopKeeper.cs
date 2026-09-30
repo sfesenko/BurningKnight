@@ -58,7 +58,7 @@ namespace BurningKnight.entity.creature.npc {
 						var rm = GetComponent<RoomComponent>()!.Room;
 
 						// Hacky solution tbh
-						rm.Tagged[Tags.Mob].Add(this);
+						rm!.Tagged[Tags.Mob].Add(this);
 						rm.Tagged[Tags.MustBeKilled].Add(this);
 					} catch (Exception e) {
 						Log.Error(e);
@@ -102,7 +102,7 @@ namespace BurningKnight.entity.creature.npc {
 				Timer.Add(() => {
 					var d = GetComponent<DialogComponent>();
 
-					if (d.Current != null && d.Current.Id != "quack") {
+					if (d!.Current != null && d.Current.Id != "quack") {
 						d.StartAndClose("quack", 3);
 					}
 
@@ -117,7 +117,7 @@ namespace BurningKnight.entity.creature.npc {
 			
 			var h = GetComponent<HealthComponent>();
 
-			h.InitMaxHealth = 10 + Context.Run.Depth * 10;
+			h!.InitMaxHealth = 10 + Context.Run.Depth * 10;
 			h.Unhittable = false;
 
 			var b = new RectBodyComponent(4, 2, 10, 14);
@@ -268,7 +268,7 @@ namespace BurningKnight.entity.creature.npc {
 			public override void Update(float dt) {
 				base.Update(dt);
 
-				if (Self.GetComponent<DialogComponent>()!.Dialog.Saying) {
+				if (Self!.GetComponent<DialogComponent>()!.Dialog.Saying) {
 					T = 0;
 					return;
 				}
@@ -286,10 +286,10 @@ namespace BurningKnight.entity.creature.npc {
 			public override void Init() {
 				base.Init();
 				
-				Self.GetComponent<AnimationComponent>()!.Animation.Tag = "run";
+				Self!.GetComponent<AnimationComponent>()!.Animation.Tag = "run";
 				var r = Self.GetComponent<RoomComponent>()!.Room;
 
-				toPlayer = r.Tagged[Tags.Player].Count > 0 && Rnd.Chance(40);
+				toPlayer = r!.Tagged[Tags.Player].Count > 0 && Rnd.Chance(40);
 
 				if (toPlayer) {
 					if (Self.DistanceTo(r.Tagged[Tags.Player][0]) < 64f) {
@@ -309,7 +309,7 @@ namespace BurningKnight.entity.creature.npc {
 				var t = target;
 
 				if (toPlayer) {
-					var a = Self.GetComponent<RoomComponent>()!.Room.Tagged[Tags.Player];
+					var a = Self!.GetComponent<RoomComponent>()!.Room.Tagged[Tags.Player];
 
 					if (a.Count > 0) {
 						target = a[0].Center;
@@ -322,11 +322,11 @@ namespace BurningKnight.entity.creature.npc {
 				var s = dt * 300;
 
 				var b = Self.GetComponent<RectBodyComponent>();
-				b.Velocity += new Vector2(dx / d * s, dy / d * s);
+				b!.Velocity += new Vector2(dx / d * s, dy / d * s);
 
 				if (d <= 24 || T >= 4f) {
 					if ((toPlayer && Rnd.Chance(80)) || Rnd.Chance(30)) {
-						if (Self.GetComponent<RoomComponent>()!.Room.Tagged[Tags.Player].Count > 0) {
+						if (Self!.GetComponent<RoomComponent>()!.Room.Tagged[Tags.Player].Count > 0) {
 							Self.GetComponent<DialogComponent>()!.StartAndClose($"shopkeeper_{(Rnd.Chance(30) ? 18 : Rnd.Int(12, 15))}", 3);
 						}
 					}
@@ -359,7 +359,7 @@ namespace BurningKnight.entity.creature.npc {
 
 				delay = Rnd.Float(0.2f, 0.8f);
 				
-				Self.GetComponent<AnimationComponent>()!.Animation.Tag = "run";
+				Self!.GetComponent<AnimationComponent>()!.Animation.Tag = "run";
 				var r = Self.GetComponent<RoomComponent>()!.Room;
 
 				if (r != null) {
@@ -382,7 +382,7 @@ namespace BurningKnight.entity.creature.npc {
 					Init();
 				}
 
-				if (Self.shotgun != null && Self.GetComponent<RoomComponent>()!.Room.Tagged[Tags.Player].Count > 0) {
+				if (Self.shotgun != null && Self!.GetComponent<RoomComponent>()!.Room.Tagged[Tags.Player].Count > 0) {
 					Self.shotgun.Use(Self);
 				}
 				
@@ -392,7 +392,7 @@ namespace BurningKnight.entity.creature.npc {
 				var s = Math.Min(T * 3, 1f) * dt * 36000;
 
 				var b = Self.GetComponent<RectBodyComponent>();
-				b.Velocity = new Vector2(dx / d * s, dy / d * s);
+				b!.Velocity = new Vector2(dx / d * s, dy / d * s);
 
 				if (d <= 8 || T >= delay) {
 					T = 0;

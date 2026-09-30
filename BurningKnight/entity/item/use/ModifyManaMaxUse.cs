@@ -9,7 +9,7 @@ namespace BurningKnight.entity.item.use {
 
 		public override void Use(Entity entity, Item item) {
 			var m = entity.GetComponent<ManaComponent>();
-			m.ManaMax += Amount * 2;
+			m!.ManaMax += Amount * 2;
 			m.ModifyMana(Amount * 2);
 		}
 

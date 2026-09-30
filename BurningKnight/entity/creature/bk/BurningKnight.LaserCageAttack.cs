@@ -94,7 +94,7 @@ namespace BurningKnight.entity.creature.bk {
 					return;
 				}
 				
-				spot = spot.Lerp(Self.Target.Center, dt * 0.5f);
+				spot = spot.Lerp(Self!.Target.Center, dt * 0.5f);
 
 				for (var i = 0; i < 8; i++) {
 					var laser = lasers[i];

@@ -36,7 +36,7 @@ namespace BurningKnight.entity.item.stand {
 				
 			var r = GetComponent<RoomComponent>()!.Room;
 
-			foreach (var p in r.Tagged[Tags.Player]) {
+			foreach (var p in r!.Tagged[Tags.Player]) {
 				if (!HasEnoughToPay(p)) {
 					Graphics.Color *= 0.6f;
 					break;

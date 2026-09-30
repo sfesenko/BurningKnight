@@ -44,7 +44,7 @@ namespace BurningKnight.entity.room {
 			
 			for (int y = MapY + offset; y < MapY + MapH - 1 - offset; y++) {
 				for (int x = MapX + offset; x < MapX + MapW - offset; x++) {
-					if (level.IsInside(x, y)) {
+					if (level!.IsInside(x, y)) {
 						callback(x, y);
 					}
 				}
@@ -105,7 +105,7 @@ namespace BurningKnight.entity.room {
 			foreach (var door in Doors) {
 				var x = (int) Math.Floor(door.CenterX / 16);
 				var y = (int) Math.Floor(door.CenterY / 16);
-				var t = level.Get(x, y);
+				var t = level!.Get(x, y);
 
 				if (t == Tile.WallA || t == Tile.WallB) {
 					var index = level.ToIndex(x, y);
@@ -127,7 +127,7 @@ namespace BurningKnight.entity.room {
 			foreach (var door in Doors) {
 				var x = (int) Math.Floor(door.CenterX / 16);
 				var y = (int) Math.Floor(door.Bottom / 16);
-				var t = level.Get(x, y);
+				var t = level!.Get(x, y);
 
 				if (level.Get(x, y).Matches(TileFlags.Passable)) {
 					var index = level.ToIndex(x, y);

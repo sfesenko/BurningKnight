@@ -64,7 +64,7 @@ namespace BurningKnight.entity.creature.mob {
 			AddDrops(new SingleDrop("bk:bomb", 0.03f));
 
 			var h = GetComponent<HealthComponent>();
-			h.InvincibilityTimerMax = 0.3f;
+			h!.InvincibilityTimerMax = 0.3f;
 			h.PreventDamageInInvincibility = false;
 
 			if (!(this is Boss)) {
@@ -94,7 +94,7 @@ namespace BurningKnight.entity.creature.mob {
 			}
 		
 			var health = GetComponent<HealthComponent>();
-			health.InitMaxHealth = hp;
+			health!.InitMaxHealth = hp;
 		}
 
 		protected virtual void OnTargetChange(Entity target) {
@@ -124,7 +124,7 @@ namespace BurningKnight.entity.creature.mob {
 
 						part.Position = Center + Rnd.Vector(-4, 4);
 						part.Particle.Scale = Rnd.Float(0.5f, 1.2f);
-						Area.Add(part);
+						Area!.Add(part);
 						part.Depth = 1;
 					}
 				}
@@ -208,7 +208,7 @@ namespace BurningKnight.entity.creature.mob {
 				return true;
 			}
 			
-			GetAnyComponent<BodyComponent>().Velocity = new Vector2(dx / d * speed, dy / d * speed);
+			GetAnyComponent<BodyComponent>()!.Velocity = new Vector2(dx / d * speed, dy / d * speed);
 
 			return false;
 		}
@@ -247,7 +247,7 @@ namespace BurningKnight.entity.creature.mob {
 
 				prefix = p;
 				
-				p.Id = id;
+				p!.Id = id;
 				p.Mob = this;
 				p.Init();
 			} catch (Exception e) {
@@ -271,7 +271,7 @@ namespace BurningKnight.entity.creature.mob {
 
 		protected void TurnToTarget() {
 			if (Target != null) {
-				GraphicsComponent.Flipped = Target.CenterX < CenterX;
+				GraphicsComponent!.Flipped = Target.CenterX < CenterX;
 			}
 		}
 	}

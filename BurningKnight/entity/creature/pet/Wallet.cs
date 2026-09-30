@@ -33,7 +33,7 @@ namespace BurningKnight.entity.creature.pet {
 
 		public override void PostInit() {
 			base.PostInit();
-			Owner.GetComponent<ConsumablesComponent>()!.MaxCoins = 255;
+			Owner!.GetComponent<ConsumablesComponent>()!.MaxCoins = 255;
 		}
 
 		private Item? target;
@@ -43,7 +43,7 @@ namespace BurningKnight.entity.creature.pet {
 			public override void Update(float dt) {
 				base.Update(dt);
 
-				var r = Self.Owner.GetComponent<RoomComponent>()!.Room;
+				var r = Self!.Owner.GetComponent<RoomComponent>()!.Room;
 
 				if (r != null && r.Tagged[Tags.Item].Count > 0) {
 					var min = float.MaxValue;
@@ -87,7 +87,7 @@ namespace BurningKnight.entity.creature.pet {
 			public override void Update(float dt) {
 				base.Update(dt);
 
-				if (Self.target.Done || Self.target.HasComponent<OwnerComponent>()) {
+				if (Self!.target.Done || Self.target.HasComponent<OwnerComponent>()) {
 					Self.target = null;
 					Self.Become<IdleState>();
 					return;
@@ -100,14 +100,14 @@ namespace BurningKnight.entity.creature.pet {
 				var b = Self.GetComponent<SensorBodyComponent>()!.Body;
 				var s = 360 * dt / d;
 				
-				b.LinearVelocity += new Vector2(dx * s, dy * s);
+				b!.LinearVelocity += new Vector2(dx * s, dy * s);
 			}
 		}
 		#endregion
 
 		public override bool HandleEvent(Event e) {
 			if (e is CollisionStartedEvent cse && cse.Entity is Item i && i.Type == ItemType.Coin) {
-				Owner.GetComponent<InventoryComponent>()!.Pickup(i);
+				Owner!.GetComponent<InventoryComponent>()!.Pickup(i);
 			}
 			
 			return base.HandleEvent(e);

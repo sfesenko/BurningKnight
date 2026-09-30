@@ -15,7 +15,7 @@ namespace BurningKnight.entity.item.use {
 
 				ProjectileCallbacks.AttachHurtCallback(pce.Projectile, (p, en) => {
 					var v = p.GetAnyComponent<BodyComponent>();
-					var a = v.Velocity.ToAngle();
+					var a = v!.Velocity.ToAngle();
 					var s = v.Velocity.Length();
 					var c = p.HasComponent<CircleBodyComponent>();
 

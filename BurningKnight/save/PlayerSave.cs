@@ -33,14 +33,14 @@ namespace BurningKnight.save {
 			
 			var input = player.GetComponent<InputComponent>();
 			
-			input.Index = 0;
+			input!.Index = 0;
 			input.KeyboardEnabled = true;
 			input.GamepadEnabled = Context.Run.NumPlayers <= 1;
 
 			for (var i = 1; i < Context.Run.NumPlayers; i++) {
-				input = area.Add(new LocalPlayer()).GetComponent<InputComponent>();
+				input = area!.Add(new LocalPlayer()).GetComponent<InputComponent>();
 
-				input.Index = (byte) i;
+				input!.Index = (byte) i;
 				input.KeyboardEnabled = false;
 				input.GamepadEnabled = true;
 			}

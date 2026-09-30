@@ -53,9 +53,9 @@ namespace BurningKnight.entity.room.controllable.platform {
 			var b = new RectBodyComponent(0.5f, 0.5f - 1, w - 1, h + 3);
 			AddComponent(b);
 			
-			b.Body.Friction = 0;
+			b!.Body.Friction = 0;
 			
-			Area.Add(left = new PlatformBorder());
+			Area!.Add(left = new PlatformBorder());
 			left.Setup(this, -12, 0, 8, th * 16);
 			
 			Area.Add(right = new PlatformBorder());

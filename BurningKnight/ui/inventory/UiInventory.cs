@@ -112,7 +112,7 @@ namespace BurningKnight.ui.inventory {
 			((InGameState) Engine.Instance.State).TopUi.Add(new RenderTrigger(RenderTop, 10));
 			description.DisableRender = true;
 			
-			Area.Add(activeSlot);
+			Area!.Add(activeSlot);
 
 			if (weaponSlot != null) {
 				Area.Add(weaponSlot);
@@ -122,7 +122,7 @@ namespace BurningKnight.ui.inventory {
 
 			var anim = Animations.Get("ui");
 
-			ItemSlot = anim.GetSlice("item_slot");
+			ItemSlot = anim!.GetSlice("item_slot");
 			UseSlot = new TextureRegion();
 			UseSlot.Set(ItemSlot);
 			
@@ -164,7 +164,7 @@ namespace BurningKnight.ui.inventory {
 			if (Player != null) {
 				var component = Player.GetComponent<ConsumablesComponent>();
 
-				coins = component.Coins;
+				coins = component!.Coins;
 				keys = component.Keys;
 				bombs = component.Bombs;
 
@@ -193,7 +193,7 @@ namespace BurningKnight.ui.inventory {
 				
 				var inventory = Player.GetComponent<InventoryComponent>();
 
-				foreach (var item in inventory.Items) {
+				foreach (var item in inventory!.Items) {
 					AddArtifact(item);
 				}
 			}
@@ -211,7 +211,7 @@ namespace BurningKnight.ui.inventory {
 		public void UpdateConsumables() {
 			var c = Player.GetComponent<ConsumablesComponent>();
 
-			bombs = c.Bombs;
+			bombs = c!.Bombs;
 			keys = c.Keys;
 			coins = c.Coins;
 		}
@@ -237,7 +237,7 @@ namespace BurningKnight.ui.inventory {
 						items.Clear();
 						var inventory = Player.GetComponent<InventoryComponent>();
 
-						foreach (var item in inventory.Items) {
+						foreach (var item in inventory!.Items) {
 							AddArtifact(item);
 						}
 					}

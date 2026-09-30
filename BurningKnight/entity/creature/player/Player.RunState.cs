@@ -72,7 +72,7 @@ namespace BurningKnight.entity.creature.player {
 				if (!Self.HasFlight) {
 					var anim = Self.GetComponent<PlayerGraphicsComponent>()!.Animation;
 
-					if (anim.Frame != lastFrame) {
+					if (anim!.Frame != lastFrame) {
 						lastFrame = anim.Frame;
 
 						if (GameContext.Current.Level != null && (lastFrame == 2 || lastFrame == 6)) {

@@ -96,7 +96,7 @@ namespace BurningKnight.entity.creature.player {
 						
 						foreach (var id in DailyItems) {
 							Log.Info($"Giving {id}");
-							inventory.Pickup(Items.CreateAndAdd(id, Area), false);
+							inventory!.Pickup(Items.CreateAndAdd(id, Area), false);
 						}
 					}
 					
@@ -127,7 +127,7 @@ namespace BurningKnight.entity.creature.player {
 			if (/*BK.Version.Dev || */ToBoss) {
 				ToBoss = false;
 				
-				foreach (var r in Area.Tagged[Tags.Room]) {
+				foreach (var r in Area!.Tagged[Tags.Room]) {
 					var rm = (Room) r;
 
 					if (rm.Type == RoomType.Boss) {
@@ -139,7 +139,7 @@ namespace BurningKnight.entity.creature.player {
 				}
 			}
 			
-			foreach (var cc in Area.Tagged[Tags.Checkpoint]) {
+			foreach (var cc in Area!.Tagged[Tags.Checkpoint]) {
 				Center = cc.Center + Rnd.Vector(-0.5f, 0.5f);
 				Log.Debug("Teleported to spawn point");
 				return true;

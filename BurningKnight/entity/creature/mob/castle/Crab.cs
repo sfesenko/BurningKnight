@@ -27,7 +27,7 @@ namespace BurningKnight.entity.creature.mob.castle {
 
 			var body = new RectBodyComponent(3, 13, 12, 1);
 			AddComponent(body);
-			body.Body.LinearDamping = 10;
+			body!.Body.LinearDamping = 10;
 
 			AddComponent(new SensorBodyComponent(3, 2, 12, 12));
 			AddDrops(new SingleDrop("bk:crabs_claw", 0.01f));
@@ -70,7 +70,7 @@ namespace BurningKnight.entity.creature.mob.castle {
 				Self.GetComponent<RectBodyComponent>()!.Velocity = velocity;
 
 				var an = Self.GetComponent<MobAnimationComponent>();
-				an.Animation.Frame = (uint) Rnd.Int(4);
+				an!.Animation.Frame = (uint) Rnd.Int(4);
 				an.Animate();
 			}
 			
@@ -90,7 +90,7 @@ namespace BurningKnight.entity.creature.mob.castle {
 				base.Update(dt);
 				var b = Self.GetComponent<RectBodyComponent>();
 
-				if (T >= timer || b.Velocity.Length() < 20) {
+				if (T >= timer || b!.Velocity.Length() < 20) {
 					Flip(T >= timer);
 					T = 0;
 					return;

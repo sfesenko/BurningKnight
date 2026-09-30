@@ -11,7 +11,7 @@ namespace BurningKnight.entity.component {
 
 		public override void Init() {
 			base.Init();
-			Body.IsSensor = false;
+			Body!.IsSensor = false;
 		}
 
 		private bool ShouldBeSensor() {

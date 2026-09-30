@@ -27,7 +27,7 @@ namespace BurningKnight.entity.item {
 			}
 
 			var filter = CheckDistance(entity);
-			MobRegistry.SetupForBiome(Context.Level!.Biome.Id);
+			MobRegistry.SetupForBiome(Context.Level.Biome.Id);
 			
 			for (var i = 0; i < Count; i++) {
 				Timer.Add(() => {

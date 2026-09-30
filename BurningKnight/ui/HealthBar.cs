@@ -58,7 +58,7 @@ namespace BurningKnight.ui {
 			phase = CommonAse.Ui.GetSlice("hb_phase");
 			phaseB = CommonAse.Ui.GetSlice("hb_b");
 			
-			Width = frame.Width;
+			Width = frame!.Width;
 			Height = frame.Height;
 
 			CenterX = Display.UiWidth / 2f;
@@ -78,7 +78,7 @@ namespace BurningKnight.ui {
 
 				if (sinceLastDamage >= ChangeDelay) {
 					var health = entity.GetComponent<HealthComponent>();
-					var h = health.Health;
+					var h = health!.Health;
 					var s = (lastChange - h) / health.MaxHealth * fill.Width;
 
 					var p = new ParticleEntity(new Particle(new HealthParticleController(), new HealthParticleRenderer(damage, s)));
@@ -86,7 +86,7 @@ namespace BurningKnight.ui {
 					p.Position = p.Particle.Position;
 					p.AlwaysActive = true;
 					p.AlwaysVisible = true;
-					Area.Add(p);
+					Area!.Add(p);
 					p.Depth = Depth + 1;
 					
 					Tween.To(h, lastChange, x => lastChange = x, 0.3f);
@@ -123,7 +123,7 @@ namespace BurningKnight.ui {
 
 			var health = entity.GetComponent<HealthComponent>();
 			var region = new TextureRegion(fill.Texture, fill.Source);
-			var h = health.Health;
+			var h = health!.Health;
 			
 			if (h < lastDamage) {
 				sinceLastDamage = 0;

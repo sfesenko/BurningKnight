@@ -31,7 +31,7 @@ namespace BurningKnight.entity.cutscene.entity {
 				return;
 			}
 
-			foreach (var p in Area.Tagged[Tags.Player]) {
+			foreach (var p in Area!.Tagged[Tags.Player]) {
 				var dx = p.DxTo(this);
 				var dy = p.DyTo(this);
 
@@ -46,10 +46,10 @@ namespace BurningKnight.entity.cutscene.entity {
 					Engine.Instance.Flash = 2;
 					
 					var ba = GetComponent<SensorBodyComponent>();
-					ba.Velocity = ba.Knockback = Vector2.Zero;
+					ba!.Velocity = ba.Knockback = Vector2.Zero;
 						
 					var bb = p.GetComponent<SensorBodyComponent>(); 
-					bb.Velocity = bb.Knockback = Vector2.Zero;
+					bb!.Velocity = bb.Knockback = Vector2.Zero;
 
 					return; 
 				}

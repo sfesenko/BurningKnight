@@ -25,7 +25,7 @@ namespace BurningKnight.entity.item.stand {
 				var rm = GetComponent<RoomComponent>()!.Room;
 				
 				if (ite.Stand != this && ite.Stand.GetComponent<RoomComponent>()!.Room == rm) {
-					var it = rm.Tagged[Tags.Item].ToArray(); // Copy it to prevent exceptions while modifying it
+					var it = rm!.Tagged[Tags.Item].ToArray(); // Copy it to prevent exceptions while modifying it
 				
 					foreach (var s in it) {
 						if (s is ScourgedStand ist && ist.Item != null) {

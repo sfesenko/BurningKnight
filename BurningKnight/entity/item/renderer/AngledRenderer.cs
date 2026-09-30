@@ -40,7 +40,7 @@ namespace BurningKnight.entity.item.renderer {
 			var region = Item.Region;
 			var owner = Item.Owner;
 
-			var of = owner.GraphicsComponent.Flipped;
+			var of = owner!.GraphicsComponent.Flipped;
 			var flipped = false;
 			
 			var angle = MathUtils.Mod((of ? -Angle : Angle) + (atBack ? ((InvertBack ? -1 : 1) * (of ? -Math.PI / 4 : Math.PI / 4)) : lastAngle), Math.PI * 2);
@@ -87,7 +87,7 @@ namespace BurningKnight.entity.item.renderer {
 
 				var aim = owner.GetComponent<AimComponent>();
 
-				aim.Center = pos + MathUtils.CreateVector(a, d);
+				aim!.Center = pos + MathUtils.CreateVector(a, d);
 
 				d = (aim.Aim - pos).Length();
 				aim.RealAim = aim.Center + MathUtils.CreateVector(angle - AddedAngle - SwingAngle, d);

@@ -35,10 +35,10 @@ namespace BurningKnight.level.entities.statue {
 
 		protected override bool Interact(Entity e) {
 			var c = e.GetComponent<ActiveWeaponComponent>();
-			var item = c.Item;
+			var item = c!.Item;
 
 			c.Drop();
-			item.Done = true;
+			item!.Done = true;
 
 			if (e.GetComponent<WeaponComponent>()!.Item == null) {
 				c.Set(Items.CreateAndAdd(LevelSave.MeleeOnly || item.Data.WeaponType == WeaponType.Melee ? "bk:ancient_sword" : "bk:ancient_revolver", Area));				

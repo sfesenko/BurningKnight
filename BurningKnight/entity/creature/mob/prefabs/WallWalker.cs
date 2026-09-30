@@ -50,7 +50,7 @@ namespace BurningKnight.entity.creature.mob.prefabs {
 				var y = (int) Math.Round((Y + 8) / 16f);
 				var level = Context.Level;
 
-				if (level.Get(x + 1, y).IsWall()) {
+				if (level!.Get(x + 1, y).IsWall()) {
 					dirs.Add(Direction.Left);
 				}
 

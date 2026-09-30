@@ -42,7 +42,7 @@ namespace BurningKnight.entity.door {
 				if (depth != 0) {
 					Context.Run.Depth = depth;
 				} else {
-					foreach (var t in Area.Tagged[Tags.TeleportTrigger]) {
+					foreach (var t in Area!.Tagged[Tags.TeleportTrigger]) {
 						var tr = (TeleportTrigger) t;
 						
 						if (tr.id == toId) {

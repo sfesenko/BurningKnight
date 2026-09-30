@@ -14,7 +14,7 @@ namespace BurningKnight.entity {
 			AddComponent(new ScalableSliceComponent("particles", $"lego_{Rnd.Int(3)}"));
 			
 			var s = GetComponent<ScalableSliceComponent>();
-			var region = s.Sprite;
+			var region = s!.Sprite;
 
 			Width = region.Width;
 			Height = region.Height;

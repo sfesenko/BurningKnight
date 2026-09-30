@@ -83,7 +83,7 @@ namespace BurningKnight.level {
 			foreach (var Room in Rooms) {
 				// Tnt
 
-				if (Level.Biome.HasTnt()) {
+				if (Level!.Biome.HasTnt()) {
 					if ((Room is RegularRoom) && Rnd.Chance(20)) {
 						for (var i = 0; i < Rnd.Int(1, 4); i++) {
 							var p = Room.GetRandomDoorFreeCell();

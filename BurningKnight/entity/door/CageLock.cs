@@ -22,7 +22,7 @@ namespace BurningKnight.entity.door {
 		private void SaveNpc() {
 			var rooms = ((Door) GetComponent<OwnerComponent>()!.Owner).Rooms;
 
-			foreach (var r in rooms) {
+			foreach (var r in rooms!) {
 				if (r == null) {
 					continue;
 				}

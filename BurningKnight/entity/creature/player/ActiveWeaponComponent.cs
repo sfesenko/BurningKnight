@@ -25,7 +25,7 @@ namespace BurningKnight.entity.creature.player {
 			base.Update(dt);
 
 			var controller = GetComponent<InputComponent>();
-			var data = controller.GamepadEnabled ? controller.GamepadData : null;
+			var data = controller!.GamepadEnabled ? controller.GamepadData : null;
 
 			var lamp = GetComponent<LampComponent>()!.Item;
 			var useLamp = lamp != null && lamp.Id == "bk:explosive_lamp";
@@ -39,7 +39,7 @@ namespace BurningKnight.entity.creature.player {
 						var t = Item.Data.WeaponType;
 						
 						if (t == WeaponType.Ranged) {
-							foreach (var u in Item.Uses) {
+							foreach (var u in Item!.Uses) {
 								if (u is SimpleShootUse s) {
 									if (s.ReloadSfx) {
 										Entity.GetComponent<AudioEmitterComponent>()!.EmitRandomizedPrefixed("item_shotgun_reload", 2, 0.8f);
@@ -60,7 +60,7 @@ namespace BurningKnight.entity.creature.player {
 				
 				var b = GetComponent<BuffsComponent>();
 				
-				if (b.Has<FrozenBuff>() || b.Has<CharmedBuff>() || GetComponent<StateComponent>()!.StateInstance is Player.RollState) {
+				if (b!.Has<FrozenBuff>() || b.Has<CharmedBuff>() || GetComponent<StateComponent>()!.StateInstance is Player.RollState) {
 					return;
 				}
 				
@@ -124,7 +124,7 @@ namespace BurningKnight.entity.creature.player {
 			if (Context.Run.Depth == -2) {
 				var dialog = GetComponent<DialogComponent>();
 								
-				dialog.Dialog.Str.ClearIcons();
+				dialog!.Dialog.Str.ClearIcons();
 				dialog.Dialog.Str.AddIcon(CommonAse.Ui.GetSlice(Controls.FindSlice(Controls.Use, false)));
 
 				if (GamepadComponent.Current != null && GamepadComponent.Current.Attached) {

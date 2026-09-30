@@ -31,7 +31,7 @@ namespace BurningKnight.entity.door {
 		public bool Open {
 			get {
 				var component = GetComponent<StateComponent>();
-				return component.StateInstance is OpenState || component.StateInstance is OpeningState;
+				return component!.StateInstance is OpenState || component.StateInstance is OpeningState;
 			}	
 		}
 		
@@ -85,7 +85,7 @@ namespace BurningKnight.entity.door {
 		}
 
 		protected virtual void RenderShadow() {
-			GraphicsComponent.Render(true);
+			GraphicsComponent!.Render(true);
 		}
 
 		public override void Load(FileReader stream) {
@@ -110,7 +110,7 @@ namespace BurningKnight.entity.door {
 					if (Colliding.Count >= 1 && CanOpen()) {
 						var state = GetComponent<StateComponent>();
 
-						if (!(state.StateInstance is OpeningState || state.StateInstance is OpenState)) {
+						if (!(state!.StateInstance is OpeningState || state.StateInstance is OpenState)) {
 							HandleEvent(new DoorOpenedEvent {
 								Who = this
 							});
@@ -158,7 +158,7 @@ namespace BurningKnight.entity.door {
 			
 			var state = GetComponent<StateComponent>();
 			
-			if (state.StateInstance is OpenState && Colliding.Count == 0 && !OpenByDefault) {
+			if (state!.StateInstance is OpenState && Colliding.Count == 0 && !OpenByDefault) {
 				lastCollisionTimer -= dt;
 
 				if (lastCollisionTimer <= 0) {
@@ -176,7 +176,7 @@ namespace BurningKnight.entity.door {
 				var pad = 4;
 				var rc = new Rectangle((int) (X + pad), (int) Y, (int) (Width - pad * 2), (int) Height);
 
-				foreach (var room in Area.Tagged[Tags.Room]) {
+				foreach (var room in Area!.Tagged[Tags.Room]) {
 					if (room.Overlaps(rc)) {
 						var r = (Room) room;
 						Rooms[i] = r;
@@ -234,7 +234,7 @@ namespace BurningKnight.entity.door {
 			public override void Update(float dt) {
 				base.Update(dt);
 
-				if (Self.GetComponent<AnimationComponent>()!.Animation.Paused) {				
+				if (Self!.GetComponent<AnimationComponent>()!.Animation.Paused) {				
 					Self.GetComponent<AudioEmitterComponent>()!.EmitRandomizedPrefixed("level_door_close", 2);
 					Self.GetComponent<StateComponent>()!.Become<ClosedState>();
 				}
@@ -261,7 +261,7 @@ namespace BurningKnight.entity.door {
 			public override void Update(float dt) {
 				base.Update(dt);
 				
-				if (Self.GetComponent<AnimationComponent>()!.Animation.Paused) {
+				if (Self!.GetComponent<AnimationComponent>()!.Animation.Paused) {
 					Self.GetComponent<StateComponent>()!.Become<OpenState>();
 				}
 			}

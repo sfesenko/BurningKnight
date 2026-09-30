@@ -17,7 +17,7 @@ namespace BurningKnight.entity.item.use {
 			if (onlyIfHasNone) {
 				var inventory = entity.GetComponent<InventoryComponent>();
 
-				foreach (var i in inventory.Items) {
+				foreach (var i in inventory!.Items) {
 					if (ItemPool.Pet.Contains(i.Data.Pools)) {
 						return;
 					}

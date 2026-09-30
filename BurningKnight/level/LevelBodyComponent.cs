@@ -52,7 +52,7 @@ namespace BurningKnight.level {
 					}
 
 					updated.Add(ci);
-					Physics.RemoveBody(chunks[ci]);
+					Physics.RemoveBody(chunks![ci]);
 					RecreateChunk(cx, cy);
 				}
 
@@ -113,7 +113,7 @@ namespace BurningKnight.level {
 			body.UserData = this;
 
 			var i = cx + cy * cw;
-			var c = chunks[i];
+			var c = chunks![i];
 
 			if (c != null) {
 				Physics.RemoveBody(c);

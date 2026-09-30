@@ -58,7 +58,7 @@ namespace BurningKnight.entity.creature.bk {
 					var a = Self.GetComponent<BkGraphicsComponent>();
 					Self.GetComponent<AudioEmitterComponent>()!.EmitRandomized("mob_oldking_shoot");
 
-					Tween.To(1.8f, a.Scale.X, x => a.Scale.X = x, 0.2f);
+					Tween.To(1.8f, a!.Scale.X, x => a.Scale.X = x, 0.2f);
 					Tween.To(0.2f, a.Scale.Y, x => a.Scale.Y = x, 0.2f).OnEnd = () => {
 
 						Tween.To(1, a.Scale.X, x => a.Scale.X = x, 0.3f);

@@ -19,7 +19,7 @@ namespace BurningKnight.ui {
 				}
 				
 				Region = CommonAse.Ui.GetSlice(id);
-				Width = Region.Width * Size;
+				Width = Region!.Width * Size;
 				Height = Region.Height * Size;
 			}
 		}

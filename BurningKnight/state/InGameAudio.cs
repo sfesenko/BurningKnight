@@ -62,7 +62,7 @@ namespace BurningKnight.state {
 
 			var c = Context.Camera;
 			
-			AudioEmitterComponent.ListenerPosition = new Vector2(c.PositionX, c.PositionY);
+			AudioEmitterComponent.ListenerPosition = new Vector2(c!.PositionX, c.PositionY);
 			AudioEmitterComponent.Listener.Position = new Vector3(c.PositionX * AudioEmitterComponent.PositionScale, 0, c.PositionY * AudioEmitterComponent.PositionScale);
 		}
 
@@ -93,7 +93,7 @@ namespace BurningKnight.state {
 						if (Context.Level!.Biome is TechBiome) {
 							Audio.PlayMusic(Context.Level!.Biome.GetMusic());
 						} else {
-							if (Area.Tagged[Tags.Boss].Count > 0 && ((Boss) Area.Tagged[Tags.Boss][0]).Awoken) {
+							if (Area!.Tagged[Tags.Boss].Count > 0 && ((Boss) Area.Tagged[Tags.Boss][0]).Awoken) {
 								Audio.PlayMusic((Context.Level!.Biome is LibraryBiome || Context.Level!.Biome is LibraryBiome)
 									? "Last chance"
 									: "Fatiga");

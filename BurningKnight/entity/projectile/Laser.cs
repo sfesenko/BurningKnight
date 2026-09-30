@@ -111,15 +111,15 @@ namespace BurningKnight.entity.projectile {
 			Vector2 closest;
 			var aim = Owner.GetComponent<AimComponent>();
 
-			Position = aim.Center;
+			Position = aim!.Center;
 
 			var from = Position;
 			
 			if (PlayerRotated) {
-				BodyComponent.Body.Rotation = angle = (aim.RealAim - from).ToAngle();
+				BodyComponent!.Body.Rotation = angle = (aim.RealAim - from).ToAngle();
 			}
 
-			closest = Position + MathUtils.CreateVector(BodyComponent.Body.Rotation, Range * 5);
+			closest = Position + MathUtils.CreateVector(BodyComponent!.Body.Rotation, Range * 5);
 
 			Physics.World.RayCast((fixture, point, normal, fraction) => {
 				if (min > fraction && fixture.Body.UserData is BodyComponent b && RayShouldCollide(b.Entity)) {

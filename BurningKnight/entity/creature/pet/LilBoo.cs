@@ -23,7 +23,7 @@ namespace BurningKnight.entity.creature.pet {
 			};
 			
 			AddComponent(b);
-			b.Body.LinearDamping = 3;
+			b!.Body.LinearDamping = 3;
 			
 			
 			Become<IdleState>();
@@ -80,7 +80,7 @@ namespace BurningKnight.entity.creature.pet {
 				var body = Self.GetComponent<RectBodyComponent>();
 				var s = dt * 20;
 				
-				body.Velocity += new Vector2(dx / d * s, dy / d * s);
+				body!.Velocity += new Vector2(dx / d * s, dy / d * s);
 			}
 		}
 

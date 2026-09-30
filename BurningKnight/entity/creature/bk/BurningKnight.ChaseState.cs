@@ -54,7 +54,7 @@ namespace BurningKnight.entity.creature.bk {
 				} else if (d <= 128f) {
 					var r = Self.Target.GetComponent<RoomComponent>()!.Room;
 
-					if (r.Type == RoomType.Shop || r.Type == RoomType.SubShop || r.Type == RoomType.OldMan) {
+					if (r!.Type == RoomType.Shop || r.Type == RoomType.SubShop || r.Type == RoomType.OldMan) {
 
 					} else {
 						Self.Become<AttackState>();

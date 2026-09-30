@@ -13,7 +13,7 @@ namespace BurningKnight.entity.creature.mob.castle {
 			var body = new RectBodyComponent(2, 2, 12, 12);
 			AddComponent(body);
 
-			body.Body.LinearDamping = 4;
+			body!.Body.LinearDamping = 4;
 		}
 		
 		#region King States

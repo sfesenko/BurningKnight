@@ -24,7 +24,7 @@ namespace BurningKnight.entity.creature.mob.library {
 			AddComponent(body);
 
 			body.KnockbackModifier = 0f;
-			body.Body.LinearDamping = 4f;
+			body!.Body.LinearDamping = 4f;
 			
 			AddComponent(new SensorBodyComponent(1, 1, 8, 13));
 			AddComponent(new MobAnimationComponent("mage"));
@@ -48,7 +48,7 @@ namespace BurningKnight.entity.creature.mob.library {
 				base.Update(dt);
 
 				if (Self.Target != null) {
-					Self.GraphicsComponent.Flipped = Self.Target.CenterX < Self.CenterX;
+					Self!.GraphicsComponent.Flipped = Self.Target.CenterX < Self.CenterX;
 				}
 
 				if (!tweened && T >= delay - 0.4f) {
@@ -107,13 +107,13 @@ namespace BurningKnight.entity.creature.mob.library {
 
 					var a = Self.GetComponent<MobAnimationComponent>();
 
-					Tween.To(0.2f, a.Scale.X, x => a.Scale.X = x, 0.5f, Ease.QuadIn);
+					Tween.To(0.2f, a!.Scale.X, x => a.Scale.X = x, 0.5f, Ease.QuadIn);
 					Tween.To(2f, a.Scale.Y, x => a.Scale.Y = x, 0.5f, Ease.QuadIn).OnEnd = () => {
 						var r = Self.GetComponent<RoomComponent>()!.Room;
 						Vector2 s;
 
 						do {
-							s = r.GetRandomFreeTile() * 16 + new Vector2(8);
+							s = r!.GetRandomFreeTile() * 16 + new Vector2(8);
 						} while (Self.Target != null && Self.Target.DistanceTo(s) < 32);
 						
 						Self.Center = s;

@@ -16,7 +16,7 @@ namespace BurningKnight.level.entities.exit {
 			if (GlobalSave.Emeralds < 3) {
 				AnimationUtil.ActionFailed();
 
-				foreach (var n in Area.Tagged[Tags.Npc]) {
+				foreach (var n in Area!.Tagged[Tags.Npc]) {
 					if (n is Mike) {
 						n.GetComponent<DialogComponent>()!.Start("mike_0");
 						break;

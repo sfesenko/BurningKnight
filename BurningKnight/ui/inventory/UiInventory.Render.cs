@@ -137,7 +137,7 @@ namespace BurningKnight.ui.inventory {
 		}
 		private void RenderHealthBar(bool pad) {
 			var red = Player.GetComponent<HealthComponent>();
-			var phases = red.Phases;
+			var phases = red!.Phases;
 
 			if (Scourge.IsEnabled(Scourge.OfRisk)) {
 				Graphics.Render(question, new Vector2(8 + (int) ((4 + ItemSlot.Source.Width) * (activeSlot.ActivePosition + 1)), 11));
@@ -161,7 +161,7 @@ namespace BurningKnight.ui.inventory {
 			var r = (int) lastRed;
 			var maxRed = red.MaxHealth;
 			var hurt = red.InvincibilityTimer > 0;
-			var shields = hearts.ShieldHalfs;
+			var shields = hearts!.ShieldHalfs;
 			var bombs = (int) hearts.Bombs;
 			var dbombs = bombs * 2;
 			var mbombs = (int) hearts.BombsMax;
@@ -235,7 +235,7 @@ namespace BurningKnight.ui.inventory {
 		private void RenderMana() {
 			var manaComponent = Player.GetComponent<ManaComponent>();
 			
-			var totalMana = manaComponent.Mana;
+			var totalMana = manaComponent!.Mana;
 			
 			if (changedTime > 0) {
 				changedTime -= Engine.Delta;

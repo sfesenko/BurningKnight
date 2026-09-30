@@ -22,7 +22,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 				base.Update(dt);
 				
 				var r = Self.GetComponent<RoomComponent>()!.Room;
-				var dx = r.CenterX - Self.CenterX;
+				var dx = r!.CenterX - Self.CenterX;
 				var dy = r.CenterY - Self.CenterY;
 				var d = MathUtils.Distance(dx, dy);
 

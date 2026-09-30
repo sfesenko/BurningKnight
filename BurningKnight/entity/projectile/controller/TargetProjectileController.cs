@@ -12,7 +12,7 @@ namespace BurningKnight.entity.projectile.controller {
 		public static ProjectileCallbacks.UpdateCallback Make(Entity target, float speed = 1f) {
 			return (p, dt) => {
 				var b = p.GetAnyComponent<BodyComponent>();
-				var d = b.Velocity.Length();
+				var d = b!.Velocity.Length();
 				var a = b.Velocity.ToAngle();
 
 				var from = p.Center;
@@ -24,7 +24,7 @@ namespace BurningKnight.entity.projectile.controller {
 				if (target == null) {
 					var md = 320000f;
 
-					foreach (var m in (p.Owner.TryGetComponent<RoomComponent>(out var c) ? c.Room.Tagged[Tags.Mob] : p.Area!.Tagged[Tags.Mob])) {
+					foreach (var m in (p.Owner.TryGetComponent<RoomComponent>(out var c) ? c!.Room.Tagged[Tags.Mob] : p.Area!.Tagged[Tags.Mob])) {
 						if (m.GetComponent<HealthComponent>()!.Unhittable) {
 							continue;
 						}
@@ -58,7 +58,7 @@ namespace BurningKnight.entity.projectile.controller {
 		public static ProjectileCallbacks.UpdateCallback MakeCursor(float speed = 1f) {
 			return (p, dt) => {
 				var b = p.GetAnyComponent<BodyComponent>();
-				var d = b.Velocity.Length();
+				var d = b!.Velocity.Length();
 				var a = b.Velocity.ToAngle();
 
 				a = (float) MathUtils.LerpAngle(a, p.AngleTo(p.Owner.GetComponent<CursorComponent>()!.Cursor.GamePosition) + Rnd.Float(-2, 2), dt * speed * 4);
@@ -70,7 +70,7 @@ namespace BurningKnight.entity.projectile.controller {
 		public static ProjectileCallbacks.UpdateCallback MakeBetter(float speed = 1f) {
 			return (p, dt) => {
 				var b = p.GetAnyComponent<BodyComponent>();
-				var d = b.Velocity.Length();
+				var d = b!.Velocity.Length();
 				var a = b.Velocity.ToAngle();
 				Entity target = null;
 				
@@ -81,7 +81,7 @@ namespace BurningKnight.entity.projectile.controller {
 					from = aim.RealAim;
 				}
 				
-				foreach (var m in (p.Owner.TryGetComponent<RoomComponent>(out var c) ? c.Room.Tagged[Tags.Mob] : p.Area!.Tagged[Tags.Mob])) {
+				foreach (var m in (p.Owner.TryGetComponent<RoomComponent>(out var c) ? c!.Room.Tagged[Tags.Mob] : p.Area!.Tagged[Tags.Mob])) {
 					if (m.Done || m.GetComponent<HealthComponent>()!.Unhittable) {
 						continue;
 					}

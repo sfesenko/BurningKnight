@@ -45,7 +45,7 @@ namespace BurningKnight.level.entities {
 			
 			AddTag(Tags.Statue);
 
-			Area.Add(new RenderTrigger(this, RenderTop, Layers.FlyingMob));
+			Area!.Add(new RenderTrigger(this, RenderTop, Layers.FlyingMob));
 			
 			Achievements.UnlockedCallback += UpdateState;
 			Achievements.LockedCallback += UpdateState;
@@ -65,7 +65,7 @@ namespace BurningKnight.level.entities {
 		}
 		
 		private bool Interact(Entity e) {
-			foreach (var s in Area.Tagged[Tags.Statue]) {
+			foreach (var s in Area!.Tagged[Tags.Statue]) {
 				if (s.TryGetComponent<DialogComponent>(out var d)) {
 					d.Close();
 				}
@@ -84,7 +84,7 @@ namespace BurningKnight.level.entities {
 			} else {
 				state = $"[sp 2][cl orange]{Locale.Get($"ach_{id}")}[cl]";
 
-				if (achievement.Max > 0) {
+				if (achievement!.Max > 0) {
 					var p = GlobalSave.GetInt($"ach_{id}", 0);
 					state += $"\n[cl gray]{MathUtils.Clamp(0, achievement.Max, p)}/{achievement.Max} {Locale.Get("complete")}[cl]";
 				}
@@ -137,7 +137,7 @@ namespace BurningKnight.level.entities {
 				return;
 			}
 			
-			GraphicsComponent.Render(true);
+			GraphicsComponent!.Render(true);
 		}
 
 		public void RenderTop() {

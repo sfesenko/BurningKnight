@@ -44,7 +44,7 @@ namespace BurningKnight.entity.creature.player {
 
 		public void ModifyShields(int amount, Entity setter) {
 			var component = GetComponent<HealthComponent>();
-			amount = (int) (amount < 0 ? Math.Max(ShieldHalfs, amount) : Math.Min(Cap - component.MaxHealth - Total, amount));
+			amount = (int) (amount < 0 ? Math.Max(ShieldHalfs, amount) : Math.Min(Cap - component!.MaxHealth - Total, amount));
 
 			var e = new HealthModifiedEvent {
 				Amount = amount,

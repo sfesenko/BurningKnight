@@ -23,7 +23,7 @@ namespace BurningKnight.entity.creature.mob.ice {
 			
 			var body = new SensorBodyComponent(1, 1, 14, 15);
 			AddComponent(body);
-			body.Body.LinearDamping = 0.3f;
+			body!.Body.LinearDamping = 0.3f;
 			
 			AddComponent(new ZAnimationComponent("snowflake"));
 			AddComponent(new ZComponent() {
@@ -54,7 +54,7 @@ namespace BurningKnight.entity.creature.mob.ice {
 			}
 
 			var h = GetComponent<HealthComponent>();
-			h.Unhittable = false;
+			h!.Unhittable = false;
 			h.Kill(this);
 		}
 
@@ -67,7 +67,7 @@ namespace BurningKnight.entity.creature.mob.ice {
 				base.Init();
 				
 				var component = Self.GetComponent<ZComponent>();
-				Tween.To(0, component.Z, x => component.Z = x, 0.4f, Ease.BackOut);
+				Tween.To(0, component!.Z, x => component.Z = x, 0.4f, Ease.BackOut);
 			}
 
 			public override void Update(float dt) {
@@ -97,7 +97,7 @@ namespace BurningKnight.entity.creature.mob.ice {
 					var body = Self.GetComponent<SensorBodyComponent>();
 					var s = dt * 200;
 					
-					body.Velocity += new Vector2(dx / d * s, dy / d * s);
+					body!.Velocity += new Vector2(dx / d * s, dy / d * s);
 					return;
 				}
 
@@ -124,7 +124,7 @@ namespace BurningKnight.entity.creature.mob.ice {
 				base.Init();
 				
 				var component = Self.GetComponent<ZComponent>();
-				Tween.To(DefaultZ, component.Z, x => component.Z = x, 0.4f, Ease.BackOut);
+				Tween.To(DefaultZ, component!.Z, x => component.Z = x, 0.4f, Ease.BackOut);
 			}
 
 			public override void Update(float dt) {

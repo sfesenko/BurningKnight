@@ -73,7 +73,7 @@ namespace BurningKnight.entity.fx {
 		
 		public override void Render() {
 			Graphics.Color = lightColor;
-			Graphics.Render(region, Position, 0.1f, region.Center, lightSize);
+			Graphics.Render(region, Position, 0.1f, region!.Center, lightSize);
 			Graphics.Color = color;
 			Graphics.Render(region, Position, 0.1f, region.Center, size);
 			Graphics.Color = ColorUtils.WhiteColor;

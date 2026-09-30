@@ -168,7 +168,7 @@ namespace BurningKnight.assets.particle.custom {
 			}
 			
 			var a = (float) Math.Cos(T * 5f + SinOffset) * 0.4f;
-			var pos = Position + Offset + Region.Center;
+			var pos = Position + Offset + Region!.Center;
 
 			pos.X += (float) Math.Cos(SinOffset + T * 2.5f) * Scale * 8 * XChange;
 		

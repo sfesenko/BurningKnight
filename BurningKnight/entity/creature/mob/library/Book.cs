@@ -18,7 +18,7 @@ namespace BurningKnight.entity.creature.mob.library {
 			AddComponent(body);
 
 			body.KnockbackModifier = 0.1f;
-			body.Body.LinearDamping = 4f;
+			body!.Body.LinearDamping = 4f;
 			
 			AddComponent(new SensorBodyComponent(0, 0, 14, 16));
 			AddComponent(new ZAnimationComponent("book"));
@@ -54,7 +54,7 @@ namespace BurningKnight.entity.creature.mob.library {
 		public class ToRageState : SmartState<Book> {
 			public override void Init() {
 				base.Init();
-				Self.GetComponent<ZAnimationComponent>()!.Animation.Tag = "anim";
+				Self!.GetComponent<ZAnimationComponent>()!.Animation.Tag = "anim";
 			}
 
 			public override void Update(float dt) {
@@ -69,7 +69,7 @@ namespace BurningKnight.entity.creature.mob.library {
 		public class ToIdleState : SmartState<Book> {
 			public override void Init() {
 				base.Init();
-				Self.GetComponent<ZAnimationComponent>()!.Animation.Tag = "anim";
+				Self!.GetComponent<ZAnimationComponent>()!.Animation.Tag = "anim";
 			}
 
 			public override void Update(float dt) {
@@ -100,7 +100,7 @@ namespace BurningKnight.entity.creature.mob.library {
 					
 					if (Self.Target != null) {
 						var h = Self.Target.GetComponent<HealthComponent>();
-						var c = h.Health <= 1 ? 'f' : Chars[Rnd.Int(Chars.Length)];
+						var c = h!.Health <= 1 ? 'f' : Chars[Rnd.Int(Chars.Length)];
 						var a = Self.AngleTo(Self.Target);
 						var color = ProjectileColor.Rainbow[Rnd.Int(ProjectileColor.Rainbow.Length)];
 						var sprite = Rnd.Chance(60) ? "circle" : "square";

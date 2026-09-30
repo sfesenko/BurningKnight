@@ -43,7 +43,7 @@ namespace BurningKnight.level.entities.decor {
 		public override void PostInit() {
 			base.PostInit();
 
-			Area.Add(emitter = new FireEmitter {
+			Area!.Add(emitter = new FireEmitter {
 				Depth = Layers.Wall + 1,
 				Position = new Vector2(CenterX, Y + 1),
 				Scale = 0.5f
@@ -68,7 +68,7 @@ namespace BurningKnight.level.entities.decor {
 			lastFlame += dt;
 
 			if (lastFlame > 0.3f) {
-				Area.Add(new FireParticle {
+				Area!.Add(new FireParticle {
 					X = CenterX,
 					Y = Y + 1,
 					Target = Target,

@@ -28,7 +28,7 @@ namespace BurningKnight.entity.creature.mob.jungle {
 
 			var body = new RectBodyComponent(3, 13, 10, 1);
 			AddComponent(body);
-			body.Body.LinearDamping = 10;
+			body!.Body.LinearDamping = 10;
 
 			AddComponent(new SensorBodyComponent(2, 2, 12, 12));
 		}
@@ -69,7 +69,7 @@ namespace BurningKnight.entity.creature.mob.jungle {
 
 				if (T < 1f) {
 					if (Self.CanSeeTarget()) {
-						Self.GraphicsComponent.Flipped = Self.Target.CenterX < Self.CenterX;
+						Self!.GraphicsComponent.Flipped = Self!.Target.CenterX < Self.CenterX;
 						lastSeen = Self.Target.Center;
 					}
 
@@ -90,7 +90,7 @@ namespace BurningKnight.entity.creature.mob.jungle {
 
 				var a = Self.GetComponent<MobAnimationComponent>();
 					
-				Tween.To(0.6f, a.Scale.X, x => a.Scale.X = x, 0.2f);
+				Tween.To(0.6f, a!.Scale.X, x => a.Scale.X = x, 0.2f);
 				Tween.To(1.6f, a.Scale.Y, x => a.Scale.Y = x, 0.2f).OnEnd = () => {
 
 					Tween.To(1.8f, a.Scale.X, x => a.Scale.X = x, 0.1f);

@@ -64,9 +64,9 @@ namespace BurningKnight.level.entities {
 			InGameState.Multiplayer = true;
 			
 			Player p;
-			var input = area.Add(p = new LocalPlayer()).GetComponent<InputComponent>();
+			var input = area!.Add(p = new LocalPlayer()).GetComponent<InputComponent>();
 			
-			input.Index = index;
+			input!.Index = index;
 			input.KeyboardEnabled = !gamepad;
 			input.GamepadEnabled = gamepad;
 			
@@ -104,9 +104,9 @@ namespace BurningKnight.level.entities {
 			
 			p.GetComponent<ActiveWeaponComponent>()!.Set(Items.CreateAndAdd(Items.Generate(ItemPool.StartingWeapon), Area));
 
-			h1.InvincibilityTimer = 0;
+			h1!.InvincibilityTimer = 0;
 			h1.Unhittable = false;
-			h2.InvincibilityTimer = 0;
+			h2!.InvincibilityTimer = 0;
 			h2.Unhittable = false;
 			
 			if (h1.Health > 0) {
@@ -114,13 +114,13 @@ namespace BurningKnight.level.entities {
 
 				h1.SetHealth(half, e, true, DamageType.Custom);
 				h2.SetHealth(half, e, true, DamageType.Custom);
-			} else if (hr1.ShieldHalfs > 0) {
+			} else if (hr1!.ShieldHalfs > 0) {
 				var half = (int) Math.Max(1, Math.Floor(hr1.ShieldHalfs / 2f));
 				hr1.ModifyShields(-(hr1.ShieldHalfs - half), e);
-				hr2.ModifyShields(-(hr2.ShieldHalfs - half), e);
+				hr2!.ModifyShields(-(hr2.ShieldHalfs - half), e);
 			} else {
 				var half = (int) Math.Max(1, Math.Floor(hr1.Bombs / 2f));
-				hr2.BombsMax = hr1.BombsMax;
+				hr2!.BombsMax = hr1.BombsMax;
 
 				hr1.ModifyBombs(-(hr1.Bombs - half), e);
 				hr2.ModifyBombs(-(hr2.Bombs - half), e);
@@ -141,7 +141,7 @@ namespace BurningKnight.level.entities {
 
 				if (pl != null) {
 					var c = pl.ForceGetComponent<ConsumablesComponent>();
-					c.Entity = p;
+					c!.Entity = p;
 					pl.Components.Remove(typeof(ConsumablesComponent));
 					p.Components[typeof(ConsumablesComponent)] = c;
 					pl.AddComponent(new ConsumablesComponent());

@@ -39,7 +39,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 			base.AddPhases();
 			
 			for (var i = 1; i < Hp; i++) {
-				HealthBar.AddPhase(i / (float) Hp);
+				HealthBar!.AddPhase(i / (float) Hp);
 			}
 		}
 
@@ -55,7 +55,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 			AddComponent(body);
 
 			body.KnockbackModifier = 0.5f;
-			body.Body.LinearDamping = 3;
+			body!.Body.LinearDamping = 3;
 
 			AddComponent(new ZComponent());
 			AddComponent(new ZAnimationComponent("dark_mage"));
@@ -66,7 +66,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 
 			var b = GetComponent<BuffsComponent>();
 			
-			b.AddImmunity<BurningBuff>();
+			b!.AddImmunity<BurningBuff>();
 			b.AddImmunity<PoisonBuff>();
 			b.AddImmunity<FrozenBuff>();
 			b.AddImmunity<BrokenArmorBuff>();
@@ -103,7 +103,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 		}
 
 		private void ChangeupRoom() {
-			foreach (var p in Area.Tagged[Tags.Player]) {
+			foreach (var p in Area!.Tagged[Tags.Player]) {
 				Timer.Add(() => {
 					AnimationUtil.TeleportAway(p, () => { });
 				}, 0.5f);
@@ -152,7 +152,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 						did.Add(type);
 					}
 
-					for (var i = rm.Controllers.Count - 1; i >= 0; i--) {
+					for (var i = rm!.Controllers.Count - 1; i >= 0; i--) {
 						if (!(rm.Controllers[i] is BossRoomController)) {
 							rm.Controllers.RemoveAt(i);
 						}
@@ -161,7 +161,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 					var rmdef = (DmRoom) Activator.CreateInstance(type);
 
 					rm.Parent = rmdef;
-					rm.MapW = Math.Min(Rnd.Int(rmdef.GetMinWidth(), rmdef.GetMaxWidth()), level.Width - 2);
+					rm.MapW = Math.Min(Rnd.Int(rmdef!.GetMinWidth(), rmdef.GetMaxWidth()), level!.Width - 2);
 					rm.MapH = Math.Min(Rnd.Int(rmdef.GetMinHeight(), rmdef.GetMaxHeight()), level.Height - 2);
 					rm.MapX = (int) Math.Ceiling((level.Width - rm.MapW) / 2f);
 					rm.MapY = (int) Math.Ceiling((level.Height - rm.MapH) / 2f);
@@ -213,7 +213,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 			public override void Update(float dt) {
 				base.Update(dt);
 
-				if (Self.GetComponent<RoomComponent>()!.Room.Tagged[Tags.Mob].Count > 1) {
+				if (Self!.GetComponent<RoomComponent>()!.Room.Tagged[Tags.Mob].Count > 1) {
 					Become<FlyingState>();
 				}
 			}
@@ -245,7 +245,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 
 				Self.GetComponent<HealthComponent>()!.Unhittable = true;
 				
-				if (Self.GetComponent<RoomComponent>()!.Room.Tagged[Tags.Mob].Count <= 1) {
+				if (Self!.GetComponent<RoomComponent>()!.Room.Tagged[Tags.Mob].Count <= 1) {
 					Become<IdleState>();
 				}
 			}
@@ -258,7 +258,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 			Done = false;
 			Died = false;
 			
-			Target.RemoveComponent<PlayerInputComponent>();
+			Target!.RemoveComponent<PlayerInputComponent>();
 			
 			GetComponent<DialogComponent>()!.Start("lp_0", Target, () => {
 				Timer.Add(() => {

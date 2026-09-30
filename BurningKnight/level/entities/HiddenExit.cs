@@ -16,7 +16,7 @@ namespace BurningKnight.level.entities {
 		internal string? id;
 		
 		private bool Interact(Entity entity) {
-			foreach (var e in Area.Tagged[Tags.HiddenEntrance]) {
+			foreach (var e in Area!.Tagged[Tags.HiddenEntrance]) {
 				if (e is HiddenEntrance h && h.id == id) {
 					var state = (InGameState) Engine.Instance.State;
 					Audio.PlaySfx("player_descending");			

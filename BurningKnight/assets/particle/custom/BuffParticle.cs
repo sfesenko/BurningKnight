@@ -24,7 +24,7 @@ namespace BurningKnight.assets.particle.custom {
 
 			region = CommonAse.Ui.GetSlice(buff.GetIcon());
 			Width = 8 * Display.UiScale;
-			Height = region.Height * Display.UiScale;
+			Height = region!.Height * Display.UiScale;
 			
 			Tween.To(Display.UiScale, scale.X, x => scale.X = x, 0.3f);
 			Tween.To(Display.UiScale, scale.Y, x => scale.Y = x, 0.3f);

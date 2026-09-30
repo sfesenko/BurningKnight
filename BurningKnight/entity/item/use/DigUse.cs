@@ -14,7 +14,7 @@ namespace BurningKnight.entity.item.use {
 
 			var level = Context.Level;
 
-			if (!level.IsInside(x, y)) {
+			if (!level!.IsInside(x, y)) {
 				return;
 			}
 

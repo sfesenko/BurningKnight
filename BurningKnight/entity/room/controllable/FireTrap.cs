@@ -52,7 +52,7 @@ namespace BurningKnight.entity.room.controllable {
 			} else {
 				var room = GetComponent<RoomComponent>()!.Room;
 
-				if (room.Tagged[Tags.Player].Count == 0 || room.Tagged[Tags.MustBeKilled].Count == 0) {
+				if (room!.Tagged[Tags.Player].Count == 0 || room.Tagged[Tags.MustBeKilled].Count == 0) {
 					ResetTimer();
 					return;
 				}
@@ -67,7 +67,7 @@ namespace BurningKnight.entity.room.controllable {
 					if (lastParticle <= 0) {
 						lastParticle = 0.1f;
 						
-						Area.Add(new FireParticle {
+						Area!.Add(new FireParticle {
 							Position = new Vector2(CenterX, CenterY),
 							XChange = 0.1f,
 							Scale = 0.3f,
@@ -82,7 +82,7 @@ namespace BurningKnight.entity.room.controllable {
 					if (lastParticle <= 0) {
 						lastParticle = 0.15f;
 						
-						Area.Add(new FireParticle {
+						Area!.Add(new FireParticle {
 							Position = new Vector2(CenterX, CenterY),
 							XChange = 0.1f,
 							Scale = 0.3f,

@@ -77,7 +77,7 @@ namespace BurningKnight.entity.creature.pet {
 		private bool Interact(Entity entity) {
 			var w = entity.GetComponent<ActiveWeaponComponent>();
 
-			if (w.Item != null && w.Item.Scourged) {
+			if (w!.Item != null && w.Item.Scourged) {
 				entity.GetComponent<DialogComponent>()!.StartAndClose($"~~{Locale.Get("scourged")}~~", 2);
 				return true;
 			}
@@ -85,7 +85,7 @@ namespace BurningKnight.entity.creature.pet {
 			var i = GetComponent<ItemComponent>();
 			var w2 = entity.GetComponent<WeaponComponent>();
 
-			if (i.Item != null && w2.Item == null) {
+			if (i!.Item != null && w2!.Item == null) {
 				i.Exchange(w2);
 				w.RequestSwap();
 			} else {

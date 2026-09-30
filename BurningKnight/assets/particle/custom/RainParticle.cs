@@ -82,7 +82,7 @@ namespace BurningKnight.assets.particle.custom {
 							part.Position = pos;
 							part.Particle.Velocity = new Vector2(Rnd.Float(-40, 40), Rnd.Float(-30, -50));
 							part.Particle.Scale = Rnd.Float(1f, 1.6f);
-							Area.Add(part);
+							Area!.Add(part);
 							part.Depth = 0;
 						}
 					}

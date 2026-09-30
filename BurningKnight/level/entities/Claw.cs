@@ -37,7 +37,7 @@ namespace BurningKnight.level.entities {
 			var body = new SensorBodyComponent(-origin.X, -origin.Y, 15, 14);
 			AddComponent(body);
 
-			body.Body.LinearDamping = 10;
+			body!.Body.LinearDamping = 10;
 
 			var animation = CommonAse.Props;
 
@@ -80,7 +80,7 @@ namespace BurningKnight.level.entities {
 			RoundItem item = null;
 			grabbed = null;
 
-			foreach (var i in room.Tagged[Tags.Item]) {
+			foreach (var i in room!.Tagged[Tags.Item]) {
 				if (i is RoundItem r) {
 					var d = r.DistanceTo(p);
 
@@ -169,7 +169,7 @@ namespace BurningKnight.level.entities {
 										};
 										
 										t9.OnEnd = () => {
-											var mega = grabbed.Id == "bk:pass";
+											var mega = grabbed!.Id == "bk:pass";
 
 											if (grabbed is RandomItem r) {
 												r.Prevent = true;

@@ -136,7 +136,7 @@ namespace BurningKnight.entity.creature.npc {
 				set = true;
 				var dialog = GetComponent<DialogComponent>();
 								
-				dialog.Dialog.Str.ClearIcons();
+				dialog!.Dialog.Str.ClearIcons();
 				dialog.Dialog.Str.AddIcon(CommonAse.Ui.GetSlice(Controls.FindSlice(Controls.Roll, false)));
 
 				if (GamepadComponent.Current != null && GamepadComponent.Current.Attached) {

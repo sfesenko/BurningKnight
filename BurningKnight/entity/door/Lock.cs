@@ -170,7 +170,7 @@ namespace BurningKnight.entity.door {
 			public override void Update(float dt) {
 				base.Update(dt);
 
-				if (Self.GetComponent<AnimationComponent>()!.Animation.Paused) {
+				if (Self!.GetComponent<AnimationComponent>()!.Animation.Paused) {
 					if (((Lock) Self).Disposable()) {
 						Self.Done = true;
 					} else {
@@ -195,7 +195,7 @@ namespace BurningKnight.entity.door {
 			public override void Update(float dt) {
 				base.Update(dt);
 
-				if (Self.GetComponent<AnimationComponent>()!.Animation.Paused) {
+				if (Self!.GetComponent<AnimationComponent>()!.Animation.Paused) {
 					Become<IdleState>();
 				}
 			}

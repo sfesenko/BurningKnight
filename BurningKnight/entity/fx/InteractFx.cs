@@ -107,7 +107,7 @@ namespace BurningKnight.entity.fx {
 
 			if (region != null) {
 				var c = GetComponent<ScalableSliceComponent>();
-				Tween.To(0, c.Scale.X, x => c.Scale = new Vector2(x), 0.25f, Ease.BackOut).OnEnd = () => Done = true;
+				Tween.To(0, c!.Scale.X, x => c.Scale = new Vector2(x), 0.25f, Ease.BackOut).OnEnd = () => Done = true;
 			} else {
 				Tween.To(GetComponent<TextGraphicsComponent>(), new {Scale = 0}, 0.2f).OnEnd = () => Done = true;
 			}

@@ -32,7 +32,7 @@ namespace BurningKnight.level.entities {
 
 					var exit = new Exit();
 					exit.To = 13;
-					Area.Add(exit);
+					Area!.Add(exit);
 					
 					var x = (int) Math.Floor(CenterX / 16);
 					var y = (int) Math.Floor(CenterY / 16);

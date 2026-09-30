@@ -38,8 +38,8 @@ namespace BurningKnight.ui {
 				var o = Option + (Input.Mouse.CheckRightButton ? -1 : 1);
 
 				if (o < 0) {
-					Option = Options.Length - 1;
-				} else if (o >= Options.Length) {
+					Option = Options!.Length - 1;
+				} else if (o >= Options!.Length) {
 					Option = 0;
 				} else {
 					Option = o;

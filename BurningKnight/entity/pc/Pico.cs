@@ -33,7 +33,7 @@ namespace BurningKnight.entity.pc {
 			base.PostInit();
 
 			controller = new Controller();
-			Area.Add(controller);
+			Area!.Add(controller);
 
 			controller.Y = Bottom + 16;
 			controller.X = X + 16;

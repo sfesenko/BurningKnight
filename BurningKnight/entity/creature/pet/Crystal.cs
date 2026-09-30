@@ -25,7 +25,7 @@ namespace BurningKnight.entity.creature.pet {
 			AddComponent(b);
 
 			b.KnockbackModifier = 0;
-			b.Body.LinearDamping = 100;
+			b!.Body.LinearDamping = 100;
 		}
 		
 		private float sinceLastTeleport;
@@ -43,7 +43,7 @@ namespace BurningKnight.entity.creature.pet {
 		private void Teleport() {
 			GetComponent<AnimationComponent>()!.Animate(() => {
 				AnimationUtil.Poof(Center, Depth + 1);
-				Center = Owner.Center + MathUtils.CreateVector(Rnd.AnglePI(), Rnd.Float(12, 18));
+				Center = Owner!.Center + MathUtils.CreateVector(Rnd.AnglePI(), Rnd.Float(12, 18));
 				AnimationUtil.Poof(Center, Depth + 1);
 			});
 		}
@@ -61,7 +61,7 @@ namespace BurningKnight.entity.creature.pet {
 				builder.AddFlags(ProjectileFlags.Artificial);
 
 				for (var i = 0; i < tt; i++) {
-					builder.Shoot(body.Angle + (i - tt * 0.5f) * 0.1f, body.Velocity.Length() * 0.05f);
+					builder.Shoot(body!.Angle + (i - tt * 0.5f) * 0.1f, body.Velocity.Length() * 0.05f);
 
 					var pr = builder.Build();
 

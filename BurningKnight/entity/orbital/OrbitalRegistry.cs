@@ -199,7 +199,7 @@ namespace BurningKnight.entity.orbital {
 						p.Owner = o;
 
 						var b = p.GetAnyComponent<BodyComponent>();
-						var d = b.Velocity.Length();
+						var d = b!.Velocity.Length();
 						var a = b.Velocity.ToAngle() - Math.PI + Rnd.Float(-0.3f, 0.3f);
 
 						b.Velocity = new Vector2((float) Math.Cos(a) * d, (float) Math.Sin(a) * d);
@@ -255,7 +255,7 @@ namespace BurningKnight.entity.orbital {
 						p.Break();
 						var s = (ScalableSliceComponent) or.GraphicsComponent;
 
-						if (Math.Abs(s.Scale.Y - 1) > 0.01f) {
+						if (Math.Abs(s!.Scale.Y - 1) > 0.01f) {
 							return; // Already animating
 						}
 

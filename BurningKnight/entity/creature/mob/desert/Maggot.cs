@@ -104,7 +104,7 @@ namespace BurningKnight.entity.creature.mob.desert {
 			public override void Update(float dt) {
 				base.Update(dt);
 
-				if (!shot && Self.GetComponent<WallAnimationComponent>()!.Animation.Paused) {
+				if (!shot && Self!.GetComponent<WallAnimationComponent>()!.Animation.Paused) {
 					if (Self.Target == null) {
 						Become<IdleState>();
 						return;
@@ -131,7 +131,7 @@ namespace BurningKnight.entity.creature.mob.desert {
 
 					projectile.Center += MathUtils.CreateVector(angle, 4);
 
-					a.Scale.X = 1.8f;
+					a!.Scale.X = 1.8f;
 					a.Scale.Y = 0.2f;
 					
 					Tween.To(1, a.Scale.X, x => a.Scale.X = x, 0.4f);

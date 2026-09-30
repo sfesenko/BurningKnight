@@ -205,10 +205,10 @@ namespace BurningKnight.entity.creature.player {
 			var hp = GetComponent<HealthComponent>();
 
 			if (fromInit) {
-				hp.InitMaxHealth = 6;
+				hp!.InitMaxHealth = 6;
 			}
 
-			hp.MaxHealthCap = 32;
+			hp!.MaxHealthCap = 32;
 			hp.InvincibilityTimerMax = 1f;
 
 			if (CheatWindow.AutoGodMode) {
@@ -269,7 +269,7 @@ namespace BurningKnight.entity.creature.player {
 
 			var inventory = GetComponent<InventoryComponent>();
 
-			foreach (var i in inventory.Items) {
+			foreach (var i in inventory!.Items) {
 				if (i.Id != "bk:no_lamp") {
 					drops.Add(Items.Create(i.Id));
 				}
@@ -313,7 +313,7 @@ namespace BurningKnight.entity.creature.player {
 			var pl = this;
 			
 			if (InGameState.Multiplayer && typeof(T) == typeof(ConsumablesComponent) && base.GetComponent<InputComponent>()!.Index != 0) {
-				foreach (var p in Area.Tagged[Tags.Player]) {
+				foreach (var p in Area!.Tagged[Tags.Player]) {
 					var i = p.GetComponent<InputComponent>()!.Index;
 					
 					if (i == 0) {

@@ -28,7 +28,7 @@ namespace BurningKnight.ui.inventory {
 				OnTop = true
 			};
 			
-			Area.Add(uiItem);
+			Area!.Add(uiItem);
 			
 			var area = inventory.Player.Area;
 			
@@ -39,7 +39,7 @@ namespace BurningKnight.ui.inventory {
 		public override void Render() {
 			var component = Active ? inventory.Player.GetComponent<ActiveWeaponComponent>() : inventory.Player.GetComponent<WeaponComponent>();
 
-			if (component.Disabled) {
+			if (component!.Disabled) {
 				return;
 			}
 			

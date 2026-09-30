@@ -96,14 +96,14 @@ namespace BurningKnight.entity.creature.mob {
 			} else if (e is TileCollisionStartEvent tce) {
 				if (tce.Tile == Tile.Cobweb) {
 					var body = GetAnyComponent<BodyComponent>();
-					wasSlow = body.Slow;
+					wasSlow = body!.Slow;
 					body.Slow = true;
 				}
 			} else if (e is TileCollisionEndEvent tee) {
 				if (tee.Tile == Tile.Cobweb) {
 					var body = GetAnyComponent<BodyComponent>();
 
-					if (!wasSlow && body.Slow && !GetComponent<BuffsComponent>()!.Has<SlowBuff>()) {
+					if (!wasSlow && body!.Slow && !GetComponent<BuffsComponent>()!.Has<SlowBuff>()) {
 						body.Slow = false;
 					}
 				}
@@ -120,7 +120,7 @@ namespace BurningKnight.entity.creature.mob {
 				}
 			}
 
-			foreach (var p in Area.Tagged[Tags.Player]) {
+			foreach (var p in Area!.Tagged[Tags.Player]) {
 				if (p.GetComponent<LampComponent>()!.Item?.Id == "bk:explosive_lamp") {
 					drops.Add(Items.Create("bk:bomb"));
 					break;

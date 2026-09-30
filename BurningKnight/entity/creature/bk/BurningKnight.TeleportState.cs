@@ -51,7 +51,7 @@ namespace BurningKnight.entity.creature.bk {
 				Self.GetComponent<DialogComponent>()!.Close();
 				var graphics = Self.GetComponent<BkGraphicsComponent>();
 
-				Tween.To(0, graphics.Alpha, x => graphics.Alpha = x, 0.3f, Ease.QuadIn).OnEnd = () => {
+				Tween.To(0, graphics!.Alpha, x => graphics.Alpha = x, 0.3f, Ease.QuadIn).OnEnd = () => {
 					if (Self.Target != null) {
 						Self.Center = Self.Target.Center + MathUtils.CreateVector(Rnd.AnglePI(), 64f);
 					}

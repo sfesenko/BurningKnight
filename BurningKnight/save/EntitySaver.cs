@@ -9,7 +9,7 @@ namespace BurningKnight.save {
 	public abstract class EntitySaver : Saver {
 		public class Comparer : IComparer<Entity> {
 			public int Compare(Entity x, Entity y) {
-				return x.GetType().FullName.CompareTo(y.GetType().FullName);
+				return x!.GetType().FullName.CompareTo(y.GetType().FullName);
 			}
 		}
 
@@ -37,7 +37,7 @@ namespace BurningKnight.save {
 				if (last != null && last.GetType().FullName == entity.GetType().FullName) {
 					writer.WriteString(null);
 				} else {
-					writer.WriteString(entity.GetType().FullName.Replace("BurningKnight.", ""));
+					writer.WriteString(entity!.GetType().FullName.Replace("BurningKnight.", ""));
 				}
 
 				writer.Cache = true;
@@ -91,7 +91,7 @@ namespace BurningKnight.save {
 				var entity = (SaveableEntity) Activator.CreateInstance(Type.GetType($"BurningKnight.{type}", true, false));
 				area.Add(entity, false);
 
-				entity.Load(reader);
+				entity!.Load(reader);
 				var readSize = reader.Position - position;
 				var sum = readSize - size;
 

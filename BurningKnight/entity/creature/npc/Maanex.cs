@@ -47,7 +47,7 @@ namespace BurningKnight.entity.creature.npc {
 
 			Dialogs.RegisterCallback("maanex_6", (d, c) => {
 				if (((ChoiceDialog) d).Choice == 0) {
-					if (!c.To.TryGetComponent<ConsumablesComponent>(out var component) || component.Coins < cost) {
+					if (!c!.To.TryGetComponent<ConsumablesComponent>(out var component) || component.Coins < cost) {
 						return Dialogs.Get("maanex_11");
 					}
 
@@ -78,7 +78,7 @@ namespace BurningKnight.entity.creature.npc {
 			base.PostInit();
 			
 			var h = GetComponent<HealthComponent>();
-			h.Unhittable = false;
+			h!.Unhittable = false;
 			h.InitMaxHealth = 50;
 			h.SetHealth(50, this);
 		}
@@ -163,7 +163,7 @@ namespace BurningKnight.entity.creature.npc {
 		public bool Interact(Entity e) {
 			var d = GetComponent<DialogComponent>();
 			
-			d.Dialog.Str.SetVariable("cost", cost);
+			d!.Dialog.Str.SetVariable("cost", cost);
 			d.Start("maanex_6", e);
 			
 			return true;

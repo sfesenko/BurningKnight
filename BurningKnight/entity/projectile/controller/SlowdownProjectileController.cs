@@ -12,7 +12,7 @@ namespace BurningKnight.entity.projectile.controller {
 				}
 				
 				var b = p.GetAnyComponent<BodyComponent>();
-				var v = b.Velocity;
+				var v = b!.Velocity;
 
 				b.Velocity -= v * (speed * dt * 2);
 

@@ -39,7 +39,7 @@ namespace BurningKnight.entity.room.controllable.spikes {
 				tile = CommonAse.Props.GetSlice("spikes_base");
 			}
 
-			Area.Add(new RenderTrigger(this, RenderBase, Layers.Entrance));
+			Area!.Add(new RenderTrigger(this, RenderBase, Layers.Entrance));
 			
 			AddComponent(new StateComponent());
 			AddComponent(new AnimationComponent("spikes"));
@@ -55,7 +55,7 @@ namespace BurningKnight.entity.room.controllable.spikes {
 		}
 
 		private void RenderShadow() {
-			GraphicsComponent.Offset.Y -= 7;
+			GraphicsComponent!.Offset.Y -= 7;
 			GraphicsComponent.Render(true);
 			GraphicsComponent.Offset.Y += 7;
 		}
@@ -64,7 +64,7 @@ namespace BurningKnight.entity.room.controllable.spikes {
 			base.TurnOn();
 			var s = GetComponent<StateComponent>();
 
-			if (s.StateInstance is HiddenState || s.StateInstance is HidingState) {
+			if (s!.StateInstance is HiddenState || s.StateInstance is HidingState) {
 				s.Become<ShowingState>();
 			}
 		}
@@ -77,7 +77,7 @@ namespace BurningKnight.entity.room.controllable.spikes {
 			On = true;
 			var s = GetComponent<StateComponent>();
 
-			if (s.StateInstance is HiddenState || s.StateInstance is HidingState) {
+			if (s!.StateInstance is HiddenState || s.StateInstance is HidingState) {
 				s.Become<FshowingState>();
 			}
 		}
@@ -86,7 +86,7 @@ namespace BurningKnight.entity.room.controllable.spikes {
 			base.TurnOff();
 			var s = GetComponent<StateComponent>();
 
-			if (s.StateInstance is IdleState || s.StateInstance is ShowingState || s.StateInstance is FshowingState) {
+			if (s!.StateInstance is IdleState || s.StateInstance is ShowingState || s.StateInstance is FshowingState) {
 				s.Become<HidingState>();
 			}
 		}
@@ -131,7 +131,7 @@ namespace BurningKnight.entity.room.controllable.spikes {
 				base.Update(dt);
 				var a = Self.GetComponent<AnimationComponent>()!.Animation;
 
-				if (a.Frame > 3) {
+				if (a!.Frame > 3) {
 					Self.Hurt();
 				}
 				
@@ -159,7 +159,7 @@ namespace BurningKnight.entity.room.controllable.spikes {
 				base.Update(dt);
 				var a = Self.GetComponent<AnimationComponent>()!.Animation;
 
-				if (a.Frame > 2) {
+				if (a!.Frame > 2) {
 					Self.Hurt();
 
 					if (!playedSfx) {
@@ -192,7 +192,7 @@ namespace BurningKnight.entity.room.controllable.spikes {
 				base.Update(dt);
 				var a = Self.GetComponent<AnimationComponent>()!.Animation;
 
-				if (a.Frame < 2) {
+				if (a!.Frame < 2) {
 					Self.Hurt();
 				}
 

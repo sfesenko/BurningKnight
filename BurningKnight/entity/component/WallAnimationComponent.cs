@@ -9,7 +9,7 @@ namespace BurningKnight.entity.component {
 		public float WallAngle;
 
 		protected override void CallRender(Vector2 pos, bool shadow) {
-			var region = Animation.GetCurrentTexture();
+			var region = Animation!.GetCurrentTexture();
 			var origin = new Vector2(0, region.Height / 2);
 			var w = region.Width / 2f;
 			

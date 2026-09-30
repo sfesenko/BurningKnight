@@ -47,7 +47,7 @@ namespace BurningKnight.entity.component {
 		}
 
 		public void SetAutoStop(bool stop) {
-			Animation.AutoStop = stop;
+			Animation!.AutoStop = stop;
 		}
 		
 		private void ReloadAnimation(string layer = null, string tag = null) {
@@ -82,7 +82,7 @@ namespace BurningKnight.entity.component {
 
 			if (shadow) {
 				FlippedVerticaly = !FlippedVerticaly;
-				pos.Y += Animation.GetCurrentTexture().Height - ShadowOffset * 2;
+				pos.Y += Animation!.GetCurrentTexture().Height - ShadowOffset * 2;
 			}
 			
 			if (Entity.TryGetComponent<InteractableComponent>(out var component) && component.OutlineAlpha > 0.05f) {

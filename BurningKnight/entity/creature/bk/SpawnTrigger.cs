@@ -57,7 +57,7 @@ namespace BurningKnight.entity.creature.bk {
 
 						Timer.Add(() => {
 							if (Interrupted) {
-								level.CreateBody();
+								level!.CreateBody();
 								return;
 							}
 								
@@ -76,14 +76,14 @@ namespace BurningKnight.entity.creature.bk {
 										continue;
 									}
 									
-									var li = level.ToIndex(RoomX + x, RoomY + y);
+									var li = level!.ToIndex(RoomX + x, RoomY + y);
 									
 									if (level.Get(li).IsWall()) {
 										level.Variants[li] = 0;
 									}
 									
 									// tmp
-									Area.Add(new TileFx {
+									Area!.Add(new TileFx {
 										X = (RoomX + x) * 16,
 										Y = (RoomY + y) * 16 - 8
 									});
@@ -99,7 +99,7 @@ namespace BurningKnight.entity.creature.bk {
 							
 							for (var y = -1; y < RoomHeight + 1; y++) {
 								for (var x = -1; x < RoomWidth + 1; x++) {
-									LevelTiler.TileUp(level, level.ToIndex(RoomX + x, RoomY + y));
+									LevelTiler.TileUp(level, level!.ToIndex(RoomX + x, RoomY + y));
 								}
 							}
 				
@@ -225,7 +225,7 @@ namespace BurningKnight.entity.creature.bk {
 
 					for (var x = X - 16; x < X + Width + 16; x += 16) {
 						for (var i = 0; i < Rnd.Int(3, 9); i++) {
-							Area.Add(new FireParticle {
+							Area!.Add(new FireParticle {
 								Position = new Vector2(x + Rnd.Float(-2, 18), Y - 16 + Rnd.Float(-2, 18)),
 								Delay = Rnd.Float(0.5f),
 								XChange = 0.1f,
@@ -257,7 +257,7 @@ namespace BurningKnight.entity.creature.bk {
 
 					for (var y = Y; y < Y + Height; y += 16) {
 						for (var i = 0; i < Rnd.Int(3, 9); i++) {
-							Area.Add(new FireParticle {
+							Area!.Add(new FireParticle {
 								Position = new Vector2(X + Rnd.Float(-2, 18) - 16, y + Rnd.Float(-2, 18)),
 								Delay = Rnd.Float(0.5f),
 								XChange = 0.1f,

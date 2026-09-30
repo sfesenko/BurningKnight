@@ -40,7 +40,7 @@ namespace BurningKnight.assets.particle.custom {
 				var x = (int) (X / 16);
 				var y = (int) ((Y + 8) / 16);
 
-				OriginalTile = level.Get(x, y);
+				OriginalTile = level!.Get(x, y);
 
 				if (OriginalTile == Tile.Chasm) {
 					Done = true;
@@ -122,7 +122,7 @@ namespace BurningKnight.assets.particle.custom {
 			var x = (int) (CenterX / 16);
 			var y = (int) ((Y + 8) / 16);
 
-			level.Liquid[level.ToIndex(x, y)] = 0;
+			level!.Liquid[level.ToIndex(x, y)] = 0;
 			level.Set(x, y, Tile);
 			level.UpdateTile(x, y);
 			level.ReCreateBodyChunk(x, y);

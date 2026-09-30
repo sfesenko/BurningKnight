@@ -46,7 +46,7 @@ namespace BurningKnight.entity.creature.player {
 
 					var body = GetComponent<RectBodyComponent>();
 
-					body.KnockbackModifier = 0;
+					body!.KnockbackModifier = 0;
 					body.Velocity = Vector2.Zero;
 
 					if (InGameState.EveryoneDied(this)) {

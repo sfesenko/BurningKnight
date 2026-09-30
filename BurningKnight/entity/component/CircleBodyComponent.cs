@@ -20,7 +20,7 @@ namespace BurningKnight.entity.component {
 		}
 
 		public override void Resize(float x, float y, float w, float h, bool center = false) {
-			var fixture = Body.FixtureList[0];
+			var fixture = Body!.FixtureList[0];
 			var sensor = fixture.IsSensor;
 			
 			Body.DestroyFixture(fixture);

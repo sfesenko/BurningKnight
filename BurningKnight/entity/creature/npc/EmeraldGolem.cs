@@ -49,15 +49,15 @@ namespace BurningKnight.entity.creature.npc {
 						GetComponent<DialogComponent>()!.StartAndClose(Locale.Get("eg_1"), 3);
 					}, 0.2f);
 
-					var inv = c.To.GetComponent<InventoryComponent>();
+					var inv = c!.To.GetComponent<InventoryComponent>();
 					var a = c.To.Area;
 			
 					for (var i = 0; i < Amount; i++) {
-						inv.Pickup(Items.CreateAndAdd("bk:emerald", a));
+						inv!.Pickup(Items.CreateAndAdd("bk:emerald", a));
 					}
 
 					Timer.Add(() => {
-						inv.Pickup(Items.CreateAndAdd(Scourge.GenerateItemId(), a));
+						inv!.Pickup(Items.CreateAndAdd(Scourge.GenerateItemId(), a));
 					}, 1f);
 
 					Timer.Add(() => {
@@ -84,10 +84,10 @@ namespace BurningKnight.entity.creature.npc {
 						GetComponent<DialogComponent>()!.StartAndClose(Locale.Get("eg_1"), 3);
 					}, 0.2f);
 
-					var inv = c.To.GetComponent<InventoryComponent>();
+					var inv = c!.To.GetComponent<InventoryComponent>();
 					var a = c.To.Area;
 			
-					inv.Pickup(Items.CreateAndAdd("bk:emerald_gun", a));
+					inv!.Pickup(Items.CreateAndAdd("bk:emerald_gun", a));
 
 					Timer.Add(() => {
 						inv.Pickup(Items.CreateAndAdd(Scourge.GenerateItemId(), a));

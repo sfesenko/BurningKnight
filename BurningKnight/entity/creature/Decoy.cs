@@ -25,7 +25,7 @@ namespace BurningKnight.entity.creature {
 
 			var h = GetComponent<HealthComponent>();
 
-			h.InitMaxHealth = 6;
+			h!.InitMaxHealth = 6;
 			h.RenderInvt = true;
 
 			GetComponent<DropsComponent>()!.Drops.Clear();

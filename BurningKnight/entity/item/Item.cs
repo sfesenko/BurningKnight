@@ -175,7 +175,7 @@ namespace BurningKnight.entity.item {
 
 						part.Position = (hasOwner ? GetComponent<OwnerComponent>()!.Owner.Center : Center) + Rnd.Vector(-4, 4);
 						part.Particle.Scale = Rnd.Float(0.5f, 1.2f);
-						Area.Add(part);
+						Area!.Add(part);
 						part.Depth = hasOwner ? 1 : -1;
 					}
 				}
@@ -185,14 +185,14 @@ namespace BurningKnight.entity.item {
 			if (hasOwner) {
 				var o = Owner;
 
-				foreach (var u in Uses) {
+				foreach (var u in Uses!) {
 					u.Update(o, this, dt);
 				}
 			} else {
 				if (Attact) {
 					var room = GetComponent<RoomComponent>()!.Room;
 
-					if (room.Tagged[Tags.Player].Count > 0) {
+					if (room!.Tagged[Tags.Player].Count > 0) {
 						var force = 360 * dt;
 						var a = AngleTo(room.Tagged[Tags.Player][0]);
 						GetBody().Velocity += new Vector2((float) Math.Cos(a) * force, (float) Math.Sin(a) * force);
@@ -256,7 +256,7 @@ namespace BurningKnight.entity.item {
 				var dy = DyTo(p);
 				var s = dt * 4;
 
-				b.LinearVelocity -= new Vector2(dx / d * s, dy / d * s);
+				b!.LinearVelocity -= new Vector2(dx / d * s, dy / d * s);
 
 				var a = b.LinearVelocity.ToAngle(); 
 				d = Math.Min(b.LinearVelocity.Length() + dt * 300, 1000);

@@ -149,7 +149,7 @@ namespace BurningKnight.entity.item.stand {
 				
 			var r = GetComponent<RoomComponent>()!.Room;
 
-			foreach (var p in r.Tagged[Tags.Player]) {
+			foreach (var p in r!.Tagged[Tags.Player]) {
 				if (p.GetComponent<ConsumablesComponent>()!.Coins < Price) {
 					Graphics.Color *= 0.6f;
 					break;

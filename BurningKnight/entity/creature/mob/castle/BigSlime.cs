@@ -18,7 +18,7 @@ namespace BurningKnight.entity.creature.mob.castle {
 			var body = new RectBodyComponent(1, 15, 14, 1);
 			AddComponent(body);
 
-			body.Body.LinearDamping = 2;
+			body!.Body.LinearDamping = 2;
 			body.KnockbackModifier = 0.5f;
 			
 			AddComponent(new SensorBodyComponent(2, 7, 12, 9));
@@ -31,7 +31,7 @@ namespace BurningKnight.entity.creature.mob.castle {
 		protected override bool HandleDeath(DiedEvent d) {
 			if (Rnd.Chance(30)) {
 				var slime = new SimpleSlime();
-				Area.Add(slime);
+				Area!.Add(slime);
 				slime.BottomCenter = BottomCenter;
 			}
 			

@@ -28,7 +28,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 
 				var r = Self.GetComponent<RoomComponent>()!.Room;
 
-				if (r.CenterX < Self.CenterX) {
+				if (r!.CenterX < Self.CenterX) {
 					x = r.X + 32;
 					sign = -1;
 				} else {
@@ -56,7 +56,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 				var body = Self.GetComponent<RectBodyComponent>();
 
 				if ((Self.CenterX - x) * sign >= -16) {
-					body.Velocity -= body.Velocity * (dt * 2);
+					body!.Velocity -= body.Velocity * (dt * 2);
 					delay -= dt;
 
 					if (delay <= 0) {
@@ -90,7 +90,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 				}
 
 				Self.X += sign * dt * 360;
-				body.Velocity += new Vector2(sign * dt * 3600, 0);
+				body!.Velocity += new Vector2(sign * dt * 3600, 0);
 			}
 		}
 	}

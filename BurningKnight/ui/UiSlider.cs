@@ -23,7 +23,7 @@ namespace BurningKnight.ui {
 				Type = ButtonType.Slider,
 				RelativeCenterY = y,
 				Click = bt => {
-					c.Value = Math.Max(min, c.Value - 10);
+					c!.Value = Math.Max(min, c.Value - 10);
 				},
 				ScaleMod = 3
 			});

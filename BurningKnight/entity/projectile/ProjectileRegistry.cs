@@ -58,12 +58,12 @@ namespace BurningKnight.entity.projectile {
 				p.Bounce += 10;
 				p.AddFlags(ProjectileFlags.HitsOwner);
 
-				p.GetComponent<CircleBodyComponent>()!.Body.AngularVelocity = 10f;
+				p!.GetComponent<CircleBodyComponent>()!.Body.AngularVelocity = 10f;
 			});
 			
 			Add("what", p => {
 				ProjectileCallbacks.AttachUpdateCallback(p, WhatController.Make());
-				p.GetComponent<CircleBodyComponent>()!.Body.AngularVelocity = 10f;
+				p!.GetComponent<CircleBodyComponent>()!.Body.AngularVelocity = 10f;
 			});
 			
 			Add("soap", p => {
@@ -178,7 +178,7 @@ namespace BurningKnight.entity.projectile {
 			
 			Add("portal", p => {
 				p.Center = p.Owner.GetComponent<CursorComponent>()!.Cursor.GamePosition;
-				p.GetAnyComponent<BodyComponent>().Velocity *= -1;
+				p!.GetAnyComponent<BodyComponent>().Velocity *= -1;
 			});
 			
 			Add("axe", p => {
@@ -187,7 +187,7 @@ namespace BurningKnight.entity.projectile {
 				var ts = Timer.Add(() => {
 					p.Item.Renderer.Hidden = false;
 
-					foreach (var u in p.Item.Uses) {
+					foreach (var u in p!.Item.Uses) {
 						if (u is SimpleShootUse ss) {
 							ss.ProjectileDied = true;
 							break;
@@ -209,7 +209,7 @@ namespace BurningKnight.entity.projectile {
 							projectile.Item.Renderer.Hidden = false;
 							projectile.Break();
 
-							foreach (var u in projectile.Item.Uses) {
+							foreach (var u in projectile!.Item.Uses) {
 								if (u is SimpleShootUse ss) {
 									ss.ProjectileDied = true;
 									break;
@@ -223,7 +223,7 @@ namespace BurningKnight.entity.projectile {
 							projectile.Bounce++;
 						} else {
 							var b = projectile.GetComponent<RectBodyComponent>()!.Body;
-							b.LinearVelocity *= -1;
+							b!.LinearVelocity *= -1;
 
 							projectile.Bounce = 0;
 							projectile.EntitiesHurt.Clear();
@@ -234,14 +234,14 @@ namespace BurningKnight.entity.projectile {
 							ProjectileCallbacks.AttachDeathCallback(projectile, (pr, ee, t) => {
 								pr.Item.Renderer.Hidden = false;
 								
-								foreach (var u in pr.Item.Uses) {
+								foreach (var u in pr!.Item.Uses) {
 									if (u is SimpleShootUse ss) {
 										ss.ProjectileDied = true;
 										break;
 									}
 								}
 								
-								ts.Cancel();
+								ts!.Cancel();
 								pr.Owner.GetComponent<AudioEmitterComponent>()!.EmitRandomized("item_axe_catch");
 							});
 							

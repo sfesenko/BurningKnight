@@ -38,7 +38,7 @@ namespace BurningKnight.ui {
 			var descriptionSize = Font.Small.MeasureString(description);
 
 			bgOffset = new Vector2(Padding);
-			iconOffset = new Vector2(Padding + (20 - icon.Width) / 2f, Padding + (20 - icon.Height) / 2f);
+			iconOffset = new Vector2(Padding + (20 - icon!.Width) / 2f, Padding + (20 - icon.Height) / 2f);
 			titleOffset = new Vector2(Padding * 2 + 20, Padding - 1);
 			descriptionOffset = new Vector2(Padding * 2 + 20, Padding + 10);
 
