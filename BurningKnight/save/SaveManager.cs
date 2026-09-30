@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using BurningKnight.state;
 using Lens;
 using Lens.entity;
@@ -110,16 +109,6 @@ namespace BurningKnight.save {
 			if (saveType != SaveType.Secret) {
 				SecretSave.HadSaveBefore = true;
 			}
-		}
-
-		public static void ThreadSave(Action callback, Area area, SaveType saveType, bool old = false, string path = null) {
-			// new Thread(() => {
-			Save(area, saveType, old, path);
-			callback?.Invoke();
-
-			// }) {
-			// 	Priority = ThreadPriority.Lowest
-			// }.Start();
 		}
 
 		public static bool ExistsAndValid(SaveType saveType, Action<FileReader> action = null, string path = null) {

@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using BurningKnight.assets;
 using BurningKnight.assets.achievements;
 using BurningKnight.assets.input;
@@ -88,7 +87,6 @@ namespace BurningKnight.state {
 		public bool Died;
 		private float saveTimer;
 		private SaveIndicator indicator;
-		private SaveLock saveLock = new();
 
 		private Painting painting;
 
@@ -278,8 +276,6 @@ namespace BurningKnight.state {
 
 		private bool doCheck;
 
-		private bool saving;
-		
 		private void TeleportTo(RoomType type) {
 			var player = LocalPlayer.Locate(Area);
 			var room = player.GetComponent<RoomComponent>().Room;
@@ -433,13 +429,10 @@ namespace BurningKnight.state {
 		public void HandleDeath() {
 			Died = true;
 
-			// Not awaited: this runs while the death screen animates. RunAsync logs any failure.
-			_ = AsyncUtils.RunAsync("Death", () =>
-			{
-				// SaveManager.Save(Area, SaveType.Statistics);
-				SaveManager.Delete(SaveType.Player, SaveType.Level, SaveType.Game);
-				SaveManager.Backup();
-			});
+			// Synchronous: a handful of small files, and a worker would race the teardown.
+			// SaveManager.Save(Area, SaveType.Statistics);
+			SaveManager.Delete(SaveType.Player, SaveType.Level, SaveType.Game);
+			SaveManager.Backup();
 		}
 
 		// private TweenTask last;

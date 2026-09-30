@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using BurningKnight.assets;
 using BurningKnight.assets.achievements;
 using BurningKnight.assets.input;
@@ -78,34 +77,23 @@ namespace BurningKnight.state {
 			}
 			
 			if (!Paused && (Settings.Autosave && Run.Depth > 0)) {
-				if (!saving) {
-					saveTimer += dt;
+				saveTimer += dt;
 
-					if (saveTimer >= AutoSaveInterval) {
-						saveTimer = 0;
-						saving = true;
-						saveLock.Reset();
+				if (saveTimer >= AutoSaveInterval) {
+					saveTimer = 0;
 
-						indicator.HandleEvent(new SaveStartedEvent());
+					indicator.HandleEvent(new SaveStartedEvent());
 
-						new Thread(() => {
-							try {
-								SaveManager.Backup();
+					// Synchronous: the savers serialise the live area, so a worker would be
+					// reading lists the frame is still sorting. The write is a few dozen
+					// milliseconds at most, every AutoSaveInterval seconds.
+					SaveManager.Backup();
 
-								SaveManager.ThreadSave(saveLock.UnlockGlobal, Area, SaveType.Global);
-								SaveManager.ThreadSave(saveLock.UnlockGame, Area, SaveType.Game);
+					SaveManager.Save(Area, SaveType.Global);
+					SaveManager.Save(Area, SaveType.Game);
+					SaveManager.Save(Area, SaveType.Level);
+					SaveManager.Save(Area, SaveType.Player);
 
-								SaveManager.ThreadSave(saveLock.UnlockLevel, Area, SaveType.Level);
-								SaveManager.ThreadSave(saveLock.UnlockPlayer, Area, SaveType.Player);
-							} catch (Exception e) {
-								Log.Error(e);
-							}
-						}) {
-							Priority = ThreadPriority.Lowest
-						}.Start();
-					}
-				} else if (saveLock.Done) {
-					saving = false;
 					indicator.HandleEvent(new SaveEndedEvent());
 				}
 			}
