@@ -50,6 +50,9 @@ namespace Lens
         // class. The game's context points at it.
         public readonly Audio Audio = new();
 
+        // The tween manager, updated by the fixed-timestep loop. Tween.To(...) adds to it.
+        public readonly Tween Tween = new();
+
         public GameState State { get; private set; }
         protected GameState NewState;
 
@@ -222,7 +225,7 @@ namespace Lens
                 Assets.Update(FixedUpdateTime);
                 Input.Update(FixedUpdateTime);
                 Timer.Update(FixedUpdateTime);
-                Tween.Instance.Update(FixedUpdateTime);
+                Tween.Update(FixedUpdateTime);
 
                 State?.Update(FixedUpdateTime);
             }

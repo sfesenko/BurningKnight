@@ -8,8 +8,6 @@ namespace Lens.util.tween;
 
 public  class Tween
 {
-	public static readonly Tween Instance = new();
-	
 	public static TweenTask To(float to, float value, Action<float> set, float duration, Func<float, float>? ease = null, float delay = 0) {
 		ease ??= Ease.QuadOut;
 		
@@ -24,7 +22,7 @@ public  class Tween
 			Set = set
 		};
 
-		Instance.Add(task);
+		Engine.Instance.Tween.Add(task);
 
 		return task;
 	}
@@ -59,7 +57,7 @@ public  class Tween
 			}
 		}
 
-		Instance.Add(task);
+		Engine.Instance.Tween.Add(task);
 
 		return task;
 	}
@@ -70,7 +68,7 @@ public  class Tween
 	private  readonly HashSet<TweenTask> _tasks = [];
 	private  readonly System.Collections.Concurrent.ConcurrentBag<TweenTask> _newTasks = [];
 
-	private Tween() {}
+	public Tween() {}
 	
 	private void Add(TweenTask task)
 	{
