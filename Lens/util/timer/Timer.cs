@@ -5,11 +5,11 @@ namespace Lens.util.timer;
 
 public class TimerTask(Action fn)
 {
-    public readonly Action? Fn = fn;
+    public Action? Fn = fn;
 
     public void Cancel()
     {
-        fn = null;
+        Fn = null;
     }
 }
 
