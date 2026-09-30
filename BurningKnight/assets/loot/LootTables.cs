@@ -15,44 +15,8 @@ namespace BurningKnight.assets.loot {
 		public static int LastDropId;
 
 		public static void Load() {
-			if (true) {
-				return;
-			}
-
-			Load(FileHandle.FromRoot("Loot/"));
-		}
-
-		private static void Load(FileHandle handle) {
-			if (!handle.Exists()) {
-				Log.Error($"Loot table {handle.FullPath} does not exist!");
-				return;
-			}
-
-			if (handle.IsDirectory()) {
-				foreach (var file in handle.ListFileHandles()) {
-					Load(file);
-				}
-
-				foreach (var file in handle.ListDirectoryHandles()) {
-					Load(file);
-				}
-
-				return;
-			}
-			
-			if (handle.Extension != ".json") {
-				return;
-			}
-			
-			var root = JsonValue.Parse(handle.ReadAll());
-
-			foreach (var table in root.AsJsonObject) {
-				try {
-					ParseTable(table.Key, table.Value);
-				} catch (Exception e) {
-					Log.Error(e);
-				}
-			}
+			// Disabled: loot tables are not loaded from disk — drops are defined on the items.
+			// The loader was unreachable and was removed; git has it if it ever comes back.
 		}
 
 		public static void Save() {

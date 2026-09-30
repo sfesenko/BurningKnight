@@ -7,7 +7,7 @@ using Lens.util.timer;
 namespace BurningKnight.entity.item.use {
 	// The editor half of ShootQueueUse; a release build excludes every *.Debug.cs (ADR-0003).
 	public partial class ShootQueueUse {
-		public static void RenderDebug(JsonValue root) {
+		public new static void RenderDebug(JsonValue root) {
 			SimpleShootUse.RenderDebug(root);
 			
 			var amount = root["amn"].Int(3);

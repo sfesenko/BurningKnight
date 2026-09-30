@@ -22,7 +22,10 @@ namespace BurningKnight.state {
 		public bool DoneLerping { get; private set; }
 
 		public Vector2 Start;
+		// The hover behaviour is disabled (see Update); the field belongs to it.
+#pragma warning disable CS0169
 		private bool hovered;
+#pragma warning restore CS0169
 		private float sc = 1;
 		public float Scale = 0.6f;
 		

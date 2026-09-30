@@ -65,7 +65,6 @@ namespace BurningKnight.entity.item {
 			};*/
 		}
 
-		private static bool simplify = true;
 
 	}
 }

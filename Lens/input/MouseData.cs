@@ -13,7 +13,16 @@ namespace Lens.input {
 		public MouseState CurrentState;
 		public static bool HadClick;
 
-		private bool blockedByGui;
+		// The overlay is a development tool; a release build has no ImGui to ask (ADR-0003).
+		private bool BlockedByGui {
+			get {
+#if DEBUG
+				return Assets.ImGuiEnabled && Input.EnableImGuiFocus && ImGui.GetIO().WantCaptureMouse;
+#else
+				return false;
+#endif
+			}
+		}
 		
 		public MouseData() {
 			PreviousState = new MouseState();
@@ -24,17 +33,13 @@ namespace Lens.input {
 			PreviousState = CurrentState;
 			CurrentState = Mouse.GetState();
 
-			// The overlay is a development tool; a release build has no ImGui to ask (ADR-0003).
-#if DEBUG
-			blockedByGui = Assets.ImGuiEnabled && Input.EnableImGuiFocus && ImGui.GetIO().WantCaptureMouse;
-#endif
 			HadClick = HadClick || WasPressedLeftButton;
 		}
 
 		#region Buttons
 
 		public bool Check(MouseButtons button, Input.CheckType type) {
-			if (blockedByGui) {
+			if (BlockedByGui) {
 				return false;
 			}
 			

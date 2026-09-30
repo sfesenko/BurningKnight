@@ -175,7 +175,9 @@ namespace BurningKnight.entity.component {
 			return base.HandleEvent(e);
 		}
 
+#if DEBUG
+		// The buff editor (BuffsComponent.Debug.cs) is Debug-only, and so is its buffer.
 		private static string toAdd = "";
-
+#endif
 	}
 }

@@ -1,4 +1,6 @@
-﻿using System;
+﻿#nullable enable
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
@@ -22,7 +24,7 @@ public class Audio
 
     public readonly float Db3 = 0.1f;
 
-    private MusicPlayer currentPlaying = null;
+    private MusicPlayer? currentPlaying;
     private string? currentPlayingMusic = null;
     private Dictionary<string, MusicPlayer> musicInstances = new();
     private Dictionary<string, SoundEffect> sounds = new();
@@ -30,7 +32,7 @@ public class Audio
     // The player loops on its own; the flag stays because PlayMusic sets it and the log names it.
     public bool Repeat { get; set; } = true;
 
-    private DynamicSoundEffectInstance SoundEffectInstance;
+    private DynamicSoundEffectInstance? SoundEffectInstance;
 
     public float Speed = 1;
 
@@ -126,7 +128,7 @@ public class Audio
     // MonoGame's Song opens from a path only, so the archive's music is played by a MusicPlayer
     // instead — NVorbis reads the entry straight from the content source, and nothing is written
     // out to disk.
-    private MusicPlayer GetOrLoadMusic(string music)
+    private MusicPlayer? GetOrLoadMusic(string music)
     {
         if (musicInstances.TryGetValue(music, out var player))
         {
@@ -178,7 +180,7 @@ public class Audio
             pan);
     }
 
-    public SoundEffect GetSfx(string id)
+    public SoundEffect? GetSfx(string id)
     {
         if (sounds.TryGetValue(id, out var effect))
         {
@@ -189,7 +191,7 @@ public class Audio
         return null;
     }
 
-    private void PlaySfx(SoundEffect sfx, float volume = 1, float pitch = 0, float pan = 0)
+    private void PlaySfx(SoundEffect? sfx, float volume = 1, float pitch = 0, float pan = 0)
     {
         if (!Assets.LoadSfx)
         {
@@ -223,13 +225,11 @@ public class Audio
         }
     }
 
-    private bool loading;
 
     private void LoadAndPlayMusic(string music, bool fromStart = false)
     {
         try
         {
-            loading = true;
             
             var id = Environment.CurrentManagedThreadId;
             Log.Info($"Audio.Play: {id}");
@@ -238,7 +238,6 @@ public class Audio
 
             if (currentPlaying == null)
             {
-                loading = false;
                 return;
             }
 
@@ -248,13 +247,11 @@ public class Audio
             Log.Info($"Playing music {music} repeat = {Repeat}");
             currentPlayingMusic = music;
 
-            loading = false;
         }
         catch (Exception e)
         {
             Log.Error($"Failed to load {music}");
             Log.Error(e);
-            loading = false;
         }
     }
 

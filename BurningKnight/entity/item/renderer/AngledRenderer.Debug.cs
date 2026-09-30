@@ -16,7 +16,7 @@ using MonoGame.Extended;
 namespace BurningKnight.entity.item.renderer {
 	// The editor half of AngledRenderer; a release build excludes every *.Debug.cs (ADR-0003).
 	public partial class AngledRenderer {
-		public static void RenderDebug(string id, JsonValue parent, JsonValue root) {
+		public new static void RenderDebug(string id, JsonValue parent, JsonValue root) {
 			ItemRenderer.RenderDebug(id, parent, root);
 
 			var invert = root["invert_back"].AsBoolean;

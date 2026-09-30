@@ -51,7 +51,7 @@ namespace BurningKnight.state {
 		private bool exitTweenDone;
 		private string currentlyLoadingLabel;
 
-		private const bool SectionalLoadTimeLogging = false;
+		private static readonly bool SectionalLoadTimeLogging = false;
 		
 		public override void Init() {
 			base.Init();

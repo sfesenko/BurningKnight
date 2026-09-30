@@ -28,7 +28,7 @@ namespace BurningKnight.entity.item.use {
 
 			try {
 				Type.GetType(type, true, false);
-			} catch (Exception e) {
+			} catch (Exception) {
 				ImGui.BulletText("Unknown type");
 			}
 			

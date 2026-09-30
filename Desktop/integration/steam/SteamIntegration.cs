@@ -221,7 +221,7 @@ namespace Desktop.integration.steam {
 					Engine.Instance.State.Paused = true;
 				};
 				
-			} catch (Exception e) {
+			} catch (Exception) {
 				Log.Info("No steam no fire :/");
 			}
 		}

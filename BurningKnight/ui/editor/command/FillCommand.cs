@@ -15,8 +15,6 @@ namespace BurningKnight.ui.editor.command {
 		public int Y;
 		public bool Dir8;
 
-		private Tile before;
-		private Tile beforeLiquid;
 		private List<Point> where = new List<Point>();
 
 		private void Set(Level level, int x, int y, bool liquid) {

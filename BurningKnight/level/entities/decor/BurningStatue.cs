@@ -31,7 +31,10 @@ namespace BurningKnight.level.entities.decor {
 		private FireEmitter feb;
 		private SpawnTrigger trigger;
 		private float XSpread = 0.1f;
+		// Only the disabled SetupSpawn assigns it; the emitters below read it as null.
+#pragma warning disable CS0649
 		private Vector2? target;
+#pragma warning restore CS0649
 		
 		public override void Init() {
 			base.Init();

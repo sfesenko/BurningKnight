@@ -90,7 +90,7 @@ namespace BurningKnight.entity.creature.mob.prefabs {
 
 				GetComponent<WallAnimationComponent>().WallAngle = angle;
 				GetComponent<StateComponent>().State = GetIdleState();
-			} catch (Exception e) {
+			} catch (Exception) {
 
 				Timer.Add(() => {
 					Done = true;

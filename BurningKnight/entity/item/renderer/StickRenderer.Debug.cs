@@ -13,7 +13,7 @@ using MonoGame.Extended;
 namespace BurningKnight.entity.item.renderer {
 	// The editor half of StickRenderer; a release build excludes every *.Debug.cs (ADR-0003).
 	public partial class StickRenderer {
-		public static void RenderDebug(string id, JsonValue parent, JsonValue root) {			
+		public new static void RenderDebug(string id, JsonValue parent, JsonValue root) {			
 			ItemRenderer.RenderDebug(id, parent, root);
 
 			var h = root["h"].Bool(false);

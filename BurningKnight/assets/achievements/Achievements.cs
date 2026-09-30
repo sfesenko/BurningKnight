@@ -244,15 +244,19 @@ namespace BurningKnight.assets.achievements {
 			}
 		}
 		
+
+
+		
+
+#if DEBUG
+		// The achievement editor (Achievements.Debug.cs) is Debug-only, and so are its fields.
 		private static string _achievementName = "";
 		private static Achievement _selected;
 		private static bool _hideLocked;
 		private static bool _hideUnlocked;
 		private static bool _forceFocus;
-
-
 		private static int count;
-		
+#endif
 
 		public static bool IsComplete(string id) {
 			var ach = Get(id);

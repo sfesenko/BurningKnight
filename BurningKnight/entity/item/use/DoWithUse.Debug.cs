@@ -11,7 +11,7 @@ using Lens.util.math;
 namespace BurningKnight.entity.item.use {
 	// The editor half of DoWithUse; a release build excludes every *.Debug.cs (ADR-0003).
 	public partial class DoWithUse {
-		public static void RenderDebug(JsonValue root) {
+		public new static void RenderDebug(JsonValue root) {
 			root.InputFloat("Chance", "chance", 100f);
 			
 			if (ImGui.TreeNode("With who")) {

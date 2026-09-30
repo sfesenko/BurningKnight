@@ -11,7 +11,6 @@ namespace BurningKnight.entity.creature.player {
 	public class LampComponent : ItemComponent {
 		private FollowerPet pet;
 		private bool loaded;
-		private bool hadLamp;
 		private Item prev;
 		
 		public override void Set(Item item, bool animate = true) {
@@ -76,7 +75,6 @@ namespace BurningKnight.entity.creature.player {
 			
 			if (loaded) {
 				Item?.Use(Entity);
-				hadLamp = true;
 			}
 
 			if (Item == null || Item.Id == "bk:no_lamp") {

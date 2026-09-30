@@ -5,7 +5,7 @@ namespace BurningKnight.ui {
 	public class UiPane : UiEntity {
 		private bool enabled = true;
 
-		public bool Enabled {
+		public new bool Enabled {
 			get => enabled;
 
 			set {

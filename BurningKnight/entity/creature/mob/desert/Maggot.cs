@@ -23,7 +23,7 @@ namespace BurningKnight.entity.creature.mob.desert {
 		}
         	
 		#region Maggot States
-		public class IdleState : WallWalker.IdleState {
+		public new class IdleState : WallWalker.IdleState {
 			private bool stop;
 			
 			public override void DoLogic(float dt) {

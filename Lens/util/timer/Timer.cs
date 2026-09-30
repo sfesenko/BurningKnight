@@ -1,4 +1,6 @@
-﻿using System;
+﻿#nullable enable
+
+using System;
 using System.Collections.Generic;
 
 namespace Lens.util.timer;
@@ -18,7 +20,7 @@ public static class Timer
     private static readonly PriorityQueue<TimerTask, float> Tasks = new();
     private static float _time;
 
-    public static TimerTask Add(Action fn, float delay)
+    public static TimerTask? Add(Action fn, float delay)
     {
         if (delay <= 0)
         {

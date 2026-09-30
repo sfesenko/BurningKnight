@@ -26,8 +26,10 @@ namespace BurningKnight.entity.item.renderer {
 		public virtual void OnUse() {
 			
 		}
-		
-		private static bool snapGrid = true;
 
+#if DEBUG
+		// The renderer editor (ItemRenderer.Debug.cs) is Debug-only, and so is its flag.
+		private static bool snapGrid = true;
+#endif
 	}
 }

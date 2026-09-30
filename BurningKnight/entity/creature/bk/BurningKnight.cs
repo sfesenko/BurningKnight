@@ -241,7 +241,6 @@ namespace BurningKnight.entity.creature.bk {
 					GetComponent<DialogComponent>().StartAndClose("bk_7", 5);
 					return false;
 				} else if (de.Who == this) {
-					died = true;
 					return base.HandleEvent(e);
 				} else {
 					return false;
@@ -264,7 +263,6 @@ namespace BurningKnight.entity.creature.bk {
 			return base.HandleEvent(e);
 		}
 
-		private bool died;
 		
 		private bool sayNoRage;
 

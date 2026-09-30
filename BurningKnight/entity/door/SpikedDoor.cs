@@ -13,7 +13,7 @@ namespace BurningKnight.entity.door {
 			return new Rectangle(0, 5 + 4, (int) Width, 7);
 		}
 		
-		protected List<Player> Colliding = new List<Player>();
+		protected new List<Player> Colliding = new List<Player>();
 
 		public override void PostInit() {
 			base.PostInit();

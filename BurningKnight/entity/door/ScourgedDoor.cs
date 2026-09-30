@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.door {
 	public class ScourgedDoor : CustomDoor {
-		private List<Player> Colliding = new List<Player>();
+		private new List<Player> Colliding = new List<Player>();
 		private bool scourged;
 
 		public override void PostInit() {

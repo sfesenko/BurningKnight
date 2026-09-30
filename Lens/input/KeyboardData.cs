@@ -9,7 +9,16 @@ namespace Lens.input {
 		public KeyboardState PreviousState;
 		public KeyboardState State;
 		
-		private bool guiBlocksKeyboard;
+		// The overlay is a development tool; a release build has no ImGui to ask (ADR-0003).
+		private bool GuiBlocksKeyboard {
+			get {
+#if DEBUG
+				return Assets.ImGuiEnabled && Input.EnableImGuiFocus && ImGui.GetIO().WantCaptureKeyboard;
+#else
+				return false;
+#endif
+			}
+		}
 
 		public KeyboardData() {
 			State = Keyboard.GetState();
@@ -19,10 +28,6 @@ namespace Lens.input {
 			PreviousState = State;
 			State = Keyboard.GetState();
 			
-			// The overlay is a development tool; a release build has no ImGui to ask (ADR-0003).
-#if DEBUG
-			guiBlocksKeyboard = Assets.ImGuiEnabled && Input.EnableImGuiFocus && ImGui.GetIO().WantCaptureKeyboard;
-#endif
 		}
 
 		public bool Check(Keys key, Input.CheckType type, bool ignoreGui = false) {
@@ -36,15 +41,15 @@ namespace Lens.input {
 		}
 
 		public bool IsDown(Keys key, bool ignoreGui = false) {
-			return (ignoreGui || !guiBlocksKeyboard) && State.IsKeyDown(key);
+			return (ignoreGui || !GuiBlocksKeyboard) && State.IsKeyDown(key);
 		}
 
 		public bool WasPressed(Keys key, bool ignoreGui = false) {
-			return (ignoreGui || !guiBlocksKeyboard) && State.IsKeyDown(key) && !PreviousState.IsKeyDown(key);
+			return (ignoreGui || !GuiBlocksKeyboard) && State.IsKeyDown(key) && !PreviousState.IsKeyDown(key);
 		}
 		
 		public bool WasReleased(Keys key, bool ignoreGui = false) {
-			return (ignoreGui || !guiBlocksKeyboard) && !State.IsKeyDown(key) && PreviousState.IsKeyDown(key);
+			return (ignoreGui || !GuiBlocksKeyboard) && !State.IsKeyDown(key) && PreviousState.IsKeyDown(key);
 		}
 	}
 }

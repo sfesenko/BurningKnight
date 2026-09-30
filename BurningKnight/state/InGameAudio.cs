@@ -16,7 +16,6 @@ namespace BurningKnight.state {
 	public class InGameAudio : Entity
 	{
 
-		private static Audio Audio => Audio.Instance;
 		
 		public override void Init() {
 			base.Init();

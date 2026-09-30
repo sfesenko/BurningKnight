@@ -20,7 +20,7 @@ using Lens.util.file;
 namespace BurningKnight.save.statistics {
 	// The editor half of RunStatistics; a release build excludes every *.Debug.cs (ADR-0003).
 	public partial class RunStatistics {
-		public static void RenderDebug() {
+		public new static void RenderDebug() {
 			if (!WindowManager.RunInfo) {
 				return;
 			}

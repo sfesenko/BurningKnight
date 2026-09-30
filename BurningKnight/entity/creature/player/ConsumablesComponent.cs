@@ -23,7 +23,6 @@ using Lens.util.timer;
 
 namespace BurningKnight.entity.creature.player {
 	public class ConsumablesComponent : ItemComponent {
-		private static Audio Audio => Audio.Instance;
 		
 		private byte bombs;
 		private byte keys;

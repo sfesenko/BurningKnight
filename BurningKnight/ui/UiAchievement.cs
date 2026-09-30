@@ -81,7 +81,7 @@ namespace BurningKnight.ui {
 						} else {
 							Achievements.AchievementBuffer.RemoveAt(0);
 						}
-					} catch (Exception e) {
+					} catch (Exception) {
 						
 					}
 				};

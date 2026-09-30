@@ -293,7 +293,6 @@ namespace BurningKnight.entity.creature.mob.boss {
 					}
 				} while (true);
 
-				return spot;
 			}
 			
 			public override void Init() {

@@ -411,7 +411,7 @@ namespace Lens.entity {
 		#endregion
 
 		public int CompareTo(object obj) {
-			return GetType().FullName.CompareTo(obj.GetType().FullName);
+			return obj == null ? 1 : GetType().FullName!.CompareTo(obj.GetType().FullName);
 		}
 
 		public virtual void RenderImDebug() {

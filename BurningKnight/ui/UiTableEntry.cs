@@ -8,8 +8,8 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.ui {
 	public class UiTableEntry : UiButton {
-		private const float XPadding = 3;
-		public const float YPadding = 1;
+		private new const float XPadding = 3;
+		public new const float YPadding = 1;
 		
 		private TextureRegion texture;
 		private string value;

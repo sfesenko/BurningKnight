@@ -173,7 +173,7 @@ namespace Lens.assets {
 			var changedClone = changed.ToArray();
 			
 			foreach (var e in changedClone) {
-				switch (new DirectoryInfo(Path.GetDirectoryName(e.FullPath)).Name) {
+				switch (Path.GetFileName(Path.GetDirectoryName(e.FullPath))) {
 					case "Textures": {
 						if (!reloadedTextures) {
 							Log.Debug("Reloading textures...");

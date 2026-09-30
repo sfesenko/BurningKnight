@@ -15,7 +15,7 @@ namespace BurningKnight.ui.inventory {
 		private Vector2 activeScale = new Vector2(1);
 		private UiItem uiItem;
 
-		public bool Active;
+		public new bool Active;
 		
 		public UiWeaponSlot(UiInventory inv) {
 			inventory = inv;

@@ -60,7 +60,7 @@ namespace Lens.assets {
 
 			if (read == 0) {
 				// The end: loop back to the start.
-				reader.DecodedPosition = 0;
+				reader.SamplePosition = 0;
 				read = reader.ReadSamples(samples, 0, SamplesPerBuffer);
 			}
 
@@ -76,7 +76,7 @@ namespace Lens.assets {
 
 		public void Play() {
 			instance.Stop();
-			reader.DecodedPosition = 0;
+			reader.SamplePosition = 0;
 			Submit();
 			instance.Play();
 		}

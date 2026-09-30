@@ -27,7 +27,7 @@ namespace BurningKnight.entity.creature.mob.castle {
 		}
 
 		#region Crawler States
-		public class IdleState : WallWalker.IdleState {
+		public new class IdleState : WallWalker.IdleState {
 			public override void Update(float dt) {
 				base.Update(dt);
 				

@@ -6,7 +6,6 @@ using Lens.graphics.animation;
 
 namespace BurningKnight.entity.door {
 	public class RedLock : Lock {
-		private static Audio Audio => Audio.Instance;
 		
 		private static ColorMap palette = ColorMap.New([
 			(Palette.Default[9], Palette.Default[59]),

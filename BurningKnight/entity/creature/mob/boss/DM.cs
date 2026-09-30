@@ -202,7 +202,6 @@ namespace BurningKnight.entity.creature.mob.boss {
 			});
 		}
 
-		private int counter;
 		
 		#region DM States
 		public class IdleState : SmartState<DM> {

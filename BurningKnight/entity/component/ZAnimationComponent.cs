@@ -6,7 +6,7 @@ namespace BurningKnight.entity.component;
 public class ZAnimationComponent(string animationName, string layer = null, string tag = null)
 	: MobAnimationComponent(animationName, layer, tag)
 {
-	public Vector2 Scale = Vector2.One;
+	public new Vector2 Scale = Vector2.One;
 
 	protected override void CallRender(Vector2 pos, bool shadow) {
 		var component = GetComponent<ZComponent>();

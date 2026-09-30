@@ -41,7 +41,7 @@ namespace Lens.util.tween {
 						type = prop.PropertyType;
 					}
 
-					if (AnyEquals(type, NumericTypes)) {
+					if (type != null && AnyEquals(type, NumericTypes)) {
 						value = Convert.ChangeType(value, type);
 					}
 				}
@@ -71,9 +71,9 @@ namespace Lens.util.tween {
 
 			prop = writeRequired
 				? targetType.GetTypeInfo().DeclaredProperties.FirstOrDefault(p =>
-					string.Equals(property, p.Name) && !p.GetMethod.IsStatic && p.CanRead && p.CanWrite)
+					string.Equals(property, p.Name) && p.GetMethod is { IsStatic: false } && p.CanRead && p.CanWrite)
 				: targetType.GetTypeInfo().DeclaredProperties.FirstOrDefault(p =>
-					string.Equals(property, p.Name) && !p.GetMethod.IsStatic && p.CanRead);
+					string.Equals(property, p.Name) && p.GetMethod is { IsStatic: false } && p.CanRead);
 
 			if (field == null) {
 				if (prop == null) {

@@ -8,7 +8,6 @@ namespace BurningKnight.entity.creature.pet {
 		public Action<float> Controller;
 
 		protected bool Saveable;
-		private bool findOwner;
 
 		public override void Update(float dt) {
 			base.Update(dt);
@@ -26,7 +25,6 @@ namespace BurningKnight.entity.creature.pet {
 			if (!Saveable) {
 				RemoveTag(Tags.LevelSave);
 			} else {
-				findOwner = true;
 			}
 		}
 

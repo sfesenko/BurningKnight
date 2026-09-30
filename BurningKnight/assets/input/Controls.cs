@@ -349,8 +349,6 @@ namespace BurningKnight.assets.input {
 
 				return $"key_{id}";
 			}
-
-			return id;
 		}
 
 		public static void Replace(string id, Keys key) {

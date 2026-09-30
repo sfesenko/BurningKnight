@@ -214,63 +214,9 @@ namespace BurningKnight.save {
 		}
 
 		public static void Backup() {
-			if (true) {
-				Log.Info("Backups are disabled, cause you cant restore anyway. Should I implement that?");
-
-				return;
-			}
-
-			var backup = new FileHandle(BackupDir);
-	
-			if (!backup.Exists()) {
-				try {
-					backup.MakeDirectory();
-				} catch (Exception e) {
-				}
-			}
-
-			var save = new FileHandle(SaveDir);
-
-			if (!save.Exists()) {
-				return;
-			}
-
-			Log.Info("Backing up the saves");
-
-			foreach (var folder in backup.ListDirectoryHandles()) {
-				try {
-					folder.Delete();
-				} catch (Exception e) {
-				}
-			}
-
-			foreach (var file in backup.ListFileHandles()) {
-				try {
-					file.Delete();
-				} catch (Exception e) {
-				}
-			}
-
-			foreach (var folder in save.ListDirectoryHandles()) {
-				try {
-					Directory.CreateDirectory($"{backup.FullPath}{folder.Name}");
-				} catch (Exception e) {
-				}
-
-				foreach (var file in folder.ListFileHandles()) {
-					try {
-						File.Copy(file.FullPath, $"{backup.FullPath}{folder.Name}/{file.Name}", true);
-					} catch (Exception e) {
-					}
-				}
-			}
-
-			foreach (var file in save.ListFileHandles()) {
-				try {
-					File.Copy(file.FullPath, $"{backup.FullPath}{file.Name}", true);
-				} catch (Exception e) {
-				}
-			}
+			// Disabled: a backup you cannot restore is not worth keeping. The implementation was
+			// unreachable and was removed; git has it if it ever comes back.
+			Log.Info("Backups are disabled, cause you cant restore anyway. Should I implement that?");
 		}
 	}
 }

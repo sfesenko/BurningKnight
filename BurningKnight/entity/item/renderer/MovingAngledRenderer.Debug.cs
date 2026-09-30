@@ -6,7 +6,7 @@ using Lens.util.tween;
 namespace BurningKnight.entity.item.renderer {
 	// The editor half of MovingAngledRenderer; a release build excludes every *.Debug.cs (ADR-0003).
 	public partial class MovingAngledRenderer {
-		public static void RenderDebug(string id, JsonValue parent, JsonValue root) {
+		public new static void RenderDebug(string id, JsonValue parent, JsonValue root) {
 			AngledRenderer.RenderDebug(id, parent, root);
 
 			var min = (float) root["min_angle"].Number(0);

@@ -55,7 +55,7 @@ namespace BurningKnight.level.entities {
 
 			try {
 				GlobalSave.GetJson($"{p}_data");
-			} catch (Exception ex) {
+			} catch (Exception) {
 				GetComponent<DialogComponent>().StartAndClose("no_score_yet", 3);
 				return true;
 			}

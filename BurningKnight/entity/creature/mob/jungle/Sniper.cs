@@ -38,7 +38,6 @@ namespace BurningKnight.entity.creature.mob.jungle {
 			return base.HandleDeath(d);
 		}
 
-		private int moveId;
 		
 		#region Bandit States
 		public class IdleState : SmartState<Sniper> {

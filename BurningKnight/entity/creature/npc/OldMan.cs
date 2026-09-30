@@ -110,7 +110,10 @@ namespace BurningKnight.entity.creature.npc {
 
 		private bool inSecret;
 		private bool set = true;
+		// The biome-cycling dev mode; nothing sets it (the toggle above is commented out).
+#pragma warning disable CS0649
 		private bool cycle;
+#pragma warning restore CS0649
 		private float t;
 		
 		public override void Update(float dt) {

@@ -154,13 +154,17 @@ namespace BurningKnight.assets.lighting {
 		private static float alpha = 1f;
 		private static System.Numerics.Vector3 color = System.Numerics.Vector3.One;
 		private static BlendState surfaceBlend = BlendState.NonPremultiplied;
-		private static int surfaceBlendId = 5;
 		public static float RadiusMod = 1;
 		public static bool EnableFog = true;
 		public static Color ClearColor;
 
 		private static BlendState lightBlend = BlendState.Additive;
+
+#if DEBUG
+		// The light editor (Lights.Debug.cs) is Debug-only, and so are its blend ids.
+		private static int surfaceBlendId = 5;
 		private static int lightBlendId = 0;
+#endif
 		
 		private static string[] blends = {
 			"Additive", "AlphaBlend", "NonPremultiplied", "Opaque", "Level", "Mess"

@@ -190,8 +190,12 @@ namespace BurningKnight.ui.dialog {
 			Dialog.Close();
 		}
 
-		private static string toSay = "";
 
+
+#if DEBUG
+		// The dialog editor (DialogComponent.Debug.cs) is Debug-only, and so is its buffer.
+		private static string toSay = "";
+#endif
 
 		private void Setup(Dialog dialog, Entity to = null) {
 			Last = Current;

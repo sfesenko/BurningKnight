@@ -19,8 +19,13 @@ namespace BurningKnight.entity.pc {
 		// private MonoGameGraphicsBackend backend;
 		private const float UpdateTime30 = 1 / 30f;
 		private const float UpdateTime60 = 1 / 60f;
-		private float deltaUpdate30, deltaUpdate60, deltaDraw;
+		private float deltaUpdate30, deltaUpdate60;
+
+		// The emulator's tick and display loop are disabled below; these belong to them.
+#pragma warning disable CS0169, CS0414
+		private float deltaDraw;
 		private string cart = "ma_puzzle";
+#pragma warning restore CS0169, CS0414
 
 		public Entity Entity;
 

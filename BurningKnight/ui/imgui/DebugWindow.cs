@@ -30,7 +30,6 @@ namespace BurningKnight.ui.imgui {
 		private static float[] fps = new float[60];
 		private static float[] cpuUsage = new float[60];
 		private static float[] memUsage = new float[60];
-		private static int pos;
 		private static int lastCall;
 		private static float lastFps;
 		private static float lastMem;
