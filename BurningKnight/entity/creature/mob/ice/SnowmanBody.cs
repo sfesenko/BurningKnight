@@ -37,7 +37,7 @@ namespace BurningKnight.entity.creature.mob.ice {
 				ShadowOffset = 3
 			});
 			
-			GetComponent<AudioEmitterComponent>().PitchMod = -0.2f;
+			GetComponent<AudioEmitterComponent>()!.PitchMod = -0.2f;
 			
 			Become<IdleState>();
 
@@ -49,7 +49,7 @@ namespace BurningKnight.entity.creature.mob.ice {
 				return;
 			}
 			
-			GetComponent<AudioEmitterComponent>().EmitRandomized("mob_fire");
+			GetComponent<AudioEmitterComponent>()!.EmitRandomized("mob_fire");
 			var a = GetComponent<MobAnimationComponent>();
 					
 			Tween.To(1.8f, a.Scale.X, x => a.Scale.X = x, 0.1f);
@@ -59,7 +59,7 @@ namespace BurningKnight.entity.creature.mob.ice {
 				Tween.To(1, a.Scale.Y, x => a.Scale.Y = x, 0.4f);
 			
 				var an = AngleTo(Target) + t * 0.3f;
-				var d = GetComponent<HealthComponent>().Percent <= 0.3f;
+				var d = GetComponent<HealthComponent>()!.Percent <= 0.3f;
 
 				var builder = new ProjectileBuilder(this, "carrot");
 

@@ -57,7 +57,7 @@ namespace BurningKnight.level.entities.building {
 			if (!HasComponent<SliceComponent>()) {
 				AddComponent(new SliceComponent(file, sprite));
 			} else {
-				GetComponent<SliceComponent>().Sprite = sp;
+				GetComponent<SliceComponent>()!.Sprite = sp;
 			}
 
 			if (sp != null) {

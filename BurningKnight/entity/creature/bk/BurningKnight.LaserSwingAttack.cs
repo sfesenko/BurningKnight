@@ -64,7 +64,7 @@ namespace BurningKnight.entity.creature.bk {
 					laser.LifeTime = 10f;
 					laser.Position = Self.Center;
 					laser.Angle = angle;
-					Self.GetComponent<AudioEmitterComponent>().EmitRandomizedPrefixed("item_laser", 4);
+					Self.GetComponent<AudioEmitterComponent>()!.EmitRandomizedPrefixed("item_laser", 4);
 				}
 
 				if (laser.Done) {

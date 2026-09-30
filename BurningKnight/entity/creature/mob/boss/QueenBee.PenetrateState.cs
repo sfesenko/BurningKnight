@@ -26,7 +26,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 			public override void Init() {
 				base.Init();
 
-				var r = Self.GetComponent<RoomComponent>().Room;
+				var r = Self.GetComponent<RoomComponent>()!.Room;
 
 				if (r.CenterX < Self.CenterX) {
 					x = r.X + 32;
@@ -85,7 +85,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 						var p = builder.Shoot(a, Rnd.Float(3f, 10f)).Build();
 
 						ProjectileCallbacks.AttachUpdateCallback(p, SlowdownProjectileController.Make(0.25f));
-						Self.GetComponent<AudioEmitterComponent>().EmitRandomized("mob_bee_shot");
+						Self.GetComponent<AudioEmitterComponent>()!.EmitRandomized("mob_bee_shot");
 					}
 				}
 

@@ -31,11 +31,11 @@ namespace BurningKnight.entity.creature.pet {
 			AddComponent(new RectBodyComponent(0, 0, Width, Height, BodyType.Dynamic, false));
 			
 			AddComponent(new StateComponent());
-			GetComponent<StateComponent>().Become<IdleState>();
+			GetComponent<StateComponent>()!.Become<IdleState>();
 			
-			GetComponent<AnimationComponent>().Animate();
+			GetComponent<AnimationComponent>()!.Animate();
 			
-			var body = GetComponent<BodyComponent>().Body;
+			var body = GetComponent<BodyComponent>()!.Body;
 
 			body.Restitution = 1;
 			body.LinearDamping = 10;
@@ -44,7 +44,7 @@ namespace BurningKnight.entity.creature.pet {
 
 		protected override void OnJump() {
 			base.OnJump();
-			GetComponent<StateComponent>().Become<IdleState>();
+			GetComponent<StateComponent>()!.Become<IdleState>();
 		}
 		
 		private float t;
@@ -56,9 +56,9 @@ namespace BurningKnight.entity.creature.pet {
 			if (t >= 0.2f) {
 				t = 0;
 
-				if (GetComponent<StateComponent>().StateInstance is AttackState) {
+				if (GetComponent<StateComponent>()!.StateInstance is AttackState) {
 					foreach (var c in Colliding) {
-						c.GetComponent<HealthComponent>().ModifyHealth(-3, this);
+						c.GetComponent<HealthComponent>()!.ModifyHealth(-3, this);
 					}
 				}
 			}
@@ -69,7 +69,7 @@ namespace BurningKnight.entity.creature.pet {
 				return false;
 			}
 
-			if ((entity is Door || entity is Level) && GetComponent<StateComponent>().StateInstance is IdleState) {
+			if ((entity is Door || entity is Level) && GetComponent<StateComponent>()!.StateInstance is IdleState) {
 				return false;
 			}
 			
@@ -79,14 +79,14 @@ namespace BurningKnight.entity.creature.pet {
 		public override bool HandleEvent(Event e) {
 			if (e is CollisionStartedEvent cse) {
 				if (cse.Entity is Level) {
-					if (GetComponent<StateComponent>().StateInstance is AttackState) {
+					if (GetComponent<StateComponent>()!.StateInstance is AttackState) {
 						Become<IdleState>();
 					}
 				} else if (cse.Entity.HasTag(Tags.MustBeKilled)) {
 					Colliding.Add(cse.Entity);
 
-					if (GetComponent<StateComponent>().StateInstance is AttackState) {
-						cse.Entity.GetComponent<HealthComponent>().ModifyHealth(-3, this);
+					if (GetComponent<StateComponent>()!.StateInstance is AttackState) {
+						cse.Entity.GetComponent<HealthComponent>()!.ModifyHealth(-3, this);
 					}
 				}
 			} else if (e is CollisionEndedEvent cee) {
@@ -104,12 +104,12 @@ namespace BurningKnight.entity.creature.pet {
 		private class IdleState : SmartState<TheEye> {
 			public override void Init() {
 				base.Init();
-				Self.Owner.GetComponent<FollowerComponent>().AddFollower(Self);
+				Self.Owner.GetComponent<FollowerComponent>()!.AddFollower(Self);
 			}
 
 			public override void Destroy() {
 				base.Destroy();
-				Self.GetComponent<FollowerComponent>().Remove();
+				Self.GetComponent<FollowerComponent>()!.Remove();
 			}
 
 			public override void Update(float dt) {
@@ -119,7 +119,7 @@ namespace BurningKnight.entity.creature.pet {
 					return;
 				}
 				
-				var r = Self.Owner.GetComponent<RoomComponent>().Room;
+				var r = Self.Owner.GetComponent<RoomComponent>()!.Room;
 
 				if (r == null || r.Tagged[Tags.MustBeKilled].Count == 0) {
 					return;
@@ -136,18 +136,18 @@ namespace BurningKnight.entity.creature.pet {
 		private class AttackState : SmartState<TheEye> {
 			public override void Init() {
 				base.Init();
-				Self.GetComponent<RectBodyComponent>().Velocity = MathUtils.CreateVector(Self.AngleTo(Self.target), 600);
+				Self.GetComponent<RectBodyComponent>()!.Velocity = MathUtils.CreateVector(Self.AngleTo(Self.target), 600);
 			}
 
 			public override void Destroy() {
 				base.Destroy();
-				Self.GetComponent<RectBodyComponent>().Velocity = Vector2.Zero;
+				Self.GetComponent<RectBodyComponent>()!.Velocity = Vector2.Zero;
 			}
 
 			public override void Update(float dt) {
 				base.Update(dt);
 
-				if (Self.GetComponent<RectBodyComponent>().Velocity.LengthSquared() <= 2048) {
+				if (Self.GetComponent<RectBodyComponent>()!.Velocity.LengthSquared() <= 2048) {
 					Become<IdleState>();
 				}
 			}

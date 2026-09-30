@@ -51,12 +51,12 @@ namespace BurningKnight.entity.door {
 			Area.Add(trigger = new Trigger {
 				Callback = (e) => {
 					if (e is Player p) {
-						if (p.GetComponent<RectBodyComponent>().Velocity.Y >= 0 || p.Y > trigger.Y + 4) {
+						if (p.GetComponent<RectBodyComponent>()!.Velocity.Y >= 0 || p.Y > trigger.Y + 4) {
 							return;
 						}
 
             // fixme: played multiple time
-						if (Context.Run.Scourge > 0 || p.GetComponent<ConsumablesComponent>().Coins >= 30) {
+						if (Context.Run.Scourge > 0 || p.GetComponent<ConsumablesComponent>()!.Coins >= 30) {
 							if (last <= 0) {
 								Audio.PlaySfx("level_door_head_success");
 								last = 0.3f;
@@ -70,7 +70,7 @@ namespace BurningKnight.entity.door {
 							last = 0.3f;
 						}
 						
-						p.GetComponent<HealthComponent>().ModifyHealth(-1, this);
+						p.GetComponent<HealthComponent>()!.ModifyHealth(-1, this);
 
 						AnimationUtil.Poof(p.Center);
 						p.TopCenter = BottomCenter + new Vector2(0, 2);
@@ -81,7 +81,7 @@ namespace BurningKnight.entity.door {
 						b.Acceleration = Vector2.Zero;
 						b.Velocity = Vector2.Zero;
 
-						p.GetComponent<BuffsComponent>().Add(new FrozenBuff() {
+						p.GetComponent<BuffsComponent>()!.Add(new FrozenBuff() {
 							Duration = 1f
 						});
 					}

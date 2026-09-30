@@ -29,7 +29,7 @@ namespace BurningKnight.entity.creature.npc {
 			Subscribe<RoomChangedEvent>();
 			Subscribe<ItemTakenEvent>();
 			
-			GetComponent<DialogComponent>().Dialog.Voice = 19;
+			GetComponent<DialogComponent>()!.Dialog.Voice = 19;
 		}
 
 		private float delay;
@@ -46,26 +46,26 @@ namespace BurningKnight.entity.creature.npc {
 
 		public override bool HandleEvent(Event e) {
 			if (e is RoomChangedEvent rce) {
-				var room = GetComponent<RoomComponent>().Room;
+				var room = GetComponent<RoomComponent>()!.Room;
 				
 				if (rce.Who is Player && rce.New == room) {
-					GetComponent<AudioEmitterComponent>().EmitRandomized("hi");
+					GetComponent<AudioEmitterComponent>()!.EmitRandomized("hi");
 					
 					// Welcome, gobbo!
-					GetComponent<DialogComponent>().Dialog.Str.SetVariable("id", MathUtils.ToRoman((int) GlobalSave.RunId));
-					GetComponent<DialogComponent>().StartAndClose(room.Type == RoomType.Granny ? "granny_4" : GetDialog(), 3);
+					GetComponent<DialogComponent>()!.Dialog.Str.SetVariable("id", MathUtils.ToRoman((int) GlobalSave.RunId));
+					GetComponent<DialogComponent>()!.StartAndClose(room.Type == RoomType.Granny ? "granny_4" : GetDialog(), 3);
 				}
 			} else if (e is Dialog.EndedEvent dee) {
 				if (dee.Dialog.Id == "bk_9") {
 					Timer.Add(() => {
 						// You will die first, Limpor!
-						GetComponent<DialogComponent>().StartAndClose("granny_3", 5);
+						GetComponent<DialogComponent>()!.StartAndClose("granny_3", 5);
 					}, 1f);
 				}
 			} else if (e is ItemTakenEvent ite) {
 				if (ite.Stand is GrannyStand) {
 					// Good luck on your sad quest!
-					GetComponent<DialogComponent>().StartAndClose("granny_5", 10);
+					GetComponent<DialogComponent>()!.StartAndClose("granny_5", 10);
 				}
 			}
 

@@ -44,7 +44,7 @@ namespace BurningKnight.entity.item.use {
 				}
 
 				// i.Hide = Hide;
-				entity.GetComponent<InventoryComponent>().Pickup(i, Animate);
+				entity.GetComponent<InventoryComponent>()!.Pickup(i, Animate);
 			}
 		}
 

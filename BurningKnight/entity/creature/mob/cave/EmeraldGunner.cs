@@ -37,7 +37,7 @@ namespace BurningKnight.entity.creature.mob.cave {
 			AddComponent(new SensorBodyComponent(1, 2, 15, 12));
 
 			moveId = Rnd.Int(3);
-			GetComponent<AudioEmitterComponent>().PitchMod = -0.4f;
+			GetComponent<AudioEmitterComponent>()!.PitchMod = -0.4f;
 			AddComponent(new LightComponent(this, 32, new Color(0.5f, 1f, 0.4f)));
 		}
 
@@ -86,13 +86,13 @@ namespace BurningKnight.entity.creature.mob.cave {
 				velocity.X = (float) Math.Cos(a) * force;
 				velocity.Y = (float) Math.Sin(a) * force;
 
-				Self.GetComponent<RectBodyComponent>().Velocity = velocity;
+				Self.GetComponent<RectBodyComponent>()!.Velocity = velocity;
 				Self.moveId++;
 			}
 
 			public override void Destroy() {
 				base.Destroy();
-				Self.GetComponent<RectBodyComponent>().Velocity = Vector2.Zero;
+				Self.GetComponent<RectBodyComponent>()!.Velocity = Vector2.Zero;
 			}
 
 			public override void Update(float dt) {
@@ -104,7 +104,7 @@ namespace BurningKnight.entity.creature.mob.cave {
 				}
 
 				var v = velocity * Math.Min(1, timer - T * 0.4f);
-				Self.GetComponent<RectBodyComponent>().Velocity = v;
+				Self.GetComponent<RectBodyComponent>()!.Velocity = v;
 
 				if (!fire) {
 					return;
@@ -130,7 +130,7 @@ namespace BurningKnight.entity.creature.mob.cave {
 						Tween.To(1, a.Scale.X, x => a.Scale.X = x, 0.2f);
 						Tween.To(1, a.Scale.Y, x => a.Scale.Y = x, 0.2f);
 						
-						Self.GetComponent<AudioEmitterComponent>().EmitRandomized("mob_fire", sz: 0.2f);
+						Self.GetComponent<AudioEmitterComponent>()!.EmitRandomized("mob_fire", sz: 0.2f);
 
 						var builder = new ProjectileBuilder(Self, "circle") {
 							LightRadius = 32f,
@@ -164,7 +164,7 @@ namespace BurningKnight.entity.creature.mob.cave {
 		public override bool HandleEvent(Event e) {
 			if (e is CollisionStartedEvent ev) {
 				if (ev.Entity is Door) {
-					var s = GetComponent<StateComponent>().StateInstance;
+					var s = GetComponent<StateComponent>()!.StateInstance;
 
 					if (s is RunState) {
 						Become<IdleState>();

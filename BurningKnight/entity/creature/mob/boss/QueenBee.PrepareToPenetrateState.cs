@@ -25,7 +25,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 				base.Init();
 				Self.penetrateCount++;
 
-				var r = Self.GetComponent<RoomComponent>().Room;
+				var r = Self.GetComponent<RoomComponent>()!.Room;
 
 				if (r.CenterX > Self.CenterX) {
 					x = r.X + 32;

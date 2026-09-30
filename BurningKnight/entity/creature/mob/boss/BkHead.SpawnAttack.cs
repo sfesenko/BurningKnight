@@ -41,7 +41,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 
 				if (delay <= 0) {
 					delay = 0.3f;
-					Self.GetComponent<BkGraphicsComponent>().Animate();
+					Self.GetComponent<BkGraphicsComponent>()!.Animate();
 
 					var angle = Rnd.AnglePI() * 0.5f + count * (float) Math.PI;
 					var builder = new ProjectileBuilder(Self, "big") {

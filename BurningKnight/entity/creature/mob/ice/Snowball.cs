@@ -40,8 +40,8 @@ namespace BurningKnight.entity.creature.mob.ice {
 			JumpForce = 40;
 			ZVelocity = 3;
 
-			GetComponent<RectBodyComponent>().Body.LinearDamping = 1;
-			GetComponent<AudioEmitterComponent>().PitchMod = 0.2f;
+			GetComponent<RectBodyComponent>()!.Body.LinearDamping = 1;
+			GetComponent<AudioEmitterComponent>()!.PitchMod = 0.2f;
 		}
 
 		protected virtual BodyComponent CreateBodyComponent() {

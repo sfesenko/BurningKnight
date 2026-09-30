@@ -22,13 +22,13 @@ namespace BurningKnight.entity.creature.mob.boss {
 		
 		public bool InSecondPhase {
 			get {
-				var p = GetComponent<HealthComponent>().Percent;
+				var p = GetComponent<HealthComponent>()!.Percent;
 				return p > 0.33f && p <= 0.66f;
 			}
 		}
 
-		public bool InThirdPhase => GetComponent<HealthComponent>().Percent <= 0.33f;
-		public bool InFirstPhase => GetComponent<HealthComponent>().Percent > 0.66f;
+		public bool InThirdPhase => GetComponent<HealthComponent>()!.Percent <= 0.33f;
+		public bool InFirstPhase => GetComponent<HealthComponent>()!.Percent > 0.66f;
 
 		protected override void AddPhases() {
 			base.AddPhases();
@@ -62,7 +62,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 		}
 
 		private void Animate() {
-			GetComponent<MobAnimationComponent>().Animate();
+			GetComponent<MobAnimationComponent>()!.Animate();
 		}
 		
 		public override void SelectAttack() {
@@ -92,7 +92,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 			if (lastFadingParticle <= 0) {
 				lastFadingParticle = 0.2f;
 
-				var particle = new FadingParticle(GetComponent<MobAnimationComponent>().Animation.GetCurrentTexture(), tint);
+				var particle = new FadingParticle(GetComponent<MobAnimationComponent>()!.Animation.GetCurrentTexture(), tint);
 				Area.Add(particle);
 
 				particle.Depth = Depth - 1;
@@ -217,7 +217,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 						var p = projectiles[0];
 						projectiles.RemoveAt(0);
 
-						Self.GetComponent<AudioEmitterComponent>().Emit("mob_fire_static", pitch: (projectiles.Count / 16f - 0.5f) * 2);
+						Self.GetComponent<AudioEmitterComponent>()!.Emit("mob_fire_static", pitch: (projectiles.Count / 16f - 0.5f) * 2);
 
 						if (!p.Done) {
 							p.BodyComponent.Velocity = MathUtils.CreateVector(p.AngleTo(Self.Target), 200f);
@@ -238,7 +238,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 						p.Center = Self.Center + MathUtils.CreateVector(projectiles.Count / 4f * Math.PI, 20 + projectiles.Count * 2);
 						p.Depth = 1;
 
-						Self.GetComponent<AudioEmitterComponent>().Emit("mob_flower_charging", pitch: projectiles.Count / 8f);
+						Self.GetComponent<AudioEmitterComponent>()!.Emit("mob_flower_charging", pitch: projectiles.Count / 8f);
 						projectiles.Add(p);
 						
 						if (projectiles.Count == 16) {

@@ -7,7 +7,7 @@ using Lens.util;
 namespace BurningKnight.entity.item.use {
 	public class FireInAllDirsUse : ItemUse {
 		public override void Use(Entity entity, Item item) {
-			var weapon = entity.GetComponent<ActiveWeaponComponent>().Item;
+			var weapon = entity.GetComponent<ActiveWeaponComponent>()!.Item;
 
 			if (weapon == null) {
 				return;

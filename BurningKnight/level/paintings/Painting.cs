@@ -62,7 +62,7 @@ namespace BurningKnight.level.paintings {
 			}
 			
 			AddComponent(new InteractableSliceComponent("paintings", $"{Id}_small"));
-			var region = GetComponent<InteractableSliceComponent>().Sprite;
+			var region = GetComponent<InteractableSliceComponent>()!.Sprite;
 
 			Width = region.Width;
 			Height = region.Height;
@@ -169,7 +169,7 @@ namespace BurningKnight.level.paintings {
 			
 				AudioEmitterComponent.Dummy(Area, Center).EmitRandomizedPrefixed("level_chair_break", 2, 0.5f);
 				
-				Particles.BreakSprite(Area, GetComponent<InteractableSliceComponent>().Sprite, Position, Depth);
+				Particles.BreakSprite(Area, GetComponent<InteractableSliceComponent>()!.Sprite, Position, Depth);
 				Context.Camera.Shake(2f);
 			}
 		}

@@ -63,7 +63,7 @@ namespace BurningKnight.level.entities.decor {
 			}
 			
 			t += dt * 0.5f;
-			GetComponent<LightComponent>().Light.Radius = 38f + (float) Math.Cos(t) * 6;
+			GetComponent<LightComponent>()!.Light.Radius = 38f + (float) Math.Cos(t) * 6;
 			
 			lastFlame += dt;
 

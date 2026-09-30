@@ -76,7 +76,7 @@ namespace BurningKnight.entity.creature.mob.jungle {
 
 					if (second) {
 						if (Self.ShootAllAtOnce) {
-							Self.GetComponent<AudioEmitterComponent>().Emit("mob_fire_static");
+							Self.GetComponent<AudioEmitterComponent>()!.Emit("mob_fire_static");
 						}
 						
 						for (var i = 0; i < (Self.ShootAllAtOnce ? 8 : 1); i++) {
@@ -84,7 +84,7 @@ namespace BurningKnight.entity.creature.mob.jungle {
 							Self.projectiles.RemoveAt(0);
 
 							if (!Self.ShootAllAtOnce) {
-								Self.GetComponent<AudioEmitterComponent>().Emit("mob_fire_static", pitch: (Self.projectiles.Count / 16f - 0.5f) * 2);
+								Self.GetComponent<AudioEmitterComponent>()!.Emit("mob_fire_static", pitch: (Self.projectiles.Count / 16f - 0.5f) * 2);
 							}
 
 							if (!p.Done) {
@@ -103,7 +103,7 @@ namespace BurningKnight.entity.creature.mob.jungle {
 
 						p.Center = Self.Position + new Vector2(9) + MathUtils.CreateVector(Self.projectiles.Count / 4f * Math.PI, 10);
 						p.Depth = 1;
-						Self.GetComponent<AudioEmitterComponent>().Emit("mob_flower_charging", pitch: Self.projectiles.Count / 8f);
+						Self.GetComponent<AudioEmitterComponent>()!.Emit("mob_flower_charging", pitch: Self.projectiles.Count / 8f);
 						Self.projectiles.Add(p);
 						
 						if (Self.projectiles.Count == 8) {

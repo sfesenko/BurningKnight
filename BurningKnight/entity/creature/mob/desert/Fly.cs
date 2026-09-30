@@ -45,7 +45,7 @@ namespace BurningKnight.entity.creature.mob.desert {
 				return;
 			}
 			
-			GetComponent<AudioEmitterComponent>().EmitRandomized("mob_fire");
+			GetComponent<AudioEmitterComponent>()!.EmitRandomized("mob_fire");
 			var a = GetComponent<ZAnimationComponent>();
 					
 			Tween.To(0.6f, a.Scale.X, x => a.Scale.X = x, 0.2f);
@@ -85,7 +85,7 @@ namespace BurningKnight.entity.creature.mob.desert {
 
 				if (!searched) {
 					searched = true;
-					target = Self.GetComponent<RoomComponent>().Room?.FindClosest(Self.Center, Tags.Mob, e => !e.HasComponent<OrbitalComponent>() && !(e is WallWalker || e is Boss));
+					target = Self.GetComponent<RoomComponent>()!.Room?.FindClosest(Self.Center, Tags.Mob, e => !e.HasComponent<OrbitalComponent>() && !(e is WallWalker || e is Boss));
 				}
 
 				if (target != null) {
@@ -93,7 +93,7 @@ namespace BurningKnight.entity.creature.mob.desert {
 						target.AddComponent(new OrbitGiverComponent());
 					}
 					
-					target.GetComponent<OrbitGiverComponent>().AddOrbiter(Self);
+					target.GetComponent<OrbitGiverComponent>()!.AddOrbiter(Self);
 					Become<OrbitingState>();
 					return;
 				}
@@ -108,7 +108,7 @@ namespace BurningKnight.entity.creature.mob.desert {
 
 				var s = dt * 300;
 
-				Self.GetComponent<SensorBodyComponent>().Velocity += new Vector2(dx / d * s, dy / d * s);
+				Self.GetComponent<SensorBodyComponent>()!.Velocity += new Vector2(dx / d * s, dy / d * s);
 				Self.PushFromOtherEnemies(dt, e => e.InAir());
 
 				if (T >= 3f) {
@@ -129,7 +129,7 @@ namespace BurningKnight.entity.creature.mob.desert {
 			public override void Update(float dt) {
 				base.Update(dt);
 
-				var orbiting = Self.GetComponent<OrbitalComponent>().Orbiting;
+				var orbiting = Self.GetComponent<OrbitalComponent>()!.Orbiting;
 				
 				if (orbiting == null) {
 					Become<IdleState>();
@@ -137,7 +137,7 @@ namespace BurningKnight.entity.creature.mob.desert {
 				}
 				
 				if (orbiting.TryGetComponent<ZComponent>(out var z)) {
-					Self.GetComponent<ZComponent>().Z = z.Z + DefaultZ;
+					Self.GetComponent<ZComponent>()!.Z = z.Z + DefaultZ;
 				}
 				
 				if (T >= 3f) {

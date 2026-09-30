@@ -107,11 +107,11 @@ namespace BurningKnight.entity.room.controller {
 				return false;
 			}
 		
-			if (e is DiedEvent de && de.Who.GetComponent<RoomComponent>().Room == Room) {
+			if (e is DiedEvent de && de.Who.GetComponent<RoomComponent>()!.Room == Room) {
 				foreach (var m in Room.Tagged[Tags.MustBeKilled]) {
 					var mob = (Mob) m;
 
-					if (!mob.GetComponent<HealthComponent>().HasNoHealth) {
+					if (!mob.GetComponent<HealthComponent>()!.HasNoHealth) {
 						return false;
 					}
 				}
@@ -125,11 +125,11 @@ namespace BurningKnight.entity.room.controller {
 			}
 			
 			if (e is ItemTakenEvent ite) {
-				if (ite.Stand.GetComponent<RoomComponent>().Room == Room) {
+				if (ite.Stand.GetComponent<RoomComponent>()!.Room == Room) {
 					Spawn(ite.Who);
 				}
 			} else if (e is Chest.OpenedEvent coe) {
-				if (coe.Chest.GetComponent<RoomComponent>().Room == Room) {
+				if (coe.Chest.GetComponent<RoomComponent>()!.Room == Room) {
 					Spawn(coe.Who);
 				}
 			}

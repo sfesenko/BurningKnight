@@ -74,7 +74,7 @@ namespace BurningKnight.entity {
 						DestroySounds = false
 					});
 					
-					explosion.GetComponent<AudioEmitterComponent>().EmitRandomizedPrefixed("level_explosion", 3);
+					explosion.GetComponent<AudioEmitterComponent>()!.EmitRandomizedPrefixed("level_explosion", 3);
 				}
 			}
 			
@@ -102,7 +102,7 @@ namespace BurningKnight.entity {
 				}
 				
 				e.GetAnyComponent<BodyComponent>()?.KnockbackFrom(whoHurts, 4f);
-				e.GetComponent<ExplodableComponent>().HandleExplosion(damager, whoHurts, damage);
+				e.GetComponent<ExplodableComponent>()!.HandleExplosion(damager, whoHurts, damage);
 			}
 
 			if (Settings.Flashes) {

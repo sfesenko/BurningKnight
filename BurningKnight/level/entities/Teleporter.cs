@@ -68,7 +68,7 @@ namespace BurningKnight.level.entities {
 				}
 
 				played = true;
-				var room = GetComponent<RoomComponent>().Room;
+				var room = GetComponent<RoomComponent>()!.Room;
 
 				if (Id != "a" && room == null) {
 					return base.HandleEvent(e);
@@ -86,7 +86,7 @@ namespace BurningKnight.level.entities {
 							tr.ignoreCollision = true;
 							c.BottomCenter = tr.Center;
 							Context.Camera.Jump();
-							c.GetComponent<HealthComponent>().InvincibilityTimer = 1;
+							c.GetComponent<HealthComponent>()!.InvincibilityTimer = 1;
 							Audio.PlaySfx("level_teleport_arrive");
 							
 							AnimationUtil.TeleportIn(c);

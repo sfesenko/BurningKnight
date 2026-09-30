@@ -18,7 +18,7 @@ namespace BurningKnight.entity.component {
 
 			set {
 				controller = value;
-				Entity.GetComponent<InputComponent>().GamepadData = value;
+				Entity.GetComponent<InputComponent>()!.GamepadData = value;
 			}
 		}
 
@@ -30,7 +30,7 @@ namespace BurningKnight.entity.component {
 					return;
 				}
 
-				var am = Context.Camera.GetComponent<ShakeComponent>().Amount;
+				var am = Context.Camera.GetComponent<ShakeComponent>()!.Amount;
 
 				if (am < 5) {
 					return;

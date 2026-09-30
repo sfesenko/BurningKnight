@@ -34,7 +34,7 @@ namespace BurningKnight.entity.item.use {
 					lastFlame = 0;
 					
 					entity.Area.Add(new FireParticle {
-						Position = entity.Center + MathUtils.CreateVector(entity.AngleTo(entity.GetComponent<AimComponent>().Aim), 13),
+						Position = entity.Center + MathUtils.CreateVector(entity.AngleTo(entity.GetComponent<AimComponent>()!.Aim), 13),
 						Depth = Layers.Wall + 1
 					});
 				}

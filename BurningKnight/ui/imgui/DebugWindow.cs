@@ -207,7 +207,7 @@ namespace BurningKnight.ui.imgui {
 			ImGui.SameLine();
 
 			if (ImGui.Button("Kill")) {
-				LocalPlayer.Locate(Context.Level.Area)?.GetComponent<HealthComponent>().Kill(null);
+				LocalPlayer.Locate(Context.Level.Area)?.GetComponent<HealthComponent>()!.Kill(null);
 			}
 
 			ImGui.Separator();
@@ -216,7 +216,7 @@ namespace BurningKnight.ui.imgui {
 				var player = LocalPlayer.Locate(Context.Level.Area);
 
 				if (player != null) {
-					ImGui.Checkbox("Unhittable", ref player.GetComponent<HealthComponent>().Unhittable);
+					ImGui.Checkbox("Unhittable", ref player.GetComponent<HealthComponent>()!.Unhittable);
 				}
 			}
 

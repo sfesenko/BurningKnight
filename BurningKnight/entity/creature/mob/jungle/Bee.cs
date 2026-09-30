@@ -35,7 +35,7 @@ namespace BurningKnight.entity.creature.mob.jungle {
 			Become<IdleState>();
 			Flying = true;
 
-			GetComponent<MobAnimationComponent>().ShadowOffset = -2;
+			GetComponent<MobAnimationComponent>()!.ShadowOffset = -2;
 			AddBody();
 			
 			var body = GetComponent<RectBodyComponent>();
@@ -57,7 +57,7 @@ namespace BurningKnight.entity.creature.mob.jungle {
 			base.OnHit(e);
 
 			if (e is Player) {
-				e.GetComponent<BuffsComponent>().Add(new SlowBuff {
+				e.GetComponent<BuffsComponent>()!.Add(new SlowBuff {
 					Duration = 5
 				});
 			}
@@ -98,7 +98,7 @@ namespace BurningKnight.entity.creature.mob.jungle {
 				var a = Self.AngleTo(lastSeen);
 				var force = 50f * dt * Self.Speed;
 
-				Self.GetComponent<RectBodyComponent>().Velocity +=
+				Self.GetComponent<RectBodyComponent>()!.Velocity +=
 					new Vector2((float) Math.Cos(a) * force, (float) Math.Sin(a) * force);
 
 				Self.PushFromOtherEnemies(dt * 0.2f);

@@ -21,7 +21,7 @@ namespace BurningKnight.entity.creature.pet {
 
 		public override bool HandleEvent(Event e) {
 			if (e is CollisionStartedEvent cse && Sprite == "bk:sharp_lamp" && cse.Entity is Creature c && !c.IsFriendly()) {
-				c.GetComponent<HealthComponent>().ModifyHealth(-2, this);
+				c.GetComponent<HealthComponent>()!.ModifyHealth(-2, this);
 			}
 			
 			return base.HandleEvent(e);
@@ -31,7 +31,7 @@ namespace BurningKnight.entity.creature.pet {
 			if (Sprite == "bk:led") {
 				if (!HasComponent<OrbitalComponent>()) {
 					AddComponent(new OrbitalComponent());
-					Owner.GetComponent<OrbitGiverComponent>().AddOrbiter(this);
+					Owner.GetComponent<OrbitGiverComponent>()!.AddOrbiter(this);
 				}
 			} else {
 				base.Follow();
@@ -44,7 +44,7 @@ namespace BurningKnight.entity.creature.pet {
 		public override void Update(float dt) {
 			base.Update(dt);
 			t += dt * 0.5f;
-			GetComponent<LightComponent>().Light.Radius = 38f + (float) Math.Cos(t) * 6;
+			GetComponent<LightComponent>()!.Light.Radius = 38f + (float) Math.Cos(t) * 6;
 			
 			lastFlame += dt;
 

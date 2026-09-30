@@ -12,12 +12,12 @@ namespace BurningKnight.entity.item.use {
 			entity.Area.Add(decoy);
 			decoy.BottomCenter = entity.BottomCenter;
 
-			entity.GetComponent<BuffsComponent>().Add(new InvisibleBuff {
+			entity.GetComponent<BuffsComponent>()!.Add(new InvisibleBuff {
 				Infinite = true
 			});
 			
 			decoy.OnDeath += () => {
-				entity.GetComponent<BuffsComponent>().Remove<InvisibleBuff>();
+				entity.GetComponent<BuffsComponent>()!.Remove<InvisibleBuff>();
 			};
 		}
 	}

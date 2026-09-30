@@ -28,22 +28,22 @@ namespace BurningKnight.level.entities.statue {
 
 				if (c.Coins < 5) {
 					// Dude where ma money?
-					GetComponent<DialogComponent>().StartAndClose("fountain_0", 5);
+					GetComponent<DialogComponent>()!.StartAndClose("fountain_0", 5);
 				} else {
 					c.Coins -= 5;
 					Context.Run.RemoveScourge();
 					
 					// You've been cleaned completely/a bit
-					GetComponent<DialogComponent>().StartAndClose($"fountain_{(Context.Run.Scourge == 0 ? 2 : 1)}", 5);
+					GetComponent<DialogComponent>()!.StartAndClose($"fountain_{(Context.Run.Scourge == 0 ? 2 : 1)}", 5);
 
 					if (Context.Run.Scourge == 0) {
-						e.GetComponent<ActiveWeaponComponent>().Cleanse();
-						e.GetComponent<WeaponComponent>().Cleanse();
+						e.GetComponent<ActiveWeaponComponent>()!.Cleanse();
+						e.GetComponent<WeaponComponent>()!.Cleanse();
 					}
 				}
 			} else {
 				// You are free from scourges
-				GetComponent<DialogComponent>().StartAndClose("fountain_3", 5);
+				GetComponent<DialogComponent>()!.StartAndClose("fountain_3", 5);
 			}
 			
 			return true;

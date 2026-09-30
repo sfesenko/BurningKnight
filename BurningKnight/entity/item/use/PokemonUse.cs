@@ -23,7 +23,7 @@ namespace BurningKnight.entity.item.use {
 				var m = (Mob) Activator.CreateInstance(type);
 				entity.Area.Add(m);
 
-				m.GetComponent<BuffsComponent>().Add(new CharmedBuff {
+				m.GetComponent<BuffsComponent>()!.Add(new CharmedBuff {
 					Infinite = true
 				});
 

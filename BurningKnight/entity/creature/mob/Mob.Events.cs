@@ -65,12 +65,12 @@ namespace BurningKnight.entity.creature.mob {
 					}
 				}
 
-				if (who is Player && who.GetComponent<LampComponent>().Item?.Id == "bk:explosive_lamp") {
+				if (who is Player && who.GetComponent<LampComponent>()!.Item?.Id == "bk:explosive_lamp") {
 					AddDrops(new SimpleDrop(1f, 1, 1, "bk:bomb"));
 				}
 
 				if (!de.BlockClear) {
-					GetComponent<RoomComponent>().Room?.CheckCleared(who);
+					GetComponent<RoomComponent>()!.Room?.CheckCleared(who);
 				}
 			} else if (e is HealthModifiedEvent hme && hme.Amount < 0) {
 				if (!(this is bk.BurningKnight) && TryGetComponent<RoomComponent>(out var room) && room.Room != null && room.Room.Tagged[Tags.Player].Count == 0) {
@@ -103,7 +103,7 @@ namespace BurningKnight.entity.creature.mob {
 				if (tee.Tile == Tile.Cobweb) {
 					var body = GetAnyComponent<BodyComponent>();
 
-					if (!wasSlow && body.Slow && !GetComponent<BuffsComponent>().Has<SlowBuff>()) {
+					if (!wasSlow && body.Slow && !GetComponent<BuffsComponent>()!.Has<SlowBuff>()) {
 						body.Slow = false;
 					}
 				}
@@ -121,7 +121,7 @@ namespace BurningKnight.entity.creature.mob {
 			}
 
 			foreach (var p in Area.Tagged[Tags.Player]) {
-				if (p.GetComponent<LampComponent>().Item?.Id == "bk:explosive_lamp") {
+				if (p.GetComponent<LampComponent>()!.Item?.Id == "bk:explosive_lamp") {
 					drops.Add(Items.Create("bk:bomb"));
 					break;
 				}

@@ -76,8 +76,8 @@ namespace BurningKnight.entity.creature.mob.boss {
 			base.OnTargetChange(target);
 
 			if (target != null) {
-				if (GetComponent<HealthComponent>().Health > 1) {
-					GetComponent<DialogComponent>().StartAndClose("dm_7", 2f);
+				if (GetComponent<HealthComponent>()!.Health > 1) {
+					GetComponent<DialogComponent>()!.StartAndClose("dm_7", 2f);
 				}
 
 				SelectAttack();
@@ -112,7 +112,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 			Context.Camera.Shake(6);
 
 			AnimationUtil.TeleportAway(this, () => {
-				GetComponent<RoomComponent>().Room.Hide();
+				GetComponent<RoomComponent>()!.Room.Hide();
 				
 				Timer.Add(() => {
 					foreach (var r in Area.Tagged[Tags.Room]) {
@@ -135,11 +135,11 @@ namespace BurningKnight.entity.creature.mob.boss {
 						}
 					}
 					
-					var rm = GetComponent<RoomComponent>().Room;
+					var rm = GetComponent<RoomComponent>()!.Room;
 					var level = Context.Level;
 					Type type;
 
-					if (GetComponent<HealthComponent>().Health <= 0) {
+					if (GetComponent<HealthComponent>()!.Health <= 0) {
 						type = typeof(DmEndRoom);
 					} else {
 						var arr = DmRoomRegistry.Rooms.ToList();
@@ -213,7 +213,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 			public override void Update(float dt) {
 				base.Update(dt);
 
-				if (Self.GetComponent<RoomComponent>().Room.Tagged[Tags.Mob].Count > 1) {
+				if (Self.GetComponent<RoomComponent>()!.Room.Tagged[Tags.Mob].Count > 1) {
 					Become<FlyingState>();
 				}
 			}
@@ -224,28 +224,28 @@ namespace BurningKnight.entity.creature.mob.boss {
 				base.Init();
 				
 				Self.TouchDamage = 0;
-				Self.GetComponent<HealthComponent>().Unhittable = true;
+				Self.GetComponent<HealthComponent>()!.Unhittable = true;
 
-				Self.GetComponent<ZAnimationComponent>().Tint.A = 140;
-				Self.GetComponent<ZComponent>().Float = true;
+				Self.GetComponent<ZAnimationComponent>()!.Tint.A = 140;
+				Self.GetComponent<ZComponent>()!.Float = true;
 			}
 
 			public override void Destroy() {
 				base.Destroy();
 				
 				Self.TouchDamage = 0;
-				Self.GetComponent<HealthComponent>().Unhittable = false;
+				Self.GetComponent<HealthComponent>()!.Unhittable = false;
 				
-				Self.GetComponent<ZAnimationComponent>().Tint.A = 255;
-				Self.GetComponent<ZComponent>().Float = false;
+				Self.GetComponent<ZAnimationComponent>()!.Tint.A = 255;
+				Self.GetComponent<ZComponent>()!.Float = false;
 			}
 
 			public override void Update(float dt) {
 				base.Update(dt);
 
-				Self.GetComponent<HealthComponent>().Unhittable = true;
+				Self.GetComponent<HealthComponent>()!.Unhittable = true;
 				
-				if (Self.GetComponent<RoomComponent>().Room.Tagged[Tags.Mob].Count <= 1) {
+				if (Self.GetComponent<RoomComponent>()!.Room.Tagged[Tags.Mob].Count <= 1) {
 					Become<IdleState>();
 				}
 			}
@@ -260,7 +260,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 			
 			Target.RemoveComponent<PlayerInputComponent>();
 			
-			GetComponent<DialogComponent>().Start("lp_0", Target, () => {
+			GetComponent<DialogComponent>()!.Start("lp_0", Target, () => {
 				Timer.Add(() => {
 					Context.Run.ActualDepth = -1;
 					Context.Run.Depth = 1;

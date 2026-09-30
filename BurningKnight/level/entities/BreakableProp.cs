@@ -60,7 +60,7 @@ namespace BurningKnight.level.entities {
 		}
 
 		protected override Rectangle GetCollider() {
-			var rect = GetComponent<SliceComponent>().Sprite.Source;
+			var rect = GetComponent<SliceComponent>()!.Sprite.Source;
 
 			/*if (Sprite.Contains("pot") || Sprite.Contains("crate")) {
 				AddComponent(new PoolDropsComponent(ItemPool.Crate, 0.3f, 1, 3));
@@ -83,7 +83,7 @@ namespace BurningKnight.level.entities {
 				}
 			} else if (e is CollisionStartedEvent c && hurts) {
 				if (c.Entity is Player) {
-					c.Entity.GetComponent<HealthComponent>().ModifyHealth(-1, this);
+					c.Entity.GetComponent<HealthComponent>()!.ModifyHealth(-1, this);
 					c.Entity.GetAnyComponent<BodyComponent>().KnockbackFrom(this, 1);
 				}
 			}
@@ -122,7 +122,7 @@ namespace BurningKnight.level.entities {
 					d.EmitRandomizedPrefixed("level_chair_break", 2, 0.75f);
 				}
 
-				Particles.BreakSprite(Area, GetComponent<SliceComponent>().Sprite, Position);
+				Particles.BreakSprite(Area, GetComponent<SliceComponent>()!.Sprite, Position);
 				Context.Camera.Shake(2f);
 			}
 		}

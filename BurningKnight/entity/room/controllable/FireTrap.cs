@@ -50,7 +50,7 @@ namespace BurningKnight.entity.room.controllable {
 				ResetTimer();
 				return;
 			} else {
-				var room = GetComponent<RoomComponent>().Room;
+				var room = GetComponent<RoomComponent>()!.Room;
 
 				if (room.Tagged[Tags.Player].Count == 0 || room.Tagged[Tags.MustBeKilled].Count == 0) {
 					ResetTimer();
@@ -115,7 +115,7 @@ namespace BurningKnight.entity.room.controllable {
 		
 		protected void Hurt() {
 			foreach (var c in Colliding) {
-				c.GetComponent<HealthComponent>().ModifyHealth(-1, this);
+				c.GetComponent<HealthComponent>()!.ModifyHealth(-1, this);
 			}
 		}
 

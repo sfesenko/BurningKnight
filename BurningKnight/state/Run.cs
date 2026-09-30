@@ -289,7 +289,7 @@ namespace BurningKnight.state {
 
 			foreach (var p in Context.Area.Tagged[Tags.Player]) {
 				p.RemoveComponent<PlayerInputComponent>();
-				p.GetComponent<HealthComponent>().Unhittable = true;
+				p.GetComponent<HealthComponent>()!.Unhittable = true;
 
 				pl = (Player) p;
 			}

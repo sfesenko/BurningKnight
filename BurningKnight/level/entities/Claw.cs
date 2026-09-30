@@ -74,7 +74,7 @@ namespace BurningKnight.level.entities {
 		}
 
 		private bool CheckGrab() {
-			var room = GetComponent<RoomComponent>().Room;
+			var room = GetComponent<RoomComponent>()!.Room;
 			var p = Position + new Vector2(0, 10);
 			var min = 12f;
 			RoundItem item = null;

@@ -83,7 +83,7 @@ namespace BurningKnight.entity.creature.bk {
 				
 				Area.Add(orbital);
 				orbital.Center = Center;
-				GetComponent<OrbitGiverComponent>().AddOrbiter(orbital);
+				GetComponent<OrbitGiverComponent>()!.AddOrbiter(orbital);
 			}
 		}
 		private void BeginFight() {
@@ -91,13 +91,13 @@ namespace BurningKnight.entity.creature.bk {
 				return;
 			}
 			
-			var r = GetComponent<RoomComponent>().Room;
+			var r = GetComponent<RoomComponent>()!.Room;
 
 			if (r == null) {
 				return;
 			}
 			
-			GetComponent<DialogComponent>().StartAndClose("bk_12", 3);
+			GetComponent<DialogComponent>()!.StartAndClose("bk_12", 3);
 			AddOrbitals(6);
 
 			InFight = true;
@@ -133,9 +133,9 @@ namespace BurningKnight.entity.creature.bk {
 
 			Become<FightState>();
 
-			GetComponent<HealthComponent>().Unhittable = false;
+			GetComponent<HealthComponent>()!.Unhittable = false;
 			TouchDamage = 2;
-			Center = Target.GetComponent<RoomComponent>().Room.Center;
+			Center = Target.GetComponent<RoomComponent>()!.Room.Center;
 		}
 		protected override void Become<T>() {
 			if (!Passive || typeof(T) == typeof(IdleState)) {
@@ -146,7 +146,7 @@ namespace BurningKnight.entity.creature.bk {
 			HealthBar.AddPhase(0.5f);
 		}
 		private int count;
-		public bool Raging => GetComponent<HealthComponent>().Percent <= 0.5f;
+		public bool Raging => GetComponent<HealthComponent>()!.Percent <= 0.5f;
 		private List<Laser> lasers = new List<Laser>();
 		private float spinV;
 		private int spinDir;
@@ -175,7 +175,7 @@ namespace BurningKnight.entity.creature.bk {
 			spinDir = Rnd.Chance() ? 1 : -1;
 
 			Timer.Add(() => { 
-				GetComponent<AudioEmitterComponent>().EmitRandomizedPrefixed("item_laser", 4);
+				GetComponent<AudioEmitterComponent>()!.EmitRandomizedPrefixed("item_laser", 4);
 			}, 1f);
 
 			for (var i = 0; i < 4; i++) {

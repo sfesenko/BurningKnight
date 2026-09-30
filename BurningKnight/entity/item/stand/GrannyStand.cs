@@ -13,7 +13,7 @@ namespace BurningKnight.entity.item.stand {
 		protected override void OnTake(Item item, Entity who) {
 			base.OnTake(item, who);
 		
-			var rm = GetComponent<RoomComponent>().Room;
+			var rm = GetComponent<RoomComponent>()!.Room;
 			
 			if (rm == null) {
 				return;

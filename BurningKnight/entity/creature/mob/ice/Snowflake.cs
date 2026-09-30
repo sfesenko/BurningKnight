@@ -19,7 +19,7 @@ namespace BurningKnight.entity.creature.mob.ice {
 			base.SetStats();
 
 			SetMaxHp(6);
-			GetComponent<HealthComponent>().Unhittable = true;
+			GetComponent<HealthComponent>()!.Unhittable = true;
 			
 			var body = new SensorBodyComponent(1, 1, 14, 15);
 			AddComponent(body);
@@ -47,7 +47,7 @@ namespace BurningKnight.entity.creature.mob.ice {
 
 		public override void Update(float dt) {
 			base.Update(dt);
-			var rm = GetComponent<RoomComponent>().Room;
+			var rm = GetComponent<RoomComponent>()!.Room;
 
 			if (rm == null || rm.Tagged[Tags.Player].Count == 0 || rm.Tagged[Tags.MustBeKilled].Count > 0) {
 				return;
@@ -88,7 +88,7 @@ namespace BurningKnight.entity.creature.mob.ice {
 							target.AddComponent(new OrbitGiverComponent());
 						}
 					
-						target.GetComponent<OrbitGiverComponent>().AddOrbiter(Self);
+						target.GetComponent<OrbitGiverComponent>()!.AddOrbiter(Self);
 						Become<OrbitingState>();
 
 						return;
@@ -103,7 +103,7 @@ namespace BurningKnight.entity.creature.mob.ice {
 
 				if (!searched) {
 					searched = true;
-					target = Self.GetComponent<RoomComponent>().Room?.FindClosest(Self.Center, Tags.Mob, e => !e.HasComponent<OrbitalComponent>() && !(e is WallWalker || e is Boss));
+					target = Self.GetComponent<RoomComponent>()!.Room?.FindClosest(Self.Center, Tags.Mob, e => !e.HasComponent<OrbitalComponent>() && !(e is WallWalker || e is Boss));
 
 					if (target == null) {
 						Self.Kill(Self);
@@ -130,7 +130,7 @@ namespace BurningKnight.entity.creature.mob.ice {
 			public override void Update(float dt) {
 				base.Update(dt);
 
-				var orbiting = Self.GetComponent<OrbitalComponent>().Orbiting;
+				var orbiting = Self.GetComponent<OrbitalComponent>()!.Orbiting;
 				
 				if (orbiting == null) {
 					Become<IdleState>();
@@ -138,7 +138,7 @@ namespace BurningKnight.entity.creature.mob.ice {
 				}
 				
 				if (orbiting.TryGetComponent<ZComponent>(out var z)) {
-					Self.GetComponent<ZComponent>().Z = z.Z + DefaultZ;
+					Self.GetComponent<ZComponent>()!.Z = z.Z + DefaultZ;
 				}
 			}
 		}

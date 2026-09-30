@@ -39,7 +39,7 @@ namespace BurningKnight.level.entities.statue {
 		public override void Update(float dt) {
 			base.Update(dt);
 
-			var with = GetComponent<InteractableComponent>().CurrentlyInteracting;
+			var with = GetComponent<InteractableComponent>()!.CurrentlyInteracting;
 
 			if (with == null) {
 				return;
@@ -72,7 +72,7 @@ namespace BurningKnight.level.entities.statue {
 						}
 					}
 					
-					with.GetComponent<InteractorComponent>().EndInteraction();
+					with.GetComponent<InteractorComponent>()!.EndInteraction();
 					Tombstone.CreatePlayer(Area, (byte) index, true, with.BottomCenter + new Vector2(0, 2));
 					
 					break;

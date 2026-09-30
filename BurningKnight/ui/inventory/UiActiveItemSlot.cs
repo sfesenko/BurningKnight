@@ -52,7 +52,7 @@ namespace BurningKnight.ui.inventory {
 			activeEmpty = anim.GetSlice("active_empty");
 			activeFull = anim.GetSlice("active_full");
 			
-			if (inventory.Player?.GetComponent<ActiveItemComponent>().Item != null) {
+			if (inventory.Player?.GetComponent<ActiveItemComponent>()!.Item != null) {
 				ActivePosition = 0;
 			}
 		}
@@ -87,7 +87,7 @@ namespace BurningKnight.ui.inventory {
 				tweened = true;
 					
 				Tween.To(-1, 0, x => ActivePosition = x, 0.3f).OnEnd = () => {
-					inventory.Player.GetComponent<ActiveItemComponent>().Clear();
+					inventory.Player.GetComponent<ActiveItemComponent>()!.Clear();
 					tweened = false;
 				};
 			}
@@ -161,7 +161,7 @@ namespace BurningKnight.ui.inventory {
 
 		public override bool HandleEvent(Event e) {
 			if (e is ItemUsedEvent item) {
-				if (inventory.Player.GetComponent<ActiveItemComponent>().Item == item.Item) {
+				if (inventory.Player.GetComponent<ActiveItemComponent>()!.Item == item.Item) {
 					Animate();
 				}
 			} else if (e is ItemAddedEvent iae) {

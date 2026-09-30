@@ -27,11 +27,11 @@ namespace BurningKnight.entity.door {
 				});
 
 				if (Owner is Door) {
-					Owner.GetComponent<StateComponent>().Become<Door.OpeningState>();
+					Owner.GetComponent<StateComponent>()!.Become<Door.OpeningState>();
 				}
 
-				GetComponent<StateComponent>().Become<OpeningState>();
-				GetComponent<AudioEmitterComponent>().EmitRandomized("unlock");
+				GetComponent<StateComponent>()!.Become<OpeningState>();
+				GetComponent<AudioEmitterComponent>()!.EmitRandomized("unlock");
 			} else {
 				HandleEvent(new LockClosedEvent {
 					Lock = this,
@@ -113,7 +113,7 @@ namespace BurningKnight.entity.door {
 				return;
 			}
 			
-			var offset = GetComponent<AnimationComponent>().Offset;
+			var offset = GetComponent<AnimationComponent>()!.Offset;
 
 			if (Move) {
 				t += dt;
@@ -127,7 +127,7 @@ namespace BurningKnight.entity.door {
 			}
 							
 			offset.X = (float) (Math.Cos(shake * 20f) * shake * 2.5f);
-			GetComponent<AnimationComponent>().Offset = offset;
+			GetComponent<AnimationComponent>()!.Offset = offset;
 		}
 
 		public override void Render() {
@@ -164,13 +164,13 @@ namespace BurningKnight.entity.door {
 		public class OpeningState : EntityState {
 			public override void Init() {
 				base.Init();
-				Self.GetComponent<AnimationComponent>().SetAutoStop(true);
+				Self.GetComponent<AnimationComponent>()!.SetAutoStop(true);
 			}
 
 			public override void Update(float dt) {
 				base.Update(dt);
 
-				if (Self.GetComponent<AnimationComponent>().Animation.Paused) {
+				if (Self.GetComponent<AnimationComponent>()!.Animation.Paused) {
 					if (((Lock) Self).Disposable()) {
 						Self.Done = true;
 					} else {
@@ -182,27 +182,27 @@ namespace BurningKnight.entity.door {
 
 			public override void Destroy() {
 				base.Destroy();
-				Self.GetComponent<AnimationComponent>().SetAutoStop(false);
+				Self.GetComponent<AnimationComponent>()!.SetAutoStop(false);
 			}
 		}
 
 		protected class ClosingState : EntityState {
 			public override void Init() {
 				base.Init();
-				Self.GetComponent<AnimationComponent>().SetAutoStop(true);
+				Self.GetComponent<AnimationComponent>()!.SetAutoStop(true);
 			}
 
 			public override void Update(float dt) {
 				base.Update(dt);
 
-				if (Self.GetComponent<AnimationComponent>().Animation.Paused) {
+				if (Self.GetComponent<AnimationComponent>()!.Animation.Paused) {
 					Become<IdleState>();
 				}
 			}
 
 			public override void Destroy() {
 				base.Destroy();
-				Self.GetComponent<AnimationComponent>().SetAutoStop(false);
+				Self.GetComponent<AnimationComponent>()!.SetAutoStop(false);
 			}
 		}
 		#endregion

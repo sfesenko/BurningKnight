@@ -49,7 +49,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 					builder.Shoot(a, 30f).Build();
 
 					GameContext.Current.Camera.Shake(2);
-					Self.GetComponent<AudioEmitterComponent>().EmitRandomized("mob_bee_swirly_shot");
+					Self.GetComponent<AudioEmitterComponent>()!.EmitRandomized("mob_bee_swirly_shot");
 				}
 			}
 		}

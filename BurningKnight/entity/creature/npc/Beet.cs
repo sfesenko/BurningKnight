@@ -59,14 +59,14 @@ namespace BurningKnight.entity.creature.npc {
 			
 			AddComponent(new InteractableComponent(Interact));
 			
-			GetComponent<StateComponent>().Become<IdleState>();
+			GetComponent<StateComponent>()!.Become<IdleState>();
 
 			var dialog = GetComponent<DialogComponent>();
 			
 			dialog.Dialog.Voice = 1;
 			dialog.OnNext += (c) => {
 				if (c.Current == null && !Context.Run.IgnoreSeed) {
-					GetComponent<StateComponent>().Become<HideState>();
+					GetComponent<StateComponent>()!.Become<HideState>();
 				}
 			};
 		}
@@ -74,7 +74,7 @@ namespace BurningKnight.entity.creature.npc {
 		public override void Update(float dt) {
 			base.Update(dt);
 
-			if (GetComponent<DialogComponent>().Current?.Id == "beet_2" && Input.Keyboard.WasPressed(Keys.V) && (Input.Keyboard.IsDown(Keys.LeftControl) || Input.Keyboard.IsDown(Keys.RightControl))) {
+			if (GetComponent<DialogComponent>()!.Current?.Id == "beet_2" && Input.Keyboard.WasPressed(Keys.V) && (Input.Keyboard.IsDown(Keys.LeftControl) || Input.Keyboard.IsDown(Keys.RightControl))) {
 				Log.Info("Pasting the seed");
 
 				var seed =
@@ -93,7 +93,7 @@ namespace BurningKnight.entity.creature.npc {
 				var result = new string(seed.Select(c => Rnd.SeedChars.Contains(c) ? c : 'X').ToArray());
 				Log.Info($"Initial seed {seed} converted to {result}");
 
-				((AnswerDialog) GetComponent<DialogComponent>().Current).Answer = result;
+				((AnswerDialog) GetComponent<DialogComponent>()!.Current).Answer = result;
 			}
 		}
 
@@ -104,7 +104,7 @@ namespace BurningKnight.entity.creature.npc {
 				interactingWith = e;
 				state.Become<PopState>();
 			} else {
-				GetComponent<DialogComponent>().Start("beet_0", e);
+				GetComponent<DialogComponent>()!.Start("beet_0", e);
 			}
 
 			return true;
@@ -119,20 +119,20 @@ namespace BurningKnight.entity.creature.npc {
 			public override void Init() {
 				base.Init();
 
-				Self.GetComponent<AudioEmitterComponent>().Emit("npc_beet_show");
-				Self.GetComponent<AnimationComponent>().SetAutoStop(true);
+				Self.GetComponent<AudioEmitterComponent>()!.Emit("npc_beet_show");
+				Self.GetComponent<AnimationComponent>()!.SetAutoStop(true);
 			}
 
 			public override void Destroy() {
 				base.Destroy();
-				Self.GetComponent<AnimationComponent>().SetAutoStop(false);
+				Self.GetComponent<AnimationComponent>()!.SetAutoStop(false);
 			}
 
 			public override void Update(float dt) {
 				base.Update(dt);
 				
-				if (Self.GetComponent<AnimationComponent>().Animation.Paused) {
-					Self.GetComponent<StateComponent>().Become<PoppedState>();
+				if (Self.GetComponent<AnimationComponent>()!.Animation.Paused) {
+					Self.GetComponent<StateComponent>()!.Become<PoppedState>();
 				}
 			}
 		}
@@ -141,20 +141,20 @@ namespace BurningKnight.entity.creature.npc {
 			public override void Init() {
 				base.Init();
 				
-				Self.GetComponent<AudioEmitterComponent>().Emit("npc_beet_hide");
-				Self.GetComponent<AnimationComponent>().SetAutoStop(true);
+				Self.GetComponent<AudioEmitterComponent>()!.Emit("npc_beet_hide");
+				Self.GetComponent<AnimationComponent>()!.SetAutoStop(true);
 			}
 
 			public override void Destroy() {
 				base.Destroy();
-				Self.GetComponent<AnimationComponent>().SetAutoStop(false);
+				Self.GetComponent<AnimationComponent>()!.SetAutoStop(false);
 			}
 
 			public override void Update(float dt) {
 				base.Update(dt);
 				
-				if (Self.GetComponent<AnimationComponent>().Animation.Paused) {
-					Self.GetComponent<StateComponent>().Become<IdleState>();
+				if (Self.GetComponent<AnimationComponent>()!.Animation.Paused) {
+					Self.GetComponent<StateComponent>()!.Become<IdleState>();
 				}
 			}
 		}
@@ -163,7 +163,7 @@ namespace BurningKnight.entity.creature.npc {
 			public override void Init() {
 				base.Init();
 				
-				Self.GetComponent<DialogComponent>().Start("beet_0", Self.interactingWith);
+				Self.GetComponent<DialogComponent>()!.Start("beet_0", Self.interactingWith);
 				Self.interactingWith = null;
 			}
 		}

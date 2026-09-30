@@ -49,8 +49,8 @@ namespace BurningKnight.entity.creature.player {
 			base.Update(dt);
 			head.Update(dt);
 
-			if (!(GetComponent<StateComponent>().StateInstance is Player.SleepingState)) {
-				Flipped = Entity.CenterX > GetComponent<CursorComponent>().Cursor.GamePosition.X;
+			if (!(GetComponent<StateComponent>()!.StateInstance is Player.SleepingState)) {
+				Flipped = Entity.CenterX > GetComponent<CursorComponent>()!.Cursor.GamePosition.X;
 			}
 		}
 
@@ -65,11 +65,11 @@ namespace BurningKnight.entity.creature.player {
 			var origin = new Vector2(region.Source.Width / 2f, FlippedVerticaly ? 0 : region.Source.Height);
 			var s = scale * Scale;
 
-			var v = GetComponent<RectBodyComponent>().Acceleration;
+			var v = GetComponent<RectBodyComponent>()!.Acceleration;
 			var target = (v.Length() > 0.1f ? 1f : 0f) * 0.25f * (Flipped ? -1 : 1);
 			angle += (target - angle) * Engine.Delta * 3f;
 
-			var state = GetComponent<StateComponent>().StateInstance;
+			var state = GetComponent<StateComponent>()!.StateInstance;
 			var a = 0; // (state is Player.RollState || state is Player.DuckState || state is Player.PostRollState || state is Player.SittingState) ? 0 : angle;
 
 			if (shadow) {
@@ -81,13 +81,13 @@ namespace BurningKnight.entity.creature.player {
 			}
 			
 			if (!shadow) {
-				pos.Y -= GetComponent<ZComponent>().Z;
+				pos.Y -= GetComponent<ZComponent>()!.Z;
 			}
 
 			var p = pos + origin;
 			p.Floor();
 			Graphics.Render(region, p, a, origin, s, Graphics.ParseEffect(Flipped, FlippedVerticaly));
-			var st = GetComponent<StateComponent>().StateInstance;
+			var st = GetComponent<StateComponent>()!.StateInstance;
 			
 			if (st is Player.RollState or Player.SleepingState) {
 				return;
@@ -97,7 +97,7 @@ namespace BurningKnight.entity.creature.player {
 			var hat = h.Item;
 
 			if (hat != null && !h.DoNotRender) {
-				var duck = Entity.GetComponent<StateComponent>().StateInstance is Player.DuckState 
+				var duck = Entity.GetComponent<StateComponent>()!.StateInstance is Player.DuckState 
 					? 'b' : 'a';
 
 				var r = $"{hat.Id}_{duck}";
@@ -107,7 +107,7 @@ namespace BurningKnight.entity.creature.player {
 				var m = shadow ? -4 : 4;
 
 				var pp = new Vector2(Entity.CenterX, m +
-					Entity.Bottom - (shadow ? 0 : GetComponent<ZComponent>().Z) + (shadow ? -1 : 1) *
+					Entity.Bottom - (shadow ? 0 : GetComponent<ZComponent>()!.Z) + (shadow ? -1 : 1) *
 					(offsets[Math.Min(offsets.Length - 1, Animation.Frame + Animation.StartFrame)] - 15));
 
 				pp.Floor();
@@ -170,7 +170,7 @@ namespace BurningKnight.entity.creature.player {
 			}
 
 			var o = (shadow ? -1 : 1) * (offsets[Math.Min(offsets.Length - 1, Animation.Frame + Animation.StartFrame)] - 11);
-			var s = GetComponent<StateComponent>().StateInstance;
+			var s = GetComponent<StateComponent>()!.StateInstance;
 			var w = !(s is Player.RollState || s is Player.SleepingState);
 			var z = GetComponent<ZComponent>();
 
@@ -185,7 +185,7 @@ namespace BurningKnight.entity.creature.player {
 				a -= (float) Math.PI / 4 * (shadow ? -1 : 1);
 				var wy = shadow ? Entity.Height : 0;
 
-				wy += GetComponent<ZComponent>().Z * (shadow ? 1 : -1);
+				wy += GetComponent<ZComponent>()!.Z * (shadow ? 1 : -1);
 
 				Graphics.Render(wing, Entity.Center + new Vector2(-1, wy), a, new Vector2(8),
 					shadow ? MathUtils.InvertY : Vector2.One);
@@ -197,7 +197,7 @@ namespace BurningKnight.entity.creature.player {
 			var g = shadow ? 0 : (int) z.Z;
 
 			if (w) {
-				GetComponent<WeaponComponent>().Render(shadow, o - g);
+				GetComponent<WeaponComponent>()!.Render(shadow, o - g);
 			}
 
 			if (!shadow && InGameState.Multiplayer) {
@@ -207,7 +207,7 @@ namespace BurningKnight.entity.creature.player {
 
 				shader.Parameters["flash"].SetValue(1f);
 				shader.Parameters["flashReplace"].SetValue(1f);
-				shader.Parameters["flashColor"].SetValue(Player.VectorTints[Entity.GetComponent<InputComponent>().Index]);
+				shader.Parameters["flashColor"].SetValue(Player.VectorTints[Entity.GetComponent<InputComponent>()!.Index]);
 
 				foreach (var d in MathUtils.Directions) {
 					CallRender(pos + d, false);
@@ -248,7 +248,7 @@ namespace BurningKnight.entity.creature.player {
 			}
 
 			if (w) {
-				GetComponent<ActiveWeaponComponent>().Render(shadow, o - g);
+				GetComponent<ActiveWeaponComponent>()!.Render(shadow, o - g);
 			}
 		}
 	}

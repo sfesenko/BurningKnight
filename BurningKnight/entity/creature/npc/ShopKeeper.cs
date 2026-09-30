@@ -43,7 +43,7 @@ namespace BurningKnight.entity.creature.npc {
 				_mood = value;
 
 				if (_mood < old && _mood < 3 && _mood > -1) {
-					GetComponent<DialogComponent>().StartAndClose($"shopkeeper_{_mood}", 1);
+					GetComponent<DialogComponent>()!.StartAndClose($"shopkeeper_{_mood}", 1);
 				}
 
 				if (raging) {
@@ -55,7 +55,7 @@ namespace BurningKnight.entity.creature.npc {
 					AddTag(Tags.MustBeKilled);
 
 					try {
-						var rm = GetComponent<RoomComponent>().Room;
+						var rm = GetComponent<RoomComponent>()!.Room;
 
 						// Hacky solution tbh
 						rm.Tagged[Tags.Mob].Add(this);
@@ -65,7 +65,7 @@ namespace BurningKnight.entity.creature.npc {
 					}
 
 					Become<RunState>();
-					GetComponent<DialogComponent>().StartAndClose($"shopkeeper_{Rnd.Int(3, 5)}", 1);
+					GetComponent<DialogComponent>()!.StartAndClose($"shopkeeper_{Rnd.Int(3, 5)}", 1);
 
 					SetItemsFree();
 
@@ -81,7 +81,7 @@ namespace BurningKnight.entity.creature.npc {
 		private bool raging => Mood < 0;
 		
 		private void Recalc() {
-			var r = GetComponent<RoomComponent>().Room;
+			var r = GetComponent<RoomComponent>()!.Room;
 
 			if (r == null) {
 				return;
@@ -106,7 +106,7 @@ namespace BurningKnight.entity.creature.npc {
 						d.StartAndClose("quack", 3);
 					}
 
-					GetComponent<AudioEmitterComponent>().EmitRandomized("quck");
+					GetComponent<AudioEmitterComponent>()!.EmitRandomized("quck");
 				}, 0.5f);
 			}));
 			
@@ -133,7 +133,7 @@ namespace BurningKnight.entity.creature.npc {
 			AddTag(Tags.ShopKeeper);
 			
 			Become<IdleState>();
-			GetComponent<DialogComponent>().Dialog.Voice = 3;
+			GetComponent<DialogComponent>()!.Dialog.Voice = 3;
 		}
 
 		public override void Load(FileReader stream) {
@@ -156,19 +156,19 @@ namespace BurningKnight.entity.creature.npc {
 
 		public override bool HandleEvent(Event e) {
 			if (e is BombPlacedEvent bpe) {
-				if (bpe.Bomb.GetComponent<RoomComponent>().Room == GetComponent<RoomComponent>().Room) {
+				if (bpe.Bomb.GetComponent<RoomComponent>()!.Room == GetComponent<RoomComponent>()!.Room) {
 					Enrage();
 				}
 			} else if (e is GramophoneBrokenEvent gbe) {
-				if (gbe.Gramophone.GetComponent<RoomComponent>().Room == GetComponent<RoomComponent>().Room) {
+				if (gbe.Gramophone.GetComponent<RoomComponent>()!.Room == GetComponent<RoomComponent>()!.Room) {
 					Mood--;
 				}
 			} else if (e is RerollMachine.BrokenEvent rme) {
-				if (rme.Machine.GetComponent<RoomComponent>().Room == GetComponent<RoomComponent>().Room) {
+				if (rme.Machine.GetComponent<RoomComponent>()!.Room == GetComponent<RoomComponent>()!.Room) {
 					Mood--;
 				}
 			} else if (e is VendingMachine.BrokenEvent vme) {
-				if (vme.Machine.GetComponent<RoomComponent>().Room == GetComponent<RoomComponent>().Room) {
+				if (vme.Machine.GetComponent<RoomComponent>()!.Room == GetComponent<RoomComponent>()!.Room) {
 					Mood--;
 				}
 			} else if (e is HealthModifiedEvent hme && hme.Amount < 0) {
@@ -177,7 +177,7 @@ namespace BurningKnight.entity.creature.npc {
 					hme.Amount = -1;
 				}
 			} else if (e is RoomChangedEvent rce) {
-				if (rce.Who is Player && rce.New == GetComponent<RoomComponent>().Room) {
+				if (rce.Who is Player && rce.New == GetComponent<RoomComponent>()!.Room) {
 					if (GameSave.IsTrue("sk_enraged")) {
 						Enrage();
 					}
@@ -185,14 +185,14 @@ namespace BurningKnight.entity.creature.npc {
 					Recalc();
 					
 					if (Mood > -1) {
-						GetComponent<AudioEmitterComponent>().EmitRandomized("hi");
-						GetComponent<DialogComponent>().StartAndClose($"shopkeeper_{Rnd.Int(6, 9)}", 3);
+						GetComponent<AudioEmitterComponent>()!.EmitRandomized("hi");
+						GetComponent<DialogComponent>()!.StartAndClose($"shopkeeper_{Rnd.Int(6, 9)}", 3);
 					}
 				}
 			} else if (e is ItemBoughtEvent ibe) {
-				if (ibe.Stand.GetComponent<RoomComponent>().Room == GetComponent<RoomComponent>().Room) {
+				if (ibe.Stand.GetComponent<RoomComponent>()!.Room == GetComponent<RoomComponent>()!.Room) {
 					Mood++;
-					GetComponent<DialogComponent>().StartAndClose($"shopkeeper_{Rnd.Int(9, 12)}", 3);
+					GetComponent<DialogComponent>()!.StartAndClose($"shopkeeper_{Rnd.Int(9, 12)}", 3);
 				}
 			} else if (e is DiedEvent) {
 				Achievements.Unlock("bk:marauder");
@@ -206,7 +206,7 @@ namespace BurningKnight.entity.creature.npc {
 		}
 
 		private void SetItemsFree() {
-			var r = GetComponent<RoomComponent>().Room;
+			var r = GetComponent<RoomComponent>()!.Room;
 
 			if (r != null) {
 				foreach (var s in r.Tagged[Tags.Item]) {
@@ -233,7 +233,7 @@ namespace BurningKnight.entity.creature.npc {
 		}
 
 		public override bool IsFriendly() {
-			return !raging || GetComponent<BuffsComponent>().Has<CharmedBuff>();
+			return !raging || GetComponent<BuffsComponent>()!.Has<CharmedBuff>();
 		}
 		
 		private float delay;
@@ -246,7 +246,7 @@ namespace BurningKnight.entity.creature.npc {
 
 				if (delay <= 0) {
 					delay = Rnd.Float(3, 9f);
-					GetComponent<AudioEmitterComponent>().EmitRandomized($"villager{Rnd.Int(1, 5)}", 0.5f);
+					GetComponent<AudioEmitterComponent>()!.EmitRandomized($"villager{Rnd.Int(1, 5)}", 0.5f);
 				}
 			}
 
@@ -268,7 +268,7 @@ namespace BurningKnight.entity.creature.npc {
 			public override void Update(float dt) {
 				base.Update(dt);
 
-				if (Self.GetComponent<DialogComponent>().Dialog.Saying) {
+				if (Self.GetComponent<DialogComponent>()!.Dialog.Saying) {
 					T = 0;
 					return;
 				}
@@ -286,8 +286,8 @@ namespace BurningKnight.entity.creature.npc {
 			public override void Init() {
 				base.Init();
 				
-				Self.GetComponent<AnimationComponent>().Animation.Tag = "run";
-				var r = Self.GetComponent<RoomComponent>().Room;
+				Self.GetComponent<AnimationComponent>()!.Animation.Tag = "run";
+				var r = Self.GetComponent<RoomComponent>()!.Room;
 
 				toPlayer = r.Tagged[Tags.Player].Count > 0 && Rnd.Chance(40);
 
@@ -309,7 +309,7 @@ namespace BurningKnight.entity.creature.npc {
 				var t = target;
 
 				if (toPlayer) {
-					var a = Self.GetComponent<RoomComponent>().Room.Tagged[Tags.Player];
+					var a = Self.GetComponent<RoomComponent>()!.Room.Tagged[Tags.Player];
 
 					if (a.Count > 0) {
 						target = a[0].Center;
@@ -326,8 +326,8 @@ namespace BurningKnight.entity.creature.npc {
 
 				if (d <= 24 || T >= 4f) {
 					if ((toPlayer && Rnd.Chance(80)) || Rnd.Chance(30)) {
-						if (Self.GetComponent<RoomComponent>().Room.Tagged[Tags.Player].Count > 0) {
-							Self.GetComponent<DialogComponent>().StartAndClose($"shopkeeper_{(Rnd.Chance(30) ? 18 : Rnd.Int(12, 15))}", 3);
+						if (Self.GetComponent<RoomComponent>()!.Room.Tagged[Tags.Player].Count > 0) {
+							Self.GetComponent<DialogComponent>()!.StartAndClose($"shopkeeper_{(Rnd.Chance(30) ? 18 : Rnd.Int(12, 15))}", 3);
 						}
 					}
 					
@@ -359,8 +359,8 @@ namespace BurningKnight.entity.creature.npc {
 
 				delay = Rnd.Float(0.2f, 0.8f);
 				
-				Self.GetComponent<AnimationComponent>().Animation.Tag = "run";
-				var r = Self.GetComponent<RoomComponent>().Room;
+				Self.GetComponent<AnimationComponent>()!.Animation.Tag = "run";
+				var r = Self.GetComponent<RoomComponent>()!.Room;
 
 				if (r != null) {
 					set = true;
@@ -382,7 +382,7 @@ namespace BurningKnight.entity.creature.npc {
 					Init();
 				}
 
-				if (Self.shotgun != null && Self.GetComponent<RoomComponent>().Room.Tagged[Tags.Player].Count > 0) {
+				if (Self.shotgun != null && Self.GetComponent<RoomComponent>()!.Room.Tagged[Tags.Player].Count > 0) {
 					Self.shotgun.Use(Self);
 				}
 				

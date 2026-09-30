@@ -101,7 +101,7 @@ namespace BurningKnight.ui.inventory {
 			};
 
 			this.multiplayer = multiplayer;
-			Second = multiplayer && player.GetComponent<InputComponent>().Index > 0;
+			Second = multiplayer && player.GetComponent<InputComponent>()!.Index > 0;
 		}
 
 		public override void Init() {

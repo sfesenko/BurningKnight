@@ -68,7 +68,7 @@ namespace BurningKnight.entity.component {
 				Entity.GetComponent<AudioEmitterComponent>().Emit("item_orbitals", 0.5f, looped: true, tween: true);
 			}	*/		
 			
-			e.GetComponent<OrbitalComponent>().Orbiting = Entity;
+			e.GetComponent<OrbitalComponent>()!.Orbiting = Entity;
 			Orbiting.Add(e);
 
 			if (Entity is Player && Orbiting.Count >= 3) {
@@ -78,7 +78,7 @@ namespace BurningKnight.entity.component {
 
 		public void RemoveOrbiter(Entity e) {
 			Orbiting.Remove(e);
-			e.GetComponent<OrbitalComponent>().Orbiting = null;
+			e.GetComponent<OrbitalComponent>()!.Orbiting = null;
 
 			if (Orbiting.Count == 0) {
 				RemoveSound();
@@ -89,7 +89,7 @@ namespace BurningKnight.entity.component {
 			base.Destroy();
 			
 			foreach (var o in Orbiting) {
-				o.GetComponent<OrbitalComponent>().Orbiting = null;
+				o.GetComponent<OrbitalComponent>()!.Orbiting = null;
 			}
 
 			RemoveSound();

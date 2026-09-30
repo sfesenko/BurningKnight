@@ -16,7 +16,7 @@ namespace BurningKnight.entity.bomb.controller {
 					var md = 320000f;
 
 					foreach (var m in (p.Owner.TryGetComponent<RoomComponent>(out var c) ? c.Room.Tagged[Tags.Mob] : p.Area.Tagged[Tags.Mob])) {
-						if (m.GetComponent<HealthComponent>().Unhittable) {
+						if (m.GetComponent<HealthComponent>()!.Unhittable) {
 							continue;
 						}
 						

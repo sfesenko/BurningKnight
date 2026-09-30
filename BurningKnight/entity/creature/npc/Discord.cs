@@ -13,7 +13,7 @@ namespace BurningKnight.entity.creature.npc {
 			
 			// todo: connect discordIntegration CurrentPlayer here
 			AddComponent(new CloseDialogComponent("discord_0"));
-			GetComponent<DialogComponent>().Dialog.Voice = 2;
+			GetComponent<DialogComponent>()!.Dialog.Voice = 2;
 		}
 	}
 }

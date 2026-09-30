@@ -58,7 +58,7 @@ namespace BurningKnight.entity.creature.mob.jungle {
 			public override void Init() {
 				base.Init();
 
-				Self.GetComponent<AudioEmitterComponent>().Emit("mob_sniper_focus");
+				Self.GetComponent<AudioEmitterComponent>()!.Emit("mob_sniper_focus");
 				Self.AlwaysVisible = true; // So that the line is visible
 				Self.lastAngle = Self.AngleTo(Self.Target);
 				lastSeen = Self.Target.Center;
@@ -103,7 +103,7 @@ namespace BurningKnight.entity.creature.mob.jungle {
 							return;
 						}
 								
-						Self.GetComponent<AudioEmitterComponent>().EmitRandomized("mob_fire_static");
+						Self.GetComponent<AudioEmitterComponent>()!.EmitRandomized("mob_fire_static");
 						var builder = new ProjectileBuilder(Self, "rect") {
 							RectHitbox = true,
 							Scale = 1.5f,
@@ -124,7 +124,7 @@ namespace BurningKnight.entity.creature.mob.jungle {
 		public override void Render() {
 			base.Render();
 
-			if (GetComponent<StateComponent>().StateInstance is AimState) {
+			if (GetComponent<StateComponent>()!.StateInstance is AimState) {
 				Graphics.Batch.DrawLine(Center - new Vector2(0, 2), new Vector2((int) (Center.X + Math.Cos(lastAngle) * Display.UiWidth), 
 					(int) (Center.Y + Math.Sin(lastAngle) * Display.UiWidth)), PlayerGraphicsComponent.AimLineColor, 1);
 			}

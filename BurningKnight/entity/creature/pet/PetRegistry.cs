@@ -65,13 +65,13 @@ namespace BurningKnight.entity.creature.pet {
 					if (timer >= 2f) {
 						timer = 0;
 
-						if ((o.GetComponent<RoomComponent>().Room?.Tagged[Tags.MustBeKilled].Count ?? 0) == 0) {
+						if ((o.GetComponent<RoomComponent>()!.Room?.Tagged[Tags.MustBeKilled].Count ?? 0) == 0) {
 							return;
 						}
 						
-						o.GetComponent<AudioEmitterComponent>().EmitRandomizedPrefixed("item_meatguy", 4, 0.5f);
+						o.GetComponent<AudioEmitterComponent>()!.EmitRandomizedPrefixed("item_meatguy", 4, 0.5f);
 						
-						var a = pet.AngleTo(o.GetComponent<AimComponent>().RealAim);
+						var a = pet.AngleTo(o.GetComponent<AimComponent>()!.RealAim);
 						var builder = new ProjectileBuilder(o, "small") {
 							LightRadius = 32f,
 							Color = ProjectileColor.Yellow
@@ -102,13 +102,13 @@ namespace BurningKnight.entity.creature.pet {
 					if (timer >= 2f) {
 						timer = 0;
 
-						if ((o.GetComponent<RoomComponent>().Room?.Tagged[Tags.MustBeKilled].Count ?? 0) == 0) {
+						if ((o.GetComponent<RoomComponent>()!.Room?.Tagged[Tags.MustBeKilled].Count ?? 0) == 0) {
 							return;
 						}
 						
-						o.GetComponent<AudioEmitterComponent>().EmitRandomizedPrefixed("item_meatguy", 4, 0.5f);
+						o.GetComponent<AudioEmitterComponent>()!.EmitRandomizedPrefixed("item_meatguy", 4, 0.5f);
 						
-						var a = pet.AngleTo(o.GetComponent<AimComponent>().RealAim) - Math.PI;
+						var a = pet.AngleTo(o.GetComponent<AimComponent>()!.RealAim) - Math.PI;
 						var builder = new ProjectileBuilder(o, "circle") {
 							Scale = Rnd.Float(0.6f, 1f),
 							LightRadius = 32f,

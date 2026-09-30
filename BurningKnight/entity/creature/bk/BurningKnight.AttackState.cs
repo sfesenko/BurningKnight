@@ -54,7 +54,7 @@ namespace BurningKnight.entity.creature.bk {
 					return;
 				}
 
-				var r = Self.Target.GetComponent<RoomComponent>().Room;
+				var r = Self.Target.GetComponent<RoomComponent>()!.Room;
 
 				if (r.Type == RoomType.Shop || r.Type == RoomType.SubShop || r.Type == RoomType.OldMan) {
 					Self.Become<ChaseState>();
@@ -62,7 +62,7 @@ namespace BurningKnight.entity.creature.bk {
 				}
 
 				if (T >= 1f) {
-					Self.GetComponent<AudioEmitterComponent>().Emit("mob_bk_fire");
+					Self.GetComponent<AudioEmitterComponent>()!.Emit("mob_bk_fire");
 
 					var c = 1;
 

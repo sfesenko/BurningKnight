@@ -155,7 +155,7 @@ namespace BurningKnight.entity.component {
 				if (Entity is Player && Item != null && Item.Scourged) {
 					AnimationUtil.ActionFailed();
 					ev.Blocked = true;
-					Entity.GetComponent<DialogComponent>().StartAndClose($"~~{Locale.Get("scourged")}~~", 2);
+					Entity.GetComponent<DialogComponent>()!.StartAndClose($"~~{Locale.Get("scourged")}~~", 2);
 					
 					return false;
 				}
@@ -199,7 +199,7 @@ namespace BurningKnight.entity.component {
 				if (!Item.HasComponent<OwnerComponent>()) {
 					Item.AddComponent(new OwnerComponent(component.Entity));
 				} else {
-					Item.GetComponent<OwnerComponent>().Owner = component.Entity;
+					Item.GetComponent<OwnerComponent>()!.Owner = component.Entity;
 				}
 			}
 
@@ -212,7 +212,7 @@ namespace BurningKnight.entity.component {
 			if (!Item.HasComponent<OwnerComponent>()) {
 				Item.AddComponent(new OwnerComponent(Entity));
 			} else {
-				Item.GetComponent<OwnerComponent>().Owner = Entity;
+				Item.GetComponent<OwnerComponent>()!.Owner = Entity;
 			}
 		}
 		

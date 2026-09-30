@@ -20,8 +20,8 @@ namespace BurningKnight.entity.room.controllable.turret {
 		protected bool Rotates;
 
 		protected uint Angle {
-			get => GetComponent<AnimationComponent>().Animation.Frame;
-			set => GetComponent<AnimationComponent>().Animation.Frame = value;
+			get => GetComponent<AnimationComponent>()!.Animation.Frame;
+			set => GetComponent<AnimationComponent>()!.Animation.Frame = value;
 		}
 
 		public uint StartingAngle;
@@ -135,7 +135,7 @@ namespace BurningKnight.entity.room.controllable.turret {
 			
 			// Always enabled in tutorial
 			if (Context.Run.Depth != -2 && On) {
-				var room = GetComponent<RoomComponent>().Room;
+				var room = GetComponent<RoomComponent>()!.Room;
 
 				if (room != null && room.Type == RoomType.Regular) {
 					if (room.Tagged[Tags.MustBeKilled].Count == 0) {
@@ -169,7 +169,7 @@ namespace BurningKnight.entity.room.controllable.turret {
 						if (Rotates) {
 							t.OnEnd = () => {
 								a.Animate();
-								GetComponent<AudioEmitterComponent>().EmitRandomized("level_turret_rotating");
+								GetComponent<AudioEmitterComponent>()!.EmitRandomized("level_turret_rotating");
 								Angle = (uint) ((Angle + (ReverseDirection ? -1 : 1)) % 8);
 							};
 						}
@@ -180,7 +180,7 @@ namespace BurningKnight.entity.room.controllable.turret {
 							Fire(Angle / 4f * Math.PI);
 
 							if (OnScreen) {
-								GetComponent<AudioEmitterComponent>().EmitRandomized("level_turret_fire");
+								GetComponent<AudioEmitterComponent>()!.EmitRandomized("level_turret_fire");
 							}
 						}
 					};

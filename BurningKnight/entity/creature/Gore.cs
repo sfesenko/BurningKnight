@@ -78,7 +78,7 @@ namespace BurningKnight.entity.creature {
 				return;
 			}
 
-			var b = GetComponent<RectBodyComponent>().Body;
+			var b = GetComponent<RectBodyComponent>()!.Body;
 
 			if (b.LinearVelocity.Length() < 4) {
 				b.LinearVelocity = Vector2.Zero;

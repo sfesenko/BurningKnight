@@ -51,7 +51,7 @@ namespace BurningKnight.entity.creature.pet {
 		public override bool HandleEvent(Event e) {
 			if (e is CollisionStartedEvent cse) {
 				if (cse.Entity is Mob m) {
-					m.GetComponent<BuffsComponent>().Add(new CharmedBuff {
+					m.GetComponent<BuffsComponent>()!.Add(new CharmedBuff {
 						Duration = 10
 					});
 				}

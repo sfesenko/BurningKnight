@@ -71,7 +71,7 @@ namespace BurningKnight.level.entities.chest {
 			var p = GetPool();
 
 			if (p != null) {
-				GetComponent<DropsComponent>().Add(p);
+				GetComponent<DropsComponent>()!.Add(p);
 			}
 		}
 
@@ -83,12 +83,12 @@ namespace BurningKnight.level.entities.chest {
 				UpdateSprite();
 			}
 
-			var body = GetComponent<RectBodyComponent>().Body;
+			var body = GetComponent<RectBodyComponent>()!.Body;
 
 			body.LinearDamping = 100;
 			body.Mass = 1000000;
 
-			GetComponent<RectBodyComponent>().KnockbackModifier = 0.1f;
+			GetComponent<RectBodyComponent>()!.KnockbackModifier = 0.1f;
 			Animate();
 		}
 		
@@ -114,7 +114,7 @@ namespace BurningKnight.level.entities.chest {
 		}
 
 		protected virtual void UpdateSprite(bool open = true) {
-			GetComponent<InteractableSliceComponent>().Sprite = CommonAse.Props.GetSlice($"{GetSprite()}{(open ? "_open" : "")}");
+			GetComponent<InteractableSliceComponent>()!.Sprite = CommonAse.Props.GetSlice($"{GetSprite()}{(open ? "_open" : "")}");
 		}
 
 		public void Open(Entity who) {
@@ -130,7 +130,7 @@ namespace BurningKnight.level.entities.chest {
 				
 				UpdateSprite();
 				SpawnDrops();
-				GetComponent<AudioEmitterComponent>().EmitRandomized("level_chest_open");
+				GetComponent<AudioEmitterComponent>()!.EmitRandomized("level_chest_open");
 			});
 
 			HandleEvent(new OpenedEvent {
@@ -173,7 +173,7 @@ namespace BurningKnight.level.entities.chest {
 		protected virtual void SpawnDrops() {
 			if (!Empty) {
 				Empty = true;
-				GetComponent<DropsComponent>().SpawnDrops();
+				GetComponent<DropsComponent>()!.SpawnDrops();
 			}
 		}
 

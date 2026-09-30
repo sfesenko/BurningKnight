@@ -62,7 +62,7 @@ namespace BurningKnight.debug {
 						item.Scourged = true;
 					}
 
-					player?.GetComponent<InventoryComponent>().Pickup(item);
+					player?.GetComponent<InventoryComponent>()!.Pickup(item);
 				}
 			}
 		}

@@ -8,7 +8,7 @@ namespace BurningKnight.level.entities.chest {
 		}
 
 		protected override void DefineDrops() {
-			GetComponent<DropsComponent>().Add(new SimpleDrop(1, 1, 1, "bk:treasure_key"));
+			GetComponent<DropsComponent>()!.Add(new SimpleDrop(1, 1, 1, "bk:treasure_key"));
 		}
 	}
 }

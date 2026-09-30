@@ -251,7 +251,7 @@ namespace BurningKnight.entity.component {
 				ev.Item.Use(Entity);
 
 				Engine.Instance.State.Ui.Add(new ConsumableParticle(ev.Item.Animation != null
-					? ev.Item.GetComponent<AnimatedItemGraphicsComponent>().Animation.GetFirstCurrent()
+					? ev.Item.GetComponent<AnimatedItemGraphicsComponent>()!.Animation.GetFirstCurrent()
 					: ev.Item.Region, (Player) Entity));
 				
 				ev.Item.Done = true;
@@ -259,7 +259,7 @@ namespace BurningKnight.entity.component {
 			} else if (e is ExplodedEvent b && !b.Handled) {
 				Items.Unlock("bk:infinite_bomb");
 
-				if (Entity is Player && b.Who == Entity && Entity.GetComponent<LampComponent>().Item?.Id == "bk:explosive_lamp") {
+				if (Entity is Player && b.Who == Entity && Entity.GetComponent<LampComponent>()!.Item?.Id == "bk:explosive_lamp") {
 					
 				} else {
 					ModifyHealth(Entity is Player ? -2 : -b.Damage, b.Who, DamageType.Explosive);

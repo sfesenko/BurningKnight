@@ -67,7 +67,7 @@ namespace BurningKnight.entity.creature.mob.castle {
 
 				var f = 40;
 				velocity = new Vector2(Self.vertical ? 0 : (a ? -f : f), Self.vertical ? (a ? -f : f) : 0);
-				Self.GetComponent<RectBodyComponent>().Velocity = velocity;
+				Self.GetComponent<RectBodyComponent>()!.Velocity = velocity;
 
 				var an = Self.GetComponent<MobAnimationComponent>();
 				an.Animation.Frame = (uint) Rnd.Int(4);
@@ -83,7 +83,7 @@ namespace BurningKnight.entity.creature.mob.castle {
 
 			public override void Destroy() {
 				base.Destroy();
-				Self.GetComponent<RectBodyComponent>().Velocity = Vector2.Zero;
+				Self.GetComponent<RectBodyComponent>()!.Velocity = Vector2.Zero;
 			}
 
 			public override void Update(float dt) {
@@ -104,7 +104,7 @@ namespace BurningKnight.entity.creature.mob.castle {
 		public override bool HandleEvent(Event e) {
 			if (e is CollisionStartedEvent ev) {
 				if (ev.Entity is Door || ev.Entity is Level || ev.Entity is Chasm || (ev.Entity is SolidProp && !(ev.Entity is BreakableProp))) {
-					var s = GetComponent<StateComponent>().StateInstance;
+					var s = GetComponent<StateComponent>()!.StateInstance;
 
 					if (s is IdleState i) {
 						i.Flip();

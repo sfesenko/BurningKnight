@@ -39,7 +39,7 @@ namespace BurningKnight.level.entities.statue {
 				return true;
 			}
 
-			GetComponent<AudioEmitterComponent>().Emit("level_well_coin");
+			GetComponent<AudioEmitterComponent>()!.Emit("level_well_coin");
 
 			c.Coins--;
 			

@@ -44,7 +44,7 @@ namespace BurningKnight.entity.creature.mob {
 			if (TargetEverywhere) {
 				targets = Area.Tagged[IsFriendly() ? Tags.Mob : Tags.PlayerTarget];
 			} else {
-				var room = GetComponent<RoomComponent>().Room;
+				var room = GetComponent<RoomComponent>()!.Room;
 
 				if (room == null) {
 					return;
@@ -163,7 +163,7 @@ namespace BurningKnight.entity.creature.mob {
 			return !found;
 		}
 		protected void PushFromOtherEnemies(float dt, Func<Creature, bool> filter = null) {
-			var room = GetComponent<RoomComponent>().Room;
+			var room = GetComponent<RoomComponent>()!.Room;
 			var body = GetAnyComponent<BodyComponent>();
 
 			if (room == null || body == null) {
@@ -193,7 +193,7 @@ namespace BurningKnight.entity.creature.mob {
 			}
 		}
 		protected void PushOthersFromMe(float dt, Func<Creature, bool> filter = null) {
-			var room = GetComponent<RoomComponent>().Room;
+			var room = GetComponent<RoomComponent>()!.Room;
 
 			if (room == null) {
 				return;

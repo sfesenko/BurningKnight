@@ -24,13 +24,13 @@ namespace BurningKnight.entity.creature.player {
 		public override void Update(float dt) {
 			base.Update(dt);
 
-			if (CurrentlyInteracting != null && Input.WasPressed(Controls.Interact, GetComponent<InputComponent>()) && !GetComponent<InventoryComponent>().Busy) {
+			if (CurrentlyInteracting != null && Input.WasPressed(Controls.Interact, GetComponent<InputComponent>()) && !GetComponent<InventoryComponent>()!.Busy) {
 				if (Context.Run.Depth == -2 && GlobalSave.IsFalse("control_interact")) {
 					GlobalSave.Put("control_interact", true);
-					Entity.GetComponent<DialogComponent>().Close();
+					Entity.GetComponent<DialogComponent>()!.Close();
 				}
 
-				if (CurrentlyInteracting.GetComponent<InteractableComponent>().Interact(Entity)) {
+				if (CurrentlyInteracting.GetComponent<InteractableComponent>()!.Interact(Entity)) {
 					Send(new InteractedEvent {
 						Who = Entity,
 						With = CurrentlyInteracting
@@ -80,7 +80,7 @@ namespace BurningKnight.entity.creature.player {
 		public override bool HandleEvent(Event e) {
 			if (e is CollisionStartedEvent start) {
 				if (start.Body.CanCollide && CanInteract(start.Entity)) {
-					var entity = start.Entity.GetComponent<InteractableComponent>().AlterInteraction?.Invoke() ?? start.Entity;
+					var entity = start.Entity.GetComponent<InteractableComponent>()!.AlterInteraction?.Invoke() ?? start.Entity;
 
 					if (CurrentlyInteracting != entity) {
 						if (CurrentlyInteracting != null) {

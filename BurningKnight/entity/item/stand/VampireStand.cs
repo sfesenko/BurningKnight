@@ -63,7 +63,7 @@ namespace BurningKnight.entity.item.stand {
 		}
 		
 		protected override bool HasEnoughToPay(Entity p) {
-			return p.GetComponent<HealthComponent>().Health >= Price * 2;
+			return p.GetComponent<HealthComponent>()!.Health >= Price * 2;
 		}
 	}
 }

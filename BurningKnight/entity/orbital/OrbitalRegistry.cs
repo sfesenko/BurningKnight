@@ -94,14 +94,14 @@ namespace BurningKnight.entity.orbital {
 					if (timer >= 2f) {
 						timer = 0;
 						
-						if ((o.GetComponent<RoomComponent>().Room?.Tagged[Tags.MustBeKilled].Count ?? 0) == 0) {
+						if ((o.GetComponent<RoomComponent>()!.Room?.Tagged[Tags.MustBeKilled].Count ?? 0) == 0) {
 							return;
 						}
 						
-						o.GetComponent<AudioEmitterComponent>().EmitRandomizedPrefixed("item_gun_fire", 2, 0.5f);
+						o.GetComponent<AudioEmitterComponent>()!.EmitRandomizedPrefixed("item_gun_fire", 2, 0.5f);
 
 
-						var a = orbital.AngleTo(o.GetComponent<AimComponent>().RealAim);
+						var a = orbital.AngleTo(o.GetComponent<AimComponent>()!.RealAim);
 
 
 						var builder = new ProjectileBuilder(o, "small") {
@@ -120,7 +120,7 @@ namespace BurningKnight.entity.orbital {
 						});*/
 
 						projectile.Owner = orbital;
-						orbital.GetComponent<ScalableSliceComponent>().Animate();
+						orbital.GetComponent<ScalableSliceComponent>()!.Animate();
 					}
 				};
 				
@@ -143,7 +143,7 @@ namespace BurningKnight.entity.orbital {
 				
 				orbital.OnCollision += (or, e) => {
 					if (e is Creature c && c.IsFriendly() != ((Creature) orbital.Owner).IsFriendly()) {
-						c.GetComponent<HealthComponent>().ModifyHealth(-1, orbital);
+						c.GetComponent<HealthComponent>()!.ModifyHealth(-1, orbital);
 					} else if (e is Projectile p && p.Owner != orbital.Owner) {
 						p.Break();
 					}

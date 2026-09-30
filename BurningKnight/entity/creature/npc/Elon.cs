@@ -11,7 +11,7 @@ namespace BurningKnight.entity.creature.npc {
 			
 			AddComponent(new AnimationComponent("elon"));
 			AddComponent(new CloseDialogComponent("elon_2"));
-			GetComponent<DialogComponent>().Dialog.Voice = 15;
+			GetComponent<DialogComponent>()!.Dialog.Voice = 15;
 		}
 	}
 }

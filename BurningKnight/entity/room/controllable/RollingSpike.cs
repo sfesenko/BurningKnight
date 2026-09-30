@@ -40,7 +40,7 @@ namespace BurningKnight.entity.room.controllable {
 		public override void Save(FileWriter stream) {
 			base.Save(stream);
 
-			var v = GetComponent<CircleBodyComponent>().Velocity;
+			var v = GetComponent<CircleBodyComponent>()!.Velocity;
 			
 			stream.WriteFloat(v.X);
 			stream.WriteFloat(v.Y);
@@ -48,32 +48,32 @@ namespace BurningKnight.entity.room.controllable {
 
 		public override void Load(FileReader stream) {
 			base.Load(stream);
-			StartVelocity = GetComponent<CircleBodyComponent>().Velocity = new Vector2(stream.ReadFloat(), stream.ReadFloat());
+			StartVelocity = GetComponent<CircleBodyComponent>()!.Velocity = new Vector2(stream.ReadFloat(), stream.ReadFloat());
 		}
 
 		public override void PostInit() {
 			base.PostInit();
-			GetComponent<CircleBodyComponent>().Velocity = StartVelocity;
+			GetComponent<CircleBodyComponent>()!.Velocity = StartVelocity;
 		}
 
 		public override void Update(float dt) {
 			base.Update(dt);
 
 			foreach (var p in colliding) {
-				p.GetComponent<HealthComponent>().ModifyHealth(-1, this);
+				p.GetComponent<HealthComponent>()!.ModifyHealth(-1, this);
 				p.GetAnyComponent<BodyComponent>()?.KnockbackFrom(this, 4);
 			}
 
-			var velocity = GetComponent<CircleBodyComponent>().Velocity;
+			var velocity = GetComponent<CircleBodyComponent>()!.Velocity;
 			var a = velocity.ToAngle();
 			var l = velocity.Length();
 
 			if (Math.Abs(a % (Math.PI * 0.5f)) >= 0.1f || l < 20) {
 				a = (float) (Math.Floor(a / (Math.PI * 0.5f)) * (Math.PI * 0.5f));
-				GetComponent<CircleBodyComponent>().Velocity = MathUtils.CreateVector(a, Math.Max(l, 32));
+				GetComponent<CircleBodyComponent>()!.Velocity = MathUtils.CreateVector(a, Math.Max(l, 32));
 			}
 			
-			GetComponent<AnimationComponent>().Angle += Math.Sign(Math.Abs(velocity.X) > 0.1f ? velocity.X : velocity.Y) * dt * 10;
+			GetComponent<AnimationComponent>()!.Angle += Math.Sign(Math.Abs(velocity.X) > 0.1f ? velocity.X : velocity.Y) * dt * 10;
 		}
 
 		public override bool HandleEvent(Event e) {

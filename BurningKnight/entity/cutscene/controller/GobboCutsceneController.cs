@@ -50,7 +50,7 @@ namespace BurningKnight.entity.cutscene.controller {
 					Start(dadDialog, "dad_1", () => {
 						dadDialog.Close();
 						dad.GraphicsComponent.Flipped = false;
-						dad.GetComponent<AnimationComponent>().Animation.Tag = "run";
+						dad.GetComponent<AnimationComponent>()!.Animation.Tag = "run";
 						dad.RunAway = true;
 
 						Timer.Add(() => {
@@ -86,7 +86,7 @@ namespace BurningKnight.entity.cutscene.controller {
 					Start(gobboDialog, "gobbo_1", () => {
 						gobboDialog.Close();
 						gobbo.GraphicsComponent.Flipped = false;
-						gobbo.GetComponent<AnimationComponent>().Animation.Tag = "run";
+						gobbo.GetComponent<AnimationComponent>()!.Animation.Tag = "run";
 						gobbo.RunAway = true;
 
 						Timer.Add(() => {

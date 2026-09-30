@@ -49,7 +49,7 @@ namespace BurningKnight.entity.creature.mob.castle {
 
 		protected virtual void DoSpit() {
 			var am = 8;
-			GetComponent<AudioEmitterComponent>().EmitRandomized("mob_fire");
+			GetComponent<AudioEmitterComponent>()!.EmitRandomized("mob_fire");
 
 			var builder = new ProjectileBuilder(this, "small") {
 				LightRadius = 32f

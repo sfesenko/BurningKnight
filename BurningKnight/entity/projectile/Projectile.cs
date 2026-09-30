@@ -319,9 +319,9 @@ namespace BurningKnight.entity.projectile {
 			Center = center;
 
 			if (HasComponent<CircleBodyComponent>()) {
-				GetComponent<CircleBodyComponent>().Resize(0, 0, w / 2f, w / 2, true);
+				GetComponent<CircleBodyComponent>()!.Resize(0, 0, w / 2f, w / 2, true);
 			} else {
-				GetComponent<RectBodyComponent>().Resize(0, 0, w, h, true);
+				GetComponent<RectBodyComponent>()!.Resize(0, 0, w, h, true);
 			}
 		}
 

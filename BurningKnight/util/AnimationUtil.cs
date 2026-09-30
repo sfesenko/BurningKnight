@@ -95,7 +95,7 @@ namespace BurningKnight.util {
 
 		public static void TeleportAway(Entity entity, Action callback) {
 			var scale = entity is Player
-				? entity.GetComponent<PlayerGraphicsComponent>().Scale
+				? entity.GetComponent<PlayerGraphicsComponent>()!.Scale
 				: entity.GetAnyComponent<MobAnimationComponent>().Scale;
 
 			if (!entity.HasComponent<ZComponent>()) {
@@ -104,24 +104,24 @@ namespace BurningKnight.util {
 			
 			var z = entity.GetComponent<ZComponent>();
 			
-			entity.GetComponent<HealthComponent>().Unhittable = true;
+			entity.GetComponent<HealthComponent>()!.Unhittable = true;
 
 			Tween.To(0, (entity is Player
-				? entity.GetComponent<PlayerGraphicsComponent>().Scale
+				? entity.GetComponent<PlayerGraphicsComponent>()!.Scale
 				: entity.GetAnyComponent<MobAnimationComponent>().Scale).X, x => {
 
 				if (entity is Player) {
-					entity.GetComponent<PlayerGraphicsComponent>().Scale.X = x;
+					entity.GetComponent<PlayerGraphicsComponent>()!.Scale.X = x;
 				} else {
 					entity.GetAnyComponent<MobAnimationComponent>().Scale.X = x;
 				}
 			}, 0.3f, Ease.QuadIn);
 			Tween.To(4, (entity is Player
-				? entity.GetComponent<PlayerGraphicsComponent>().Scale
+				? entity.GetComponent<PlayerGraphicsComponent>()!.Scale
 				: entity.GetAnyComponent<MobAnimationComponent>().Scale).Y, x => {
 				
 				if (entity is Player) {
-					entity.GetComponent<PlayerGraphicsComponent>().Scale.Y = x;
+					entity.GetComponent<PlayerGraphicsComponent>()!.Scale.Y = x;
 				} else {
 					entity.GetAnyComponent<MobAnimationComponent>().Scale.Y = x;
 				}
@@ -132,37 +132,37 @@ namespace BurningKnight.util {
 
 		public static void TeleportIn(Entity entity) {
 			var scale = new Func<Vector2>(() => entity is Player
-				? entity.GetComponent<PlayerGraphicsComponent>().Scale
+				? entity.GetComponent<PlayerGraphicsComponent>()!.Scale
 				: entity.GetAnyComponent<MobAnimationComponent>().Scale);
 
 			var z = entity.GetComponent<ZComponent>();
 			
-			entity.GetComponent<HealthComponent>().Unhittable = true;
+			entity.GetComponent<HealthComponent>()!.Unhittable = true;
 
 			Tween.To(1.5f, scale().X, x => {
 				if (entity is Player) {
-					entity.GetComponent<PlayerGraphicsComponent>().Scale.X = x;
+					entity.GetComponent<PlayerGraphicsComponent>()!.Scale.X = x;
 				} else {
 					entity.GetAnyComponent<MobAnimationComponent>().Scale.X = x;
 				}
 			}, 0.3f);
 			Tween.To(0.1f, scale().Y, x => {
 				if (entity is Player) {
-					entity.GetComponent<PlayerGraphicsComponent>().Scale.Y = x;
+					entity.GetComponent<PlayerGraphicsComponent>()!.Scale.Y = x;
 				} else {
 					entity.GetAnyComponent<MobAnimationComponent>().Scale.Y = x;
 				}
 			}, 0.3f).OnEnd = () => {
 				Tween.To(1, scale().X, x => {
 					if (entity is Player) {
-						entity.GetComponent<PlayerGraphicsComponent>().Scale.X = x;
+						entity.GetComponent<PlayerGraphicsComponent>()!.Scale.X = x;
 					} else {
 						entity.GetAnyComponent<MobAnimationComponent>().Scale.X = x;
 					}
 				}, 0.3f);
 				Tween.To(1f, scale().Y, x => {
 					if (entity is Player) {
-						entity.GetComponent<PlayerGraphicsComponent>().Scale.Y = x;
+						entity.GetComponent<PlayerGraphicsComponent>()!.Scale.Y = x;
 					} else {
 						entity.GetAnyComponent<MobAnimationComponent>().Scale.Y = x;
 					}
@@ -170,7 +170,7 @@ namespace BurningKnight.util {
 			};
 			
 			Tween.To(0, z.Z, x => z.Z = x, 0.2f).OnEnd = () => {
-				entity.GetComponent<HealthComponent>().Unhittable = false;
+				entity.GetComponent<HealthComponent>()!.Unhittable = false;
 			};
 		}
 	}

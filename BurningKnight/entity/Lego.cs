@@ -29,7 +29,7 @@ namespace BurningKnight.entity {
 		public override bool HandleEvent(Event e)
 		{
 			if (e is CollisionStartedEvent { Entity: Creature c } && !c.IsFriendly() &&
-			    c.GetComponent<HealthComponent>().ModifyHealth(-10, this, DamageType.Custom))
+			    c.GetComponent<HealthComponent>()!.ModifyHealth(-10, this, DamageType.Custom))
 			{
 				AnimationUtil.Ash(Center);
 				Done = true;

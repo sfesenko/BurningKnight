@@ -248,7 +248,7 @@ namespace BurningKnight.ui.dialog {
 			
 			Tween.To(2, Context.Camera.TextureZoom, x => Context.Camera.TextureZoom = x, 0.3f, Ease.QuadInOut);
 						
-			p.GetComponent<StateComponent>().Become<Player.IdleState>();
+			p.GetComponent<StateComponent>()!.Become<Player.IdleState>();
 			((InGameState) Engine.Instance.State).OpenBlackBars();
 
 			Talking = this;
@@ -262,7 +262,7 @@ namespace BurningKnight.ui.dialog {
 					Dialog.ShowArrow = false;
 				}
 				
-				To.GetComponent<HealthComponent>().Unhittable = wasUnhittable;
+				To.GetComponent<HealthComponent>()!.Unhittable = wasUnhittable;
 				wasUnhittable = false;
 			}
 

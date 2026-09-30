@@ -267,7 +267,7 @@ namespace BurningKnight.entity.item.stand {
 			Graphics.Render(itemShadow, Position + shadowOffset);
 			Graphics.Color = ColorUtils.WhiteColor;
 
-			var t = item.Animation == null ? item.GetComponent<ItemGraphicsComponent>().T : 0;
+			var t = item.Animation == null ? item.GetComponent<ItemGraphicsComponent>()!.T : 0;
 			var angle = (float) Math.Cos(t * 3f) * 0.4f;
 			
 			var region = item.Region;

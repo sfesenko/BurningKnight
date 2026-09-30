@@ -17,7 +17,7 @@ namespace BurningKnight.entity.item.use {
 		private bool d2;
 		
 		public override void Use(Entity entity, Item self) {
-			var room = entity.GetComponent<RoomComponent>().Room;
+			var room = entity.GetComponent<RoomComponent>()!.Room;
 
 			if (room == null) {
 				return;

@@ -26,7 +26,7 @@ namespace BurningKnight.level.entities.statue {
 			Items.Unlock("bk:broken_stone");
 
 			for (var i = 0; i < 2; i++) {
-				e.GetComponent<InventoryComponent>().Pickup(Items.CreateAndAdd("bk:broken_stone", Area));
+				e.GetComponent<InventoryComponent>()!.Pickup(Items.CreateAndAdd("bk:broken_stone", Area));
 			}
 			
 			Break();

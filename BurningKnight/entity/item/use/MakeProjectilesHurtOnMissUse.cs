@@ -33,7 +33,7 @@ namespace BurningKnight.entity.item.use {
 				
 				ProjectileCallbacks.AttachDeathCallback(pce.Projectile, (p, en, t) => {
 					if (!hurt) {
-						Item.Owner.GetComponent<HealthComponent>().ModifyHealth(-1, Item);
+						Item.Owner.GetComponent<HealthComponent>()!.ModifyHealth(-1, Item);
 					}
 				});
 			} else if (e is MeleeArc.CreatedEvent mac) {
@@ -51,7 +51,7 @@ namespace BurningKnight.entity.item.use {
 
 				mac.Arc.OnDeath += (m) => {
 					if (!hurt) {
-						Item.Owner.GetComponent<HealthComponent>().ModifyHealth(-1, Item);
+						Item.Owner.GetComponent<HealthComponent>()!.ModifyHealth(-1, Item);
 					}
 				};
 			}

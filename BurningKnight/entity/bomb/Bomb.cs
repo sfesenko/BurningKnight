@@ -63,7 +63,7 @@ namespace BurningKnight.entity.bomb {
 			});
 			
 			AddComponent(new AudioEmitterComponent());
-			GetComponent<AudioEmitterComponent>().EmitRandomized("bomb_placed");
+			GetComponent<AudioEmitterComponent>()!.EmitRandomized("bomb_placed");
 		}
 
 		private void RenderShadow() {
@@ -71,7 +71,7 @@ namespace BurningKnight.entity.bomb {
 		}
 
 		public void MoveToMouse() {
-			VelocityTo(AngleTo(Owner.GetComponent<CursorComponent>().Cursor.GamePosition));
+			VelocityTo(AngleTo(Owner.GetComponent<CursorComponent>()!.Cursor.GamePosition));
 		}
 
 		public void VelocityTo(float angle, float force = 100f) {
@@ -111,14 +111,14 @@ namespace BurningKnight.entity.bomb {
 		public void Explode() {
 			OnDeath?.Invoke(this);
 			Done = true;
-			var r = GetComponent<ExplodeComponent>().Radius;
+			var r = GetComponent<ExplodeComponent>()!.Radius;
 			ExplosionMaker.Make(this, r, scale: r / 32f);
 		}
 
 		public override bool HandleEvent(Event e) {
 			if (e is CollisionStartedEvent cse) {
 				if (cse.Entity is Projectile p) {
-					GetComponent<RectBodyComponent>().KnockbackFrom(p);
+					GetComponent<RectBodyComponent>()!.KnockbackFrom(p);
 
 					if (!p.HasFlag(ProjectileFlags.FlyOverStones)) {
 						p.Break();

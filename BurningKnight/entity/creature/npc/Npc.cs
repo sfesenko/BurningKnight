@@ -12,7 +12,7 @@ namespace BurningKnight.entity.creature.npc {
 			base.AddComponents();
 			
 			AddComponent(new DialogComponent());
-			GetComponent<HealthComponent>().Unhittable = true;
+			GetComponent<HealthComponent>()!.Unhittable = true;
 			
 			AddTag(Tags.Npc);
 		}

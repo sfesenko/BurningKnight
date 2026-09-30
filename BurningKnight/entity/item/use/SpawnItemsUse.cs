@@ -15,7 +15,7 @@ namespace BurningKnight.entity.item.use {
 			var count = 0;
 
 			var center = entity.Center;
-			var room = entity.GetComponent<RoomComponent>().Room;
+			var room = entity.GetComponent<RoomComponent>()!.Room;
 
 			if (room != null) {
 				center = room.Center;

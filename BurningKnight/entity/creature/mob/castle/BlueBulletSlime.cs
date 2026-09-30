@@ -25,7 +25,7 @@ namespace BurningKnight.entity.creature.mob.castle {
 
 		protected override void DoSpit() {
 			var am = 8;
-			GetComponent<AudioEmitterComponent>().EmitRandomized("mob_fire");
+			GetComponent<AudioEmitterComponent>()!.EmitRandomized("mob_fire");
 
 			var builder = new ProjectileBuilder(this, "small") {
 				Color = ProjectileColor.Cyan,
@@ -40,12 +40,12 @@ namespace BurningKnight.entity.creature.mob.castle {
 			}
 
 			Timer.Add(() => {
-				if (GetComponent<HealthComponent>().Dead) {
+				if (GetComponent<HealthComponent>()!.Dead) {
 					return;
 				}
 
-				GetComponent<AudioEmitterComponent>().EmitRandomized("mob_fire");
-				GetComponent<ZAnimationComponent>().Animate();
+				GetComponent<AudioEmitterComponent>()!.EmitRandomized("mob_fire");
+				GetComponent<ZAnimationComponent>()!.Animate();
 
 				var b = new ProjectileBuilder(this, "small") {
 					Color = ProjectileColor.Blue,

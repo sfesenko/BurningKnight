@@ -24,7 +24,7 @@ namespace BurningKnight.entity.item.use {
 			}
 			
 			if (random) {
-				entity.GetComponent<InventoryComponent>().Pickup(Items.CreateAndAdd(Items.Generate(ItemPool.Orbital), entity.Area, true));
+				entity.GetComponent<InventoryComponent>()!.Pickup(Items.CreateAndAdd(Items.Generate(ItemPool.Orbital), entity.Area, true));
 				return;
 			}
 			
@@ -35,7 +35,7 @@ namespace BurningKnight.entity.item.use {
 				return;
 			}
 			
-			entity.GetComponent<OrbitGiverComponent>().AddOrbiter(o);
+			entity.GetComponent<OrbitGiverComponent>()!.AddOrbiter(o);
 		}
 
 		public override void Setup(JsonValue settings) {

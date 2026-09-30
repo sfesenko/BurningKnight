@@ -45,7 +45,7 @@ namespace BurningKnight.entity.creature.player {
 		protected override void OnItemSet(Item previous) {
 			base.OnItemSet(previous);
 			
-			if (Context.Run.Depth > 0 && GlobalSave.IsFalse("control_active") && GetComponent<DialogComponent>().Dialog?.Str != null) {
+			if (Context.Run.Depth > 0 && GlobalSave.IsFalse("control_active") && GetComponent<DialogComponent>()!.Dialog?.Str != null) {
 				var dialog = GetComponent<DialogComponent>();
 				
 				dialog.Dialog.Str.ClearIcons();
@@ -65,7 +65,7 @@ namespace BurningKnight.entity.creature.player {
 					Drop();
 					i.Done = true;
 
-					Entity.GetComponent<InventoryComponent>().Pickup(Items.CreateAndAdd("bk:water_bucket", Entity.Area));
+					Entity.GetComponent<InventoryComponent>()!.Pickup(Items.CreateAndAdd("bk:water_bucket", Entity.Area));
 				}, 3f);
 			}
 		}
@@ -74,12 +74,12 @@ namespace BurningKnight.entity.creature.player {
 			base.Update(dt);
 
 			if (Context.Run.Depth > 0 && Item != null && !Item.Done && Input.WasPressed(Controls.Active, GetComponent<InputComponent>())) {
-				if (GetComponent<PlayerInputComponent>().InDialog) {
+				if (GetComponent<PlayerInputComponent>()!.InDialog) {
 					return;
 				}
 			
-				if (GetComponent<StateComponent>().StateInstance is Player.SleepingState) {
-					GetComponent<StateComponent>().Become<Player.IdleState>();
+				if (GetComponent<StateComponent>()!.StateInstance is Player.SleepingState) {
+					GetComponent<StateComponent>()!.Become<Player.IdleState>();
 				}
 				
 				if (Item.Use((Player) Entity)) {
@@ -88,7 +88,7 @@ namespace BurningKnight.entity.creature.player {
 					}
 					
 					if (Context.Run.Depth > 0 && GlobalSave.IsFalse("control_active")) {
-						Entity.GetComponent<DialogComponent>().Close();
+						Entity.GetComponent<DialogComponent>()!.Close();
 						GlobalSave.Put("control_active", true);
 					}
 					

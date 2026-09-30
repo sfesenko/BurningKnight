@@ -50,7 +50,7 @@ namespace BurningKnight.level.entities.machine {
 			AddComponent(drops);
 			drops.Add("bk:charger");
 			
-			GetComponent<DialogComponent>().Dialog.Voice = 10;
+			GetComponent<DialogComponent>()!.Dialog.Voice = 10;
 		}
 
 		public override void Save(FileWriter stream) {
@@ -74,19 +74,19 @@ namespace BurningKnight.level.entities.machine {
 		public void Break(bool spawnLoot = true) {
 			broken = true;
 			
-			GetComponent<InteractableSliceComponent>().Sprite = CommonAse.Props.GetSlice("charger_broken");
+			GetComponent<InteractableSliceComponent>()!.Sprite = CommonAse.Props.GetSlice("charger_broken");
 
 			if (spawnLoot) {
-				GetComponent<DropsComponent>().SpawnDrops();
+				GetComponent<DropsComponent>()!.SpawnDrops();
 			}
 		}
 		
 		private void Animate() {
-			GetComponent<InteractableSliceComponent>().Scale.Y = 0.4f;
-			Tween.To(1, 0.4f, x => GetComponent<InteractableSliceComponent>().Scale.Y = x, 0.2f);
+			GetComponent<InteractableSliceComponent>()!.Scale.Y = 0.4f;
+			Tween.To(1, 0.4f, x => GetComponent<InteractableSliceComponent>()!.Scale.Y = x, 0.2f);
 			
-			GetComponent<InteractableSliceComponent>().Scale.X = 1.3f;
-			Tween.To(1, 1.3f, x => GetComponent<InteractableSliceComponent>().Scale.X = x, 0.2f);
+			GetComponent<InteractableSliceComponent>()!.Scale.X = 1.3f;
+			Tween.To(1, 1.3f, x => GetComponent<InteractableSliceComponent>()!.Scale.X = x, 0.2f);
 		}
 
 		private bool Interact(Entity e) {
@@ -96,14 +96,14 @@ namespace BurningKnight.level.entities.machine {
 			var active = p.GetComponent<ActiveItemComponent>();
 			
 			if (active.Item == null) {
-				GetComponent<DialogComponent>().StartAndClose("charger_0", 3);
+				GetComponent<DialogComponent>()!.StartAndClose("charger_0", 3);
 				AnimationUtil.ActionFailed();
 				
 				return true;
 			}
 			
 			if (active.Item.Delay <= 0.02f) {
-				GetComponent<DialogComponent>().StartAndClose("charger_1", 3);
+				GetComponent<DialogComponent>()!.StartAndClose("charger_1", 3);
 				AnimationUtil.ActionFailed();
 				
 				return true;
@@ -114,13 +114,13 @@ namespace BurningKnight.level.entities.machine {
 
 				if (component.Coins == 0) {
 					if (noMoneyAttempt == 0) {
-						GetComponent<DialogComponent>().StartAndClose("charger_2", 3);
+						GetComponent<DialogComponent>()!.StartAndClose("charger_2", 3);
 					} else if (noMoneyAttempt == 1) {
-						GetComponent<DialogComponent>().StartAndClose("charger_3", 3);
+						GetComponent<DialogComponent>()!.StartAndClose("charger_3", 3);
 					} else {
 						var hp = p.GetComponent<HealthComponent>();
 						hp.ModifyHealth(-1, this);
-						GetComponent<DialogComponent>().StartAndClose($"charger_{(hp.HasNoHealth ? 5 : 4)}", 3);
+						GetComponent<DialogComponent>()!.StartAndClose($"charger_{(hp.HasNoHealth ? 5 : 4)}", 3);
 					}
 
 					noMoneyAttempt++;

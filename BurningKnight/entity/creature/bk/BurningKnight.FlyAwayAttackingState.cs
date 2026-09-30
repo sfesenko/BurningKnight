@@ -57,7 +57,7 @@ namespace BurningKnight.entity.creature.bk {
 
 				var a = Self.AngleTo(Self.Target);
 
-				Self.GetComponent<RectBodyComponent>().Velocity +=
+				Self.GetComponent<RectBodyComponent>()!.Velocity +=
 					new Vector2((float) Math.Cos(a) * force, (float) Math.Sin(a) * force);
 			}
 		}

@@ -87,7 +87,7 @@ namespace BurningKnight.entity.creature.npc {
 							d.StartAndClose("quack", 3);
 						}
 
-						GetComponent<AudioEmitterComponent>().EmitRandomized("quck");
+						GetComponent<AudioEmitterComponent>()!.EmitRandomized("quck");
 					}, 0.5f);
 				}));
 			}
@@ -164,35 +164,35 @@ namespace BurningKnight.entity.creature.npc {
 			}
 			
 			if (e is RoomChangedEvent rce) {
-				if (rce.Who is Player && rce.New == GetComponent<RoomComponent>().Room) {
+				if (rce.Who is Player && rce.New == GetComponent<RoomComponent>()!.Room) {
 					if (Context.Run.Depth > 0 && !saved) {
-						GetComponent<AudioEmitterComponent>().EmitRandomized("hi");
+						GetComponent<AudioEmitterComponent>()!.EmitRandomized("hi");
 
 						if ((rce.Who.TryGetComponent<ActiveWeaponComponent>(out var a) && a.Item != null && a.Item.Id == "bk:cage_key") ||
 						    (rce.Who.TryGetComponent<WeaponComponent>(out var w) && w.Item != null && w.Item.Id == "bk:cage_key")) {
 
-							GetComponent<DialogComponent>().StartAndClose("npc_2", 3);
+							GetComponent<DialogComponent>()!.StartAndClose("npc_2", 3);
 						} else {
-							GetComponent<DialogComponent>().StartAndClose("npc_0", 3);
+							GetComponent<DialogComponent>()!.StartAndClose("npc_0", 3);
 						}
 					} else {
 						var s = GetHiDialog();
 						
 						if (s != null) {
-							GetComponent<DialogComponent>().StartAndClose(s, 3);
+							GetComponent<DialogComponent>()!.StartAndClose(s, 3);
 						}
 					}
 				}
 			} else if (e is ItemBoughtEvent ibe) {
-				if (OwnsStand(ibe.Stand) && ibe.Stand.GetComponent<RoomComponent>().Room == GetComponent<RoomComponent>().Room) {
-					GetComponent<DialogComponent>().StartAndClose(GetDealDialog(), 3);
+				if (OwnsStand(ibe.Stand) && ibe.Stand.GetComponent<RoomComponent>()!.Room == GetComponent<RoomComponent>()!.Room) {
+					GetComponent<DialogComponent>()!.StartAndClose(GetDealDialog(), 3);
 					OnItemBought(ibe);
 				}
 			} else if (e is DiedEvent) {
 				GlobalSave.Put(GetId(), false);
 				ExplosionMaker.Make(this);
 			} else if (e is HealthModifiedEvent hme && hme.Amount < 0) {
-				GetComponent<DialogComponent>().StartAndClose($"npc_hurt_{Rnd.Int(3)}", 2);
+				GetComponent<DialogComponent>()!.StartAndClose($"npc_hurt_{Rnd.Int(3)}", 2);
 			}
 			
 			return base.HandleEvent(e);
@@ -210,7 +210,7 @@ namespace BurningKnight.entity.creature.npc {
 			if (Context.Run.Depth > 0 && !saved) {
 				saved = true;
 				Remove = true;
-				GetComponent<DialogComponent>().StartAndClose("npc_1", 6);
+				GetComponent<DialogComponent>()!.StartAndClose("npc_1", 6);
 				
 				GlobalSave.Put(GetId(), true);
 				GlobalSave.Put("saved_npc", true);

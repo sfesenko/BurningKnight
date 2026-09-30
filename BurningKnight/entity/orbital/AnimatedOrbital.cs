@@ -16,7 +16,7 @@ namespace BurningKnight.entity.orbital {
 				ShadowOffset = -2
 			});
 
-			var region = GetComponent<AnimationComponent>().Animation.GetCurrentTexture();
+			var region = GetComponent<AnimationComponent>()!.Animation.GetCurrentTexture();
 			
 			Width = region.Width;
 			Height = region.Height;
@@ -24,7 +24,7 @@ namespace BurningKnight.entity.orbital {
 			AddComponent(new ShadowComponent());
 			AddComponent(new RectBodyComponent(0, 0, Width, Height, BodyType.Dynamic, true));
 			
-			GetComponent<AnimationComponent>().Animate();
+			GetComponent<AnimationComponent>()!.Animate();
 		}
 	}
 }

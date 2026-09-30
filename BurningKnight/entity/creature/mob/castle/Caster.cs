@@ -113,20 +113,20 @@ namespace BurningKnight.entity.creature.mob.castle {
 			public override void Init() {
 				base.Init();
 				
-				Self.GetComponent<AudioEmitterComponent>().EmitRandomized("door_close");
-				Self.GetComponent<AnimationComponent>().SetAutoStop(true);
+				Self.GetComponent<AudioEmitterComponent>()!.EmitRandomized("door_close");
+				Self.GetComponent<AnimationComponent>()!.SetAutoStop(true);
 			}
 
 			public override void Destroy() {
 				base.Destroy();
-				Self.GetComponent<AnimationComponent>().SetAutoStop(false);
+				Self.GetComponent<AnimationComponent>()!.SetAutoStop(false);
 			}
 
 			public override void Update(float dt) {
 				base.Update(dt);
 
-				if (Self.GetComponent<AnimationComponent>().Animation.Paused) {
-					Self.GetComponent<StateComponent>().Become<AppearState>();
+				if (Self.GetComponent<AnimationComponent>()!.Animation.Paused) {
+					Self.GetComponent<StateComponent>()!.Become<AppearState>();
 				}
 			}
 		}
@@ -135,22 +135,22 @@ namespace BurningKnight.entity.creature.mob.castle {
 			public override void Init() {
 				base.Init();
 
-				Self.Center = Self.GetComponent<RoomComponent>().Room.GetRandomFreeTile() * 16;
+				Self.Center = Self.GetComponent<RoomComponent>()!.Room.GetRandomFreeTile() * 16;
 				
-				Self.GetComponent<AudioEmitterComponent>().EmitRandomized("door_close");
-				Self.GetComponent<AnimationComponent>().SetAutoStop(true);
+				Self.GetComponent<AudioEmitterComponent>()!.EmitRandomized("door_close");
+				Self.GetComponent<AnimationComponent>()!.SetAutoStop(true);
 			}
 
 			public override void Destroy() {
 				base.Destroy();
-				Self.GetComponent<AnimationComponent>().SetAutoStop(false);
+				Self.GetComponent<AnimationComponent>()!.SetAutoStop(false);
 			}
 
 			public override void Update(float dt) {
 				base.Update(dt);
 
-				if (Self.GetComponent<AnimationComponent>().Animation.Paused) {
-					Self.GetComponent<StateComponent>().Become<IdleState>();
+				if (Self.GetComponent<AnimationComponent>()!.Animation.Paused) {
+					Self.GetComponent<StateComponent>()!.Become<IdleState>();
 				}
 			}
 		}

@@ -25,7 +25,7 @@ namespace BurningKnight.entity.projectile.controller {
 					var md = 320000f;
 
 					foreach (var m in (p.Owner.TryGetComponent<RoomComponent>(out var c) ? c.Room.Tagged[Tags.Mob] : p.Area.Tagged[Tags.Mob])) {
-						if (m.GetComponent<HealthComponent>().Unhittable) {
+						if (m.GetComponent<HealthComponent>()!.Unhittable) {
 							continue;
 						}
 
@@ -61,7 +61,7 @@ namespace BurningKnight.entity.projectile.controller {
 				var d = b.Velocity.Length();
 				var a = b.Velocity.ToAngle();
 
-				a = (float) MathUtils.LerpAngle(a, p.AngleTo(p.Owner.GetComponent<CursorComponent>().Cursor.GamePosition) + Rnd.Float(-2, 2), dt * speed * 4);
+				a = (float) MathUtils.LerpAngle(a, p.AngleTo(p.Owner.GetComponent<CursorComponent>()!.Cursor.GamePosition) + Rnd.Float(-2, 2), dt * speed * 4);
 				b.Velocity = new Vector2((float) Math.Cos(a) * d, (float) Math.Sin(a) * d);
 				b.Angle = a;
 			};
@@ -82,7 +82,7 @@ namespace BurningKnight.entity.projectile.controller {
 				}
 				
 				foreach (var m in (p.Owner.TryGetComponent<RoomComponent>(out var c) ? c.Room.Tagged[Tags.Mob] : p.Area.Tagged[Tags.Mob])) {
-					if (m.Done || m.GetComponent<HealthComponent>().Unhittable) {
+					if (m.Done || m.GetComponent<HealthComponent>()!.Unhittable) {
 						continue;
 					}
 					

@@ -26,7 +26,7 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.creature.mob.boss {
 	public partial class BkHead : Boss {
-		public bool CanBeSaved => GetComponent<HealthComponent>().Percent <= 0.2f;
+		public bool CanBeSaved => GetComponent<HealthComponent>()!.Percent <= 0.2f;
 		
 		protected override void AddPhases() {
 			base.AddPhases();
@@ -54,7 +54,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 			base.OnTargetChange(target);
 
 			if (target != null) {
-				GetComponent<DialogComponent>().StartAndClose("head_0", 2f);
+				GetComponent<DialogComponent>()!.StartAndClose("head_0", 2f);
 
 				Timer.Add(() => {
 					Become<IdleState>();
@@ -78,7 +78,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 				var force = 40f * dt;
 				var a = AngleTo(Target);
 
-				GetComponent<RectBodyComponent>().Velocity += new Vector2((float) Math.Cos(a) * force, (float) Math.Sin(a) * force);
+				GetComponent<RectBodyComponent>()!.Velocity += new Vector2((float) Math.Cos(a) * force, (float) Math.Sin(a) * force);
 			}
 		}
 
@@ -122,7 +122,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 			}
 
 			saved = true;
-			GetComponent<HealthComponent>().Kill(this);
+			GetComponent<HealthComponent>()!.Kill(this);
 
 			Timer.Add(PlaceRewards, 1f);
 		}
@@ -151,7 +151,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 			Area.Add(dm);
 
 			dm.Center = Center + new Vector2(0, 32);
-			dm.GetComponent<AnimationComponent>().Animate();
+			dm.GetComponent<AnimationComponent>()!.Animate();
 
 			AnimationUtil.Poof(dm.Center);
 			
@@ -185,7 +185,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 						Context.Camera.MainTarget = dm;
 
 						foreach (var p in Area.Tagged[Tags.Player]) {
-							p.GetComponent<PlayerGraphicsComponent>().Hidden = true;
+							p.GetComponent<PlayerGraphicsComponent>()!.Hidden = true;
 							p.RemoveComponent<RectBodyComponent>();
 						}
 						
@@ -196,7 +196,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 						Area.Add(bk);
 						bk.Center = Center;
 
-						bk.GetComponent<BkGraphicsComponent>().Animate();
+						bk.GetComponent<BkGraphicsComponent>()!.Animate();
 						Context.Camera.Follow(bk, 1f);
 						
 						dmDialog.Start("dm_6", null, () => Timer.Add(() => {

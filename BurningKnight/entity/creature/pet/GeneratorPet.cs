@@ -26,11 +26,11 @@ namespace BurningKnight.entity.creature.pet {
 			AddComponent(new ZSliceComponent("items", sprite));
 			AddComponent(new ZComponent { Float = true });
 
-			var region = GetComponent<ZSliceComponent>().Sprite;
+			var region = GetComponent<ZSliceComponent>()!.Sprite;
 			AddComponent(new SensorBodyComponent(0, 0, region.Width, region.Height));
 			
 			Subscribe<RoomClearedEvent>();
-			GetComponent<ZSliceComponent>().Animate();
+			GetComponent<ZSliceComponent>()!.Animate();
 		}
 
 		public override bool HandleEvent(Event e) {
@@ -38,7 +38,7 @@ namespace BurningKnight.entity.creature.pet {
 				roomsCleared++;
 
 				if (roomsCleared >= numRooms) {
-					GetComponent<FollowerComponent>().Pause = 1f;
+					GetComponent<FollowerComponent>()!.Pause = 1f;
 					roomsCleared = 0;
 
 					var a = GetComponent<ZSliceComponent>();

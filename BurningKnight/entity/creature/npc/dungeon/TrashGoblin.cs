@@ -50,7 +50,7 @@ namespace BurningKnight.entity.creature.npc.dungeon {
 			base.PostInit();
 
 			if (freed) {
-				GetComponent<AnimationComponent>().Animation.Tag = "free";
+				GetComponent<AnimationComponent>()!.Animation.Tag = "free";
 			}
 		}
 
@@ -65,8 +65,8 @@ namespace BurningKnight.entity.creature.npc.dungeon {
 
 			freed = true;
 			
-			GetComponent<AnimationComponent>().Animation.Tag = "free";
-			GetComponent<DialogComponent>().StartAndClose("trash_goblin_1", 5);
+			GetComponent<AnimationComponent>()!.Animation.Tag = "free";
+			GetComponent<DialogComponent>()!.StartAndClose("trash_goblin_1", 5);
 
 			Timer.Add(() => {
 				try {

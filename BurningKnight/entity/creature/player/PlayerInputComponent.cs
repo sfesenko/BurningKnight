@@ -62,7 +62,7 @@ namespace BurningKnight.entity.creature.player {
 			base.Update(dt);
 			EnableUpdates = !((Player) Entity).SuperHot;
 
-			if (GetComponent<BuffsComponent>().Has<FrozenBuff>()) {
+			if (GetComponent<BuffsComponent>()!.Has<FrozenBuff>()) {
 				EnableUpdates = true;
 				return;
 			}
@@ -247,7 +247,7 @@ namespace BurningKnight.entity.creature.player {
 
 				if (controller.KeyboardEnabled && Input.Mouse.CheckMiddleButton) {
 					idle = false;
-					var a = Entity.AngleTo(GetComponent<CursorComponent>().Cursor.GamePosition);
+					var a = Entity.AngleTo(GetComponent<CursorComponent>()!.Cursor.GamePosition);
 					acceleration += new Vector2((float) Math.Cos(a), (float) Math.Sin(a));
 				}
 
@@ -294,7 +294,7 @@ namespace BurningKnight.entity.creature.player {
 		}
 
 		public void Accelerate(Vector2 acceleration, float dt) {
-			if (GetComponent<RectBodyComponent>().Confused) {
+			if (GetComponent<RectBodyComponent>()!.Confused) {
 				acceleration *= -1;
 			}
 			
@@ -319,7 +319,7 @@ namespace BurningKnight.entity.creature.player {
 			}
 
 			var ac = acceleration * s;
-			var st = (GetComponent<StatsComponent>().Speed);
+			var st = (GetComponent<StatsComponent>()!.Speed);
 			
 			body.Acceleration = ac * st * 1.5f;
 			body.Velocity -= body.Velocity * dt * sp * 1.5f - body.Acceleration;
@@ -338,7 +338,7 @@ namespace BurningKnight.entity.creature.player {
 			}
 
 			EnableUpdates = true;
-			Entity.GetComponent<StateComponent>().Become<Player.IdleState>();
+			Entity.GetComponent<StateComponent>()!.Become<Player.IdleState>();
 		}
 	}
 }

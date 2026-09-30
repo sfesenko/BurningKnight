@@ -134,7 +134,7 @@ namespace BurningKnight.state {
 			var lamp = "none";
 
 			try {
-				var l = player.GetComponent<LampComponent>().Item;
+				var l = player.GetComponent<LampComponent>()!.Item;
 
 				if (l != null) {
 					lamp = l.Id;
@@ -162,7 +162,7 @@ namespace BurningKnight.state {
 				} else if (Context.Run.Type == RunType.Daily) {
 					Achievements.Unlock("bk:daily");
 				} else if (Context.Run.Type == RunType.Regular) {
-					if (player.GetComponent<LampComponent>().Item?.Id != "bk:no_lamp") {
+					if (player.GetComponent<LampComponent>()!.Item?.Id != "bk:no_lamp") {
 						Achievements.Unlock("bk:unstoppable");
 					}
 

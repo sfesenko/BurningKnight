@@ -27,7 +27,7 @@ namespace BurningKnight.entity.creature.pet {
 			a.CustomFlip = true;
 			a.Animation.Tag = tags[stage];
 			
-			GetComponent<ShadowComponent>().Callback = RenderShadow;
+			GetComponent<ShadowComponent>()!.Callback = RenderShadow;
 		}
 
 		private float t;
@@ -40,7 +40,7 @@ namespace BurningKnight.entity.creature.pet {
 				t = 0;
 				
 				foreach (var c in Colliding) {
-					if (c.GetComponent<HealthComponent>().ModifyHealth(-3, this)) {
+					if (c.GetComponent<HealthComponent>()!.ModifyHealth(-3, this)) {
 						Hit();
 					}
 				}
@@ -104,7 +104,7 @@ namespace BurningKnight.entity.creature.pet {
 				if (!hidden && cse.Entity.HasTag(Tags.MustBeKilled)) {
 					Colliding.Add(cse.Entity);
 
-					if (cse.Entity.GetComponent<HealthComponent>().ModifyHealth(-3, this)) {
+					if (cse.Entity.GetComponent<HealthComponent>()!.ModifyHealth(-3, this)) {
 						Hit();
 					}
 				}

@@ -41,7 +41,7 @@ namespace BurningKnight.entity.creature.bk {
 				base.Init();
 
 				Timer.Add(() => {
-					Self.GetComponent<AudioEmitterComponent>().EmitRandomized("mob_fire_static");
+					Self.GetComponent<AudioEmitterComponent>()!.EmitRandomized("mob_fire_static");
 
 					var a = Self.AngleTo(Self.Target);
 					
@@ -59,7 +59,7 @@ namespace BurningKnight.entity.creature.bk {
 					}, swordData, () => {
 						Timer.Add(() => {
 							p.Launch(a, 30);
-							Self.GetComponent<AudioEmitterComponent>().EmitRandomized("mob_fire_static");
+							Self.GetComponent<AudioEmitterComponent>()!.EmitRandomized("mob_fire_static");
 
 							Become<FightState>();
 						}, 0.2f);

@@ -21,7 +21,7 @@ namespace BurningKnight.entity.creature.pet {
 			AddComponent(new ZComponent { Float = true });
 			AddComponent(new RectBodyComponent(0, 0, Width, Height, BodyType.Dynamic, true));
 			
-			GetComponent<SimpleZAnimationComponent>().Animate();
+			GetComponent<SimpleZAnimationComponent>()!.Animate();
 			
 			AddComponent(new FollowerComponent {
 				MaxDistance = 4
@@ -31,7 +31,7 @@ namespace BurningKnight.entity.creature.pet {
 		public override bool HandleEvent(Event e) {
 			if (e is CollisionStartedEvent cse) {
 				if (cse.Entity is Creature c && !c.IsFriendly()) {
-					c.GetComponent<BuffsComponent>().Add(new PoisonBuff());
+					c.GetComponent<BuffsComponent>()!.Add(new PoisonBuff());
 				}
 			}
 			
@@ -44,9 +44,9 @@ namespace BurningKnight.entity.creature.pet {
 			var component = GetComponent<FollowerComponent>();
 
 			if (component.Following == null || component.Following == this) {
-				Owner.GetComponent<FollowerComponent>().AddFollower(this);
+				Owner.GetComponent<FollowerComponent>()!.AddFollower(this);
 			} else if (component.Following == Owner) {
-				var room = GetComponent<RoomComponent>().Room;
+				var room = GetComponent<RoomComponent>()!.Room;
 
 				if (room == null) {
 					return;
@@ -59,8 +59,8 @@ namespace BurningKnight.entity.creature.pet {
 						target.AddComponent(new FollowerComponent());
 					}
 					
-					GetComponent<FollowerComponent>().Remove();
-					target.GetComponent<FollowerComponent>().AddFollower(this);
+					GetComponent<FollowerComponent>()!.Remove();
+					target.GetComponent<FollowerComponent>()!.AddFollower(this);
 				}
 			}
 		}

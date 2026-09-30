@@ -78,7 +78,7 @@ namespace BurningKnight.state {
 				};
 				
 				TopUi.Add(cursor);
-				p.GetComponent<CursorComponent>().Cursor = cursor;
+				p.GetComponent<CursorComponent>()!.Cursor = cursor;
 			}
 			
 			Ui.Add(indicator = new SaveIndicator());

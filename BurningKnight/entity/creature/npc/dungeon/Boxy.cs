@@ -27,9 +27,9 @@ namespace BurningKnight.entity.creature.npc.dungeon {
 			Flips = false;
 			
 			AddComponent(new AnimationComponent("boxy"));
-			GetComponent<AnimationComponent>().Animation.Tag = "idle";
+			GetComponent<AnimationComponent>()!.Animation.Tag = "idle";
 
-			GetComponent<DropsComponent>().Add("bk:boxy");
+			GetComponent<DropsComponent>()!.Add("bk:boxy");
 			
 			AddComponent(new RectBodyComponent(0, 9, 15, 9, BodyType.Static));
 		}
@@ -38,7 +38,7 @@ namespace BurningKnight.entity.creature.npc.dungeon {
 			base.PostInit();
 
 			if (open) {
-				GetComponent<AnimationComponent>().Animation.Tag = "open";
+				GetComponent<AnimationComponent>()!.Animation.Tag = "open";
 			}
 		}
 
@@ -47,7 +47,7 @@ namespace BurningKnight.entity.creature.npc.dungeon {
 				return;
 			}
 			
-			foreach (var s in GetComponent<RoomComponent>().Room.Tagged[Tags.Item]) {
+			foreach (var s in GetComponent<RoomComponent>()!.Room.Tagged[Tags.Item]) {
 				if (s is BoxyStand st && st != ibe.Stand && st.Item != null) {
 					return;
 				}
@@ -60,7 +60,7 @@ namespace BurningKnight.entity.creature.npc.dungeon {
 			Timer.Add(() => {
 				AnimationUtil.Poof(Center);
 				
-				GetComponent<DropsComponent>().SpawnDrops();
+				GetComponent<DropsComponent>()!.SpawnDrops();
 
 				open = true;
 				var a = GetComponent<AnimationComponent>();

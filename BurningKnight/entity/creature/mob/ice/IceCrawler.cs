@@ -47,7 +47,7 @@ namespace BurningKnight.entity.creature.mob.ice {
 				velocity *= -1;
 				vx *= -1;
 				vy *= -1;
-				Self.GetComponent<RectBodyComponent>().Velocity = velocity;
+				Self.GetComponent<RectBodyComponent>()!.Velocity = velocity;
 				T = 0;
 			}
 		}
@@ -60,19 +60,19 @@ namespace BurningKnight.entity.creature.mob.ice {
 
 				Self.T = 0;
 				
-				Self.GetComponent<RectBodyComponent>().Velocity = Vector2.Zero;
-				Self.GetComponent<WallAnimationComponent>().SetAutoStop(true);
+				Self.GetComponent<RectBodyComponent>()!.Velocity = Vector2.Zero;
+				Self.GetComponent<WallAnimationComponent>()!.SetAutoStop(true);
 			}
 
 			public override void Destroy() {
 				base.Destroy();
-				Self.GetComponent<WallAnimationComponent>().SetAutoStop(false);
+				Self.GetComponent<WallAnimationComponent>()!.SetAutoStop(false);
 			}
 
 			public override void Update(float dt) {
 				base.Update(dt);
 
-				if (!fired && Self.GetComponent<WallAnimationComponent>().Animation.Paused) {
+				if (!fired && Self.GetComponent<WallAnimationComponent>()!.Animation.Paused) {
 					fired = true;
 					T = 0;
 
@@ -95,7 +95,7 @@ namespace BurningKnight.entity.creature.mob.ice {
 								return;
 							}
 
-							Self.GetComponent<AudioEmitterComponent>().EmitRandomized("mob_fire_wall");
+							Self.GetComponent<AudioEmitterComponent>()!.EmitRandomized("mob_fire_wall");
 						
 							var angle = Self.Direction.ToAngle();
 							var builder = new ProjectileBuilder(Self, "circle") {
@@ -128,7 +128,7 @@ namespace BurningKnight.entity.creature.mob.ice {
 						};
 					};
 				} else if (fired && T > 1f) {
-					Self.GetComponent<StateComponent>().Become<IdleState>();
+					Self.GetComponent<StateComponent>()!.Become<IdleState>();
 				}
 			}
 		}

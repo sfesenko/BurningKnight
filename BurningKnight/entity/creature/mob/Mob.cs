@@ -68,7 +68,7 @@ namespace BurningKnight.entity.creature.mob {
 			h.PreventDamageInInvincibility = false;
 
 			if (!(this is Boss)) {
-				GetComponent<StateComponent>().Pause++;
+				GetComponent<StateComponent>()!.Pause++;
 			}
 		}
 
@@ -76,7 +76,7 @@ namespace BurningKnight.entity.creature.mob {
 			base.PostInit();
 
 			if (Context.Level?.Variant is SnowLevelVariant || Context.Level?.Biome is IceBiome) {
-				GetComponent<BuffsComponent>().AddImmunity<FrozenBuff>();
+				GetComponent<BuffsComponent>()!.AddImmunity<FrozenBuff>();
 			}
 		}
 
@@ -99,10 +99,10 @@ namespace BurningKnight.entity.creature.mob {
 
 		protected virtual void OnTargetChange(Entity target) {
 			if (target == null) {
-				GetComponent<StateComponent>().PauseOnChange = true;
+				GetComponent<StateComponent>()!.PauseOnChange = true;
 			} else {
-				GetComponent<StateComponent>().PauseOnChange = false;
-				GetComponent<StateComponent>().Pause = 0;
+				GetComponent<StateComponent>()!.PauseOnChange = false;
+				GetComponent<StateComponent>()!.Pause = 0;
 			}
 		}
 		
@@ -132,7 +132,7 @@ namespace BurningKnight.entity.creature.mob {
 
 			if (Target == null) {
 				FindTarget();
-			} else if (Target.Done || Target.GetComponent<RoomComponent>().Room != GetComponent<RoomComponent>().Room ||
+			} else if (Target.Done || Target.GetComponent<RoomComponent>()!.Room != GetComponent<RoomComponent>()!.Room ||
 			           (Target is Creature c && c.IsFriendly() == IsFriendly()) || 
 			           (Target.TryGetComponent<BuffsComponent>(out var b) && b.Has<InvisibleBuff>())) {
 
@@ -151,7 +151,7 @@ namespace BurningKnight.entity.creature.mob {
 				return;
 			}
 
-			var raging = GetComponent<BuffsComponent>().Has<RageBuff>();
+			var raging = GetComponent<BuffsComponent>()!.Has<RageBuff>();
 			
 			for (var i = CollidingToHurt.Count - 1; i >= 0; i--) {
 				var entity = CollidingToHurt[i];
@@ -162,13 +162,13 @@ namespace BurningKnight.entity.creature.mob {
 				}
 
 				if ((!(entity is Creature c) || c.IsFriendly() != IsFriendly())) {
-					if (entity.GetComponent<HealthComponent>().ModifyHealth(-TouchDamage * (raging ? 2 : 1), this, DamageType.Contact)) {
+					if (entity.GetComponent<HealthComponent>()!.ModifyHealth(-TouchDamage * (raging ? 2 : 1), this, DamageType.Contact)) {
 						OnHit(entity);
 					}
 				}
 			}
 
-			if (GetComponent<RoomComponent>().Room == null) {
+			if (GetComponent<RoomComponent>()!.Room == null) {
 				Kill(null);
 			}
 		}
@@ -184,7 +184,7 @@ namespace BurningKnight.entity.creature.mob {
 		}
 
 		public override bool IsFriendly() {
-			return GetComponent<BuffsComponent>().Has<CharmedBuff>();
+			return GetComponent<BuffsComponent>()!.Has<CharmedBuff>();
 		}
 
 		private bool rotationApplied;

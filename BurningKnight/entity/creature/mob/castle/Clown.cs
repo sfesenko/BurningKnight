@@ -35,7 +35,7 @@ namespace BurningKnight.entity.creature.mob.castle {
 		public class IdleState : SmartState<Clown> {
 			public override void Init() {
 				base.Init();
-				Self.GetComponent<RectBodyComponent>().Velocity = Vector2.Zero;
+				Self.GetComponent<RectBodyComponent>()!.Velocity = Vector2.Zero;
 			}
 		}
 		
@@ -60,7 +60,7 @@ namespace BurningKnight.entity.creature.mob.castle {
 				if (toTarget) {
 					target = Self.Target.Center;
 				} else {
-					target = Self.GetComponent<RoomComponent>().Room.GetRandomFreeTile();
+					target = Self.GetComponent<RoomComponent>()!.Room.GetRandomFreeTile();
 				}
 			}
 
@@ -89,7 +89,7 @@ namespace BurningKnight.entity.creature.mob.castle {
 					bomb.Center = Self.Center;
 					bomb.VelocityTo(Self.AngleTo(Self.Target));
 
-					Self.GetComponent<AudioEmitterComponent>().EmitRandomizedPrefixed("mob_clown_bomb", 2);
+					Self.GetComponent<AudioEmitterComponent>()!.EmitRandomizedPrefixed("mob_clown_bomb", 2);
 
 					away = true;
 					Init();

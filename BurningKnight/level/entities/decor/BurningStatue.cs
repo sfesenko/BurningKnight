@@ -116,7 +116,7 @@ namespace BurningKnight.level.entities.decor {
 			
 			Tween.To(1f, Context.Camera.Zoom, xx => Context.Camera.Zoom = xx, 0.2f);
 			Tween.To(1.4f, Context.Camera.TextureZoom, xx => Context.Camera.TextureZoom = xx, 0.5f);
-			Context.Camera.GetComponent<ShakeComponent>().Amount = 0;
+			Context.Camera.GetComponent<ShakeComponent>()!.Amount = 0;
 			GameSave.Put("statue_broken", true);
 
 			/*var torches = GetComponent<RoomComponent>().Room.Tagged[Tags.Torch];
@@ -291,7 +291,7 @@ namespace BurningKnight.level.entities.decor {
 
 		public override bool HandleEvent(Event e) {
 			if (e is RoomChangedEvent rce) {
-				var r = GetComponent<RoomComponent>().Room;
+				var r = GetComponent<RoomComponent>()!.Room;
 
 				if (rce.Who is LocalPlayer) {
 					if (rce.New == r) {

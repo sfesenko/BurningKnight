@@ -25,7 +25,7 @@ namespace BurningKnight.level.entities.statue {
 				return true;
 			}
 
-			var i = e.GetComponent<ActiveWeaponComponent>().Item;
+			var i = e.GetComponent<ActiveWeaponComponent>()!.Item;
 			return i != null && i.Id != "bk:ancient_revolver" && i.Id != "bk:ancient_sword";
 		}
 
@@ -40,13 +40,13 @@ namespace BurningKnight.level.entities.statue {
 			c.Drop();
 			item.Done = true;
 
-			if (e.GetComponent<WeaponComponent>().Item == null) {
+			if (e.GetComponent<WeaponComponent>()!.Item == null) {
 				c.Set(Items.CreateAndAdd(LevelSave.MeleeOnly || item.Data.WeaponType == WeaponType.Melee ? "bk:ancient_sword" : "bk:ancient_revolver", Area));				
 			} else {
 				c.RequestSwap();
 			}
 
-			c.GetComponent<HealthComponent>().ModifyHealth(6, this);
+			c.GetComponent<HealthComponent>()!.ModifyHealth(6, this);
 			Break();
 			
 			return true;

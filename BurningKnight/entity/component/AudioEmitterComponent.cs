@@ -190,7 +190,7 @@ namespace BurningKnight.entity.component {
 			public override void Update(float dt) {
 				base.Update(dt);
 				
-				if (GetComponent<AudioEmitterComponent>().Playing.Count == 0) {
+				if (GetComponent<AudioEmitterComponent>()!.Playing.Count == 0) {
 					Done = true;
 				}
 			}

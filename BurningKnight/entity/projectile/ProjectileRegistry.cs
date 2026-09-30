@@ -49,7 +49,7 @@ namespace BurningKnight.entity.projectile {
 
 				skull.T = 5f;
 				skull.RemoveFlags(ProjectileFlags.BreakableByMelee, ProjectileFlags.Reflectable);
-				skull.GetComponent<ProjectileGraphicsComponent>().IgnoreRotation = true;
+				skull.GetComponent<ProjectileGraphicsComponent>()!.IgnoreRotation = true;
 			});
 		
 			Add("disk", p => {
@@ -58,12 +58,12 @@ namespace BurningKnight.entity.projectile {
 				p.Bounce += 10;
 				p.AddFlags(ProjectileFlags.HitsOwner);
 
-				p.GetComponent<CircleBodyComponent>().Body.AngularVelocity = 10f;
+				p.GetComponent<CircleBodyComponent>()!.Body.AngularVelocity = 10f;
 			});
 			
 			Add("what", p => {
 				ProjectileCallbacks.AttachUpdateCallback(p, WhatController.Make());
-				p.GetComponent<CircleBodyComponent>().Body.AngularVelocity = 10f;
+				p.GetComponent<CircleBodyComponent>()!.Body.AngularVelocity = 10f;
 			});
 			
 			Add("soap", p => {
@@ -177,7 +177,7 @@ namespace BurningKnight.entity.projectile {
 			});
 			
 			Add("portal", p => {
-				p.Center = p.Owner.GetComponent<CursorComponent>().Cursor.GamePosition;
+				p.Center = p.Owner.GetComponent<CursorComponent>()!.Cursor.GamePosition;
 				p.GetAnyComponent<BodyComponent>().Velocity *= -1;
 			});
 			
@@ -222,7 +222,7 @@ namespace BurningKnight.entity.projectile {
 						if (e is Painting || e is BreakableProp || e is ExplodingBarrel || e.HasComponent<HealthComponent>()) {
 							projectile.Bounce++;
 						} else {
-							var b = projectile.GetComponent<RectBodyComponent>().Body;
+							var b = projectile.GetComponent<RectBodyComponent>()!.Body;
 							b.LinearVelocity *= -1;
 
 							projectile.Bounce = 0;
@@ -242,7 +242,7 @@ namespace BurningKnight.entity.projectile {
 								}
 								
 								ts.Cancel();
-								pr.Owner.GetComponent<AudioEmitterComponent>().EmitRandomized("item_axe_catch");
+								pr.Owner.GetComponent<AudioEmitterComponent>()!.EmitRandomized("item_axe_catch");
 							});
 							
 							pi?.Invoke(projectile, e, false);

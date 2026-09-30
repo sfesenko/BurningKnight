@@ -19,7 +19,7 @@ namespace BurningKnight.level.tutorial {
 				set = true;
 
 				if (Item != null) {
-					foreach (var c in GetComponent<RoomComponent>().Room.Controllable) {
+					foreach (var c in GetComponent<RoomComponent>()!.Room.Controllable) {
 						c.TurnOff();
 					}
 				}
@@ -29,7 +29,7 @@ namespace BurningKnight.level.tutorial {
 		public override bool HandleEvent(Event e) {
 			if (e is ItemTakenEvent) {
 				Context.Camera.Shake(8);
-				var r = GetComponent<RoomComponent>().Room;
+				var r = GetComponent<RoomComponent>()!.Room;
 				
 				foreach (var c in r.Controllable) {
 					c.TurnOn();
@@ -38,7 +38,7 @@ namespace BurningKnight.level.tutorial {
 
 				foreach (var n in r.Tagged[Tags.Npc]) {
 					if (n is OldMan) {
-						n.GetComponent<DialogComponent>().Start("old_man_5");
+						n.GetComponent<DialogComponent>()!.Start("old_man_5");
 						n.RemoveComponent<CloseDialogComponent>();
 
 						break;

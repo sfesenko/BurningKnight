@@ -17,7 +17,7 @@ namespace BurningKnight.entity.buff {
 
 		public override void Init() {
 			base.Init();
-			Entity.GetComponent<BuffsComponent>().Remove<FrozenBuff>();
+			Entity.GetComponent<BuffsComponent>()!.Remove<FrozenBuff>();
 		}
 
 		public override void Update(float dt) {
@@ -37,7 +37,7 @@ namespace BurningKnight.entity.buff {
 
 			if (tillDamage <= 0) {
 				tillDamage = Delay;
-				Entity.GetComponent<HealthComponent>().ModifyHealth(-1, Entity);
+				Entity.GetComponent<HealthComponent>()!.ModifyHealth(-1, Entity);
 			}
 		}
 

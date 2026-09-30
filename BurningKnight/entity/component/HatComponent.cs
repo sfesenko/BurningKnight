@@ -15,14 +15,14 @@ namespace BurningKnight.entity.component {
 
 		public override void Init() {
 			base.Init();
-			Entity.GetComponent<InputComponent>().InitCallback = Setup;
+			Entity.GetComponent<InputComponent>()!.InitCallback = Setup;
 		}
 
 		public void Setup() {
 			loaded = true;
 			
 			if (Item == null) {
-				var hat = GlobalSave.GetString($"hat_{Entity.GetComponent<InputComponent>().Index}");
+				var hat = GlobalSave.GetString($"hat_{Entity.GetComponent<InputComponent>()!.Index}");
 				Log.Debug($"HatComponent.Setup: {hat}");
 				// Log.Debug($"hat_{Entity.GetComponent<InputComponent>().Index}");
 
@@ -42,14 +42,14 @@ namespace BurningKnight.entity.component {
 			base.Set(item, animate);
 
 			if (loaded) {
-				GlobalSave.Put($"hat_{Entity.GetComponent<InputComponent>().Index}", item?.Id);
+				GlobalSave.Put($"hat_{Entity.GetComponent<InputComponent>()!.Index}", item?.Id);
 			}
 
 			if (item != null) {
 				DoNotRender = item.Id == "bk:no_hat";
 
 				if (Entity.HasComponent<LightComponent>()) {
-					Entity.GetComponent<LightComponent>().Light.Color =
+					Entity.GetComponent<LightComponent>()!.Light.Color =
 						item.Id == "bk:glowing_mushroom" ? new Color(0.05f, 0.4f, 1f, 1f) : Player.LightColor;
 				}
 			}

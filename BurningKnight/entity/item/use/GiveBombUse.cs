@@ -18,7 +18,7 @@ namespace BurningKnight.entity.item.use {
 			}
 
 			if (a > 0) {
-				entity.GetComponent<ConsumablesComponent>().Bombs += a;
+				entity.GetComponent<ConsumablesComponent>()!.Bombs += a;
 			}
 		}
 

@@ -12,7 +12,7 @@ namespace BurningKnight.entity.creature.npc {
 			
 			AddComponent(new AnimationComponent("brastin"));
 			AddComponent(new CloseDialogComponent("brastin_0"));
-			GetComponent<DialogComponent>().Dialog.Voice = 3;
+			GetComponent<DialogComponent>()!.Dialog.Voice = 3;
 
 			if (Achievements.IsComplete("bk:cat_without_a_hat")) {
 				Done = true;

@@ -103,7 +103,7 @@ namespace BurningKnight.entity.room.controllable.platform {
 			public override void Update(float dt) {
 				base.Update(dt);
 
-				Self.GetComponent<RectBodyComponent>().Velocity = Vector2.Zero;
+				Self.GetComponent<RectBodyComponent>()!.Velocity = Vector2.Zero;
 
 				if (Self.On && T >= Delay) {
 					Become<MovingState>();
@@ -132,7 +132,7 @@ namespace BurningKnight.entity.room.controllable.platform {
 					Self.velocity.Y = 0;
 				}
 				
-				Self.GetComponent<RectBodyComponent>().Velocity = Self.velocity * Speed;
+				Self.GetComponent<RectBodyComponent>()!.Velocity = Self.velocity * Speed;
 
 				if (Math.Abs(Self.velocity.X) > 0.1f) {
 					var s = (int) Math.Round(Self.Y / 16);
@@ -193,7 +193,7 @@ namespace BurningKnight.entity.room.controllable.platform {
 
 			public override void Destroy() {
 				base.Destroy();
-				Self.GetComponent<RectBodyComponent>().Velocity = Vector2.Zero;
+				Self.GetComponent<RectBodyComponent>()!.Velocity = Vector2.Zero;
 			}
 		}
 		#endregion
@@ -206,7 +206,7 @@ namespace BurningKnight.entity.room.controllable.platform {
 		};
 
 		protected virtual void Stop() {
-			GetComponent<StateComponent>().Become<IdleState>();
+			GetComponent<StateComponent>()!.Become<IdleState>();
 			step++;
 
 			switch (Controller) {
@@ -252,12 +252,12 @@ namespace BurningKnight.entity.room.controllable.platform {
 
 		public override void TurnOn() {
 			base.TurnOn();
-			GetComponent<StateComponent>().Become<MovingState>();
+			GetComponent<StateComponent>()!.Become<MovingState>();
 		}
 
 		public override void TurnOff() {
 			base.TurnOff();
-			GetComponent<StateComponent>().Become<IdleState>();
+			GetComponent<StateComponent>()!.Become<IdleState>();
 		}
 
 		public override void Save(FileWriter stream) {

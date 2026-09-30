@@ -44,7 +44,7 @@ namespace BurningKnight.level.entities {
 		public override void PostInit() {
 			base.PostInit();
 			
-			if (GetComponent<HealthComponent>().HasNoHealth) {
+			if (GetComponent<HealthComponent>()!.HasNoHealth) {
 				Break(false);
 			}
 		}
@@ -56,11 +56,11 @@ namespace BurningKnight.level.entities {
 
 			broken = true;
 			
-			GetComponent<SliceComponent>().Sprite = CommonAse.Props.GetSlice("safe_broken");
-			GetComponent<HealthComponent>().RenderInvt = false;
+			GetComponent<SliceComponent>()!.Sprite = CommonAse.Props.GetSlice("safe_broken");
+			GetComponent<HealthComponent>()!.RenderInvt = false;
 
 			if (spawnLoot) {
-				GetComponent<DropsComponent>().SpawnDrops();
+				GetComponent<DropsComponent>()!.SpawnDrops();
 			}
 		}
 

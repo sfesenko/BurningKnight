@@ -49,7 +49,7 @@ namespace BurningKnight.level.entities {
 			
 			e.RemoveComponent<PlayerInputComponent>();
 			interacting = e;
-			interacting.GetComponent<StateComponent>().Become<Player.SittingState>();
+			interacting.GetComponent<StateComponent>()!.Become<Player.SittingState>();
 			
 			var region = CommonAse.Ui.GetSlice("key_right");
 			Engine.Instance.State.Ui.Add(ia = new InteractFx(this, null, region, -5));
@@ -70,7 +70,7 @@ namespace BurningKnight.level.entities {
 			base.Update(dt);
 
 			if (maanex == null) {
-				var room = GetComponent<RoomComponent>().Room;
+				var room = GetComponent<RoomComponent>()!.Room;
 
 				foreach (var n in room.Tagged[Tags.Npc]) {
 					if (n is Maanex2 m) {
@@ -94,7 +94,7 @@ namespace BurningKnight.level.entities {
 				ib.Close();
 				ia = ib = null;
 				
-				GetComponent<InteractableComponent>().CurrentlyInteracting?.GetComponent<InteractorComponent>()?.EndInteraction();
+				GetComponent<InteractableComponent>()!.CurrentlyInteracting?.GetComponent<InteractorComponent>()?.EndInteraction();
 
 				claw.Grab((won, mega) => {
 					interacting.AddComponent(new PlayerInputComponent());
@@ -102,9 +102,9 @@ namespace BurningKnight.level.entities {
 					grabbing = false;
 
 					if (won) {
-						maanex.GetComponent<DialogComponent>().StartAndClose(Locale.Get(mega ? "m2_0" : "m2_1"), 2);
+						maanex.GetComponent<DialogComponent>()!.StartAndClose(Locale.Get(mega ? "m2_0" : "m2_1"), 2);
 					} else {
-						maanex.GetComponent<DialogComponent>().StartAndClose("F", 2);
+						maanex.GetComponent<DialogComponent>()!.StartAndClose("F", 2);
 					}
 					
 					((InGameState) Engine.Instance.State).ResetFollowing();
@@ -113,7 +113,7 @@ namespace BurningKnight.level.entities {
 				return;
 			}
 
-			var body = claw.GetComponent<SensorBodyComponent>().Body;
+			var body = claw.GetComponent<SensorBodyComponent>()!.Body;
 			var speed = 420 * dt;
 
 			var wdown = wasDown;

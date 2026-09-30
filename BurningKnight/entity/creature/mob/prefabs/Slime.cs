@@ -81,7 +81,7 @@ namespace BurningKnight.entity.creature.mob.prefabs {
 				if (!tweened && T >= delay) {
 					tweened = true;
 
-					Self.GetComponent<AudioEmitterComponent>().EmitRandomizedPrefixed("mob_slime_jump", 2);
+					Self.GetComponent<AudioEmitterComponent>()!.EmitRandomizedPrefixed("mob_slime_jump", 2);
 					
 					Self.AnimateJump(() => {
 						Become<JumpState>();
@@ -129,19 +129,19 @@ namespace BurningKnight.entity.creature.mob.prefabs {
 				var a = Self.GetJumpAngle();
 				var force = Rnd.Float(20f) + Self.JumpForce;
 				
-				Self.GetComponent<RectBodyComponent>().Velocity = new Vector2((float) Math.Cos(a) * force, (float) Math.Sin(a) * force);
+				Self.GetComponent<RectBodyComponent>()!.Velocity = new Vector2((float) Math.Cos(a) * force, (float) Math.Sin(a) * force);
 
-				Self.GetComponent<ZComponent>().ZVelocity = Self.ZVelocity;
+				Self.GetComponent<ZComponent>()!.ZVelocity = Self.ZVelocity;
 			}
 
 			public override void Destroy() {
 				base.Destroy();
 				
 				Self.AnimateLand();
-				Self.GetComponent<RectBodyComponent>().Velocity = Vector2.Zero;
+				Self.GetComponent<RectBodyComponent>()!.Velocity = Vector2.Zero;
 				Self.OnLand();
 				
-				Self.GetComponent<AudioEmitterComponent>().EmitRandomizedPrefixed("mob_slime_land", 2);
+				Self.GetComponent<AudioEmitterComponent>()!.EmitRandomizedPrefixed("mob_slime_land", 2);
 			}
 			
 			public override void Update(float dt) {
@@ -167,7 +167,7 @@ namespace BurningKnight.entity.creature.mob.prefabs {
 		#endregion
 
 		public override bool InAir() {
-			return (GetComponent<StateComponent>().StateInstance is JumpState j && j.InAir);
+			return (GetComponent<StateComponent>()!.StateInstance is JumpState j && j.InAir);
 		}
 
 		public override bool ShouldCollide(Entity entity) {
@@ -179,7 +179,7 @@ namespace BurningKnight.entity.creature.mob.prefabs {
 		}
 
 		public override bool HandleEvent(Event e) {
-			if (e is HealthModifiedEvent ev && ev.Amount < 0 && InAir() && GetComponent<ZComponent>().Z > 4f) {
+			if (e is HealthModifiedEvent ev && ev.Amount < 0 && InAir() && GetComponent<ZComponent>()!.Z > 4f) {
 				return true;
 			}
 			

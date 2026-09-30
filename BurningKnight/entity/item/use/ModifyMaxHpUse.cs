@@ -30,11 +30,11 @@ namespace BurningKnight.entity.item.use {
 				}
 			} else {
 				if (Amount > 0) {
-					if (entity.GetComponent<LampComponent>().Item?.Id == "bk:shielded_lamp") {
-						entity.GetComponent<HeartsComponent>().ModifyShields(Amount, entity);
+					if (entity.GetComponent<LampComponent>()!.Item?.Id == "bk:shielded_lamp") {
+						entity.GetComponent<HeartsComponent>()!.ModifyShields(Amount, entity);
 
 						return;
-					} else if (entity.GetComponent<LampComponent>().Item?.Id == "bk:explosive_lamp") {
+					} else if (entity.GetComponent<LampComponent>()!.Item?.Id == "bk:explosive_lamp") {
 						var c = entity.GetComponent<HeartsComponent>();
 						Amount = (int) Math.Ceiling(Amount / 2f);
 

@@ -308,7 +308,7 @@ namespace BurningKnight.state {
 						Timer.Add(() => {
 							foreach (var n in Area.Tagged[Tags.Npc]) {
 								if (n is OldMan m) {
-									m.GetComponent<DialogComponent>().StartAndClose("shopkeeper_6", 3);
+									m.GetComponent<DialogComponent>()!.StartAndClose("shopkeeper_6", 3);
 									break;
 								}
 							}

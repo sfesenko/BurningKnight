@@ -55,7 +55,7 @@ namespace BurningKnight.entity.creature.bk {
 								bkDialog.OnEnd();
 								GlobalSave.Put("bk_who", true);
 
-								Self.Target.GetComponent<HealthComponent>().Unhittable = false;
+								Self.Target.GetComponent<HealthComponent>()!.Unhittable = false;
 							});	
 						});	
 					});	

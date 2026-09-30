@@ -11,7 +11,7 @@ namespace BurningKnight.entity.item.use {
 
 		public override void Use(Entity entity, Item item) {
 			if (SetToMin) {
-				entity.GetComponent<HealthComponent>().InitMaxHealth = 1;
+				entity.GetComponent<HealthComponent>()!.InitMaxHealth = 1;
 
 				return;
 			}
@@ -32,7 +32,7 @@ namespace BurningKnight.entity.item.use {
 				a = (int) (a / 2f);
 			}
 			
-			entity.GetComponent<HealthComponent>().ModifyHealth(a, entity);
+			entity.GetComponent<HealthComponent>()!.ModifyHealth(a, entity);
 		}
 
 		public override void Setup(JsonValue settings) {

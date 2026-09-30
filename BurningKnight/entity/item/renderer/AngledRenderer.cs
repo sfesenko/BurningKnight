@@ -47,7 +47,7 @@ namespace BurningKnight.entity.item.renderer {
 			var vf = angle > Math.PI * 0.5f && angle < Math.PI * 1.5f;
 			
 			if (!atBack && !paused && !shadow) {
-				var to = owner.GetComponent<AimComponent>().Aim;
+				var to = owner.GetComponent<AimComponent>()!.Aim;
 				/*var dx = Nozzle.X - Origin.X;
 				var dy = Nozzle.Y - Origin.Y;
 

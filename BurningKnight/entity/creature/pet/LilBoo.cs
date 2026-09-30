@@ -34,7 +34,7 @@ namespace BurningKnight.entity.creature.pet {
 				return true;
 			}
 
-			if (GetComponent<StateComponent>().StateInstance is WanderState) {
+			if (GetComponent<StateComponent>()!.StateInstance is WanderState) {
 				return entity is Level;
 			}
 

@@ -53,12 +53,12 @@ namespace BurningKnight.entity.creature.player {
 		public class SleepingState : EntityState {
 			public override void Init() {
 				base.Init();
-				Self.GetComponent<PlayerGraphicsComponent>().Animate();
+				Self.GetComponent<PlayerGraphicsComponent>()!.Animate();
 			}
 			
 			public override void Destroy() {
 				base.Destroy();
-				Self.GetComponent<PlayerGraphicsComponent>().Animate();
+				Self.GetComponent<PlayerGraphicsComponent>()!.Animate();
 			}
 
 			public override void Update(float dt) {

@@ -30,12 +30,12 @@ namespace BurningKnight.entity.creature.mob.boss {
 			public override void Init() {
 				base.Init();
 
-				Tween.To(0, 255, x => Self.GetComponent<BkGraphicsComponent>().Tint.A = (byte) x, 0.5f).OnEnd = () => {
-					var tile = Self.GetComponent<RoomComponent>().Room.GetRandomFreeTile() * 16;
+				Tween.To(0, 255, x => Self.GetComponent<BkGraphicsComponent>()!.Tint.A = (byte) x, 0.5f).OnEnd = () => {
+					var tile = Self.GetComponent<RoomComponent>()!.Room.GetRandomFreeTile() * 16;
 
 					Self.BottomCenter = tile + new Vector2(8, 8); 
 
-					Tween.To(255, 0, x => Self.GetComponent<BkGraphicsComponent>().Tint.A = (byte) x, 0.5f).OnEnd = () => {
+					Tween.To(255, 0, x => Self.GetComponent<BkGraphicsComponent>()!.Tint.A = (byte) x, 0.5f).OnEnd = () => {
 						Become<IdleState>();
 					};
 				};

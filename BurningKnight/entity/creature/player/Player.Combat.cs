@@ -60,22 +60,22 @@ namespace BurningKnight.entity.creature.player {
 		public bool HasFlight;
 		public bool SuperHot;
 		public override bool InAir() {
-			return HasFlight || base.InAir() || GetComponent<StateComponent>().StateInstance is RollState;
+			return HasFlight || base.InAir() || GetComponent<StateComponent>()!.StateInstance is RollState;
 		}
 		public override bool HasNoHealth(HealthModifiedEvent e = null) {
-			return base.HasNoHealth(e) && GetComponent<HeartsComponent>().Total == 0;
+			return base.HasNoHealth(e) && GetComponent<HeartsComponent>()!.Total == 0;
 		}
 		public override bool HasNoHealth(PostHealthModifiedEvent e = null) {
-			return base.HasNoHealth(e) && GetComponent<HeartsComponent>().Total == 0;
+			return base.HasNoHealth(e) && GetComponent<HeartsComponent>()!.Total == 0;
 		}
 		public override bool HandleEvent(Event e) {
 			if (e is LostSupportEvent) {
-				if (GetComponent<HealthComponent>().Unhittable) {
+				if (GetComponent<HealthComponent>()!.Unhittable) {
 					return true;
 				}
 
-				if (!GetComponent<BuffsComponent>().PitImmunity) {
-					GetComponent<HealthComponent>().ModifyHealth(-1, Context.Level);
+				if (!GetComponent<BuffsComponent>()!.PitImmunity) {
+					GetComponent<HealthComponent>()!.ModifyHealth(-1, Context.Level);
 				}
 				
 
@@ -95,7 +95,7 @@ namespace BurningKnight.entity.creature.player {
 					Audio.PlaySfx("level_door_shut");
 
 					foreach (var p in Area.Tagged[Tags.Player]) {
-						if (p.GetComponent<RoomComponent>().Room != c.New) {
+						if (p.GetComponent<RoomComponent>()!.Room != c.New) {
 							AnimationUtil.Poof(p.Center);
 							p.Center = Center;
 							AnimationUtil.Poof(p.Center);
@@ -165,7 +165,7 @@ namespace BurningKnight.entity.creature.player {
 						case RoomType.OldMan:
 						case RoomType.Granny: {
 							if (c.New.Type == RoomType.OldMan) {
-								GetComponent<StatsComponent>().SawDeal = true;
+								GetComponent<StatsComponent>()!.SawDeal = true;
 							}
 							
 							c.New.OpenHiddenDoors();
@@ -285,7 +285,7 @@ namespace BurningKnight.entity.creature.player {
 						Player = this
 					});
 
-					var hp = GetComponent<HealthComponent>().Health + GetComponent<HeartsComponent>().Total;
+					var hp = GetComponent<HealthComponent>()!.Health + GetComponent<HeartsComponent>()!.Total;
 
 					if (hp > 0) {
 						if (h.HealthType == HealthType.Shield) {
@@ -323,14 +323,14 @@ namespace BurningKnight.entity.creature.player {
 					Audio.PlaySfx("level_cleared");
 				}
 			} else if (e is NewLevelStartedEvent) {
-				GetComponent<HealthComponent>().Unhittable = true;
+				GetComponent<HealthComponent>()!.Unhittable = true;
 			} else if (e is ProjectileCreatedEvent pce) {
 				if (Flying || HasFlight) {
 					pce.Projectile.AddFlags(ProjectileFlags.FlyOverStones);
 				}
 			} else if (e is FlagCollisionStartEvent fcse) {
 				if (fcse.Flag == Flag.Burning) {
-					GetComponent<HealthComponent>().ModifyHealth(-1, Context.Level);
+					GetComponent<HealthComponent>()!.ModifyHealth(-1, Context.Level);
 				}
 			} else if (e is RevivedEvent re) {
 				AnimationUtil.TeleportAway(this, () => {
@@ -340,7 +340,7 @@ namespace BurningKnight.entity.creature.player {
 				});
 			} else if (e is CollisionStartedEvent cse) {
 				if (ItemDamage && cse.Entity is Item) {
-					GetComponent<HealthComponent>().ModifyHealth(-1, cse.Entity, DamageType.Custom);
+					GetComponent<HealthComponent>()!.ModifyHealth(-1, cse.Entity, DamageType.Custom);
 				}
 			}
 			
@@ -362,7 +362,7 @@ namespace BurningKnight.entity.creature.player {
 			return !HasFlight;
 		}
 		public override bool IgnoresProjectiles() {
-			return GetComponent<StateComponent>().StateInstance is RollState;
+			return GetComponent<StateComponent>()!.StateInstance is RollState;
 		}
 	}
 }

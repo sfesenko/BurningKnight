@@ -47,7 +47,7 @@ namespace BurningKnight.entity.creature.mob {
 			}
 			
 			AddComponent(new InteractableSliceComponent("props", Kind));
-			GetComponent<DropsComponent>().Add(Pool);
+			GetComponent<DropsComponent>()!.Add(Pool);
 
 			if (!invoked) {
 				RemoveTag(Tags.MustBeKilled);
@@ -66,7 +66,7 @@ namespace BurningKnight.entity.creature.mob {
 				return true;
 			}
 
-			e.GetComponent<HealthComponent>().ModifyHealth(-2, this, DamageType.Custom);
+			e.GetComponent<HealthComponent>()!.ModifyHealth(-2, this, DamageType.Custom);
 			Target = e;
 			Become<JumpState>();
 			
@@ -109,12 +109,12 @@ namespace BurningKnight.entity.creature.mob {
 						return;
 					}
 				
-					GetComponent<AudioEmitterComponent>().EmitRandomized("mob_fire");
+					GetComponent<AudioEmitterComponent>()!.EmitRandomized("mob_fire");
 
 					var a = AngleTo(Target) + Rnd.Float(-0.1f, 0.1f);
 					var projectile = builder.Shoot(a, 9f).Build();
 
-					projectile.Center = Center + MathUtils.CreateVector(a, 5f) - new Vector2(0, GetComponent<ZComponent>().Z);
+					projectile.Center = Center + MathUtils.CreateVector(a, 5f) - new Vector2(0, GetComponent<ZComponent>()!.Z);
 				}, i * 0.3f);
 			}
 		}
@@ -125,7 +125,7 @@ namespace BurningKnight.entity.creature.mob {
 			}
 			
 			var am = 16;
-			GetComponent<AudioEmitterComponent>().EmitRandomized("mob_fire");
+			GetComponent<AudioEmitterComponent>()!.EmitRandomized("mob_fire");
 
 			var builder = new ProjectileBuilder(this, "small") {
 				LightRadius = 32f

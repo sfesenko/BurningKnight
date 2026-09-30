@@ -103,7 +103,7 @@ namespace BurningKnight.ui.imgui {
 				var p = LocalPlayer.Locate(Area);
 
 				if (p != null) {
-					var rm = p.GetComponent<RoomComponent>().Room;
+					var rm = p.GetComponent<RoomComponent>()!.Room;
 					var rn = new List<Room>();
 
 					foreach (var r in Area.Tagged[Tags.Room]) {

@@ -68,7 +68,7 @@ namespace BurningKnight.entity.creature.player {
 					Tween.To(start, z.Z, x => z.Z = x, 0.15f, Ease.QuadIn);
 				};
 				
-				Self.GetComponent<AudioEmitterComponent>().EmitRandomized("player_roll", 0.5f);
+				Self.GetComponent<AudioEmitterComponent>()!.EmitRandomized("player_roll", 0.5f);
 				var hp = Self.GetComponent<HealthComponent>();
 
 				wasUnhittable = hp.Unhittable;
@@ -93,7 +93,7 @@ namespace BurningKnight.entity.creature.player {
 			public override void Destroy() {
 				base.Destroy();
 				
-				Self.GetComponent<HealthComponent>().Unhittable = wasUnhittable;
+				Self.GetComponent<HealthComponent>()!.Unhittable = wasUnhittable;
 			}
 
 			public override void Update(float dt) {

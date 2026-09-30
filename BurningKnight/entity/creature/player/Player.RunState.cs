@@ -70,7 +70,7 @@ namespace BurningKnight.entity.creature.player {
 				}
 
 				if (!Self.HasFlight) {
-					var anim = Self.GetComponent<PlayerGraphicsComponent>().Animation;
+					var anim = Self.GetComponent<PlayerGraphicsComponent>()!.Animation;
 
 					if (anim.Frame != lastFrame) {
 						lastFrame = anim.Frame;
@@ -86,7 +86,7 @@ namespace BurningKnight.entity.creature.player {
 							var i = GameContext.Current.Level.ToIndex(x, y);
 							var tile = GameContext.Current.Level.Get(i);
 							var liquid = GameContext.Current.Level.Liquid[i];
-							var room = Self.GetComponent<RoomComponent>().Room;
+							var room = Self.GetComponent<RoomComponent>()!.Room;
 
 							Audio.PlaySfx(GameContext.Current.Level.Biome.GetStepSound(liquid == 0 ? tile : (Tile) liquid),
 								room != null && room.Tagged[Tags.MustBeKilled].Count > 0 ? 0.18f : 0.25f);

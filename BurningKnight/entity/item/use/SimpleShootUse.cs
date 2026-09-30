@@ -138,18 +138,18 @@ namespace BurningKnight.entity.item.use {
 				}
 
 				if (sfx == "item_gun_fire") {
-					entity.GetComponent<AudioEmitterComponent>().EmitRandomizedPrefixed(sfx, 2, 0.5f, sz: 0.2f);
+					entity.GetComponent<AudioEmitterComponent>()!.EmitRandomizedPrefixed(sfx, 2, 0.5f, sz: 0.2f);
 				} else {
 					if (sfxNumber == 0) {
-						entity.GetComponent<AudioEmitterComponent>().EmitRandomized(sfx, 0.5f, sz: 0.25f);
+						entity.GetComponent<AudioEmitterComponent>()!.EmitRandomized(sfx, 0.5f, sz: 0.25f);
 					} else {
-						entity.GetComponent<AudioEmitterComponent>().EmitRandomizedPrefixed(sfx, sfxNumber, 0.5f, sz: 0.25f);
+						entity.GetComponent<AudioEmitterComponent>()!.EmitRandomizedPrefixed(sfx, sfxNumber, 0.5f, sz: 0.25f);
 					}
 				}
 
 				var aim = entity.GetComponent<AimComponent>();
 				var from = toCursor ? entity.Center : aim.Center;
-				var am = toCursor ? entity.GetComponent<CursorComponent>().Cursor.GamePosition : aim.RealAim;
+				var am = toCursor ? entity.GetComponent<CursorComponent>()!.Cursor.GamePosition : aim.RealAim;
 
 				if (toEnemy) {
 					var target = entity.Area.FindClosest(from, Tags.MustBeKilled, e => true);
@@ -278,7 +278,7 @@ namespace BurningKnight.entity.item.use {
 
 						entity.Area.Add(p);
 
-						var f = (entity.CenterX > entity.GetComponent<CursorComponent>().Cursor.GamePosition.X ? 1 : -1);
+						var f = (entity.CenterX > entity.GetComponent<CursorComponent>()!.Cursor.GamePosition.X ? 1 : -1);
 
 						p.Particle.Velocity =
 							new Vector2(f * Rnd.Float(40, 60), 0) + entity.GetAnyComponent<BodyComponent>().Velocity;
@@ -305,7 +305,7 @@ namespace BurningKnight.entity.item.use {
 				if (!played && Particle.Z <= 0) {
 					played = true;
 					AddComponent(new AudioEmitterComponent());
-					GetComponent<AudioEmitterComponent>().EmitRandomizedPrefixed("projectile_shell", 3);
+					GetComponent<AudioEmitterComponent>()!.EmitRandomizedPrefixed("projectile_shell", 3);
 				}
 			}
 		}

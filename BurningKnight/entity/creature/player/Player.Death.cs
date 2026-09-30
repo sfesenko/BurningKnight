@@ -128,23 +128,23 @@ namespace BurningKnight.entity.creature.player {
 				});
 			}
 
-			GetComponent<OrbitGiverComponent>().DestroyAll();
-			GetComponent<FollowerComponent>().DestroyAll();
+			GetComponent<OrbitGiverComponent>()!.DestroyAll();
+			GetComponent<FollowerComponent>()!.DestroyAll();
 			
 			var stone = new Tombstone();
 			stone.DisableDialog = true;
 
 			if (InGameState.Multiplayer) {
 				stone.HasPlayer = true;
-				stone.Index = GetComponent<InputComponent>().Index;
-				stone.WasGamepad = GetComponent<InputComponent>().GamepadEnabled;
+				stone.Index = GetComponent<InputComponent>()!.Index;
+				stone.WasGamepad = GetComponent<InputComponent>()!.GamepadEnabled;
 
-				if (GetComponent<InputComponent>().Index == 0) {
+				if (GetComponent<InputComponent>()!.Index == 0) {
 					var minIndex = 1024;
 					Player pl = null;
 
 					foreach (var p in Area.Tagged[Tags.Player]) {
-						var i = p.GetComponent<InputComponent>().Index;
+						var i = p.GetComponent<InputComponent>()!.Index;
 
 						if (p != this && i < minIndex) {
 							minIndex = i;
@@ -164,25 +164,25 @@ namespace BurningKnight.entity.creature.player {
 
 			var pool = new List<string>();
 
-			foreach (var i in GetComponent<InventoryComponent>().Items) {
+			foreach (var i in GetComponent<InventoryComponent>()!.Items) {
 				if (i.Type != ItemType.Hat && i.Id != "bk:no_lamp") {
 					pool.Add(i.Id);
 				}
 			}
 
-			var w = GetComponent<ActiveItemComponent>().Item;
+			var w = GetComponent<ActiveItemComponent>()!.Item;
 
 			if (w != null) {
 				pool.Add(w.Id);
 			}
 
-			w = GetComponent<WeaponComponent>().Item;
+			w = GetComponent<WeaponComponent>()!.Item;
 
 			if (w != null) {
 				pool.Add(w.Id);
 			}
 			
-			w = GetComponent<ActiveWeaponComponent>().Item;
+			w = GetComponent<ActiveWeaponComponent>()!.Item;
 
 			if (w != null) {
 				pool.Add(w.Id);

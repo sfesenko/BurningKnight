@@ -51,7 +51,7 @@ namespace BurningKnight.entity.creature.bk {
 
 				if (delay <= 0) {
 					delay = 0.3f;
-					Self.GetComponent<BkGraphicsComponent>().Animate();
+					Self.GetComponent<BkGraphicsComponent>()!.Animate();
 
 					var angle = Rnd.AnglePI() * 0.5f + count * (float) Math.PI;
 

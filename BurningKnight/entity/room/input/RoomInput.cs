@@ -47,7 +47,7 @@ namespace BurningKnight.entity.room.input {
 			};
 			
 			HandleEvent(e);
-			GetComponent<RoomComponent>().Room?.HandleInputChange(e);
+			GetComponent<RoomComponent>()!.Room?.HandleInputChange(e);
 		}
 
 		public void Toggle() {
@@ -68,7 +68,7 @@ namespace BurningKnight.entity.room.input {
 			base.Update(dt);
 
 			if (!added) {
-				var room = GetComponent<RoomComponent>().Room;
+				var room = GetComponent<RoomComponent>()!.Room;
 
 				if (room == null) {
 					return;
@@ -80,7 +80,7 @@ namespace BurningKnight.entity.room.input {
 		}
 
 		protected void RemoveFromRoom() {
-			GetComponent<RoomComponent>().Room?.Inputs.Remove(this);
+			GetComponent<RoomComponent>()!.Room?.Inputs.Remove(this);
 		}
 
 		/*public override void Render() {

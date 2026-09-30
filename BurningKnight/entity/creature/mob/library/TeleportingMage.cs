@@ -53,7 +53,7 @@ namespace BurningKnight.entity.creature.mob.library {
 
 				if (!tweened && T >= delay - 0.4f) {
 					tweened = true;
-					Self.GetComponent<MobAnimationComponent>().Animate();
+					Self.GetComponent<MobAnimationComponent>()!.Animate();
 				}
 				
 				if (T >= delay && Self.CanSeeTarget()) {
@@ -83,7 +83,7 @@ namespace BurningKnight.entity.creature.mob.library {
 							pr.Center = Self.Center + MathUtils.CreateVector(a, 12);
 							
 							p.Add(pr);
-							Self.GetComponent<AudioEmitterComponent>().EmitRandomized("mob_fire");
+							Self.GetComponent<AudioEmitterComponent>()!.EmitRandomized("mob_fire");
 
 							if (i1 == count - 1) {
 								p.Launch(Self.Target == null ? Rnd.AnglePI() : Self.AngleTo(Self.Target), 80);
@@ -109,7 +109,7 @@ namespace BurningKnight.entity.creature.mob.library {
 
 					Tween.To(0.2f, a.Scale.X, x => a.Scale.X = x, 0.5f, Ease.QuadIn);
 					Tween.To(2f, a.Scale.Y, x => a.Scale.Y = x, 0.5f, Ease.QuadIn).OnEnd = () => {
-						var r = Self.GetComponent<RoomComponent>().Room;
+						var r = Self.GetComponent<RoomComponent>()!.Room;
 						Vector2 s;
 
 						do {

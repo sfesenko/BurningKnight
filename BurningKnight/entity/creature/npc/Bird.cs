@@ -23,17 +23,17 @@ namespace BurningKnight.entity.creature.npc {
 						d.StartAndClose("quack", 3);
 					}
 
-					GetComponent<AudioEmitterComponent>().EmitRandomized("quck");
+					GetComponent<AudioEmitterComponent>()!.EmitRandomized("quck");
 				}, 0.5f);
 			}));
 		}
 
 		public override bool HandleEvent(Event e) {
 			if (e is RoomChangedEvent rce && rce.Who is Player) {
-				if (rce.New == GetComponent<RoomComponent>().Room) {
-					GetComponent<DialogComponent>().Start("^^Spanish^^ or [cl red]##vanish##[cl]!");
+				if (rce.New == GetComponent<RoomComponent>()!.Room) {
+					GetComponent<DialogComponent>()!.Start("^^Spanish^^ or [cl red]##vanish##[cl]!");
 				} else {
-					GetComponent<DialogComponent>().Close();
+					GetComponent<DialogComponent>()!.Close();
 				}
 			}
 			

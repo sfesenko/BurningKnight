@@ -10,7 +10,7 @@ namespace BurningKnight.entity.item.use {
 		private float amount;
 
 		public override void Use(Entity entity, Item item) {
-			var i = entity.GetComponent<ActiveItemComponent>().Item;
+			var i = entity.GetComponent<ActiveItemComponent>()!.Item;
 
 			if (i == null) {
 				return;

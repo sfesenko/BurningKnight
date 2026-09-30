@@ -41,7 +41,7 @@ namespace BurningKnight.level.entities {
 		public override void Load(FileReader stream) {
 			base.Load(stream);
 			disk = stream.ReadByte();
-			broken = GetComponent<HealthComponent>().HasNoHealth;
+			broken = GetComponent<HealthComponent>()!.HasNoHealth;
 		}
 
 		public override void Save(FileWriter stream) {
@@ -86,7 +86,7 @@ namespace BurningKnight.level.entities {
 					var old = c.Item;
 
 					if (hd) {
-						entity.GetComponent<InventoryComponent>().Pickup(Items.CreateAndAdd($"bk:disk_{disk}", Area));
+						entity.GetComponent<InventoryComponent>()!.Pickup(Items.CreateAndAdd($"bk:disk_{disk}", Area));
 					} else {
 						c.Set(null, false);
 					}
@@ -98,7 +98,7 @@ namespace BurningKnight.level.entities {
 					Log.Error(e);
 				}
 			} else if (hd) {
-				entity.GetComponent<InventoryComponent>().Pickup(Items.CreateAndAdd($"bk:disk_{disk}", Area));
+				entity.GetComponent<InventoryComponent>()!.Pickup(Items.CreateAndAdd($"bk:disk_{disk}", Area));
 				disk = 0;
 			}
 			
@@ -113,7 +113,7 @@ namespace BurningKnight.level.entities {
 			
 			t += dt;
 
-			if (GetComponent<HealthComponent>().HasNoHealth || disk == 0) {
+			if (GetComponent<HealthComponent>()!.HasNoHealth || disk == 0) {
 				return;
 			}
 			
@@ -212,7 +212,7 @@ namespace BurningKnight.level.entities {
 
 		public override bool HandleEvent(Event e) {
 			if (e is PostHealthModifiedEvent) {
-				if (GetComponent<HealthComponent>().HasNoHealth) {
+				if (GetComponent<HealthComponent>()!.HasNoHealth) {
 					if (!broken) {
 						HandleEvent(new GramophoneBrokenEvent {
 							Gramophone = this

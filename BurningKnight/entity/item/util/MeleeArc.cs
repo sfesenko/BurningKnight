@@ -57,12 +57,12 @@ namespace BurningKnight.entity.item.util {
 			
 			AddComponent(new LightComponent(this, 32f, Color.White));
 
-			GetComponent<AnimationComponent>().OriginY = 12;
+			GetComponent<AnimationComponent>()!.OriginY = 12;
 			Context.Camera.Push(Angle - (float) Math.PI, 4f);
 		}
 
 		public void AdjustSize() {
-			GetComponent<RectBodyComponent>().Resize(0, -Height / 2f, Width, Height);
+			GetComponent<RectBodyComponent>()!.Resize(0, -Height / 2f, Width, Height);
 		}
 
 		public override void Render() {
@@ -95,7 +95,7 @@ namespace BurningKnight.entity.item.util {
 						}
 					}
 				} else if (ev.Entity is Bomb) {
-					ev.Entity.GetComponent<RectBodyComponent>().KnockbackFrom(Owner, 1f + Knockback);
+					ev.Entity.GetComponent<RectBodyComponent>()!.KnockbackFrom(Owner, 1f + Knockback);
 				} else if (ev.Entity is Projectile p) {
 					if ((p.Owner is Mob) != (Owner is Mob) && ((p.FirstOwner is Mob) != (Owner is Mob))) {
 						if (p.HasFlag(ProjectileFlags.Reflectable)) {
@@ -118,7 +118,7 @@ namespace BurningKnight.entity.item.util {
 							p.Color = ProjectileColor.Yellow;
 
 							Context.Camera.ShakeMax(4f);
-							Owner.GetComponent<AudioEmitterComponent>().EmitRandomizedPrefixed("projectile_reflected", 2);
+							Owner.GetComponent<AudioEmitterComponent>()!.EmitRandomizedPrefixed("projectile_reflected", 2);
 						} else if (p.HasFlag(ProjectileFlags.BreakableByMelee)) {
 							p.Break();
 						}
@@ -131,7 +131,7 @@ namespace BurningKnight.entity.item.util {
 							}
 
 							if (health.ModifyHealth(-Damage, Owner, DamageType.Melee)) {
-								Owner.GetComponent<AudioEmitterComponent>().EmitRandomizedPrefixed(Sound, 3);
+								Owner.GetComponent<AudioEmitterComponent>()!.EmitRandomizedPrefixed(Sound, 3);
 								OnHurt?.Invoke(this, ev.Entity);
 							}
 
@@ -139,7 +139,7 @@ namespace BurningKnight.entity.item.util {
 						}
 					} else if (ev.Entity is ProjectileLevelBody && !HitWall) {
 						HitWall = true;
-						Owner.GetComponent<AudioEmitterComponent>().EmitRandomized("item_sword_hit_wall");
+						Owner.GetComponent<AudioEmitterComponent>()!.EmitRandomized("item_sword_hit_wall");
 					}
 				}
 			}

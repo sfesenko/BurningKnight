@@ -9,7 +9,7 @@ namespace BurningKnight.entity.item.use {
 		public override void Update(Entity entity, Item item, float dt) {
 			base.Update(entity, item, dt);
 
-			var r = entity.GetComponent<RoomComponent>().Room;
+			var r = entity.GetComponent<RoomComponent>()!.Room;
 
 			if (r == null || r.Tagged[Tags.MustBeKilled].Count == 0) {
 				t = 0;

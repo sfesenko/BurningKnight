@@ -30,7 +30,7 @@ namespace BurningKnight.entity.component {
 				return;
 			}
 			
-			Graphics.Render(Sprite, Entity.Position - new Vector2(0, Entity.GetComponent<ZComponent>().Z), 0, Origin, Scale, Graphics.ParseEffect(Flipped, FlippedVerticaly));
+			Graphics.Render(Sprite, Entity.Position - new Vector2(0, Entity.GetComponent<ZComponent>()!.Z), 0, Origin, Scale, Graphics.ParseEffect(Flipped, FlippedVerticaly));
 		}
 		
 		public void Animate(Action callback = null) {

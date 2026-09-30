@@ -15,11 +15,11 @@ namespace BurningKnight.level.entities.chest {
 		}
 
 		protected override bool TryOpen(Entity entity) {
-			if (entity.GetComponent<HealthComponent>().Health + entity.GetComponent<HeartsComponent>().Total < 3) {
+			if (entity.GetComponent<HealthComponent>()!.Health + entity.GetComponent<HeartsComponent>()!.Total < 3) {
 				return false;
 			}
 
-			entity.GetComponent<HealthComponent>().ModifyHealth(-2, this, DamageType.Custom);
+			entity.GetComponent<HealthComponent>()!.ModifyHealth(-2, this, DamageType.Custom);
 			return true;
 		}
 	}

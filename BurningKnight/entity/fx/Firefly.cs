@@ -66,7 +66,7 @@ namespace BurningKnight.entity.fx {
 			X = (float) (start.X + Math.Cos(t / 8) * Math.Sin(t / 9) * 32);
 			Y = (float) (start.Y + Math.Sin(t / 7) * Math.Cos(t / 10) * 32);
 
-			var light = GetComponent<LightComponent>().Light;
+			var light = GetComponent<LightComponent>()!.Light;
 			
 			light.Radius += ((t % 20 <= 16f ? 96f : 0) - light.Radius) * dt * 3;
 		}

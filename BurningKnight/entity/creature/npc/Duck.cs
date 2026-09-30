@@ -33,7 +33,7 @@ namespace BurningKnight.entity.creature.npc {
 			}
 			
 			Become<IdleState>();
-			GetComponent<DialogComponent>().Dialog.Voice = 4;
+			GetComponent<DialogComponent>()!.Dialog.Voice = 4;
 		}
 
 		private bool set;

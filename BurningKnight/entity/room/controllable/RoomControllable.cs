@@ -40,7 +40,7 @@ namespace BurningKnight.entity.room.controllable {
 			base.Update(dt);
 
 			if (!added) {
-				var room = GetComponent<RoomComponent>().Room;
+				var room = GetComponent<RoomComponent>()!.Room;
 
 				if (room == null) {
 					return;
@@ -52,7 +52,7 @@ namespace BurningKnight.entity.room.controllable {
 		}
 
 		protected void RemoveFromRoom() {
-			GetComponent<RoomComponent>().Room?.Controllable.Remove(this);
+			GetComponent<RoomComponent>()!.Room?.Controllable.Remove(this);
 		}
 
 	}

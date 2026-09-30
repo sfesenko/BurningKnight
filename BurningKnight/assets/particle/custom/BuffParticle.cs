@@ -20,7 +20,7 @@ namespace BurningKnight.assets.particle.custom {
 		public BuffParticle(Buff buff, Entity entity) {
 			Buff = buff;
 			Entity = entity;
-			Id = entity.GetComponent<BuffsComponent>().Particles.Count;
+			Id = entity.GetComponent<BuffsComponent>()!.Particles.Count;
 
 			region = CommonAse.Ui.GetSlice(buff.GetIcon());
 			Width = 8 * Display.UiScale;
@@ -56,7 +56,7 @@ namespace BurningKnight.assets.particle.custom {
 			Tween.To(0, scale.Y, x => scale.Y = x, 0.3f).OnEnd = () => {
 				Done = true;
 
-				foreach (var p in Entity.GetComponent<BuffsComponent>().Particles) {
+				foreach (var p in Entity.GetComponent<BuffsComponent>()!.Particles) {
 					if (p.Id > Id) {
 						p.Id--;
 						p.lastX -= (Width + 4) * 0.5f;
@@ -69,7 +69,7 @@ namespace BurningKnight.assets.particle.custom {
 
 		public override void Render() {
 			var origin = region.Center;
-			var tar = (Entity.GetComponent<BuffsComponent>().Particles.Count - 1) * (Width + 4) * 0.5f;
+			var tar = (Entity.GetComponent<BuffsComponent>()!.Particles.Count - 1) * (Width + 4) * 0.5f;
 
 			lastX += (tar - lastX) * Engine.Delta * 5;
 			

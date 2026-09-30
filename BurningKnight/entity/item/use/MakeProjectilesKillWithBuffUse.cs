@@ -15,7 +15,7 @@ namespace BurningKnight.entity.item.use {
 		public override bool HandleEvent(Event e) {
 			if (e is ProjectileCreatedEvent pce) {
 				ProjectileCallbacks.AttachHurtCallback(pce.Projectile, (p, w) => {
-					if (w is Mob m && w.GetComponent<BuffsComponent>().Buffs.ContainsKey(buff)) {
+					if (w is Mob m && w.GetComponent<BuffsComponent>()!.Buffs.ContainsKey(buff)) {
 						m.Kill(Item);
 					}
 				});

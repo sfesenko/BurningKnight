@@ -26,7 +26,7 @@ namespace BurningKnight.level.entities {
 		}
 
 		public void SetMessage(string m) {
-			GetComponent<CloseDialogComponent>().Variants = new [] { m };
+			GetComponent<CloseDialogComponent>()!.Variants = new [] { m };
 		}
 		
 		public override void AddComponents() {
@@ -36,7 +36,7 @@ namespace BurningKnight.level.entities {
 			AddComponent(new CloseDialogComponent());
 			AddComponent(new ShadowComponent());
 			
-			GetComponent<DialogComponent>().Dialog.Voice = 30;
+			GetComponent<DialogComponent>()!.Dialog.Voice = 30;
 		}
 
 		public override void PostInit() {

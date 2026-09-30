@@ -24,18 +24,18 @@ namespace BurningKnight.debug {
 			var player = LocalPlayer.Locate(Context.Area);
 
 			if (player != null) {
-				ImGui.Checkbox("God Mode", ref player.GetComponent<HealthComponent>().Unhittable);
+				ImGui.Checkbox("God Mode", ref player.GetComponent<HealthComponent>()!.Unhittable);
 			}
 			
 
 			if (ImGui.Checkbox("Auto god mode", ref AutoGodMode) && player != null) {
-				player.GetComponent<HealthComponent>().Unhittable = AutoGodMode;
+				player.GetComponent<HealthComponent>()!.Unhittable = AutoGodMode;
 			}
 			
 			ImGui.Separator();
 
 			if (ImGui.Checkbox("Infinite active charge", ref InfiniteActive) && player != null && InfiniteActive) {
-				player.GetComponent<InventoryComponent>().Pickup(Items.CreateAndAdd("bk:battery", player.Area));
+				player.GetComponent<InventoryComponent>()!.Pickup(Items.CreateAndAdd("bk:battery", player.Area));
 			}
 			
 			ImGui.Checkbox("No Sleep", ref NoSleep);

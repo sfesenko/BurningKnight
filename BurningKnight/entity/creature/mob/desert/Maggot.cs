@@ -92,19 +92,19 @@ namespace BurningKnight.entity.creature.mob.desert {
 
 				Self.T = 0;
 				
-				Self.GetComponent<RectBodyComponent>().Velocity = Vector2.Zero;
-				Self.GetComponent<WallAnimationComponent>().SetAutoStop(true);
+				Self.GetComponent<RectBodyComponent>()!.Velocity = Vector2.Zero;
+				Self.GetComponent<WallAnimationComponent>()!.SetAutoStop(true);
 			}
 
 			public override void Destroy() {
 				base.Destroy();
-				Self.GetComponent<WallAnimationComponent>().SetAutoStop(false);
+				Self.GetComponent<WallAnimationComponent>()!.SetAutoStop(false);
 			}
 
 			public override void Update(float dt) {
 				base.Update(dt);
 
-				if (!shot && Self.GetComponent<WallAnimationComponent>().Animation.Paused) {
+				if (!shot && Self.GetComponent<WallAnimationComponent>()!.Animation.Paused) {
 					if (Self.Target == null) {
 						Become<IdleState>();
 						return;
@@ -113,7 +113,7 @@ namespace BurningKnight.entity.creature.mob.desert {
 					shot = true;
 
 					var a = Self.GetComponent<WallAnimationComponent>();
-					Self.GetComponent<AudioEmitterComponent>().EmitRandomized("mob_fire_wall");
+					Self.GetComponent<AudioEmitterComponent>()!.EmitRandomized("mob_fire_wall");
 						
 					var angle = Self.Direction.ToAngle();
 

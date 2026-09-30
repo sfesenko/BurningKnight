@@ -74,7 +74,7 @@ namespace BurningKnight.entity.creature.player {
 			}
 		}
 		
-		public Color Tint => IndexTints[GetComponent<InputComponent>().Index];
+		public Color Tint => IndexTints[GetComponent<InputComponent>()!.Index];
 		
 		public static int Quacks;
 		public static bool ToBoss;
@@ -102,21 +102,21 @@ namespace BurningKnight.entity.creature.player {
 			if (item.Type == ItemType.Weapon && Context.Run.Depth == 0) {
 				Audio.PlaySfx(item.Data.WeaponType.GetPickupSfx());
 			} else {
-				GetComponent<AudioEmitterComponent>().EmitRandomized("item_pickup");
+				GetComponent<AudioEmitterComponent>()!.EmitRandomized("item_pickup");
 			}
 
 			if (add || item.Type == ItemType.Lamp || item.Type == ItemType.Active || item.Type == ItemType.ConsumableArtifact || item.Type == ItemType.Weapon || item.Type == ItemType.Hat) {
-				GetComponent<InventoryComponent>().Busy = true;
+				GetComponent<InventoryComponent>()!.Busy = true;
 				
 				Engine.Instance.State.Ui.Add(new ConsumableParticle(item.Region, this, item.Type != ItemType.Active, () => {
 					item.Area?.Remove(item);
 					item.Done = false;
 					
 					action?.Invoke();
-					GetComponent<InventoryComponent>().Busy = false;
+					GetComponent<InventoryComponent>()!.Busy = false;
 
 					if (item.Type != ItemType.ConsumableArtifact && item.Type != ItemType.Active && item.Type != ItemType.Weapon && item.Type != ItemType.Hat && item.Type != ItemType.Lamp) {
-						GetComponent<InventoryComponent>().Add(item);
+						GetComponent<InventoryComponent>()!.Add(item);
 					}
 				}));
 				
@@ -131,7 +131,7 @@ namespace BurningKnight.entity.creature.player {
 			AddComponent(new CursorComponent());
 			
 			InBuilding = false;
-			GetComponent<HealthComponent>().SaveMaxHp = true;
+			GetComponent<HealthComponent>()!.SaveMaxHp = true;
 			
 			Height = 11;
 			
@@ -164,10 +164,10 @@ namespace BurningKnight.entity.creature.player {
 			});
 			
 			AddComponent(new SensorBodyComponent(2, 1, Width - 4, Height - 1, BodyType.Dynamic, true));
-			GetComponent<SensorBodyComponent>().Body.SleepingAllowed = false;
+			GetComponent<SensorBodyComponent>()!.Body.SleepingAllowed = false;
 			
 			AddComponent(new InteractorComponent {
-				CanInteractCallback = e => !died && !GetComponent<InventoryComponent>().Busy
+				CanInteractCallback = e => !died && !GetComponent<InventoryComponent>()!.Busy
 			});
 
 			// Other mechanics
@@ -178,7 +178,7 @@ namespace BurningKnight.entity.creature.player {
 			
 			AddComponent(new ZComponent());
 			
-			GetComponent<StateComponent>().Become<IdleState>();
+			GetComponent<StateComponent>()!.Become<IdleState>();
 			
 			AddTag(Tags.Player);
 			AddTag(Tags.PlayerTarget);
@@ -198,9 +198,9 @@ namespace BurningKnight.entity.creature.player {
 
 			Scourge.Clear();
 
-			GetComponent<AimComponent>().ShowLaserLine = false;
-			GetComponent<OrbitGiverComponent>().DestroyAll();
-			GetComponent<FollowerComponent>().DestroyAll();
+			GetComponent<AimComponent>()!.ShowLaserLine = false;
+			GetComponent<OrbitGiverComponent>()!.DestroyAll();
+			GetComponent<FollowerComponent>()!.DestroyAll();
 
 			var hp = GetComponent<HealthComponent>();
 
@@ -224,7 +224,7 @@ namespace BurningKnight.entity.creature.player {
 					findASpawn = false;
 					
 					if (!CheatWindow.AutoGodMode) {
-						GetComponent<HealthComponent>().Unhittable = false;
+						GetComponent<HealthComponent>()!.Unhittable = false;
 					}
 				} else {
 					Log.Error("Did not find a spawn point!");
@@ -236,7 +236,7 @@ namespace BurningKnight.entity.creature.player {
 
 			if (!set && t >= 0.3f) {
 				set = true;
-				GetComponent<RoomComponent>().Room?.Discover();
+				GetComponent<RoomComponent>()!.Room?.Discover();
 
 				if (Context.Run.Depth == 0) {
 					CageLock.CheckProgress();
@@ -285,12 +285,12 @@ namespace BurningKnight.entity.creature.player {
 		public override void Destroy() {
 			base.Destroy();
 
-			if (!GetComponent<HealthComponent>().Dead && (Context.Run.LastDepth == -1 || Context.Run.LastDepth == 0)) {
-				var index = GetComponent<InputComponent>().Index;
+			if (!GetComponent<HealthComponent>()!.Dead && (Context.Run.LastDepth == -1 || Context.Run.LastDepth == 0)) {
+				var index = GetComponent<InputComponent>()!.Index;
 				
-				StartingWeapons[index] = GetComponent<ActiveWeaponComponent>().Item?.Id;
-				StartingItems[index] = GetComponent<ActiveItemComponent>().Item?.Id;
-				StartingLamps[index] = GetComponent<LampComponent>().Item?.Id;
+				StartingWeapons[index] = GetComponent<ActiveWeaponComponent>()!.Item?.Id;
+				StartingItems[index] = GetComponent<ActiveItemComponent>()!.Item?.Id;
+				StartingLamps[index] = GetComponent<LampComponent>()!.Item?.Id;
 			}
 		}
 
@@ -312,9 +312,9 @@ namespace BurningKnight.entity.creature.player {
 			var minIndex = 1024;
 			var pl = this;
 			
-			if (InGameState.Multiplayer && typeof(T) == typeof(ConsumablesComponent) && base.GetComponent<InputComponent>().Index != 0) {
+			if (InGameState.Multiplayer && typeof(T) == typeof(ConsumablesComponent) && base.GetComponent<InputComponent>()!.Index != 0) {
 				foreach (var p in Area.Tagged[Tags.Player]) {
-					var i = p.GetComponent<InputComponent>().Index;
+					var i = p.GetComponent<InputComponent>()!.Index;
 					
 					if (i == 0) {
 						return p.GetComponent<T>();

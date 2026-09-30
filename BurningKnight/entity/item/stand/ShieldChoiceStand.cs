@@ -14,7 +14,7 @@ namespace BurningKnight.entity.item.stand {
 
 		protected override void Heal(Entity entity) {
 			for (var i = 0; i < 3; i++) {
-				entity.GetComponent<InventoryComponent>().Pickup(Items.CreateAndAdd("bk:shield", entity.Area));
+				entity.GetComponent<InventoryComponent>()!.Pickup(Items.CreateAndAdd("bk:shield", entity.Area));
 			}
 		}
 	}

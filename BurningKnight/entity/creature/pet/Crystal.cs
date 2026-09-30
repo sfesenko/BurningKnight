@@ -41,7 +41,7 @@ namespace BurningKnight.entity.creature.pet {
 		}
 
 		private void Teleport() {
-			GetComponent<AnimationComponent>().Animate(() => {
+			GetComponent<AnimationComponent>()!.Animate(() => {
 				AnimationUtil.Poof(Center, Depth + 1);
 				Center = Owner.Center + MathUtils.CreateVector(Rnd.AnglePI(), Rnd.Float(12, 18));
 				AnimationUtil.Poof(Center, Depth + 1);

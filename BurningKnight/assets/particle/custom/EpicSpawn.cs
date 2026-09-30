@@ -54,7 +54,7 @@ namespace BurningKnight.assets.particle.custom {
 				});
 			}
 
-			GetComponent<LightComponent>().Light.Radius = scale * 2f;
+			GetComponent<LightComponent>()!.Light.Radius = scale * 2f;
 
 			t += dt;
 			tt += dt;

@@ -29,7 +29,7 @@ namespace BurningKnight.level.entities.decor {
 		public override void Update(float dt) {
 			base.Update(dt);
 			t += dt;
-			GetComponent<LightComponent>().Light.Radius = 32f + (float) Math.Cos(t) * 6;
+			GetComponent<LightComponent>()!.Light.Radius = 32f + (float) Math.Cos(t) * 6;
 		}
 	}
 }

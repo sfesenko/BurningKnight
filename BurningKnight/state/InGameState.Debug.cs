@@ -233,7 +233,7 @@ namespace BurningKnight.state {
 
 			if (Input.Keyboard.WasPressed(Keys.NumPad7) || Input.Keyboard.WasPressed(Keys.Home)) {
 				var p = LocalPlayer.Locate(Area);
-				p.Center = p.GetComponent<CursorComponent>().Cursor.GamePosition;
+				p.Center = p.GetComponent<CursorComponent>()!.Cursor.GamePosition;
 			}
 
 			if (Input.Keyboard.WasPressed(Keys.PageUp)) {

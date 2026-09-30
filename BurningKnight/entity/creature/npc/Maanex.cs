@@ -31,7 +31,7 @@ namespace BurningKnight.entity.creature.npc {
 			cost = (byte) Rnd.Int(min, min + 5);
 			
 			AddComponent(new AnimationComponent("maanex"));
-			GetComponent<DropsComponent>().Add(new SingleDrop("bk:maanex_head"));
+			GetComponent<DropsComponent>()!.Add(new SingleDrop("bk:maanex_head"));
 
 			if (Context.Run.Depth == 0) {
 				AddComponent(new CloseDialogComponent("maanex_0", "maanex_1", "maanex_2", "maanex_3", "maanex_4"));
@@ -51,7 +51,7 @@ namespace BurningKnight.entity.creature.npc {
 						return Dialogs.Get("maanex_11");
 					}
 
-					var room = GetComponent<RoomComponent>().Room;
+					var room = GetComponent<RoomComponent>()!.Room;
 
 					if (room == null) {
 						return null;
@@ -84,7 +84,7 @@ namespace BurningKnight.entity.creature.npc {
 		}
 
 		private string GetDialog(Entity e) {
-			var hat = e.GetComponent<HatComponent>().Item;
+			var hat = e.GetComponent<HatComponent>()!.Item;
 
 			if (hat != null && hat.Id == "bk:maanex_head") {
 				return "maanex_12";
@@ -99,15 +99,15 @@ namespace BurningKnight.entity.creature.npc {
 
 		public override bool HandleEvent(Event e) {
 			if (e is Chest.OpenedEvent coe) {
-				if (coe.Chest.GetComponent<RoomComponent>().Room == GetComponent<RoomComponent>().Room) {
+				if (coe.Chest.GetComponent<RoomComponent>()!.Room == GetComponent<RoomComponent>()!.Room) {
 					if (coe.Chest.Empty) {
-						GetComponent<DialogComponent>().StartAndClose("maanex_9", 5f);
+						GetComponent<DialogComponent>()!.StartAndClose("maanex_9", 5f);
 					} else {
-						GetComponent<DialogComponent>().StartAndClose("maanex_10", 5f);
+						GetComponent<DialogComponent>()!.StartAndClose("maanex_10", 5f);
 					}
 					
 					played = true;
-					foreach (var chest in GetComponent<RoomComponent>().Room.Tagged[Tags.Chest]) {
+					foreach (var chest in GetComponent<RoomComponent>()!.Room.Tagged[Tags.Chest]) {
 						var c = (Chest) chest;
 
 						if (c.Scale > 0.9f) {
@@ -117,23 +117,23 @@ namespace BurningKnight.entity.creature.npc {
 				}
 			} else if (e is RoomChangedEvent rce) {
 				if (rce.Who is Player) {
-					var r = GetComponent<RoomComponent>().Room;
+					var r = GetComponent<RoomComponent>()!.Room;
 					
 					if (rce.New == r) {
-						GetComponent<DialogComponent>().Start(GetDialog(rce.Who));
+						GetComponent<DialogComponent>()!.Start(GetDialog(rce.Who));
 					} else if (rce.Old == r) {
-						GetComponent<DialogComponent>().Close();
+						GetComponent<DialogComponent>()!.Close();
 					}
 				}
 			} else if (e is DiedEvent de) {
 				Items.Unlock("bk:maanex_head");
 				ExplosionMaker.Make(this);
 
-				if (de.From is Player p && p.GetComponent<HatComponent>().Item?.Id == "bk:maanex_head") {
+				if (de.From is Player p && p.GetComponent<HatComponent>()!.Item?.Id == "bk:maanex_head") {
 					Achievements.Unlock("bk:maanex");
 				}
 			} else if (e is HealthModifiedEvent hme && hme.Amount < 0) {
-				GetComponent<DialogComponent>().StartAndClose(Bruh[Rnd.Int(Bruh.Length)], 2);
+				GetComponent<DialogComponent>()!.StartAndClose(Bruh[Rnd.Int(Bruh.Length)], 2);
 			}
 			
 			return base.HandleEvent(e);
@@ -148,7 +148,7 @@ namespace BurningKnight.entity.creature.npc {
 			t += dt;
 			
 			if ((!interacted || played) && t >= 0.1f) {
-				var r = GetComponent<RoomComponent>().Room;
+				var r = GetComponent<RoomComponent>()!.Room;
 
 				if (r == null) {
 					return;

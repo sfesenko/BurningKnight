@@ -19,7 +19,7 @@ namespace BurningKnight.entity.item.use {
 				var am = aim.RealAim;
 				var a = MathUtils.Angle(am.X - from.X, am.Y - from.Y);
 
-				entity.GetComponent<AudioEmitterComponent>().EmitRandomized("item_laser_player");
+				entity.GetComponent<AudioEmitterComponent>()!.EmitRandomized("item_laser_player");
 				
 				var cnt = 1;
 				var accurate = false;

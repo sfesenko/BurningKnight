@@ -18,7 +18,7 @@ namespace BurningKnight.level.entities.exit {
 
 				foreach (var n in Area.Tagged[Tags.Npc]) {
 					if (n is Mike) {
-						n.GetComponent<DialogComponent>().Start("mike_0");
+						n.GetComponent<DialogComponent>()!.Start("mike_0");
 						break;
 					}
 				}

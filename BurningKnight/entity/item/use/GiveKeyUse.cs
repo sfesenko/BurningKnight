@@ -7,7 +7,7 @@ namespace BurningKnight.entity.item.use {
 		public int Amount;
 
 		public override void Use(Entity entity, Item item) {
-			entity.GetComponent<ConsumablesComponent>().Keys += Amount;
+			entity.GetComponent<ConsumablesComponent>()!.Keys += Amount;
 		}
 
 		public override void Setup(JsonValue settings) {

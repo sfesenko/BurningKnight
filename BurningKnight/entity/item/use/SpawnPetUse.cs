@@ -25,7 +25,7 @@ namespace BurningKnight.entity.item.use {
 			}
 			
 			if (random) {
-				entity.GetComponent<InventoryComponent>().Pickup(Items.CreateAndAdd(Items.Generate(ItemPool.Pet), entity.Area));
+				entity.GetComponent<InventoryComponent>()!.Pickup(Items.CreateAndAdd(Items.Generate(ItemPool.Pet), entity.Area));
 				return;
 			}
 			

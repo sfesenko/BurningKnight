@@ -32,7 +32,7 @@ namespace BurningKnight.entity.creature.npc {
 				if (dee.Dialog.Id == "bk_10") {
 					Timer.Add(() => {
 						// Really, well, thank you, Limpor
-						GetComponent<DialogComponent>().StartAndClose("dm_1", 5);
+						GetComponent<DialogComponent>()!.StartAndClose("dm_1", 5);
 					}, 1f);
 				}
 			} else if (e is ItemTakenEvent ite) {
@@ -40,7 +40,7 @@ namespace BurningKnight.entity.creature.npc {
 					// Yes, yes, I need more power!
 					// MORE POWER!!!
 					// I can feel the energy growing in me!
-					GetComponent<DialogComponent>().StartAndClose($"dm_{Rnd.Int(2, 4)}", 5);
+					GetComponent<DialogComponent>()!.StartAndClose($"dm_{Rnd.Int(2, 4)}", 5);
 				}
 			}
 			

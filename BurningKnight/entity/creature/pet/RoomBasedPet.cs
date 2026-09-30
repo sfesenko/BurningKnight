@@ -18,14 +18,14 @@ namespace BurningKnight.entity.creature.pet {
 					return;
 				}
 				
-				var r = GetComponent<RoomComponent>().Room;
-				var rm = Owner.GetComponent<RoomComponent>().Room;
+				var r = GetComponent<RoomComponent>()!.Room;
+				var rm = Owner.GetComponent<RoomComponent>()!.Room;
 
 				if (r != rm) {
 					AnimationUtil.Poof(Center);
 					Center = rm.GetRandomFreeTile() * 16 + new Vector2(8);
 					AnimationUtil.Poof(Center);
-					GetComponent<AnimationComponent>().Animate();
+					GetComponent<AnimationComponent>()!.Animate();
 					OnJump();
 				}
 			}
@@ -44,7 +44,7 @@ namespace BurningKnight.entity.creature.pet {
 				ShadowOffset = -2
 			});
 
-			var region = GetComponent<AnimationComponent>().Animation.GetCurrentTexture();
+			var region = GetComponent<AnimationComponent>()!.Animation.GetCurrentTexture();
 
 			if (w == -1) {
 				Width = region.Width;
@@ -61,7 +61,7 @@ namespace BurningKnight.entity.creature.pet {
 			AddComponent(new ShadowComponent());
 			AddComponent(new RectBodyComponent(0, 0, Width, Height, BodyType.Dynamic, sensor));
 			
-			GetComponent<AnimationComponent>().Animate();
+			GetComponent<AnimationComponent>()!.Animate();
 		}
 	}
 }

@@ -34,11 +34,11 @@ namespace BurningKnight.entity.creature.player {
 
 		public override bool HandleEvent(Event e) {
 			if (e is DiedEvent ev && ev.Who == this) {
-				if (!GetComponent<HealthComponent>().Dead && !died) {
+				if (!GetComponent<HealthComponent>()!.Dead && !died) {
 					died = true;
 					Done = false;
 
-					GetComponent<AudioEmitterComponent>().EmitRandomized("player_death");
+					GetComponent<AudioEmitterComponent>()!.EmitRandomized("player_death");
 					RemoveComponent<PlayerInputComponent>();
 					
 					Achievements.Unlock("bk:rip");

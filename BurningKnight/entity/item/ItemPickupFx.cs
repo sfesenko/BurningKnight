@@ -63,7 +63,7 @@ namespace BurningKnight.entity.item {
 			}
 			
 			Center = Context.Camera.CameraToUi(new Vector2(item.CenterX, item.Y - 8 + y + yy));
-			GetComponent<TextGraphicsComponent>().Angle = (float) (Math.Cos(Engine.Instance.State.Time) * 0.05f);
+			GetComponent<TextGraphicsComponent>()!.Angle = (float) (Math.Cos(Engine.Instance.State.Time) * 0.05f);
 		}
 		
 		public override void Render() {
@@ -79,7 +79,7 @@ namespace BurningKnight.entity.item {
 
 			if (!tweened) {
 				if (!item.TryGetComponent<InteractableComponent>(out var component) || component.CurrentlyInteracting == null) {
-					if (item.TryGetComponent<OwnerComponent>(out var owner) && owner.Owner is ItemStand stand && stand.GetComponent<InteractableComponent>().CurrentlyInteracting != null) {
+					if (item.TryGetComponent<OwnerComponent>(out var owner) && owner.Owner is ItemStand stand && stand.GetComponent<InteractableComponent>()!.CurrentlyInteracting != null) {
 						return;
 					}
 

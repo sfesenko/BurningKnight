@@ -18,7 +18,7 @@ namespace BurningKnight.entity.room.controllable.platform {
 		public bool On {
 			set {
 				on = value;
-				GetComponent<RectBodyComponent>().Body.IsSensor = !value;
+				GetComponent<RectBodyComponent>()!.Body.IsSensor = !value;
 			}
 		}
 		

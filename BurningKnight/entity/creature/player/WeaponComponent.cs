@@ -82,7 +82,7 @@ namespace BurningKnight.entity.creature.player {
 					
 					if (ev.Item != null && ev.Old == null && AtBack) {
 						if (GlobalSave.IsTrue("control_swap")) {
-							Entity.GetComponent<ActiveWeaponComponent>().requestSwap = InGameState.Ready;
+							Entity.GetComponent<ActiveWeaponComponent>()!.requestSwap = InGameState.Ready;
 						} else {
 							var dialog = GetComponent<DialogComponent>();
 								
@@ -105,7 +105,7 @@ namespace BurningKnight.entity.creature.player {
 		protected void Swap() {
 			if (GlobalSave.IsFalse("control_swap")) {
 				GlobalSave.Put("control_swap", true);
-				Entity.GetComponent<DialogComponent>().Close();
+				Entity.GetComponent<DialogComponent>()!.Close();
 			}
 			
 			var component = AtBack ? Entity.GetComponent<ActiveWeaponComponent>() : Entity.GetComponent<WeaponComponent>();

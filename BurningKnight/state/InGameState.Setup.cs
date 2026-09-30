@@ -88,7 +88,7 @@ namespace BurningKnight.state {
 
 			foreach (var p in Area.Tagged[Tags.Player]) {
 				if (p is LocalPlayer) {
-					bool imp = p.GetComponent<InputComponent>().Index == 0;
+					bool imp = p.GetComponent<InputComponent>()!.Index == 0;
 					Context.Camera.Follow(p, imp ? 1f : 0.5f, imp);
 					
 					if (imp && Assets.ImGuiEnabled) {
@@ -161,7 +161,7 @@ namespace BurningKnight.state {
 			
 			foreach (var p in Area.Tagged[Tags.Player]) {
 				if (p is LocalPlayer lp && !lp.Dead) {
-					var index = p.GetComponent<InputComponent>().Index;
+					var index = p.GetComponent<InputComponent>()!.Index;
 
 					if (index < min) {
 						min = index;
@@ -171,7 +171,7 @@ namespace BurningKnight.state {
 			
 			foreach (var p in Area.Tagged[Tags.Player]) {
 				if (p is LocalPlayer) {
-					var imp = !Multiplayer || p.GetComponent<InputComponent>().Index == min;
+					var imp = !Multiplayer || p.GetComponent<InputComponent>()!.Index == min;
 					Context.Camera.Follow(p, imp ? 1f : 0.5f, imp);
 				}
 			}
@@ -233,7 +233,7 @@ namespace BurningKnight.state {
 
 			foreach (var e in Area.Tagged[Tags.HasShadow]) {
 				if (!e.Done && (e.AlwaysVisible || e.OnScreen)) {
-					e.GetComponent<ShadowComponent>().Callback();
+					e.GetComponent<ShadowComponent>()!.Callback();
 				}
 			}
 			

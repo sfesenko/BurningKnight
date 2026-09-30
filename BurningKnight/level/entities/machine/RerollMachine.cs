@@ -43,7 +43,7 @@ namespace BurningKnight.level.entities.machine {
 			AddComponent(new DialogComponent());
 			
 			AddComponent(new InteractableSliceComponent("props", "reroll_machine"));
-			GetComponent<DialogComponent>().Dialog.Voice = 10;
+			GetComponent<DialogComponent>()!.Dialog.Voice = 10;
 		}
 
 		protected bool Interact(Entity entity) {
@@ -52,11 +52,11 @@ namespace BurningKnight.level.entities.machine {
 		}
 
 		private void Animate() {
-			GetComponent<InteractableSliceComponent>().Scale.Y = 0.4f;
-			Tween.To(1, 0.4f, x => GetComponent<InteractableSliceComponent>().Scale.Y = x, 0.2f);
+			GetComponent<InteractableSliceComponent>()!.Scale.Y = 0.4f;
+			Tween.To(1, 0.4f, x => GetComponent<InteractableSliceComponent>()!.Scale.Y = x, 0.2f);
 			
-			GetComponent<InteractableSliceComponent>().Scale.X = 1.3f;
-			Tween.To(1, 1.3f, x => GetComponent<InteractableSliceComponent>().Scale.X = x, 0.2f);
+			GetComponent<InteractableSliceComponent>()!.Scale.X = 1.3f;
+			Tween.To(1, 1.3f, x => GetComponent<InteractableSliceComponent>()!.Scale.X = x, 0.2f);
 		}
 
 		public void Reroll(Entity entity, bool consumeCoin) {
@@ -64,7 +64,7 @@ namespace BurningKnight.level.entities.machine {
 				return;
 			}
 			
-			var room = GetComponent<RoomComponent>().Room;
+			var room = GetComponent<RoomComponent>()!.Room;
 
 			if (room == null) {
 				return;
@@ -76,7 +76,7 @@ namespace BurningKnight.level.entities.machine {
 				var component = entity.GetComponent<ConsumablesComponent>();
 
 				if (component.Coins == 0) {
-					GetComponent<DialogComponent>().StartAndClose("machine_0", 3);
+					GetComponent<DialogComponent>()!.StartAndClose("machine_0", 3);
 					AnimationUtil.ActionFailed();
 					return;
 				}
@@ -91,7 +91,7 @@ namespace BurningKnight.level.entities.machine {
 				}
 			}
 
-			GetComponent<DialogComponent>().Close();
+			GetComponent<DialogComponent>()!.Close();
 			Items.Unlock("bk:d6");
 			
 			// Reset the luck for the next uses
@@ -137,7 +137,7 @@ namespace BurningKnight.level.entities.machine {
 			component.Sprite = CommonAse.Props.GetSlice("reroll_machine_broken");
 			component.Offset.Y += Height - 14;
 			
-			GetComponent<AudioEmitterComponent>().EmitRandomizedPrefixed("level_explosion", 3);
+			GetComponent<AudioEmitterComponent>()!.EmitRandomizedPrefixed("level_explosion", 3);
 		}
 
 		public override bool HandleEvent(Event e) {

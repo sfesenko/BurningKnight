@@ -142,14 +142,14 @@ namespace BurningKnight.assets.particle.custom {
 			}
 
 			if (Hurts) {
-				GetComponent<CircleBodyComponent>().Position = Position + Offset;
+				GetComponent<CircleBodyComponent>()!.Position = Position + Offset;
 			}
 		}
 
 		public override bool HandleEvent(Event e) {
 			if (e is CollisionStartedEvent cse) {
 				if (cse.Entity is Player p) {
-					p.GetComponent<HealthComponent>().ModifyHealth(-1, this);
+					p.GetComponent<HealthComponent>()!.ModifyHealth(-1, this);
 				}
 			}
 			

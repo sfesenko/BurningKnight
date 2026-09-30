@@ -48,7 +48,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 						projectile.Color = ProjectileColor.DesertRainbow[Rnd.Int(ProjectileColor.DesertRainbow.Length)];
 					}
 					
-					Self.GetComponent<BkGraphicsComponent>().Animate();
+					Self.GetComponent<BkGraphicsComponent>()!.Animate();
 				}
 
 				if (T >= 5f) {

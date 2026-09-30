@@ -60,7 +60,7 @@ namespace BurningKnight.level.entities {
 
 		public override void Update(float dt) {
 			base.Update(dt);
-			GetComponent<AnimationComponent>().Animation.Frame = (uint) (Engine.Time * 24) % 4;
+			GetComponent<AnimationComponent>()!.Animation.Frame = (uint) (Engine.Time * 24) % 4;
 		}
 
 		public override void Apply(Entity e, float dt) {

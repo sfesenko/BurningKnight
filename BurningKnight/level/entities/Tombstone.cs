@@ -57,7 +57,7 @@ namespace BurningKnight.level.entities {
 			AddComponent(new LightComponent(this, 64, new Color(0.7f, 0.6f, 0.3f, 1f)));
 			
 			Subscribe<RoomChangedEvent>();
-			GetComponent<DialogComponent>().Dialog.Voice = 30;
+			GetComponent<DialogComponent>()!.Dialog.Voice = 30;
 		}
 
 		public static Player CreatePlayer(Area area, byte index, bool gamepad, Vector2 where) {
@@ -83,7 +83,7 @@ namespace BurningKnight.level.entities {
 			((InGameState) Engine.Instance.State).Ui.Add(u);
 			((InGameState) Engine.Instance.State).TopUi.Add(cursor);
 
-			p.GetComponent<CursorComponent>().Cursor = cursor;
+			p.GetComponent<CursorComponent>()!.Cursor = cursor;
 			
 			AnimationUtil.Poof(where, 1);
 			GameContext.Current.Camera.Shake(16);
@@ -102,7 +102,7 @@ namespace BurningKnight.level.entities {
 			var h2 = p.GetComponent<HealthComponent>();
 			var hr2 = p.GetComponent<HeartsComponent>();
 			
-			p.GetComponent<ActiveWeaponComponent>().Set(Items.CreateAndAdd(Items.Generate(ItemPool.StartingWeapon), Area));
+			p.GetComponent<ActiveWeaponComponent>()!.Set(Items.CreateAndAdd(Items.Generate(ItemPool.StartingWeapon), Area));
 
 			h1.InvincibilityTimer = 0;
 			h1.Unhittable = false;
@@ -126,12 +126,12 @@ namespace BurningKnight.level.entities {
 				hr2.ModifyBombs(-(hr2.Bombs - half), e);
 			}
 
-			if (p.GetComponent<InputComponent>().Index == 0) {
+			if (p.GetComponent<InputComponent>()!.Index == 0) {
 				var minIndex = 1024;
 				Player pl = null;
 
 				foreach (var pr in Area.Tagged[Tags.Player]) {
-					var i = pr.GetComponent<InputComponent>().Index;
+					var i = pr.GetComponent<InputComponent>()!.Index;
 
 					if (p != pr && i < minIndex) {
 						minIndex = i;
@@ -175,7 +175,7 @@ namespace BurningKnight.level.entities {
 				Interact(d.From);
 				return true;
 			} else if (e is RoomChangedEvent rce) {
-				if (rce.Who is Player && rce.New == GetComponent<RoomComponent>().Room) {
+				if (rce.Who is Player && rce.New == GetComponent<RoomComponent>()!.Room) {
 					// Daddy? What did they do with you?!?!
 					// rce.Who.GetComponent<DialogComponent>().StartAndClose("player_0", 3f);
 				}
@@ -201,7 +201,7 @@ namespace BurningKnight.level.entities {
 			UpdateSprite();
 			Context.Run.AddScourge(true);
 
-			GetComponent<DialogComponent>().Close();
+			GetComponent<DialogComponent>()!.Close();
 			
 			AnimationUtil.Poof(Center);
 			Context.Camera.Shake(16);
@@ -239,7 +239,7 @@ namespace BurningKnight.level.entities {
 
 
 		private void UpdateSprite() {
-			GetComponent<InteractableSliceComponent>().Set("props", Item == null ? "broken_tombstone" : "tombstone");
+			GetComponent<InteractableSliceComponent>()!.Set("props", Item == null ? "broken_tombstone" : "tombstone");
 		}
 	}
 }

@@ -47,7 +47,7 @@ namespace BurningKnight.entity.room.controllable.spikes {
 			AddComponent(new AudioEmitterComponent());
 			AddComponent(new RectBodyComponent(3, 5, 10, 10, BodyType.Static, true));
 			
-			GetComponent<StateComponent>().Become<HiddenState>();
+			GetComponent<StateComponent>()!.Become<HiddenState>();
 		}
 
 		private void RenderBase() {
@@ -94,7 +94,7 @@ namespace BurningKnight.entity.room.controllable.spikes {
 		protected void Hurt() {
 			foreach (var c in Colliding) {
 				if (!(c is Creature cc && cc.InAir()) || c is ExplodingBarrel) {
-					c.GetComponent<HealthComponent>().ModifyHealth(-1, this);
+					c.GetComponent<HealthComponent>()!.ModifyHealth(-1, this);
 				}
 			}
 		}
@@ -116,27 +116,27 @@ namespace BurningKnight.entity.room.controllable.spikes {
 				base.Init();
 
 				if (Self.OnScreen) {
-					Self.GetComponent<AudioEmitterComponent>().Emit("level_spike", 1f - Audio.Db3);
+					Self.GetComponent<AudioEmitterComponent>()!.Emit("level_spike", 1f - Audio.Db3);
 				}
 
-				Self.GetComponent<AnimationComponent>().SetAutoStop(true);
+				Self.GetComponent<AnimationComponent>()!.SetAutoStop(true);
 			}
 
 			public override void Destroy() {
 				base.Destroy();
-				Self.GetComponent<AnimationComponent>().SetAutoStop(false);
+				Self.GetComponent<AnimationComponent>()!.SetAutoStop(false);
 			}
 
 			public override void Update(float dt) {
 				base.Update(dt);
-				var a = Self.GetComponent<AnimationComponent>().Animation;
+				var a = Self.GetComponent<AnimationComponent>()!.Animation;
 
 				if (a.Frame > 3) {
 					Self.Hurt();
 				}
 				
 				if (a.Paused) {
-					Self.GetComponent<StateComponent>().Become<IdleState>();
+					Self.GetComponent<StateComponent>()!.Become<IdleState>();
 				}
 			}
 		}
@@ -146,18 +146,18 @@ namespace BurningKnight.entity.room.controllable.spikes {
 			
 			public override void Init() {
 				base.Init();
-				Self.GetComponent<AudioEmitterComponent>().Emit("level_spike_peaking");
-				Self.GetComponent<AnimationComponent>().SetAutoStop(true);
+				Self.GetComponent<AudioEmitterComponent>()!.Emit("level_spike_peaking");
+				Self.GetComponent<AnimationComponent>()!.SetAutoStop(true);
 			}
 
 			public override void Destroy() {
 				base.Destroy();
-				Self.GetComponent<AnimationComponent>().SetAutoStop(false);
+				Self.GetComponent<AnimationComponent>()!.SetAutoStop(false);
 			}
 
 			public override void Update(float dt) {
 				base.Update(dt);
-				var a = Self.GetComponent<AnimationComponent>().Animation;
+				var a = Self.GetComponent<AnimationComponent>()!.Animation;
 
 				if (a.Frame > 2) {
 					Self.Hurt();
@@ -166,13 +166,13 @@ namespace BurningKnight.entity.room.controllable.spikes {
 						playedSfx = true;
 
 						if (Self.OnScreen) {
-							Self.GetComponent<AudioEmitterComponent>().EmitRandomized("level_spike");
+							Self.GetComponent<AudioEmitterComponent>()!.EmitRandomized("level_spike");
 						}
 					}
 				}
 				
 				if (a.Paused) {
-					Self.GetComponent<StateComponent>().Become<IdleState>();
+					Self.GetComponent<StateComponent>()!.Become<IdleState>();
 				}
 			}
 		}
@@ -180,24 +180,24 @@ namespace BurningKnight.entity.room.controllable.spikes {
 		protected class HidingState : SmartState<Spikes> {
 			public override void Init() {
 				base.Init();
-				Self.GetComponent<AnimationComponent>().SetAutoStop(true);
+				Self.GetComponent<AnimationComponent>()!.SetAutoStop(true);
 			}
 
 			public override void Destroy() {
 				base.Destroy();
-				Self.GetComponent<AnimationComponent>().SetAutoStop(false);
+				Self.GetComponent<AnimationComponent>()!.SetAutoStop(false);
 			}
 
 			public override void Update(float dt) {
 				base.Update(dt);
-				var a = Self.GetComponent<AnimationComponent>().Animation;
+				var a = Self.GetComponent<AnimationComponent>()!.Animation;
 
 				if (a.Frame < 2) {
 					Self.Hurt();
 				}
 
 				if (a.Paused) {
-					Self.GetComponent<StateComponent>().Become<HiddenState>();
+					Self.GetComponent<StateComponent>()!.Become<HiddenState>();
 				}
 			}
 		}

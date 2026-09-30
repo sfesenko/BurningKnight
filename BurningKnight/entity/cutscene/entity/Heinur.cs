@@ -21,7 +21,7 @@ namespace BurningKnight.entity.cutscene.entity {
 			AddComponent(new BkGraphicsComponent("heinur"));
 			AddComponent(new SensorBodyComponent(0, 0, 42, 42));
 
-			GetComponent<SensorBodyComponent>().Body.LinearDamping = 2;
+			GetComponent<SensorBodyComponent>()!.Body.LinearDamping = 2;
 		}
 
 		public override void Update(float dt) {
@@ -61,9 +61,9 @@ namespace BurningKnight.entity.cutscene.entity {
 					force *= 2;
 				}
 				
-				p.GetComponent<RectBodyComponent>().Velocity += new Vector2((float) Math.Cos(a) * force, (float) Math.Sin(a) * force);
+				p.GetComponent<RectBodyComponent>()!.Velocity += new Vector2((float) Math.Cos(a) * force, (float) Math.Sin(a) * force);
 				a += (float) Math.PI;
-				GetComponent<SensorBodyComponent>().Velocity += new Vector2((float) Math.Cos(a) * force, (float) Math.Sin(a) * force);
+				GetComponent<SensorBodyComponent>()!.Velocity += new Vector2((float) Math.Cos(a) * force, (float) Math.Sin(a) * force);
 			}
 		}
 	}

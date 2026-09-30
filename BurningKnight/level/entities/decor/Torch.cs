@@ -83,7 +83,7 @@ namespace BurningKnight.level.entities.decor {
 			}
 			
 			AnimationUtil.Poof(Center);
-			Particles.BreakSprite(Area, GetComponent<SliceComponent>().Sprite, Position);
+			Particles.BreakSprite(Area, GetComponent<SliceComponent>()!.Sprite, Position);
 			
 			UpdateSprite();
 		}
@@ -98,7 +98,7 @@ namespace BurningKnight.level.entities.decor {
 			}
 			
 			t += dt * 0.5f;
-			GetComponent<LightComponent>().Light.Radius = 38f + (float) Math.Cos(t) * 6;
+			GetComponent<LightComponent>()!.Light.Radius = 38f + (float) Math.Cos(t) * 6;
 			lastFlame += dt;
 
 			if (lastFlame > 0.1f) {

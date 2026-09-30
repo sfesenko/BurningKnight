@@ -34,7 +34,7 @@ namespace BurningKnight.entity.item.stand {
 				Graphics.Color = Palette.Default[35];
 			}
 				
-			var r = GetComponent<RoomComponent>().Room;
+			var r = GetComponent<RoomComponent>()!.Room;
 
 			foreach (var p in r.Tagged[Tags.Player]) {
 				if (!HasEnoughToPay(p)) {
@@ -49,7 +49,7 @@ namespace BurningKnight.entity.item.stand {
 		}
 		
 		protected virtual bool HasEnoughToPay(Entity p) {
-			return p.GetComponent<ConsumablesComponent>().Bombs >= Price;
+			return p.GetComponent<ConsumablesComponent>()!.Bombs >= Price;
 		}
 	}
 }

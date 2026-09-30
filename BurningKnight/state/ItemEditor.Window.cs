@@ -290,19 +290,19 @@ namespace BurningKnight.state {
 			if (Selected != null && player != null) {
 				var id = Selected.Id;
 				
-				if (player.GetComponent<InventoryComponent>().Has(id)) {
+				if (player.GetComponent<InventoryComponent>()!.Has(id)) {
 					ImGui.BulletText("Present in inventory");
 				}
 				
-				if (player.GetComponent<ActiveWeaponComponent>().Has(id)) {
+				if (player.GetComponent<ActiveWeaponComponent>()!.Has(id)) {
 					ImGui.BulletText("Present in active weapon slot");
 				}
 				
-				if (player.GetComponent<WeaponComponent>().Has(id)) {
+				if (player.GetComponent<WeaponComponent>()!.Has(id)) {
 					ImGui.BulletText("Present in weapon slot");
 				}
 				
-				if (player.GetComponent<ActiveItemComponent>().Has(id)) {
+				if (player.GetComponent<ActiveItemComponent>()!.Has(id)) {
 					ImGui.BulletText("Present in active item slot");
 				}
 			}

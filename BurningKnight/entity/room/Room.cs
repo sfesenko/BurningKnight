@@ -130,7 +130,7 @@ namespace BurningKnight.entity.room {
 				var found = false;
 
 				foreach (var m in Tagged[Tags.MustBeKilled]) {
-					if (m.GetComponent<HealthComponent>().Health > 0) {
+					if (m.GetComponent<HealthComponent>()!.Health > 0) {
 						found = true;
 						break;
 					}

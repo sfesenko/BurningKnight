@@ -54,7 +54,7 @@ namespace BurningKnight.entity.creature.npc.dungeon {
 				return true;
 			}
 			
-			GetComponent<DialogComponent>().Start("elon_3", e);
+			GetComponent<DialogComponent>()!.Start("elon_3", e);
 			return true;
 		}
 

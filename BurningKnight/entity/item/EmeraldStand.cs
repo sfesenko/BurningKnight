@@ -166,7 +166,7 @@ namespace BurningKnight.entity.item {
 				price = Item.Data.UnlockPrice;
 				var player = LocalPlayer.Locate(Area);
 
-				if (player != null && player.GetComponent<HatComponent>().Item?.Id == "bk:dunce_hat") {
+				if (player != null && player.GetComponent<HatComponent>()!.Item?.Id == "bk:dunce_hat") {
 					price++;
 				}
 				

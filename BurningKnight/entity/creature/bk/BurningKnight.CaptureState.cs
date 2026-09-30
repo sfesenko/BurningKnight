@@ -55,14 +55,14 @@ namespace BurningKnight.entity.creature.bk {
 					Audio.PlayMusic("Fatiga", true);
 
 					// PREPARE TO DIE!
-					Self.captured.GetComponent<DialogComponent>().StartAndClose(Self.captured.GetScream(), 5);
-					Self.captured.GetComponent<AudioEmitterComponent>().EmitRandomized("mob_bk_capture");
+					Self.captured.GetComponent<DialogComponent>()!.StartAndClose(Self.captured.GetScream(), 5);
+					Self.captured.GetComponent<AudioEmitterComponent>()!.EmitRandomized("mob_bk_capture");
 					GameContext.Current.Camera.Unfollow(Self);
 
 					Become<HiddenState>();
 					Self.captured.SelectAttack();
 				} else if (d >= 400f &&
-				           Self.GetComponent<RoomComponent>().Room != Self.captured.GetComponent<RoomComponent>().Room) {
+				           Self.GetComponent<RoomComponent>()!.Room != Self.captured.GetComponent<RoomComponent>()!.Room) {
 					Become<TeleportState>();
 
 					return;
@@ -75,7 +75,7 @@ namespace BurningKnight.entity.creature.bk {
 					force *= 2;
 				}
 
-				Self.GetComponent<RectBodyComponent>().Velocity +=
+				Self.GetComponent<RectBodyComponent>()!.Velocity +=
 					new Vector2((float) Math.Cos(a) * force, (float) Math.Sin(a) * force);
 			}
 		}

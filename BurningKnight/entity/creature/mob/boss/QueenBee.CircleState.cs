@@ -39,7 +39,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 					builder.Shoot(t + Math.PI + Rnd.Float(-0.1f, 0.1f), Rnd.Float(4f, 10f)).Build();
 				}
 				
-				var r = Self.GetComponent<RoomComponent>().Room;
+				var r = Self.GetComponent<RoomComponent>()!.Room;
 
 				var x = Self.Target.CenterX + (float) Math.Cos(t) * (r.Width * 0.3f);
 				var y = Self.Target.CenterY + (float) Math.Sin(t) * (r.Height * 0.3f);

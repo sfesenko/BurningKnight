@@ -19,7 +19,7 @@ namespace BurningKnight.entity.item.use {
 			}
 			
 			foreach (var e in entities) {
-				var room = e.GetComponent<RoomComponent>().Room;
+				var room = e.GetComponent<RoomComponent>()!.Room;
 				var newRoom = (Room) Rnd.Element<Entity>(rooms, r => r != room && r is Room rm && rm.Type != RoomType.Granny && rm.Type != RoomType.OldMan && rm.Type != RoomType.Secret && rm.Type != RoomType.Special && rm.Type != RoomType.Hidden);
 
 				if (newRoom != null) {
@@ -27,10 +27,10 @@ namespace BurningKnight.entity.item.use {
 						e.Center = newRoom.GetRandomFreeTile() * 16 + new Vector2(8);
 						Context.Camera.Jump();
 						AnimationUtil.TeleportIn(e);
-						e.GetComponent<HealthComponent>().Unhittable = false;
+						e.GetComponent<HealthComponent>()!.Unhittable = false;
 					});
 
-					entity.GetComponent<AudioEmitterComponent>().EmitRandomized("quck");
+					entity.GetComponent<AudioEmitterComponent>()!.EmitRandomized("quck");
 				}
 			}
 		}

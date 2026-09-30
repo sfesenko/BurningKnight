@@ -54,7 +54,7 @@ namespace BurningKnight.ui {
 						var player = LocalPlayer.Locate(Context.Area);
 
 						if (player != null) {
-							player.GetComponent<DialogComponent>().StartAndClose(input, 5);
+							player.GetComponent<DialogComponent>()!.StartAndClose(input, 5);
 							input = "";
 						}
 					}

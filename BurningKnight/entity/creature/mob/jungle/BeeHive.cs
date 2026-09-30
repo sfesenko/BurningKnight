@@ -32,7 +32,7 @@ namespace BurningKnight.entity.creature.mob.jungle {
 			AddComponent(body);
 			body.KnockbackModifier = 0;
 
-			GetComponent<MobAnimationComponent>().ShadowOffset = -ZHeight;
+			GetComponent<MobAnimationComponent>()!.ShadowOffset = -ZHeight;
 		}
 
 		public override void Load(FileReader stream) {
@@ -51,13 +51,13 @@ namespace BurningKnight.entity.creature.mob.jungle {
 			}
 
 			Timer.Add(() => { 
-				GetComponent<AudioEmitterComponent>().Emit("mob_hive_static", 0.8f, looped: true, tween: true);
+				GetComponent<AudioEmitterComponent>()!.Emit("mob_hive_static", 0.8f, looped: true, tween: true);
 			}, 5f);
 		}
 
 		public override void Destroy() {
 			base.Destroy();
-			GetComponent<AudioEmitterComponent>().StopAll();
+			GetComponent<AudioEmitterComponent>()!.StopAll();
 		}
 
 		public override void Update(float dt) {
@@ -78,12 +78,12 @@ namespace BurningKnight.entity.creature.mob.jungle {
 						T = 0;
 						
 						var bee = GenerateBee();
-						Self.GetComponent<MobAnimationComponent>().Animate();
+						Self.GetComponent<MobAnimationComponent>()!.Animate();
 						Self.Area.Add(bee);
 						bee.BottomCenter = Self.BottomCenter;
 						AnimationUtil.Ash(bee.Center);
 						
-						Self.GetComponent<AudioEmitterComponent>().Emit("mob_hive_pop");
+						Self.GetComponent<AudioEmitterComponent>()!.Emit("mob_hive_pop");
 					}
 				} else {
 					T = 0;
@@ -95,7 +95,7 @@ namespace BurningKnight.entity.creature.mob.jungle {
 			public override void Init() {
 				base.Init();
 				
-				Self.GetComponent<AudioEmitterComponent>().Emit("mob_hive_breaking");
+				Self.GetComponent<AudioEmitterComponent>()!.Emit("mob_hive_breaking");
 				Self.tree = null;
 
 				var y = Self.Y;
@@ -106,7 +106,7 @@ namespace BurningKnight.entity.creature.mob.jungle {
 					Audio.PlaySfx("mob_hive_release");
 					
 					Self.AnimateDeath(null);
-					Self.GetComponent<AudioEmitterComponent>().StopAll();
+					Self.GetComponent<AudioEmitterComponent>()!.StopAll();
 					
 					var am = 16;
 

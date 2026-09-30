@@ -42,7 +42,7 @@ namespace BurningKnight.entity.creature.bk {
 		private int timesRaged;
 
 		public bool Passive;
-		public bool Hidden => GetComponent<StateComponent>().StateInstance is HiddenState;
+		public bool Hidden => GetComponent<StateComponent>()!.StateInstance is HiddenState;
 
 		public override void AddComponents() {
 			base.AddComponents();
@@ -79,7 +79,7 @@ namespace BurningKnight.entity.creature.bk {
 			SetMaxHp(300);
 			// health.AutoKill = false;
 
-			GetComponent<StateComponent>().Become<IdleState>();
+			GetComponent<StateComponent>()!.Become<IdleState>();
 			AddComponent(new OrbitGiverComponent());
 
 			AddComponent(new LightComponent(this, 64, new Color(1f, 0.2f, 0.1f, 0.5f)));
@@ -100,7 +100,7 @@ namespace BurningKnight.entity.creature.bk {
 			Subscribe<DefeatedEvent>();
 			Subscribe<NewLevelStartedEvent>();
 
-			GetComponent<DialogComponent>().Dialog.Voice = 25;
+			GetComponent<DialogComponent>()!.Dialog.Voice = 25;
 			AddComponent(new AimComponent(AimComponent.AimType.Target));
 		}
 
@@ -108,14 +108,14 @@ namespace BurningKnight.entity.creature.bk {
 			base.PostInit();
 			
 			Timer.Add(() => {
-				GetComponent<AudioEmitterComponent>().Emit("mob_bk_hovering_loop", 0.3f, looped: true, tween: true);
-				GetComponent<AudioEmitterComponent>().Emit(Context.Run.Depth == 10 ? "mob_bk_fight_loop" : "mob_bk_flame_loop",  0.3f, looped: true, tween: true);
+				GetComponent<AudioEmitterComponent>()!.Emit("mob_bk_hovering_loop", 0.3f, looped: true, tween: true);
+				GetComponent<AudioEmitterComponent>()!.Emit(Context.Run.Depth == 10 ? "mob_bk_fight_loop" : "mob_bk_flame_loop",  0.3f, looped: true, tween: true);
 			}, 2f);
 		}
 
 		public override void Destroy() {
 			base.Destroy();
-			GetComponent<AudioEmitterComponent>().StopAll();
+			GetComponent<AudioEmitterComponent>()!.StopAll();
 		}
 
 		protected override void OnTargetChange(Entity target) {
@@ -143,17 +143,17 @@ namespace BurningKnight.entity.creature.bk {
 			graphics.Alpha = 0;
 
 			Center = captured.Center;
-			GetComponent<HealthComponent>().Unhittable = true;
+			GetComponent<HealthComponent>()!.Unhittable = true;
 
 			Tween.To(1, graphics.Alpha, x => graphics.Alpha = x, 0.3f).OnEnd = () => {
-				GetComponent<AudioEmitterComponent>().Emit("mob_bk_roar_4", 0.8f);
+				GetComponent<AudioEmitterComponent>()!.Emit("mob_bk_roar_4", 0.8f);
 									
 				Timer.Add(() => {
 					if (captured.Done) {
 						Become<ChaseState>();
 
 						// YOU CAN'T DEFEAT THE BURNING KNIGHT!!!
-						GetComponent<DialogComponent>().StartAndClose("bk_2", 5);
+						GetComponent<DialogComponent>()!.StartAndClose("bk_2", 5);
 					} else {
 						captured = null;
 						Become<FollowState>();
@@ -194,30 +194,30 @@ namespace BurningKnight.entity.creature.bk {
 							if (t == RoomType.Treasure) {
 								foreach (var item in rce.New.Tagged[Tags.Item]) {
 									if (item is SingleChoiceStand stand && stand.Item != null) {
-										GetComponent<DialogComponent>().StartAndClose("bk_0", 5);
+										GetComponent<DialogComponent>()!.StartAndClose("bk_0", 5);
 
 										break;
 									}
 								}
 							} else if (t == RoomType.Granny) {
 								// GRANNY, CAN YOU JUST DIE, PLEASE??
-								GetComponent<DialogComponent>().StartAndClose("bk_9", 3);
+								GetComponent<DialogComponent>()!.StartAndClose("bk_9", 3);
 							} else if (t == RoomType.OldMan) {
 								// MY MASTER, I BROUGHT THE GOBLIN
-								GetComponent<DialogComponent>().StartAndClose("bk_10", 5);
+								GetComponent<DialogComponent>()!.StartAndClose("bk_10", 5);
 							}
 						}
 					}
 				}
 			} else if (e is ItemTakenEvent ite) {
 				if (!InFight && ite.Stand is SingleChoiceStand && ite.Who is Player) {
-					GetComponent<DialogComponent>().StartAndClose("bk_1", 5);
+					GetComponent<DialogComponent>()!.StartAndClose("bk_1", 5);
 					var state = GetComponent<StateComponent>();
 
 					if (!(state.StateInstance is HiddenState)) {
 						Timer.Add(() => {
 							timesRaged++;
-							GetComponent<AudioEmitterComponent>().Emit("mob_bk_roar_1", 0.8f);
+							GetComponent<AudioEmitterComponent>()!.Emit("mob_bk_roar_1", 0.8f);
 							state.Become<AttackState>();
 						}, 3);
 					}
@@ -225,20 +225,20 @@ namespace BurningKnight.entity.creature.bk {
 			} else if (e is Dialog.EndedEvent dse) {
 				if (!InFight && dse.Owner is ShopKeeper && dse.Dialog.Id == "shopkeeper_18") {
 					// What a joke
-					Timer.Add(() => { GetComponent<DialogComponent>().StartAndClose("bk_4", 5); }, 1);
+					Timer.Add(() => { GetComponent<DialogComponent>()!.StartAndClose("bk_4", 5); }, 1);
 				}
 			} else if (e is ShopNpc.SavedEvent) {
 				// I WOULDN'T BOTHER EVEN TALKING TO THEM
-				Timer.Add(() => { GetComponent<DialogComponent>().StartAndClose("bk_5", 5); }, 2f);
+				Timer.Add(() => { GetComponent<DialogComponent>()!.StartAndClose("bk_5", 5); }, 2f);
 			} else if (e is ShopKeeper.EnragedEvent skee) {
-				if (skee.ShopKeeper.GetComponent<RoomComponent>().Room.Explored) {
+				if (skee.ShopKeeper.GetComponent<RoomComponent>()!.Room.Explored) {
 					// KILL HIM, EDWARD!
-					GetComponent<DialogComponent>().StartAndClose("bk_6", 5);
+					GetComponent<DialogComponent>()!.StartAndClose("bk_6", 5);
 				}
 			} else if (e is DiedEvent de) {
 				if (de.Who is ShopKeeper) {
 					// EDWARD, NOOOOOO!
-					GetComponent<DialogComponent>().StartAndClose("bk_7", 5);
+					GetComponent<DialogComponent>()!.StartAndClose("bk_7", 5);
 					return false;
 				} else if (de.Who == this) {
 					return base.HandleEvent(e);
@@ -247,11 +247,11 @@ namespace BurningKnight.entity.creature.bk {
 				}
 			} else if (e is SecretRoomFoundEvent) {
 				// OH COMON, STOP EXPLODING MY CASTLE!
-				GetComponent<DialogComponent>().StartAndClose("bk_8", 5);
+				GetComponent<DialogComponent>()!.StartAndClose("bk_8", 5);
 			} else if (e is NewLevelStartedEvent) {
 				if (!InFight) {
 					CheckForScourgeRage();
-					var state = GetComponent<StateComponent>().StateInstance;
+					var state = GetComponent<StateComponent>()!.StateInstance;
 
 					if (raging && !(state is AttackState || state is ChaseState || state is FlyAwayAttackingState)) {
 						raging = false;
@@ -306,21 +306,21 @@ namespace BurningKnight.entity.creature.bk {
 
 			lastFadingParticle -= dt;
 
-			if (lastFadingParticle <= 0 && !(GetComponent<StateComponent>().StateInstance is FlameAttack)) {
+			if (lastFadingParticle <= 0 && !(GetComponent<StateComponent>()!.StateInstance is FlameAttack)) {
 				lastFadingParticle = 0.2f;
 
-				var particle = new FadingParticle(GetComponent<BkGraphicsComponent>().Animation.GetCurrentTexture(), tint);
+				var particle = new FadingParticle(GetComponent<BkGraphicsComponent>()!.Animation.GetCurrentTexture(), tint);
 				Area.Add(particle);
 
 				particle.Depth = Depth - 1;
 				particle.Center = Center;
 
-				var room = GetComponent<RoomComponent>().Room;
+				var room = GetComponent<RoomComponent>()!.Room;
 
 				if (room != null && room.Type == RoomType.Boss) {
 					CheckCapture();
 				} else if (Target != null) {
-					room = Target.GetComponent<RoomComponent>().Room;
+					room = Target.GetComponent<RoomComponent>()!.Room;
 
 					if (room != null && room.Type == RoomType.Boss) {
 						CheckCapture();
@@ -336,7 +336,7 @@ namespace BurningKnight.entity.creature.bk {
 				return;
 			}
 			
-			var s = GetComponent<StateComponent>().StateInstance;
+			var s = GetComponent<StateComponent>()!.StateInstance;
 
 			if (s is ChaseState || s is AttackState || s is HiddenState) {
 				return;
@@ -356,7 +356,7 @@ namespace BurningKnight.entity.creature.bk {
 				Become<IdleState>();
 			}
 			
-			var s = GetComponent<StateComponent>().StateInstance;
+			var s = GetComponent<StateComponent>()!.StateInstance;
 
 			if (s is IdleState || s is ChaseState || s is FollowState || s is HiddenState || s is FlyAwayAttackingState || s is AttackState) {
 				return;

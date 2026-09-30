@@ -9,7 +9,7 @@ namespace BurningKnight.level.entities.chest {
 		}
 
 		protected override void UpdateSprite(bool open = true) {
-			GetComponent<AnimationComponent>().Animation.Tag = open ? "open" : "idle";
+			GetComponent<AnimationComponent>()!.Animation.Tag = open ? "open" : "idle";
 		}
 		
 		protected override void Animate() {

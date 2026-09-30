@@ -15,7 +15,7 @@ namespace BurningKnight.entity.creature.mob.desert {
 			SetMaxHp(1);
 			AddAnimation("worm");
 
-			GetComponent<MobAnimationComponent>().ShadowOffset = 1;
+			GetComponent<MobAnimationComponent>()!.ShadowOffset = 1;
 
 			var body = new RectBodyComponent(3, 3, 4, 10);
 			AddComponent(body);
@@ -35,7 +35,7 @@ namespace BurningKnight.entity.creature.mob.desert {
 				var i = 0;
 
 				do {
-					var spot = Self.GetComponent<RoomComponent>().Room.GetRandomFreeTile() * 16;
+					var spot = Self.GetComponent<RoomComponent>()!.Room.GetRandomFreeTile() * 16;
 
 					if (Self.Target == null || Self.Target.DistanceTo(spot) > 32f) {
 						target = new Vector2(spot.X + 8, spot.Y);
@@ -52,13 +52,13 @@ namespace BurningKnight.entity.creature.mob.desert {
 				} while (true);
 				
 				Self.TouchDamage = 0;
-				Self.GetComponent<HealthComponent>().Unhittable = true;
+				Self.GetComponent<HealthComponent>()!.Unhittable = true;
 				delay = Rnd.Float(0.5f, 1.5f);
 
 				Self.Center = target;
 				
 				Self.TouchDamage = 1;
-				Self.GetComponent<HealthComponent>().Unhittable = false;
+				Self.GetComponent<HealthComponent>()!.Unhittable = false;
 			}
 
 			public override void Update(float dt) {
@@ -73,18 +73,18 @@ namespace BurningKnight.entity.creature.mob.desert {
 		public class HidingState : SmartState<Worm> {
 			public override void Init() {
 				base.Init();
-				Self.GetComponent<MobAnimationComponent>().SetAutoStop(true);
+				Self.GetComponent<MobAnimationComponent>()!.SetAutoStop(true);
 			}
 
 			public override void Destroy() {
 				base.Destroy();
-				Self.GetComponent<MobAnimationComponent>().SetAutoStop(false);
+				Self.GetComponent<MobAnimationComponent>()!.SetAutoStop(false);
 			}
 
 			public override void Update(float dt) {
 				base.Update(dt);
 
-				if (Self.GetComponent<MobAnimationComponent>().Animation.Paused) {
+				if (Self.GetComponent<MobAnimationComponent>()!.Animation.Paused) {
 					Become<HiddenState>();
 				}
 			}
@@ -93,18 +93,18 @@ namespace BurningKnight.entity.creature.mob.desert {
 		public class ShowingState : SmartState<Worm> {
 			public override void Init() {
 				base.Init();
-				Self.GetComponent<MobAnimationComponent>().SetAutoStop(true);
+				Self.GetComponent<MobAnimationComponent>()!.SetAutoStop(true);
 			}
 
 			public override void Destroy() {
 				base.Destroy();
-				Self.GetComponent<MobAnimationComponent>().SetAutoStop(false);
+				Self.GetComponent<MobAnimationComponent>()!.SetAutoStop(false);
 			}
 
 			public override void Update(float dt) {
 				base.Update(dt);
 
-				if (Self.GetComponent<MobAnimationComponent>().Animation.Paused) {
+				if (Self.GetComponent<MobAnimationComponent>()!.Animation.Paused) {
 					Become<IdleState>();
 				}
 
@@ -178,7 +178,7 @@ namespace BurningKnight.entity.creature.mob.desert {
 		#endregion
 
 		protected override void RenderShadow() {
-			if (GetComponent<StateComponent>().StateInstance is HiddenState) {
+			if (GetComponent<StateComponent>()!.StateInstance is HiddenState) {
 				return;
 			}
 			
@@ -186,7 +186,7 @@ namespace BurningKnight.entity.creature.mob.desert {
 		}
 
 		public override void Render() {
-			if (GetComponent<StateComponent>().StateInstance is HiddenState) {
+			if (GetComponent<StateComponent>()!.StateInstance is HiddenState) {
 				return;
 			}
 			

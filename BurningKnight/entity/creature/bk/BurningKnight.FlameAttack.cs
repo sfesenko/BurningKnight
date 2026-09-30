@@ -44,7 +44,7 @@ namespace BurningKnight.entity.creature.bk {
 				base.Init();
 				
 				var graphics = Self.GetComponent<BkGraphicsComponent>();
-				Self.GetComponent<HealthComponent>().Unhittable = true;
+				Self.GetComponent<HealthComponent>()!.Unhittable = true;
 				Tween.To(0, graphics.Alpha, x => graphics.Alpha = x, 0.3f);
 				Self.TouchDamage = 0;
 			}
@@ -53,7 +53,7 @@ namespace BurningKnight.entity.creature.bk {
 				base.Destroy();
 				
 				var graphics = Self.GetComponent<BkGraphicsComponent>();
-				Self.GetComponent<HealthComponent>().Unhittable = false;
+				Self.GetComponent<HealthComponent>()!.Unhittable = false;
 				Self.TouchDamage = 2;
 				Tween.To(1, graphics.Alpha, x => graphics.Alpha = x, 0.3f);
 
@@ -96,7 +96,7 @@ namespace BurningKnight.entity.creature.bk {
 				var force = 250f * dt;
 				var a = Self.AngleTo(Self.Target);
 
-				Self.GetComponent<RectBodyComponent>().Velocity += new Vector2((float) Math.Cos(a) * force, (float) Math.Sin(a) * force);
+				Self.GetComponent<RectBodyComponent>()!.Velocity += new Vector2((float) Math.Cos(a) * force, (float) Math.Sin(a) * force);
 			}
 		}
 	}

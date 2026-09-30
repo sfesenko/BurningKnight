@@ -174,7 +174,7 @@ namespace BurningKnight.entity.projectile {
 			Scale = newScale;
 			Height = 9 * Scale;
 
-			GetComponent<RectBodyComponent>().Resize(0, 0, Width, Height, true);
+			GetComponent<RectBodyComponent>()!.Resize(0, 0, Width, Height, true);
 		}
 	}
 }

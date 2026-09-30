@@ -30,7 +30,7 @@ namespace BurningKnight.level.entities.chest {
 			
 			var i = GetComponent<InteractableComponent>();
 			
-			i.CanInteract = e => e.GetComponent<ActiveWeaponComponent>().Item != null && !e.GetComponent<ActiveWeaponComponent>().Item.Scourged;
+			i.CanInteract = e => e.GetComponent<ActiveWeaponComponent>()!.Item != null && !e.GetComponent<ActiveWeaponComponent>()!.Item.Scourged;
 			i.OnStart = e => AddFx();
 			
 			try {
@@ -38,7 +38,7 @@ namespace BurningKnight.level.entities.chest {
 
 				if (id != null) {
 					var item = Items.CreateAndAdd(id, Area);
-					GetComponent<ItemComponent>().Set(item, false);
+					GetComponent<ItemComponent>()!.Set(item, false);
 					itemRegion = item.Region;
 				}
 			} catch (Exception e) {
@@ -47,7 +47,7 @@ namespace BurningKnight.level.entities.chest {
 		}
 
 		public override void Destroy() {
-			GlobalSave.Put("proto_chest", GetComponent<ItemComponent>().Item?.Id);
+			GlobalSave.Put("proto_chest", GetComponent<ItemComponent>()!.Item?.Id);
 			base.Destroy();
 		}
 
@@ -56,7 +56,7 @@ namespace BurningKnight.level.entities.chest {
 				fx.Close();
 			}
 			
-			var i = GetComponent<ItemComponent>().Item;
+			var i = GetComponent<ItemComponent>()!.Item;
 			Engine.Instance.State.Ui.Add(fx = new InteractFx(this, i == null ? Locale.Get("place_an_item") : i.Name));
 		}
 
@@ -82,16 +82,16 @@ namespace BurningKnight.level.entities.chest {
 
 		protected override bool Interact(Entity entity) {
 			var w = entity.GetComponent<ActiveWeaponComponent>();
-			GetComponent<ItemComponent>().Exchange(w);
+			GetComponent<ItemComponent>()!.Exchange(w);
 
 			if (w.Item != null) {
 				Audio.PlaySfx(w.Item.Data.WeaponType.GetSwapSfx());
-				entity.GetComponent<PlayerGraphicsComponent>().AnimateSwap();
-			} else if (entity.GetComponent<WeaponComponent>().Item != null) {
+				entity.GetComponent<PlayerGraphicsComponent>()!.AnimateSwap();
+			} else if (entity.GetComponent<WeaponComponent>()!.Item != null) {
 				w.RequestSwap();
 			}
 			
-			itemRegion = GetComponent<ItemComponent>().Item.Region;
+			itemRegion = GetComponent<ItemComponent>()!.Item.Region;
 			AddFx();
 			return false;
 		}
@@ -123,7 +123,7 @@ namespace BurningKnight.level.entities.chest {
 			base.Render();
 
 			if (open && itemRegion != null) {
-				Graphics.Render(itemRegion, Position + new Vector2(10, 7), 0, itemRegion.Center, GetComponent<AnimationComponent>().Scale);
+				Graphics.Render(itemRegion, Position + new Vector2(10, 7), 0, itemRegion.Center, GetComponent<AnimationComponent>()!.Scale);
 			}
 		}
 	}

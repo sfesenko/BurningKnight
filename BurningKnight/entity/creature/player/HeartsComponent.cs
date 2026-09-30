@@ -56,7 +56,7 @@ namespace BurningKnight.entity.creature.player {
 			
 			if (amount != 0 && !Send(e)) {
 				if (amount > 0) {
-					Entity.GetComponent<HealthComponent>().EmitParticles(HealthType.Shield);
+					Entity.GetComponent<HealthComponent>()!.EmitParticles(HealthType.Shield);
 				}
 				
 				shieldHalfs = (byte) Math.Max(0, (float) shieldHalfs + e.Amount);
@@ -90,7 +90,7 @@ namespace BurningKnight.entity.creature.player {
 			
 			if (amount != 0 && !Send(e)) {
 				if (amount > 0) {
-					Entity.GetComponent<HealthComponent>().EmitParticles(HealthType.Bomb);
+					Entity.GetComponent<HealthComponent>()!.EmitParticles(HealthType.Bomb);
 				}
 				
 				bombs = (byte) Math.Max(0, (float) bombs + e.Amount);
@@ -155,7 +155,7 @@ namespace BurningKnight.entity.creature.player {
 			return false;
 		}
 		
-		public bool CanHaveMore => Total + GetComponent<HealthComponent>().MaxHealth < Cap;
+		public bool CanHaveMore => Total + GetComponent<HealthComponent>()!.MaxHealth < Cap;
 				
 		public override void Save(FileWriter stream) {
 			base.Save(stream);

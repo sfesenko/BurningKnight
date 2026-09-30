@@ -67,7 +67,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 
 						if (!made) {
 							made = true;
-							Self.GetComponent<AudioEmitterComponent>().EmitRandomizedPrefixed("item_laser", 4);
+							Self.GetComponent<AudioEmitterComponent>()!.EmitRandomizedPrefixed("item_laser", 4);
 						}
 
 						Log.Info("made laser");

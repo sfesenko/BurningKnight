@@ -57,7 +57,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 				Become<FriendlyState>();
 			}
 
-			GetComponent<HealthComponent>().AutoKill = true;
+			GetComponent<HealthComponent>()!.AutoKill = true;
 			
 			AddTag(Tags.Boss);
 		}
@@ -71,7 +71,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 			if (Died) {
 				if (!cleared) {
 					cleared = true;
-					GetComponent<DialogComponent>().Close();
+					GetComponent<DialogComponent>()!.Close();
 					
 					foreach (var p in Area.Tagged[Tags.Projectile]) {
 						AnimationUtil.Poof(p.Center);
@@ -79,7 +79,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 					}
 
 					try {
-						var a = GetComponent<RoomComponent>().Room.Tagged[Tags.MustBeKilled].ToArray();
+						var a = GetComponent<RoomComponent>()!.Room.Tagged[Tags.MustBeKilled].ToArray();
 
 						foreach (var p in a) {
 							if (!(p is Boss)) {
@@ -164,7 +164,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 					}
 
 					if (doors.Count > 0) {
-						var rm = GetComponent<RoomComponent>().Room;
+						var rm = GetComponent<RoomComponent>()!.Room;
 						var level = Context.Level;
 						var cx = rm.MapX + rm.MapW / 2f;
 						var cy = rm.MapY + rm.MapH / 2f;
@@ -238,7 +238,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 				return;
 			}
 			
-			if (!(GetComponent<StateComponent>().StateInstance is FriendlyState) && HasHealthbar && HealthBar == null) {
+			if (!(GetComponent<StateComponent>()!.StateInstance is FriendlyState) && HasHealthbar && HealthBar == null) {
 				HealthBar = new HealthBar(this);
 				Engine.Instance.State.Ui.Add(HealthBar);
 				AddPhases();
@@ -306,7 +306,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 
 			exit.To = Context.Run.Depth + 1;
 
-			var center = GetComponent<RoomComponent>().Room.Center;
+			var center = GetComponent<RoomComponent>()!.Room.Center;
 
 			var x = (int) Math.Floor(center.X / 16);
 			var y = (int) Math.Floor(center.Y / 16);
@@ -378,19 +378,19 @@ namespace BurningKnight.entity.creature.mob.boss {
 				base.Init();
 
 				Exploding = false;
-				Self.GetComponent<HealthComponent>().Unhittable = true;
+				Self.GetComponent<HealthComponent>()!.Unhittable = true;
 			}
 
 			public override void Destroy() {
 				base.Destroy();
 
 				Exploding = false;
-				Self.GetComponent<HealthComponent>().Unhittable = false;
+				Self.GetComponent<HealthComponent>()!.Unhittable = false;
 			}
 		}
 
 		public override bool IsFriendly() {
-			return GetComponent<StateComponent>().StateInstance is FriendlyState;
+			return GetComponent<StateComponent>()!.StateInstance is FriendlyState;
 		}
 
 		public class DefeatedEvent : Event {

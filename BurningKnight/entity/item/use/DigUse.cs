@@ -8,7 +8,7 @@ using Lens.input;
 namespace BurningKnight.entity.item.use {
 	public class DigUse : ItemUse {
 		public override void Use(Entity entity, Item item) {
-			var cursor = entity.GetComponent<CursorComponent>().Cursor.GamePosition;
+			var cursor = entity.GetComponent<CursorComponent>()!.Cursor.GamePosition;
 			var x = (int) Math.Floor(cursor.X / 16f);
 			var y = (int) Math.Floor((cursor.Y) / 16f);
 

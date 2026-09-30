@@ -24,23 +24,23 @@ namespace BurningKnight.entity.door {
 		}
 		
 		protected virtual void UpdateState() {
-			var shouldLock = ((ConditionDoor) GetComponent<OwnerComponent>().Owner).ShouldLock();
+			var shouldLock = ((ConditionDoor) GetComponent<OwnerComponent>()!.Owner).ShouldLock();
 
 			if (shouldLock && !IsLocked) {
 				SetLocked(true, null);
 
 				if (first) {
-					GetComponent<StateComponent>().Become<IdleState>();
+					GetComponent<StateComponent>()!.Become<IdleState>();
 				} else {
-					GetComponent<StateComponent>().Become<ClosingState>();
+					GetComponent<StateComponent>()!.Become<ClosingState>();
 				}
 			} else if (!shouldLock && IsLocked) {
 				SetLocked(false, null);
 
 				if (first) {
-					GetComponent<StateComponent>().Become<OpenState>();
+					GetComponent<StateComponent>()!.Become<OpenState>();
 				} else {
-					GetComponent<StateComponent>().Become<OpeningState>();
+					GetComponent<StateComponent>()!.Become<OpeningState>();
 				}
 			}
 

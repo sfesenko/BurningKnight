@@ -46,7 +46,7 @@ namespace BurningKnight.level.entities.machine {
 			AddComponent(new DialogComponent());
 			
 			AddComponent(new InteractableSliceComponent("props", "vending_machine"));
-			GetComponent<DialogComponent>().Dialog.Voice = 10;
+			GetComponent<DialogComponent>()!.Dialog.Voice = 10;
 		}
 
 		protected bool Interact(Entity entity) {
@@ -54,7 +54,7 @@ namespace BurningKnight.level.entities.machine {
 				return false;
 			}
 			
-			var room = GetComponent<RoomComponent>().Room;
+			var room = GetComponent<RoomComponent>()!.Room;
 			
 			if (room == null) {
 				return false;
@@ -65,12 +65,12 @@ namespace BurningKnight.level.entities.machine {
 			var component = entity.GetComponent<ConsumablesComponent>();
 
 			if (component.Coins == 0) {
-				GetComponent<DialogComponent>().StartAndClose("machine_0", 3);
+				GetComponent<DialogComponent>()!.StartAndClose("machine_0", 3);
 				AnimationUtil.ActionFailed();
 				return false;
 			}
 			
-			GetComponent<DialogComponent>().Close();
+			GetComponent<DialogComponent>()!.Close();
 
 			component.Coins -= 1;
 			coinsConsumed++;
@@ -110,11 +110,11 @@ namespace BurningKnight.level.entities.machine {
 		}
 
 		private void Animate() {
-			GetComponent<InteractableSliceComponent>().Scale.Y = 0.7f;
-			Tween.To(1, 0.7f, x => GetComponent<InteractableSliceComponent>().Scale.Y = x, 0.2f);
+			GetComponent<InteractableSliceComponent>()!.Scale.Y = 0.7f;
+			Tween.To(1, 0.7f, x => GetComponent<InteractableSliceComponent>()!.Scale.Y = x, 0.2f);
 			
-			GetComponent<InteractableSliceComponent>().Scale.X = 1.3f;
-			Tween.To(1, 1.3f, x => GetComponent<InteractableSliceComponent>().Scale.X = x, 0.2f);
+			GetComponent<InteractableSliceComponent>()!.Scale.X = 1.3f;
+			Tween.To(1, 1.3f, x => GetComponent<InteractableSliceComponent>()!.Scale.X = x, 0.2f);
 		}
 
 		private void Break(bool spawn = true) {
@@ -123,10 +123,10 @@ namespace BurningKnight.level.entities.machine {
 				AnimationUtil.Poof(Center);
 				AnimationUtil.Explosion(Center);
 				broken = true;
-				GetComponent<AudioEmitterComponent>().EmitRandomizedPrefixed("level_explosion", 3);
+				GetComponent<AudioEmitterComponent>()!.EmitRandomizedPrefixed("level_explosion", 3);
 
 				if (spawn) {
-					GetComponent<DropsComponent>().SpawnDrops();
+					GetComponent<DropsComponent>()!.SpawnDrops();
 				}
 			}
 		}

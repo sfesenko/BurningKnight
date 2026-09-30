@@ -47,7 +47,7 @@ namespace BurningKnight.entity.buff {
 
 			if (tillDamage <= 0) {
 				tillDamage = Delay;
-				Entity.GetComponent<HealthComponent>().ModifyHealth(-2, Entity);
+				Entity.GetComponent<HealthComponent>()!.ModifyHealth(-2, Entity);
 			}
 		}
 

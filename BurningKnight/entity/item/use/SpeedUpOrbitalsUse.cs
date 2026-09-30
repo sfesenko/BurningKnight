@@ -6,7 +6,7 @@ namespace BurningKnight.entity.item.use {
 		public override void Use(Entity entity, Item item) {
 			base.Use(entity, item);
 
-			entity.GetComponent<OrbitGiverComponent>().Speed *= 2;
+			entity.GetComponent<OrbitGiverComponent>()!.Speed *= 2;
 		}
 	}
 }

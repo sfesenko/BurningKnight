@@ -26,7 +26,7 @@ namespace BurningKnight.level.entities {
 			Sprite = $"stand_{id}";
 
 			base.PostInit();
-			var s = GetComponent<InteractableSliceComponent>().Sprite;
+			var s = GetComponent<InteractableSliceComponent>()!.Sprite;
 
 			Width = s.Width;
 			Height = s.Height;
@@ -49,14 +49,14 @@ namespace BurningKnight.level.entities {
 			var p = $"top_{(int) id}";
 			
 			if (!GlobalSave.Exists(p) || GlobalSave.GetString($"{p}_data") == null) {
-				GetComponent<DialogComponent>().StartAndClose("no_score_yet", 3);
+				GetComponent<DialogComponent>()!.StartAndClose("no_score_yet", 3);
 				return true;
 			}
 
 			try {
 				GlobalSave.GetJson($"{p}_data");
 			} catch (Exception) {
-				GetComponent<DialogComponent>().StartAndClose("no_score_yet", 3);
+				GetComponent<DialogComponent>()!.StartAndClose("no_score_yet", 3);
 				return true;
 			}
 

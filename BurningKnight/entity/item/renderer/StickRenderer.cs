@@ -43,7 +43,7 @@ namespace BurningKnight.entity.item.renderer {
 			var owner = Item.Owner;
 			
 			if (!atBack && !paused && !shadow) {
-				var to = owner.GetComponent<AimComponent>().Aim;
+				var to = owner.GetComponent<AimComponent>()!.Aim;
 				/*var dx = Nozzle.X - Origin.X;
 				var dy = Nozzle.Y - Origin.Y;
 				

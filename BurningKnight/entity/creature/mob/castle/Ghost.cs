@@ -35,7 +35,7 @@ namespace BurningKnight.entity.creature.mob.castle {
 
 			body.Body.LinearDamping = 3;
 			
-			GetComponent<MobAnimationComponent>().Tint.A = Alpha;
+			GetComponent<MobAnimationComponent>()!.Tint.A = Alpha;
 		}
 
 		private bool rage;
@@ -45,15 +45,15 @@ namespace BurningKnight.entity.creature.mob.castle {
 			public override void Init() {
 				base.Init();
 
-				var color = Self.GetComponent<MobAnimationComponent>().Tint;
-				Tween.To(Alpha, color.A, x => Self.GetComponent<MobAnimationComponent>().Tint.A = (byte) x, 0.3f);
+				var color = Self.GetComponent<MobAnimationComponent>()!.Tint;
+				Tween.To(Alpha, color.A, x => Self.GetComponent<MobAnimationComponent>()!.Tint.A = (byte) x, 0.3f);
 			}
 
 			public override void Destroy() {
 				base.Destroy();	
 				
-				var color = Self.GetComponent<MobAnimationComponent>().Tint;
-				Tween.To(255f, color.A, x => Self.GetComponent<MobAnimationComponent>().Tint.A = (byte) x, 0.3f);
+				var color = Self.GetComponent<MobAnimationComponent>()!.Tint;
+				Tween.To(255f, color.A, x => Self.GetComponent<MobAnimationComponent>()!.Tint.A = (byte) x, 0.3f);
 			}
 
 			public override void Update(float dt) {
@@ -103,7 +103,7 @@ namespace BurningKnight.entity.creature.mob.castle {
 					force *= 0.1f;
 				}
 
-				Self.GetComponent<SensorBodyComponent>().Velocity += new Vector2((float) Math.Cos(a) * force, (float) Math.Sin(a) * force);
+				Self.GetComponent<SensorBodyComponent>()!.Velocity += new Vector2((float) Math.Cos(a) * force, (float) Math.Sin(a) * force);
 				Self.PushFromOtherEnemies(dt);
 			}
 		}
@@ -114,7 +114,7 @@ namespace BurningKnight.entity.creature.mob.castle {
 				return;
 			}
 			
-			var room = GetComponent<RoomComponent>().Room;
+			var room = GetComponent<RoomComponent>()!.Room;
 
 			if (room == null) {
 				return;
@@ -130,7 +130,7 @@ namespace BurningKnight.entity.creature.mob.castle {
 			rage = true;
 			
 			Become<ChaseState>();
-			GetComponent<HealthComponent>().InitMaxHealth = 4;
+			GetComponent<HealthComponent>()!.InitMaxHealth = 4;
 		}
 
 		public override bool ShouldCollide(Entity entity) {

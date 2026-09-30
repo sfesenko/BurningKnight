@@ -50,10 +50,10 @@ namespace BurningKnight.entity.item.stand {
 				Graphics.Color = Palette.Default[35];
 			}
 				
-			var r = GetComponent<RoomComponent>().Room;
+			var r = GetComponent<RoomComponent>()!.Room;
 
 			foreach (var p in r.Tagged[Tags.Player]) {
-				if (p.GetComponent<HealthComponent>().MaxHealth + p.GetComponent<HeartsComponent>().Total < Price * 2) {
+				if (p.GetComponent<HealthComponent>()!.MaxHealth + p.GetComponent<HeartsComponent>()!.Total < Price * 2) {
 					Graphics.Color *= 0.6f;
 					break;
 				}					
@@ -69,7 +69,7 @@ namespace BurningKnight.entity.item.stand {
 				return false;
 			}
 
-			if (component.MaxHealth + entity.GetComponent<HeartsComponent>().Total < Price * 2) {
+			if (component.MaxHealth + entity.GetComponent<HeartsComponent>()!.Total < Price * 2) {
 				return false;
 			}
 

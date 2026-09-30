@@ -199,7 +199,7 @@ namespace BurningKnight.entity.creature.player {
 					}
 
 					Engine.Instance.State.Ui.Add(new ConsumableParticle(ev.Item.Animation != null
-						? ev.Item.GetComponent<AnimatedItemGraphicsComponent>().Animation.GetFirstCurrent()
+						? ev.Item.GetComponent<AnimatedItemGraphicsComponent>()!.Animation.GetFirstCurrent()
 						: ev.Item.Region, p, false, () => {
 							ev.Item.Use(p);
 							ev.Item.Done = true;
@@ -221,12 +221,12 @@ namespace BurningKnight.entity.creature.player {
 		}
 
 		public void SpawnBomb() {
-			if (GetComponent<PlayerInputComponent>().InDialog) {
+			if (GetComponent<PlayerInputComponent>()!.InDialog) {
 				return;
 			}
 
-			if (GetComponent<StateComponent>().StateInstance is Player.SleepingState) {
-				GetComponent<StateComponent>().Become<Player.IdleState>();
+			if (GetComponent<StateComponent>()!.StateInstance is Player.SleepingState) {
+				GetComponent<StateComponent>()!.Become<Player.IdleState>();
 			}
 
 			var spawn = false;

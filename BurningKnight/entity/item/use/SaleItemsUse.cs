@@ -14,7 +14,7 @@ namespace BurningKnight.entity.item.use {
 		public override void Use(Entity entity, Item item) {
 			used = true;
 			
-			foreach (var i in entity.GetComponent<RoomComponent>().Room.Tagged[Tags.Item]) {
+			foreach (var i in entity.GetComponent<RoomComponent>()!.Room.Tagged[Tags.Item]) {
 				if (i is ShopStand s) {
 					s.Recalculate();
 				}

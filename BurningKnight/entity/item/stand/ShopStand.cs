@@ -60,16 +60,16 @@ namespace BurningKnight.entity.item.stand {
 
 		private bool OkToBuy(Entity entity) {
 			if (Item.Type == ItemType.Active) {
-				var item = entity.GetComponent<ActiveItemComponent>().Item;
+				var item = entity.GetComponent<ActiveItemComponent>()!.Item;
 
 				if (item != null && item.Scourged) {
 					return false;
 				}
 			} else if (Item.Type == ItemType.Weapon) {
-				var item = entity.GetComponent<ActiveWeaponComponent>().Item;
+				var item = entity.GetComponent<ActiveWeaponComponent>()!.Item;
 
 				if (item != null && item.Scourged) {
-					item = entity.GetComponent<WeaponComponent>().Item;
+					item = entity.GetComponent<WeaponComponent>()!.Item;
 
 					if (item != null && item.Scourged) {
 						return false;
@@ -91,18 +91,18 @@ namespace BurningKnight.entity.item.stand {
 
 			if (!OkToBuy(entity)) {
 				AnimationUtil.ActionFailed();
-				entity.GetComponent<DialogComponent>().StartAndClose($"~~{Locale.Get("scourged")}~~", 2);
+				entity.GetComponent<DialogComponent>()!.StartAndClose($"~~{Locale.Get("scourged")}~~", 2);
 
 				return false;
 			} else if (!TryPay(entity)) {
 				AnimationUtil.ActionFailed();
 
-				foreach (var n in GetComponent<RoomComponent>().Room.Tagged[Tags.Npc]) {
+				foreach (var n in GetComponent<RoomComponent>()!.Room.Tagged[Tags.Npc]) {
 					if (n is ShopNpc s) {
-						n.GetComponent<DialogComponent>().StartAndClose(s.GetFailDialog(), 3);
+						n.GetComponent<DialogComponent>()!.StartAndClose(s.GetFailDialog(), 3);
 						break;
 					} else if (n is ShopKeeper) {
-						n.GetComponent<DialogComponent>().StartAndClose($"shopkeeper_{Rnd.Int(15, 18)}", 3);
+						n.GetComponent<DialogComponent>()!.StartAndClose($"shopkeeper_{Rnd.Int(15, 18)}", 3);
 						break;
 					}
 				}
@@ -147,10 +147,10 @@ namespace BurningKnight.entity.item.stand {
 				}
 			}
 				
-			var r = GetComponent<RoomComponent>().Room;
+			var r = GetComponent<RoomComponent>()!.Room;
 
 			foreach (var p in r.Tagged[Tags.Player]) {
-				if (p.GetComponent<ConsumablesComponent>().Coins < Price) {
+				if (p.GetComponent<ConsumablesComponent>()!.Coins < Price) {
 					Graphics.Color *= 0.6f;
 					break;
 				}					
@@ -184,7 +184,7 @@ namespace BurningKnight.entity.item.stand {
 				HasSale = true;
 			}
 			
-			var r = GetComponent<RoomComponent>().Room;
+			var r = GetComponent<RoomComponent>()!.Room;
 
 			if (r != null) {
 				var e = new ItemPriceCalculationEvent {
@@ -216,7 +216,7 @@ namespace BurningKnight.entity.item.stand {
 		}
 
 		public override bool HandleEvent(Event e) {
-			if (e is ItemPlacedEvent || (e is RoomChangedEvent rce && rce.Who is Player && rce.New == GetComponent<RoomComponent>().Room)) {
+			if (e is ItemPlacedEvent || (e is RoomChangedEvent rce && rce.Who is Player && rce.New == GetComponent<RoomComponent>()!.Room)) {
 				Recalculate();
 			}
 			

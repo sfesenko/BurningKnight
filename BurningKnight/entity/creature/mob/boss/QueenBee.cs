@@ -19,13 +19,13 @@ namespace BurningKnight.entity.creature.mob.boss {
 	public partial class QueenBee : Boss {
 		public bool InSecondPhase {
 			get {
-				var p = GetComponent<HealthComponent>().Percent;
+				var p = GetComponent<HealthComponent>()!.Percent;
 				return p > 0.33f && p <= 0.66f;
 			}
 		}
 
-		public bool InThirdPhase => GetComponent<HealthComponent>().Percent <= 0.33f;
-		public bool InFirstPhase => GetComponent<HealthComponent>().Percent > 0.66f;
+		public bool InThirdPhase => GetComponent<HealthComponent>()!.Percent <= 0.33f;
+		public bool InFirstPhase => GetComponent<HealthComponent>()!.Percent > 0.66f;
 		public int Phase => (InThirdPhase ? 3 : (InSecondPhase ? 2 : 1));
 
 		private int lastPhase = 1;
