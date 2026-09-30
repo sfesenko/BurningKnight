@@ -73,9 +73,8 @@ namespace BurningKnight.level {
 
 							if (yy == y + 1 || yy == y) {
 								found = true;
+								break;
 							}
-
-							break;
 						}
 					}
 				}
