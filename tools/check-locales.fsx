@@ -58,7 +58,21 @@ let strictExclusions : Set<string> =
           "painting_totemori_redux"
           // localhost joke and proper-noun game term: identical in every language
           "bk:mask_desc"
-          "happening_bk:sudoku" ]
+          "happening_bk:sudoku"
+          // proper-noun titles and universal tokens/emotes/tags
+          "painting_banana"
+          "painting_beet_boys"
+          "painting_ducktective"
+          "painting_egor"
+          "painting_grannylisa"
+          "painting_horatio"
+          "painting_trasevol"
+          "painting_zweihandler"
+          "run_twitch"
+          "seeded"
+          "twitch"
+          "twitch_0"
+          "twitch_4" ]
 
 let readMap (path: string) =
     let text = File.ReadAllText(path).TrimStart('\uFEFF')
