@@ -29,13 +29,23 @@ namespace BurningKnight.state {
 
 		private TextureRegion pixel;
 		// private PhotoCard[] cards = new PhotoCard[3];
-		private bool ready;
+
+		// Set by the loading worker; the main thread only reads it to decide when the loaded
+		// area may be touched. Volatile: the write publishes `gameArea` and everything in it.
+		private volatile bool ready;
+
+		// Display-only: the progress bar may read a slightly stale value; it is also passed by
+		// ref into the loader, so it cannot be volatile. The hand-off is `ready`.
 		private int progress;
+
 		private Area gameArea;
 		private float t;
 		private bool added;
 		private bool removed;
-		private bool checkFullscreen;
+
+		// Set by the worker once the saves are in, applied by the main thread.
+		private volatile bool checkFullscreen;
+
 		private float lastV;
 		private UiString tipLabel;
 		private bool exitTweenDone;

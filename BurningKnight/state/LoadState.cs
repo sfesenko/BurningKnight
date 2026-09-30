@@ -20,7 +20,11 @@ namespace BurningKnight.state {
 	public partial class LoadState : GameState {
 		public string Path;
 		private Area gameArea;
-		private bool ready;
+
+		// Set by the loading worker; the main thread only reads it to decide when the loaded
+		// area may be touched. Volatile: the write publishes `gameArea` and everything in it.
+		private volatile bool ready;
+
 		private bool down;
 		private float alpha;
 		private string title;
@@ -28,7 +32,10 @@ namespace BurningKnight.state {
 		private float titleX;
 		private float prefixX;
 		private float t;
+
+		// Display-only: the progress bar may read a slightly stale value; the hand-off is `ready`.
 		private int progress;
+
 		private float timer;
 		private bool loading;
 		private bool nice;
@@ -89,6 +96,7 @@ namespace BurningKnight.state {
 				ready = true;
 			});
 
+			// A scheduling hint so the loading screen keeps animating; the hand-off is `ready`.
 			thread.Priority = ThreadPriority.Lowest;
 			thread.IsBackground = true;
 			thread.Start();
