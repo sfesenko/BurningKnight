@@ -19,11 +19,11 @@ namespace BurningKnight.entity.room.controller {
 			Add<BossRoomController>("boss_room");
 		}
 		
-		public static void Add(string id, Func<RoomController> maker, Mod mod = null) {
+		public static void Add(string id, Func<RoomController> maker, Mod? mod = null) {
 			defined[$"{(mod == null ? Mods.BurningKnight : mod.Prefix)}:{id}"] = maker;
 		}
 
-		public static void Add<T>(string id, Mod mod = null) where T : RoomController {
+		public static void Add<T>(string id, Mod? mod = null) where T : RoomController {
 			Add(id, () => {
 				try {
 					return Activator.CreateInstance<T>();

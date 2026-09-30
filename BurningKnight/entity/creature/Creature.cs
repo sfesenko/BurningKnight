@@ -230,11 +230,11 @@ namespace BurningKnight.entity.creature {
 			GetComponent<DropsComponent>()!.Add(drops);
 		}
 
-		public virtual bool HasNoHealth(HealthModifiedEvent e = null) {
+		public virtual bool HasNoHealth(HealthModifiedEvent? e = null) {
 			return GetComponent<HealthComponent>()!.HasNoHealth || Math.Abs(GetComponent<HealthComponent>()!.Health - (-e?.Amount ?? 0)) < 0.01f;
 		}
 
-		public virtual bool HasNoHealth(PostHealthModifiedEvent e = null) {
+		public virtual bool HasNoHealth(PostHealthModifiedEvent? e = null) {
 			return GetComponent<HealthComponent>()!.HasNoHealth;
 		}
 		

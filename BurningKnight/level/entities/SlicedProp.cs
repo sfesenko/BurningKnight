@@ -7,7 +7,7 @@ namespace BurningKnight.level.entities {
 	public class SlicedProp : Prop {
 		public string Sprite = null!;
 		
-		public SlicedProp(string slice = null, int depth = 0) {
+		public SlicedProp(string? slice = null, int depth = 0) {
 			Sprite = slice;
 			Depth = depth;
 		}

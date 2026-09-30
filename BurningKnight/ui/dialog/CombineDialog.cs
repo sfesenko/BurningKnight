@@ -7,7 +7,7 @@ namespace BurningKnight.ui.dialog {
 		public string Ar;
 		public string Br;
 		
-		public CombineDialog(string id, string ar = null, string br = null, Action<string, int> callback = null) : base(id, new[] {
+		public CombineDialog(string id, string? ar = null, string? br = null, Action<string, int>? callback = null) : base(id, new[] {
 			$"{id}_a", $"{id}_b"
 		}, new List<string[]> {
 			new[] { $"{id}_ar" }, 

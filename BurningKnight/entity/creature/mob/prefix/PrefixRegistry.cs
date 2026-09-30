@@ -15,7 +15,7 @@ namespace BurningKnight.entity.creature.mob.prefix {
 			Define<GoldPrefix>("gold");
 		}
 
-		public static void Define<T>(string id, Mod mod = null) where T : Prefix {
+		public static void Define<T>(string id, Mod? mod = null) where T : Prefix {
 			Defined[$"{(mod == null ? Mods.BurningKnight : mod.Prefix)}:{id}"] = typeof(T);
 		}
 	}

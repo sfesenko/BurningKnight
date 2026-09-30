@@ -27,7 +27,7 @@ namespace BurningKnight.ui {
 			entries.Clear();
 		}
 
-		public void Add(string key, string value, bool h = false, Action<UiButton> a = null) {
+		public void Add(string key, string value, bool h = false, Action<UiButton>? a = null) {
 			value = value ?? "";
 
 			var entry = new UiTableEntry() {

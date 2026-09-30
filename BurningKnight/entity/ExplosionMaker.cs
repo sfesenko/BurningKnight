@@ -45,7 +45,7 @@ namespace BurningKnight.entity {
 			level.ReCreateBodyChunk(x, y);
 		}
 
-		public static void Make(Entity whoHurts, float hurtRadius = 32f, bool leave = true, Vec2 where = null, float damage = 16, float scale = 1, bool damageOwner = true) {
+		public static void Make(Entity whoHurts, float hurtRadius = 32f, bool leave = true, Vec2? where = null, float damage = 16, float scale = 1, bool damageOwner = true) {
 			Context.Camera!.Shake(10 * scale);
 			
 			Context.Audio.SfxVolumeBuffer = 0.5f;

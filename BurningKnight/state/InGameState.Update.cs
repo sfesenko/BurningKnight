@@ -140,7 +140,7 @@ namespace BurningKnight.state {
 					}
 				} else if (UiButton.Selected > -1) {
 					if (Input.WasPressed(Controls.UiDown, gamepad, true) || (inControl && Input.WasPressed(Controls.UiRight, gamepad, true))) {
-						UiButton sm = null;
+						UiButton? sm = null;
 						var mn = UiButton.LastId;
 						
 						foreach (var b in TopUi.Tagged[Tags.Button]) {
@@ -161,7 +161,7 @@ namespace BurningKnight.state {
 							}
 						} else {
 							var min = UiButton.Selected;
-							UiButton btn = null;
+							UiButton? btn = null;
 							
 							foreach (var b in TopUi.Tagged[Tags.Button]) {
 								var bt = ((UiButton) b);
@@ -182,7 +182,7 @@ namespace BurningKnight.state {
 							}
 						}
 					} else if (Input.WasPressed(Controls.UiUp, gamepad, true) || (inControl && Input.WasPressed(Controls.UiLeft, gamepad, true))) {
-						UiButton sm = null;
+						UiButton? sm = null;
 						var mn = -1;
 						
 						foreach (var b in TopUi.Tagged[Tags.Button]) {
@@ -203,7 +203,7 @@ namespace BurningKnight.state {
 							}
 						} else {
 							var max = -1;
-							UiButton btn = null;
+							UiButton? btn = null;
 							
 							foreach (var b in TopUi.Tagged[Tags.Button]) {
 								var bt = ((UiButton) b);

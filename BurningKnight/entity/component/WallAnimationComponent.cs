@@ -3,7 +3,7 @@ using Lens.graphics;
 using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.component {
-	public class WallAnimationComponent(string animationName, string layer = null, string tag = null)
+	public class WallAnimationComponent(string animationName, string? layer = null, string? tag = null)
 		: MobAnimationComponent(animationName, layer, tag)
 	{
 		public float WallAngle;

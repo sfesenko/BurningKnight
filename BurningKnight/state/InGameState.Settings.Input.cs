@@ -67,7 +67,7 @@ namespace BurningKnight.state {
 			});
 
 			var first = true;
-			UiButton gamepad = null;
+			UiButton? gamepad = null;
 			
 			inputSettings.Add(new UiChoice {
 				Name = "gamepad",

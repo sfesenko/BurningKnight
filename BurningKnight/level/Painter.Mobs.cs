@@ -35,7 +35,7 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.level {
 	public partial class Painter {
-		public static void PlaceMobs(Level level, Room room, Action<List<MobInfo>> modifier = null) {
+		public static void PlaceMobs(Level level, Room room, Action<List<MobInfo>>? modifier = null) {
 			var parent = room.Parent;
 			var w = parent.GetWidth() - 2;
 			var h = parent.GetHeight() - 2;
@@ -103,7 +103,7 @@ namespace BurningKnight.level {
 			}
 
 			var hasDoors = parent.Connected.Count > 0;
-			Dot start = null;
+			Dot? start = null;
 			
 			if (hasDoors) {
 				PathFinder.SetMapSize(w, h);
@@ -203,7 +203,7 @@ namespace BurningKnight.level {
 				}
 				
 				var type = types[id];
-				Dot point = null;
+				Dot? point = null;
 
 				if (type.NearWall) {
 					if (wallPoints.Count == 0) {
@@ -258,7 +258,7 @@ namespace BurningKnight.level {
 				}
 			}
 		}
-		private void PlaceMobs(Level level, List<Room> rooms, Action<List<MobInfo>> modifier = null) {
+		private void PlaceMobs(Level level, List<Room> rooms, Action<List<MobInfo>>? modifier = null) {
 			MobRegistry.SetupForBiome(level!.Biome.Id);
 			// level.CreatePassable(true);
 			

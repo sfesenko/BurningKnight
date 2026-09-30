@@ -133,7 +133,7 @@ namespace BurningKnight.state {
 			Context.Run.Update();
 		}
 
-		public void Say(string what, Action callback = null) {
+		public void Say(string what, Action? callback = null) {
 			text = what;
 			textW = Font.Medium.MeasureString(what).Width;
 			

@@ -24,7 +24,7 @@ namespace BurningKnight.entity.creature.pet {
 			return Create(keys[Rnd.Int(keys.Length)], owner);
 		}
 
-		public static void Define(string id, Func<Entity, Entity> pet, Mod mod = null) {
+		public static void Define(string id, Func<Entity, Entity> pet, Mod? mod = null) {
 			defined[$"{(mod == null ? Mods.BurningKnight : mod.Prefix)}:{id}"] = pet;
 		}
 

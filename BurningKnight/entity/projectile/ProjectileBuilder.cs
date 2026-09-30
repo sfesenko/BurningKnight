@@ -110,7 +110,7 @@ namespace BurningKnight.entity.projectile {
 				return null;
 			}
 
-			Item item = null;
+			Item? item = null;
 
 			if (Owner is Item i) {
 				item = i;

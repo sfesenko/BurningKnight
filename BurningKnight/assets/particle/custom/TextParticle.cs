@@ -141,7 +141,7 @@ namespace BurningKnight.assets.particle.custom {
 		public static TextParticle Add(Entity owner, string text, float count = 0, bool hasSign = false, bool minus = false) {
 			var where = owner.TopCenter - new Vector2(0, 4);
 			var min = 72f;
-			TextParticle prt = null;
+			TextParticle? prt = null;
 			
 			foreach (var p in Engine.Instance.State.Ui.Tagged[Tags.TextParticle]) {
 				var pr = (TextParticle) p;

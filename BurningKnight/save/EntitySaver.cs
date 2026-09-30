@@ -29,7 +29,7 @@ namespace BurningKnight.save {
 			
 			writer.WriteInt32(all.Count);
 			
-			SaveableEntity last = null;
+			SaveableEntity? last = null;
 			
 			for (var i = 0; i < all.Count; i++) {
 				var entity = (SaveableEntity) all[i];

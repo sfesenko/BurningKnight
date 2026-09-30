@@ -72,7 +72,7 @@ namespace BurningKnight.entity.projectile.controller {
 				var b = p.GetAnyComponent<BodyComponent>();
 				var d = b!.Velocity.Length();
 				var a = b.Velocity.ToAngle();
-				Entity target = null;
+				Entity? target = null;
 				
 				var md = 320000f;
 				var from = p.Center;

@@ -29,7 +29,7 @@ namespace BurningKnight.entity.creature.drop {
 			root["chance"] = Chance;
 		}
 
-		public static void Create(string id, Entity entity, Area area = null, Dot where = null) {
+		public static void Create(string id, Entity entity, Area? area = null, Dot? where = null) {
 			var drop = Drops.Get(id);
 
 			if (drop == null) {
@@ -39,7 +39,7 @@ namespace BurningKnight.entity.creature.drop {
 			Create(new List<Drop> { drop }, entity, area, where);
 		}
 
-		public static void Create(List<Drop> dr, Entity entity, Area area = null, Dot where = null) {
+		public static void Create(List<Drop> dr, Entity entity, Area? area = null, Dot? where = null) {
 			var drops = new List<Item>();
 			var ar = entity?.Area ?? area;
 			var wh = entity?.BottomCenter ?? where;

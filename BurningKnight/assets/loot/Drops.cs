@@ -169,7 +169,7 @@ namespace BurningKnight.assets.loot {
 			return null;
 		}
 
-		private static void Define(string id, Drop drop, Mod mod = null) {
+		private static void Define(string id, Drop drop, Mod? mod = null) {
 			Defined[$"{(mod == null ? Mods.BurningKnight : mod.Prefix)}:{id}"] = drop;
 		}
 	}

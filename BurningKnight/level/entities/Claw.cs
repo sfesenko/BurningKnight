@@ -77,7 +77,7 @@ namespace BurningKnight.level.entities {
 			var room = GetComponent<RoomComponent>()!.Room;
 			var p = Position + new Vector2(0, 10);
 			var min = 12f;
-			RoundItem item = null;
+			RoundItem? item = null;
 			grabbed = null;
 
 			foreach (var i in room!.Tagged[Tags.Item]) {

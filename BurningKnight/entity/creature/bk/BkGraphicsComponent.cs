@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.creature.bk;
 
-public class BkGraphicsComponent(string animationName, string layer = null, string tag = null)
+public class BkGraphicsComponent(string animationName, string? layer = null, string? tag = null)
 	: AnimationComponent(animationName, layer, tag)
 {
 	private float t;

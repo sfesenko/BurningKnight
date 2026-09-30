@@ -157,7 +157,7 @@ namespace BurningKnight.entity.creature.mob {
 
 		public static void Remove<T>() where T : Mob {
 			var type = typeof(T);
-			MobInfo i = null; 
+			MobInfo? i = null;
 			
 			foreach (var info in All) {
 				if (info.Type == type) {

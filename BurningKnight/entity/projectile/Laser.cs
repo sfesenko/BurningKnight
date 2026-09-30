@@ -36,7 +36,7 @@ namespace BurningKnight.entity.projectile {
 			}
 		}
 
-		public static Laser Make(Entity owner, float a, float additional, Item item = null, float damage = 1, float scale = 1f, float range = -1, Laser parent = null) {
+		public static Laser Make(Entity owner, float a, float additional, Item? item = null, float damage = 1, float scale = 1f, float range = -1, Laser? parent = null) {
 			if (owner is Item i) {
 				item = i;
 				owner = i.Owner;

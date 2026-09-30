@@ -295,9 +295,9 @@ namespace BurningKnight.entity.room {
 			}
 		}
 
-		public Entity FindClosest(Vector2 to, int tag, Func<Entity, bool> filter = null) {
+		public Entity FindClosest(Vector2 to, int tag, Func<Entity, bool>? filter = null) {
 			var min = float.MaxValue;
-			Entity en = null;
+			Entity? en = null;
 			
 			foreach (var e in Tagged[tag]) {
 				if (filter?.Invoke(e) ?? true) {

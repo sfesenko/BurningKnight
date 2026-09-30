@@ -84,7 +84,7 @@ namespace BurningKnight.level.paintings {
 			Add("bgang", "Friendship", 0.1f);
 		}
 		
-		public static void Add(string id, string author, float chance = 1f, string[] biomes = null, bool animated = false) {
+		public static void Add(string id, string author, float chance = 1f, string[]? biomes = null, bool animated = false) {
 			paintings.Add(new Info {
 				Id = id,
 				Author = author,

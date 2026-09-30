@@ -97,7 +97,7 @@ namespace BurningKnight.assets.items {
 
 			return ShouldAppear(data);
 		}
-		public static string GenerateAndRemove(List<ItemData> datas, Func<ItemData, bool> filter = null, bool removeFromFloor = false) {
+		public static string GenerateAndRemove(List<ItemData> datas, Func<ItemData, bool>? filter = null, bool removeFromFloor = false) {
 			double sum = 0;
 			
 			foreach (var chance in datas) {
@@ -109,8 +109,8 @@ namespace BurningKnight.assets.items {
 			var value = Rnd.Double(sum);
 			sum = 0;
 
-			string id = null;
-			ItemData data = null;
+			string? id = null;
+			ItemData? data = null;
 			
 			foreach (var t in datas) {
 				if (filter == null || filter(t)) {

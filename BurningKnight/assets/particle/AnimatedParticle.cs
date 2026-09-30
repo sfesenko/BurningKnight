@@ -7,7 +7,7 @@ namespace BurningKnight.assets.particle {
 	public class AnimatedParticle : Particle {
 		public Animation Animation;
 
-		public AnimatedParticle(ParticleController controller, ParticleRenderer renderer, string animation, string tag = null) : base(controller, renderer) {
+		public AnimatedParticle(ParticleController controller, ParticleRenderer renderer, string animation, string? tag = null) : base(controller, renderer) {
 			Animation = Animations.Create(animation);
 
 			if (tag != null) {

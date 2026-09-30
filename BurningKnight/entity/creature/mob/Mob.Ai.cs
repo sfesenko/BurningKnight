@@ -56,7 +56,7 @@ namespace BurningKnight.entity.creature.mob {
 			var closestDistance = float.MaxValue;
 			var friendly = IsFriendly();
 			
-			Entity closest = null;
+			Entity? closest = null;
 			
 			foreach (var target in targets) {
 				if (target == this || target is bk.BurningKnight || ((Creature) target).IsFriendly() == friendly || 
@@ -162,7 +162,7 @@ namespace BurningKnight.entity.creature.mob {
 
 			return !found;
 		}
-		protected void PushFromOtherEnemies(float dt, Func<Creature, bool> filter = null) {
+		protected void PushFromOtherEnemies(float dt, Func<Creature, bool>? filter = null) {
 			var room = GetComponent<RoomComponent>()!.Room;
 			var body = GetAnyComponent<BodyComponent>();
 
@@ -192,7 +192,7 @@ namespace BurningKnight.entity.creature.mob {
 				}
 			}
 		}
-		protected void PushOthersFromMe(float dt, Func<Creature, bool> filter = null) {
+		protected void PushOthersFromMe(float dt, Func<Creature, bool>? filter = null) {
 			var room = GetComponent<RoomComponent>()!.Room;
 
 			if (room == null) {

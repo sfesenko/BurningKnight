@@ -24,7 +24,7 @@ namespace BurningKnight.assets.dialogs {
 		}
 
 		public virtual Dialog Convert() {
-			string[] variants = null;
+			string[]? variants = null;
 
 			if (Outputs.Count == 1) {
 				var t = Outputs[0].ConnectedTo;

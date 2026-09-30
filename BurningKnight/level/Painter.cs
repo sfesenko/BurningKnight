@@ -130,7 +130,7 @@ namespace BurningKnight.level {
 				Level.Dark = true;
 			}
 			
-			RoomDef current = null;
+			RoomDef? current = null;
 
 			foreach (var r in Rooms) {
 				if (r is ExitRoom) {
@@ -240,8 +240,8 @@ namespace BurningKnight.level {
 			}
 
 			var tr = Level.GetFilling();
-			RoomDef exit = null;
-			RoomDef entrance = null;
+			RoomDef? exit = null;
+			RoomDef? entrance = null;
 
 			for (var i = Rooms.Count - 1; i >= 0; i--) {
 				var Room = Rooms[i];

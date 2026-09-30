@@ -82,7 +82,7 @@ namespace BurningKnight.level {
 			var vertical = Level.Get(D.X, D.Y + 1).IsWall() && Level.Get(D.X, D.Y - 1).IsWall();
 			
 			if (gt && !T.Matches(Tile.FloorA, Tile.FloorB, Tile.FloorC, Tile.FloorD, Tile.Crack)) {
-				Door door = null;
+				Door? door = null;
 
 				switch (type) {
 					case DoorPlaceholder.Variant.Locked: 

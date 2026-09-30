@@ -48,7 +48,7 @@ namespace BurningKnight.save {
 			return Values.ContainsKey(key);
 		}
 
-		public static string GetString(string Key, string Def = null) {
+		public static string GetString(string Key, string? Def = null) {
 			return Values.TryGetValue(Key, out var Value) ? Value : Def;
 		}
 		

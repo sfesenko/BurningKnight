@@ -50,7 +50,7 @@ namespace BurningKnight.entity.room {
 				}
 			}
 		}
-		public List<Point> GetFreeTiles(Func<int, int, bool> filter = null) {
+		public List<Point> GetFreeTiles(Func<int, int, bool>? filter = null) {
 			var list = new List<Point>();
 
 			for (var x = MapX + 1; x < MapX + MapW - 1; x++) {
@@ -63,7 +63,7 @@ namespace BurningKnight.entity.room {
 			
 			return list;
 		}
-		public Vector2 GetRandomFreeTile(Func<int, int, bool> filter = null) {
+		public Vector2 GetRandomFreeTile(Func<int, int, bool>? filter = null) {
 			var tiles = GetFreeTiles(filter);
 
 			if (tiles.Count == 0) {
@@ -73,7 +73,7 @@ namespace BurningKnight.entity.room {
 			var tile = tiles[Rnd.Int(tiles.Count)];
 			return new Vector2(tile.X, tile.Y);
 		}
-		public Vector2 GetRandomFreeTileNearWall(Func<int, int, bool> filter = null) {
+		public Vector2 GetRandomFreeTileNearWall(Func<int, int, bool>? filter = null) {
 			return GetRandomFreeTile((x, y) => {
 				if (Context.Level!.CheckFor(x - 1, y, TileFlags.Passable)
 				&& Context.Level!.CheckFor(x + 1, y, TileFlags.Passable)
@@ -86,7 +86,7 @@ namespace BurningKnight.entity.room {
 				return filter == null || filter(x, y);
 			});
 		}
-		public Vector2 GetRandomWallFreeTile(Func<int, int, bool> filter = null) {
+		public Vector2 GetRandomWallFreeTile(Func<int, int, bool>? filter = null) {
 			return GetRandomFreeTile((x, y) => {
 				if (!Context.Level!.CheckFor(x - 1, y, TileFlags.Passable)
 				    || !Context.Level!.CheckFor(x + 1, y, TileFlags.Passable)
@@ -143,7 +143,7 @@ namespace BurningKnight.entity.room {
 				}
 			}
 		}
-		public void PaintTunnel(List<Door> Doors, Tile Floor, Rect space = null, bool Bold = false, bool shift = true, bool randomRect = true) {
+		public void PaintTunnel(List<Door> Doors, Tile Floor, Rect? space = null, bool Bold = false, bool shift = true, bool randomRect = true) {
 			if (Doors.Count == 0) {
 				return;
 			}

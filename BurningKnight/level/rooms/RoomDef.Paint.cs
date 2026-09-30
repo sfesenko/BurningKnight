@@ -30,7 +30,7 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.level.rooms {
 	public partial class RoomDef {
-		public void PaintTunnel(Level Level, Tile Floor, Rect space = null, bool Bold = false, bool shift = true, bool randomRect = true, RoomDef defTo = null, DoorPlaceholder to = null) {
+		public void PaintTunnel(Level Level, Tile Floor, Rect? space = null, bool Bold = false, bool shift = true, bool randomRect = true, RoomDef? defTo = null, DoorPlaceholder? to = null) {
 			if (Connected.Count == 0) {
 				Log.Error("Invalid connection room");
 

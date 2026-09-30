@@ -92,7 +92,7 @@ namespace BurningKnight.entity.creature.player {
 
 		public bool Dead;
 
-		public void AnimateItemPickup(Item item, Action action = null, bool add = true, bool ban = true) {
+		public void AnimateItemPickup(Item item, Action? action = null, bool add = true, bool ban = true) {
 			if (ban) {
 				var banner = new UiDescriptionBanner();
 				banner.Show(item);

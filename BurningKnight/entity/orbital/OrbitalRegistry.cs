@@ -26,7 +26,7 @@ namespace BurningKnight.entity.orbital {
 			return !defined.TryGetValue(id, out var d) ? null : d(owner);
 		}
 		
-		public static void Define(string id, Func<Entity, Entity> orbital, Mod mod = null) {
+		public static void Define(string id, Func<Entity, Entity> orbital, Mod? mod = null) {
 			defined[$"{(mod == null ? Mods.BurningKnight : mod.Prefix)}:{id}"] = orbital;
 		}
 

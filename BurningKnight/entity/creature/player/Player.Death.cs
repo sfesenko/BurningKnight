@@ -141,7 +141,7 @@ namespace BurningKnight.entity.creature.player {
 
 				if (GetComponent<InputComponent>()!.Index == 0) {
 					var minIndex = 1024;
-					Player pl = null;
+					Player? pl = null;
 
 					foreach (var p in Area!.Tagged[Tags.Player]) {
 						var i = p.GetComponent<InputComponent>()!.Index;

@@ -127,7 +127,7 @@ namespace BurningKnight.state {
 		
 		private static Audio Audio => Context.Audio;
 
-		public static void TransitionToBlack(Vector2 position, Action callback = null) {
+		public static void TransitionToBlack(Vector2 position, Action? callback = null) {
 			Context.Camera!.Targets.Clear();
 			var v = Context.Camera!.CameraToScreen(position);
 
@@ -140,7 +140,7 @@ namespace BurningKnight.state {
 			Ready = false;
 		}
 
-		public static void TransitionToOpen(Action callback = null) {
+		public static void TransitionToOpen(Action? callback = null) {
 			Shaders.Ui.Parameters["bx"].SetValue(0.333f);
 			Shaders.Ui.Parameters["by"].SetValue(0.333f);
 
@@ -239,7 +239,7 @@ namespace BurningKnight.state {
 			}
 		
 			var min = UiButton.LastId;
-			UiButton btn = null;
+			UiButton? btn = null;
 
 			foreach (var b in TopUi.Tagged[Tags.Button]) {
 				var bt = ((UiButton) b);
@@ -416,7 +416,7 @@ namespace BurningKnight.state {
 			Paused = false;
 		}
 
-		public static bool EveryoneDied(Player pl = null) {
+		public static bool EveryoneDied(Player? pl = null) {
 			foreach (var p in Context.Area!.Tagged[Tags.Player]) {
 				if (!((Player) p).Dead && p != pl) {
 					return false;

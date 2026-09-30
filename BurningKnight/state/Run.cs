@@ -285,7 +285,7 @@ namespace BurningKnight.state {
 			
 			Won = true;
 			Statistics!.Won = true;
-			Player pl = null;
+			Player? pl = null;
 
 			foreach (var p in Context.Area!.Tagged[Tags.Player]) {
 				p.RemoveComponent<PlayerInputComponent>();

@@ -35,7 +35,7 @@ namespace BurningKnight.level.builders {
 					}
 				}
 
-				RoomDef closestRoomDef = null;
+				RoomDef? closestRoomDef = null;
 				var ClosestDiff = int.MaxValue;
 				var Inside = true;
 				var CurDiff = 0;

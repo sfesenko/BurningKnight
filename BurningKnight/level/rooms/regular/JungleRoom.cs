@@ -141,7 +141,7 @@ namespace BurningKnight.level.rooms.regular {
 				}
 			}
 
-			Action<int, int> fill = null;
+			Action<int, int>? fill = null;
 			var queue = new Queue<Dot>();
 			var m = 0;
 

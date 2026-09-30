@@ -171,7 +171,7 @@ namespace BurningKnight.ui.dialog {
 			}
 		}
 		
-		public void Close(Action callback = null) {
+		public void Close(Action? callback = null) {
 			Saying = false;
 			DoneSaying = false;
 			

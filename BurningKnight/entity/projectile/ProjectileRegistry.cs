@@ -25,7 +25,7 @@ namespace BurningKnight.entity.projectile {
 	public static class ProjectileRegistry {
 		private static Dictionary<string, Action<Projectile>> registry = new Dictionary<string, Action<Projectile>>();
 
-		public static void Add(string id, Action<Projectile> fn, Mod mod = null) {
+		public static void Add(string id, Action<Projectile> fn, Mod? mod = null) {
 			registry[$"{mod?.Prefix ?? Mods.BurningKnight}:{id}"] = fn;
 		}
 

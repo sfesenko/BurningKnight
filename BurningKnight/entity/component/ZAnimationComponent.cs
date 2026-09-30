@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.component;
 
-public class ZAnimationComponent(string animationName, string layer = null, string tag = null)
+public class ZAnimationComponent(string animationName, string? layer = null, string? tag = null)
 	: MobAnimationComponent(animationName, layer, tag)
 {
 	public new Vector2 Scale = Vector2.One;

@@ -355,7 +355,7 @@ namespace BurningKnight.state {
 				});
 				
 				var offset = 0;
-				string lastS = null;
+				string? lastS = null;
 				
 				d = (s) =>{
 					if (s == null) {

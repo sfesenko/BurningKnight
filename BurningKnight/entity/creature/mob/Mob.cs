@@ -84,7 +84,7 @@ namespace BurningKnight.entity.creature.mob {
 			
 		}
 
-		protected void AddAnimation(string name, string layer = null) {
+		protected void AddAnimation(string name, string? layer = null) {
 			AddComponent(new MobAnimationComponent(name, layer));
 		}
 		

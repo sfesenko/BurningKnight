@@ -98,7 +98,7 @@ namespace BurningKnight.level.entities {
 			achievementTexture = Animations.Get("achievements")!.GetSlice(id);
 		}
 
-		private void UpdateState(string i = null) {
+		private void UpdateState(string? i = null) {
 			achievement = Achievements.Get(id);
 
 			if (achievement == null || Engine.EditingLevel) {

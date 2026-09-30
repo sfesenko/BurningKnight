@@ -62,10 +62,10 @@ namespace BurningKnight.entity.creature.player {
 		public override bool InAir() {
 			return HasFlight || base.InAir() || GetComponent<StateComponent>()!.StateInstance is RollState;
 		}
-		public override bool HasNoHealth(HealthModifiedEvent e = null) {
+		public override bool HasNoHealth(HealthModifiedEvent? e = null) {
 			return base.HasNoHealth(e) && GetComponent<HeartsComponent>()!.Total == 0;
 		}
-		public override bool HasNoHealth(PostHealthModifiedEvent e = null) {
+		public override bool HasNoHealth(PostHealthModifiedEvent? e = null) {
 			return base.HasNoHealth(e) && GetComponent<HeartsComponent>()!.Total == 0;
 		}
 		public override bool HandleEvent(Event e) {

@@ -5,7 +5,7 @@ using Lens.util;
 
 namespace BurningKnight.entity.component;
 
-public class MobAnimationComponent(string animationName, string layer = null, string tag = null)
+public class MobAnimationComponent(string animationName, string? layer = null, string? tag = null)
 	: AnimationComponent(animationName, layer, tag)
 {
 	public override void Render(bool shadow) {

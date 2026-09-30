@@ -11,7 +11,7 @@ namespace BurningKnight.ui.dialog {
 
 		public List<Func<Dialog, DialogComponent, Dialog>> Callbacks = new List<Func<Dialog, DialogComponent, Dialog>>();
 		
-		public Dialog(string id, string[] next = null) {
+		public Dialog(string id, string[]? next = null) {
 			Id = id;
 			Next = next;
 		}

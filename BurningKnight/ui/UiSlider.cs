@@ -13,7 +13,7 @@ namespace BurningKnight.ui {
 				RelativeCenterY = y
 			});
 
-			UiSliderLabel c = null;
+			UiSliderLabel? c = null;
 
 			var b = pane.Add(new UiButton {
 				Label = "-",

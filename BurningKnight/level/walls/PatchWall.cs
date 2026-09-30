@@ -133,7 +133,7 @@ namespace BurningKnight.level.walls {
 		public override void Paint(Level level, RoomDef room, Rect inside) {
 			var fill = 0.25f + (room.GetWidth() * room.GetHeight()) / 1024f;
 			var s = Rnd.Chance();
-			bool[] oldPatch = null;
+			bool[]? oldPatch = null;
 			
 			if (s) {
 				Setup(level, room, fill, 4, true);

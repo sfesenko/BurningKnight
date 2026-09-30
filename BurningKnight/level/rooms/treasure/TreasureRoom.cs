@@ -58,7 +58,7 @@ namespace BurningKnight.level.rooms.treasure {
 				return;
 			}
 
-			Func<ItemData, bool> filter = null;
+			Func<ItemData, bool>? filter = null;
 
 			if (Rnd.Chance(10)) {
 				filter = (i) => i.Type == ItemType.Weapon;

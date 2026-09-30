@@ -240,8 +240,8 @@ namespace BurningKnight.assets.input {
 
 		public static string Find(string id, bool gamepad, bool both = false) {
 			var k = "None";
-			string a = null;
-			string b = null;
+			string? a = null;
+			string? b = null;
 			
 			if (!gamepad) {
 				both = false;

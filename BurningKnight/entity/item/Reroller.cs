@@ -14,12 +14,12 @@ namespace BurningKnight.entity.item {
 			return !(i.Id == "bk:idol" || i.Type == ItemType.Scourge || i.Type == ItemType.Bomb || i.Type == ItemType.Key || i.Type == ItemType.Heart || i.Type == ItemType.Coin || i.Type == ItemType.Battery || i.Type == ItemType.Mana || i is RoundItem);
 		}
 
-		public static void Reroll(Area area, Room room, bool rerollStands, bool spawnNewItems, bool ignore, ItemType[] types, Action<Item> processItem = null, bool d2 = false) {
+		public static void Reroll(Area area, Room room, bool rerollStands, bool spawnNewItems, bool ignore, ItemType[] types, Action<Item>? processItem = null, bool d2 = false) {
 			var items = room.Tagged[Tags.Item].ToArray();
 			var pool = Items.GeneratePool(Items.GetPool(room.GetPool() ?? ItemPool.Shop));
 			
 			foreach (var e in items) {
-				Item item = null;
+				Item? item = null;
 				
 				if (e is ItemStand s) {
 					if (rerollStands) {
@@ -80,7 +80,7 @@ namespace BurningKnight.entity.item {
 			Context.Audio.PlaySfx("item_reroll");
 		}
 
-		public static bool Reroll(Item item, ItemPool pool, Func<ItemData, bool> filter = null) {
+		public static bool Reroll(Item item, ItemPool pool, Func<ItemData, bool>? filter = null) {
 			var id = Items.Generate(pool, i => i.Id != item.Id && Items.ShouldAppear(i) && (filter == null || filter(i)));
 
 			if (id != null) {
@@ -96,7 +96,7 @@ namespace BurningKnight.entity.item {
 			return false;
 		}
 
-		private static bool Reroll(Item item, List<ItemData> pool, Func<ItemData, bool> filter = null, bool d2 = false) {
+		private static bool Reroll(Item item, List<ItemData> pool, Func<ItemData, bool>? filter = null, bool d2 = false) {
 			var id = (d2 ? item.LastId : null) ?? Items.GenerateAndRemove(pool, i => i.Id != item.Id && (filter == null || filter(i)));
 
 			if (id != null) {

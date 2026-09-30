@@ -166,7 +166,7 @@ namespace BurningKnight.ui.str {
 							continue;
 						}
 
-						GlyphEvent e = null;
+						GlyphEvent? e = null;
 
 						switch (parts[0]) {
 							case "skp": {

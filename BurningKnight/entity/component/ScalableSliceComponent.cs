@@ -57,7 +57,7 @@ namespace BurningKnight.entity.component {
 			}
 		}
 		
-		public void Animate(Action callback = null) {
+		public void Animate(Action? callback = null) {
 			Tween.To(1.8f, Scale.X, x => Scale.X = x, 0.1f);
 			Tween.To(0.2f, Scale.Y, x => Scale.Y = x, 0.1f).OnEnd = () => {
 				Tween.To(1, Scale.X, x => Scale.X = x, 0.4f);

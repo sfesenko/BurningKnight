@@ -62,7 +62,7 @@ namespace BurningKnight.entity.creature.bk {
 				});
 			}
 		
-			private void Start(DialogComponent d, string id, Entity to, Action callback = null) {
+			private void Start(DialogComponent d, string id, Entity to, Action? callback = null) {
 				d.Start(id, to);
 
 				if (callback != null) {

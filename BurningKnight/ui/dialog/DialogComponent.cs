@@ -50,7 +50,7 @@ namespace BurningKnight.ui.dialog {
 			Dialog.Owner = Entity;
 			
 			Dialog.OnEnd += () => {
-				Dialog next = null;
+				Dialog? next = null;
 				
 				foreach (var c in Current!.Callbacks) {
 					var d = c(Current, this);
@@ -158,7 +158,7 @@ namespace BurningKnight.ui.dialog {
 			InitCallback?.Invoke();
 		}
 
-		public void Start(string id, Entity to = null, Action end = null) {
+		public void Start(string id, Entity? to = null, Action? end = null) {
 			var dialog = Dialogs.Get(id);
 			tillClose = -1;
 
@@ -172,7 +172,7 @@ namespace BurningKnight.ui.dialog {
 			Setup(dialog, to);
 		}
 
-		public void StartAndClose(string id, float time, Entity to = null) {
+		public void StartAndClose(string id, float time, Entity? to = null) {
 			Start(id, to);
 			tillClose = time;
 		}
@@ -197,7 +197,7 @@ namespace BurningKnight.ui.dialog {
 		private static string toSay = "";
 #endif
 
-		private void Setup(Dialog dialog, Entity to = null) {
+		private void Setup(Dialog dialog, Entity? to = null) {
 			Last = Current;
 			Current = dialog;
 

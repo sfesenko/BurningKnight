@@ -325,7 +325,7 @@ namespace BurningKnight.entity.projectile {
 			}
 		}
 
-		public void Break(Entity from = null, bool timeout = false) {
+		public void Break(Entity? from = null, bool timeout = false) {
 			if (Dying) {
 				return;
 			}
