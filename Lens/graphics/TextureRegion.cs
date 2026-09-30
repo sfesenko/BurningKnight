@@ -1,9 +1,11 @@
-﻿using Microsoft.Xna.Framework;
+﻿#nullable enable
+
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Lens.graphics {
 	public class TextureRegion {
-		public Texture2D Texture;
+		public Texture2D? Texture;
 		public Rectangle Source;
 		public Vector2 Center;
 

@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿#nullable enable
+
+using System.Collections.Generic;
 using System.Linq;
 using Lens.assets;
 using Lens.util;
@@ -26,7 +28,7 @@ public class AnimationData
     public readonly Dictionary<string, List<AnimationFrame>> Layers = new();
     public readonly Dictionary<string, AnimationTag> Tags = new();
     public readonly Dictionary<string, TextureRegion> Slices = new();
-    public Texture2D Texture;
+    public Texture2D Texture = null!; // set by the loader
 
     public AnimationData Recolor(ColorMap colorMap)
     {
@@ -61,23 +63,27 @@ public class AnimationData
         return newAnimation;
     }
 
-    public AnimationTag? GetTag(string tagName)
+    public AnimationTag? GetTag(string? tagName)
     {
-        AnimationTag tag;
+        AnimationTag? tag;
 
         if (tagName == null)
         {
             tag = Tags.FirstOrDefault().Value;
         }
-        else if (!Tags.TryGetValue(tagName, out tag))
+        else if (!Tags.TryGetValue(tagName, out var found))
         {
             return null;
+        }
+        else
+        {
+            tag = found;
         }
 
         return tag;
     }
 
-    public TextureRegion GetSlice(string name, bool error = true)
+    public TextureRegion? GetSlice(string name, bool error = true)
     {
         if (Slices.TryGetValue(name, out var region))
         {
@@ -93,9 +99,9 @@ public class AnimationData
         return Textures.Missing;
     }
 
-    public AnimationFrame? GetFrame(string layer, uint id)
+    public AnimationFrame? GetFrame(string? layer, uint id)
     {
-        List<AnimationFrame> frames;
+        List<AnimationFrame>? frames;
 
         if (layer == null)
         {
@@ -106,16 +112,16 @@ public class AnimationData
             return null;
         }
 
-        if (frames.Count < id)
+        if (frames!.Count < id)
         {
             Log.Warning($"Unable to find frame {layer}:{id}");
             return null;
         }
 
-        return frames[(int)id];
+        return frames![(int)id];
     }
 
-    public Animation CreateAnimation(string layer = null)
+    public Animation CreateAnimation(string? layer = null)
     {
         return new Animation(this, layer);
     }

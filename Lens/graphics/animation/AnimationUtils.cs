@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿#nullable enable
+
+using System.Collections.Generic;
 using System.Text.Json;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -26,7 +28,7 @@ public static class AnimationUtils
 
         foreach (var layer in entry.GetProperty("layers").EnumerateArray())
         {
-            layers.Add(layer.GetString());
+            layers.Add(layer.GetString()!);
         }
 
         var slices = new List<(string, Rectangle)>();

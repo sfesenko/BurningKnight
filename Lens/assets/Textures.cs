@@ -50,7 +50,7 @@ namespace Lens.assets {
 
 		internal static void Destroy() {
 			foreach (var region in textures.Values) {
-				region.Texture.Dispose();
+				region.Texture?.Dispose();
 			}
 			
 			textures.Clear();
