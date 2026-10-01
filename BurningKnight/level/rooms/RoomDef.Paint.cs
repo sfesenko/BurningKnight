@@ -50,7 +50,7 @@ namespace BurningKnight.level.rooms {
 				};
 
 			foreach (var pair in doors) {
-				if (pair.Key is GrannyRoom || pair.Key is OldManRoom) {
+				if (pair.Key is GrannyRoom || pair.Key is OldManRoom || pair.Value == null) {
 					continue;
 				}
 				

@@ -89,7 +89,7 @@ namespace BurningKnight.level.entities.machine {
 			Tween.To(1, 1.3f, x => GetComponent<InteractableSliceComponent>()!.Scale.X = x, 0.2f);
 		}
 
-		private bool Interact(Entity e) {
+		private bool Interact(Entity? e) {
 			Animate();
 			
 			var p = e ?? LocalPlayer.Locate(Area!);
