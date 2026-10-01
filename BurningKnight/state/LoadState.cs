@@ -44,6 +44,28 @@ namespace BurningKnight.state {
 		public bool Menu;
 
 		private Animation animation = null!;
+
+		// The loading title is drawn with Graphics.Print, which goes straight to
+		// DrawString without the markup parser UiString runs. A localised joke that
+		// carries `##`/`^^`/`[cl ..]` would otherwise show its raw markers on screen,
+		// so they are stripped before the string is measured and drawn. LoadScreenTips
+		// goes through a UiString, so its colours still render.
+		//
+		// The token list mirrors every branch of the parser switch in
+		// UiString.Recalculate.cs: bracket tokens (cl, dl, ic, vr, rn, sp, skp, ev,
+		// /cl) and the paired markers ^ * % & @ # ~ _ . A bracket run is matched as a
+		// whole rather than per known name, so an unknown token is stripped too (the
+		// parser would drop it as well) - but only when it really is a token, which
+		// is what the leading `\[` escape check is for.
+		private static readonly System.Text.RegularExpressions.Regex markupMarkers =
+			new System.Text.RegularExpressions.Regex(
+				@"(?<!\\)\[[a-z/]+[^\]]*\]|\*\*|\^\^|@@|%%|##|~~|&&|(?<!\\)_");
+
+		private static string Plain(string value) {
+			return markupMarkers.Replace(value, string.Empty).Replace("\\[", "[");
+		}
+		
+		
 		
 		public override void Init() {
 			base.Init();
@@ -63,7 +85,7 @@ namespace BurningKnight.state {
 			}
 
 			prefix = Locale.Get(loading || Context.Run.Depth < 1 ? Locale.Get("loading") : Locale.Get("generating"));
-			title = new Random().NextDouble() > 0.3 ? LoadScreenJokes.Generate() : BiomeTitles.Generate(BiomeRegistry.GenerateForDepth(Context.Run.Depth).Id);
+			title = Plain(new Random().NextDouble() > 0.3 ? LoadScreenJokes.Generate() : BiomeTitles.Generate(BiomeRegistry.GenerateForDepth(Context.Run.Depth).Id));
 			
 			Lights.Init();
 			Physics.Init();
