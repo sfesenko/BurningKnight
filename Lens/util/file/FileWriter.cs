@@ -76,7 +76,7 @@ namespace Lens.util.file {
 			WriteByte((byte) (value & 0xFF));
 		}
 
-		public void WriteString(string str) {
+		public void WriteString(string? str) {
 			if (str == null) {
 				WriteByte(0);
 			} else {
