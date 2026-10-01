@@ -34,7 +34,7 @@ namespace BurningKnight.entity.creature.mob {
 		public override bool HandleEvent(Event e) {
 			if (e is HealthModifiedEvent ev && ev.Amount < 0) {
 				Become<HurtState>();
-				GraphicsComponent!.Flipped = ev.From.CenterX > CenterX;
+				GraphicsComponent!.Flipped = ev!.From!.CenterX > CenterX;
 				GetComponent<AudioEmitterComponent>()!.EmitRandomized(GetHurtSfx());
 
 				if (Context.Run.Depth < 1 && Rnd.Chance(30)) {

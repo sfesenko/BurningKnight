@@ -18,7 +18,7 @@ namespace BurningKnight.level.rooms.challenge {
 	public class ChallengeRoom : SpecialRoom {
 		public override void SetupDoors(Level level) {
 			foreach (var door in Connected.Values) {
-				door.Type = DoorPlaceholder.Variant.Challenge;
+				door!.Type = DoorPlaceholder.Variant.Challenge;
 			}
 		}
 

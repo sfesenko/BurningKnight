@@ -68,7 +68,7 @@ namespace BurningKnight.entity.creature {
 				if (HasNoHealth(ev)) {
 					Kill(ev.From, ev.Type);
 				} else if (!ev.PressedForBomb) {
-					GetComponent<AudioEmitterComponent>()!.EmitRandomized(GetHurtSfx());
+					GetComponent<AudioEmitterComponent>()!.EmitRandomized(GetHurtSfx()!);
 				}
 
 				if (ev.From != null && !ev.Handled && !ev.PressedForBomb) {
@@ -151,7 +151,7 @@ namespace BurningKnight.entity.creature {
 		}
 
 		public virtual void AnimateDeath(DiedEvent d) {
-			AudioEmitterComponent.Dummy(Area!, Center).EmitRandomized(GetDeadSfx(), sz: 0.2f);
+			AudioEmitterComponent.Dummy(Area!, Center).EmitRandomized(GetDeadSfx()!, sz: 0.2f);
 
 			if (!GetComponent<TileInteractionComponent>()!.HasNoSupport) {
 				GetComponent<DropsComponent>()!.SpawnDrops();

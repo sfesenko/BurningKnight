@@ -35,7 +35,7 @@ namespace BurningKnight.ui.inventory {
 					? Items.Datas.Values.ElementAt(Rnd.Int(Items.Datas.Count)).Id
 					: Id;
 				
-				Name = Locale.Get(idd);
+				Name = Locale.Get(idd!);
 				Description = Locale.Get($"{idd}_desc");
 				Region = CommonAse.Items.GetSlice(id)!;
 

@@ -107,7 +107,7 @@ namespace BurningKnight.level.rooms.special {
 
 			var fl = Tiles.RandomFloorOrSpike();
 			
-			if (d.X == Left || d.X == Right) {
+			if (d!.X == Left || d.X == Right) {
 				var w = (int) (GetWidth() / 2f + Rnd.Int(-1, 1));
 				var door = new Dot(Left + w, Rnd.Int(Top + 2, Bottom - 2));
 				

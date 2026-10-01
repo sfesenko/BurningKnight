@@ -18,7 +18,7 @@ namespace BurningKnight.level.rooms.preboss {
 					Dot a;
 					Dot b;
 
-					if (d.X == Left) {
+					if (d!.X == Left) {
 						a = new Dot(Left + 4, Top + 4);
 						b = new Dot(Left + 4, Top + 6);
 					} else if (d.X == Right) {
@@ -47,7 +47,7 @@ namespace BurningKnight.level.rooms.preboss {
 				Dot from;
 				Dot to;
 
-				if (d.X == Left) {
+				if (d!.X == Left) {
 					to = new Dot(Left + 3, Top + 5);
 					from = new Dot(d.X + 1, d.Y);
 				} else if (d.X == Right) {

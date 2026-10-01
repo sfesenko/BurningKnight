@@ -56,18 +56,18 @@ namespace BurningKnight.entity.creature.player {
 				var index = GetComponent<InputComponent>()!.Index;
 				
 				if (StartingLamps[index] != null) {
-					var i = Items.CreateAndAdd(StartingLamps[index], Area!);
+					var i = Items.CreateAndAdd(StartingLamps[index]!, Area!);
 					i!.Scourged = false;
 					GetComponent<LampComponent>()!.Set(i, false);
 					Log.Debug($"Starting lamp: {StartingLamps[index]}");
 				}
 				
-				if (StartingWeapons[index] == null || !ItemPool.StartingWeapon.Contains(Items.Datas[StartingWeapons[index]].Pools)) {
+				if (StartingWeapons[index] == null || !ItemPool.StartingWeapon.Contains(Items.Datas[StartingWeapons[index]!].Pools)) {
 					StartingWeapons[index] = Items.Generate(ItemPool.StartingWeapon, item => Item.Unlocked(item.Id))!;
 				}
 
 				if (StartingWeapons[index] != null) {
-					var i = Items.CreateAndAdd(StartingWeapons[index], Area!);
+					var i = Items.CreateAndAdd(StartingWeapons[index]!, Area!);
 					i!.Scourged = false;
 
 					var l = GetComponent<LampComponent>()!.Item;
@@ -75,7 +75,7 @@ namespace BurningKnight.entity.creature.player {
 					if (l != null && l.Id == "bk:sharp_lamp" && i.Data.WeaponType != WeaponType.Melee) {
 						StartingWeapons[index] = Items.Generate(ItemPool.StartingWeapon, item => Item.Unlocked(item.Id))!;
 						i.Done = true;
-						i = Items.CreateAndAdd(StartingWeapons[index], Area!);
+						i = Items.CreateAndAdd(StartingWeapons[index]!, Area!);
 					}
 					
 					GetComponent<ActiveWeaponComponent>()!.Set(i!, false);
@@ -83,7 +83,7 @@ namespace BurningKnight.entity.creature.player {
 				}
 				
 				if (StartingItems[index] != null) {
-					var i = Items.CreateAndAdd(StartingItems[index], Area!);
+					var i = Items.CreateAndAdd(StartingItems[index]!, Area!);
 					i!.Scourged = false;
 					GetComponent<ActiveItemComponent>()!.Set(i, false);
 					

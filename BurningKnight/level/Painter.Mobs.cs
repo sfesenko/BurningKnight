@@ -109,7 +109,7 @@ namespace BurningKnight.level {
 				PathFinder.SetMapSize(w, h);
 
 				var door = parent.Connected.Values.First();
-				start = new Dot(door.X, door.Y);
+				start = new Dot(door!.X, door.Y);
 
 				if ((int) start.X == parent.Left) {
 					start.X++;
@@ -136,7 +136,7 @@ namespace BurningKnight.level {
 						var found = false;
 
 						foreach (var dr in parent.Connected.Values) {
-							var dx = (int) (dr.X - x);
+							var dx = (int) (dr!.X - x);
 							var dy = (int) (dr.Y - y);
 							var d = (float) Math.Sqrt(dx * dx + dy * dy);
 

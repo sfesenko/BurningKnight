@@ -20,7 +20,7 @@ namespace BurningKnight.level.rooms.oldman {
 
 		public override void SetupDoors(Level level) {
 			foreach (var door in Connected.Values) {
-				door.Type = DoorPlaceholder.Variant.Hidden;
+				door!.Type = DoorPlaceholder.Variant.Hidden;
 			}
 		}
 

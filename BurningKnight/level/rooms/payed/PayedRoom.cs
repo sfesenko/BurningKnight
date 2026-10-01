@@ -9,7 +9,7 @@ namespace BurningKnight.level.rooms.payed {
 
 		public override void SetupDoors(Level level) {
 			foreach (var door in Connected.Values) {
-				door.Type = DoorPlaceholder.Variant.Payed;
+				door!.Type = DoorPlaceholder.Variant.Payed;
 			}
 		}
 

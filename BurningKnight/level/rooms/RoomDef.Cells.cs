@@ -57,7 +57,7 @@ namespace BurningKnight.level.rooms {
 						var found = false;
 						
 						foreach (var Door in Connected.Values) {
-							var Dx = (int) (Door.X - x);
+							var Dx = (int) (Door!.X - x);
 							var Dy = (int) (Door.Y - y);
 							var D = (float) Math.Sqrt(Dx * Dx + Dy * Dy);
 

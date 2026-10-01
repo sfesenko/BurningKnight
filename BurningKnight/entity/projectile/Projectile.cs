@@ -210,7 +210,7 @@ namespace BurningKnight.entity.projectile {
 				return false;
 			}
 
-			if (IsWall(entity, body)) {
+			if (IsWall(entity, body!)) {
 				return !HasFlag(ProjectileFlags.FlyOverWalls);
 			}
 

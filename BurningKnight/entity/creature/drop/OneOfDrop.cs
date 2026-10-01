@@ -25,7 +25,7 @@ namespace BurningKnight.entity.creature.drop {
 
 				foreach (var drop in Drops) {
 					var results = drop.GetItems();
-					dropResults[i++] = results;
+					dropResults[i++] = results!;
 
 					if (results == null || results.Count > 0) {
 						sum += drop.Chance;

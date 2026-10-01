@@ -170,7 +170,7 @@ namespace BurningKnight.level.rooms.boss {
 
 		public override void SetupDoors(Level level) {
 			foreach (var d in Connected.Values) {
-				d.Type = DoorPlaceholder.Variant.Boss;
+				d!.Type = DoorPlaceholder.Variant.Boss;
 			}
 		}
 

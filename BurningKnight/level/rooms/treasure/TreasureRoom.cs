@@ -139,7 +139,7 @@ namespace BurningKnight.level.rooms.treasure {
 			var rude = Rnd.Chance(5); // Hehe
 			
 			foreach (var door in Connected.Values) {
-				door.Type = rude ? DoorPlaceholder.Variant.Locked : DoorPlaceholder.Variant.Treasure;
+				door!.Type = rude ? DoorPlaceholder.Variant.Locked : DoorPlaceholder.Variant.Treasure;
 			}
 		}
 

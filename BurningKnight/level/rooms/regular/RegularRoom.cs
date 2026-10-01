@@ -4,7 +4,7 @@ namespace BurningKnight.level.rooms.regular {
 	public class RegularRoom : RoomDef {
 		public override void SetupDoors(Level level) {
 			foreach (var Door in Connected.Values) {
-				Door.Type = DoorPlaceholder.Variant.Enemy;
+				Door!.Type = DoorPlaceholder.Variant.Enemy;
 			}
 		}
 

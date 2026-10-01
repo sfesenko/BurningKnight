@@ -33,7 +33,7 @@ namespace BurningKnight.entity.creature.player {
 				if (pet.TryGetComponent<FollowerComponent>(out var f)) {
 					f.Remove();
 				} else {
-					pet.GetComponent<OrbitalComponent>()!.Orbiting.GetComponent<OrbitGiverComponent>()!.RemoveOrbiter(pet);
+					pet!.GetComponent<OrbitalComponent>()!.Orbiting!.GetComponent<OrbitGiverComponent>()!.RemoveOrbiter(pet);
 				}
 
 				pet.Done = true;

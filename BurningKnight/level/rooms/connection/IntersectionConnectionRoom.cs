@@ -21,7 +21,7 @@ namespace BurningKnight.level.rooms.connection {
 				Dot to;
 				Dot from;
 
-				if (d.X == Left) {
+				if (d!.X == Left) {
 					left = true;
 					to = new Dot(Right - 1, d.Y);
 					from = new Dot(d.X + 1, d.Y);

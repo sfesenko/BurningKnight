@@ -168,7 +168,7 @@ namespace BurningKnight.level.rooms.regular {
 			var painted = false;
 			
 			foreach (var dr in Connected.Values) {
-				var st = new Dot(dr.X, dr.Y);
+				var st = new Dot(dr!.X, dr.Y);
 
 				if (dr.X == Left) {
 					st = new Dot(dr.X + 1, dr.Y);
@@ -207,7 +207,7 @@ namespace BurningKnight.level.rooms.regular {
 			Func<int, int, int> toIndex = (x, y) => (x - Left) + (y - Top) * ww;
 
 			foreach (var d in Connected.Values) {
-				if (d.X == Left) {
+				if (d!.X == Left) {
 					start = toIndex(d.X + 1, d.Y);
 				} else if (d.X == Right) {
 					start = toIndex(d.X - 1, d.Y);

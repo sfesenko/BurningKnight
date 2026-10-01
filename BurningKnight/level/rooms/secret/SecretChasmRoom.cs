@@ -14,7 +14,7 @@ namespace BurningKnight.level.rooms.secret {
 			Painter.Fill(level, this, (int) (Math.Min(GetWidth(), GetHeight()) / 2f) - 1, Tiles.RandomFloor());
 
 			foreach (var d in Connected.Values) {
-				Painter.Fill(level, d.X - 1, d.Y - 1, 3, 3, Tiles.RandomFloor());
+				Painter.Fill(level, d!.X - 1, d.Y - 1, 3, 3, Tiles.RandomFloor());
 			}
 			
 			for (var i = 0; i < Rnd.Int(1, 5); i++) {

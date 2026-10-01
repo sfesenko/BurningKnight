@@ -31,7 +31,7 @@ namespace BurningKnight.level.walls {
 					var start = 0;
 
 					foreach (var d in room.Connected.Values) {
-						if (d.X == room.Left) {
+						if (d!.X == room.Left) {
 							start = ToIndex(room, d.X + 1, d.Y);
 							
 							Patch[ToIndex(room, d.X + 1, d.Y)] = false;
@@ -149,7 +149,7 @@ namespace BurningKnight.level.walls {
 				var start = 0;
 
 				foreach (var d in room.Connected.Values) {
-					if (d.X == room.Left) {
+					if (d!.X == room.Left) {
 						start = ToIndex(room, d.X + 1, d.Y);
 					} else if (d.X == room.Right) {
 						start = ToIndex(room, d.X - 1, d.Y);

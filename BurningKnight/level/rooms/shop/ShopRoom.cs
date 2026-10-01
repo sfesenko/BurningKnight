@@ -134,7 +134,7 @@ namespace BurningKnight.level.rooms.shop {
 				var found = false;
 
 				foreach (var c in Connected.Values) {
-					if (c.X == x && c.Y == Top) {
+					if (c!.X == x && c.Y == Top) {
 						found = true;
 						break;
 					}
@@ -190,7 +190,7 @@ namespace BurningKnight.level.rooms.shop {
 				var mat = new SlicedProp(spr, Layers.Entrance);
 				level.Area!.Add(mat);
 
-				if (door.X == Left) {
+				if (door!.X == Left) {
 					PlaceSign(level, new Vector2(door.X * 16 - 8, door.Y * 16 - 5));
 					mat.Center = new Vector2(door.X * 16 - 8, door.Y * 16 + 8);
 				} else if (door.X == Right) {
@@ -288,7 +288,7 @@ namespace BurningKnight.level.rooms.shop {
 
 		public override void SetupDoors(Level level) {
 			foreach (var door in Connected) {
-				door.Value.Type = door.Key is SubShopRoom || (Context.Run.Depth == 5 && Context.Run.Loop == 0 && LevelSave.GenerateMarket) || Context.Run.Type == RunType.BossRush || Rnd.Chance(2) ? DoorPlaceholder.Variant.Enemy : DoorPlaceholder.Variant.Shop;
+				door!.Value!.Type = door.Key is SubShopRoom || (Context.Run.Depth == 5 && Context.Run.Loop == 0 && LevelSave.GenerateMarket) || Context.Run.Type == RunType.BossRush || Rnd.Chance(2) ? DoorPlaceholder.Variant.Enemy : DoorPlaceholder.Variant.Shop;
 			}
 		}
 		

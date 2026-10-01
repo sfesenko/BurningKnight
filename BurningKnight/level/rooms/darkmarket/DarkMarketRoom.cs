@@ -141,7 +141,7 @@ namespace BurningKnight.level.rooms.darkmarket {
 
 		public override void SetupDoors(Level level) {
 			foreach (var door in Connected.Values) {
-				door.Type = DoorPlaceholder.Variant.Head;
+				door!.Type = DoorPlaceholder.Variant.Head;
 			}
 		}
 

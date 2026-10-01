@@ -254,7 +254,7 @@ namespace BurningKnight.level {
 				}
 
 				foreach (var d in Room.Connected.Values) {
-					if (d.Type != DoorPlaceholder.Variant.Empty && d.Type != DoorPlaceholder.Variant.Secret &&
+					if (d!.Type != DoorPlaceholder.Variant.Empty && d.Type != DoorPlaceholder.Variant.Secret &&
 					    d.Type != DoorPlaceholder.Variant.Maze) {
 
 						if (d.X == Room.Left || d.X == Room.Right) {
@@ -302,7 +302,7 @@ namespace BurningKnight.level {
 
 				if (!(Room is TreasureRoom)) {
 					foreach (var d in Room.Connected.Values) {
-						if (d.Type != DoorPlaceholder.Variant.Secret) {
+						if (d!.Type != DoorPlaceholder.Variant.Secret) {
 							var a = d.X == Room.Left || d.X == Room.Right;
 							var w = a ? 2 : 1;
 							var h = a ? 1 : 2;
@@ -394,7 +394,7 @@ namespace BurningKnight.level {
 			}
 
 			if (rrms.Count > 0) {
-				foreach (var type in Level.ItemsToSpawn) {
+				foreach (var type in Level!.ItemsToSpawn) {
 					var item = Items.CreateAndAdd(type, Level.Area!);
 
 					if (item == null) {

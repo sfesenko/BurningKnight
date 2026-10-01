@@ -13,7 +13,7 @@ namespace BurningKnight.entity.component {
 		public float Angle;
 		
 		public SliceComponent(string image, string? slice) {
-			Set(image, slice);
+			Set(image, slice!);
 		}
 
 		public SliceComponent(AnimationData image, string slice) {

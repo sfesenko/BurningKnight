@@ -116,7 +116,7 @@ namespace BurningKnight.level.rooms.scourged {
 
 		public override void SetupDoors(Level level) {
 			foreach (var door in Connected.Values) {
-				door.Type = DoorPlaceholder.Variant.Scourged;
+				door!.Type = DoorPlaceholder.Variant.Scourged;
 			}
 		}
 

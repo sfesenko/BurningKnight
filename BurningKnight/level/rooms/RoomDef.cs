@@ -76,7 +76,7 @@ namespace BurningKnight.level.rooms {
 
 		public virtual void SetupDoors(Level level) {
 			foreach (var door in Connected.Values) {
-				door.Type = DoorPlaceholder.Variant.Regular;
+				door!.Type = DoorPlaceholder.Variant.Regular;
 			}
 		}
 
@@ -154,7 +154,7 @@ namespace BurningKnight.level.rooms {
 
 		public bool HasDoorsNear(int x, int y, int r) {
 			foreach (var Door in Connected.Values) {
-				var Dx = (Door.X - x);
+				var Dx = (Door!.X - x);
 				var Dy = (Door.Y - y);
 				var D = (float) Math.Sqrt(Dx * Dx + Dy * Dy);
 

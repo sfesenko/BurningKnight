@@ -44,7 +44,7 @@ namespace BurningKnight.level.rooms.special.minigame {
 		
 		public override void SetupDoors(Level level) {
 			foreach (var d in Connected.Values) {
-				d.Type = DoorPlaceholder.Variant.Red;
+				d!.Type = DoorPlaceholder.Variant.Red;
 			}
 		}
 	}

@@ -46,7 +46,7 @@ namespace BurningKnight.level.rooms.shop.sub {
 
 		public override void SetupDoors(Level level) {
 			foreach (var door in Connected.Values) {
-				door.Type = DoorPlaceholder.Variant.Locked;
+				door!.Type = DoorPlaceholder.Variant.Locked;
 			}
 		}
 

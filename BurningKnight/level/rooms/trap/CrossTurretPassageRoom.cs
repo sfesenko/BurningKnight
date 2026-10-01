@@ -145,7 +145,7 @@ namespace BurningKnight.level.rooms.trap {
 
 		private bool Place(Level level, int x, int y, uint a, float offset) {
 			foreach (var d in Connected.Values) {
-				if ((d.X == x && (d.Y == y + 1 || d.Y == y - 1)) || (d.Y == y && (d.X == x + 1 || d.X == x - 1))) {
+				if ((d!.X == x && (d.Y == y + 1 || d.Y == y - 1)) || (d.Y == y && (d.X == x + 1 || d.X == x - 1))) {
 					return false;
 				}
 			}

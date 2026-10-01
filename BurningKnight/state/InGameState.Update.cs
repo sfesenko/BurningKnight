@@ -99,7 +99,7 @@ namespace BurningKnight.state {
 			}
 
 			if (credits is { Enabled: true }) {
-				if (lastCreditsLabel.Y <= Display.UiHeight * 0.75f) {
+				if (lastCreditsLabel!.Y <= Display.UiHeight * 0.75f) {
 					if (!stopped) {
 						stopped = true;
 						

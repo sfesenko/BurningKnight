@@ -29,7 +29,7 @@ namespace BurningKnight.entity.component {
 			base.Update(dt);
 
 			T += dt * Speed;
-			count += (Orbiting.Count - count) * dt * 4;
+			count += (Orbiting!.Count - count) * dt * 4;
 
 			if (Entity.DistanceTo(center) > 32f) {
 				center = Entity.Center;
@@ -69,7 +69,7 @@ namespace BurningKnight.entity.component {
 			}	*/		
 			
 			e.GetComponent<OrbitalComponent>()!.Orbiting = Entity;
-			Orbiting.Add(e);
+			Orbiting!.Add(e);
 
 			if (Entity is Player && Orbiting.Count >= 3) {
 				Achievements.Unlock("bk:star");
@@ -77,7 +77,7 @@ namespace BurningKnight.entity.component {
 		}
 
 		public void RemoveOrbiter(Entity e) {
-			Orbiting.Remove(e);
+			Orbiting!.Remove(e);
 			e.GetComponent<OrbitalComponent>()!.Orbiting = null;
 
 			if (Orbiting.Count == 0) {

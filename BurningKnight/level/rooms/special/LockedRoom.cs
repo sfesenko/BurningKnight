@@ -4,7 +4,7 @@ namespace BurningKnight.level.rooms.special {
 			base.Paint(level);
 			
 			foreach (var door in Connected.Values) {
-				door.Type = DoorPlaceholder.Variant.Locked;
+				door!.Type = DoorPlaceholder.Variant.Locked;
 			}
 		}
 	}

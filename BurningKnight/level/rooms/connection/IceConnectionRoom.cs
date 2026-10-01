@@ -17,13 +17,13 @@ namespace BurningKnight.level.rooms.connection {
 			foreach (var door in Connected.Values) {
 				var sx = Rnd.Int(3, 7);
 				var sy = Rnd.Int(3, 7);
-				Painter.FillEllipse(level, door.X - sx / 2, door.Y - sy / 2, sx, sy, Tiles.RandomFloor());
+				Painter.FillEllipse(level, door!.X - sx / 2, door.Y - sy / 2, sx, sy, Tiles.RandomFloor());
 			}
 		}
 
 		public override void SetupDoors(Level level) {
 			foreach (var door in Connected.Values) {
-				door.Type = DoorPlaceholder.Variant.Empty;
+				door!.Type = DoorPlaceholder.Variant.Empty;
 			}
 		}
 

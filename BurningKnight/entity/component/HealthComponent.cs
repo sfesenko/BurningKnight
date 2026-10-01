@@ -175,7 +175,7 @@ namespace BurningKnight.entity.component {
 				health = (int) Math.Floor((Entity is Player ? 0.5f : 1f) * maxHealth);
 
 				Send(new RevivedEvent {
-					WhoDamaged = from,
+					WhoDamaged = from!,
 					Who = Entity
 				});
 
@@ -190,7 +190,7 @@ namespace BurningKnight.entity.component {
 			health = 0;
 
 			if (!Send(new DiedEvent {
-				From = from,
+				From = from!,
 				Who = Entity,
 				DamageType = damageType
 			})) {

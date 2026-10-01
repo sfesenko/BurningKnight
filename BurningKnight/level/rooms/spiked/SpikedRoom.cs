@@ -74,7 +74,7 @@ namespace BurningKnight.level.rooms.spiked {
 
 		public override void SetupDoors(Level level) {
 			foreach (var door in Connected.Values) {
-				door.Type = DoorPlaceholder.Variant.Spiked;
+				door!.Type = DoorPlaceholder.Variant.Spiked;
 			}
 		}
 

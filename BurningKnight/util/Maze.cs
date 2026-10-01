@@ -24,7 +24,7 @@ namespace BurningKnight.util {
 
 			foreach (var D in R.Connected.Values) {
 				try {
-					Maze[D.X - R.Left][D.Y - R.Top] = Empty;
+					Maze[D!.X - R.Left][D.Y - R.Top] = Empty;
 				} catch (Exception) {
 					
 				}

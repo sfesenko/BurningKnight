@@ -10,7 +10,7 @@ namespace BurningKnight.level.rooms.trap {
 			var a = 0;
 			
 			foreach (var d in Connected.Values) {
-				if (d.Type != DoorPlaceholder.Variant.Secret) {
+				if (d!.Type != DoorPlaceholder.Variant.Secret) {
 					var w = 2;
 					var h = 2;
 					
