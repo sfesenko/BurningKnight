@@ -48,13 +48,13 @@ namespace BurningKnight.entity.creature.npc {
 			Dialogs.RegisterCallback("maanex_6", (d, c) => {
 				if (((ChoiceDialog) d).Choice == 0) {
 					if (!c!.To!.TryGetComponent<ConsumablesComponent>(out var component) || component.Coins < cost) {
-						return Dialogs.Get("maanex_11");
+						return Dialogs.Get("maanex_11")!;
 					}
 
 					var room = GetComponent<RoomComponent>()!.Room;
 
 					if (room == null) {
-						return null;
+						return null!;
 					}
 
 					component.Coins -= cost;
@@ -64,10 +64,10 @@ namespace BurningKnight.entity.creature.npc {
 						((Chest) chest).CanOpen = true;
 					}
 
-					return Dialogs.Get("maanex_8");
+					return Dialogs.Get("maanex_8")!;
 				}
 
-				return null;
+				return null!;
 			});
 			
 			Subscribe<Chest.OpenedEvent>();

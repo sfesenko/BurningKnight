@@ -33,7 +33,7 @@ namespace BurningKnight.entity.creature.player {
 		private static Audio Audio => Context.Audio;
 		
 		public DialogComponent Dialog {
-			get => dialog;
+			get => dialog!;
 			
 			set {
 				var old = dialog;

@@ -186,7 +186,7 @@ namespace BurningKnight.level.builders {
 
 				Loop.Add(C!);
 				Init.Add(C!);
-				Prev = C;
+				Prev = C!;
 			}
 
 			LoopCenter = new Vector2();

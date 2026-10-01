@@ -39,14 +39,14 @@ namespace BurningKnight.entity.creature.npc.dungeon {
 					
 					RemoveComponent<InteractableComponent>();
 					
-					return null;
+					return null!;
 				});
 
 				Dialogs.RegisterCallback("duck_5", (d, c) => {
 					interacted = true;
 					RemoveComponent<InteractableComponent>();
 					
-					return null;
+					return null!;
 				});
 			}
 		}

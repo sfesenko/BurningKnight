@@ -8,7 +8,7 @@ namespace BurningKnight.ui {
 		public float Size = 2;
 
 		public new string Id {
-			get => id;
+			get => id!;
 
 			set {
 				id = value;

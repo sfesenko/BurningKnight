@@ -29,7 +29,7 @@ namespace BurningKnight.entity.room.controller {
 					return Activator.CreateInstance<T>();
 				} catch (Exception e) {
 					Log.Error(e);
-					return null;
+					return null!;
 				}
 			}, mod);
 		}

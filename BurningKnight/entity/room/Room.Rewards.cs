@@ -53,7 +53,7 @@ namespace BurningKnight.entity.room {
 		};
 		private Entity CreateReward() {
 			if (Rnd.Chance(LevelSave.ChestRewardChance)) {
-				return ChestRegistry.PlaceRandom(Vector2.Zero, Area!);
+				return ChestRegistry.PlaceRandom(Vector2.Zero, Area!)!;
 			}
 
 			var id = rewards[Rnd.Int(rewards.Length)];
@@ -65,7 +65,7 @@ namespace BurningKnight.entity.room {
 				return bomb;
 			}
 			
-			return Items.CreateAndAdd(id, Area!);
+			return Items.CreateAndAdd(id, Area!)!;
 		}
 		private void SpawnReward() {
 			if (Context.Run.Depth < 1 || Type != RoomType.Regular || Rnd.Chance(40 - Context.Run.Luck)) {

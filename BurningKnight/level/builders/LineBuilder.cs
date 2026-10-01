@@ -136,7 +136,7 @@ namespace BurningKnight.level.builders {
 
 						Branchable.Add(T!);
 						Init.Add(T!);
-						Curr = T;
+						Curr = T!;
 					}
 
 				var R = I == RoomsOnPath ? Exit : MultiConnection[I];

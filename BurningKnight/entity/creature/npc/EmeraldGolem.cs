@@ -41,7 +41,7 @@ namespace BurningKnight.entity.creature.npc {
 			
 			Dialogs.RegisterCallback("eg_0", (d, c) => {
 				if (broken) {
-					return null;
+					return null!;
 				}
 			
 				if (((ChoiceDialog) d).Choice == 0) {
@@ -78,7 +78,7 @@ namespace BurningKnight.entity.creature.npc {
 					}, 4f);
 
 					broken = true;
-					return null;
+					return null!;
 				} else if (GlobalSave.IsTrue("bk:emerald_gun")) {
 					Timer.Add(() => {
 						GetComponent<DialogComponent>()!.StartAndClose(Locale.Get("eg_1"), 3);
@@ -111,10 +111,10 @@ namespace BurningKnight.entity.creature.npc {
 					}, 4f);
 
 					broken = true;
-					return null;
+					return null!;
 				}
 
-				return null;
+				return null!;
 			});
 			
 			Subscribe<RoomChangedEvent>();

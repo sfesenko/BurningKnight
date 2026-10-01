@@ -41,7 +41,7 @@ namespace BurningKnight.entity.creature.npc {
 				if (((ChoiceDialog) d).Choice == 0) {
 					try {
 						if (!c!.To!.TryGetComponent<ConsumablesComponent>(out var component) || component.Coins < Cost) {
-							return Dialogs.Get("maanex_11");
+							return Dialogs.Get("maanex_11")!;
 						}
 
 						component.Coins -= Cost;
@@ -52,10 +52,10 @@ namespace BurningKnight.entity.creature.npc {
 						GetComponent<DialogComponent>()!.StartAndClose(e.Message, 10);
 					}
 
-					return null;
+					return null!;
 				}
 
-				return null;
+				return null!;
 			});
 		}
 

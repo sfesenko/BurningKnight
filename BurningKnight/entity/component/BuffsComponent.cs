@@ -71,7 +71,7 @@ namespace BurningKnight.entity.component {
 		}
 
 		public Buff Add(string id) {
-			return Add(BuffRegistry.Create(id)!);
+			return Add(BuffRegistry.Create(id)!)!;
 		}
 
 		public bool Has<T>() {

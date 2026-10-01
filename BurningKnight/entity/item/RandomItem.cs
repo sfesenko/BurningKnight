@@ -6,7 +6,7 @@ namespace BurningKnight.entity.item {
 		public bool Prevent;
 	
 		private static string GenerateId() {
-			return Items.Generate(ItemPool.Treasure);
+			return Items.Generate(ItemPool.Treasure)!;
 		}
 
 		private void TryToOverrideId() {

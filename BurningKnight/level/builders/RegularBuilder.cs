@@ -143,7 +143,7 @@ namespace BurningKnight.level.builders {
 					Tries = 3;
 
 					do {
-						Angle = PlaceRoom(Rooms, Curr, T!, RandomBranchAngle(Curr));
+						Angle = PlaceRoom(Rooms, Curr!, T!, RandomBranchAngle(Curr!));
 						Tries--;
 					} while (Math.Abs(Angle - (-1)) < 0.01f && Tries > 0);
 
@@ -162,7 +162,7 @@ namespace BurningKnight.level.builders {
 					Rooms.Add(T!);
 
 
-					Curr = T;
+					Curr = T!;
 				}
 
 				if (ConnectingRoomsThisBranch.Count != ConnectingRooms) {
@@ -176,7 +176,7 @@ namespace BurningKnight.level.builders {
 				Tries = 10;
 
 				do {
-					Angle = PlaceRoom(Rooms, Curr, R, RandomBranchAngle(Curr));
+					Angle = PlaceRoom(Rooms, Curr!, R, RandomBranchAngle(Curr!));
 					Tries--;
 				} while (Math.Abs(Angle - (-1)) < 0.01f && Tries > 0);
 

@@ -112,7 +112,7 @@ namespace BurningKnight.ui.str {
 				}
 			}
 
-			return null;
+			return null!;
 		}
 
 		private void AddEffect<T>(StringBuilder builder) where T: GlyphEffect {

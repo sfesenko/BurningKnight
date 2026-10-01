@@ -156,7 +156,7 @@ namespace BurningKnight.state {
 				Paused = painting != null;
 			}
 
-			get => painting;
+			get => painting!;
 		}
 
 		public InGameState(Area area, bool menu) {

@@ -168,7 +168,7 @@ namespace BurningKnight.state {
 						gameSettings.Enabled = true;
 
 						Tween.To(Display.UiWidth * -2, pauseMenu.X, x => pauseMenu.X = x, PaneTransitionTime).OnEnd = () => {
-							pauseMenu.Remove(confirmationPane);
+							pauseMenu.Remove(confirmationPane!);
 							confirmationPane = null;	
 							SelectFirst();
 						};

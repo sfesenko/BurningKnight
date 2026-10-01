@@ -31,7 +31,7 @@ namespace BurningKnight.entity.creature.npc.dungeon {
 				var c = cm!.To!.GetComponent<ActiveWeaponComponent>();
 			
 				if (c!.Item == null) {
-					return Dialogs.Get("elon_7");
+					return Dialogs.Get("elon_7")!;
 				}
 
 				interacted = true;
@@ -45,7 +45,7 @@ namespace BurningKnight.entity.creature.npc.dungeon {
 			
 				Context.Run.AddScourge(true);
 
-				return null;
+				return null!;
 			});
 		}
 

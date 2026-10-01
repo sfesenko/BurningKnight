@@ -21,7 +21,7 @@ namespace BurningKnight.ui.inventory {
 		public float TextA;
 
 		public string Id {
-			get => id;
+			get => id!;
 
 			set {
 				id = value;

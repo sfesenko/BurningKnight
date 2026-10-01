@@ -40,7 +40,7 @@ namespace BurningKnight.entity.creature.mob {
 	public partial class Mob : Creature, DropModifier {
 		public Entity? Target;
 		public bool HasPrefix => prefix != null;
-		public Prefix Prefix => prefix;
+		public Prefix Prefix => prefix!;
 		
 		protected List<Entity> CollidingToHurt = new List<Entity>();
 		protected int TouchDamage = 1;

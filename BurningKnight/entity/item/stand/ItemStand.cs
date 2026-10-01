@@ -26,7 +26,7 @@ namespace BurningKnight.entity.item.stand {
 
 		protected Item? item;
 		
-		public Item Item => item;
+		public Item Item => item!;
 		public bool Hidden;
 
 		public bool ShouldCollide(Entity entity) {

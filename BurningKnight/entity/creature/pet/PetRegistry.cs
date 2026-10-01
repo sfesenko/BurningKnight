@@ -21,7 +21,7 @@ namespace BurningKnight.entity.creature.pet {
 		
 		public static Entity CreateRandom(Entity owner) {
 			var keys = defined.Keys.ToArray();
-			return Create(keys[Rnd.Int(keys.Length)], owner);
+			return Create(keys[Rnd.Int(keys.Length)], owner)!;
 		}
 
 		public static void Define(string id, Func<Entity, Entity> pet, Mod? mod = null) {
@@ -128,27 +128,27 @@ namespace BurningKnight.entity.creature.pet {
 				return pet;
 			});
 
-			Define("coin_pouch", o => o.Area!.Add(new GeneratorPet("bk:coin_pouch", 2, a => Items.CreateAndAdd("bk:coin", a)) {
+			Define("coin_pouch", o => o.Area!.Add(new GeneratorPet("bk:coin_pouch", 2, a => Items.CreateAndAdd("bk:coin", a)!) {
 				Owner = o
 			}));
 
-			Define("key_pouch", o => o.Area!.Add(new GeneratorPet("bk:key_pouch", 3, a => Items.CreateAndAdd("bk:key", a)) {
+			Define("key_pouch", o => o.Area!.Add(new GeneratorPet("bk:key_pouch", 3, a => Items.CreateAndAdd("bk:key", a)!) {
 				Owner = o
 			}));
 
-			Define("bomb_pouch", o => o.Area!.Add(new GeneratorPet("bk:bomb_pouch", 3, a => Items.CreateAndAdd("bk:bomb", a)) {
+			Define("bomb_pouch", o => o.Area!.Add(new GeneratorPet("bk:bomb_pouch", 3, a => Items.CreateAndAdd("bk:bomb", a)!) {
 				Owner = o
 			}));
 			
-			Define("batman", o => o.Area!.Add(new GeneratorPet("bk:batman", 3, a => Items.CreateAndAdd("bk:battery", a)) {
+			Define("batman", o => o.Area!.Add(new GeneratorPet("bk:batman", 3, a => Items.CreateAndAdd("bk:battery", a)!) {
 				Owner = o
 			}));
 
-			Define("pouch_pouch", o => o.Area!.Add(new GeneratorPet("bk:pouch_pouch", 4, a => Items.CreateAndAdd("bk:pouch", a)) {
+			Define("pouch_pouch", o => o.Area!.Add(new GeneratorPet("bk:pouch_pouch", 4, a => Items.CreateAndAdd("bk:pouch", a)!) {
 				Owner = o
 			}));
 
-			Define("shield_pouch", o => o.Area!.Add(new GeneratorPet("bk:shield_pouch", 8, a => Items.CreateAndAdd("bk:shield", a)) {
+			Define("shield_pouch", o => o.Area!.Add(new GeneratorPet("bk:shield_pouch", 8, a => Items.CreateAndAdd("bk:shield", a)!) {
 				Owner = o
 			}));
 

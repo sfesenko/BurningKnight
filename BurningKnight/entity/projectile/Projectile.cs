@@ -59,7 +59,7 @@ namespace BurningKnight.entity.projectile {
 		}
 
 		public bool NearingDeath => T < 0.9f && T % 0.6f >= 0.3f;
-		public BodyComponent BodyComponent => GetAnyComponent<BodyComponent>();
+		public BodyComponent BodyComponent => GetAnyComponent<BodyComponent>()!;
 
 		public override void Init() {
 			base.Init();

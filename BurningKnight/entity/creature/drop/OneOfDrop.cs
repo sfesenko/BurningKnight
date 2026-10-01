@@ -55,7 +55,7 @@ namespace BurningKnight.entity.creature.drop {
 				}
 			}
 
-			return items;
+			return items!;
 		}
 
 		public override string GetId() {

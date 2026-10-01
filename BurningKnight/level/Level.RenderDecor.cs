@@ -291,7 +291,7 @@ namespace BurningKnight.level {
 			enabled.SetValue(true);
 
 			for (int y = GetRenderTop(camera!); y < toY; y++) {
-				for (int x = GetRenderLeft(camera); x < toX; x++) {
+				for (int x = GetRenderLeft(camera!); x < toX; x++) {
 					var index = ToIndex(x, y);
 
 					if ((Tile) Tiles[index] == Tile.Chasm) {

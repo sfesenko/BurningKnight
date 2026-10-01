@@ -59,7 +59,7 @@ namespace BurningKnight.entity.item {
 		public bool Hidden => (Type != ItemType.Mana && Type != ItemType.Coin && Type != ItemType.Heart && Type != ItemType.Key && Type != ItemType.Bomb && (!TryGetComponent<OwnerComponent>(out var o) || !(o.Owner is Player)) && Scourge.IsEnabled(Scourge.OfUnknown));
 		public TextureRegion Region => (Hidden) ? UnknownRegion : (Animation != null ? GetComponent<AnimatedItemGraphicsComponent>()!.Animation.GetCurrentTexture() : GetComponent<ItemGraphicsComponent>()!.Sprite);
 		
-		public Entity Owner => TryGetComponent<OwnerComponent>(out var o) ? o.Owner : null;
+		public Entity Owner => TryGetComponent<OwnerComponent>(out var o) ? o.Owner : null!;
 		public ItemData Data => Items.Datas[Id];
 
 		private bool updateLight;
