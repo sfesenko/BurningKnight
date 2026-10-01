@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.component {
 	public class OrbitGiverComponent : Component {
-		public List<Entity> Orbiting = new List<Entity>();
+		public List<Entity>? Orbiting = new List<Entity>();
 		public float RadiusMultiplier = 1;
 		public float T;
 		public float Speed = 1;
