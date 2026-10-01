@@ -266,11 +266,11 @@ namespace BurningKnight.entity.creature {
 			return Color.Red;
 		}
 
-		protected virtual string GetHurtSfx() {
+		protected virtual string? GetHurtSfx() {
 			return $"hurt{Rnd.Int(1, 3)}";
 		}
 
-		protected virtual string GetDeadSfx() {
+		protected virtual string? GetDeadSfx() {
 			return $"dead{Rnd.Int(1, 4)}";
 		}
 	}
