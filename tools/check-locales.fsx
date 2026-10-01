@@ -478,7 +478,7 @@ for loc in localeFiles do
     let joinKeys xs = String.concat " " (xs |> List.truncate 12)
 
     if not dupKeys.IsEmpty then
-        strictFailures <- $"[{loc}] duplicate keys (the game throws and drops the language): {joinKeys dupKeys}" :: strictFailures
+        strictFailures <- $"[{loc}] duplicate keys (silent last-wins in the game): {joinKeys dupKeys}" :: strictFailures
 
     if not emptyValues.IsEmpty then
         strictFailures <- $"[{loc}] {emptyValues.Length} empty values: {joinKeys emptyValues}" :: strictFailures
