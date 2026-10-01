@@ -58,7 +58,7 @@ namespace BurningKnight.entity.creature.mob.castle {
 			for (var i = 0; i < am; i++) {
 				var a = Math.PI * 2 * (((float) i) / am);
 				var projectile = builder.Shoot(a, 5f).Build();
-				projectile.Center = BottomCenter;
+				projectile!.Center = BottomCenter;
 			}
 		}
 	}

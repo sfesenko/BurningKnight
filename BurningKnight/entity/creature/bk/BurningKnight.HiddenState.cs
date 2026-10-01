@@ -54,7 +54,7 @@ namespace BurningKnight.entity.creature.bk {
 			public override void Update(float dt) {
 				base.Update(dt);
 
-				if (!teleported && (Self.captured.Done || Self.captured.GetComponent<StateComponent>()!.StateInstance is FriendlyState)) {
+				if (!teleported && (Self!.captured!.Done || Self.captured.GetComponent<StateComponent>()!.StateInstance is FriendlyState)) {
 					teleported = true;
 					Self.FreeSelf();
 				}

@@ -139,11 +139,11 @@ namespace BurningKnight.level.builders {
 				ConnectionChances[ConnectingRooms]--;
 
 				for (var J = 0; J < ConnectingRooms; J++) {
-					var T = RoomRegistry.Generate(RoomType.Connection, LevelSave.BiomeGenerated);
+					var T = RoomRegistry.Generate(RoomType.Connection, LevelSave.BiomeGenerated!);
 					Tries = 3;
 
 					do {
-						Angle = PlaceRoom(Rooms, Curr, T, RandomBranchAngle(Curr));
+						Angle = PlaceRoom(Rooms, Curr, T!, RandomBranchAngle(Curr));
 						Tries--;
 					} while (Math.Abs(Angle - (-1)) < 0.01f && Tries > 0);
 

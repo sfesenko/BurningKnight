@@ -59,7 +59,7 @@ namespace BurningKnight.entity.creature.pet {
 				base.Update(dt);
 
 				var dx = Self.DxTo(Self.Owner!);
-				var dy = Self.DyTo(Self.Owner);
+				var dy = Self.DyTo(Self.Owner!);
 				var d = MathUtils.Distance(dx, dy);
 				
 				if (d > 256) {

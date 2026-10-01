@@ -119,7 +119,7 @@ namespace BurningKnight.entity.orbital {
 							Owner = Owner
 						});*/
 
-						projectile.Owner = orbital;
+						projectile!.Owner = orbital;
 						orbital.GetComponent<ScalableSliceComponent>()!.Animate();
 					}
 				};

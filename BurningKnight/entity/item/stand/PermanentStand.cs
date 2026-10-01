@@ -24,7 +24,7 @@ namespace BurningKnight.entity.item.stand {
 			}
 
 			debugItem = SavedItem;
-			SetItem(Items.CreateAndAdd(SavedItem, Area!), null);
+			SetItem(Items.CreateAndAdd(SavedItem, Area!)!, null);
 		}
 
 		public override void SetItem(Item i, Entity? entity, bool remove = true) {

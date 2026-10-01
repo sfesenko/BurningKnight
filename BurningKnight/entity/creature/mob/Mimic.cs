@@ -114,7 +114,7 @@ namespace BurningKnight.entity.creature.mob {
 					var a = AngleTo(Target) + Rnd.Float(-0.1f, 0.1f);
 					var projectile = builder.Shoot(a, 9f).Build();
 
-					projectile.Center = Center + MathUtils.CreateVector(a, 5f) - new Vector2(0, GetComponent<ZComponent>()!.Z);
+					projectile!.Center = Center + MathUtils.CreateVector(a, 5f) - new Vector2(0, GetComponent<ZComponent>()!.Z);
 				}, i * 0.3f);
 			}
 		}
@@ -140,7 +140,7 @@ namespace BurningKnight.entity.creature.mob {
 				builder.Slice = fast ? "small" : "circle";
 				var projectile = builder.Shoot(a, fast ? 7f : 4f).Build();
 					
-				projectile.Center = BottomCenter;
+				projectile!.Center = BottomCenter;
 			}
 		}
 		

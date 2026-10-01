@@ -72,7 +72,7 @@ namespace BurningKnight.entity.creature.bk {
 
 					var projectile = builder.Build();
 
-					projectile.Center = Center + MathUtils.CreateVector(an, 4f);
+					projectile!.Center = Center + MathUtils.CreateVector(an, 4f);
 					ProjectileCallbacks.AttachUpdateCallback(projectile, TargetProjectileController.Make(Target, 0.2f));
 				};
 			};

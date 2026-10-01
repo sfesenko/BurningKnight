@@ -114,10 +114,10 @@ namespace BurningKnight.entity.creature.player {
 								var dialog = GetComponent<DialogComponent>();
 
 								dialog!.Dialog.Str!.ClearIcons();
-								dialog.Dialog.Str.AddIcon(CommonAse.Ui.GetSlice(Controls.FindSlice(Controls.Bomb, false))!);
+								dialog.Dialog.Str.AddIcon(CommonAse.Ui.GetSlice(Controls.FindSlice(Controls.Bomb, false)!)!);
 
 								if (GamepadComponent.Current != null && GamepadComponent.Current.Attached) {
-									dialog.Dialog.Str.AddIcon(CommonAse.Ui.GetSlice(Controls.FindSlice(Controls.Bomb, true))!);
+									dialog.Dialog.Str.AddIcon(CommonAse.Ui.GetSlice(Controls.FindSlice(Controls.Bomb, true)!)!);
 								}
 
 								dialog.StartAndClose("control_0", 3);

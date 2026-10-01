@@ -41,7 +41,7 @@ namespace BurningKnight.entity.item.use {
 						};
 
 						for (var i = 0; i < cnt; i++) {
-							builder.Shoot(a + Rnd.Float(-1.4f, 1.4f), s * Rnd.Float(0.3f, 0.7f)).Build().Center = p.Center;
+							builder!.Shoot(a + Rnd.Float(-1.4f, 1.4f), s * Rnd.Float(0.3f, 0.7f)).Build().Center = p.Center;
 						}	
 					}
 				});

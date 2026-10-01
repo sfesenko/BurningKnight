@@ -83,7 +83,7 @@ namespace BurningKnight.level.builders {
 				pathTunnels[tunnels]--;
 				
 				for (var j = 0; j < tunnels; j++){
-					firstLoop.Add(RoomRegistry.Generate(RoomType.Connection, LevelSave.BiomeGenerated));
+					firstLoop.Add(RoomRegistry.Generate(RoomType.Connection, LevelSave.BiomeGenerated!)!);
 				}
 			}
 
@@ -112,7 +112,7 @@ namespace BurningKnight.level.builders {
 				pathTunnels[tunnels]--;
 				
 				for (var j = 0; j < tunnels; j++){
-					secondLoop.Add(RoomRegistry.Generate(RoomType.Connection, LevelSave.BiomeGenerated));
+					secondLoop.Add(RoomRegistry.Generate(RoomType.Connection, LevelSave.BiomeGenerated!)!);
 				}
 			}
 
@@ -142,9 +142,9 @@ namespace BurningKnight.level.builders {
 			}
 			
 			while (!prev.ConnectWithRoom(landmarkRoom)){
-				var c = RoomRegistry.Generate(RoomType.Connection, LevelSave.BiomeGenerated);
+				var c = RoomRegistry.Generate(RoomType.Connection, LevelSave.BiomeGenerated!);
 
-				if ((int) PlaceRoom(rooms, prev, c, AngleBetweenRooms(prev, landmarkRoom)) == -1){
+				if ((int) PlaceRoom(rooms, prev, c!, AngleBetweenRooms(prev, landmarkRoom)) == -1){
 					return null;
 				}
 				

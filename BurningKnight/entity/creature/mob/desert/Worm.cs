@@ -167,7 +167,7 @@ namespace BurningKnight.entity.creature.mob.desert {
 							builder.Shoot(angle, 8f);
 							var projectile = builder.Build();
 
-							projectile.Center += MathUtils.CreateVector(angle, 2f);
+							projectile!.Center += MathUtils.CreateVector(angle, 2f);
 						};
 					};
 				}

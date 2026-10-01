@@ -30,7 +30,7 @@ namespace BurningKnight.entity.projectile {
 						if (data[y][x1] != ' ') {
 							var p = builder.Build();
 
-							p.Center = center + MathUtils.RotateAround(new Vector2(0, (y - height / 2f) * 10), angle, c);
+							p!.Center = center + MathUtils.RotateAround(new Vector2(0, (y - height / 2f) * 10), angle, c);
 							modifier?.Invoke(p);
 						}
 					}	
@@ -61,7 +61,7 @@ namespace BurningKnight.entity.projectile {
 
 						Timer.Add(() => {
 							var p = builder.Build();
-							p.Center = center + MathUtils.RotateAround(new Vector2(x2 * 10, (y1 - height / 2f) * 10), angle, c);
+							p!.Center = center + MathUtils.RotateAround(new Vector2(x2 * 10, (y1 - height / 2f) * 10), angle, c);
 
 							modifier?.Invoke(p);
 

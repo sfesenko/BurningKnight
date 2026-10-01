@@ -153,7 +153,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 						builder.RemoveFlags(ProjectileFlags.Reflectable, ProjectileFlags.BreakableByMelee);
 						var skull = builder.Shoot(Self.AngleTo(Self.Target), 8).Build();
 
-						ProjectileCallbacks.AttachDeathCallback(skull, (p, e, t) => {
+						ProjectileCallbacks.AttachDeathCallback(skull!, (p, e, t) => {
 							if (!t) {
 								return;
 							}
@@ -165,7 +165,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 					
 							for (var i = 0; i < 8; i++) {
 								var bullet = b.Shoot(((float) i) / 4 * (float) Math.PI, (i % 2 == 0 ? 2 : 1) * 4 + 3).Build();
-								bullet.Center = p.Center;
+								bullet!.Center = p.Center;
 							}
 						});
 
@@ -276,7 +276,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 					};
 
 					for (var j = 0; j < 2; j++) {
-						pp.Add(bb.Build());
+						pp.Add(bb.Build()!);
 					}
 				
 					pp.Launch(an, 40);
@@ -295,7 +295,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 					builder.Scale = Rnd.Float(0.5f, 1f);
 					var b = builder.Shoot(aa + Rnd.Float(-0.3f, 0.3f), Rnd.Float(2, 12)).Build();
 						
-					b.Center = Self.BottomCenter;
+					b!.Center = Self.BottomCenter;
 				}
 			}
 

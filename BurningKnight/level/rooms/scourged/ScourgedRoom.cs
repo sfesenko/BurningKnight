@@ -44,7 +44,7 @@ namespace BurningKnight.level.rooms.scourged {
 					level.Area!.Add(stand);
 					stand.Center = cn + new Vector2(16 + (i - c / 2f) * 32, 8);
 
-					stand.SetItem(Items.CreateAndAdd(Scourge.GenerateItemId(), level.Area), stand);
+					stand.SetItem(Items.CreateAndAdd(Scourge.GenerateItemId()!, level.Area)!, stand);
 				}
 
 				return;
@@ -63,7 +63,7 @@ namespace BurningKnight.level.rooms.scourged {
 			switch (Rnd.Int(GlobalSave.IsTrue(ShopNpc.Gobetta) ? 6 : 5)) {
 				case 0: {
 					for (var i = 0; i < Rnd.Int(1, 3); i++) {
-						Items.CreateAndAdd("bk:heart", level.Area!).Center = center;
+						Items.CreateAndAdd("bk:heart", level.Area!)!.Center = center;
 					}
 
 					break;
@@ -71,7 +71,7 @@ namespace BurningKnight.level.rooms.scourged {
 
 				case 1: {
 					for (var i = 0; i < Rnd.Int(1, 4); i++) {
-						Items.CreateAndAdd("bk:shield", level.Area!).Center = center;
+						Items.CreateAndAdd("bk:shield", level.Area!)!.Center = center;
 					}
 
 					break;
@@ -81,7 +81,7 @@ namespace BurningKnight.level.rooms.scourged {
 					var stand = new ItemStand();
 					level.Area!.Add(stand);
 					stand.BottomCenter = center;
-					stand.SetItem(Items.CreateAndAdd(Items.Generate(ItemPool.Treasure), level.Area), null);
+					stand.SetItem(Items.CreateAndAdd(Items.Generate(ItemPool.Treasure)!, level.Area)!, null);
 
 					break;
 				}
@@ -101,7 +101,7 @@ namespace BurningKnight.level.rooms.scourged {
 				
 				case 4: {
 					for (var i = 0; i < Rnd.Int(6, 12); i++) {
-						Items.CreateAndAdd("bk:coin", level.Area!).Center = center;
+						Items.CreateAndAdd("bk:coin", level.Area!)!.Center = center;
 					}
 
 					break;

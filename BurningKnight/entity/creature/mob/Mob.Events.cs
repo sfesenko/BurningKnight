@@ -116,13 +116,13 @@ namespace BurningKnight.entity.creature.mob {
 				var c = Rnd.Int(0, 3);
 				
 				for (var i = 0; i < c; i++) {
-					drops.Add(Items.Create("bk:copper_coin"));
+					drops.Add(Items.Create("bk:copper_coin")!);
 				}
 			}
 
 			foreach (var p in Area!.Tagged[Tags.Player]) {
 				if (p.GetComponent<LampComponent>()!.Item?.Id == "bk:explosive_lamp") {
-					drops.Add(Items.Create("bk:bomb"));
+					drops.Add(Items.Create("bk:bomb")!);
 					break;
 				}
 			}

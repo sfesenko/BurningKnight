@@ -49,7 +49,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 									builder.Slice = j % 2 == 0 ? "circle" : "small";
 									builder.Color = j % 2 == 0 ? ProjectileColor.Orange : ProjectileColor.Red;
 
-									pp.Add(builder.Build());
+									pp.Add(builder.Build()!);
 								}
 
 								pp.Launch(a, 80);

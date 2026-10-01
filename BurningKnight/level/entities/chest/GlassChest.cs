@@ -47,7 +47,7 @@ namespace BurningKnight.level.entities.chest {
 
 			if (id != null) {
 				item = Items.CreateAndAdd(id, Area!);
-				item.RemoveDroppedComponents();
+				item!.RemoveDroppedComponents();
 			}
 		}
 
@@ -71,8 +71,8 @@ namespace BurningKnight.level.entities.chest {
 			base.PostInit();
 
 			if (!open && item == null) {
-				item = Items.CreateAndAdd(Items.Generate(ItemPool.GoldChest), Area!);
-				item.RemoveDroppedComponents();
+				item = Items.CreateAndAdd(Items.Generate(ItemPool.GoldChest)!, Area!);
+				item!.RemoveDroppedComponents();
 			}
 		}
 	}

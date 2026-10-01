@@ -212,7 +212,7 @@ namespace BurningKnight.entity.room {
 				}
 
 				Painter.DrawLine(Level!, Start, Mid, Floor, Bold);
-				Painter.DrawLine(Level, Mid, End, Floor, Bold);
+				Painter.DrawLine(Level!, Mid, End, Floor, Bold);
 
 				if (Rnd.Chance(10)) {
 					Painter.Set(Level, End, Tiles.RandomFloor());

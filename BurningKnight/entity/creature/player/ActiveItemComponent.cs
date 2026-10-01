@@ -49,10 +49,10 @@ namespace BurningKnight.entity.creature.player {
 				var dialog = GetComponent<DialogComponent>();
 				
 				dialog!.Dialog.Str!.ClearIcons();
-				dialog.Dialog.Str.AddIcon(CommonAse.Ui.GetSlice(Controls.FindSlice(Controls.Active, false))!);
+				dialog.Dialog.Str.AddIcon(CommonAse.Ui.GetSlice(Controls.FindSlice(Controls.Active, false)!)!);
 
 				if (GamepadComponent.Current != null && GamepadComponent.Current.Attached) {
-					dialog.Dialog.Str.AddIcon(CommonAse.Ui.GetSlice(Controls.FindSlice(Controls.Active, true))!);
+					dialog.Dialog.Str.AddIcon(CommonAse.Ui.GetSlice(Controls.FindSlice(Controls.Active, true)!)!);
 				}
 				
 				dialog.StartAndClose("control_6", 5);
@@ -65,7 +65,7 @@ namespace BurningKnight.entity.creature.player {
 					Drop();
 					i.Done = true;
 
-					Entity.GetComponent<InventoryComponent>()!.Pickup(Items.CreateAndAdd("bk:water_bucket", Entity.Area!));
+					Entity.GetComponent<InventoryComponent>()!.Pickup(Items.CreateAndAdd("bk:water_bucket", Entity.Area!)!);
 				}, 3f);
 			}
 		}

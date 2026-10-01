@@ -61,7 +61,7 @@ namespace BurningKnight.level {
 			
 			// Cache the condition
 			var toX = GetRenderRight(camera!);
-			var toY = GetRenderTop(camera);
+			var toY = GetRenderTop(camera!);
 
 			Graphics.Color = new Color(1f, 1f, 0f, 1f);
 			
@@ -101,7 +101,7 @@ namespace BurningKnight.level {
 			
 			// Cache the condition
 			var toX = GetRenderRight(camera!);
-			var toY = GetRenderTop(camera);
+			var toY = GetRenderTop(camera!);
 			var active = !Engine.Instance.State.Paused;
 
 			var shader = Shaders.Chasm;
@@ -169,7 +169,7 @@ namespace BurningKnight.level {
 
 			// Cache the condition
 			var toX = GetRenderRight(camera!);
-			var toY = GetRenderBottom(camera);
+			var toY = GetRenderBottom(camera!);
 
 			for (int y = toY; y >= GetRenderTop(camera); y--) {
 				for (int x = GetRenderLeft(camera); x <= toX; x++) {
@@ -279,7 +279,7 @@ namespace BurningKnight.level {
 
 			// Cache the condition
 			var toX = GetRenderRight(camera!);
-			var toY = GetRenderBottom(camera);
+			var toY = GetRenderBottom(camera!);
 
 			var dt = Engine.Delta * 10f;
 			var region = Tileset!.WallTopA;

@@ -137,7 +137,7 @@ namespace BurningKnight.assets.lighting {
 			
 			Graphics.Color = new Color(color.X, color.Y, color.Z, alpha);
 
-			Graphics.Render(surface, Context.Camera!.TopLeft - new Vector2(Context.Camera!.Position.X % 1, 
+			Graphics.Render(surface!, Context.Camera!.TopLeft - new Vector2(Context.Camera!.Position.X % 1, 
 			Context.Camera!.Position.Y % 1));
 			Graphics.Color = Color.White;
 			Graphics.Batch.End();

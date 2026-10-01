@@ -278,7 +278,7 @@ namespace BurningKnight.state {
 
 		private void TeleportTo(RoomType type) {
 			var player = LocalPlayer.Locate(Area);
-			var room = player.GetComponent<RoomComponent>()!.Room;
+			var room = player!.GetComponent<RoomComponent>()!.Room;
 
 			foreach (var r in Area.Tagged[Tags.Room].Where(r => r != room && ((Room) r).Type == type))
 			{

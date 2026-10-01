@@ -8,7 +8,7 @@ namespace BurningKnight.level.tutorial {
 		private Prefab prefab;
 
 		public TutorialRoom() {
-			prefab = Prefabs.Get("tutorial");
+			prefab = Prefabs.Get("tutorial")!;
 		}
 		
 		public override void Paint(Level level) {

@@ -67,11 +67,11 @@ namespace BurningKnight.entity.creature.player {
 			if (Context.Run.Depth == -2) {
 				var hasGamepad = GamepadComponent.Current != null && GamepadComponent.Current.Attached;
 				
-				var region = CommonAse.Ui.GetSlice(Controls.FindSlice(Controls.Interact, false));
+				var region = CommonAse.Ui.GetSlice(Controls.FindSlice(Controls.Interact, false)!);
 				Engine.Instance.State.Ui.Add(new InteractFx(CurrentlyInteracting, null, region, hasGamepad ? -5 : 0));
 
 				if (hasGamepad) {
-					region = CommonAse.Ui.GetSlice(Controls.FindSlice(Controls.Interact, true));
+					region = CommonAse.Ui.GetSlice(Controls.FindSlice(Controls.Interact, true)!);
 					Engine.Instance.State.Ui.Add(new InteractFx(CurrentlyInteracting, null, region, 5));
 				}
 			}

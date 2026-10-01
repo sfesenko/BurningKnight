@@ -27,7 +27,7 @@ namespace BurningKnight.ui {
 		public TextureRegion? Region = null!;
 
 		public override void Render() {
-			Graphics.Render(Region, Center, 0, Region.Center, new Vector2(scale * Size));
+			Graphics.Render(Region!, Center, 0, Region.Center, new Vector2(scale * Size));
 		}
 	}
 }

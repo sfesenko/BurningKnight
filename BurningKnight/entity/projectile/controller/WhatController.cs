@@ -21,7 +21,7 @@ namespace BurningKnight.entity.projectile.controller {
 					builder.Range = 1f;
 
 					var projectile = builder.Build();
-					projectile.Center = p.Center;
+					projectile!.Center = p.Center;
 				}
 			};
 		}

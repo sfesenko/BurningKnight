@@ -98,7 +98,7 @@ namespace BurningKnight.level {
 
 			// Cache the condition
 			var toX = GetRenderRight(camera!);
-			var toY = GetRenderBottom(camera);
+			var toY = GetRenderBottom(camera!);
 
 			for (int y = toY; y >= GetRenderTop(camera); y--) {
 				for (int x = GetRenderLeft(camera); x <= toX; x++) {
@@ -130,7 +130,7 @@ namespace BurningKnight.level {
 
 			// Cache the condition
 			var toX = GetRenderRight(camera!);
-			var toY = GetRenderBottom(camera);
+			var toY = GetRenderBottom(camera!);
 
 			var region = new TextureRegion();
 			var shader = Shaders.Terrain;
@@ -257,7 +257,7 @@ namespace BurningKnight.level {
 
 			// Cache the condition
 			var toX = GetRenderRight(camera!);
-			var toY = GetRenderBottom(camera);
+			var toY = GetRenderBottom(camera!);
 			
 			var active = !Engine.Instance.State.Paused;
 			var state = Engine.Instance.StateRenderer;

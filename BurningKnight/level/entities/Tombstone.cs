@@ -102,7 +102,7 @@ namespace BurningKnight.level.entities {
 			var h2 = p.GetComponent<HealthComponent>();
 			var hr2 = p.GetComponent<HeartsComponent>();
 			
-			p.GetComponent<ActiveWeaponComponent>()!.Set(Items.CreateAndAdd(Items.Generate(ItemPool.StartingWeapon), Area));
+			p.GetComponent<ActiveWeaponComponent>()!.Set(Items.CreateAndAdd(Items.Generate(ItemPool.StartingWeapon)!, Area!)!);
 
 			h1!.InvincibilityTimer = 0;
 			h1.Unhittable = false;

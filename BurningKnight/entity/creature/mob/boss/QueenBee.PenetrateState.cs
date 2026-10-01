@@ -84,7 +84,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 
 						var p = builder.Shoot(a, Rnd.Float(3f, 10f)).Build();
 
-						ProjectileCallbacks.AttachUpdateCallback(p, SlowdownProjectileController.Make(0.25f));
+						ProjectileCallbacks.AttachUpdateCallback(p!, SlowdownProjectileController.Make(0.25f));
 						Self.GetComponent<AudioEmitterComponent>()!.EmitRandomized("mob_bee_shot");
 					}
 				}

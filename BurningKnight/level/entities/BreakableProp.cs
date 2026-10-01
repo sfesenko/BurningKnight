@@ -122,7 +122,7 @@ namespace BurningKnight.level.entities {
 					d.EmitRandomizedPrefixed("level_chair_break", 2, 0.75f);
 				}
 
-				Particles.BreakSprite(Area, GetComponent<SliceComponent>()!.Sprite, Position);
+				Particles.BreakSprite(Area!, GetComponent<SliceComponent>()!.Sprite, Position);
 				Context.Camera!.Shake(2f);
 			}
 		}

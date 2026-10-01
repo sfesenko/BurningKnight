@@ -66,7 +66,7 @@ namespace BurningKnight.entity.creature.mob.ice {
 				for (var i = 0; i < (d ? 8 : 4); i++) {
 					var projectile = builder.Shoot(an + i * Math.PI * (d ? 0.25f : 0.5f), 4f).Build();
 
-					projectile.Color = d ? ProjectileColor.Red : ProjectileColor.Orange;
+					projectile!.Color = d ? ProjectileColor.Red : ProjectileColor.Orange;
 					projectile.Center = Center + MathUtils.CreateVector(an, 4f);
 				}
 			};

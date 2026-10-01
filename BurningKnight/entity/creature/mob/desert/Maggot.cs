@@ -129,7 +129,7 @@ namespace BurningKnight.entity.creature.mob.desert {
 					builder.AddFlags(ProjectileFlags.FlyOverStones);
 					var projectile = builder.Shoot(angle, 5f).Build();
 
-					projectile.Center += MathUtils.CreateVector(angle, 4);
+					projectile!.Center += MathUtils.CreateVector(angle, 4);
 
 					a!.Scale.X = 1.8f;
 					a.Scale.Y = 0.2f;

@@ -121,7 +121,7 @@ namespace BurningKnight.entity.creature.mob.jungle {
 						builder.Scale = Rnd.Float(0.4f, 1f);
 						var p = builder.Shoot(a, Rnd.Float(3f, 10f)).Build();
 
-						ProjectileCallbacks.AttachUpdateCallback(p, SlowdownProjectileController.Make(0.25f, 0.5f, 1f));
+						ProjectileCallbacks.AttachUpdateCallback(p!, SlowdownProjectileController.Make(0.25f, 0.5f, 1f));
 					}
 
 					for (var i = 0; i < Rnd.Int(4, 10); i++) {

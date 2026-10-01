@@ -38,7 +38,7 @@ namespace BurningKnight.level.entities.chest {
 
 				if (id != null) {
 					var item = Items.CreateAndAdd(id, Area!);
-					GetComponent<ItemComponent>()!.Set(item, false);
+					GetComponent<ItemComponent>()!.Set(item!, false);
 					itemRegion = item.Region;
 				}
 			} catch (Exception e) {
@@ -84,7 +84,7 @@ namespace BurningKnight.level.entities.chest {
 			var w = entity.GetComponent<ActiveWeaponComponent>();
 			GetComponent<ItemComponent>()!.Exchange(w!);
 
-			if (w.Item != null) {
+			if (w!.Item != null) {
 				Audio.PlaySfx(w.Item.Data.WeaponType.GetSwapSfx());
 				entity.GetComponent<PlayerGraphicsComponent>()!.AnimateSwap();
 			} else if (entity.GetComponent<WeaponComponent>()!.Item != null) {

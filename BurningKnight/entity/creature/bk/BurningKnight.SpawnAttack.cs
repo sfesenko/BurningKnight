@@ -63,7 +63,7 @@ namespace BurningKnight.entity.creature.bk {
 					builder.RemoveFlags(ProjectileFlags.BreakableByMelee, ProjectileFlags.Reflectable);
 
 					var projectile = builder.Build();
-					projectile.Center += MathUtils.CreateVector(angle, 8);
+					projectile!.Center += MathUtils.CreateVector(angle, 8);
 
 					ProjectileCallbacks.AttachDeathCallback(projectile, (p, en, t) => {
 						var x = (int) Math.Floor(p.CenterX / 16);

@@ -28,7 +28,7 @@ namespace BurningKnight.entity.item.use {
 					for (var i = 0; i < 2; i++) {
 						var pr = builder.Shoot( a + 0.2f * (i == 0 ? -1 : 1), s).Build();
 
-						pr.EntitiesHurt.AddRange(p.EntitiesHurt);
+						pr!.EntitiesHurt!.AddRange(p.EntitiesHurt);
 						pr.Center = p.Center;
 					}
 

@@ -38,7 +38,7 @@ namespace BurningKnight.entity {
 				level.Area!.Add(part);
 			}
 
-			Particles.BreakSprite(level.Area, (l == Tile.TintedRock ? level!.Tileset.TintedRock : (l == Tile.MetalBlock ? level!.Tileset.MetalBlock : level!.Tileset.Rock))[Rnd.Int(4)], ww);
+			Particles.BreakSprite(level.Area!, (l == Tile.TintedRock ? level!.Tileset.TintedRock : (l == Tile.MetalBlock ? level!.Tileset.MetalBlock : level!.Tileset.Rock))[Rnd.Int(4)], ww);
 
 			level.Set(x, y, Tile.Ember);
 			level.UpdateTile(x, y);

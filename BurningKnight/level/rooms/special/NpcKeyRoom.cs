@@ -11,7 +11,7 @@ namespace BurningKnight.level.rooms.special {
 			level.Area!.Add(stand);
 			stand.Center = GetTileCenter() * 16 + new Vector2(8);
 			
-			stand.SetItem(Items.CreateAndAdd("bk:cage_key", level.Area), null);
+			stand.SetItem(Items.CreateAndAdd("bk:cage_key", level.Area)!, null);
 		}
 		
 		public override int GetMinWidth() {

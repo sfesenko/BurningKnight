@@ -8,7 +8,7 @@ namespace BurningKnight.level.hall {
 		private Prefab prefab;
 
 		public HallRoom() {
-			prefab = Prefabs.Get(PrefabName);
+			prefab = Prefabs.Get(PrefabName)!;
 		}
 		
 		public override void Paint(Level level) {

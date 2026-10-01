@@ -50,7 +50,7 @@ namespace BurningKnight.level {
 			var chances = new List<float>();
 
 			for (var i = 0; i < mobs.Count; i++) {
-				chances.Add(parent.WeightMob(mobs[i], mobs[i].GetChanceFor(level!.Biome.Id)));
+				chances.Add(parent.WeightMob(mobs[i], mobs[i].GetChanceFor(level!.Biome.Id)!));
 			}
 
 			var types = new List<MobInfo>();

@@ -47,7 +47,7 @@ namespace BurningKnight.entity.creature.npc.dungeon {
 					var stand = new SnekStand();
 					Area!.Add(stand);
 					stand.Center = Center;
-					stand.SetItem(Items.CreateAndAdd("bk:snek", Area), this);
+					stand.SetItem(Items.CreateAndAdd("bk:snek", Area)!, this);
 				}, 4f);
 			}, 4f);
 		}
@@ -69,7 +69,7 @@ namespace BurningKnight.entity.creature.npc.dungeon {
 				stand.Center = where + new Vector2((stand.Width + 4) * i, 4 + stand.Height);
 
 				var id = Items.GenerateAndRemove(pool, null, true);
-				stand.SetItem(Items.CreateAndAdd(id, area, false), null);
+				stand.SetItem(Items.CreateAndAdd(id, area, false)!, null);
 			}
 		}
 

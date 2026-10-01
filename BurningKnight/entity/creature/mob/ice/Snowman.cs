@@ -69,7 +69,7 @@ namespace BurningKnight.entity.creature.mob.ice {
 
 					var projectile = builder.Shoot(an, 8f).Build();
 
-					projectile.Center = Center + MathUtils.CreateVector(an, 4f);
+					projectile!.Center = Center + MathUtils.CreateVector(an, 4f);
 
 					ProjectileCallbacks.AttachUpdateCallback(projectile, TargetProjectileController.Make(Target));
 				};

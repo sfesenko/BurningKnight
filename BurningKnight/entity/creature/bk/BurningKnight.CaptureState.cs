@@ -43,13 +43,13 @@ namespace BurningKnight.entity.creature.bk {
 				GameContext.Current!.Camera.Targets!.Clear();
 				GameContext.Current.Camera.Follow(Self, 0.3f);
 
-				Timer.Add(() => { GameContext.Current.Camera.Follow(Self.captured, 0.3f); }, 0.5f);
+				Timer.Add(() => { GameContext.Current.Camera.Follow(Self.captured!, 0.3f); }, 0.5f);
 			}
 
 			public override void Update(float dt) {
 				base.Update(dt);
 
-				var d = Self.DistanceTo(Self.captured);
+				var d = Self.DistanceTo(Self.captured!);
 
 				if (d <= 8) {
 					Audio.PlayMusic("Fatiga", true);

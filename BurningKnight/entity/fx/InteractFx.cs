@@ -22,7 +22,7 @@ namespace BurningKnight.entity.fx {
 		
 		public InteractFx(Entity e, string? str, TextureRegion? sprite = null, float of = 0) {
 			entity = e;
-			text = str;
+			text = str!;
 			region = sprite!;
 			AlwaysActive = true;
 			AlwaysVisible = true;

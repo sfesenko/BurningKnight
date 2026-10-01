@@ -113,9 +113,9 @@ namespace BurningKnight.entity.item.use {
 						var b = BuffRegistry.Create(buff);
 
 						if (InfiniteBuff) {
-							b.Infinite = true;
+							b!.Infinite = true;
 						} else {
-							b.TimeLeft = b.Duration = BuffDuration;
+							b!.TimeLeft = b.Duration = BuffDuration;
 						}
 
 						buffs.Add(b);

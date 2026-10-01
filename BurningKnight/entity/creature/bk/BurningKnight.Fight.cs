@@ -161,7 +161,7 @@ namespace BurningKnight.entity.creature.bk {
 			for (var i = 0; i < 3; i++) {
 				Timer.Add(() => {
 					var projectile = builder.Shoot(angle, Raging ? 15f : 10f).Build();
-					projectile.Center += MathUtils.CreateVector(angle, 8);
+					projectile!.Center += MathUtils.CreateVector(angle, 8);
 
 					if (offset != null) {
 						projectile.Center += offset.Value;

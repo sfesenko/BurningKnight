@@ -93,7 +93,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 
 			var projectile = builder.Shoot(angle, 20f).Build();
 
-			projectile.Center += MathUtils.CreateVector(angle, 8);
+			projectile!.Center += MathUtils.CreateVector(angle, 8);
 
 			if (offset != null) {
 				projectile.Center += offset.Value;

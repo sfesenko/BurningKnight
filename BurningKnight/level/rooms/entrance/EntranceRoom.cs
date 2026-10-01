@@ -67,7 +67,7 @@ namespace BurningKnight.level.rooms.entrance {
 			if (Context.Run.Type == RunType.BossRush && Context.Run.Depth > 1) {
 				var item = Items.CreateAndAdd("bk:battery", level.Area);
 				
-				item.Center = where * 16 + new Vector2(8 + Rnd.Float(-16, 16), Rnd.Float(-16, 16));
+				item!.Center = where * 16 + new Vector2(8 + Rnd.Float(-16, 16), Rnd.Float(-16, 16));
 			}
 		}
 

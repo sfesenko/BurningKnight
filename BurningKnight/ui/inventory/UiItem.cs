@@ -144,13 +144,13 @@ namespace BurningKnight.ui.inventory {
 				shader.Parameters["flashColor"].SetValue(Scourged ? ItemGraphicsComponent.ScourgedColor : ColorUtils.White);
 
 				foreach (var d in MathUtils.Directions) {
-					Graphics.Render(Region, Center + d, 0, Region.Center, IconScale * scale);
+					Graphics.Render(Region!, Center + d, 0, Region.Center, IconScale * scale);
 				}
 
 				Shaders.End();
 			}
 			
-			Graphics.Render(Region, Center, 0, Region.Center, IconScale * scale);
+			Graphics.Render(Region!, Center, 0, Region.Center, IconScale * scale);
 			
 			if (count < 2) {
 				return;

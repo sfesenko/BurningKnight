@@ -23,7 +23,7 @@ namespace BurningKnight.entity.door {
 			if (!IsLocked) {
 				HandleEvent(new LockOpenedEvent {
 					Lock = this,
-					Who = entity
+					Who = entity!
 				});
 
 				if (Owner is Door) {
@@ -35,7 +35,7 @@ namespace BurningKnight.entity.door {
 			} else {
 				HandleEvent(new LockClosedEvent {
 					Lock = this,
-					Who = entity
+					Who = entity!
 				});
 			}
 		}

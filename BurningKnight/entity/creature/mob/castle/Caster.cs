@@ -73,7 +73,7 @@ namespace BurningKnight.entity.creature.mob.castle {
 							builder.AddFlags(ProjectileFlags.AutomaticRotation, ProjectileFlags.FlyOverStones, ProjectileFlags.FlyOverWalls);
 
 							var projectile = builder.Shoot(an, 7f).Build();
-							ProjectileCallbacks.AttachUpdateCallback(projectile, MakeController());
+							ProjectileCallbacks.AttachUpdateCallback(projectile!, MakeController());
 						};
 					}
 				}

@@ -18,7 +18,7 @@ namespace BurningKnight.level.rooms.secret {
 			level.Area!.Add(stand);
 			stand.Center = GetCenter() * 16 + new Vector2(8);
 
-			stand.SetItem(Items.CreateAndAdd(Scourge.GenerateItemId(), level.Area), stand);
+			stand.SetItem(Items.CreateAndAdd(Scourge.GenerateItemId()!, level.Area)!, stand);
 		}
 
 		protected override bool Quad() {

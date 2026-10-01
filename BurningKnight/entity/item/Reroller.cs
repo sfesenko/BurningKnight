@@ -26,7 +26,7 @@ namespace BurningKnight.entity.item {
 						if (s.Item == null) {
 							if (spawnNewItems) {
 								var id = s is ShopStand std ? Items.Generate(std.GetPool()) : Items.GenerateAndRemove(pool);
-								s.SetItem(Items.CreateAndAdd(id, area), null);
+								s.SetItem(Items.CreateAndAdd(id!, area)!, null);
 
 								TextParticle.Add(s, Locale.Get("rerolled")).Stacks = false;
 							}

@@ -24,13 +24,13 @@ namespace BurningKnight.level.entities.chest {
 
 		public static Entity? PlaceRandom(Vector2 where, Area area) {
 			try {
-				var chest = (Chest) Activator.CreateInstance(Instance.Generate());
+				var chest = (Chest) Activator.CreateInstance(Instance.Generate()!);
 				
 				
 				if (!(chest is GlassChest || chest is ProtoChest) && Rnd.Chance(LevelSave.MimicChance)) {
 					var mimic = new Mimic {
 						Kind = chest!.GetSprite(),
-						Pool = chest.GetPool()
+						Pool = chest.GetPool()!
 					};
 
 					area.Add(mimic);

@@ -65,7 +65,7 @@ namespace BurningKnight.entity.creature.pet {
 
 					var pr = builder.Build();
 
-					pr.Color = ProjectileColor.Rainbow[i];
+					pr!.Color = ProjectileColor.Rainbow[i];
 					pr.Position = p.Position;
 				}
 

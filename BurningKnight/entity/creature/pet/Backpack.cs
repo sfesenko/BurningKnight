@@ -49,7 +49,7 @@ namespace BurningKnight.entity.creature.pet {
 
 				if (id != null) {
 					var item = Items.CreateAndAdd(id, Area!);
-					GetComponent<ItemComponent>()!.Set(item, false);
+					GetComponent<ItemComponent>()!.Set(item!, false);
 					item.GetComponent<OwnerComponent>()!.Owner = Owner!;
 					itemRegion = item.Region;
 				}

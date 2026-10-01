@@ -108,10 +108,10 @@ namespace BurningKnight.level.rooms.shop {
 				var item = Items.CreateAndAdd(id, level.Area, false);
 
 				if (scourged) {
-					item.Scourged = true;
+					item!.Scourged = true;
 				}
 				
-				stand.SetItem(item, null);
+				stand.SetItem(item!, null);
 
 				if (pool.Count == 0) {
 					break;

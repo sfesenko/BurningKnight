@@ -40,7 +40,7 @@ namespace BurningKnight.entity.creature.mob.desert {
 
 					var a = AngleTo(Target) + Rnd.Float(-0.1f, 0.1f);
 					var projectile = builder.Shoot(a, 9f).Build();
-					projectile.Center = Center + MathUtils.CreateVector(a, 5f) - new Vector2(0, GetComponent<ZComponent>()!.Z);
+					projectile!.Center = Center + MathUtils.CreateVector(a, 5f) - new Vector2(0, GetComponent<ZComponent>()!.Z);
 				}, i * 0.3f);
 			}
 		}

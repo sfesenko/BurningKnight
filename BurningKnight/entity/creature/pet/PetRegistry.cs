@@ -81,7 +81,7 @@ namespace BurningKnight.entity.creature.pet {
 
 						var projectile = builder.Build();
 
-						projectile.Center = pet.Center + MathUtils.CreateVector(a, 5f);
+						projectile!.Center = pet.Center + MathUtils.CreateVector(a, 5f);
 						projectile.Owner = pet;
 					}
 				};
@@ -118,7 +118,7 @@ namespace BurningKnight.entity.creature.pet {
 						for (var i = 0; i < 3; i++) {
 							var projectile = builder.Shoot(a + (i - 1) * 0.3f + Rnd.Float(-0.1f, 0.1f), Rnd.Float(4, 6)).Build();
 
-							projectile.Center = pet.Center + MathUtils.CreateVector(a, 5f);
+							projectile!.Center = pet.Center + MathUtils.CreateVector(a, 5f);
 							projectile.Owner = pet;
 						}
 					}

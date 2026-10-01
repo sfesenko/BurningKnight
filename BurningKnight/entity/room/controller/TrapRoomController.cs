@@ -32,7 +32,7 @@ namespace BurningKnight.entity.room.controller {
 			}
 
 			if (!on) {
-				Room.CheckCleared(LocalPlayer.Locate(Room.Area!));
+				Room.CheckCleared(LocalPlayer.Locate(Room.Area!)!);
 			}
 		}
 	}

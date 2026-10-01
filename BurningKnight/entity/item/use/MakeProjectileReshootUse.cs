@@ -27,7 +27,7 @@ namespace BurningKnight.entity.item.use {
 
 						var pr = builder.Shoot(p.AngleTo(target), 10).Build();
 
-						pr.EntitiesHurt.AddRange(p.EntitiesHurt);
+						pr!.EntitiesHurt!.AddRange(p.EntitiesHurt);
 						pr.Center = p.Center;
 					}
 				});

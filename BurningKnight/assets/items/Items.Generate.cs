@@ -53,12 +53,12 @@ namespace BurningKnight.assets.items {
 			if (data.Renderer != JsonValue.Null) {
 				if (data.Renderer.IsString) {
 					var name = data.Renderer.AsString;
-					item.Renderer = RendererRegistry.Create(name);
+					item.Renderer = RendererRegistry.Create(name)!;
 
 					CheckRendererForNull(item, name);
 				} else if (data.Renderer.IsJsonObject) {
 					var name = data.Renderer["id"].String("bk:Angled");
-					item.Renderer = RendererRegistry.Create(name);
+					item.Renderer = RendererRegistry.Create(name)!;
 
 					CheckRendererForNull(item, name);
 					

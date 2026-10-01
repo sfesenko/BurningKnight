@@ -57,34 +57,34 @@ namespace BurningKnight.entity.creature.player {
 				
 				if (StartingLamps[index] != null) {
 					var i = Items.CreateAndAdd(StartingLamps[index], Area!);
-					i.Scourged = false;
+					i!.Scourged = false;
 					GetComponent<LampComponent>()!.Set(i, false);
 					Log.Debug($"Starting lamp: {StartingLamps[index]}");
 				}
 				
 				if (StartingWeapons[index] == null || !ItemPool.StartingWeapon.Contains(Items.Datas[StartingWeapons[index]].Pools)) {
-					StartingWeapons[index] = Items.Generate(ItemPool.StartingWeapon, item => Item.Unlocked(item.Id));
+					StartingWeapons[index] = Items.Generate(ItemPool.StartingWeapon, item => Item.Unlocked(item.Id))!;
 				}
 
 				if (StartingWeapons[index] != null) {
 					var i = Items.CreateAndAdd(StartingWeapons[index], Area!);
-					i.Scourged = false;
+					i!.Scourged = false;
 
 					var l = GetComponent<LampComponent>()!.Item;
 
 					if (l != null && l.Id == "bk:sharp_lamp" && i.Data.WeaponType != WeaponType.Melee) {
-						StartingWeapons[index] = Items.Generate(ItemPool.StartingWeapon, item => Item.Unlocked(item.Id));
+						StartingWeapons[index] = Items.Generate(ItemPool.StartingWeapon, item => Item.Unlocked(item.Id))!;
 						i.Done = true;
-						i = Items.CreateAndAdd(StartingWeapons[index], Area);
+						i = Items.CreateAndAdd(StartingWeapons[index], Area!);
 					}
 					
-					GetComponent<ActiveWeaponComponent>()!.Set(i, false);
+					GetComponent<ActiveWeaponComponent>()!.Set(i!, false);
 					Log.Debug($"Starting weapon: {StartingWeapons[index]}");
 				}
 				
 				if (StartingItems[index] != null) {
 					var i = Items.CreateAndAdd(StartingItems[index], Area!);
-					i.Scourged = false;
+					i!.Scourged = false;
 					GetComponent<ActiveItemComponent>()!.Set(i, false);
 					
 					Log.Debug($"Starting item: {StartingItems[index]}");
@@ -96,7 +96,7 @@ namespace BurningKnight.entity.creature.player {
 						
 						foreach (var id in DailyItems) {
 							Log.Info($"Giving {id}");
-							inventory!.Pickup(Items.CreateAndAdd(id, Area!), false);
+							inventory!.Pickup(Items.CreateAndAdd(id, Area!)!, false);
 						}
 					}
 					

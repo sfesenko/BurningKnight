@@ -34,7 +34,7 @@ namespace BurningKnight.level.rooms.spiked {
 			switch (Rnd.Int(4)) {
 				case 0: {
 					for (var i = 0; i < Rnd.Int(1, 3); i++) {
-						Items.CreateAndAdd("bk:heart", level.Area!).Center = center;
+						Items.CreateAndAdd("bk:heart", level.Area!)!.Center = center;
 					}
 					
 					break;
@@ -42,7 +42,7 @@ namespace BurningKnight.level.rooms.spiked {
 
 				case 1: {
 					for (var i = 0; i < Rnd.Int(1, 4); i++) {
-						Items.CreateAndAdd("bk:shield", level.Area!).Center = center;
+						Items.CreateAndAdd("bk:shield", level.Area!)!.Center = center;
 					}
 
 					break;
@@ -52,7 +52,7 @@ namespace BurningKnight.level.rooms.spiked {
 					var stand = new ItemStand();
 					level.Area!.Add(stand);
 					stand.BottomCenter = center;
-					stand.SetItem(Items.CreateAndAdd(Items.Generate(ItemPool.SpikedRoom), level.Area), null);
+					stand.SetItem(Items.CreateAndAdd(Items.Generate(ItemPool.SpikedRoom)!, level.Area)!, null);
 					
 					break;
 				}

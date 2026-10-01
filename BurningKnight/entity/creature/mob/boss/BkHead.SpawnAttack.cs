@@ -52,7 +52,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 					builder.RemoveFlags(ProjectileFlags.BreakableByMelee, ProjectileFlags.Reflectable, ProjectileFlags.BreakableByMelee);
 
 					var projectile = builder.Shoot(angle, 15f).Build();
-					projectile.Center += MathUtils.CreateVector(angle, 8);
+					projectile!.Center += MathUtils.CreateVector(angle, 8);
 
 
 					ProjectileCallbacks.AttachDeathCallback(projectile, (p, en, t) => {

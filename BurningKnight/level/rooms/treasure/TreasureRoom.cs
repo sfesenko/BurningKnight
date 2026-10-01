@@ -83,10 +83,10 @@ namespace BurningKnight.level.rooms.treasure {
 				var item = Items.CreateAndAdd(Items.GenerateAndRemove(pool, null, true), level.Area, false);
 
 				if (scourged) {
-					item.Scourged = true;
+					item!.Scourged = true;
 				}
 				
-				s.SetItem(item, null);
+				s.SetItem(item!, null);
 
 				if (pool.Count == 0) {
 					break;

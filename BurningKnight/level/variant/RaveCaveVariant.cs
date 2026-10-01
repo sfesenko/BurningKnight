@@ -12,7 +12,7 @@ namespace BurningKnight.level.variant {
 
 			painter.ModifyMobs = mobs => {
 				mobs.Clear();
-				mobs.Add(MobRegistry.FindFor(typeof(Crab)));
+				mobs.Add(MobRegistry.FindFor(typeof(Crab))!);
 			};
 		}
 	}

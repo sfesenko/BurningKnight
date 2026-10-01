@@ -7,7 +7,7 @@ namespace BurningKnight.level.rooms.special.minigame {
 		private Prefab prefab;
 
 		public ClawMinigameRoom() {
-			prefab = Prefabs.Get(PrefabName);
+			prefab = Prefabs.Get(PrefabName)!;
 		}
 		
 		public override void Paint(Level level) {

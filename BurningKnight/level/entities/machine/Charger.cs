@@ -93,7 +93,7 @@ namespace BurningKnight.level.entities.machine {
 			Animate();
 			
 			var p = e ?? LocalPlayer.Locate(Area!);
-			var active = p.GetComponent<ActiveItemComponent>();
+			var active = p!.GetComponent<ActiveItemComponent>();
 			
 			if (active!.Item == null) {
 				GetComponent<DialogComponent>()!.StartAndClose("charger_0", 3);

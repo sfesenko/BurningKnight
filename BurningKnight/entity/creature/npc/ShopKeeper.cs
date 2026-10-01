@@ -369,7 +369,7 @@ namespace BurningKnight.entity.creature.npc {
 
 					if (Self.shotgun == null) {
 						Self.shotgun = Items.CreateAndAdd("bk:shotgun", Self.Area!);
-						Self.shotgun.RemoveDroppedComponents();
+						Self!.shotgun!.RemoveDroppedComponents();
 						Self.shotgun.AddComponent(new OwnerComponent(Self));
 					}
 				}

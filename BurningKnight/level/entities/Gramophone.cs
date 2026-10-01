@@ -86,7 +86,7 @@ namespace BurningKnight.level.entities {
 					var old = c.Item;
 
 					if (hd) {
-						entity.GetComponent<InventoryComponent>()!.Pickup(Items.CreateAndAdd($"bk:disk_{disk}", Area!));
+						entity.GetComponent<InventoryComponent>()!.Pickup(Items.CreateAndAdd($"bk:disk_{disk}", Area!)!);
 					} else {
 						c.Set(null, false);
 					}
@@ -98,7 +98,7 @@ namespace BurningKnight.level.entities {
 					Log.Error(e);
 				}
 			} else if (hd) {
-				entity.GetComponent<InventoryComponent>()!.Pickup(Items.CreateAndAdd($"bk:disk_{disk}", Area!));
+				entity.GetComponent<InventoryComponent>()!.Pickup(Items.CreateAndAdd($"bk:disk_{disk}", Area!)!);
 				disk = 0;
 			}
 			
@@ -234,7 +234,7 @@ namespace BurningKnight.level.entities {
 			}
 
 			var item = Items.CreateAndAdd($"bk:disk_{disk}", Area!);
-			item.CenterX = CenterX;
+			item!.CenterX = CenterX;
 			item.Y = Bottom + 4;
 
 			disk = 0;

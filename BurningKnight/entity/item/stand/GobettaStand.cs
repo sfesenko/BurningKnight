@@ -25,7 +25,7 @@ namespace BurningKnight.entity.item.stand {
 
 				if (scourge != null) {
 					Timer.Add(() => {
-						entity.GetComponent<InventoryComponent>()!.Pickup(Items.CreateAndAdd(scourge, entity.Area!));
+						entity.GetComponent<InventoryComponent>()!.Pickup(Items.CreateAndAdd(scourge, entity.Area!)!);
 					}, 2f);
 				}
 			

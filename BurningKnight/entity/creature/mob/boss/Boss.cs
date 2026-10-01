@@ -315,7 +315,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 			exit.Center = p;
 
 			Painter.Fill(Context.Level!, x - 1, y - 1, 3, 3, Tiles.RandomFloor());
-			Painter.Fill(Context.Level, x - 1, y - 3, 3, 3, Tiles.RandomFloor());
+			Painter.Fill(Context.Level!, x - 1, y - 3, 3, 3, Tiles.RandomFloor());
 
 			Context.Level!.ReTileAndCreateBodyChunks(x - 1, y - 1, 3, 7);
 			var w = p - new Vector2(0, 32f);
@@ -324,7 +324,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 				var stand = new BossStand();
 				Area.Add(stand);
 				stand.Center = w;
-				stand.SetItem(Items.CreateAndAdd(Items.Generate(ItemPool.Boss), Area), null);
+				stand.SetItem(Items.CreateAndAdd(Items.Generate(ItemPool.Boss)!, Area)!, null);
 			}
 
 			var rewards = new List<string>();
@@ -360,7 +360,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 
 			foreach (var reward in rewards) {
 				var item = Items.CreateAndAdd(reward, Area);
-				item.Center = w + MathUtils.CreateVector(j / ((float) rewards.Count) * Math.PI * 2 + Rnd.Float(-0.1f, 0.1f), Rnd.Float(12, 18));
+				item!.Center = w + MathUtils.CreateVector(j / ((float) rewards.Count) * Math.PI * 2 + Rnd.Float(-0.1f, 0.1f), Rnd.Float(12, 18));
 				j++;
 			}
 		}

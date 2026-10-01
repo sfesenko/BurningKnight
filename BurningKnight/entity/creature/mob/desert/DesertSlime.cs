@@ -43,7 +43,7 @@ namespace BurningKnight.entity.creature.mob.desert {
 			};
 
 			builder.Shoot(a, 5f);
-			builder.Build().Center = Center + MathUtils.CreateVector(a, 5f);
+			builder!.Build()!.Center = Center + MathUtils.CreateVector(a, 5f);
 
 			GetComponent<RectBodyComponent>()!.KnockbackFrom(a - (float) Math.PI, 0.3f);
 		}

@@ -92,7 +92,7 @@ namespace BurningKnight.level.entities.machine {
 
 			var e = Items.CreateAndAdd(item, Area!);
 			
-			e.CenterX = CenterX;
+			e!.CenterX = CenterX;
 			e.CenterY = Bottom;
 
 			e!.GetAnyComponent<BodyComponent>()!.Velocity = new Vector2(0, 128);

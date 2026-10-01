@@ -39,7 +39,7 @@ namespace BurningKnight.entity.orbital {
 
 					var pr = builder.Build();
 					
-					pr.Color = ProjectileColor.Rainbow[i];
+					pr!.Color = ProjectileColor.Rainbow[i];
 					pr.Position = p.Position;
 				}
 				

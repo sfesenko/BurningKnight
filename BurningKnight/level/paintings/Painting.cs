@@ -169,7 +169,7 @@ namespace BurningKnight.level.paintings {
 			
 				AudioEmitterComponent.Dummy(Area!, Center).EmitRandomizedPrefixed("level_chair_break", 2, 0.5f);
 				
-				Particles.BreakSprite(Area, GetComponent<InteractableSliceComponent>()!.Sprite, Position, Depth);
+				Particles.BreakSprite(Area!, GetComponent<InteractableSliceComponent>()!.Sprite, Position, Depth);
 				Context.Camera!.Shake(2f);
 			}
 		}

@@ -226,7 +226,7 @@ namespace BurningKnight.entity.item.use {
 					// projectile.FlashTimer = 0.05f;
 
 					var projectile = builder.Build();
-					projectile.Center = from;
+					projectile!.Center = from;
 
 					if (modifiers != null) {
 						foreach (var m in modifiers) {
@@ -320,11 +320,11 @@ namespace BurningKnight.entity.item.use {
 
 		private void PlaceMana(Area area, Vector2 where) {
 			for (var j = 0; j < Math.Floor(manaUsage / 2f); j++) {
-				Items.CreateAndAdd("bk:mana", area).Center = where;
+				Items.CreateAndAdd("bk:mana", area)!.Center = where;
 			}
 
 			if (manaUsage % 2 == 1) {
-				Items.CreateAndAdd("bk:half_mana", area).Center = where;
+				Items.CreateAndAdd("bk:half_mana", area)!.Center = where;
 			}
 
 			AnimationUtil.Poof(where);

@@ -45,7 +45,7 @@ namespace BurningKnight.level.rooms.challenge {
 				level.Area!.Add(stand);
 				stand.Center = center;
 
-				stand.SetItem(Items.CreateAndAdd(Items.Generate(ItemPool.Treasure), level.Area), null);
+				stand.SetItem(Items.CreateAndAdd(Items.Generate(ItemPool.Treasure)!, level.Area)!, null);
 			} else {
 				var chests = new List<Chest>();
 				var i = Rnd.Int(4);

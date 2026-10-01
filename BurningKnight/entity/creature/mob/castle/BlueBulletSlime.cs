@@ -36,7 +36,7 @@ namespace BurningKnight.entity.creature.mob.castle {
 				var a = Math.PI * 2 * (((float) i) / am);
 				var projectile = builder.Shoot(a + Rnd.Float(-0.1f, 0.1f), 5f).Build();
 					
-				projectile.Center = BottomCenter;
+				projectile!.Center = BottomCenter;
 			}
 
 			Timer.Add(() => {
@@ -59,7 +59,7 @@ namespace BurningKnight.entity.creature.mob.castle {
 					var a = Math.PI * 2 * (((float) i) / am + 0.5f);
 					var projectile = b.Shoot(a + Rnd.Float(-0.1f, 0.1f), 8f).Build();
 					
-					projectile.Center = BottomCenter;
+					projectile!.Center = BottomCenter;
 					projectile.Color = ProjectileColor.Blue;
 				}
 			}, 1f);

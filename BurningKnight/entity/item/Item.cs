@@ -195,7 +195,7 @@ namespace BurningKnight.entity.item {
 					if (room!.Tagged[Tags.Player].Count > 0) {
 						var force = 360 * dt;
 						var a = AngleTo(room.Tagged[Tags.Player][0]);
-						GetBody().Velocity += new Vector2((float) Math.Cos(a) * force, (float) Math.Sin(a) * force);
+						GetBody()!.Velocity += new Vector2((float) Math.Cos(a) * force, (float) Math.Sin(a) * force);
 					}
 				}
 				
@@ -251,7 +251,7 @@ namespace BurningKnight.entity.item {
 					return;
 				}
 
-				var b = GetBody().Body;
+				var b = GetBody()!.Body;
 				var dx = DxTo(p);
 				var dy = DyTo(p);
 				var s = dt * 4;

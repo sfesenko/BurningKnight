@@ -45,7 +45,7 @@ namespace BurningKnight.level {
 
 			// Cache the condition
 			var toX = GetRenderRight(camera!);
-			var toY = GetRenderBottom(camera);
+			var toY = GetRenderBottom(camera!);
 			
 			for (int y = GetRenderTop(camera); y < toY; y++) {
 				for (int x = GetRenderLeft(camera); x < toX; x++) {
@@ -355,7 +355,7 @@ namespace BurningKnight.level {
 			
 			// Cache the condition
 			var toX = GetRenderRight(camera!);
-			var toY = GetRenderBottom(camera);
+			var toY = GetRenderBottom(camera!);
 
 			for (int y = GetRenderTop(camera); y <= toY; y++) {
 				for (int x = GetRenderLeft(camera); x <= toX; x++) {

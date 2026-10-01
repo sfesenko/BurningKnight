@@ -10,7 +10,7 @@ namespace BurningKnight.level.rooms.secret {
 			
 			level.Area!.Add(stand);
 			stand.Center = c * 16 + new Vector2(8);
-			stand.SetItem(Items.CreateAndAdd("bk:treasure_key", level.Area), null);
+			stand.SetItem(Items.CreateAndAdd("bk:treasure_key", level.Area)!, null);
 		}
 
 		public override int GetMinWidth() {

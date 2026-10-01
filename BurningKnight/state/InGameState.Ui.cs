@@ -86,7 +86,7 @@ namespace BurningKnight.state {
 			var player = LocalPlayer.Locate(Area);
 
 			if (!Multiplayer && Context.Run.Depth > 0) {
-				Ui.Add(map = new UiMap(player));
+				Ui.Add(map = new UiMap(player!));
 			}	
 			
 			CreateConsole();

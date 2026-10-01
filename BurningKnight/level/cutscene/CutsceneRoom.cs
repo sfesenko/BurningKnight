@@ -9,7 +9,7 @@ namespace BurningKnight.level.cutscene {
 
 		public CutsceneRoom(int id) {
 			prefabId = $"cutscene_{id}";
-			prefab = Prefabs.Get(prefabId);
+			prefab = Prefabs.Get(prefabId)!;
 		}
 		
 		public override void Paint(Level level) {

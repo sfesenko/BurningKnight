@@ -269,7 +269,7 @@ namespace BurningKnight.state {
 							var id2 = $"top_{i + 1}";
 
 							GlobalSave.Put(id2, GlobalSave.GetInt(id1));
-							GlobalSave.Put($"{id2}_data", GlobalSave.GetString($"{id1}_data"));
+							GlobalSave.Put($"{id2}_data", GlobalSave.GetString($"{id1}_data")!);
 						}
 					}
 

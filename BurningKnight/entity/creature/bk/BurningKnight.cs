@@ -142,7 +142,7 @@ namespace BurningKnight.entity.creature.bk {
 			var graphics = GetComponent<BkGraphicsComponent>();
 			graphics!.Alpha = 0;
 
-			Center = captured.Center;
+			Center = captured!.Center;
 			GetComponent<HealthComponent>()!.Unhittable = true;
 
 			Tween.To(1, graphics.Alpha, x => graphics.Alpha = x, 0.3f).OnEnd = () => {

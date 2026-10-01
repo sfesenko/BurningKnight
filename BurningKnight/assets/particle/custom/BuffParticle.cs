@@ -22,7 +22,7 @@ namespace BurningKnight.assets.particle.custom {
 			Entity = entity;
 			Id = entity.GetComponent<BuffsComponent>()!.Particles.Count;
 
-			region = CommonAse.Ui.GetSlice(buff.GetIcon())!;
+			region = CommonAse.Ui.GetSlice(buff.GetIcon()!)!;
 			Width = 8 * Display.UiScale;
 			Height = region!.Height * Display.UiScale;
 			

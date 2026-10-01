@@ -41,7 +41,7 @@ namespace BurningKnight.entity.projectile {
 
 					for (var i = 0; i < 8; i++) {
 						var bullet = b.Shoot(((float) i) / 4 * (float) Math.PI, (i % 2 == 0 ? 2 : 1) * 4 + 3).Build();
-						bullet.Center = p.Center;
+						bullet!.Center = p.Center;
 					}
 				});
 
@@ -159,7 +159,7 @@ namespace BurningKnight.entity.projectile {
 
 					for (var i = 0; i < 8; i++) {
 						var pr2 = b.Shoot((float) i / 8 * (float) Math.PI * 2, 8).Build();
-						pr2.Center = pr.Center;
+						pr2!.Center = pr.Center;
 
 						ProjectileCallbacks.AttachUpdateCallback(pr2, SlowdownProjectileController.Make(1));
 					}

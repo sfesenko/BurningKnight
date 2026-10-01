@@ -186,7 +186,7 @@ namespace BurningKnight.level {
 								var painting = PaintingRegistry.Generate(Level.Biome);
 								Level.Area!.Add(painting);
 
-								painting.CenterX = X * 16 + 8 + Rnd.Float(-1, 1);
+								painting!.CenterX = X * 16 + 8 + Rnd.Float(-1, 1);
 								painting.Bottom = Room.Top * 16 + 17;
 							}
 						}

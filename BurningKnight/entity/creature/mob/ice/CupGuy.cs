@@ -96,7 +96,7 @@ namespace BurningKnight.entity.creature.mob.ice {
 								var angle = Rnd.Float(-0.1f, 0.1f) + (float) i / am * Math.PI * 2;
 								var projectile = builder.Shoot(angle, Rnd.Float(3, 6)).Build();
 
-								projectile.Center += MathUtils.CreateVector(angle, 8f);
+								projectile!.Center += MathUtils.CreateVector(angle, 8f);
 								AnimationUtil.Poof(projectile.Center);
 							}
 						};

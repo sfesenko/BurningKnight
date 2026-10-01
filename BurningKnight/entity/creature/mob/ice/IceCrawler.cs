@@ -110,7 +110,7 @@ namespace BurningKnight.entity.creature.mob.ice {
 
 								var projectile = builder.Shoot(angle + (i == 0 ? 0 : Rnd.Float(-0.5f, 0.5f)), i == 0 ? 5f : Rnd.Float(6, 10f)).Build();
 
-								projectile.Color = i == 0 ? ProjectileColor.Cyan : ProjectileColor.Blue;
+								projectile!.Color = i == 0 ? ProjectileColor.Cyan : ProjectileColor.Blue;
 								projectile.Center += MathUtils.CreateVector(angle, 8);
 
 								if (i == 0) {

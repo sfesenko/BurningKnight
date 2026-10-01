@@ -100,7 +100,7 @@ namespace BurningKnight.assets.achievements {
 		public static void LoadState() {
 			foreach (var a in Defined.Values) {
 				a.Unlocked = GlobalSave.IsTrue($"ach_{a.Id}");
-				a.CompletionDate = GlobalSave.GetString($"ach_{a.Id}_date", "???");
+				a.CompletionDate = GlobalSave.GetString($"ach_{a.Id}_date", "???")!;
 			}
 		}
 

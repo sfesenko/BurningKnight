@@ -160,8 +160,8 @@ namespace BurningKnight {
 			FloorDarkness = GlobalSave.GetFloat("s_fd", 1);
 			PixelPerfect = GlobalSave.IsTrue("s_pp", false);
 			CursorRadius = GlobalSave.GetFloat("s_cr", 1);
-			Language = GlobalSave.GetString("s_ln", Locale.PrefferedClientLanguage);
-			Locale.Load(Language);
+			Language = GlobalSave.GetString("s_ln", Locale.PrefferedClientLanguage)!;
+			Locale.Load(Language!);
 
 			ShakeComponent.Modifier = Screenshake;
 			Engine.Flashes = Flashes;
@@ -186,7 +186,7 @@ namespace BurningKnight {
 			GlobalSave.Put("s_v", Vegan);
 			GlobalSave.Put("s_as", Autosave);
 			GlobalSave.Put("s_ap", Autopause);
-			GlobalSave.Put("s_gp", Gamepad);
+			GlobalSave.Put("s_gp", Gamepad!);
 			GlobalSave.Put("s_vb", Vibrate);
 			GlobalSave.Put("s_ss", Sensivity);
 			GlobalSave.Put("s_gs", GameScale);

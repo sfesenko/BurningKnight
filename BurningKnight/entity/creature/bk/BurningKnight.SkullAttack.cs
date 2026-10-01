@@ -75,7 +75,7 @@ namespace BurningKnight.entity.creature.bk {
 						builder.RemoveFlags(ProjectileFlags.Reflectable, ProjectileFlags.BreakableByMelee);
 
 						var skull = builder.Build();
-						ProjectileCallbacks.AttachUpdateCallback(skull, TargetProjectileController.Make(Self.Target, 0.5f));
+						ProjectileCallbacks.AttachUpdateCallback(skull!, TargetProjectileController.Make(Self.Target, 0.5f));
 
 						if (explode) {
 							/*skull.NearDeath += p => {
@@ -98,7 +98,7 @@ namespace BurningKnight.entity.creature.bk {
 						
 								for (var i = 0; i < 16; i++) {
 									var bullet = b.Shoot(((float) i) / 8 * (float) Math.PI, (i % 2 == 0 ? 2 : 1) * 4 + 3).Build();
-									bullet.Center = p.Center;
+									bullet!.Center = p.Center;
 								}
 							});
 						}

@@ -271,13 +271,13 @@ namespace BurningKnight.entity.creature.player {
 
 			foreach (var i in inventory!.Items) {
 				if (i.Id != "bk:no_lamp") {
-					drops.Add(Items.Create(i.Id));
+					drops.Add(Items.Create(i.Id)!);
 				}
 			}
 
 			foreach (var c in Components.Values) {
 				if (c is ItemComponent i && i.Item != null && i.Item.Type != ItemType.Hat && i.Item.Id != "bk:no_lamp") {
-					drops.Add(Items.Create(i.Item.Id));
+					drops.Add(Items.Create(i.Item.Id)!);
 				}
 			}
 		}

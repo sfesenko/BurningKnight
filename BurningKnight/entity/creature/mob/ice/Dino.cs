@@ -156,7 +156,7 @@ namespace BurningKnight.entity.creature.mob.ice {
 
 						var projectile = builder.Shoot(an, 15).Build();
 
-						projectile.Color = Rnd.Chance(70) ? ProjectileColor.Orange : ProjectileColor.Red;
+						projectile!.Color = Rnd.Chance(70) ? ProjectileColor.Orange : ProjectileColor.Red;
 						projectile.Center += MathUtils.CreateVector(angle, 8);
 					};
 				}

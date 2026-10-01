@@ -43,7 +43,7 @@ namespace BurningKnight.entity.creature.pet {
 						var a = i * Math.PI * 0.5f;
 						var projectile = builder.Shoot(a, 4f).Build();
 
-						projectile.Center = Center + MathUtils.CreateVector(a, 5f);
+						projectile!.Center = Center + MathUtils.CreateVector(a, 5f);
 						projectile.Owner = this;
 					}
 					

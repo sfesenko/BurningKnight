@@ -20,7 +20,7 @@ namespace BurningKnight.level.entities.chest {
 			var item = Scourge.GenerateItemId();
 
 			if (item != null) {
-				Timer.Add(() => entity.GetComponent<InventoryComponent>()!.Pickup(Items.CreateAndAdd(item, entity.Area!)), 0.3f);
+				Timer.Add(() => entity.GetComponent<InventoryComponent>()!.Pickup(Items.CreateAndAdd(item, entity.Area!)!), 0.3f);
 			}
 
 			return true;

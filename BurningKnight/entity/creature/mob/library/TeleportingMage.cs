@@ -79,7 +79,7 @@ namespace BurningKnight.entity.creature.mob.library {
 							var a = (float) Math.PI * i1 / (count * 0.5f) + sa;
 							var pr = builder.Build();
 
-							pr.BodyComponent.Angle = a;
+							pr!.BodyComponent.Angle = a;
 							pr.Center = Self.Center + MathUtils.CreateVector(a, 12);
 							
 							p.Add(pr);

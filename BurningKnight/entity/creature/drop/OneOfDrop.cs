@@ -70,7 +70,7 @@ namespace BurningKnight.entity.creature.drop {
 				Drops = new Drop[drops.Count];
 
 				for (var i = 0; i < Drops.Length; i++) {
-					Drops[i] = LootTables.ParseDrop(drops[i]);
+					Drops[i] = LootTables.ParseDrop(drops[i])!;
 				}
 			}
 		}

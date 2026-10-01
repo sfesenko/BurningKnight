@@ -27,7 +27,7 @@ namespace BurningKnight.level.rooms.special {
 			level.Area!.Add(stand);
 			stand.Center = c * 16 + new Vector2(8);
 			
-			stand.SetItem(Items.CreateAndAdd(Items.Generate(ItemType.Artifact, data => data.Quality == ItemQuality.Wooden && data.Id != "bk:pass"), level.Area), null);
+			stand.SetItem(Items.CreateAndAdd(Items.Generate(ItemType.Artifact, data => data.Quality == ItemQuality.Wooden && data.Id != "bk:pass")!, level.Area)!, null);
 		}
 
 		public override int GetMinWidth() {

@@ -55,7 +55,7 @@ namespace BurningKnight.entity.creature.drop {
 					if (id != null) {
 						if (id == "bk:troll_bomb") {
 							var bomb = new Bomb(entity!);
-							ar.Add(bomb);
+							ar!.Add(bomb);
 							bomb.Center = wh;
 							
 							continue;
@@ -77,7 +77,7 @@ namespace BurningKnight.entity.creature.drop {
 			foreach (var item in drops) {
 				item.CenterX = wh.X;
 				item.CenterY = wh.Y + 4;
-				ar.Add(item);
+				ar!.Add(item);
 				item.AddDroppedComponents();
 				item.RandomizeVelocity(1f);
 			}

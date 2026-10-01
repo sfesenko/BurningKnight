@@ -234,7 +234,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 
 						var p = builder.Shoot(Self.AngleTo(Self.Target), 0).Build();
 
-						p.Color = projectiles.Count % 2 == 0 ? ProjectileColor.Blue : ProjectileColor.Cyan;
+						p!.Color = projectiles.Count % 2 == 0 ? ProjectileColor.Blue : ProjectileColor.Cyan;
 						p.Center = Self.Center + MathUtils.CreateVector(projectiles.Count / 4f * Math.PI, 20 + projectiles.Count * 2);
 						p.Depth = 1;
 
@@ -280,7 +280,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 					var projectile = builder.Shoot(a, 15f).Build();
 					Self.Animate();
 
-					projectile.Color = ProjectileColor.Red;
+					projectile!.Color = ProjectileColor.Red;
 					projectile.Center += MathUtils.CreateVector(a, 8);
 
 					var tt = 0f;
@@ -303,7 +303,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 
 							Self.ModifyBuilder(builder);
 							var z = bb.Shoot(a - Math.PI + Rnd.Float(-0.1f, 0.1f), s).Build();
-							z.Center = projectile.Center;
+							z!.Center = projectile.Center;
 						}
 					});
 
@@ -325,7 +325,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 
 							for (var j = 0; j < 4; j++) {
 								var b = bb.Build();
-								pp.Add(b);
+								pp.Add(b!);
 								b.Color = ProjectileColor.Red;
 							}
 				
@@ -343,7 +343,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 							bbb.Scale = Rnd.Float(0.5f, 1f);
 							var b = bbb.Shoot(Rnd.AnglePI(), Rnd.Float(10, 40)).Build();
 						
-							b.Center = p.Center;
+							b!.Center = p.Center;
 							ProjectileCallbacks.AttachUpdateCallback(b,  SlowdownProjectileController.Make(Rnd.Float(0.5f, 4f)));
 						}
 					});
@@ -382,7 +382,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 					var projectile = builder.Shoot(a, 7).Build();
 					Self.Animate();
 
-					projectile.Color = ProjectileColor.Blue;
+					projectile!.Color = ProjectileColor.Blue;
 					projectile.Center += MathUtils.CreateVector(a, 8);
 
 					ProjectileCallbacks.AttachDeathCallback(projectile, (p, e, t) => {
@@ -396,7 +396,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 
 						for (var i = 0; i < InnerCount; i++) {
 							var b = bb.Shoot((float) i / InnerCount * Math.PI * 2, i % 2 == 0 ? 6 : 12).Build();
-							b.Center = p.Center;
+							b!.Center = p.Center;
 						}
 					});
 					
@@ -433,7 +433,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 				for (var j = 0; j < 2; j++) {
 					var projectile = builder.Shoot(aa + (j % 2 == 0 ? -1 : 1) * 0.3f, 14f).Build();
 
-					projectile.Center += MathUtils.CreateVector(aa, 8);
+					projectile!.Center += MathUtils.CreateVector(aa, 8);
 
 					ProjectileCallbacks.AttachDeathCallback(projectile, (p, e, t) => {
 						var v = p!.GetAnyComponent<BodyComponent>()!.Velocity;
@@ -448,7 +448,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 
 						Self.ModifyBuilder(b);
 						for (var i = 0; i < Rnd.Int(3, 5); i++) {
-							b.Shoot(a + Rnd.Float(-1.4f, 1.4f), s * Rnd.Float(0.3f, 1.5f)).Build().Center = p.Center;
+							b!.Shoot(a + Rnd.Float(-1.4f, 1.4f), s * Rnd.Float(0.3f, 1.5f)).Build().Center = p.Center;
 						}
 					});
 				}

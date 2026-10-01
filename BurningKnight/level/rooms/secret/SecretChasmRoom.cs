@@ -18,14 +18,14 @@ namespace BurningKnight.level.rooms.secret {
 			}
 			
 			for (var i = 0; i < Rnd.Int(1, 5); i++) {
-				var item = Items.CreateAndAdd(Items.Generate(ItemPool.Consumable), level.Area!);
-				item.Center = GetCenter() * 16 + new Vector2(Rnd.Float(-4, 4), Rnd.Float(-4, 4));
+				var item = Items.CreateAndAdd(Items.Generate(ItemPool.Consumable)!, level.Area!);
+				item!.Center = GetCenter() * 16 + new Vector2(Rnd.Float(-4, 4), Rnd.Float(-4, 4));
 			}
 
 			if (GlobalSave.IsTrue("saved_npc")) {
 				for (var i = 0; i < Rnd.Int(1, Context.Run.Depth); i++) {
 					var item = Items.CreateAndAdd("bk:emerald", level.Area!);
-					item.Center = GetCenter() * 16 + new Vector2(Rnd.Float(-4, 4), Rnd.Float(-4, 4));
+					item!.Center = GetCenter() * 16 + new Vector2(Rnd.Float(-4, 4), Rnd.Float(-4, 4));
 				}
 			}
 		}

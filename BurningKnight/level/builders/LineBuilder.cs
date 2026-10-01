@@ -25,7 +25,7 @@ namespace BurningKnight.level.builders {
 			var i = 0;
 						
 			while (true) {
-				var an = PlaceRoom(Init, R, Boss, a);
+				var an = PlaceRoom(Init, R, Boss!, a);
 							
 				if ((int) an != -1) {
 					break;
@@ -100,7 +100,7 @@ namespace BurningKnight.level.builders {
 			Branchable.Add(Entrance);
 
 			if (MultiConnection.Count == 0) {
-				PlaceRoom(Init, Entrance, Exit, Rnd.Angle());
+				PlaceRoom(Init, Entrance, Exit!, Rnd.Angle());
 
 				if (Boss != null && !PlaceBoss(Init, Exit)) {
 					return null;
@@ -128,9 +128,9 @@ namespace BurningKnight.level.builders {
 
 				if (I != 0 && Context.Run.Depth != 0)
 					for (var J = 0; J < Tunnels; J++) {
-						var T = RoomRegistry.Generate(RoomType.Connection, LevelSave.BiomeGenerated);
+						var T = RoomRegistry.Generate(RoomType.Connection, LevelSave.BiomeGenerated!);
 
-						if (Math.Abs(PlaceRoom(Init, Curr, T, Direction + Rnd.Float(-PathVariance, PathVariance)) - (-1)) < 0.01f) {
+						if (Math.Abs(PlaceRoom(Init, Curr, T!, Direction + Rnd.Float(-PathVariance, PathVariance)) - (-1)) < 0.01f) {
 							return null;
 						}
 
@@ -146,11 +146,11 @@ namespace BurningKnight.level.builders {
 					return null;
 				}
 				
-				if (R == Exit && Boss != null && !PlaceBoss(Init, R)) {
+				if (R == Exit && Boss != null && !PlaceBoss(Init, R!)) {
 					return null;
 				}
 
-				Branchable.Add(R);
+				Branchable.Add(R!);
 				Curr = R;
 			}
 

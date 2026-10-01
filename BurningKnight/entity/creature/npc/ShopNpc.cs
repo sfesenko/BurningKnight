@@ -53,7 +53,7 @@ namespace BurningKnight.entity.creature.npc {
 
 			var id = GetId();
 
-			saved = id == TrashGoblin || GlobalSave.IsTrue(id);
+			saved = id == TrashGoblin || GlobalSave.IsTrue(id!);
 			AlwaysActive = true;
 			Hidden = Context.Run.Depth == 0 && !saved;
 		}
@@ -115,7 +115,7 @@ namespace BurningKnight.entity.creature.npc {
 				var stand = new ItemStand();
 				Area!.Add(stand);
 				stand.Center = Center;
-				stand.SetItem(Items.CreateAndAdd("bk:emerald", Area), null);
+				stand.SetItem(Items.CreateAndAdd("bk:emerald", Area)!, null);
 				
 				return;
 			}
@@ -189,7 +189,7 @@ namespace BurningKnight.entity.creature.npc {
 					OnItemBought(ibe);
 				}
 			} else if (e is DiedEvent) {
-				GlobalSave.Put(GetId(), false);
+				GlobalSave.Put(GetId()!, false);
 				ExplosionMaker.Make(this);
 			} else if (e is HealthModifiedEvent hme && hme.Amount < 0) {
 				GetComponent<DialogComponent>()!.StartAndClose($"npc_hurt_{Rnd.Int(3)}", 2);
@@ -212,7 +212,7 @@ namespace BurningKnight.entity.creature.npc {
 				Remove = true;
 				GetComponent<DialogComponent>()!.StartAndClose("npc_1", 6);
 				
-				GlobalSave.Put(GetId(), true);
+				GlobalSave.Put(GetId()!, true);
 				GlobalSave.Put("saved_npc", true);
 				
 				RemoveComponent<InteractableComponent>();

@@ -15,7 +15,7 @@ namespace BurningKnight.entity.creature.mob.boss.rooms {
 			Painter.Fill(Context.Level!, new Rect().Setup(w.X - 1, w.Y - 1, 3, 2), Tile.FloorA);
 			
 			mage.BottomCenter = w * 16 + new Vector2(8, -8);
-			Painter.DrawLine(Context.Level, new Dot(w.X - 1, w.Y), new Dot(w.X + 1, w.Y), Tile.WallA);
+			Painter.DrawLine(Context.Level!, new Dot(w.X - 1, w.Y), new Dot(w.X + 1, w.Y), Tile.WallA);
 		}
 
 		public override void PlacePlayer(Room room, Player player) {

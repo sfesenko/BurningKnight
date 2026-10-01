@@ -19,7 +19,7 @@ namespace BurningKnight.ui.dialog {
 
 		public override Dialog GetNext() {
 			var str = DecideNext();
-			return new Dialog($"[sp 2]{Locale.Get(Id)}\n{Locale.Get(Options[Last])}\n{Locale.Get(str)}", new [] {
+			return new Dialog($"[sp 2]{Locale.Get(Id)}\n{Locale.Get(Options[Last])}\n{Locale.Get(str!)}", new [] {
 				Last == 0 ? Ar : Br
 			});
 		}

@@ -45,7 +45,7 @@ namespace BurningKnight.level {
 			Context.Level = this;
 			rooms = null;
 			ItemsToSpawn = [];
-			Variant = VariantRegistry.Generate(LevelSave.BiomeGenerated.Id) 
+			Variant = VariantRegistry.Generate(LevelSave.BiomeGenerated!.Id) 
 			          ?? new RegularLevelVariant();
 
 			if (Context.Run.Depth > 0) {
@@ -84,7 +84,7 @@ namespace BurningKnight.level {
 		private bool Paint() {
 			Log.Info("Painting...");
 			var p = GetPainter();
-			LevelSave.BiomeGenerated.ModifyPainter(this, p);
+			LevelSave.BiomeGenerated!.ModifyPainter(this, p);
 			
 			return p.Paint(this, rooms!);
 		}
@@ -160,14 +160,14 @@ namespace BurningKnight.level {
 			}
 
 			if (cave) {
-				AddRoom(rooms, RoomType.Treasure, biome);
+				AddRoom(rooms, RoomType.Treasure, biome!);
 			}
 
 			if (final) {
 				Log.Info("Prepare for the final!");
 			}
 			
-			Log.Info($"Generating a level for {biome.Id} biome");
+			Log.Info($"Generating a level for {biome!.Id} biome");
 			
 			rooms.Add(new EntranceRoom());
 			
@@ -354,7 +354,7 @@ namespace BurningKnight.level {
 			if (IsFinal() || Context.Run.Type == RunType.BossRush) {
 				builder = new LineBuilder();
 			} else {
-				builder = LevelSave.BiomeGenerated.GetBuilder();
+				builder = LevelSave.BiomeGenerated!.GetBuilder();
 
 				if (builder is RegularBuilder b) {
 					if (LevelSave.BiomeGenerated.Id == Biome.Ice) {
