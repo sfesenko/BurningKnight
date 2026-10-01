@@ -326,7 +326,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 							for (var j = 0; j < 4; j++) {
 								var b = bb.Build();
 								pp.Add(b!);
-								b.Color = ProjectileColor.Red;
+								b!.Color = ProjectileColor.Red;
 							}
 				
 							pp.Launch(an, 40);

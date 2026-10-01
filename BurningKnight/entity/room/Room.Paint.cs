@@ -215,7 +215,7 @@ namespace BurningKnight.entity.room {
 				Painter.DrawLine(Level!, Mid, End, Floor, Bold);
 
 				if (Rnd.Chance(10)) {
-					Painter.Set(Level, End, Tiles.RandomFloor());
+					Painter.Set(Level!, End, Tiles.RandomFloor());
 				}
 
 				minLeft = Math.Min(minLeft, End.X);

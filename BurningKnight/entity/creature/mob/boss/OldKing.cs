@@ -169,7 +169,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 							}
 						});
 
-						ProjectileCallbacks.AttachUpdateCallback(skull, TargetProjectileController.Make(Self.Target, 0.5f));
+						ProjectileCallbacks.AttachUpdateCallback(skull!, TargetProjectileController.Make(Self.Target, 0.5f));
 						skull.GetComponent<ProjectileGraphicsComponent>()!.IgnoreRotation = true;
 						
 						if (count == (Self.Raging ? 6 : 4)) {

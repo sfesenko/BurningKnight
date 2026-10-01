@@ -39,7 +39,7 @@ namespace BurningKnight.level.entities.chest {
 				if (id != null) {
 					var item = Items.CreateAndAdd(id, Area!);
 					GetComponent<ItemComponent>()!.Set(item!, false);
-					itemRegion = item.Region;
+					itemRegion = item!.Region;
 				}
 			} catch (Exception e) {
 				Log.Error(e);

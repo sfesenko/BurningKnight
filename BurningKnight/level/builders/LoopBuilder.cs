@@ -184,7 +184,7 @@ namespace BurningKnight.level.builders {
 					return null;
 				}
 
-				Loop.Add(C);
+				Loop.Add(C!);
 				Init.Add(C);
 				Prev = C;
 			}

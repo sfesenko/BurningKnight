@@ -201,7 +201,7 @@ namespace BurningKnight.state {
 
 			Render(wdot, dot, positions[13] + o);
 			
-			Render(letterB, letterB, positions[0] + o);
+			Render(letterB!, letterB!, positions[0] + o);
 			Render(letterU, letterU, positions[1] + o);
 			Render(letterR, letterR, positions[2] + o, flipR);
 			Render(letterN1, letterN1, positions[3] + o);

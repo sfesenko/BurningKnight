@@ -100,7 +100,7 @@ namespace BurningKnight.level {
 			var toX = GetRenderRight(camera!);
 			var toY = GetRenderBottom(camera!);
 
-			for (int y = toY; y >= GetRenderTop(camera); y--) {
+			for (int y = toY; y >= GetRenderTop(camera!); y--) {
 				for (int x = GetRenderLeft(camera); x <= toX; x++) {
 					var index = ToIndex(x, y);
 					var light = Light[index];
@@ -152,7 +152,7 @@ namespace BurningKnight.level {
 
 			enabled.SetValue(true);
 
-			for (int y = toY; y >= GetRenderTop(camera); y--) {
+			for (int y = toY; y >= GetRenderTop(camera!); y--) {
 				for (int x = GetRenderLeft(camera); x <= toX; x++) {
 					var index = ToIndex(x, y);
 					var light = Light[index];
@@ -271,7 +271,7 @@ namespace BurningKnight.level {
 			Graphics.Batch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, 
 				state.ClipRasterizerState, null, Matrix.Identity);
 
-			for (int y = GetRenderTop(camera); y < toY; y++) {
+			for (int y = GetRenderTop(camera!); y < toY; y++) {
 				for (int x = GetRenderLeft(camera); x < toX; x++) {
 					if ((Tile) Tiles[ToIndex(x, y)] == Tile.Chasm) {
 						Graphics.Render(clear!, new Vector2(x * 16, y * 16));

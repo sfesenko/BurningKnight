@@ -87,7 +87,7 @@ namespace BurningKnight.entity.creature.bk {
 								c.Emit("mob_oldking_explode");
 							};*/
 						
-							ProjectileCallbacks.AttachDeathCallback(skull, (p, e, t) => {
+							ProjectileCallbacks.AttachDeathCallback(skull!, (p, e, t) => {
 								if (!t) {
 									return;
 								}
@@ -103,7 +103,7 @@ namespace BurningKnight.entity.creature.bk {
 							});
 						}
 
-						skull.GetComponent<ProjectileGraphicsComponent>()!.IgnoreRotation = true;
+						skull!.GetComponent<ProjectileGraphicsComponent>()!.IgnoreRotation = true;
 						
 						if (count == (Self.Raging ? 6 : 4)) {
 							Self.Become<FightState>();
