@@ -105,7 +105,7 @@ public class SaveRoundTripTests : IClassFixture<SaveHost> {
 
 		try {
 			var dir = host.NewDir($"level-{depth}-a");
-			SaveManager.Save(level.Area, SaveType.Level, path: dir);
+			SaveManager.Save(level.Area!, SaveType.Level, path: dir);
 			var before = ReadEntities(dir + $"level-{depth}-l0.lvl", SaveType.Level);
 
 			var loaded = new GameArea();
@@ -127,7 +127,7 @@ public class SaveRoundTripTests : IClassFixture<SaveHost> {
 			loaded.Destroy();
 		} finally {
 			Generation.Release(level);
-			Physics.World.Clear();
+			Physics.World!.Clear();
 		}
 	}
 
@@ -162,7 +162,7 @@ public class SaveRoundTripTests : IClassFixture<SaveHost> {
 			loaded.Destroy();
 		} finally {
 			area.Destroy();
-			Physics.World.Clear();
+			Physics.World!.Clear();
 		}
 	}
 

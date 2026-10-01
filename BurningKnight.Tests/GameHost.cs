@@ -24,7 +24,7 @@ namespace BurningKnight.Tests;
 public static class GameHost {
 	private static bool ready;
 
-	public static Area Area { get; private set; }
+	public static Area Area { get; private set; } = null!;
 
 	public static void Boot() {
 		if (ready) {

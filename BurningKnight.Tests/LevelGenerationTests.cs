@@ -61,7 +61,7 @@ public class LevelGenerationTests {
 	}
 
 	private static List<Room> Rooms(RegularLevel level) {
-		return level.Area.Entities.Entities.OfType<Room>().ToList();
+		return level.Area!.Entities.Entities.OfType<Room>().ToList();
 	}
 
 	private static void AssertLevel(RegularLevel level, string context) {
