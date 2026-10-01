@@ -15,14 +15,14 @@ namespace BurningKnight.assets {
 		public static Effect Bk = null!;
 		
 		public static void Load() {
-			Ui = Effects.Get("ui");
-			Entity = Effects.Get("entity");
-			Terrain = Effects.Get("terrain");
-			Screen = Effects.Get("screen");
-			Fog = Effects.Get("fog");
-			Chasm = Effects.Get("chasm");
-			Item = Effects.Get("item");
-			Bk = Effects.Get("bk");
+			Ui = Effects.Get("ui")!;
+			Entity = Effects.Get("entity")!;
+			Terrain = Effects.Get("terrain")!;
+			Screen = Effects.Get("screen")!;
+			Fog = Effects.Get("fog")!;
+			Chasm = Effects.Get("chasm")!;
+			Item = Effects.Get("item")!;
+			Bk = Effects.Get("bk")!;
 
 			Engine.Instance.StateRenderer.GameEffect = Screen;
 			// Engine.Instance.StateRenderer.UiEffect = Ui;

@@ -31,7 +31,7 @@ namespace BurningKnight.assets.particle.custom {
 
 			Width = Rnd.Float(6, 10);
 			Height = Width * 0.3f;
-			region = CommonAse.Particles.GetSlice("fire");
+			region = CommonAse.Particles.GetSlice("fire")!;
 		}
 
 		public override void Update(float dt) {

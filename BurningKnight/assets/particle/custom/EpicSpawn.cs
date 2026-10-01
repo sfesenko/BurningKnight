@@ -32,8 +32,8 @@ namespace BurningKnight.assets.particle.custom {
 			AlwaysActive = true;
 			AlwaysVisible = true;
 
-			region = CommonAse.Particles.GetSlice("epic_spawn");
-			ray = CommonAse.Particles.GetSlice("ray");
+			region = CommonAse.Particles.GetSlice("epic_spawn")!;
+			ray = CommonAse.Particles.GetSlice("ray")!;
 			
 			Width = region!.Width;
 			Height = region.Height;

@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace BurningKnight.ui {
 	public class UiControl : UiButton {
-		public static UiControl Focused = null!;
+		public static UiControl? Focused = null!;
 		public string Key = null!;
 		public bool Gamepad;
 		public GamepadComponent GamepadComponent = null!;

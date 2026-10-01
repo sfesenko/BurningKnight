@@ -33,7 +33,7 @@ namespace BurningKnight.entity.bomb {
 		public Bomb(Entity owner, float time = ExplosionTime, Bomb? parent = null) {
 			explosionTime = time + Rnd.Float(-0.1f, 1f);
 			
-			Parent = parent;
+			Parent = parent!;
 			Owner = owner;
 
 			Scale = parent?.Scale * 0.7f ?? 1;

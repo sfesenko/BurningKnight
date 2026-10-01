@@ -50,8 +50,8 @@ namespace BurningKnight.entity.component {
 
 				Send(new RoomChangedEvent {
 					Who = Entity,
-					Old = old,
-					New = Room,
+					Old = old!,
+					New = Room!,
 					WasDiscovered = Room == null || Room.Explored,
 					JustDiscovered = Room != null && !Room.Explored
 				});

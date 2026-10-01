@@ -89,7 +89,7 @@ namespace BurningKnight.level.paintings {
 				Id = id,
 				Author = author,
 				Chance = chance,
-				Biomes = biomes,
+				Biomes = biomes!,
 				Animated = animated
 			});
 		}

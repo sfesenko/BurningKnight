@@ -77,7 +77,7 @@ namespace BurningKnight.assets.prefabs {
 
 				saver.Load(new GameArea {NoInit = true}, stream, false);
 
-				prefab.Level = Context.Level;
+				prefab.Level = Context.Level!;
 				prefab.Datas = ArrayUtils.Clone(saver.Datas);
 				saver.Datas.Clear();
 

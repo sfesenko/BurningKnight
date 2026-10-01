@@ -38,7 +38,7 @@ namespace BurningKnight.entity.item.stand {
 
 			if (itemShadow == null) {
 				itemShadow = CommonAse.Props.GetSlice("item_shadow");
-				standShadow = CommonAse.Props.GetSlice("stand_shadow");
+				standShadow = CommonAse.Props.GetSlice("stand_shadow")!;
 			}
 		}
 

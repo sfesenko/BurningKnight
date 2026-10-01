@@ -18,13 +18,13 @@ namespace BurningKnight.ui {
 					return;
 				}
 				
-				Region = CommonAse.Ui.GetSlice(id);
+				Region = CommonAse.Ui.GetSlice(id)!;
 				Width = Region!.Width * Size;
 				Height = Region.Height * Size;
 			}
 		}
 
-		public TextureRegion Region = null!;
+		public TextureRegion? Region = null!;
 
 		public override void Render() {
 			Graphics.Render(Region, Center, 0, Region.Center, new Vector2(scale * Size));

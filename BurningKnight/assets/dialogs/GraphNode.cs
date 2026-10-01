@@ -43,7 +43,7 @@ namespace BurningKnight.assets.dialogs {
 			});
 		}
 
-		private JsonArray outputs = null!;
+		private JsonArray? outputs = null!;
 
 		public void ReadOutputs() {
 			var j = -1;

@@ -29,17 +29,17 @@ namespace BurningKnight.ui {
 		public void Setup(string ase, string prefix) {
 			var anim = Animations.Get(ase);
 
-			Top = anim!.GetSlice($"{prefix}top");
-			TopLeft = anim.GetSlice($"{prefix}top_left");
-			TopRight = anim.GetSlice($"{prefix}top_right");
+			Top = anim!.GetSlice($"{prefix}top")!;
+			TopLeft = anim.GetSlice($"{prefix}top_left")!;
+			TopRight = anim.GetSlice($"{prefix}top_right")!;
 			
-			RCenter = anim.GetSlice($"{prefix}center");
-			CenterLeft = anim.GetSlice($"{prefix}left");
-			CenterRight = anim.GetSlice($"{prefix}right");
+			RCenter = anim.GetSlice($"{prefix}center")!;
+			CenterLeft = anim.GetSlice($"{prefix}left")!;
+			CenterRight = anim.GetSlice($"{prefix}right")!;
 			
-			RBottom = anim.GetSlice($"{prefix}bottom");
-			BottomLeft = anim.GetSlice($"{prefix}bottom_left");
-			BottomRight = anim.GetSlice($"{prefix}bottom_right");
+			RBottom = anim.GetSlice($"{prefix}bottom")!;
+			BottomLeft = anim.GetSlice($"{prefix}bottom_left")!;
+			BottomRight = anim.GetSlice($"{prefix}bottom_right")!;
 		}
 
 		public override void Render() {

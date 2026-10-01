@@ -91,7 +91,7 @@ namespace BurningKnight.entity.item {
 
 			try {
 				LoadedSelf = true;
-				Id = stream.ReadString();
+				Id = stream.ReadString()!;
 				Scourged = false;
 
 				if (!Items.Has(Id!)) {

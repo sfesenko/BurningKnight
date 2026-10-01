@@ -18,7 +18,7 @@ namespace BurningKnight.entity.item.use {
 			Log.Info($"Using active item {id} with d8");
 
 			var it = Items.Create(id);
-			item.GetComponent<ItemGraphicsComponent>()!.Sprite = CommonAse.Items.GetSlice(id);
+			item.GetComponent<ItemGraphicsComponent>()!.Sprite = CommonAse.Items.GetSlice(id)!;
 
 			foreach (var u in it!.Uses) {
 				u.Item = it;
@@ -26,7 +26,7 @@ namespace BurningKnight.entity.item.use {
 			}
 			
 			Timer.Add(() => {
-				item.GetComponent<ItemGraphicsComponent>()!.Sprite = CommonAse.Items.GetSlice(item.Id);
+				item.GetComponent<ItemGraphicsComponent>()!.Sprite = CommonAse.Items.GetSlice(item.Id)!;
 			}, 2);
 		}
 	}

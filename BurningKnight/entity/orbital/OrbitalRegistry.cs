@@ -261,7 +261,7 @@ namespace BurningKnight.entity.orbital {
 
 						Tween.To(1, 1.5f, x => s.Scale.X = x, 0.3f);
 						Tween.To(0, 1, x => s.Scale.Y = x, 0.2f).OnEnd = () => {
-							s.Sprite = CommonAse.Items.GetSlice(planets[Rnd.Int(planets.Length)]);
+							s.Sprite = CommonAse.Items.GetSlice(planets[Rnd.Int(planets.Length)])!;
 							s.SetOwnerSize();
 							
 							orbital.RemoveComponent<CircleBodyComponent>();

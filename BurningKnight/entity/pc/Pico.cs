@@ -27,7 +27,7 @@ namespace BurningKnight.entity.pc {
 		private string cart = "ma_puzzle";
 #pragma warning restore CS0169, CS0414
 
-		public Entity Entity = null!;
+		public Entity? Entity = null!;
 
 		public override void PostInit() {
 			base.PostInit();

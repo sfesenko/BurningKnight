@@ -237,7 +237,7 @@ namespace BurningKnight.entity.room {
 				}
 			}
 
-			Id = stream.ReadString();
+			Id = stream.ReadString()!;
 		}
 		
 		public override void Save(FileWriter stream) {

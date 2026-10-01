@@ -8,7 +8,7 @@ namespace BurningKnight.level.entities {
 		public string Sprite = null!;
 		
 		public SlicedProp(string? slice = null, int depth = 0) {
-			Sprite = slice;
+			Sprite = slice!;
 			Depth = depth;
 		}
 
@@ -40,7 +40,7 @@ namespace BurningKnight.level.entities {
 
 		public override void Load(FileReader stream) {
 			base.Load(stream);
-			Sprite = stream.ReadString();
+			Sprite = stream.ReadString()!;
 			Depth = stream.ReadSbyte();
 		}
 	}

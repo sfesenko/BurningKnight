@@ -42,7 +42,7 @@ namespace BurningKnight.entity.creature.player {
 			ShadowOffset = 8;
 
 			head = Animations.Get("gobbo")!.CreateAnimation("head");
-			wing = CommonAse.Items.GetSlice("wing");
+			wing = CommonAse.Items.GetSlice("wing")!;
 		}
 
 		public override void Update(float dt) {

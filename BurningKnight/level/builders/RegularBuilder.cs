@@ -17,11 +17,11 @@ using Lens.util.math;
 namespace BurningKnight.level.builders {
 	public class RegularBuilder : Builder {
 		protected float[] BranchTunnelChances = {1, 0, 0};
-		protected EntranceRoom Entrance = null!;
-		protected ExitRoom Exit = null!;
-		protected BossRoom Boss = null!;
-		protected GrannyRoom Granny = null!;
-		protected OldManRoom OldMan = null!;
+		protected EntranceRoom? Entrance = null!;
+		protected ExitRoom? Exit = null!;
+		protected BossRoom? Boss = null!;
+		protected GrannyRoom? Granny = null!;
+		protected OldManRoom? OldMan = null!;
 		protected List<RoomDef> SubShop = new List<RoomDef>();
 		protected float ExtraConnectionChance = 0.2f;
 		protected List<RoomDef> MultiConnection = new List<RoomDef>();

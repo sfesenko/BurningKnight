@@ -23,7 +23,7 @@ namespace BurningKnight.entity.item.use {
 			}
 
 			try {
-				typeInstance = Type.GetType(type, true, false);
+				typeInstance = Type.GetType(type, true, false)!;
 			} catch (Exception e) {
 				Log.Error(e);
 			}

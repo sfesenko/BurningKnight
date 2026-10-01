@@ -23,7 +23,7 @@ namespace BurningKnight.save {
 		}
 
 		public static void Put(string Key, object Val) {
-			Values[Key] = Val?.ToString();
+			Values[Key] = Val?.ToString()!;
 		}
 
 		public static void Put(string Key, int Val) {
@@ -93,7 +93,7 @@ namespace BurningKnight.save {
 				var Key = reader.ReadString();
 				var Val = reader.ReadString();
 				
-				Values[Key!] = Val;
+				Values[Key!] = Val!;
 			}
 
 			Context.Run.HasRun = true;
@@ -106,7 +106,7 @@ namespace BurningKnight.save {
 
 			var seed = reader.ReadString();
 			if (Context.Run.LastSavedDepth > 0) {
-				Rnd.Seed = Context.Run.Seed = seed;
+				Rnd.Seed = Context.Run.Seed = seed!;
 			}
 
 			if (Enum.TryParse<RunType>(reader.ReadString(), out var t)) {

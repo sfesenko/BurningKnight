@@ -77,7 +77,7 @@ namespace BurningKnight.level.entities.statue {
 		}
 
 		protected virtual void UpdateSprite() {
-			GetComponent<InteractableSliceComponent>()!.Sprite = CommonAse.Props.GetSlice($"broken_{Sprite}");
+			GetComponent<InteractableSliceComponent>()!.Sprite = CommonAse.Props.GetSlice($"broken_{Sprite}")!;
 		}
 
 		public override void Load(FileReader stream) {

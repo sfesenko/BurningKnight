@@ -270,7 +270,7 @@ namespace BurningKnight.entity.item.use {
 				if (shells) {
 					Timer.Add(() => {
 						var p = new ShellParticle(new Particle(Controllers.Destroy, new TexturedParticleRenderer {
-							Region = CommonAse.Particles.GetSlice("shell")
+							Region = CommonAse.Particles.GetSlice("shell")!
 						}));
 
 						p.Position = entity.Center;

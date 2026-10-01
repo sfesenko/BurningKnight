@@ -47,10 +47,10 @@ namespace BurningKnight.ui.inventory {
 			
 			var anim = Animations.Get("ui");
 
-			activeSide = anim!.GetSlice("active_side");
-			activeBorder = anim.GetSlice("active_border");
-			activeEmpty = anim.GetSlice("active_empty");
-			activeFull = anim.GetSlice("active_full");
+			activeSide = anim!.GetSlice("active_side")!;
+			activeBorder = anim.GetSlice("active_border")!;
+			activeEmpty = anim.GetSlice("active_empty")!;
+			activeFull = anim.GetSlice("active_full")!;
 			
 			if (inventory.Player?.GetComponent<ActiveItemComponent>()!.Item != null) {
 				ActivePosition = 0;

@@ -15,7 +15,7 @@ using MonoGame.Extended;
 
 namespace BurningKnight.ui.inventory {
 	public class UiItem : UiEntity {
-		public static UiItem Hovered = null!;
+		public static UiItem? Hovered = null!;
 
 		private string? id;
 		public float TextA;
@@ -37,7 +37,7 @@ namespace BurningKnight.ui.inventory {
 				
 				Name = Locale.Get(idd);
 				Description = Locale.Get($"{idd}_desc");
-				Region = CommonAse.Items.GetSlice(id);
+				Region = CommonAse.Items.GetSlice(id)!;
 
 				NameSize = Font.Small.MeasureString(Name);
 				DescriptionSize = Font.Small.MeasureString(Description);
@@ -52,7 +52,7 @@ namespace BurningKnight.ui.inventory {
 		public Vector2 DescriptionSize;
 		public bool OnTop;
 
-		public TextureRegion Region = null!;
+		public TextureRegion? Region = null!;
 		private string countStr = null!;
 		private int count;
 		private int countW;

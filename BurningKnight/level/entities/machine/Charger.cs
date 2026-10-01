@@ -74,7 +74,7 @@ namespace BurningKnight.level.entities.machine {
 		public void Break(bool spawnLoot = true) {
 			broken = true;
 			
-			GetComponent<InteractableSliceComponent>()!.Sprite = CommonAse.Props.GetSlice("charger_broken");
+			GetComponent<InteractableSliceComponent>()!.Sprite = CommonAse.Props.GetSlice("charger_broken")!;
 
 			if (spawnLoot) {
 				GetComponent<DropsComponent>()!.SpawnDrops();

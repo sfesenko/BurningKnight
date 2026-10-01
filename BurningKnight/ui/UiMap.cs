@@ -43,10 +43,10 @@ namespace BurningKnight.ui {
 			X = Display.UiWidth - W - 11;
 			Y = 11;
 
-			slice = CommonAse.Particles.GetSlice("fire");
+			slice = CommonAse.Particles.GetSlice("fire")!;
 
-			playerIcon = CommonAse.Ui.GetSlice("gps");
-			frame = CommonAse.Ui.GetSlice("map_frame");
+			playerIcon = CommonAse.Ui.GetSlice("gps")!;
+			frame = CommonAse.Ui.GetSlice("map_frame")!;
 
 			AlwaysVisible = true;
 		}

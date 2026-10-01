@@ -71,10 +71,10 @@ namespace BurningKnight.entity.door {
 			Width = stream.ReadFloat();
 			Height = stream.ReadFloat();
 			depth = stream.ReadSbyte();
-			id = stream.ReadString();
+			id = stream.ReadString()!;
 
 			if (depth == 0) {
-				toId = stream.ReadString();
+				toId = stream.ReadString()!;
 			}
 
 			toTop = stream.ReadBoolean();

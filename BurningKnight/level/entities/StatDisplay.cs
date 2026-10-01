@@ -74,7 +74,7 @@ namespace BurningKnight.level.entities {
 		public override void Load(FileReader stream) {
 			base.Load(stream);
 			
-			board = stream.ReadString();
+			board = stream.ReadString()!;
 
 			if (board == "challenge") {
 				challengeId = stream.ReadInt32();

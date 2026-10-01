@@ -40,15 +40,15 @@ namespace BurningKnight.entity {
 			AddTag(Tags.Cursor);
 			regions ??=
 			[
-				CommonAse.Ui.GetSlice("cursor_a"),
-				CommonAse.Ui.GetSlice("cursor_b"),
-				CommonAse.Ui.GetSlice("cursor_c"),
-				CommonAse.Ui.GetSlice("cursor_d"),
-				CommonAse.Ui.GetSlice("cursor_e"),
-				CommonAse.Ui.GetSlice("cursor_f"),
-				CommonAse.Ui.GetSlice("cursor_g"),
-				CommonAse.Ui.GetSlice("cursor_j"),
-				CommonAse.Ui.GetSlice("cursor_k")
+				CommonAse.Ui.GetSlice("cursor_a")!,
+				CommonAse.Ui.GetSlice("cursor_b")!,
+				CommonAse.Ui.GetSlice("cursor_c")!,
+				CommonAse.Ui.GetSlice("cursor_d")!,
+				CommonAse.Ui.GetSlice("cursor_e")!,
+				CommonAse.Ui.GetSlice("cursor_f")!,
+				CommonAse.Ui.GetSlice("cursor_g")!,
+				CommonAse.Ui.GetSlice("cursor_j")!,
+				CommonAse.Ui.GetSlice("cursor_k")!
 			];
 		}
 

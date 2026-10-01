@@ -17,8 +17,8 @@ namespace BurningKnight.entity.item.stand {
 		private TextureRegion heart = null!;
 		private float priceWidth;
 
-		private Entity payer = null!;
-		private Item takenItem = null!;
+		private Entity? payer = null!;
+		private Item? takenItem = null!;
 		private int lastPrice;
 
 		protected override int CalculatePrice() {
@@ -33,7 +33,7 @@ namespace BurningKnight.entity.item.stand {
 			base.Init();
 			
 			OnSale = false;
-			heart = CommonAse.Ui.GetSlice("deal_heart");
+			heart = CommonAse.Ui.GetSlice("deal_heart")!;
 			
 			Subscribe<ItemUsedEvent>();
 			Subscribe<ItemAddedEvent>();

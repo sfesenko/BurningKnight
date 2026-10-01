@@ -53,7 +53,7 @@ namespace BurningKnight.level.entities {
 
 		public override void Load(FileReader stream) {
 			base.Load(stream);
-			Id = stream.ReadString();
+			Id = stream.ReadString()!;
 		}
 
 		public override bool HandleEvent(Event e) {

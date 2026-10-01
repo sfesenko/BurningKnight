@@ -74,7 +74,7 @@ namespace BurningKnight.save {
 					var sl = Items.Generate(ItemType.Lamp);
 
 					for (var i = 0; i < Player.MaxPlayers; i++) {
-						Player.StartingItems[i] = si;
+						Player.StartingItems[i] = si!;
 						Player.StartingWeapons[i] = sw;
 						Player.StartingLamps[i] = sl;
 					}

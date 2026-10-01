@@ -76,8 +76,8 @@ namespace BurningKnight.entity.creature.mob {
 			if (Target != closest) {
 				HandleEvent(new MobTargetChange {
 					Mob = this,
-					New = closest,
-					Old = Target 
+					New = closest!,
+					Old = Target! 
 				});
 			}			
 			

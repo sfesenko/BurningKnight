@@ -58,7 +58,7 @@ namespace BurningKnight.level.paintings {
 			base.PostInit();
 
 			if (!HasComponent<AnimationComponent>()) {
-				big = Animations.Get("paintings")!.GetSlice(Id);
+				big = Animations.Get("paintings")!.GetSlice(Id)!;
 			}
 			
 			AddComponent(new InteractableSliceComponent("paintings", $"{Id}_small"));
@@ -112,8 +112,8 @@ namespace BurningKnight.level.paintings {
 
 		public override void Load(FileReader stream) {
 			base.Load(stream);
-			Id = stream.ReadString();
-			Author = stream.ReadString();
+			Id = stream.ReadString()!;
+			Author = stream.ReadString()!;
 		}
 
 		public override bool HandleEvent(Event e) {

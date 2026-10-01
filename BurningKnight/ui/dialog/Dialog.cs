@@ -13,7 +13,7 @@ namespace BurningKnight.ui.dialog {
 		
 		public Dialog(string id, string[]? next = null) {
 			Id = id;
-			Next = next;
+			Next = next!;
 		}
 
 		public virtual string DecideNext() {

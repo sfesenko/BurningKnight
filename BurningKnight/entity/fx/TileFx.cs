@@ -15,7 +15,7 @@ namespace BurningKnight.entity.fx {
 			AlwaysActive = true;
 
 			t = Rnd.Float(0.5f);
-			region = Animations.Get("particles")!.GetSlice("wall");
+			region = Animations.Get("particles")!.GetSlice("wall")!;
 		}
 
 		public override void Update(float dt) {

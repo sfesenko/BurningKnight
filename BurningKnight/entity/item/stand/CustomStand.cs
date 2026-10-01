@@ -26,7 +26,7 @@ namespace BurningKnight.entity.item.stand {
 
 		public override void Init() {
 			base.Init();
-			icon = CommonAse.Ui.GetSlice(GetIcon());
+			icon = CommonAse.Ui.GetSlice(GetIcon())!;
 		}
 
 		protected override void RenderPrice() {

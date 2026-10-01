@@ -134,7 +134,7 @@ namespace BurningKnight.level.entities.machine {
 		private void UpdateSprite() {
 			var component = GetComponent<InteractableSliceComponent>();
 
-			component!.Sprite = CommonAse.Props.GetSlice("reroll_machine_broken");
+			component!.Sprite = CommonAse.Props.GetSlice("reroll_machine_broken")!;
 			component.Offset.Y += Height - 14;
 			
 			GetComponent<AudioEmitterComponent>()!.EmitRandomizedPrefixed("level_explosion", 3);

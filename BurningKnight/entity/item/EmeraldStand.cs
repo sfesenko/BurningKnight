@@ -29,7 +29,7 @@ namespace BurningKnight.entity.item {
 		
 		public EmeraldStand() {
 			dontSaveItem = true;
-			emerald = CommonAse.Ui.GetSlice("emerald");
+			emerald = CommonAse.Ui.GetSlice("emerald")!;
 		}
 
 		public override void Init() {
@@ -86,7 +86,7 @@ namespace BurningKnight.entity.item {
 			Achievements.Unlock("bk:unlock");
 			
 			entity.HandleEvent(new ItemBoughtEvent {
-				Item = item,
+				Item = item!,
 				Who = entity,
 				Stand = this
 			});

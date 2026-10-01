@@ -30,7 +30,7 @@ namespace BurningKnight.entity.projectile {
 					Color = value.Color;
 				}
 
-				parent = value;
+				parent = value!;
 			}
 		}
 
@@ -127,7 +127,7 @@ namespace BurningKnight.entity.projectile {
 				Scale = Scale,
 				Color = Color,
 				Parent = parent,
-				Item = item
+				Item = item!
 			};
 
 			Owner.Area!.Add(projectile);
@@ -201,7 +201,7 @@ namespace BurningKnight.entity.projectile {
 
 			Owner.HandleEvent(new ProjectileCreatedEvent {
 				Owner = Owner,
-				Item = item,
+				Item = item!,
 				Projectile = projectile
 			});
 

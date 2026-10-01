@@ -65,7 +65,7 @@ namespace BurningKnight.level.entities.decor {
 			if (broken) {
 				var s = GetComponent<SliceComponent>();
 
-				s!.Sprite = CommonAse.Props.GetSlice("broken_torch");
+				s!.Sprite = CommonAse.Props.GetSlice("broken_torch")!;
 				s.Offset = new Vector2(0, 5);
 			}
 		}

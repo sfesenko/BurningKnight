@@ -14,7 +14,7 @@ namespace BurningKnight.assets.particle.custom {
 		public override void Init() {
 			base.Init();
 
-			region = CommonAse.Particles.GetSlice("fire_emitter");
+			region = CommonAse.Particles.GetSlice("fire_emitter")!;
 			Width = region!.Width;
 			Height = region.Height;
 			t = Rnd.Float(6);

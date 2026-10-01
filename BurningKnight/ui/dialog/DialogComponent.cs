@@ -18,7 +18,7 @@ namespace BurningKnight.ui.dialog {
 	public delegate void DialogCallback(DialogComponent d);
 	
 	public partial class DialogComponent : Component {
-		public static DialogComponent Talking = null!;
+		public static DialogComponent? Talking = null!;
 		
 		public UiDialog? Dialog;
 		public Dialog Last = null!;
@@ -127,7 +127,7 @@ namespace BurningKnight.ui.dialog {
 
 			Dialog!.Str!.FinishedTyping += s => {
 				Entity.HandleEvent(new Dialog.EndedEvent {
-					Dialog = Last ?? Current,
+					Dialog = Last ?? Current!,
 					Owner = Entity
 				});
 
@@ -178,7 +178,7 @@ namespace BurningKnight.ui.dialog {
 		}
 
 		public void Close() {
-			Last = Current;
+			Last = Current!;
 			tillClose = -1;
 
 			if (Dialog == null || Current == null) {
@@ -198,7 +198,7 @@ namespace BurningKnight.ui.dialog {
 #endif
 
 		private void Setup(Dialog dialog, Entity? to = null) {
-			Last = Current;
+			Last = Current!;
 			Current = dialog;
 
 			var c = Locale.Get(dialog.Id);

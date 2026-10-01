@@ -112,8 +112,8 @@ namespace BurningKnight.entity.creature.player {
 			
 			if (!Send(new WeaponSwappedEvent {
 				Who = (Player) Entity,
-				Old = Item,
-				Current = component!.Item
+				Old = Item!,
+				Current = component!.Item!
 			})) {
 				// Swap the items
 				var tmp = component.Item;

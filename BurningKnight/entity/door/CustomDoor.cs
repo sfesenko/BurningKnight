@@ -17,7 +17,7 @@ namespace BurningKnight.entity.door {
 			var p = GetPad();
 
 			if (p != null) {
-				pad = CommonAse.Props.GetSlice(p);
+				pad = CommonAse.Props.GetSlice(p)!;
 				
 				Area!.Add(new RenderTrigger(this, () => {
 					Graphics.Render(pad!, Position);

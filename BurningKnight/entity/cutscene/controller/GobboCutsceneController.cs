@@ -19,8 +19,8 @@ namespace BurningKnight.entity.cutscene.controller {
 		public override void PostInit() {
 			base.PostInit();
 
-			baby = Area!.Find<BabyGobbo>();
-			dad = Area.Find<OldGobbo>();
+			baby = Area!.Find<BabyGobbo>()!;
+			dad = Area.Find<OldGobbo>()!;
 			dadStart = dad!.BottomCenter;
 
 			dad!.GraphicsComponent.Flipped = true;

@@ -102,7 +102,7 @@ namespace BurningKnight.entity.component {
 		
 		public Item Drop() {
 			var e = new ItemRemovedEvent {
-				Item = Item
+				Item = Item!
 			};
 			
 			Send(e);

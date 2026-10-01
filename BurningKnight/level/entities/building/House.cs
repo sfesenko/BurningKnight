@@ -16,7 +16,7 @@ namespace BurningKnight.level.entities.building {
 			Height = 164;
 			Sprite = "house";
 
-			shadow = Animations.Get("buildings")!.GetSlice("house_shadow");
+			shadow = Animations.Get("buildings")!.GetSlice("house_shadow")!;
 			
 			AddComponent(new ShadowComponent(RenderShadow));
 		}

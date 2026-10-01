@@ -38,7 +38,7 @@ namespace BurningKnight.ui.dialog {
 			Height = 4;
 				
 			Setup("ui", "dialog_");
-			triangle = CommonAse.Ui.GetSlice("dialog_tri");
+			triangle = CommonAse.Ui.GetSlice("dialog_tri")!;
 			
 			Str = new UiString(Font.Small);
 			Area!.Add(Str);

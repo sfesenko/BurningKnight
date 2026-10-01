@@ -114,7 +114,7 @@ namespace BurningKnight.level.entities.chest {
 		}
 
 		protected virtual void UpdateSprite(bool open = true) {
-			GetComponent<InteractableSliceComponent>()!.Sprite = CommonAse.Props.GetSlice($"{GetSprite()}{(open ? "_open" : "")}");
+			GetComponent<InteractableSliceComponent>()!.Sprite = CommonAse.Props.GetSlice($"{GetSprite()}{(open ? "_open" : "")}")!;
 		}
 
 		public void Open(Entity who) {

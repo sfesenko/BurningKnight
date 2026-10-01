@@ -12,13 +12,13 @@ public static class CommonAse {
 	public static AnimationData Props = null!;
 	
 	public static void Load() {
-		Items = Animations.Get("items");
-		Ui = Animations.Get("ui");
-		Projectiles = Animations.Get("projectiles");
-		Particles = Animations.Get("particles");
-		Props = Animations.Get("props");
+		Items = Animations.Get("items")!;
+		Ui = Animations.Get("ui")!;
+		Projectiles = Animations.Get("projectiles")!;
+		Particles = Animations.Get("particles")!;
+		Props = Animations.Get("props")!;
 
-		Textures.Missing = Items!.GetSlice("missing");
-		Item.UnknownRegion = Items.GetSlice("unknown");
+		Textures.Missing = Items!.GetSlice("missing")!;
+		Item.UnknownRegion = Items.GetSlice("unknown")!;
 	}
 }

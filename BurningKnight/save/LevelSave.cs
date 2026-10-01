@@ -69,7 +69,7 @@ namespace BurningKnight.save {
 			return new RegularLevel(BiomeRegistry.GenerateForDepth(Context.Run.Depth));
 		}
 
-		public static Biome BiomeGenerated = null!;
+		public static Biome? BiomeGenerated = null!;
 
 		private bool GenerationThread(string seed, Area area, int attempt, int c = 0) {
 			// Checked on entry so an abandoned attempt stops before it starts, and again after the
@@ -89,7 +89,7 @@ namespace BurningKnight.save {
 				Items.GeneratedOnFloor.Clear();
 				
 				var level = CreateLevel();
-				BiomeGenerated = level.Biome;
+				BiomeGenerated = level.Biome!;
 				WallRegistry.Instance.ResetForBiome(BiomeGenerated!);
 
 				a.Add(level);

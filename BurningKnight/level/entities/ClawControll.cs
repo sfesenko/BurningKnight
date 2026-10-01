@@ -92,7 +92,7 @@ namespace BurningKnight.level.entities {
 
 				ia.Close();
 				ib.Close();
-				ia = ib = null;
+				ia = ib = null!;
 				
 				GetComponent<InteractableComponent>()!.CurrentlyInteracting?.GetComponent<InteractorComponent>()?.EndInteraction();
 

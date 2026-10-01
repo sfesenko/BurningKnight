@@ -13,8 +13,8 @@ namespace BurningKnight.ui.dialog {
 			new[] { $"{id}_ar" }, 
 			new[] { $"{id}_br" }
 		}, callback) {
-			Ar = ar;
-			Br = br;
+			Ar = ar!;
+			Br = br!;
 		}
 
 		public override Dialog GetNext() {

@@ -172,8 +172,8 @@ namespace BurningKnight.state {
 			Area.EventListener.Subscribe<DiedEvent>(this);
 			Area.EventListener.Subscribe<GiveEmeraldsUse.GaveEvent>(this);
 
-			black = CommonAse.Ui.GetSlice("black");
-			emerald = CommonAse.Items.GetSlice("bk:emerald");
+			black = CommonAse.Ui.GetSlice("black")!;
+			emerald = CommonAse.Items.GetSlice("bk:emerald")!;
 
 			if (Menu) {
 				Achievements.PostLoadCallback?.Invoke();
@@ -182,7 +182,7 @@ namespace BurningKnight.state {
 				Input.Blocked = 1;
 
 				blackBarsSize = BarsSize;
-				gardient = CommonAse.Ui.GetSlice("gardient");
+				gardient = CommonAse.Ui.GetSlice("gardient")!;
 				blur = 1;
 
 				offset = Display.UiHeight;

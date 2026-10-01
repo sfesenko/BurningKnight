@@ -62,7 +62,7 @@ namespace BurningKnight.state {
 			Ui.Add(Camera = new Camera(new FollowingDriver()));
 			Camera.Position = new Vector2(Display.Width / 2f, Display.Height / 2f) + new Vector2(32);
 			
-			black = CommonAse.Ui.GetSlice("black");
+			black = CommonAse.Ui.GetSlice("black")!;
 		}
 		
 		private void PrerenderShadows() {

@@ -122,44 +122,44 @@ namespace BurningKnight.ui.inventory {
 
 			var anim = Animations.Get("ui");
 
-			ItemSlot = anim!.GetSlice("item_slot");
+			ItemSlot = anim!.GetSlice("item_slot")!;
 			UseSlot = new TextureRegion();
 			UseSlot.Set(ItemSlot!);
 			
-			question = anim.GetSlice("question");
-			bomb = anim.GetSlice("bomb");
-			key = anim.GetSlice("key");
-			coin = anim.GetSlice("coin");
-			pointer = anim.GetSlice("pointer");
-			exitPointer = anim.GetSlice("exit_pointer");
+			question = anim.GetSlice("question")!;
+			bomb = anim.GetSlice("bomb")!;
+			key = anim.GetSlice("key")!;
+			coin = anim.GetSlice("coin")!;
+			pointer = anim.GetSlice("pointer")!;
+			exitPointer = anim.GetSlice("exit_pointer")!;
 
-			Heart = anim.GetSlice("heart");
-			HalfHeart = anim.GetSlice("half_heart");
-			HeartBackground = anim.GetSlice("heart_bg");
-			changedHeartBackground = anim.GetSlice("heart_hurt_bg");
-			halfHeartBackground = anim.GetSlice("half_heart_bg");
-			changedHalfHeartBackground = anim.GetSlice("half_heart_hurt");
+			Heart = anim.GetSlice("heart")!;
+			HalfHeart = anim.GetSlice("half_heart")!;
+			HeartBackground = anim.GetSlice("heart_bg")!;
+			changedHeartBackground = anim.GetSlice("heart_hurt_bg")!;
+			halfHeartBackground = anim.GetSlice("half_heart_bg")!;
+			changedHalfHeartBackground = anim.GetSlice("half_heart_hurt")!;
 			
-			veganHeart = anim.GetSlice("vegan");
-			veganHalfHeart = anim.GetSlice("half_vegan");
-			veganHeartBackground = anim.GetSlice("vegan_bg");
-			veganchangedHeartBackground = anim.GetSlice("vegan_hurt_bg");
-			veganhalfHeartBackground = anim.GetSlice("half_vegan_bg");
-			veganchangedHalfHeartBackground = anim.GetSlice("half_vegan_hurt_bg");
+			veganHeart = anim.GetSlice("vegan")!;
+			veganHalfHeart = anim.GetSlice("half_vegan")!;
+			veganHeartBackground = anim.GetSlice("vegan_bg")!;
+			veganchangedHeartBackground = anim.GetSlice("vegan_hurt_bg")!;
+			veganhalfHeartBackground = anim.GetSlice("half_vegan_bg")!;
+			veganchangedHalfHeartBackground = anim.GetSlice("half_vegan_hurt_bg")!;
 			
-			Bomb = anim.GetSlice("bmb");
-			BombBg = anim.GetSlice("bmb_bg");
-			ChangedBombBg = anim.GetSlice("bmb_hurt");
+			Bomb = anim.GetSlice("bmb")!;
+			BombBg = anim.GetSlice("bmb_bg")!;
+			ChangedBombBg = anim.GetSlice("bmb_hurt")!;
 			
-			Mana = anim.GetSlice("mana");
-			HalfMana = anim.GetSlice("half_mana");
-			ManaBackground = anim.GetSlice("mana_bg");
-			ChangedManaBackground = anim.GetSlice("mana_hurt_bg");
+			Mana = anim.GetSlice("mana")!;
+			HalfMana = anim.GetSlice("half_mana")!;
+			ManaBackground = anim.GetSlice("mana_bg")!;
+			ChangedManaBackground = anim.GetSlice("mana_hurt_bg")!;
 			
-			ShieldBackground = anim.GetSlice("shield_bg");
-			changedShieldBackground = anim.GetSlice("shield_hurt");
-			halfShieldBackground = anim.GetSlice("half_shield_bg");
-			changedHalfShieldBackground = anim.GetSlice("half_shield_hurt");
+			ShieldBackground = anim.GetSlice("shield_bg")!;
+			changedShieldBackground = anim.GetSlice("shield_hurt")!;
+			halfShieldBackground = anim.GetSlice("half_shield_bg")!;
+			changedHalfShieldBackground = anim.GetSlice("half_shield_hurt")!;
 			
 			if (Player != null) {
 				var component = Player.GetComponent<ConsumablesComponent>();

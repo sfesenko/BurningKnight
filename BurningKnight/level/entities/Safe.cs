@@ -56,7 +56,7 @@ namespace BurningKnight.level.entities {
 
 			broken = true;
 			
-			GetComponent<SliceComponent>()!.Sprite = CommonAse.Props.GetSlice("safe_broken");
+			GetComponent<SliceComponent>()!.Sprite = CommonAse.Props.GetSlice("safe_broken")!;
 			GetComponent<HealthComponent>()!.RenderInvt = false;
 
 			if (spawnLoot) {

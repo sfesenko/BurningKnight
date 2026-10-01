@@ -47,7 +47,7 @@ namespace BurningKnight.assets.particle.custom {
 				target += new Vector2(Display.UiWidth, 0);
 			}
 
-			callback = call;
+			callback = call!;
 		}
 
 		public override void PostInit() {

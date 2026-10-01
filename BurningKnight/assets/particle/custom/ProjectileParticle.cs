@@ -19,7 +19,7 @@ namespace BurningKnight.assets.particle.custom {
 
 			scale = Rnd.Float(5, 8);
 			angle = Rnd.AnglePI();
-			region = CommonAse.Particles.GetSlice("fire");
+			region = CommonAse.Particles.GetSlice("fire")!;
 
 			Width = scale;
 			Height = scale;

@@ -41,9 +41,9 @@ namespace BurningKnight.level.entities {
 
 			var animation = CommonAse.Props;
 
-			leftClaw = animation.GetSlice("left_claw");
-			rightClaw = animation.GetSlice("right_claw");
-			top = animation.GetSlice("claw_hand");
+			leftClaw = animation.GetSlice("left_claw")!;
+			rightClaw = animation.GetSlice("right_claw")!;
+			top = animation.GetSlice("claw_hand")!;
 			
 			AddComponent(new ShadowComponent(() => {
 				SimpleRender(true);

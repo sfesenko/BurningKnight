@@ -40,7 +40,7 @@ namespace BurningKnight.ui {
 		public override void AddComponents() {
 			base.AddComponents();
 
-			texture = CommonAse.Ui.GetSlice("table_item");
+			texture = CommonAse.Ui.GetSlice("table_item")!;
 			Width = texture!.Width;
 			Height = texture.Height;
 		}

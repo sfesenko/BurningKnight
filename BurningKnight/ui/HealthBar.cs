@@ -52,11 +52,11 @@ namespace BurningKnight.ui {
 			AlwaysActive = true;
 			AlwaysVisible = true;
 
-			frame = CommonAse.Ui.GetSlice("hb_frame");
-			fill = CommonAse.Ui.GetSlice("hb");
-			damage = CommonAse.Ui.GetSlice("hb_damage");
-			phase = CommonAse.Ui.GetSlice("hb_phase");
-			phaseB = CommonAse.Ui.GetSlice("hb_b");
+			frame = CommonAse.Ui.GetSlice("hb_frame")!;
+			fill = CommonAse.Ui.GetSlice("hb")!;
+			damage = CommonAse.Ui.GetSlice("hb_damage")!;
+			phase = CommonAse.Ui.GetSlice("hb_phase")!;
+			phaseB = CommonAse.Ui.GetSlice("hb_b")!;
 			
 			Width = frame!.Width;
 			Height = frame.Height;

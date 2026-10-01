@@ -33,9 +33,9 @@ namespace BurningKnight.level.entities {
 
 			disk = GlobalSave.GetInt("disk");
 
-			top = CommonAse.Props.GetSlice("player_top");
-			bottom = CommonAse.Props.GetSlice("player");
-			tdisk = CommonAse.Props.GetSlice("disk");
+			top = CommonAse.Props.GetSlice("player_top")!;
+			bottom = CommonAse.Props.GetSlice("player")!;
+			tdisk = CommonAse.Props.GetSlice("disk")!;
 		}
 
 		public override void Load(FileReader stream) {

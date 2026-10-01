@@ -160,7 +160,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 					
 					var rmdef = (DmRoom) Activator.CreateInstance(type);
 
-					rm.Parent = rmdef;
+					rm.Parent = rmdef!;
 					rm.MapW = Math.Min(Rnd.Int(rmdef!.GetMinWidth(), rmdef.GetMaxWidth()), level!.Width - 2);
 					rm.MapH = Math.Min(Rnd.Int(rmdef.GetMinHeight(), rmdef.GetMaxHeight()), level.Height - 2);
 					rm.MapX = (int) Math.Ceiling((level.Width - rm.MapW) / 2f);

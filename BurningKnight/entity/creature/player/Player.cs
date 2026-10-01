@@ -288,9 +288,9 @@ namespace BurningKnight.entity.creature.player {
 			if (!GetComponent<HealthComponent>()!.Dead && (Context.Run.LastDepth == -1 || Context.Run.LastDepth == 0)) {
 				var index = GetComponent<InputComponent>()!.Index;
 				
-				StartingWeapons[index] = GetComponent<ActiveWeaponComponent>()!.Item?.Id;
-				StartingItems[index] = GetComponent<ActiveItemComponent>()!.Item?.Id;
-				StartingLamps[index] = GetComponent<LampComponent>()!.Item?.Id;
+				StartingWeapons[index] = GetComponent<ActiveWeaponComponent>()!.Item?.Id!;
+				StartingItems[index] = GetComponent<ActiveItemComponent>()!.Item?.Id!;
+				StartingLamps[index] = GetComponent<LampComponent>()!.Item?.Id!;
 			}
 		}
 

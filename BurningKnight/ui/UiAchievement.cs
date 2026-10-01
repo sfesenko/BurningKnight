@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.ui {
 	public class UiAchievement : FrameRenderer {
-		public static UiAchievement Current = null!;
+		public static UiAchievement? Current = null!;
 		
 		private const int Padding = 6;
 		
@@ -31,8 +31,8 @@ namespace BurningKnight.ui {
 			
 			title = Locale.Get(item ? id : $"ach_{id}");
 			description = Locale.Get(item ? "was_unlocked" : $"ach_{id}_desc");
-			icon = Animations.Get(item ? "items" : "achievements")!.GetSlice(id);
-			iconBg = CommonAse.Ui.GetSlice("item_bg");
+			icon = Animations.Get(item ? "items" : "achievements")!.GetSlice(id)!;
+			iconBg = CommonAse.Ui.GetSlice("item_bg")!;
 
 			var titleSize = Font.Small.MeasureString(title);
 			var descriptionSize = Font.Small.MeasureString(description);

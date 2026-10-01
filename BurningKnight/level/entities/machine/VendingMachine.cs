@@ -150,7 +150,7 @@ namespace BurningKnight.level.entities.machine {
 		private void UpdateSprite() {
 			var component = GetComponent<InteractableSliceComponent>();
 
-			component!.Sprite = CommonAse.Props.GetSlice("vending_machine_broken");
+			component!.Sprite = CommonAse.Props.GetSlice("vending_machine_broken")!;
 			component.Offset.Y += Height - 15;
 		}
 

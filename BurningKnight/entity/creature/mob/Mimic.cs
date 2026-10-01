@@ -174,7 +174,7 @@ namespace BurningKnight.entity.creature.mob {
 			
 			Kind = stream.ReadString();
 			invoked = stream.ReadBoolean();
-			Pool = stream.ReadString();
+			Pool = stream.ReadString()!;
 		}
 
 		public override void Save(FileWriter stream) {

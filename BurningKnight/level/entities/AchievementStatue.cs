@@ -95,7 +95,7 @@ namespace BurningKnight.level.entities {
 		}
 
 		private void SetupSprite() {
-			achievementTexture = Animations.Get("achievements")!.GetSlice(id);
+			achievementTexture = Animations.Get("achievements")!.GetSlice(id)!;
 		}
 
 		private void UpdateState(string? i = null) {
@@ -116,7 +116,7 @@ namespace BurningKnight.level.entities {
 
 		public override void Load(FileReader stream) {
 			base.Load(stream);
-			id = stream.ReadString();
+			id = stream.ReadString()!;
 		}
 
 		public override void Save(FileWriter stream) {
