@@ -16,7 +16,7 @@ namespace BurningKnight.level.entities.statue {
 			Height = 20;
 		}
 
-		protected override string GetFxText() {
+		protected override string? GetFxText() {
 			return null;
 		}
 

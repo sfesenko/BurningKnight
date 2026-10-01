@@ -81,7 +81,7 @@ namespace BurningKnight.entity.creature.mob {
 			return base.HandleEvent(e);
 		}
 
-		protected override TextureRegion GetDeathFrame() {
+		protected override TextureRegion? GetDeathFrame() {
 			return CommonAse.Props.GetSlice($"{Kind}_open");
 		}
 

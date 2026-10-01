@@ -119,7 +119,7 @@ namespace BurningKnight.assets.dialogs {
 			return "Node";
 		}
 
-		public static GraphNode Create(string file, JsonValue vl, bool ignoreId = false) {
+		public static GraphNode? Create(string file, JsonValue vl, bool ignoreId = false) {
 			if (!vl.IsJsonObject) {
 				return null;
 			}

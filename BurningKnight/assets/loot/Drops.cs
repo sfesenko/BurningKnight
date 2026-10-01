@@ -163,7 +163,7 @@ namespace BurningKnight.assets.loot {
 			));
 		}
 
-		public static Drop Get(string drop) {
+		public static Drop? Get(string drop) {
 			if (Defined.TryGetValue(drop, out var d)) return d;
 			Log.Error($"Unknown drop {drop}");
 			return null;

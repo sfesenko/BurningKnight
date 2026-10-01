@@ -110,7 +110,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 			Achievements.Unlock("bk:bk_no_more");
 		}
 
-		protected override TextureRegion GetDeathFrame() {
+		protected override TextureRegion? GetDeathFrame() {
 			return CommonAse.Particles.GetSlice("old_gobbo");
 		}
 

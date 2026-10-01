@@ -248,7 +248,7 @@ namespace BurningKnight.level.builders {
 			return -1;
 		}
 
-		public virtual List<RoomDef> Build(List<RoomDef> Init) {
+		public virtual List<RoomDef>? Build(List<RoomDef> Init) {
 			return null;
 		}
 	}

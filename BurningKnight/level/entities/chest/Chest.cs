@@ -109,7 +109,7 @@ namespace BurningKnight.level.entities.chest {
 			return "chest";
 		}
 
-		public virtual string GetPool() {
+		public virtual string? GetPool() {
 			return null;
 		}
 

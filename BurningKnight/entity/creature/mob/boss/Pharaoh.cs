@@ -259,7 +259,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 		}
 		
 		public class TileMoveState : SmartState<Pharaoh> {
-			private Dot PickDot() {
+			private Dot? PickDot() {
 				var room = Self.GetComponent<RoomComponent>()!.Room;
 				var attempt = 0;
 				var toCheck = new List<Entity>();

@@ -95,7 +95,7 @@ namespace BurningKnight.entity.creature.mob {
 			All.AddRange(infos);
 		}
 
-		public static MobInfo FindFor(Type type) {
+		public static MobInfo? FindFor(Type type) {
 			foreach (var info in All) {
 				if (info.Type == type) {
 					return info;
@@ -105,7 +105,7 @@ namespace BurningKnight.entity.creature.mob {
 			return null;
 		}
 
-		public static Mob Generate() {
+		public static Mob? Generate() {
 			var chances = new float[Current.Count];
 
 			for (var i = 0; i < Current.Count; i++) {

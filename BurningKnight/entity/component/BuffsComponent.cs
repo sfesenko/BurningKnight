@@ -29,7 +29,7 @@ namespace BurningKnight.entity.component {
 			}
 		}
 		
-		public Buff Add(Buff buff) {
+		public Buff? Add(Buff buff) {
 			if (buff == null) {
 				return null;
 			}

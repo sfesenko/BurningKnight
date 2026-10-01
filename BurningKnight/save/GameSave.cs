@@ -38,7 +38,7 @@ namespace BurningKnight.save {
 			Values[Key] = Val ? "1" : "0";
 		}
 
-		public static string GetString(string Key, string? Def = null) {
+		public static string? GetString(string Key, string? Def = null) {
 			return Values.TryGetValue(Key, out var Value) ? Value : Def;
 		}
 		

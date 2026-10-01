@@ -76,7 +76,7 @@ namespace BurningKnight.entity.item.stand {
 
 		protected bool ShowUnlocked = true;
 
-		private Item PickItem() {
+		private Item? PickItem() {
 			var items = new List<ItemData>();
 
 			foreach (var i in Items.Datas.Values) {

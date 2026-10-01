@@ -35,7 +35,7 @@ namespace BurningKnight.level.builders {
 			return Math.Pow(4, 2 * Exponent) * Math.Pow(X % 0.5f - 0.25, 2 * Exponent + 1) + 0.25 + 0.5 * Math.Floor(2 * X);
 		}
 
-		public override List<RoomDef> Build(List<RoomDef> Init) {
+		public override List<RoomDef>? Build(List<RoomDef> Init) {
 			SetupRooms(Init);
 
 			if (Entrance == null) {

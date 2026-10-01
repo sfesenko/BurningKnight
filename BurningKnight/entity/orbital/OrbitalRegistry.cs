@@ -22,7 +22,7 @@ namespace BurningKnight.entity.orbital {
 	public static class OrbitalRegistry {
 		private static Dictionary<string, Func<Entity, Entity>> defined = new Dictionary<string, Func<Entity, Entity>>();
 
-		public static Entity Create(string id, Entity owner) {
+		public static Entity? Create(string id, Entity owner) {
 			return !defined.TryGetValue(id, out var d) ? null : d(owner);
 		}
 		

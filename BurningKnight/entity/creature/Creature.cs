@@ -179,11 +179,11 @@ namespace BurningKnight.entity.creature {
 			}
 		}
 
-		protected virtual TextureRegion GetDeathFrame() {
+		protected virtual TextureRegion? GetDeathFrame() {
 			return GetAnyComponent<AnimationComponent>()?.Animation.GetFrame("dead", 0);
 		}
 
-		protected virtual void CreateGore(DiedEvent d) {
+		protected virtual void CreateGore(DiedEvent? d) {
 			Context.Camera!.ShakeMax(5);
 			
 

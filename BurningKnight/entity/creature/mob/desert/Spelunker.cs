@@ -160,7 +160,7 @@ namespace BurningKnight.entity.creature.mob.desert {
 		}
 		#endregion
 
-		protected override string GetDeadSfx() {
+		protected override string? GetDeadSfx() {
 			return Exploded ? null : "mob_archeolog_death";
 		}
 

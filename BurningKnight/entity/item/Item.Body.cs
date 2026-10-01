@@ -95,7 +95,7 @@ namespace BurningKnight.entity.item {
 		protected virtual bool HasBody() {
 			return HasComponent<RectBodyComponent>();
 		}
-		protected virtual BodyComponent GetBody() {
+		protected virtual BodyComponent? GetBody() {
 			return TryGetComponent<RectBodyComponent>(out var b) ? b : null;
 		}
 	}

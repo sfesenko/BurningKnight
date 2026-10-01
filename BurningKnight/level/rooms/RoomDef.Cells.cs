@@ -30,7 +30,7 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.level.rooms {
 	public partial class RoomDef {
-		public Dot GetRandomFreeCell() {
+		public Dot? GetRandomFreeCell() {
 			var passable = new List<Dot>();
 
 			for (var x = Left + 1; x < Right; x++) {
@@ -48,7 +48,7 @@ namespace BurningKnight.level.rooms {
 
 			return passable[Rnd.Int(passable.Count)];
 		}
-		public Dot GetRandomDoorFreeCell() {
+		public Dot? GetRandomDoorFreeCell() {
 			var passable = new List<Dot>();
 
 			for (var x = Left + 1; x < Right; x++) {

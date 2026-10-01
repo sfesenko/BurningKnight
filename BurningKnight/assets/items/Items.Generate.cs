@@ -21,7 +21,7 @@ using Lens.util.math;
 
 namespace BurningKnight.assets.items {
 	public partial class Items {
-		public static Item Create(string id) {
+		public static Item? Create(string id) {
 			if (id == null) {
 				return null;
 			}
@@ -157,7 +157,7 @@ namespace BurningKnight.assets.items {
 
 			return PlaceholderItem;
 		}
-		public static Item CreateAndAdd(string id, Area area, bool scourgeFree = true) {
+		public static Item? CreateAndAdd(string id, Area area, bool scourgeFree = true) {
 			var item = Create(id);
 
 			if (item == null) {

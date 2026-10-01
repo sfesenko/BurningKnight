@@ -29,7 +29,7 @@ namespace BurningKnight.entity.projectile {
 			registry[$"{mod?.Prefix ?? Mods.BurningKnight}:{id}"] = fn;
 		}
 
-		public static Action<Projectile> Get(string id) {
+		public static Action<Projectile>? Get(string id) {
 			return registry.TryGetValue(id, out var f) ? f : null;
 		}
 

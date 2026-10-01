@@ -294,11 +294,11 @@ namespace BurningKnight.entity.creature.player {
 			}
 		}
 
-		protected override string GetHurtSfx() {
+		protected override string? GetHurtSfx() {
 			return null;
 		}
 
-		protected override string GetDeadSfx() {
+		protected override string? GetDeadSfx() {
 			return null;
 		}
 

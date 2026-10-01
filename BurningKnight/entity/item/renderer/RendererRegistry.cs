@@ -9,7 +9,7 @@ namespace BurningKnight.entity.item.renderer {
 		public static Dictionary<string, Action<string, JsonValue, JsonValue>> DebugRenderers = new Dictionary<string, Action<string, JsonValue, JsonValue>>();
 		public static Dictionary<string, Type> Renderers = new Dictionary<string, Type>();
 
-		public static ItemRenderer Create(string id) {
+		public static ItemRenderer? Create(string id) {
 			if (!Renderers.TryGetValue(id, out var renderer)) {
 				return null;
 			}

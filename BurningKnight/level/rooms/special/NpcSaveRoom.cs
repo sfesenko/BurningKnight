@@ -65,7 +65,7 @@ namespace BurningKnight.level.rooms.special {
 			return Achievements.IsComplete("bk:democracy") && Achievements.IsComplete("bk:mummified") && Achievements.IsComplete("bk:ice_boss") && Achievements.IsComplete("bk:bk_no_more") && Achievements.IsComplete("bk:sting_operation");
 		}
 
-		private static string GenerateNpc() {
+		private static string? GenerateNpc() {
 			var d = Context.Run.Depth;
 
 			foreach (var info in npcs) {

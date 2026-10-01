@@ -105,7 +105,7 @@ namespace BurningKnight.entity.projectile {
 			return this;
 		}
 
-		public Projectile Build() {
+		public Projectile? Build() {
 			if (empty || ((Owner is Mob && !(Owner is creature.bk.BurningKnight)) && Owner.Area!.Tagged[Tags.MobProjectile].Count >= 199)) {
 				return null;
 			}

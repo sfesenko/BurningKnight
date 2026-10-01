@@ -37,7 +37,7 @@ namespace BurningKnight.assets.achievements {
 		// class is touched, and a release run must not touch ImGui at all.
 
 
-		public static Achievement Get(string id)
+		public static Achievement? Get(string id)
 		{
 			if (!Defined.TryGetValue(id, out var a))
 			{

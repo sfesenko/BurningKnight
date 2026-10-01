@@ -71,7 +71,7 @@ namespace BurningKnight.entity.creature.bk {
 			head.Center = Center;
 			Audio.PlayMusic("Last chance");
 		}
-		protected override void CreateGore(DiedEvent d) {
+		protected override void CreateGore(DiedEvent? d) {
 			
 		}
 		public bool InFight;

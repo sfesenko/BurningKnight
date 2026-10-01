@@ -88,7 +88,7 @@ namespace BurningKnight.util {
 			return Maze;
 		}
 
-		private static int[] DecideDirection(bool[][] Maze, int X, int Y) {
+		private static int[]? DecideDirection(bool[][] Maze, int X, int Y) {
 			if (Rnd.Int(4) == 0 && CheckValidMove(Maze, X, Y, new[] {0, -1})) {
 				return new[] {0, -1};
 			}

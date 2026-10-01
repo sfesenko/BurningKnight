@@ -25,7 +25,7 @@ namespace BurningKnight.assets.prefabs {
 			Context.Level = null;
 		}
 
-		public static Prefab Get(string id) {
+		public static Prefab? Get(string id) {
 			return loaded.TryGetValue(id, out var fab) ? fab : null;
 		}
 

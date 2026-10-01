@@ -16,7 +16,7 @@ namespace BurningKnight.ui.dialog {
 			Next = next!;
 		}
 
-		public virtual string DecideNext() {
+		public virtual string? DecideNext() {
 			if (Next == null || Next.Length == 0) {
 				return null;
 			}
@@ -24,7 +24,7 @@ namespace BurningKnight.ui.dialog {
 			return Next?[Rnd.Int(Next.Length)];
 		}
 
-		public virtual Dialog GetNext() {
+		public virtual Dialog? GetNext() {
 			var next = DecideNext();
 			return next != null ? Dialogs.Get(next) : null;
 		}

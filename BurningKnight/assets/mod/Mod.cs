@@ -12,7 +12,7 @@ namespace BurningKnight.assets.mod {
 		public abstract void Update(float dt);
 		public abstract void Render();
 		
-		public static Mod Load(FileHandle file) {
+		public static Mod? Load(FileHandle file) {
 			var dll = Assembly.LoadFile(file.FullPath);
 
 			foreach (var type in dll.ExportedTypes) {

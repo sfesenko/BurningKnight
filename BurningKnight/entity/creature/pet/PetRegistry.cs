@@ -15,7 +15,7 @@ namespace BurningKnight.entity.creature.pet {
 	public static class PetRegistry {
 		private static Dictionary<string, Func<Entity, Entity>> defined = new Dictionary<string, Func<Entity, Entity>>();
 
-		public static Entity Create(string id, Entity owner) {
+		public static Entity? Create(string id, Entity owner) {
 			return !defined.TryGetValue(id, out var d) ? null : d(owner);
 		}
 		
@@ -28,7 +28,7 @@ namespace BurningKnight.entity.creature.pet {
 			defined[$"{(mod == null ? Mods.BurningKnight : mod.Prefix)}:{id}"] = pet;
 		}
 
-		public static bool Has(string id) {
+		public static bool? Has(string id) {
 			return defined.ContainsKey(id);
 		}
 

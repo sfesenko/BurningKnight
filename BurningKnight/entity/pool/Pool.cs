@@ -10,7 +10,7 @@ namespace BurningKnight.entity.pool {
 
 		public int Size => Classes.Count;
 
-		public virtual T Generate() {
+		public virtual T? Generate() {
 			var I = Rnd.Chances(Chances);
 
 			if (I == -1) {

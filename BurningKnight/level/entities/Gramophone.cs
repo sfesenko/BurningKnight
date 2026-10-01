@@ -248,7 +248,7 @@ namespace BurningKnight.level.entities {
 			});
 		}
 
-		public string GetTune() {
+		public string? GetTune() {
 			if (disk == 0) {
 				return null;
 			} else if (disk == 10) {

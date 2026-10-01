@@ -38,7 +38,7 @@ namespace BurningKnight.ui.dialog {
 			return builder.ToString();
 		}
 
-		public override string DecideNext() {
+		public override string? DecideNext() {
 			if (Branches.Count == 0) {
 				return null;
 			}

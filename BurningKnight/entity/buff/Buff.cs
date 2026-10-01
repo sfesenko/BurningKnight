@@ -30,7 +30,7 @@ namespace BurningKnight.entity.buff {
 			
 		}
 
-		public virtual string GetIcon() {
+		public virtual string? GetIcon() {
 			return null;
 		}
 	}

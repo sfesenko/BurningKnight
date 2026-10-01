@@ -34,7 +34,7 @@ namespace BurningKnight.entity.room.controller {
 			}, mod);
 		}
 
-		public static RoomController Get(string id) {
+		public static RoomController? Get(string id) {
 			if (defined.TryGetValue(id, out var c)) {
 				var d = c();
 				d.Id = id;

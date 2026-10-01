@@ -13,7 +13,7 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.creature.player {
 	public class LocalPlayer : Player {
-		public static LocalPlayer Locate(Area area) {
+		public static LocalPlayer? Locate(Area area) {
 			foreach (var player in area.Tagged[Tags.Player]) {
 				if (player is LocalPlayer localPlayer) {
 					return localPlayer;

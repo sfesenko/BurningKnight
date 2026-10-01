@@ -20,7 +20,7 @@ namespace BurningKnight.entity.fx {
 		private TextureRegion region;
 		private float offset;
 		
-		public InteractFx(Entity e, string str, TextureRegion? sprite = null, float of = 0) {
+		public InteractFx(Entity e, string? str, TextureRegion? sprite = null, float of = 0) {
 			entity = e;
 			text = str;
 			region = sprite!;

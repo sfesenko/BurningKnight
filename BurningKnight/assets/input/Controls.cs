@@ -299,7 +299,7 @@ namespace BurningKnight.assets.input {
 		}
 
 
-		public static string FindSlice(string name, bool gamepad) {
+		public static string? FindSlice(string name, bool gamepad) {
 			var id = Find(name, gamepad);
 
 			if (id == null) {

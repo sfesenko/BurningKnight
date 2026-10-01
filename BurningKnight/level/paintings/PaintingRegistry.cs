@@ -94,7 +94,7 @@ namespace BurningKnight.level.paintings {
 			});
 		}
 
-		public static Painting Generate(Biome biome) {
+		public static Painting? Generate(Biome biome) {
 			var length = paintings.Count;
 			float sum = 0;
 

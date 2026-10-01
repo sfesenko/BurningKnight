@@ -22,7 +22,7 @@ namespace BurningKnight.level.entities.chest {
 			Instance.Add(typeof(GlassChest), 0.5f);
 		}
 
-		public static Entity PlaceRandom(Vector2 where, Area area) {
+		public static Entity? PlaceRandom(Vector2 where, Area area) {
 			try {
 				var chest = (Chest) Activator.CreateInstance(Instance.Generate());
 				

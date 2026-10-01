@@ -38,11 +38,11 @@ namespace BurningKnight.entity.door {
 			return 0;
 		}
 
-		protected virtual string GetBar() {
+		protected virtual string? GetBar() {
 			return null;
 		}
 
-		protected virtual string GetPad() {
+		protected virtual string? GetPad() {
 			return null;
 		}
 

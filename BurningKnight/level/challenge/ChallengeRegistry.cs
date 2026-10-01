@@ -12,7 +12,7 @@ namespace BurningKnight.level.challenge {
 			challenges.Add(challenge);
 		}
 
-		public static Challenge Get(byte id) {
+		public static Challenge? Get(byte id) {
 			if (challenges.Count > id - 1 && id > 0) {
 				return challenges[id - 1];
 			}

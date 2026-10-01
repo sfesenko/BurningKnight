@@ -167,7 +167,7 @@ namespace BurningKnight.level.biome {
 			return mapColor;
 		}
 
-		public virtual string GetItemUnlock() {
+		public virtual string? GetItemUnlock() {
 			return null;
 		}
 	}

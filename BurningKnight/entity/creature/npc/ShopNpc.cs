@@ -154,7 +154,7 @@ namespace BurningKnight.entity.creature.npc {
 			return false;
 		}
 
-		protected virtual string GetHiDialog() {
+		protected virtual string? GetHiDialog() {
 			return null;
 		}
 
@@ -233,7 +233,7 @@ namespace BurningKnight.entity.creature.npc {
 			return $"shopkeeper_{Rnd.Int(15, 18)}";
 		}
 		
-		public virtual string GetId() {
+		public virtual string? GetId() {
 			return null;
 		}
 

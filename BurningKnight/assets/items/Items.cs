@@ -104,7 +104,7 @@ namespace BurningKnight.assets.items {
 			}
 		}
 
-		private static ItemUse ParseItemUse(string id, JsonValue? data) {
+		private static ItemUse? ParseItemUse(string id, JsonValue? data) {
 			var use = UseRegistry.Create(id);
 
 			if (use == null) {
@@ -149,7 +149,7 @@ namespace BurningKnight.assets.items {
 				.ToList();
 		}
 
-		public static string Generate(ItemType type, Func<ItemData, bool>? filter = null, PlayerClass c = PlayerClass.Any) {
+		public static string? Generate(ItemType type, Func<ItemData, bool>? filter = null, PlayerClass c = PlayerClass.Any) {
 			if (!byType.TryGetValue(type, out var types)) {
 				return null;
 			}
@@ -157,7 +157,7 @@ namespace BurningKnight.assets.items {
 			return Generate(types, filter!, c);
 		}
 
-		public static string Generate(ItemPool pool, Func<ItemData, bool>? filter = null, PlayerClass c = PlayerClass.Any) {
+		public static string? Generate(ItemPool pool, Func<ItemData, bool>? filter = null, PlayerClass c = PlayerClass.Any) {
 			if (!byPool.TryGetValue(pool.Id, out var types)) {
 				return null;
 			}

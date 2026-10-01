@@ -175,7 +175,7 @@ namespace BurningKnight.level.rooms {
 			ByType[info.Type].Remove(info);
 		}
 
-		public static RoomDef Generate(RoomType type, Biome biome) {
+		public static RoomDef? Generate(RoomType type, Biome biome) {
 			if (biome is IceBiome && type == RoomType.Connection && Context.Run.Type != RunType.BossRush) {
 				return new IceConnectionRoom();
 			}

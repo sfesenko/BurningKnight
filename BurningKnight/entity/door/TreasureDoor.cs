@@ -34,7 +34,7 @@ namespace BurningKnight.entity.door {
 			return Vertical ? "vertical_treasure_door" : "treasure_door";
 		}
 
-		protected override string GetPad() {
+		protected override string? GetPad() {
 			return Vertical ? "vertical_treasure_door_pad" : null;
 		}
 	}

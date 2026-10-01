@@ -20,7 +20,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 			All.AddRange(infos);
 		}
 		
-		public static Boss Generate() {
+		public static Boss? Generate() {
 			var current = new List<BossInfo>();
 			
 			foreach (var info in All) {

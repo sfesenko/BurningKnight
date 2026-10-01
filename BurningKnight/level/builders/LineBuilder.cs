@@ -85,7 +85,7 @@ namespace BurningKnight.level.builders {
 			return true;
 		}
 
-		public override List<RoomDef> Build(List<RoomDef> Init) {
+		public override List<RoomDef>? Build(List<RoomDef> Init) {
 			SetupRooms(Init);
 
 			if (Entrance == null) {

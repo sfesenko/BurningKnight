@@ -76,7 +76,7 @@ namespace BurningKnight.entity.room {
 			AddTag(Tags.Room);
 		}
 
-		public ItemPool GetPool() {
+		public ItemPool? GetPool() {
 			switch (Type) {
 				case RoomType.Shop: return ItemPool.Shop;
 				case RoomType.Secret: return ItemPool.Secret;
@@ -295,7 +295,7 @@ namespace BurningKnight.entity.room {
 			}
 		}
 
-		public Entity FindClosest(Vector2 to, int tag, Func<Entity, bool>? filter = null) {
+		public Entity? FindClosest(Vector2 to, int tag, Func<Entity, bool>? filter = null) {
 			var min = float.MaxValue;
 			Entity? en = null;
 			
