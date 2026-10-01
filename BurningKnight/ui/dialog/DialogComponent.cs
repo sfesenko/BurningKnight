@@ -33,7 +33,7 @@ namespace BurningKnight.ui.dialog {
 		private bool added;
 		private float tillClose = -1;
 		
-		private void HandleInput(object sender, TextInputEventArgs args) {
+		private void HandleInput(object? sender, TextInputEventArgs args) {
 			if (Current is AnswerDialog a) {
 				if (a.Focused) {
 					a.HandleInput(args);

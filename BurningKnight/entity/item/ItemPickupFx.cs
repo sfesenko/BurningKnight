@@ -85,7 +85,7 @@ namespace BurningKnight.entity.item {
 
 					task.Ended = true;
 					
-					Tween.To(GetComponent<TextGraphicsComponent>(), new {Scale = 0}, 0.2f).OnEnd = () => Done = true;
+					Tween.To(GetComponent<TextGraphicsComponent>()!, new {Scale = 0}, 0.2f).OnEnd = () => Done = true;
 					Tween.To(12, y, x => y = x, 0.5f);
 					
 					tweened = true;

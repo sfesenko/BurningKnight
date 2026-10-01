@@ -127,7 +127,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 			Timer.Add(PlaceRewards, 1f);
 		}
 		
-		protected override void CreateGore(DiedEvent d) {
+		protected override void CreateGore(DiedEvent? d) {
 			base.CreateGore(d);
 
 			if (saved) {

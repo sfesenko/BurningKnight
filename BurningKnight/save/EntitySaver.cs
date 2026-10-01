@@ -8,7 +8,7 @@ using Lens.util.file;
 namespace BurningKnight.save {
 	public abstract class EntitySaver : Saver {
 		public class Comparer : IComparer<Entity> {
-			public int Compare(Entity x, Entity y) {
+			public int Compare(Entity? x, Entity? y) {
 				return x!.GetType()!.FullName!.CompareTo(y.GetType().FullName);
 			}
 		}

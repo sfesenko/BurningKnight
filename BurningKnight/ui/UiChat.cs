@@ -30,7 +30,7 @@ namespace BurningKnight.ui {
 			Engine.Instance.Window.TextInput -= HandleInput;
 		}
 		
-		public void HandleInput(object e, TextInputEventArgs args) {
+		public void HandleInput(object? e, TextInputEventArgs args) {
 			if (Engine.Instance.State.Paused) {
 				return;
 			}

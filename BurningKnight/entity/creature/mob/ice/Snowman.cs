@@ -99,7 +99,7 @@ namespace BurningKnight.entity.creature.mob.ice {
 		}
 		#endregion
 
-		protected override void CreateGore(DiedEvent d) {
+		protected override void CreateGore(DiedEvent? d) {
 			var head = new Snowball();
 			Area!.Add(head);
 			head.TopCenter = TopCenter;
