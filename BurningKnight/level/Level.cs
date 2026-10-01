@@ -343,7 +343,7 @@ namespace BurningKnight.level {
 				Engine.Graphics.PreferredBackBufferFormat, DepthFormat.Depth24, 0, RenderTargetUsage.PreserveContents);
 		}
 
-		public virtual string GetMusic() {
+		public virtual string? GetMusic() {
 			return Biome!.GetMusic();
 		}
 

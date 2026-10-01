@@ -14,7 +14,7 @@ namespace BurningKnight.level.entities.statue {
 	public class Statue : SolidProp {
 		protected bool Broken;
 
-		protected virtual string GetFxText() {
+		protected virtual string? GetFxText() {
 			return "touch";
 		}
 		

@@ -40,7 +40,7 @@ namespace BurningKnight.level.builders {
 			       + 0.25 + 0.5*Math.Floor(2*x);
 		}
 		
-		public override List<RoomDef> Build(List<RoomDef> rooms) {
+		public override List<RoomDef>? Build(List<RoomDef> rooms) {
 			SetupRooms(rooms);
 			
 			if (landmarkRoom == null) {
