@@ -34,7 +34,7 @@ namespace BurningKnight.entity.item.use {
 				return null;
 			}
 
-			return (ItemUse) Activator.CreateInstance(use);
+			return (ItemUse) Activator.CreateInstance(use)!;
 		}
 
 		static UseRegistry() {

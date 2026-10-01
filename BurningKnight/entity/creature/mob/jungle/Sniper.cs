@@ -61,7 +61,7 @@ namespace BurningKnight.entity.creature.mob.jungle {
 				Self.GetComponent<AudioEmitterComponent>()!.Emit("mob_sniper_focus");
 				Self.AlwaysVisible = true; // So that the line is visible
 				Self.lastAngle = Self.AngleTo(Self.Target!);
-				lastSeen = Self!.Target.Center;
+				lastSeen = Self!.Target!.Center;
 			}
 
 			public override void Update(float dt) {
@@ -69,7 +69,7 @@ namespace BurningKnight.entity.creature.mob.jungle {
 
 				if (T < 1f) {
 					if (Self.CanSeeTarget()) {
-						Self!.GraphicsComponent.Flipped = Self!.Target.CenterX < Self.CenterX;
+						Self!.GraphicsComponent!.Flipped = Self!.Target!.CenterX < Self.CenterX;
 						lastSeen = Self.Target.Center;
 					}
 

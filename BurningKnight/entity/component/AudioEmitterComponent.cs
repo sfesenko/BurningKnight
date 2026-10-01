@@ -125,7 +125,7 @@ namespace BurningKnight.entity.component {
 				v *= Audio.SfxVolumeBuffer;
 			}*/
 
-			if (!insert || !Playing.TryGetValue(sfx, out instance)) {
+			if (!insert || !Playing.TryGetValue(sfx, out instance!)) {
 				var sound = Audio.GetSfx(sfx);
 
 				if (sound == null) {

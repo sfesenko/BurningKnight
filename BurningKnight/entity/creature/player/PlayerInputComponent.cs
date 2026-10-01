@@ -87,7 +87,7 @@ namespace BurningKnight.entity.creature.player {
 
 				if (dd != null) {
 					var isAnswer = dialog!.Current is AnswerDialog;
-					var a = isAnswer ? (AnswerDialog) dialog.Current : null;
+					var a = isAnswer ? (AnswerDialog) dialog.Current : null!;
 					
 					if (dd.DoneSaying) {
 						if (dialog.Current is ChoiceDialog c) {
@@ -139,13 +139,13 @@ namespace BurningKnight.entity.creature.player {
 			}
 
 			if (Context.Run.Depth == 0 && InGameState.Multiplayer && controller.Index > 0) {
-				if (controller!.GamepadData.CurrentState!.Buttons!.B == ButtonState.Pressed) {
+				if (controller!.GamepadData!.CurrentState!.Buttons!.B == ButtonState.Pressed) {
 					if (holdTimer <= 0) {
 						holdTimer = 0;
 						var dialog = GetComponent<DialogComponent>();
 
 						if (dialog!.Current == null) {
-							dialog!.Dialog.Str!.ClearIcons();
+							dialog!.Dialog!.Str!.ClearIcons();
 							dialog.Dialog.Str.AddIcon(CommonAse.Ui.GetSlice("button_b")!);
 
 							dialog.StartAndClose("remove_player", 2);

@@ -19,7 +19,7 @@ namespace BurningKnight.level.tutorial {
 				set = true;
 
 				if (Item != null) {
-					foreach (var c in GetComponent<RoomComponent>()!.Room.Controllable) {
+					foreach (var c in GetComponent<RoomComponent>()!.Room!.Controllable) {
 						c.TurnOff();
 					}
 				}

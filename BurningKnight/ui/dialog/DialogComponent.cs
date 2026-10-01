@@ -234,7 +234,7 @@ namespace BurningKnight.ui.dialog {
 		private bool wasUnhittable;
 
 		private void OnStart() {
-			var p = (Player) To;
+			var p = (Player) To!;
 
 			if (p!.TryGetComponent<PlayerInputComponent>(out var input)) {
 				input.InDialog = true;

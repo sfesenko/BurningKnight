@@ -253,7 +253,7 @@ namespace BurningKnight.entity.orbital {
 				orbital.OnCollision += (or, e) => {
 					if (e is Projectile p && p.Owner != orbital.Owner) {
 						p.Break();
-						var s = (ScalableSliceComponent) or.GraphicsComponent;
+						var s = (ScalableSliceComponent) or.GraphicsComponent!;
 
 						if (Math.Abs(s!.Scale.Y - 1) > 0.01f) {
 							return; // Already animating

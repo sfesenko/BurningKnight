@@ -54,14 +54,14 @@ namespace BurningKnight.entity.item.renderer {
 				lastAngle = MathUtils.LerpAngle(lastAngle, owner.AngleTo(to) + Math.PI * 0.5f, dt * 24f);
 			}
 
-			var angle = atBack ? (float) Math.PI * (owner!.GraphicsComponent.Flipped ? 0.25f : -0.25f) : (float) lastAngle;
+			var angle = atBack ? (float) Math.PI * (owner!.GraphicsComponent!.Flipped ? 0.25f : -0.25f) : (float) lastAngle;
 
 			if (horizontal) {
 				angle -= (float) Math.PI * 0.5f;
 			}
 
 			var pos = new Vector2(
-				owner.CenterX + (owner!.GraphicsComponent.Flipped ? -5 : 5) + (horizontal ? 0 : (region.Width / 2f) * (owner.GraphicsComponent.Flipped ? -1 : 1)),
+				owner.CenterX + (owner!.GraphicsComponent!.Flipped ? -5 : 5) + (horizontal ? 0 : (region.Width / 2f) * (owner.GraphicsComponent.Flipped ? -1 : 1)),
 				owner.CenterY + offset + (shadow ? owner.Height : 0)
 			);
 

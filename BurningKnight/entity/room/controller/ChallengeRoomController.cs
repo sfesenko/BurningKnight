@@ -54,7 +54,7 @@ namespace BurningKnight.entity.room.controller {
 
 		private void SpawnWave(Entity entity) {
 			var filter = CheckDistance(entity);
-			MobRegistry.SetupForBiome(Context.Level.Biome.Id);
+			MobRegistry.SetupForBiome(Context.Level!.Biome.Id);
 
 			var c = Rnd.Int(5, 11);
 			

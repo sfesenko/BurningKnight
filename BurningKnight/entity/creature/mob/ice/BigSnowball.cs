@@ -80,14 +80,14 @@ namespace BurningKnight.entity.creature.mob.ice {
 					velocity.Y = (float) Math.Sin(a) * force;
 
 					Self.GetComponent<RectBodyComponent>()!.Velocity = velocity;
-					Self!.GetComponent<MobAnimationComponent>()!.Animation.Reverse = velocity.Y < 0;
+					Self!.GetComponent<MobAnimationComponent>()!.Animation!.Reverse = velocity.Y < 0;
 				}
 			}
 
 			public override void Destroy() {
 				base.Destroy();
 				Self.GetComponent<RectBodyComponent>()!.Velocity = Vector2.Zero;
-				Self!.GetComponent<MobAnimationComponent>()!.Animation.Reverse = false;
+				Self!.GetComponent<MobAnimationComponent>()!.Animation!.Reverse = false;
 			}
 
 			public override void Update(float dt) {
@@ -102,7 +102,7 @@ namespace BurningKnight.entity.creature.mob.ice {
 					return;
 				}
 				
-				Self!.GetComponent<MobAnimationComponent>()!.Animation.Reverse = v.Y < 0;
+				Self!.GetComponent<MobAnimationComponent>()!.Animation!.Reverse = v.Y < 0;
 			}
 		}
 		#endregion

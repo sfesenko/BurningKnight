@@ -86,11 +86,11 @@ namespace BurningKnight.assets.lighting {
 			Graphics.Color.A = AuraAlpha;
 
 			foreach (var p in Context.Level!.Area!.Tagged[Tags.Projectile]) {
-				((BasicProjectileGraphicsComponent) p.GraphicsComponent).RenderLight();
+				((BasicProjectileGraphicsComponent) p.GraphicsComponent!).RenderLight();
 			}
 			
 			foreach (var p in Context.Level!.Area!.Tagged[Tags.Laser]) {
-				((LaserGraphicsComponent) p.GraphicsComponent).RenderTopLight();
+				((LaserGraphicsComponent) p.GraphicsComponent!).RenderTopLight();
 			}
 			
 			state.End();

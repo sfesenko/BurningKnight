@@ -235,7 +235,7 @@ namespace BurningKnight.level {
 					continue;
 				}
 
-				var mob = (Mob) Activator.CreateInstance(type.Type);
+				var mob = (Mob) Activator.CreateInstance(type.Type)!;
 				
 				weight -= type.Weight;
 				level.Area!.Add(mob);

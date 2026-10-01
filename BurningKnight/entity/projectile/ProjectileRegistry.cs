@@ -187,7 +187,7 @@ namespace BurningKnight.entity.projectile {
 				var ts = Timer.Add(() => {
 					p.Item.Renderer.Hidden = false;
 
-					foreach (var u in p!.Item.Uses) {
+					foreach (var u in p!.Item!.Uses) {
 						if (u is SimpleShootUse ss) {
 							ss.ProjectileDied = true;
 							break;
@@ -209,7 +209,7 @@ namespace BurningKnight.entity.projectile {
 							projectile.Item.Renderer.Hidden = false;
 							projectile.Break();
 
-							foreach (var u in projectile!.Item.Uses) {
+							foreach (var u in projectile!.Item!.Uses) {
 								if (u is SimpleShootUse ss) {
 									ss.ProjectileDied = true;
 									break;
@@ -234,7 +234,7 @@ namespace BurningKnight.entity.projectile {
 							ProjectileCallbacks.AttachDeathCallback(projectile, (pr, ee, t) => {
 								pr.Item.Renderer.Hidden = false;
 								
-								foreach (var u in pr!.Item.Uses) {
+								foreach (var u in pr!.Item!.Uses) {
 									if (u is SimpleShootUse ss) {
 										ss.ProjectileDied = true;
 										break;

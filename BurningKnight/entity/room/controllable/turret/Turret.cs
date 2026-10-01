@@ -20,8 +20,8 @@ namespace BurningKnight.entity.room.controllable.turret {
 		protected bool Rotates;
 
 		protected uint Angle {
-			get => GetComponent<AnimationComponent>()!.Animation.Frame;
-			set => GetComponent<AnimationComponent>()!.Animation.Frame = value;
+			get => GetComponent<AnimationComponent>()!.Animation!.Frame;
+			set => GetComponent<AnimationComponent>()!.Animation!.Frame = value;
 		}
 
 		public uint StartingAngle;
@@ -42,7 +42,7 @@ namespace BurningKnight.entity.room.controllable.turret {
 			var a = new AnimationComponent("turret", "on");
 			AddComponent(a);
 
-			a!.Animation.Tag = "single";
+			a!.Animation!.Tag = "single";
 			a.Animation.Paused = true;
 			a.ShadowOffset = 4;
 			
@@ -111,7 +111,7 @@ namespace BurningKnight.entity.room.controllable.turret {
 
 			a!.Scale.X = 2f;
 			a.Scale.Y = 0.4f;
-			a!.Animation.Layer = "on";
+			a!.Animation!.Layer = "on";
 
 			Tween.To(1f, a.Scale.X, x => a.Scale.X = x, 0.3f);
 			Tween.To(1f, a.Scale.Y, x => a.Scale.Y = x, 0.3f);
@@ -124,7 +124,7 @@ namespace BurningKnight.entity.room.controllable.turret {
 
 			a!.Scale.X = 2f;
 			a.Scale.Y = 0.4f;
-			a!.Animation.Layer = "off";
+			a!.Animation!.Layer = "off";
 
 			Tween.To(1f, a.Scale.X, x => a.Scale.X = x, 0.3f);
 			Tween.To(1f, a.Scale.Y, x => a.Scale.Y = x, 0.3f);

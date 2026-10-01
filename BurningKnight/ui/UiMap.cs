@@ -105,7 +105,7 @@ namespace BurningKnight.ui {
 				}
 			}
 
-			var cl = Context.Level.Biome.GetMapColor();
+			var cl = Context.Level!.Biome.GetMapColor();
 			Graphics.Color = cl;
 
 			foreach (var rm in level.Area!.Tagged[Tags.Room]) {

@@ -48,7 +48,7 @@ namespace BurningKnight.entity.creature.mob.library {
 				base.Update(dt);
 
 				if (Self.Target != null) {
-					Self!.GraphicsComponent.Flipped = Self.Target.CenterX < Self.CenterX;
+					Self!.GraphicsComponent!.Flipped = Self.Target.CenterX < Self.CenterX;
 				}
 
 				if (!tweened && T >= delay - 0.4f) {

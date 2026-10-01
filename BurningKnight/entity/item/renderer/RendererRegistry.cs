@@ -14,7 +14,7 @@ namespace BurningKnight.entity.item.renderer {
 				return null;
 			}
 
-			return (ItemRenderer) Activator.CreateInstance(renderer);
+			return (ItemRenderer) Activator.CreateInstance(renderer)!;
 		}
 
 

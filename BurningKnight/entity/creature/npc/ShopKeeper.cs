@@ -133,7 +133,7 @@ namespace BurningKnight.entity.creature.npc {
 			AddTag(Tags.ShopKeeper);
 			
 			Become<IdleState>();
-			GetComponent<DialogComponent>()!.Dialog.Voice = 3;
+			GetComponent<DialogComponent>()!.Dialog!.Voice = 3;
 		}
 
 		public override void Load(FileReader stream) {
@@ -268,7 +268,7 @@ namespace BurningKnight.entity.creature.npc {
 			public override void Update(float dt) {
 				base.Update(dt);
 
-				if (Self!.GetComponent<DialogComponent>()!.Dialog.Saying) {
+				if (Self!.GetComponent<DialogComponent>()!.Dialog!.Saying) {
 					T = 0;
 					return;
 				}
@@ -286,7 +286,7 @@ namespace BurningKnight.entity.creature.npc {
 			public override void Init() {
 				base.Init();
 				
-				Self!.GetComponent<AnimationComponent>()!.Animation.Tag = "run";
+				Self!.GetComponent<AnimationComponent>()!.Animation!.Tag = "run";
 				var r = Self.GetComponent<RoomComponent>()!.Room;
 
 				toPlayer = r!.Tagged[Tags.Player].Count > 0 && Rnd.Chance(40);
@@ -309,7 +309,7 @@ namespace BurningKnight.entity.creature.npc {
 				var t = target;
 
 				if (toPlayer) {
-					var a = Self!.GetComponent<RoomComponent>()!.Room.Tagged[Tags.Player];
+					var a = Self!.GetComponent<RoomComponent>()!.Room!.Tagged[Tags.Player];
 
 					if (a.Count > 0) {
 						target = a[0].Center;
@@ -326,7 +326,7 @@ namespace BurningKnight.entity.creature.npc {
 
 				if (d <= 24 || T >= 4f) {
 					if ((toPlayer && Rnd.Chance(80)) || Rnd.Chance(30)) {
-						if (Self!.GetComponent<RoomComponent>()!.Room.Tagged[Tags.Player].Count > 0) {
+						if (Self!.GetComponent<RoomComponent>()!.Room!.Tagged[Tags.Player].Count > 0) {
 							Self.GetComponent<DialogComponent>()!.StartAndClose($"shopkeeper_{(Rnd.Chance(30) ? 18 : Rnd.Int(12, 15))}", 3);
 						}
 					}
@@ -359,7 +359,7 @@ namespace BurningKnight.entity.creature.npc {
 
 				delay = Rnd.Float(0.2f, 0.8f);
 				
-				Self!.GetComponent<AnimationComponent>()!.Animation.Tag = "run";
+				Self!.GetComponent<AnimationComponent>()!.Animation!.Tag = "run";
 				var r = Self.GetComponent<RoomComponent>()!.Room;
 
 				if (r != null) {
@@ -382,7 +382,7 @@ namespace BurningKnight.entity.creature.npc {
 					Init();
 				}
 
-				if (Self.shotgun != null && Self!.GetComponent<RoomComponent>()!.Room.Tagged[Tags.Player].Count > 0) {
+				if (Self.shotgun != null && Self!.GetComponent<RoomComponent>()!.Room!.Tagged[Tags.Player].Count > 0) {
 					Self.shotgun.Use(Self);
 				}
 				

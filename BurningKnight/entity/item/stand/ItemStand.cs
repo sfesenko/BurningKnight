@@ -251,7 +251,7 @@ namespace BurningKnight.entity.item.stand {
 				shader.Parameters["flashColor"].SetValue(ColorUtils.White);
 
 				foreach (var d in MathUtils.Directions) {
-					Graphics.Render(((SliceComponent) GraphicsComponent).Sprite, Position + d);
+					Graphics.Render(((SliceComponent) GraphicsComponent!).Sprite, Position + d);
 				}
 				
 				Shaders.End();

@@ -27,7 +27,7 @@ namespace BurningKnight.entity.creature.npc.dungeon {
 			Flips = false;
 			
 			AddComponent(new AnimationComponent("boxy"));
-			GetComponent<AnimationComponent>()!.Animation.Tag = "idle";
+			GetComponent<AnimationComponent>()!.Animation!.Tag = "idle";
 
 			GetComponent<DropsComponent>()!.Add("bk:boxy");
 			
@@ -38,7 +38,7 @@ namespace BurningKnight.entity.creature.npc.dungeon {
 			base.PostInit();
 
 			if (open) {
-				GetComponent<AnimationComponent>()!.Animation.Tag = "open";
+				GetComponent<AnimationComponent>()!.Animation!.Tag = "open";
 			}
 		}
 
@@ -47,7 +47,7 @@ namespace BurningKnight.entity.creature.npc.dungeon {
 				return;
 			}
 			
-			foreach (var s in GetComponent<RoomComponent>()!.Room.Tagged[Tags.Item]) {
+			foreach (var s in GetComponent<RoomComponent>()!.Room!.Tagged[Tags.Item]) {
 				if (s is BoxyStand st && st != ibe.Stand && st.Item != null) {
 					return;
 				}
@@ -64,7 +64,7 @@ namespace BurningKnight.entity.creature.npc.dungeon {
 
 				open = true;
 				var a = GetComponent<AnimationComponent>();
-				a!.Animation.Tag = "open";
+				a!.Animation!.Tag = "open";
 				a.Animate();
 				
 				Achievements.Unlock("bk:open_up");

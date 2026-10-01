@@ -112,7 +112,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 			Context.Camera!.Shake(6);
 
 			AnimationUtil.TeleportAway(this, () => {
-				GetComponent<RoomComponent>()!.Room.Hide();
+				GetComponent<RoomComponent>()!.Room!.Hide();
 				
 				Timer.Add(() => {
 					foreach (var r in Area.Tagged[Tags.Room]) {
@@ -158,7 +158,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 						}
 					}
 					
-					var rmdef = (DmRoom) Activator.CreateInstance(type);
+					var rmdef = (DmRoom) Activator.CreateInstance(type)!;
 
 					rm.Parent = rmdef!;
 					rm.MapW = Math.Min(Rnd.Int(rmdef!.GetMinWidth(), rmdef.GetMaxWidth()), level!.Width - 2);
@@ -213,7 +213,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 			public override void Update(float dt) {
 				base.Update(dt);
 
-				if (Self!.GetComponent<RoomComponent>()!.Room.Tagged[Tags.Mob].Count > 1) {
+				if (Self!.GetComponent<RoomComponent>()!.Room!.Tagged[Tags.Mob].Count > 1) {
 					Become<FlyingState>();
 				}
 			}
@@ -245,7 +245,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 
 				Self.GetComponent<HealthComponent>()!.Unhittable = true;
 				
-				if (Self!.GetComponent<RoomComponent>()!.Room.Tagged[Tags.Mob].Count <= 1) {
+				if (Self!.GetComponent<RoomComponent>()!.Room!.Tagged[Tags.Mob].Count <= 1) {
 					Become<IdleState>();
 				}
 			}

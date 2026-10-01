@@ -29,7 +29,7 @@ namespace BurningKnight.entity.component {
 			} else if (TheType == AimType.Target) {
 				RealAim = Aim = ((Mob) Entity).Target?.Center ?? Input.Mouse.GamePosition;
 			} else {
-				var a = GetComponent<RoomComponent>()!.Room.Tagged[Tags.Player];
+				var a = GetComponent<RoomComponent>()!.Room!.Tagged[Tags.Player];
 
 				if (a.Count > 0) {
 					RealAim = Aim = a[0].Center;

@@ -82,7 +82,7 @@ namespace BurningKnight.entity.pc {
 				return;
 			}
 			
-			Entity.AddComponent(new PlayerInputComponent());
+			Entity!.AddComponent(new PlayerInputComponent());
 			Entity = null;
 			
 			Context.Camera!.Targets.Clear();

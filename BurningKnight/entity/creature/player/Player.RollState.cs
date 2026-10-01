@@ -77,7 +77,7 @@ namespace BurningKnight.entity.creature.player {
 				var body = Self.GetComponent<RectBodyComponent>();
 				var angle = body!.Acceleration.LengthSquared() > 0.1f 
 					?	body.Acceleration.ToAngle()
-					: (GameContext.Current!.Camera.ScreenToCamera(Input.Mouse.ScreenPosition) - Self.Center).ToAngle();
+					: (GameContext.Current!.Camera!.ScreenToCamera(Input.Mouse.ScreenPosition) - Self.Center).ToAngle();
 
 				direction = new Vector2((float) Math.Cos(angle) * RollForce, (float) Math.Sin(angle) * RollForce);
 				

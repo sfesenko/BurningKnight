@@ -40,7 +40,7 @@ namespace BurningKnight.entity.item.renderer {
 			var region = Item.Region;
 			var owner = Item.Owner;
 
-			var of = owner!.GraphicsComponent.Flipped;
+			var of = owner!.GraphicsComponent!.Flipped;
 			var flipped = false;
 			
 			var angle = MathUtils.Mod((of ? -Angle : Angle) + (atBack ? ((InvertBack ? -1 : 1) * (of ? -Math.PI / 4 : Math.PI / 4)) : lastAngle), Math.PI * 2);

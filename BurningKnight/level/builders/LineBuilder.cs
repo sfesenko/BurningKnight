@@ -135,7 +135,7 @@ namespace BurningKnight.level.builders {
 						}
 
 						Branchable.Add(T!);
-						Init.Add(T);
+						Init.Add(T!);
 						Curr = T;
 					}
 
@@ -151,7 +151,7 @@ namespace BurningKnight.level.builders {
 				}
 
 				Branchable.Add(R!);
-				Curr = R;
+				Curr = R!;
 			}
 
 			var RoomsToBranch = new List<RoomDef>();

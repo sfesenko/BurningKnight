@@ -71,7 +71,7 @@ namespace BurningKnight.assets.loot {
 				return null;
 			}
 
-			var drop = (Drop) Activator.CreateInstance(t.Type);
+			var drop = (Drop) Activator.CreateInstance(t.Type)!;
 			table["id"] = LastDropId++;
 			drop!.Load(table);
 

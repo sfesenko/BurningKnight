@@ -7,7 +7,7 @@ namespace BurningKnight.level.hall {
 		public override List<RoomDef> Build(List<RoomDef> Init) {
 			SetupRooms(Init);
 
-			Exit.SetSize();
+			Exit!.SetSize();
 			Exit.SetPos(0, 0);
 			
 			// PlaceRoom(Init, Entrance, Exit, 95);

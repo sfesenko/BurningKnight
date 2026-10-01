@@ -171,7 +171,7 @@ namespace BurningKnight.entity.creature {
 
 			if (Settings.Blood) {
 				for (var i = 0; i < Rnd.Int(2, 8); i++) {
-					Area.Add(new SplashParticle {
+					Area!.Add(new SplashParticle {
 						Position = Center - new Vector2(2.5f),
 						Color = GetBloodColor()
 					});

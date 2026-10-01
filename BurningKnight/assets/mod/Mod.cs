@@ -18,7 +18,7 @@ namespace BurningKnight.assets.mod {
 			foreach (var type in dll.ExportedTypes) {
 				if (typeof(Mod).IsAssignableFrom(type)) {
 					try {
-						var mod = (Mod) Activator.CreateInstance(type);
+						var mod = (Mod) Activator.CreateInstance(type)!;
 						
 						return mod;
 					} catch (Exception e) {

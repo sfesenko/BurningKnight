@@ -135,7 +135,7 @@ namespace BurningKnight.entity.creature.bk {
 
 			GetComponent<HealthComponent>()!.Unhittable = false;
 			TouchDamage = 2;
-			Center = Target!.GetComponent<RoomComponent>()!.Room.Center;
+			Center = Target!.GetComponent<RoomComponent>()!.Room!.Center;
 		}
 		protected override void Become<T>() {
 			if (!Passive || typeof(T) == typeof(IdleState)) {

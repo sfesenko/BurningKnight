@@ -19,7 +19,7 @@ namespace BurningKnight.entity.item.use {
 			}
 
 			var room = e.GetComponent<RoomComponent>()!.Room;
-			var newRoom = (Room) Rnd.Element<Entity>(rooms, r => r != room && r is Room rm && rm.Type == RoomType.Shop);
+			var newRoom = (Room) Rnd.Element<Entity>(rooms, r => r != room && r is Room rm && rm.Type == RoomType.Shop)!;
 
 			if (newRoom != null) {
 				AnimationUtil.TeleportAway(e, () => {

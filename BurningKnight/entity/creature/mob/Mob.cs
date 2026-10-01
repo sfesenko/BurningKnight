@@ -243,7 +243,7 @@ namespace BurningKnight.entity.creature.mob {
 			}
 
 			try {
-				var p = (Prefix) Activator.CreateInstance(t);
+				var p = (Prefix) Activator.CreateInstance(t)!;
 
 				prefix = p;
 				

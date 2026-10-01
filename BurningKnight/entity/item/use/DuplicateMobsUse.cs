@@ -22,7 +22,7 @@ namespace BurningKnight.entity.item.use {
 
 			foreach (var mob in mobs) {
 				try {
-					var m = (Mob) Activator.CreateInstance(mob.GetType());
+					var m = (Mob) Activator.CreateInstance(mob.GetType())!;
 					entity.Area!.Add(m);
 					m!.Center = mob.Center;
 

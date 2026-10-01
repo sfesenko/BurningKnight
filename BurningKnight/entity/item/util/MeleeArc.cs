@@ -67,7 +67,7 @@ namespace BurningKnight.entity.item.util {
 
 		public override void Render() {
 			var component = GetComponent<AnimationComponent>();
-			var region = component!.Animation.GetCurrentTexture();
+			var region = component!.Animation!.GetCurrentTexture();
 
 			Graphics.Color = Color;
 			Graphics.Render(region, Position, Angle, component.Offset, component.Scale);

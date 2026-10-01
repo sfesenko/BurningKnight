@@ -41,7 +41,7 @@ namespace BurningKnight.entity.creature.bk {
 				base.Init();
 
 				var bkDialog = Self.GetComponent<DialogComponent>();
-				var playerDialog = Self!.Target.GetComponent<DialogComponent>();
+				var playerDialog = Self!.Target!.GetComponent<DialogComponent>();
 				
 				Start(bkDialog!, "bkw_0", Self.Target, () => {
 					Start(bkDialog!, "bkw_1", Self.Target, () => {
@@ -66,7 +66,7 @@ namespace BurningKnight.entity.creature.bk {
 				d.Start(id, to);
 
 				if (callback != null) {
-					d!.Dialog.ShowArrow = true;
+					d!.Dialog!.ShowArrow = true;
 					d.Dialog.OnEnd = () => {
 						Timer.Add(callback, 0.1f);
 						return true;

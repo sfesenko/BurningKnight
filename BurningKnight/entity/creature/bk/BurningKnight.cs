@@ -100,7 +100,7 @@ namespace BurningKnight.entity.creature.bk {
 			Subscribe<DefeatedEvent>();
 			Subscribe<NewLevelStartedEvent>();
 
-			GetComponent<DialogComponent>()!.Dialog.Voice = 25;
+			GetComponent<DialogComponent>()!.Dialog!.Voice = 25;
 			AddComponent(new AimComponent(AimComponent.AimType.Target));
 		}
 
@@ -231,7 +231,7 @@ namespace BurningKnight.entity.creature.bk {
 				// I WOULDN'T BOTHER EVEN TALKING TO THEM
 				Timer.Add(() => { GetComponent<DialogComponent>()!.StartAndClose("bk_5", 5); }, 2f);
 			} else if (e is ShopKeeper.EnragedEvent skee) {
-				if (skee!.ShopKeeper.GetComponent<RoomComponent>()!.Room.Explored) {
+				if (skee!.ShopKeeper!.GetComponent<RoomComponent>()!.Room!.Explored) {
 					// KILL HIM, EDWARD!
 					GetComponent<DialogComponent>()!.StartAndClose("bk_6", 5);
 				}
@@ -309,7 +309,7 @@ namespace BurningKnight.entity.creature.bk {
 			if (lastFadingParticle <= 0 && !(GetComponent<StateComponent>()!.StateInstance is FlameAttack)) {
 				lastFadingParticle = 0.2f;
 
-				var particle = new FadingParticle(GetComponent<BkGraphicsComponent>()!.Animation.GetCurrentTexture(), tint);
+				var particle = new FadingParticle(GetComponent<BkGraphicsComponent>()!.Animation!.GetCurrentTexture(), tint);
 				Area!.Add(particle);
 
 				particle.Depth = Depth - 1;

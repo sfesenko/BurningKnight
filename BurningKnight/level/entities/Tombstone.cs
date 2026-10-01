@@ -57,7 +57,7 @@ namespace BurningKnight.level.entities {
 			AddComponent(new LightComponent(this, 64, new Color(0.7f, 0.6f, 0.3f, 1f)));
 			
 			Subscribe<RoomChangedEvent>();
-			GetComponent<DialogComponent>()!.Dialog.Voice = 30;
+			GetComponent<DialogComponent>()!.Dialog!.Voice = 30;
 		}
 
 		public static Player CreatePlayer(Area area, byte index, bool gamepad, Vector2 where) {
@@ -86,7 +86,7 @@ namespace BurningKnight.level.entities {
 			p.GetComponent<CursorComponent>()!.Cursor = cursor;
 			
 			AnimationUtil.Poof(where, 1);
-			GameContext.Current!.Camera.Shake(16);
+			GameContext.Current!.Camera!.Shake(16);
 			
 			return p;
 		}
@@ -130,7 +130,7 @@ namespace BurningKnight.level.entities {
 				var minIndex = 1024;
 				Player? pl = null;
 
-				foreach (var pr in Area.Tagged[Tags.Player]) {
+				foreach (var pr in Area!.Tagged[Tags.Player]) {
 					var i = pr.GetComponent<InputComponent>()!.Index;
 
 					if (p != pr && i < minIndex) {

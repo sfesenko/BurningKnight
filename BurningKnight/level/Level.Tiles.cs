@@ -341,7 +341,7 @@ namespace BurningKnight.level {
 			Animate(Area!, tx, ty);
 		}
 		public static void Animate(Area area, int x, int y) {
-			if (!GameContext.Current!.Camera.Overlaps(new Rectangle(x * 16, y * 16, 16, 16))) {
+			if (!GameContext.Current!.Camera!.Overlaps(new Rectangle(x * 16, y * 16, 16, 16))) {
 				return;
 			}
 

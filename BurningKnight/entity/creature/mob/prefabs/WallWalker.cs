@@ -182,7 +182,7 @@ namespace BurningKnight.entity.creature.mob.prefabs {
 				var mx = Self.X + (this.mx) * 16;
 				var my = Self.CenterY + (this.my) * 16;
 
-				if (!GameContext.Current!.Level.Get((int) Math.Round(mx / 16f), (int) Math.Round(my / 16f)).IsWall()) {
+				if (!GameContext.Current!.Level!.Get((int) Math.Round(mx / 16f), (int) Math.Round(my / 16f)).IsWall()) {
 					Self.GetComponent<HealthComponent>()!.Kill(Self);
 					return;
 				}

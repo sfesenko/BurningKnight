@@ -37,7 +37,7 @@ namespace BurningKnight.entity.creature.npc {
 				CanInteract = e => !broken
 			});
 			
-			GetComponent<DialogComponent>()!.Dialog.Voice = 15;
+			GetComponent<DialogComponent>()!.Dialog!.Voice = 15;
 			
 			Dialogs.RegisterCallback("eg_0", (d, c) => {
 				if (broken) {

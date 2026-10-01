@@ -205,7 +205,7 @@ namespace BurningKnight.level.rooms {
 				sum += t.Chance;
 
 				if (value < sum) {
-					return (RoomDef) Activator.CreateInstance(t.Room);
+					return (RoomDef) Activator.CreateInstance(t.Room)!;
 				}
 			}
 			

@@ -240,7 +240,7 @@ namespace BurningKnight.entity.creature.player {
 								Timer.Add(() => {
 									var part = new TileParticle();
 
-									part.Top = Context!.Level!.Tileset.WallTopADecor;
+									part.Top = Context!.Level!.Tileset!.WallTopADecor;
 									part.TopTarget = Context.Level!.Tileset.WallTopADecor;
 									part.Side = Context.Level!.Tileset.FloorSidesD[0];
 									part.Sides = Context.Level!.Tileset.WallSidesA[2];

@@ -45,7 +45,7 @@ namespace BurningKnight.entity.creature.mob.library {
 		public class SummonState : SmartState<Skeleton> {
 			public override void Init() {
 				base.Init();
-				Self!.GetComponent<MobAnimationComponent>()!.Animation.Tag = "idle";
+				Self!.GetComponent<MobAnimationComponent>()!.Animation!.Tag = "idle";
 			}
 
 			public override void Update(float dt) {

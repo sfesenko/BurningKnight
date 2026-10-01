@@ -17,7 +17,7 @@ namespace BurningKnight.entity.item.use {
 			}
 
 			var o = entity.GetComponent<WeaponComponent>();
-			var c = (WeaponComponent) entity.GetComponent<ActiveWeaponComponent>();
+			var c = (WeaponComponent) entity.GetComponent<ActiveWeaponComponent>()!;
 
 			if (o!.Item == item) {
 				c = o;

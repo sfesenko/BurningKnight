@@ -47,7 +47,7 @@ namespace BurningKnight.entity.creature.drop {
 
 					if (value <= sum) {
 						if (d != null) {
-							items.AddRange(d);
+							items!.AddRange(d);
 						}
 						
 						break;

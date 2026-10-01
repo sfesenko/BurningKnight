@@ -66,7 +66,7 @@ namespace BurningKnight.level {
 			Graphics.Color = new Color(1f, 1f, 0f, 1f);
 			
 			for (int y = GetRenderBottom(camera!); y >= toY; y--) {
-				for (int x = GetRenderLeft(camera); x <= toX; x++) {
+				for (int x = GetRenderLeft(camera!); x <= toX; x++) {
 					var index = ToIndex(x, y);
 					var light = Light[index];
 
@@ -112,7 +112,7 @@ namespace BurningKnight.level {
 			enabled.SetValue(false);
 							
 			for (int y = GetRenderBottom(camera!); y >= toY; y--) {
-				for (int x = GetRenderLeft(camera); x <= toX; x++) {
+				for (int x = GetRenderLeft(camera!); x <= toX; x++) {
 					var index = ToIndex(x, y);
 					var light = Light[index];
 
@@ -172,7 +172,7 @@ namespace BurningKnight.level {
 			var toY = GetRenderBottom(camera!);
 
 			for (int y = toY; y >= GetRenderTop(camera!); y--) {
-				for (int x = GetRenderLeft(camera); x <= toX; x++) {
+				for (int x = GetRenderLeft(camera!); x <= toX; x++) {
 					var index = ToIndex(x, y);
 					var tl = (Tile) Tiles[index];
 					var tileset = (MatrixLeak[index] ? MatrixTileset : Tileset);
@@ -285,7 +285,7 @@ namespace BurningKnight.level {
 			var region = Tileset!.WallTopA;
 			
 			for (int y = GetRenderTop(camera!); y <= toY; y++) {
-				for (int x = GetRenderLeft(camera); x <= toX; x++) {
+				for (int x = GetRenderLeft(camera!); x <= toX; x++) {
 					var index = ToIndex(x, y);
 					var light = Light[index];
 

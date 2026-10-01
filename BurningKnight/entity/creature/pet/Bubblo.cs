@@ -25,7 +25,7 @@ namespace BurningKnight.entity.creature.pet {
 
 			var a = GetComponent<AnimationComponent>();
 			a!.CustomFlip = true;
-			a!.Animation.Tag = tags[stage];
+			a!.Animation!.Tag = tags[stage];
 			
 			GetComponent<ShadowComponent>()!.Callback = RenderShadow;
 		}

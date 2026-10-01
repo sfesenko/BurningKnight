@@ -30,7 +30,7 @@ namespace BurningKnight.level.entities.chest {
 			
 			var i = GetComponent<InteractableComponent>();
 			
-			i!.CanInteract = e => e.GetComponent<ActiveWeaponComponent>()!.Item != null && !e!.GetComponent<ActiveWeaponComponent>()!.Item.Scourged;
+			i!.CanInteract = e => e.GetComponent<ActiveWeaponComponent>()!.Item != null && !e!.GetComponent<ActiveWeaponComponent>()!.Item!.Scourged;
 			i.OnStart = e => AddFx();
 			
 			try {
@@ -91,7 +91,7 @@ namespace BurningKnight.level.entities.chest {
 				w.RequestSwap();
 			}
 			
-			itemRegion = GetComponent<ItemComponent>()!.Item.Region;
+			itemRegion = GetComponent<ItemComponent>()!.Item!.Region;
 			AddFx();
 			return false;
 		}

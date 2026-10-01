@@ -114,7 +114,7 @@ namespace BurningKnight.entity.creature.pet {
 			if (e is CollisionStartedEvent cse) {
 				if (!open && cse.Entity == Owner) {
 					GetComponent<AnimationComponent>()!.Animate(() => {
-						GetComponent<AnimationComponent>()!.Animation.Tag = "open";
+						GetComponent<AnimationComponent>()!.Animation!.Tag = "open";
 					});
 
 					GetComponent<FollowerComponent>()!.Paused = true;
@@ -127,7 +127,7 @@ namespace BurningKnight.entity.creature.pet {
 				if (open && cee.Entity == Owner) {
 					GetComponent<AnimationComponent>()!.Animate(() => {
 						open = false;
-						GetComponent<AnimationComponent>()!.Animation.Tag = "idle";
+						GetComponent<AnimationComponent>()!.Animation!.Tag = "idle";
 					});
 
 					GetComponent<FollowerComponent>()!.Paused = false;

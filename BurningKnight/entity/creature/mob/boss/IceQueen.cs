@@ -92,7 +92,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 			if (lastFadingParticle <= 0) {
 				lastFadingParticle = 0.2f;
 
-				var particle = new FadingParticle(GetComponent<MobAnimationComponent>()!.Animation.GetCurrentTexture(), tint);
+				var particle = new FadingParticle(GetComponent<MobAnimationComponent>()!.Animation!.GetCurrentTexture(), tint);
 				Area!.Add(particle);
 
 				particle.Depth = Depth - 1;
@@ -412,7 +412,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 			
 			public override void Init() {
 				base.Init();
-				to = Self!.Target.Center;
+				to = Self!.Target!.Center;
 				Self.Animate();
 			}
 

@@ -38,11 +38,11 @@ namespace BurningKnight.entity.buff {
 				return null;
 			}
 
-			return (Buff) Activator.CreateInstance(buff.Buff);
+			return (Buff) Activator.CreateInstance(buff.Buff)!;
 		}
 
 		public static Buff Create<T>() where T : Buff {
-			return (Buff) Activator.CreateInstance(typeof(T));
+			return (Buff) Activator.CreateInstance(typeof(T))!;
 		}
 	}
 }

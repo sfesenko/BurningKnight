@@ -141,7 +141,7 @@ namespace BurningKnight.state {
 					}
 
 					default: {
-						Audio.PlayMusic(Context.Level!.GetMusic());
+						Audio.PlayMusic(Context.Level!.GetMusic()!);
 						break;
 					}
 				}

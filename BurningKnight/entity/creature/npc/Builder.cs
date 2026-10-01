@@ -38,7 +38,7 @@ namespace BurningKnight.entity.creature.npc {
 			var dl = GetComponent<DialogComponent>();
 
 			dl!.InitCallback = () => {
-				dl!.Dialog.Str!.AddIcon(CommonAse.Ui.GetSlice("coin")!);
+				dl!.Dialog!.Str!.AddIcon(CommonAse.Ui.GetSlice("coin")!);
 				dl.Dialog.Str.SetVariable("need", GetPrice());
 			};
 			
@@ -60,7 +60,7 @@ namespace BurningKnight.entity.creature.npc {
 
 					paid += amount;
 					component.Coins -= amount;
-					dl!.Dialog.Str!.SetVariable("need", GetPrice());
+					dl!.Dialog!.Str!.SetVariable("need", GetPrice());
 
 					if (paid >= cost) {
 						GlobalSave.Put("builder_paid", 0);

@@ -317,7 +317,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 							var part = new TileParticle();
 
 							part.FromBottom = true;
-							part.Top = GameContext.Current!.Level.Tileset.FloorA[0];
+							part.Top = GameContext.Current!.Level!.Tileset!.FloorA[0];
 							part.TopTarget = GameContext.Current.Level.Tileset.WallTopADecor;
 							part.Side = GameContext.Current.Level.Tileset.WallA[0];
 							part.Sides = GameContext.Current.Level.Tileset.WallSidesA[2];
@@ -417,7 +417,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 				Self.GetComponent<AudioEmitterComponent>()!.EmitRandomized("mob_pharaoh_adidos");
 
 				Tween.To(0, 255, x => Self.GetComponent<MobAnimationComponent>()!.Tint.A = (byte) x, 0.5f).OnEnd = () => {
-					var tile = Self!.GetComponent<RoomComponent>()!.Room.GetRandomWallFreeTile() * 16;
+					var tile = Self!.GetComponent<RoomComponent>()!.Room!.GetRandomWallFreeTile() * 16;
 
 					Self.BottomCenter = tile + new Vector2(8, 8); 
 					Self.GetComponent<AudioEmitterComponent>()!.EmitRandomized("mob_pharaoh_appear");

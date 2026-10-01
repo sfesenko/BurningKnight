@@ -54,7 +54,7 @@ namespace BurningKnight.entity.creature.mob.library {
 		public class ToRageState : SmartState<Book> {
 			public override void Init() {
 				base.Init();
-				Self!.GetComponent<ZAnimationComponent>()!.Animation.Tag = "anim";
+				Self!.GetComponent<ZAnimationComponent>()!.Animation!.Tag = "anim";
 			}
 
 			public override void Update(float dt) {
@@ -69,7 +69,7 @@ namespace BurningKnight.entity.creature.mob.library {
 		public class ToIdleState : SmartState<Book> {
 			public override void Init() {
 				base.Init();
-				Self!.GetComponent<ZAnimationComponent>()!.Animation.Tag = "anim";
+				Self!.GetComponent<ZAnimationComponent>()!.Animation!.Tag = "anim";
 			}
 
 			public override void Update(float dt) {

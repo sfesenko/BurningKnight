@@ -41,7 +41,7 @@ namespace BurningKnight.level.entities {
 			AddComponent(new InteractableSliceComponent("props", "achievement_statue"));
 			AddComponent(new RectBodyComponent(0, 13, 24, 19, BodyType.Static));
 
-			GetComponent<DialogComponent>()!.Dialog.Voice = 30;
+			GetComponent<DialogComponent>()!.Dialog!.Voice = 30;
 			
 			AddTag(Tags.Statue);
 

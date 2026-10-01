@@ -79,7 +79,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 					}
 
 					try {
-						var a = GetComponent<RoomComponent>()!.Room.Tagged[Tags.MustBeKilled].ToArray();
+						var a = GetComponent<RoomComponent>()!.Room!.Tagged[Tags.MustBeKilled].ToArray();
 
 						foreach (var p in a) {
 							if (!(p is Boss)) {
@@ -125,7 +125,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 						var dm = Rnd.Chance(e.DmChance * 100);
 						
 						if (gr || (dm && e.OpenBoth)) {
-							foreach (var r in Area.Tagged[Tags.Room]) {
+							foreach (var r in Area!.Tagged[Tags.Room]) {
 								var room = (Room) r;
 
 								if (room.Type == RoomType.Granny) {
@@ -144,7 +144,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 						}
 						
 						if (dm || (gr && e.OpenBoth)) {
-							foreach (var r in Area.Tagged[Tags.Room]) {
+							foreach (var r in Area!.Tagged[Tags.Room]) {
 								var room = (Room) r;
 
 								if (room.Type == RoomType.OldMan) {
@@ -192,7 +192,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 									var part = new TileParticle();
 
 									part.Top = t == Tile.GrannyFloor ? Tilesets.Biome.GrannyFloor[0] : Tilesets.Biome.EvilFloor[0];
-									part.TopTarget = Context!.Level!.Tileset.WallTopADecor;
+									part.TopTarget = Context!.Level!.Tileset!.WallTopADecor;
 									part.Side = Context.Level!.Tileset.FloorSidesD[0];
 									part.Sides = Context.Level!.Tileset.WallSidesA[2];
 									part.Tile = t;
@@ -203,7 +203,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 									part.Target.Y = y * 16;
 									part.TargetZ = -8f;
 
-									Area.Add(part);
+									Area!.Add(part);
 								}, 1f + Rnd.Float(0.2f) + MathUtils.Distance(x - cx, y - cy) / 6f);
 							}
 						}, -1);
@@ -266,7 +266,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 				var c = GetAnyComponent<AnimationComponent>();
 
 				if (c != null) {
-					c!.Animation.Tag = "idle";
+					c!.Animation!.Tag = "idle";
 				}
 			} else {
 				Awoken = true;
@@ -306,7 +306,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 
 			exit.To = Context.Run.Depth + 1;
 
-			var center = GetComponent<RoomComponent>()!.Room.Center;
+			var center = GetComponent<RoomComponent>()!.Room!.Center;
 
 			var x = (int) Math.Floor(center.X / 16);
 			var y = (int) Math.Floor(center.Y / 16);

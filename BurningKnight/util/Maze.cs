@@ -68,7 +68,7 @@ namespace BurningKnight.util {
 					Y = Rnd.Int(Maze[0].Length);
 				} while (!Maze[X][Y]);
 
-				Mov = DecideDirection(Maze, X, Y);
+				Mov = DecideDirection(Maze, X, Y)!;
 
 				if (Mov == null) {
 					Fails++;

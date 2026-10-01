@@ -47,7 +47,7 @@ namespace BurningKnight.entity.item.use {
 
 			foreach (var i in chests) {
 				try {
-					var st = (Entity) Activator.CreateInstance(i.GetType());
+					var st = (Entity) Activator.CreateInstance(i.GetType())!;
 					i.X -= i.Width / 2f + 1;
 
 					st!.X = i.X + i.Width + 2;

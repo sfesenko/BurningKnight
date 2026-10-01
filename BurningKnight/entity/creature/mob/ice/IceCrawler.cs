@@ -72,7 +72,7 @@ namespace BurningKnight.entity.creature.mob.ice {
 			public override void Update(float dt) {
 				base.Update(dt);
 
-				if (!fired && Self!.GetComponent<WallAnimationComponent>()!.Animation.Paused) {
+				if (!fired && Self!.GetComponent<WallAnimationComponent>()!.Animation!.Paused) {
 					fired = true;
 					T = 0;
 

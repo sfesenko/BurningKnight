@@ -88,7 +88,7 @@ namespace BurningKnight.entity.creature.player {
 							var liquid = GameContext.Current.Level.Liquid[i];
 							var room = Self.GetComponent<RoomComponent>()!.Room;
 
-							Audio.PlaySfx(GameContext.Current!.Level.Biome.GetStepSound(liquid == 0 ? tile : (Tile) liquid),
+							Audio.PlaySfx(GameContext.Current!.Level!.Biome.GetStepSound(liquid == 0 ? tile : (Tile) liquid),
 								room != null && room.Tagged[Tags.MustBeKilled].Count > 0 ? 0.18f : 0.25f);
 						}
 					}

@@ -15,7 +15,7 @@ namespace BurningKnight.entity.creature.mob {
 			
 			AddComponent(new RectBodyComponent(4, 2, 8, 14, BodyType.Static));
 			AddComponent(new DialogComponent());
-			GetComponent<DialogComponent>()!.Dialog.Voice = 2;
+			GetComponent<DialogComponent>()!.Dialog!.Voice = 2;
 			AddAnimation("dummy");
 			
 			SetMaxHp(1);
@@ -70,7 +70,7 @@ namespace BurningKnight.entity.creature.mob {
 			public override void Update(float dt) {
 				base.Update(dt);
 				
-				if (Self!.GetComponent<MobAnimationComponent>()!.Animation.Paused) {
+				if (Self!.GetComponent<MobAnimationComponent>()!.Animation!.Paused) {
 					Self.GetComponent<StateComponent>()!.Become<IdleState>(true);
 				}
 			}

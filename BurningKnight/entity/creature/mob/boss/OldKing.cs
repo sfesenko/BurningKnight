@@ -158,7 +158,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 								return;
 							}
 
-							GameContext.Current!.Camera.ShakeMax(8);
+							GameContext.Current!.Camera!.ShakeMax(8);
 
 							var b = new ProjectileBuilder(Self, "small");
 							b.RemoveFlags(ProjectileFlags.Reflectable, ProjectileFlags.BreakableByMelee);
@@ -170,7 +170,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 						});
 
 						ProjectileCallbacks.AttachUpdateCallback(skull!, TargetProjectileController.Make(Self.Target, 0.5f));
-						skull.GetComponent<ProjectileGraphicsComponent>()!.IgnoreRotation = true;
+						skull!.GetComponent<ProjectileGraphicsComponent>()!.IgnoreRotation = true;
 						
 						if (count == (Self.Raging ? 6 : 4)) {
 							Self.Become<IdleState>();
@@ -194,7 +194,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 			public override void Update(float dt) {
 				base.Update(dt);
 
-				if (Self!.GetComponent<ZAnimationComponent>()!.Animation.Paused) {
+				if (Self!.GetComponent<ZAnimationComponent>()!.Animation!.Paused) {
 					Become<UpState>();
 					Self.GetComponent<AudioEmitterComponent>()!.EmitRandomized("mob_oldking_jump");
 				}
@@ -253,7 +253,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 				var a = Self.GetComponent<ZAnimationComponent>();
 				a!.SetAutoStop(true);
 
-				GameContext.Current!.Camera.ShakeMax(12);
+				GameContext.Current!.Camera!.ShakeMax(12);
 				
 				Self.GetComponent<AudioEmitterComponent>()!.EmitRandomized("mob_oldking_land");
 				

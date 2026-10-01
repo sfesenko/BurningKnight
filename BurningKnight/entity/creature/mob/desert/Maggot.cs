@@ -104,7 +104,7 @@ namespace BurningKnight.entity.creature.mob.desert {
 			public override void Update(float dt) {
 				base.Update(dt);
 
-				if (!shot && Self!.GetComponent<WallAnimationComponent>()!.Animation.Paused) {
+				if (!shot && Self!.GetComponent<WallAnimationComponent>()!.Animation!.Paused) {
 					if (Self.Target == null) {
 						Become<IdleState>();
 						return;

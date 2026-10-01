@@ -13,14 +13,14 @@ namespace BurningKnight.assets.prefabs {
 
 		public void Place(Level level, int x, int y) {
 			var pos = new Vector2(x * 16, y * 16);
-			var reader = new FileReader((string) null);
+			var reader = new FileReader((string) null!);
 			
 			foreach (var d in Datas) {
 				if (d.Type == typeof(Level)) {
 					continue;
 				}
 
-				var e = (SaveableEntity) Activator.CreateInstance(d.Type);
+				var e = (SaveableEntity) Activator.CreateInstance(d.Type)!;
 				
 				level.Area!.Add(e, false);
 				reader.SetData(d.Data);

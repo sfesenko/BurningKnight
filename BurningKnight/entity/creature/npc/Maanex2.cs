@@ -71,7 +71,7 @@ namespace BurningKnight.entity.creature.npc {
 		private bool Interact(Entity e) {
 			var d = GetComponent<DialogComponent>();
 			
-			d!.Dialog.Str!.SetVariable("cost", Cost);
+			d!.Dialog!.Str!.SetVariable("cost", Cost);
 			d.Start("maanex2_0", e);
 			
 			return true;

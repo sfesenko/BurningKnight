@@ -70,7 +70,7 @@ namespace BurningKnight.entity.creature.mob.castle {
 				Self.GetComponent<RectBodyComponent>()!.Velocity = velocity;
 
 				var an = Self.GetComponent<MobAnimationComponent>();
-				an!.Animation.Frame = (uint) Rnd.Int(4);
+				an!.Animation!.Frame = (uint) Rnd.Int(4);
 				an.Animate();
 			}
 			

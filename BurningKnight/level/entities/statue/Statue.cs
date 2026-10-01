@@ -25,7 +25,7 @@ namespace BurningKnight.level.entities.statue {
 				CanInteract = CanInteract,
 				OnStart = (e) => {
 					if (GetFxText() != null) {
-						Engine.Instance.State.Ui.Add(new InteractFx(this, Locale.Get(GetFxText())));
+						Engine.Instance.State.Ui.Add(new InteractFx(this, Locale.Get(GetFxText()!)));
 					}
 				}
 			});
@@ -48,7 +48,7 @@ namespace BurningKnight.level.entities.statue {
 			AddSensor();
 
 			if (TryGetComponent<DialogComponent>(out var c)) {
-				c!.Dialog.Voice = 30;
+				c!.Dialog!.Voice = 30;
 			}
 		}
 

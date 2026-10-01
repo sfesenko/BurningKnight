@@ -27,7 +27,7 @@ namespace BurningKnight.entity.creature.npc.dungeon {
 		}
 
 		protected override void OnItemBought(ItemBoughtEvent ibe) {
-			foreach (var s in GetComponent<RoomComponent>()!.Room.Tagged[Tags.Item]) {
+			foreach (var s in GetComponent<RoomComponent>()!.Room!.Tagged[Tags.Item]) {
 				if (s is SnekStand st && st != ibe.Stand && st.Item != null) {
 					return;
 				}

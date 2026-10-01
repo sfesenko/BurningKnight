@@ -49,7 +49,7 @@ namespace BurningKnight.entity.creature.npc {
 			}
 
 			AlwaysActive = true;
-			GetComponent<DialogComponent>()!.Dialog.Voice = 28;
+			GetComponent<DialogComponent>()!.Dialog!.Voice = 28;
 		}
 
 		private string[] song = {
@@ -75,7 +75,7 @@ namespace BurningKnight.entity.creature.npc {
 				}, 2);
 
 				if (RickRoll) {
-					foreach (var item in GetComponent<RoomComponent>()!.Room.Tagged[Tags.Item]) {
+					foreach (var item in GetComponent<RoomComponent>()!.Room!.Tagged[Tags.Item]) {
 						item.Done = true;
 						AnimationUtil.Poof(item.Center);
 					}
@@ -136,7 +136,7 @@ namespace BurningKnight.entity.creature.npc {
 				set = true;
 				var dialog = GetComponent<DialogComponent>();
 								
-				dialog!.Dialog.Str!.ClearIcons();
+				dialog!.Dialog!.Str!.ClearIcons();
 				dialog.Dialog.Str.AddIcon(CommonAse.Ui.GetSlice(Controls.FindSlice(Controls.Roll, false)!)!);
 
 				if (GamepadComponent.Current != null && GamepadComponent.Current.Attached) {

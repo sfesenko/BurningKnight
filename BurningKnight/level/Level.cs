@@ -134,7 +134,7 @@ namespace BurningKnight.level {
 
 		public void SetBiome(BiomeInfo biome) {
 			if (biome != null) {
-				Biome = (Biome) Activator.CreateInstance(biome.Type);
+				Biome = (Biome) Activator.CreateInstance(biome.Type)!;
 				Tileset = Tilesets.Get(Biome!.Tileset);
 
 				if (Tilesets.Biome != null && Tileset != null) {
@@ -349,10 +349,10 @@ namespace BurningKnight.level {
 
 		public static string GetDepthString(bool eng = false) {
 			if (GameContext.Current.Run.Depth < 1) {
-				return Locale.Get(GameContext.Current!.Level.Biome.Id, eng);
+				return Locale.Get(GameContext.Current!.Level!.Biome.Id, eng);
 			}
 
-			var s = $"{Locale.Get(GameContext.Current!.Level.Biome.Id, eng)} {MathUtils.ToRoman((GameContext.Current.Run.Depth - 1) % 2 + 1)}";
+			var s = $"{Locale.Get(GameContext.Current!.Level!.Biome.Id, eng)} {MathUtils.ToRoman((GameContext.Current.Run.Depth - 1) % 2 + 1)}";
 
 			if (GameContext.Current.Run.Loop > 0) {
 				s = $"L{GameContext.Current.Run.Loop} {s}";

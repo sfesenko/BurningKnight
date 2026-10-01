@@ -149,7 +149,7 @@ namespace BurningKnight.level.builders {
 				}
 				
 				firstLoop.Add(c!);
-				rooms.Add(c);
+				rooms.Add(c!);
 				prev = c;
 			}
 			

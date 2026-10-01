@@ -234,7 +234,7 @@ namespace BurningKnight.entity.door {
 			public override void Update(float dt) {
 				base.Update(dt);
 
-				if (Self!.GetComponent<AnimationComponent>()!.Animation.Paused) {				
+				if (Self!.GetComponent<AnimationComponent>()!.Animation!.Paused) {				
 					Self.GetComponent<AudioEmitterComponent>()!.EmitRandomizedPrefixed("level_door_close", 2);
 					Self.GetComponent<StateComponent>()!.Become<ClosedState>();
 				}
@@ -261,7 +261,7 @@ namespace BurningKnight.entity.door {
 			public override void Update(float dt) {
 				base.Update(dt);
 				
-				if (Self!.GetComponent<AnimationComponent>()!.Animation.Paused) {
+				if (Self!.GetComponent<AnimationComponent>()!.Animation!.Paused) {
 					Self.GetComponent<StateComponent>()!.Become<OpenState>();
 				}
 			}

@@ -97,7 +97,7 @@ namespace BurningKnight.entity.item.stand {
 			} else if (!TryPay(entity)) {
 				AnimationUtil.ActionFailed();
 
-				foreach (var n in GetComponent<RoomComponent>()!.Room.Tagged[Tags.Npc]) {
+				foreach (var n in GetComponent<RoomComponent>()!.Room!.Tagged[Tags.Npc]) {
 					if (n is ShopNpc s) {
 						n.GetComponent<DialogComponent>()!.StartAndClose(s.GetFailDialog(), 3);
 						break;

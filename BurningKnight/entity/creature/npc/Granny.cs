@@ -29,7 +29,7 @@ namespace BurningKnight.entity.creature.npc {
 			Subscribe<RoomChangedEvent>();
 			Subscribe<ItemTakenEvent>();
 			
-			GetComponent<DialogComponent>()!.Dialog.Voice = 19;
+			GetComponent<DialogComponent>()!.Dialog!.Voice = 19;
 		}
 
 		private float delay;
@@ -52,7 +52,7 @@ namespace BurningKnight.entity.creature.npc {
 					GetComponent<AudioEmitterComponent>()!.EmitRandomized("hi");
 					
 					// Welcome, gobbo!
-					GetComponent<DialogComponent>()!.Dialog.Str!.SetVariable("id", MathUtils.ToRoman((int) GlobalSave.RunId));
+					GetComponent<DialogComponent>()!.Dialog!.Str!.SetVariable("id", MathUtils.ToRoman((int) GlobalSave.RunId));
 					GetComponent<DialogComponent>()!.StartAndClose(room.Type == RoomType.Granny ? "granny_4" : GetDialog(), 3);
 				}
 			} else if (e is Dialog.EndedEvent dee) {

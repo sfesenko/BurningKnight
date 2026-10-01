@@ -159,7 +159,7 @@ namespace BurningKnight.level.builders {
 					}
 
 					ConnectingRoomsThisBranch.Add(T!);
-					Rooms.Add(T);
+					Rooms.Add(T!);
 
 
 					Curr = T;

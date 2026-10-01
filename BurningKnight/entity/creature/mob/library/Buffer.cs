@@ -52,7 +52,7 @@ namespace BurningKnight.entity.creature.mob.library {
     public class SummonState : SmartState<Buffer> {
 	    public override void Init() {
 		    base.Init();
-		    Self!.GetComponent<MobAnimationComponent>()!.Animation.Tag = "idle";
+		    Self!.GetComponent<MobAnimationComponent>()!.Animation!.Tag = "idle";
 	    }
 
 	    public override void Update(float dt) {
@@ -64,7 +64,7 @@ namespace BurningKnight.entity.creature.mob.library {
 		    }
 
 		    if (T >= 3f) {
-			    var list = Self!.GetComponent<RoomComponent>()!.Room.Tagged[Tags.Mob];
+			    var list = Self!.GetComponent<RoomComponent>()!.Room!.Tagged[Tags.Mob];
 
 			    if (list.Count <= 1) {
 				    return;

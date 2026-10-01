@@ -10,7 +10,7 @@ namespace BurningKnight.entity.cutscene.entity {
 			Height = 8;
 			
 			AddComponent(new AnimationComponent("baby_gobbo"));
-			GetComponent<DialogComponent>()!.Dialog.Voice = 7;
+			GetComponent<DialogComponent>()!.Dialog!.Voice = 7;
 		}
 	}
 }

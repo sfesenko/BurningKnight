@@ -49,7 +49,7 @@ namespace BurningKnight.entity.creature.mob.castle {
 				T = 0;
 				
 				if (away) {
-					target = Self.Center + MathUtils.CreateVector(Self!.Target.AngleTo(Self) + Rnd.Float(-1, 1), 96f);
+					target = Self.Center + MathUtils.CreateVector(Self!.Target!.AngleTo(Self) + Rnd.Float(-1, 1), 96f);
 					delay = Rnd.Float(1f, 2f);
 					return;
 				}
@@ -58,9 +58,9 @@ namespace BurningKnight.entity.creature.mob.castle {
 				var toTarget = Self.Target != null && Rnd.Chance();
 
 				if (toTarget) {
-					target = Self!.Target.Center;
+					target = Self!.Target!.Center;
 				} else {
-					target = Self!.GetComponent<RoomComponent>()!.Room.GetRandomFreeTile();
+					target = Self!.GetComponent<RoomComponent>()!.Room!.GetRandomFreeTile();
 				}
 			}
 

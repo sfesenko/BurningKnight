@@ -50,7 +50,7 @@ namespace BurningKnight.level.entities.machine {
 			AddComponent(drops);
 			drops.Add("bk:charger");
 			
-			GetComponent<DialogComponent>()!.Dialog.Voice = 10;
+			GetComponent<DialogComponent>()!.Dialog!.Voice = 10;
 		}
 
 		public override void Save(FileWriter stream) {

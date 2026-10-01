@@ -88,7 +88,7 @@ namespace BurningKnight.save {
 			var position = reader.Position;
 
 			try {
-				var entity = (SaveableEntity) Activator.CreateInstance(Type.GetType($"BurningKnight.{type}", true, false)!);
+				var entity = (SaveableEntity) Activator.CreateInstance(Type.GetType($"BurningKnight.{type}", true, false)!)!;
 				area.Add(entity, false);
 
 				entity!.Load(reader);

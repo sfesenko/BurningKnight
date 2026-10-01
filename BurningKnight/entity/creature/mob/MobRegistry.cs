@@ -113,7 +113,7 @@ namespace BurningKnight.entity.creature.mob {
 					continue;
 				}
 				
-				chances[i] = Current[i].GetChanceFor(Context.Level.Biome.Id).Chance;
+				chances[i] = Current[i].GetChanceFor(Context.Level!.Biome.Id).Chance;
 			}
 
 			var types = new List<MobInfo>();
@@ -142,7 +142,7 @@ namespace BurningKnight.entity.creature.mob {
 				return null;
 			}
 
-			return (Mob) Activator.CreateInstance(types[Rnd.Chances(spawnChances)].Type);
+			return (Mob) Activator.CreateInstance(types[Rnd.Chances(spawnChances)].Type)!;
 		}
 
 		public static void SetupForBiome(string biome) {

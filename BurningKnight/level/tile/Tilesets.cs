@@ -29,7 +29,7 @@ namespace BurningKnight.level.tile {
 		public static Tileset Get(string id) {
 			Tileset tileset;
 			
-			if (Loaded.TryGetValue(id, out tileset)) {
+			if (Loaded.TryGetValue(id, out tileset!)) {
 				return tileset;
 			}
 			

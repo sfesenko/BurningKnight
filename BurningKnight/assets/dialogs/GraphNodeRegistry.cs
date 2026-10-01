@@ -24,7 +24,7 @@ namespace BurningKnight.assets.dialogs {
 				return null;
 			}
 			
-			var node = (GraphNode) Activator.CreateInstance(type);
+			var node = (GraphNode) Activator.CreateInstance(type)!;
 			node!.Tip = name;
 			
 			return node;

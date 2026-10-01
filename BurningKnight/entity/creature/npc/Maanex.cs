@@ -107,7 +107,7 @@ namespace BurningKnight.entity.creature.npc {
 					}
 					
 					played = true;
-					foreach (var chest in GetComponent<RoomComponent>()!.Room.Tagged[Tags.Chest]) {
+					foreach (var chest in GetComponent<RoomComponent>()!.Room!.Tagged[Tags.Chest]) {
 						var c = (Chest) chest;
 
 						if (c.Scale > 0.9f) {
@@ -163,7 +163,7 @@ namespace BurningKnight.entity.creature.npc {
 		public bool Interact(Entity e) {
 			var d = GetComponent<DialogComponent>();
 			
-			d!.Dialog.Str!.SetVariable("cost", cost);
+			d!.Dialog!.Str!.SetVariable("cost", cost);
 			d.Start("maanex_6", e);
 			
 			return true;

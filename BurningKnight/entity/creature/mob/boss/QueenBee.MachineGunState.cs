@@ -85,7 +85,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 				
 				Self.CenterX += dx * s;
 				Self.CenterY += dy * s;
-				Self!.GraphicsComponent.Flipped = dx < 0;
+				Self!.GraphicsComponent!.Flipped = dx < 0;
 				
 
 				if (t >= Math.PI * 4.5f) {
