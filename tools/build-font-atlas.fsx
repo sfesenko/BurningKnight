@@ -100,7 +100,8 @@ type Cell =
       XAdvance: int }
 
 // None when the char has no ink (spacing chars) — the caller blanks those.
-let rasterize (face: SKTypeface) (size: float32) (scale: float32) (baseLine: int) (c: char) =
+// `threshold` is the alpha cutoff for the 1-bit core: higher = lighter strokes.
+let rasterize (face: SKTypeface) (size: float32) (scale: float32) (baseLine: int) (threshold: byte) (c: char) =
     use font = new SKFont(face, size * scale)
     font.Hinting <- SKFontHinting.Full
     font.Edging <- SKFontEdging.Antialias
@@ -127,7 +128,7 @@ let rasterize (face: SKTypeface) (size: float32) (scale: float32) (baseLine: int
         let alpha x y = if x < 0 || y < 0 || x >= w || y >= h then 0uy else bmp.GetPixel(x, y).Alpha
 
         // 1-bit mask like the original atlases, then a 1px black halo around the core.
-        let mask = Array2D.init w h (fun x y -> alpha x y >= 128uy)
+        let mask = Array2D.init w h (fun x y -> alpha x y >= threshold)
 
         let mutable l, t, r, bb = w, h, -1, -1
 
@@ -243,11 +244,14 @@ let build (spec: FontSpec) =
             |> List.map (fun c ->
                 let rendered =
                     if hasGlyph indie c then
-                        // CJK fills the em; cap the size so it fits the line box.
-                        let size = float32 (min spec.LineHeight 17)
-                        rasterize indie size 1f spec.Base c
+                        // CJK is optically heavier than latin at the same size: render it
+                        // smaller (LineHeight - 4: 11px/13px vs the 7px latin cap reference)
+                        // and threshold harder, so stroke weight matches latin instead of
+                        // doubling it. Baseline unchanged, so mixed lines stay aligned.
+                        let size = float32 (spec.LineHeight - 4)
+                        rasterize indie size 1f spec.Base 200uy c
                     elif hasGlyph roboto c then
-                        rasterize roboto (float32 spec.LineHeight) robotoScale spec.Base c
+                        rasterize roboto (float32 spec.LineHeight) robotoScale spec.Base 128uy c
                     else
                         None
 
