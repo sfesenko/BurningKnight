@@ -344,11 +344,14 @@ let strictExclusions : Set<string> =
           "loading_biome_cave_4"
           "painting_dungeon" ]
 
-// The game parses locales with Lens/lightJson (JsonReader), which throws on
-// duplicate object keys, and Locale.Load installs an empty map *before* parsing —
-// so a single duplicate key silently drops the whole language back to English.
-// System.Text.Json instead keeps the last value, so the duplicate has to be
-// detected here: the checker's own parser would never see it.
+// Duplicate keys are reported because every locale parser keeps the last value
+// silently: JsonDocument does here, and dev's Locale.Load now uses JsonNode +
+// a plain Dictionary, so a duplicated key is invisible in the running game too.
+// When locales were still read through lightJson (JsonReader) this was a crash
+// class rather than a lint — an empty map was installed before parsing, so one
+// duplicate dropped the whole language back to English. Either way the fix is the
+// same and it cannot be detected by reading the parsed map, only the raw pairs.
+
 let readMapRaw (path: string) =
     let text = File.ReadAllText(path).TrimStart('\uFEFF')
     use doc = JsonDocument.Parse(text)
