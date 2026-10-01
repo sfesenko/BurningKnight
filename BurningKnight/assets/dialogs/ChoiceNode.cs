@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using BurningKnight.ui.dialog;
 using Lens.assets;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
+using Lens.util;
 
 namespace BurningKnight.assets.dialogs {
 	public partial class ChoiceNode : GraphNode, IDialogNode {
@@ -34,7 +35,7 @@ namespace BurningKnight.assets.dialogs {
 		public override void Load(JsonObject root) {
 			base.Load(root);
 
-			for (var i = 0; i < root["cc"]; i++) {
+			for (var i = 0; i < root["cc"].Int(); i++) {
 				choices.Add($"{LocaleId}_{i}");
 				AddOutput();
 			}

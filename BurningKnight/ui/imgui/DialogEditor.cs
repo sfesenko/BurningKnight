@@ -9,7 +9,7 @@ using BurningKnight.ui.str;
 using Lens;
 using Lens.assets;
 using Lens.graphics;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
 using Lens.lightJson.Serialization;
 using Lens.util;
 using Lens.util.file;
@@ -95,7 +95,7 @@ namespace BurningKnight.ui.imgui {
 			try {
 				ImGuiHelper.ClearNodes();
 				var name = files[current];
-				LoadFromRoot(name, JsonValue.Parse(FileHandle.FromRoot($"Dialogs/{name}.json").ReadAll()));
+				LoadFromRoot(name, JsonNode.Parse(FileHandle.FromRoot($"Dialogs/{name}.json").ReadAll()));
 			} catch (Exception e) {
 				Log.Error(e);
 			}

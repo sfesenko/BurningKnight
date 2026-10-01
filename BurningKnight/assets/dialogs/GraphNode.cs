@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
 using Lens.util;
 using Vector2 = System.Numerics.Vector2;
 
@@ -48,22 +48,22 @@ namespace BurningKnight.assets.dialogs {
 		public void ReadOutputs() {
 			var j = -1;
 
-			if (outputs != JsonValue.Null) {
+			if (outputs != null) {
 				foreach (var i in outputs!) {
 					j++;
 
-					if (!i.IsJsonArray) {
+					if (!i.IsJsonArray()) {
 						continue;
 					}
 						
-					foreach (var o in i.AsJsonArray) {
-						if (!o.IsJsonArray || o.AsJsonArray.Count == 0) {
+					foreach (var o in i.AsJsonArray()!) {
+						if (!o.IsJsonArray() || o.AsJsonArray()!.Count == 0) {
 							continue;
 						}
 							
-						var to = DialogGraph.Nodes[o[0]];
+						var to = DialogGraph.Nodes[o![0].Int()];
 						var from = Outputs[j];
-						var where = to.Inputs[o[1]];
+						var where = to.Inputs[o![1].Int()];
 
 						from.ConnectedTo.Add(where);
 						where.ConnectedTo.Add(from);
@@ -106,11 +106,11 @@ namespace BurningKnight.assets.dialogs {
 		}
 
 		public virtual void Load(JsonObject root) {
-			Id = root["id"].AsInteger;
-			outputs = root["outputs"].AsJsonArray;
+			Id = root["id"].AsInteger();
+			outputs = root["outputs"].AsJsonArray();
 
-			RealPosition.X = root["x"];
-			RealPosition.Y = root["y"];
+			RealPosition.X = root["x"].Number();
+			RealPosition.Y = root["y"].Number();
 
 			LastId = Math.Max(LastId, Id);
 		}
@@ -119,27 +119,27 @@ namespace BurningKnight.assets.dialogs {
 			return "Node";
 		}
 
-		public static GraphNode? Create(string file, JsonValue vl, bool ignoreId = false) {
-			if (!vl.IsJsonObject) {
+		public static GraphNode? Create(string file, JsonNode? vl, bool ignoreId = false) {
+			if (!vl.IsJsonObject()) {
 				return null;
 			}
 			
-			var type = vl["type"];
+			var type = vl?["type"];
 
-			if (!type.IsString) {
+			if (!type.IsString()) {
 				return null;
 			}
 
-			var node = GraphNodeRegistry.Create(type.AsString);
+			var node = GraphNodeRegistry.Create(type.String());
 
 			if (node == null) {
-				Log.Error($"Unknown node type {type.AsString}");
+				Log.Error($"Unknown node type {type.String()}");
 				return null;
 			}
 
-			node.Tip = type.AsString;
+			node.Tip = type.String();
 			node.File = file;
-			node.Load(vl);
+			node.Load(vl.AsJsonObject()!);
 
 			if (ignoreId) {
 				node.Id = LastId;

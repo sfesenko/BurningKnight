@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using BurningKnight.ui.dialog;
 using BurningKnight.assets.dialogs;
 using Lens.assets;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
 using Lens.util;
 using Lens.util.file;
 
@@ -29,10 +29,10 @@ namespace BurningKnight.assets {
 				if (f.Extension == ".json") {
 					try {
 						var name = f.NameWithoutExtension;
-						var root = JsonValue.Parse(f.ReadAll());
+						var root = JsonNode.Parse(f.ReadAll());
 						
 						// Create nodes
-						foreach (var vl in root.AsJsonArray) {
+						foreach (var vl in root.AsJsonArray()!) {
 							try {
 								GraphNode.Create(name, vl);
 							} catch (Exception e) {

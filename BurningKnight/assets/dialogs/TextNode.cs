@@ -1,6 +1,6 @@
 using BurningKnight.ui.dialog;
 using Lens.assets;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
 
 namespace BurningKnight.assets.dialogs {
 	public partial class TextNode : GraphNode, IDialogNode {
