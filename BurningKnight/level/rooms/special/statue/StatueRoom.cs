@@ -14,7 +14,7 @@ namespace BurningKnight.level.rooms.special.statue {
 			PaintTunnel(level, Tiles.RandomFloor(), GetCenterRect());
 
 			var statue = GetStatue();
-			level.Area.Add(statue);
+			level.Area!.Add(statue);
 			statue.BottomCenter = GetTileCenter() * 16 + new Vector2(8);
 		}
 

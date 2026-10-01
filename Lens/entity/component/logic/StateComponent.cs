@@ -3,13 +3,13 @@ using Lens.entity.component.graphics;
 
 namespace Lens.entity.component.logic {
 	public partial class StateComponent : Component {
-		private EntityState state;
-		private Type newState;
+		private EntityState? state;
+		private Type? newState;
 
 		public bool PauseOnChange;
 		
 		public Type State {
-			get => state.GetType();
+			get => state!.GetType();
 			
 			set {
 				if (state == null || state.GetType() != value) {
@@ -22,7 +22,7 @@ namespace Lens.entity.component.logic {
 			set => newState = value;
 		}
 
-		public EntityState StateInstance => state;
+		public EntityState? StateInstance => state;
 		public int Pause;
 		
 		public void Become<T>(bool force = false) {
@@ -55,7 +55,7 @@ namespace Lens.entity.component.logic {
 			base.Update(dt);
 
 			if (newState != null) {
-				PushState((EntityState) Activator.CreateInstance(newState));
+				PushState((EntityState) Activator.CreateInstance(newState)!);
 				newState = null;
 			}
 

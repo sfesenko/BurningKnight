@@ -21,8 +21,8 @@ namespace BurningKnight.entity.creature.mob.boss {
 			public override void Update(float dt) {
 				base.Update(dt);
 				
-				var r = Self.GetComponent<RoomComponent>().Room;
-				var dx = r.CenterX - Self.CenterX;
+				var r = Self.GetComponent<RoomComponent>()!.Room;
+				var dx = r!.CenterX - Self.CenterX;
 				var dy = r.CenterY - Self.CenterY;
 				var d = MathUtils.Distance(dx, dy);
 
@@ -39,7 +39,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 				
 				var s = (dt * 3600 / d) * (d > 48 ? 1 : d / 48);
 				
-				Self.GetComponent<RectBodyComponent>().Velocity += new Vector2(dx * s, dy * s);
+				Self.GetComponent<RectBodyComponent>()!.Velocity += new Vector2(dx * s, dy * s);
 			}
 		}
 	}

@@ -34,13 +34,13 @@ namespace BurningKnight.entity.creature.npc.dungeon {
 		}
 
 		private bool Interact(Entity entity) {
-			if (entity.GetComponent<HealthComponent>().ModifyHealth(-1, this)) {
+			if (entity.GetComponent<HealthComponent>()!.ModifyHealth(-1, this)) {
 				for (var i = 0; i < 3; i++) {
-					var coin = Items.CreateAndAdd("bk:copper_coin", Area);
-					coin.TopCenter = BottomCenter;
+					var coin = Items.CreateAndAdd("bk:copper_coin", Area!);
+					coin!.TopCenter = BottomCenter;
 				}
 				
-				GetComponent<DialogComponent>().Start($"vampire_{Rnd.Int(4, 7)}");
+				GetComponent<DialogComponent>()!.Start($"vampire_{Rnd.Int(4, 7)}");
 			}
 
 			return false;
@@ -75,7 +75,7 @@ namespace BurningKnight.entity.creature.npc.dungeon {
 				stand.Center = where + new Vector2((stand.Width + 4) * i - s, 4 + stand.Height);
 
 				var id = Items.GenerateAndRemove(pool, null, true);
-				stand.SetItem(Items.CreateAndAdd(id, area, false), null);
+				stand.SetItem(Items.CreateAndAdd(id, area, false)!, null);
 			}
 		}
 

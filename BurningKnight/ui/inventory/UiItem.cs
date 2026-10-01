@@ -15,13 +15,13 @@ using MonoGame.Extended;
 
 namespace BurningKnight.ui.inventory {
 	public class UiItem : UiEntity {
-		public static UiItem Hovered;
+		public static UiItem? Hovered = null!;
 
-		private string id;
+		private string? id;
 		public float TextA;
 
-		public string Id {
-			get => id;
+		public string? Id {
+			get => id!;
 
 			set {
 				id = value;
@@ -35,25 +35,25 @@ namespace BurningKnight.ui.inventory {
 					? Items.Datas.Values.ElementAt(Rnd.Int(Items.Datas.Count)).Id
 					: Id;
 				
-				Name = Locale.Get(idd);
+				Name = Locale.Get(idd!);
 				Description = Locale.Get($"{idd}_desc");
-				Region = CommonAse.Items.GetSlice(id);
+				Region = CommonAse.Items.GetSlice(id)!;
 
 				NameSize = Font.Small.MeasureString(Name);
 				DescriptionSize = Font.Small.MeasureString(Description);
 
-				Width = Region.Width;
+				Width = Region!.Width;
 			}
 		}
 
-		public string Name;
-		public string Description;
+		public string Name = null!;
+		public string Description = null!;
 		public Vector2 NameSize;
 		public Vector2 DescriptionSize;
 		public bool OnTop;
 
-		public TextureRegion Region;
-		private string countStr;
+		public TextureRegion? Region = null!;
+		private string countStr = null!;
 		private int count;
 		private int countW;
 		private int countH;
@@ -144,13 +144,13 @@ namespace BurningKnight.ui.inventory {
 				shader.Parameters["flashColor"].SetValue(Scourged ? ItemGraphicsComponent.ScourgedColor : ColorUtils.White);
 
 				foreach (var d in MathUtils.Directions) {
-					Graphics.Render(Region, Center + d, 0, Region.Center, IconScale * scale);
+					Graphics.Render(Region!, Center + d, 0, Region!.Center, IconScale * scale);
 				}
 
 				Shaders.End();
 			}
 			
-			Graphics.Render(Region, Center, 0, Region.Center, IconScale * scale);
+			Graphics.Render(Region!, Center, 0, Region!.Center, IconScale * scale);
 			
 			if (count < 2) {
 				return;

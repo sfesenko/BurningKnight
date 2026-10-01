@@ -11,11 +11,11 @@ namespace BurningKnight.entity.item.use {
 		
 		public override void Use(Entity entity, Item item) {
 			if (IceImmunity) {
-				entity.GetComponent<BuffsComponent>().IceImmunity = true;
+				entity.GetComponent<BuffsComponent>()!.IceImmunity = true;
 			}
 
 			if (PitImmunity) {
-				entity.GetComponent<BuffsComponent>().PitImmunity = true;
+				entity.GetComponent<BuffsComponent>()!.PitImmunity = true;
 			}
 		}
 

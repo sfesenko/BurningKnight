@@ -26,25 +26,25 @@ namespace Lens
             ;
 
         
-        public static Action AssetsLoaded;
+        public static Action? AssetsLoaded;
 
         public static bool PixelPerfect;
         public static bool EditingLevel;
         public static readonly Version Version = new("Bad rock update", 50, 1, 3, 1, 4, Debug);
-        public static Engine Instance;
-        public static GraphicsDeviceManager Graphics;
-        public new static GraphicsDevice GraphicsDevice;
+        public static Engine Instance = null!; // the host constructs it
+        public static GraphicsDeviceManager Graphics = null!;
+        public new static GraphicsDevice GraphicsDevice = null!;
         public static Matrix ScreenMatrix;
         public static Matrix UiMatrix;
         public static float Time;
         public static float Delta;
-        public static GameTime GameTime;
+        public static GameTime GameTime = null!;
         public static bool Quiting;
         public static int UpdateTime;
         public static int RenderTime;
         public static bool Flashes = true;
 
-        public GameRenderer StateRenderer;
+        public GameRenderer StateRenderer = null!; // UpdateView creates it before the first frame
 
         // The audio device: one per process, owned here rather than by a static on the Audio
         // class. The game's context points at it.
@@ -53,14 +53,14 @@ namespace Lens
         // The tween manager, updated by the fixed-timestep loop. Tween.To(...) adds to it.
         public readonly Tween Tween = new();
 
-        public GameState State { get; private set; }
-        protected GameState NewState;
+        public GameState State { get; private set; } = null!; // set before the first state runs
+        protected GameState? NewState;
 
         public static Vector2 Viewport;
         public float Upscale;
         public float UiUpscale;
 
-        private static Core core;
+        private static Core core = null!; // the constructor sets it
         private const float FixedUpdateTime = 0.015f;
         private float time;
         public float Speed = 1;

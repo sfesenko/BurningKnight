@@ -19,7 +19,7 @@ namespace BurningKnight.entity.creature.pet {
 			AddComponent(new ShadowComponent(RenderShadow));
 			AddComponent(new RectBodyComponent(0, 0, Width, Height, BodyType.Dynamic, true));
 			
-			GetComponent<AnimationComponent>().Animate();
+			GetComponent<AnimationComponent>()!.Animate();
 		}
 
 		public override bool HandleEvent(Event e) {

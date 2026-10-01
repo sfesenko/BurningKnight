@@ -19,13 +19,13 @@ namespace BurningKnight.entity.creature.mob.boss {
 	public partial class QueenBee : Boss {
 		public bool InSecondPhase {
 			get {
-				var p = GetComponent<HealthComponent>().Percent;
+				var p = GetComponent<HealthComponent>()!.Percent;
 				return p > 0.33f && p <= 0.66f;
 			}
 		}
 
-		public bool InThirdPhase => GetComponent<HealthComponent>().Percent <= 0.33f;
-		public bool InFirstPhase => GetComponent<HealthComponent>().Percent > 0.66f;
+		public bool InThirdPhase => GetComponent<HealthComponent>()!.Percent <= 0.33f;
+		public bool InFirstPhase => GetComponent<HealthComponent>()!.Percent > 0.66f;
 		public int Phase => (InThirdPhase ? 3 : (InSecondPhase ? 2 : 1));
 
 		private int lastPhase = 1;
@@ -45,7 +45,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 			var body = new RectBodyComponent(2, 17, 19, 1);
 			AddComponent(body);
 
-			body.Body.LinearDamping = 3;
+			body!.Body!.LinearDamping = 3;
 
 			AddAnimation("bigbee");
 			SetMaxHp(340);
@@ -57,7 +57,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 		protected override void AddPhases() {
 			base.AddPhases();
 			
-			HealthBar.AddPhase(0.33f);
+			HealthBar!.AddPhase(0.33f);
 			HealthBar.AddPhase(0.66f);
 		}
 		
@@ -70,9 +70,9 @@ namespace BurningKnight.entity.creature.mob.boss {
 				lastParticle = 0.1f;
 
 				if (!IsFriendly()) {
-					var s = GraphicsComponent.Flipped ? -1 : 1;
+					var s = GraphicsComponent!.Flipped ? -1 : 1;
 					
-					Area.Add(new FireParticle {
+					Area!.Add(new FireParticle {
 						Offset = new Vector2(6 * s, -5.5f),
 						Owner = this,
 						Size = 0.5f,

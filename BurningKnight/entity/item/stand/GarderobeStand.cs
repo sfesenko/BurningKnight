@@ -57,12 +57,12 @@ namespace BurningKnight.entity.item.stand {
 			}
 		
 			var ht = entity.GetComponent<HatComponent>();
-			var old = ht.Item;
+			var old = ht!.Item;
 			
-			ht.Set(item, true);
+			ht.Set(item!, true);
 			item = null;
 			
-			SetItem(old, entity);
+			SetItem(old!, entity);
 		
 			return false;
 		}
@@ -72,7 +72,7 @@ namespace BurningKnight.entity.item.stand {
 			Achievements.Unlock("bk:fancy_hat");
 		}
 
-		private Item PickItem() {
+		private Item? PickItem() {
 			var items = new List<ItemData>();
 
 			foreach (var i in Items.Datas.Values) {
@@ -90,7 +90,7 @@ namespace BurningKnight.entity.item.stand {
 			var id = items[0].Id;
 			AlreadyOnStand.Add(id);
 
-			return Items.CreateAndAdd(id, Area);
+			return Items.CreateAndAdd(id, Area!);
 		}
 	}
 }

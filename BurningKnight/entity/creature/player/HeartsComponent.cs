@@ -44,7 +44,7 @@ namespace BurningKnight.entity.creature.player {
 
 		public void ModifyShields(int amount, Entity setter) {
 			var component = GetComponent<HealthComponent>();
-			amount = (int) (amount < 0 ? Math.Max(ShieldHalfs, amount) : Math.Min(Cap - component.MaxHealth - Total, amount));
+			amount = (int) (amount < 0 ? Math.Max(ShieldHalfs, amount) : Math.Min(Cap - component!.MaxHealth - Total, amount));
 
 			var e = new HealthModifiedEvent {
 				Amount = amount,
@@ -56,7 +56,7 @@ namespace BurningKnight.entity.creature.player {
 			
 			if (amount != 0 && !Send(e)) {
 				if (amount > 0) {
-					Entity.GetComponent<HealthComponent>().EmitParticles(HealthType.Shield);
+					Entity.GetComponent<HealthComponent>()!.EmitParticles(HealthType.Shield);
 				}
 				
 				shieldHalfs = (byte) Math.Max(0, (float) shieldHalfs + e.Amount);
@@ -75,7 +75,7 @@ namespace BurningKnight.entity.creature.player {
 			}
 		}
 		
-		public void ModifyBombs(int amount, Entity setter, bool pr = false) {
+		public void ModifyBombs(int amount, Entity? setter, bool pr = false) {
 			var component = GetComponent<HealthComponent>();
 			amount = (int) (amount < 0 ? -Math.Min(Bombs, -amount) : Math.Min(bombsMax, amount));
 
@@ -90,7 +90,7 @@ namespace BurningKnight.entity.creature.player {
 			
 			if (amount != 0 && !Send(e)) {
 				if (amount > 0) {
-					Entity.GetComponent<HealthComponent>().EmitParticles(HealthType.Bomb);
+					Entity.GetComponent<HealthComponent>()!.EmitParticles(HealthType.Bomb);
 				}
 				
 				bombs = (byte) Math.Max(0, (float) bombs + e.Amount);
@@ -106,7 +106,7 @@ namespace BurningKnight.entity.creature.player {
 			}
 		}
 		
-		public bool Hurt(int amount, Entity setter, DamageType type = DamageType.Regular) {
+		public bool Hurt(int amount, Entity? setter, DamageType type = DamageType.Regular) {
 			if (amount > 0) {
 				amount *= -1;
 			}
@@ -155,7 +155,7 @@ namespace BurningKnight.entity.creature.player {
 			return false;
 		}
 		
-		public bool CanHaveMore => Total + GetComponent<HealthComponent>().MaxHealth < Cap;
+		public bool CanHaveMore => Total + GetComponent<HealthComponent>()!.MaxHealth < Cap;
 				
 		public override void Save(FileWriter stream) {
 			base.Save(stream);

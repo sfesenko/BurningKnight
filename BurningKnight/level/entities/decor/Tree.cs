@@ -88,7 +88,7 @@ namespace BurningKnight.level.entities.decor {
 			base.Update(dt);
 			var s = GetComponent<PlantGraphicsComponent>();
 
-			s.Alpha += ((colliding.Count > 0 ? 0.2f : 1) - s.Alpha) * dt * 5;
+			s!.Alpha += ((colliding.Count > 0 ? 0.2f : 1) - s.Alpha) * dt * 5;
 		}
 
 		public override bool HandleEvent(Event e) {

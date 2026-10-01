@@ -36,7 +36,7 @@ namespace BurningKnight.entity.projectile {
 			}
 		}
 
-		public static Laser Make(Entity owner, float a, float additional, Item item = null, float damage = 1, float scale = 1f, float range = -1, Laser parent = null) {
+		public static Laser Make(Entity owner, float a, float additional, Item? item = null, float damage = 1, float scale = 1f, float range = -1, Laser? parent = null) {
 			if (owner is Item i) {
 				item = i;
 				owner = i.Owner;
@@ -51,11 +51,11 @@ namespace BurningKnight.entity.projectile {
 				Bounce = 0,
 				Scale = scale,
 				Color = ProjectileColor.Red,
-				Parent = parent,
-				Item = item
+				Parent = parent!,
+				Item = item!
 			};
 
-			owner.Area.Add(projectile);
+			owner.Area!.Add(projectile);
 
 			var graphics = new LaserGraphicsComponent("projectiles", "laser");
 			projectile.AddComponent(graphics);
@@ -73,7 +73,7 @@ namespace BurningKnight.entity.projectile {
 
 			owner.HandleEvent(new ProjectileCreatedEvent {
 				Owner = owner,
-				Item = item,
+				Item = item!,
 				Projectile = projectile
 			});
 
@@ -101,7 +101,7 @@ namespace BurningKnight.entity.projectile {
 			return entity is ProjectileLevelBody || entity is Level || entity is Door;
 		}
 
-		public override bool BreaksFrom(Entity entity, BodyComponent body) {
+		public override bool BreaksFrom(Entity entity, BodyComponent? body) {
 			return false;
 		}
 
@@ -111,17 +111,17 @@ namespace BurningKnight.entity.projectile {
 			Vector2 closest;
 			var aim = Owner.GetComponent<AimComponent>();
 
-			Position = aim.Center;
+			Position = aim!.Center;
 
 			var from = Position;
 			
 			if (PlayerRotated) {
-				BodyComponent.Body.Rotation = angle = (aim.RealAim - from).ToAngle();
+				BodyComponent!.Body!.Rotation = angle = (aim.RealAim - from).ToAngle();
 			}
 
-			closest = Position + MathUtils.CreateVector(BodyComponent.Body.Rotation, Range * 5);
+			closest = Position + MathUtils.CreateVector(BodyComponent!.Body!.Rotation, Range * 5);
 
-			Physics.World.RayCast((fixture, point, normal, fraction) => {
+			Physics.World!.RayCast((fixture, point, normal, fraction) => {
 				if (min > fraction && fixture.Body.UserData is BodyComponent b && RayShouldCollide(b.Entity)) {
 					min = fraction;
 					closest = point;
@@ -174,7 +174,7 @@ namespace BurningKnight.entity.projectile {
 			Scale = newScale;
 			Height = 9 * Scale;
 
-			GetComponent<RectBodyComponent>().Resize(0, 0, Width, Height, true);
+			GetComponent<RectBodyComponent>()!.Resize(0, 0, Width, Height, true);
 		}
 	}
 }

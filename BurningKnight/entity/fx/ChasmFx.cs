@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.fx {
 	public class ChasmFx : Entity {
-		private static TextureRegion region;
+		private static TextureRegion? region;
 		
 		private Vector2 scale;
 		private Color color;
@@ -58,7 +58,7 @@ namespace BurningKnight.entity.fx {
 
 		public override void Render() {
 			Graphics.Color = color;
-			Graphics.Render(region, Position, 0, region.Center, scale);
+			Graphics.Render(region!, Position, 0, region!.Center, scale);
 			Graphics.Color = ColorUtils.WhiteColor;
 		}
 	}

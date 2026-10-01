@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.assets.particle.custom {
 	public class ConfettiParticle : Entity {
-		private TextureRegion region;
+		private TextureRegion region = null!;
 		private float t;
 		private float rotationOffset;
 		private float z;
@@ -31,7 +31,7 @@ namespace BurningKnight.assets.particle.custom {
 
 			Width = Rnd.Float(6, 10);
 			Height = Width * 0.3f;
-			region = CommonAse.Particles.GetSlice("fire");
+			region = CommonAse.Particles.GetSlice("fire")!;
 		}
 
 		public override void Update(float dt) {

@@ -22,7 +22,7 @@ namespace BurningKnight.entity.projectile.controller {
 					return;
 				}
 
-				b.Velocity += new Vector2(dx / d * s, dy / d * s);
+				b!.Velocity += new Vector2(dx / d * s, dy / d * s);
 				b.Angle = b.Velocity.ToAngle();
 			};
 		}

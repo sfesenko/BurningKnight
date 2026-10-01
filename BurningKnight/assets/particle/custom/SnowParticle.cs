@@ -14,7 +14,7 @@ using Vector2 = Microsoft.Xna.Framework.Vector2;
 
 namespace BurningKnight.assets.particle.custom {
 	public class SnowParticle : Entity {
-		private static TextureRegion region;
+		private static TextureRegion? region;
 
 		private Color color;
 		private float target;
@@ -40,13 +40,14 @@ namespace BurningKnight.assets.particle.custom {
 			delay = 0;
 
 			if (!Custom) {
-				Y = Context.Camera.Y + Rnd.Float(Display.Height + 20);
+				Y = Context.Camera!.Y + Rnd.Float(Display.Height + 20);
 			} else {
 				delay = Rnd.Float(0, 10f);
 			}
 		}
 
 		private void Reset() {
+			var camera = Context.Camera!;
 			if (End) {
 				Done = true;
 				return;
@@ -54,10 +55,10 @@ namespace BurningKnight.assets.particle.custom {
 			
 			var v = Rnd.Float(0.8f, 1f);
 			color = new Color(v, v, v, Rnd.Float(0.8f, 1f));
-			X = Rnd.Float(Context.Camera.X - 150, Context.Camera.Right + 150);
-			Y = Context.Camera.Y - Rnd.Float(50, 60);
+			X = Rnd.Float(camera.X - 150, camera.Right + 150);
+			Y = camera.Y - Rnd.Float(50, 60);
 			size = new Vector2(Rnd.Float(0.05f, 0.3f));
-			target = Context.Camera.Y + Rnd.Float(Display.Height + 20);
+			target = camera.Y + Rnd.Float(Display.Height + 20);
 			speed = Rnd.Float(1f, 1.5f);
 			delay = Rnd.Float(0, 5f);
 			t = Rnd.Float(3);
@@ -92,7 +93,7 @@ namespace BurningKnight.assets.particle.custom {
 
 			Position += MathUtils.CreateVector(Weather.RainAngle, dt * 30f * speed) + new Vector2((float) Math.Cos(t * 2 * speed) * dt * 10, 0);
 			
-			if (Position.Y > Context.Camera.Bottom + 20) {
+			if (Position.Y > Context.Camera!.Bottom + 20) {
 				Reset();
 			}
 		}
@@ -103,7 +104,7 @@ namespace BurningKnight.assets.particle.custom {
 			}
 			
 			Graphics.Color = color;
-			Graphics.Render(region, Position, 0, Vector2.Zero, size);
+			Graphics.Render(region!, Position, 0, Vector2.Zero, size);
 			Graphics.Color = ColorUtils.WhiteColor;
 		}
 	}

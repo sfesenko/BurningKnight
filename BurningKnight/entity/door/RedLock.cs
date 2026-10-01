@@ -18,7 +18,7 @@ namespace BurningKnight.entity.door {
 		}
 
 		protected override bool CanInteract(Entity entity) {
-			return entity.GetComponent<ActiveWeaponComponent>().Item?.Id == "bk:treasure_key" || entity.GetComponent<WeaponComponent>().Item?.Id == "bk:treasure_key";
+			return entity.GetComponent<ActiveWeaponComponent>()!.Item?.Id == "bk:treasure_key" || entity.GetComponent<WeaponComponent>()!.Item?.Id == "bk:treasure_key";
 		}
 
 		protected override bool TryToConsumeKey(Entity entity) {

@@ -24,7 +24,7 @@ namespace BurningKnight.entity.creature.mob.library {
 			AddComponent(body);
 
 			body.KnockbackModifier = 0f;
-			body.Body.LinearDamping = 4f;
+			body!.Body!.LinearDamping = 4f;
 			
 			AddComponent(new SensorBodyComponent(1, 1, 8, 13));
 			AddComponent(new MobAnimationComponent("mage"));
@@ -48,12 +48,12 @@ namespace BurningKnight.entity.creature.mob.library {
 				base.Update(dt);
 
 				if (Self.Target != null) {
-					Self.GraphicsComponent.Flipped = Self.Target.CenterX < Self.CenterX;
+					Self!.GraphicsComponent!.Flipped = Self.Target.CenterX < Self.CenterX;
 				}
 
 				if (!tweened && T >= delay - 0.4f) {
 					tweened = true;
-					Self.GetComponent<MobAnimationComponent>().Animate();
+					Self.GetComponent<MobAnimationComponent>()!.Animate();
 				}
 				
 				if (T >= delay && Self.CanSeeTarget()) {
@@ -61,7 +61,7 @@ namespace BurningKnight.entity.creature.mob.library {
 						Position = Self.Center
 					};
 					
-					Self.Area.Add(p);
+					Self.Area!.Add(p);
 					var sa = Rnd.AnglePI();
 					var count = 5;
 
@@ -79,11 +79,11 @@ namespace BurningKnight.entity.creature.mob.library {
 							var a = (float) Math.PI * i1 / (count * 0.5f) + sa;
 							var pr = builder.Build();
 
-							pr.BodyComponent.Angle = a;
+							pr!.BodyComponent.Angle = a;
 							pr.Center = Self.Center + MathUtils.CreateVector(a, 12);
 							
 							p.Add(pr);
-							Self.GetComponent<AudioEmitterComponent>().EmitRandomized("mob_fire");
+							Self.GetComponent<AudioEmitterComponent>()!.EmitRandomized("mob_fire");
 
 							if (i1 == count - 1) {
 								p.Launch(Self.Target == null ? Rnd.AnglePI() : Self.AngleTo(Self.Target), 80);
@@ -107,13 +107,13 @@ namespace BurningKnight.entity.creature.mob.library {
 
 					var a = Self.GetComponent<MobAnimationComponent>();
 
-					Tween.To(0.2f, a.Scale.X, x => a.Scale.X = x, 0.5f, Ease.QuadIn);
+					Tween.To(0.2f, a!.Scale.X, x => a.Scale.X = x, 0.5f, Ease.QuadIn);
 					Tween.To(2f, a.Scale.Y, x => a.Scale.Y = x, 0.5f, Ease.QuadIn).OnEnd = () => {
-						var r = Self.GetComponent<RoomComponent>().Room;
+						var r = Self.GetComponent<RoomComponent>()!.Room;
 						Vector2 s;
 
 						do {
-							s = r.GetRandomFreeTile() * 16 + new Vector2(8);
+							s = r!.GetRandomFreeTile() * 16 + new Vector2(8);
 						} while (Self.Target != null && Self.Target.DistanceTo(s) < 32);
 						
 						Self.Center = s;

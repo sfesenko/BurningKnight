@@ -42,7 +42,7 @@ namespace BurningKnight.entity.creature.bk {
 			public override void Init() {
 				base.Init();
 
-				GameContext.Current.Camera.Shake(20);
+				GameContext.Current!.Camera!.Shake(20);
 				Self.Position = Vector2.Zero;
 
 				Timer.Add(() => {
@@ -54,7 +54,7 @@ namespace BurningKnight.entity.creature.bk {
 			public override void Update(float dt) {
 				base.Update(dt);
 
-				if (!teleported && (Self.captured.Done || Self.captured.GetComponent<StateComponent>().StateInstance is FriendlyState)) {
+				if (!teleported && (Self!.captured!.Done || Self.captured.GetComponent<StateComponent>()!.StateInstance is FriendlyState)) {
 					teleported = true;
 					Self.FreeSelf();
 				}

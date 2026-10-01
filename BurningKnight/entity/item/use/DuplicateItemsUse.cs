@@ -10,7 +10,7 @@ namespace BurningKnight.entity.item.use {
 		public override void Use(Entity entity, Item item) {
 			base.Use(entity, item);
 			
-			var room = entity.GetComponent<RoomComponent>().Room;
+			var room = entity.GetComponent<RoomComponent>()!.Room;
 
 			if (room == null) {
 				return;
@@ -26,19 +26,19 @@ namespace BurningKnight.entity.item.use {
 					}
 
 					var st = new ItemStand();
-					entity.Area.Add(st);
+					entity.Area!.Add(st);
 
 					ist.X -= ist.Width / 2f + 1;
 
 					st.X = ist.X + ist.Width + 2;
 					st.Y = ist.Y;
 
-					st.SetItem(Items.CreateAndAdd(ist.Item.Id, entity.Area), item);
+					st.SetItem(Items.CreateAndAdd(ist.Item.Id, entity.Area)!, item);
 				} else if (it is Item i) {
-					var st = Items.CreateAndAdd(i.Id, entity.Area);
+					var st = Items.CreateAndAdd(i.Id, entity.Area!);
 					i.X -= i.Width / 2f + 1;
 					
-					st.X = i.X + i.Width + 2;
+					st!.X = i.X + i.Width + 2;
 					st.Y = i.Y;
 				}
 			}
@@ -47,10 +47,10 @@ namespace BurningKnight.entity.item.use {
 
 			foreach (var i in chests) {
 				try {
-					var st = (Entity) Activator.CreateInstance(i.GetType());
+					var st = (Entity) Activator.CreateInstance(i.GetType())!;
 					i.X -= i.Width / 2f + 1;
 
-					st.X = i.X + i.Width + 2;
+					st!.X = i.X + i.Width + 2;
 					st.Y = i.Y;
 				} catch (Exception e) {
 					Log.Error(e);

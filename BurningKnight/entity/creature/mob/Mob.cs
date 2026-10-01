@@ -38,15 +38,15 @@ using MonoGame.Extended;
 
 namespace BurningKnight.entity.creature.mob {
 	public partial class Mob : Creature, DropModifier {
-		public Entity Target;
+		public Entity? Target;
 		public bool HasPrefix => prefix != null;
-		public Prefix Prefix => prefix;
+		public Prefix Prefix => prefix!;
 		
 		protected List<Entity> CollidingToHurt = new List<Entity>();
 		protected int TouchDamage = 1;
 		protected bool TargetEverywhere;
 		
-		private Prefix prefix;
+		private Prefix? prefix;
 		
 		public override void AddComponents() {
 			base.AddComponents();
@@ -64,11 +64,11 @@ namespace BurningKnight.entity.creature.mob {
 			AddDrops(new SingleDrop("bk:bomb", 0.03f));
 
 			var h = GetComponent<HealthComponent>();
-			h.InvincibilityTimerMax = 0.3f;
+			h!.InvincibilityTimerMax = 0.3f;
 			h.PreventDamageInInvincibility = false;
 
 			if (!(this is Boss)) {
-				GetComponent<StateComponent>().Pause++;
+				GetComponent<StateComponent>()!.Pause++;
 			}
 		}
 
@@ -76,7 +76,7 @@ namespace BurningKnight.entity.creature.mob {
 			base.PostInit();
 
 			if (Context.Level?.Variant is SnowLevelVariant || Context.Level?.Biome is IceBiome) {
-				GetComponent<BuffsComponent>().AddImmunity<FrozenBuff>();
+				GetComponent<BuffsComponent>()!.AddImmunity<FrozenBuff>();
 			}
 		}
 
@@ -84,7 +84,7 @@ namespace BurningKnight.entity.creature.mob {
 			
 		}
 
-		protected void AddAnimation(string name, string layer = null) {
+		protected void AddAnimation(string name, string? layer = null) {
 			AddComponent(new MobAnimationComponent(name, layer));
 		}
 		
@@ -94,15 +94,15 @@ namespace BurningKnight.entity.creature.mob {
 			}
 		
 			var health = GetComponent<HealthComponent>();
-			health.InitMaxHealth = hp;
+			health!.InitMaxHealth = hp;
 		}
 
 		protected virtual void OnTargetChange(Entity target) {
 			if (target == null) {
-				GetComponent<StateComponent>().PauseOnChange = true;
+				GetComponent<StateComponent>()!.PauseOnChange = true;
 			} else {
-				GetComponent<StateComponent>().PauseOnChange = false;
-				GetComponent<StateComponent>().Pause = 0;
+				GetComponent<StateComponent>()!.PauseOnChange = false;
+				GetComponent<StateComponent>()!.Pause = 0;
 			}
 		}
 		
@@ -124,7 +124,7 @@ namespace BurningKnight.entity.creature.mob {
 
 						part.Position = Center + Rnd.Vector(-4, 4);
 						part.Particle.Scale = Rnd.Float(0.5f, 1.2f);
-						Area.Add(part);
+						Area!.Add(part);
 						part.Depth = 1;
 					}
 				}
@@ -132,7 +132,7 @@ namespace BurningKnight.entity.creature.mob {
 
 			if (Target == null) {
 				FindTarget();
-			} else if (Target.Done || Target.GetComponent<RoomComponent>().Room != GetComponent<RoomComponent>().Room ||
+			} else if (Target.Done || Target.GetComponent<RoomComponent>()!.Room != GetComponent<RoomComponent>()!.Room ||
 			           (Target is Creature c && c.IsFriendly() == IsFriendly()) || 
 			           (Target.TryGetComponent<BuffsComponent>(out var b) && b.Has<InvisibleBuff>())) {
 
@@ -151,7 +151,7 @@ namespace BurningKnight.entity.creature.mob {
 				return;
 			}
 
-			var raging = GetComponent<BuffsComponent>().Has<RageBuff>();
+			var raging = GetComponent<BuffsComponent>()!.Has<RageBuff>();
 			
 			for (var i = CollidingToHurt.Count - 1; i >= 0; i--) {
 				var entity = CollidingToHurt[i];
@@ -162,13 +162,13 @@ namespace BurningKnight.entity.creature.mob {
 				}
 
 				if ((!(entity is Creature c) || c.IsFriendly() != IsFriendly())) {
-					if (entity.GetComponent<HealthComponent>().ModifyHealth(-TouchDamage * (raging ? 2 : 1), this, DamageType.Contact)) {
+					if (entity.GetComponent<HealthComponent>()!.ModifyHealth(-TouchDamage * (raging ? 2 : 1), this, DamageType.Contact)) {
 						OnHit(entity);
 					}
 				}
 			}
 
-			if (GetComponent<RoomComponent>().Room == null) {
+			if (GetComponent<RoomComponent>()!.Room == null) {
 				Kill(null);
 			}
 		}
@@ -184,18 +184,18 @@ namespace BurningKnight.entity.creature.mob {
 		}
 
 		public override bool IsFriendly() {
-			return GetComponent<BuffsComponent>().Has<CharmedBuff>();
+			return GetComponent<BuffsComponent>()!.Has<CharmedBuff>();
 		}
 
 		private bool rotationApplied;
 
-		public override void AnimateDeath(DiedEvent d) {
+		public override void AnimateDeath(DiedEvent? d) {
 			base.AnimateDeath(d);
 			CreateGore(d);
 		}
 
 		#region Path finding
-		protected Vec2 NextPathPoint;
+		protected Vec2? NextPathPoint;
 		private int lastStepBack;
 		private int prevStepBack;
 
@@ -208,7 +208,7 @@ namespace BurningKnight.entity.creature.mob {
 				return true;
 			}
 			
-			GetAnyComponent<BodyComponent>().Velocity = new Vector2(dx / d * speed, dy / d * speed);
+			GetAnyComponent<BodyComponent>()!.Velocity = new Vector2(dx / d * speed, dy / d * speed);
 
 			return false;
 		}
@@ -225,7 +225,7 @@ namespace BurningKnight.entity.creature.mob {
 
 		public override void Save(FileWriter stream) {
 			base.Save(stream);
-			stream.WriteString(prefix?.Id);
+			stream.WriteString(prefix?.Id!);
 		}
 
 		public void GeneratePrefix() {
@@ -243,11 +243,11 @@ namespace BurningKnight.entity.creature.mob {
 			}
 
 			try {
-				var p = (Prefix) Activator.CreateInstance(t);
+				var p = (Prefix) Activator.CreateInstance(t)!;
 
 				prefix = p;
 				
-				p.Id = id;
+				p!.Id = id;
 				p.Mob = this;
 				p.Init();
 			} catch (Exception e) {
@@ -261,7 +261,7 @@ namespace BurningKnight.entity.creature.mob {
 
 			if (NextPathPoint != null) {
 				Graphics.Batch.DrawLine(CenterX, Bottom, NextPathPoint.X, NextPathPoint.Y, Color.Red);
-				Graphics.Batch.DrawLine(CenterX, Bottom, Context.Level.FromIndexX(prevStepBack) * 16 + 8, Context.Level.FromIndexY(prevStepBack) * 16 + 8, Color.Blue);
+				Graphics.Batch.DrawLine(CenterX, Bottom, Context.Level!.FromIndexX(prevStepBack) * 16 + 8, Context.Level!.FromIndexY(prevStepBack) * 16 + 8, Color.Blue);
 			}
 		}
 
@@ -271,7 +271,7 @@ namespace BurningKnight.entity.creature.mob {
 
 		protected void TurnToTarget() {
 			if (Target != null) {
-				GraphicsComponent.Flipped = Target.CenterX < CenterX;
+				GraphicsComponent!.Flipped = Target.CenterX < CenterX;
 			}
 		}
 	}

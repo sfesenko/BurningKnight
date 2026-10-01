@@ -49,20 +49,20 @@ namespace BurningKnight.entity.creature.bk {
 				base.Update(dt);
 				Self.CheckForScourgeRageFree();
 
-				if (Self.DistanceTo(Self.Target) < 64f) {
+				if (Self.DistanceTo(Self.Target!) < 64f) {
 					Self.Become<FlyAwayAttackingState>();
 					return;
 				}
 
-				var r = Self.Target.GetComponent<RoomComponent>().Room;
+				var r = Self!.Target!.GetComponent<RoomComponent>()!.Room;
 
-				if (r.Type == RoomType.Shop || r.Type == RoomType.SubShop || r.Type == RoomType.OldMan) {
+				if (r!.Type == RoomType.Shop || r.Type == RoomType.SubShop || r.Type == RoomType.OldMan) {
 					Self.Become<ChaseState>();
 					return;
 				}
 
 				if (T >= 1f) {
-					Self.GetComponent<AudioEmitterComponent>().Emit("mob_bk_fire");
+					Self.GetComponent<AudioEmitterComponent>()!.Emit("mob_bk_fire");
 
 					var c = 1;
 
@@ -83,7 +83,7 @@ namespace BurningKnight.entity.creature.bk {
 						var p = builder.Shoot(Self.AngleTo(Self.Target) + Rnd.Float(-0.4f, 0.4f) + (c == 1 ? 0 : (i - 1) * Math.PI * 0.2f),
 							8 + Self.timesRaged * 0.3f).Build();
 
-						p.Center = Self.Center;
+						p!.Center = Self.Center;
 						p.Depth = Self.Depth;
 
 						if (Self.timesRaged > 4) {

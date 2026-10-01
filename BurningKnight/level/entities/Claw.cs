@@ -20,12 +20,12 @@ namespace BurningKnight.level.entities {
 		private static Vector2 rightOrigin = new Vector2(-0.5f, 1);
 		private static Vector2 topOrigin = new Vector2(7 / 2f, 31);
 
-		private TextureRegion leftClaw;
-		private TextureRegion rightClaw;
-		private TextureRegion top;
+		private TextureRegion leftClaw = null!;
+		private TextureRegion rightClaw = null!;
+		private TextureRegion top = null!;
 		private float angle;
 		private float z = TopZ;
-		private RoundItem grabbed;
+		private RoundItem? grabbed;
 		internal Vector2 start;
 		
 		public override void AddComponents() {
@@ -37,13 +37,13 @@ namespace BurningKnight.level.entities {
 			var body = new SensorBodyComponent(-origin.X, -origin.Y, 15, 14);
 			AddComponent(body);
 
-			body.Body.LinearDamping = 10;
+			body!.Body!.LinearDamping = 10;
 
 			var animation = CommonAse.Props;
 
-			leftClaw = animation.GetSlice("left_claw");
-			rightClaw = animation.GetSlice("right_claw");
-			top = animation.GetSlice("claw_hand");
+			leftClaw = animation.GetSlice("left_claw")!;
+			rightClaw = animation.GetSlice("right_claw")!;
+			top = animation.GetSlice("claw_hand")!;
 			
 			AddComponent(new ShadowComponent(() => {
 				SimpleRender(true);
@@ -74,13 +74,13 @@ namespace BurningKnight.level.entities {
 		}
 
 		private bool CheckGrab() {
-			var room = GetComponent<RoomComponent>().Room;
+			var room = GetComponent<RoomComponent>()!.Room;
 			var p = Position + new Vector2(0, 10);
 			var min = 12f;
-			RoundItem item = null;
+			RoundItem? item = null;
 			grabbed = null;
 
-			foreach (var i in room.Tagged[Tags.Item]) {
+			foreach (var i in room!.Tagged[Tags.Item]) {
 				if (i is RoundItem r) {
 					var d = r.DistanceTo(p);
 
@@ -169,7 +169,7 @@ namespace BurningKnight.level.entities {
 										};
 										
 										t9.OnEnd = () => {
-											var mega = grabbed.Id == "bk:pass";
+											var mega = grabbed!.Id == "bk:pass";
 
 											if (grabbed is RandomItem r) {
 												r.Prevent = true;

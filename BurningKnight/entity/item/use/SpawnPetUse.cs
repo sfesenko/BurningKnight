@@ -9,7 +9,7 @@ using Lens.util.math;
 
 namespace BurningKnight.entity.item.use {
 	public partial class SpawnPetUse : ItemUse {
-		private string pet;
+		private string pet = null!;
 		private bool random;
 		private bool onlyIfHasNone;
 
@@ -17,7 +17,7 @@ namespace BurningKnight.entity.item.use {
 			if (onlyIfHasNone) {
 				var inventory = entity.GetComponent<InventoryComponent>();
 
-				foreach (var i in inventory.Items) {
+				foreach (var i in inventory!.Items) {
 					if (ItemPool.Pet.Contains(i.Data.Pools)) {
 						return;
 					}
@@ -25,7 +25,7 @@ namespace BurningKnight.entity.item.use {
 			}
 			
 			if (random) {
-				entity.GetComponent<InventoryComponent>().Pickup(Items.CreateAndAdd(Items.Generate(ItemPool.Pet), entity.Area));
+				entity.GetComponent<InventoryComponent>()!.Pickup(Items.CreateAndAdd(Items.Generate(ItemPool.Pet)!, entity.Area!)!);
 				return;
 			}
 			

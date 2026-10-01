@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
 namespace BurningKnight.ui.dialog {
-	public class AnswerDialog(string id, AnswerType type, string[] next = null) : Dialog(id, next)
+	public class AnswerDialog(string id, AnswerType type, string[]? next = null) : Dialog(id, next)
 	{
 		private static Audio Audio => Context.Audio;
 		

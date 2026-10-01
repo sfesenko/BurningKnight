@@ -9,14 +9,14 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.ui {
 	public class UiAchievement : FrameRenderer {
-		public static UiAchievement Current;
+		public static UiAchievement? Current = null!;
 		
 		private const int Padding = 6;
 		
 		private string title;
 		private string description;
 		private TextureRegion icon;
-		private TextureRegion iconBg;
+		private TextureRegion iconBg = null!;
 
 		private Vector2 bgOffset;
 		private Vector2 iconOffset;
@@ -31,14 +31,14 @@ namespace BurningKnight.ui {
 			
 			title = Locale.Get(item ? id : $"ach_{id}");
 			description = Locale.Get(item ? "was_unlocked" : $"ach_{id}_desc");
-			icon = Animations.Get(item ? "items" : "achievements").GetSlice(id);
-			iconBg = CommonAse.Ui.GetSlice("item_bg");
+			icon = Animations.Get(item ? "items" : "achievements")!.GetSlice(id)!;
+			iconBg = CommonAse.Ui.GetSlice("item_bg")!;
 
 			var titleSize = Font.Small.MeasureString(title);
 			var descriptionSize = Font.Small.MeasureString(description);
 
 			bgOffset = new Vector2(Padding);
-			iconOffset = new Vector2(Padding + (20 - icon.Width) / 2f, Padding + (20 - icon.Height) / 2f);
+			iconOffset = new Vector2(Padding + (20 - icon!.Width) / 2f, Padding + (20 - icon.Height) / 2f);
 			titleOffset = new Vector2(Padding * 2 + 20, Padding - 1);
 			descriptionOffset = new Vector2(Padding * 2 + 20, Padding + 10);
 

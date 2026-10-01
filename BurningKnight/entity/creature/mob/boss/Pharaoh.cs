@@ -22,13 +22,13 @@ namespace BurningKnight.entity.creature.mob.boss {
 	public class Pharaoh : Boss {
 		public bool InSecondPhase {
 			get {
-				var p = GetComponent<HealthComponent>().Percent;
+				var p = GetComponent<HealthComponent>()!.Percent;
 				return p > 0.33f && p <= 0.66f;
 			}
 		}
 
-		public bool InThirdPhase => GetComponent<HealthComponent>().Percent <= 0.33f;
-		public bool InFirstPhase => GetComponent<HealthComponent>().Percent > 0.66f;
+		public bool InThirdPhase => GetComponent<HealthComponent>()!.Percent <= 0.33f;
+		public bool InFirstPhase => GetComponent<HealthComponent>()!.Percent > 0.66f;
 		
 		public int Phase => (InThirdPhase ? 3 : (InSecondPhase ? 2 : 1));
 
@@ -46,7 +46,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 			AddComponent(body);
 
 			body.KnockbackModifier = 0.1f;
-			body.Body.LinearDamping = 4;
+			body!.Body!.LinearDamping = 4;
 
 			AddAnimation("pharaoh");
 			SetMaxHp(250);
@@ -55,7 +55,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 		protected override void AddPhases() {
 			base.AddPhases();
 			
-			HealthBar.AddPhase(0.33f);
+			HealthBar!.AddPhase(0.33f);
 			HealthBar.AddPhase(0.66f);
 		}
 
@@ -72,7 +72,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 				lastParticle = 0.1f;
 
 				if (!IsFriendly()) {
-					Area.Add(new FireParticle {
+					Area!.Add(new FireParticle {
 						Offset = new Vector2(-2, -11),
 						Owner = this,
 						Size = 0.5f,
@@ -180,7 +180,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 						builder.Shoot(a, 8f).Build();
 					}
 
-					Self.GetComponent<AudioEmitterComponent>().EmitRandomized("mob_pharaoh_shot");
+					Self.GetComponent<AudioEmitterComponent>()!.EmitRandomized("mob_pharaoh_shot");
 					count++;
 				}
 
@@ -216,7 +216,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 						builder.Shoot(a, 6f + (float) Math.Cos(Self.t * 1) * 2f).Build();
 					}
 
-					Self.GetComponent<AudioEmitterComponent>().EmitRandomized("mob_pharaoh_shot_wave");
+					Self.GetComponent<AudioEmitterComponent>()!.EmitRandomized("mob_pharaoh_shot_wave");
 					count++;
 				}
 				
@@ -259,13 +259,13 @@ namespace BurningKnight.entity.creature.mob.boss {
 		}
 		
 		public class TileMoveState : SmartState<Pharaoh> {
-			private Dot PickDot() {
-				var room = Self.GetComponent<RoomComponent>().Room;
+			private Dot? PickDot() {
+				var room = Self.GetComponent<RoomComponent>()!.Room;
 				var attempt = 0;
 				var toCheck = new List<Entity>();
 
 				toCheck.Add(Self);
-				toCheck.AddRange(room.Tagged[Tags.Player]);
+				toCheck.AddRange(room!.Tagged[Tags.Player]);
 
 				Dot spot;
 
@@ -317,7 +317,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 							var part = new TileParticle();
 
 							part.FromBottom = true;
-							part.Top = GameContext.Current.Level.Tileset.FloorA[0];
+							part.Top = GameContext.Current!.Level!.Tileset!.FloorA[0];
 							part.TopTarget = GameContext.Current.Level.Tileset.WallTopADecor;
 							part.Side = GameContext.Current.Level.Tileset.WallA[0];
 							part.Sides = GameContext.Current.Level.Tileset.WallSidesA[2];
@@ -328,7 +328,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 							part.Target.X = (to.X + x1) * 16;
 							part.Target.Y = (to.Y + y1) * 16 + 8;
 
-							Self.Area.Add(part);
+							Self.Area!.Add(part);
 						}, Rnd.Float(1f));
 					}
 				}
@@ -364,7 +364,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 							builder.Shoot(a, 7f + j1 * 2).Build();
 						}
 
-						Self.GetComponent<AudioEmitterComponent>().EmitRandomized("mob_pharaoh_shot");
+						Self.GetComponent<AudioEmitterComponent>()!.EmitRandomized("mob_pharaoh_shot");
 					}, j);
 				}
 
@@ -396,12 +396,12 @@ namespace BurningKnight.entity.creature.mob.boss {
 						var i1 = i;
 
 						Timer.Add(() => {
-							Self.GetComponent<AudioEmitterComponent>().EmitRandomized("mob_pharaoh_summon");
+							Self.GetComponent<AudioEmitterComponent>()!.EmitRandomized("mob_pharaoh_summon");
 							
 							var mummy = new Mummy();
-							Self.Area.Add(mummy);
+							Self.Area!.Add(mummy);
 							mummy.BottomCenter = Self.BottomCenter + MathUtils.CreateVector(i1 / (float) amount * Math.PI * 2, d);
-							mummy.GetComponent<StateComponent>().Become<Mummy.SummonedState>();
+							mummy.GetComponent<StateComponent>()!.Become<Mummy.SummonedState>();
 						}, i * 0.5f);
 					}
 				} else if (summoned && T >= 2f) {
@@ -414,15 +414,15 @@ namespace BurningKnight.entity.creature.mob.boss {
 			public override void Init() {
 				base.Init();
 
-				Self.GetComponent<AudioEmitterComponent>().EmitRandomized("mob_pharaoh_adidos");
+				Self.GetComponent<AudioEmitterComponent>()!.EmitRandomized("mob_pharaoh_adidos");
 
-				Tween.To(0, 255, x => Self.GetComponent<MobAnimationComponent>().Tint.A = (byte) x, 0.5f).OnEnd = () => {
-					var tile = Self.GetComponent<RoomComponent>().Room.GetRandomWallFreeTile() * 16;
+				Tween.To(0, 255, x => Self.GetComponent<MobAnimationComponent>()!.Tint.A = (byte) x, 0.5f).OnEnd = () => {
+					var tile = Self!.GetComponent<RoomComponent>()!.Room!.GetRandomWallFreeTile() * 16;
 
 					Self.BottomCenter = tile + new Vector2(8, 8); 
-					Self.GetComponent<AudioEmitterComponent>().EmitRandomized("mob_pharaoh_appear");
+					Self.GetComponent<AudioEmitterComponent>()!.EmitRandomized("mob_pharaoh_appear");
 
-					Tween.To(255, 0, x => Self.GetComponent<MobAnimationComponent>().Tint.A = (byte) x, 0.5f).OnEnd = () => {
+					Tween.To(255, 0, x => Self.GetComponent<MobAnimationComponent>()!.Tint.A = (byte) x, 0.5f).OnEnd = () => {
 						Become<IdleState>();
 					};
 				};

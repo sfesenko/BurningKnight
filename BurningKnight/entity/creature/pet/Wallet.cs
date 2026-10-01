@@ -23,27 +23,27 @@ namespace BurningKnight.entity.creature.pet {
 			AddComponent(new ShadowComponent(RenderShadow));
 			AddComponent(new SensorBodyComponent(0, 0, Width, Height, BodyType.Dynamic));
 			
-			GetComponent<AnimationComponent>().Animate();
+			GetComponent<AnimationComponent>()!.Animate();
 			
 			AddComponent(new StateComponent());
-			GetComponent<StateComponent>().Become<IdleState>();
+			GetComponent<StateComponent>()!.Become<IdleState>();
 
-			GetComponent<SensorBodyComponent>().Body.LinearDamping = 3;
+			GetComponent<SensorBodyComponent>()!.Body!.LinearDamping = 3;
 		}
 
 		public override void PostInit() {
 			base.PostInit();
-			Owner.GetComponent<ConsumablesComponent>().MaxCoins = 255;
+			Owner!.GetComponent<ConsumablesComponent>()!.MaxCoins = 255;
 		}
 
-		private Item target;
+		private Item? target;
 		
 		#region Wallet States
 		private class IdleState : SmartState<Wallet> {
 			public override void Update(float dt) {
 				base.Update(dt);
 
-				var r = Self.Owner.GetComponent<RoomComponent>().Room;
+				var r = Self!.Owner!.GetComponent<RoomComponent>()!.Room;
 
 				if (r != null && r.Tagged[Tags.Item].Count > 0) {
 					var min = float.MaxValue;
@@ -76,7 +76,7 @@ namespace BurningKnight.entity.creature.pet {
 		private class PickupState : SmartState<Wallet> {
 			public override void Init() {
 				base.Init();
-				Self.GetComponent<FollowerComponent>().Remove();
+				Self.GetComponent<FollowerComponent>()!.Remove();
 			}
 
 			public override void Destroy() {
@@ -87,7 +87,7 @@ namespace BurningKnight.entity.creature.pet {
 			public override void Update(float dt) {
 				base.Update(dt);
 
-				if (Self.target.Done || Self.target.HasComponent<OwnerComponent>()) {
+				if (Self!.target!.Done || Self.target.HasComponent<OwnerComponent>()) {
 					Self.target = null;
 					Self.Become<IdleState>();
 					return;
@@ -97,17 +97,17 @@ namespace BurningKnight.entity.creature.pet {
 				var dy = Self.DyTo(Self.target);
 				var d = MathUtils.Distance(dx, dy);
 
-				var b = Self.GetComponent<SensorBodyComponent>().Body;
+				var b = Self.GetComponent<SensorBodyComponent>()!.Body;
 				var s = 360 * dt / d;
 				
-				b.LinearVelocity += new Vector2(dx * s, dy * s);
+				b!.LinearVelocity += new Vector2(dx * s, dy * s);
 			}
 		}
 		#endregion
 
 		public override bool HandleEvent(Event e) {
 			if (e is CollisionStartedEvent cse && cse.Entity is Item i && i.Type == ItemType.Coin) {
-				Owner.GetComponent<InventoryComponent>().Pickup(i);
+				Owner!.GetComponent<InventoryComponent>()!.Pickup(i);
 			}
 			
 			return base.HandleEvent(e);

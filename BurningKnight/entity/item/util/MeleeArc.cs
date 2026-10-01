@@ -26,15 +26,15 @@ namespace BurningKnight.entity.item.util {
 		
 		public float LifeTime = 0.1f;
 		public float Damage;
-		public Entity Owner;
+		public Entity Owner = null!;
 		public float Angle;
 		public string Sound = "item_sword_hit";
 		public Color Color = ColorUtils.WhiteColor;
 		public bool Mines;
 		public float Knockback;
 
-		public ArcHurtCallback OnHurt;
-		public ArcDeathCallback OnDeath;
+		public ArcHurtCallback? OnHurt;
+		public ArcDeathCallback? OnDeath;
 
 		private float t;
 		private Vector2 velocity;
@@ -57,17 +57,17 @@ namespace BurningKnight.entity.item.util {
 			
 			AddComponent(new LightComponent(this, 32f, Color.White));
 
-			GetComponent<AnimationComponent>().OriginY = 12;
-			Context.Camera.Push(Angle - (float) Math.PI, 4f);
+			GetComponent<AnimationComponent>()!.OriginY = 12;
+			Context.Camera!.Push(Angle - (float) Math.PI, 4f);
 		}
 
 		public void AdjustSize() {
-			GetComponent<RectBodyComponent>().Resize(0, -Height / 2f, Width, Height);
+			GetComponent<RectBodyComponent>()!.Resize(0, -Height / 2f, Width, Height);
 		}
 
 		public override void Render() {
 			var component = GetComponent<AnimationComponent>();
-			var region = component.Animation.GetCurrentTexture();
+			var region = component!.Animation!.GetCurrentTexture();
 
 			Graphics.Color = Color;
 			Graphics.Render(region, Position, Angle, component.Offset, component.Scale);
@@ -75,27 +75,28 @@ namespace BurningKnight.entity.item.util {
 		}
 
 		public override bool HandleEvent(Event e) {
+			var level = Context.Level!;
 			if (e is CollisionStartedEvent ev) {
 				if (ev.Entity is HalfProjectileLevel bdd) {
 					if (Mines) {
 						var hitbox = ev.Fixture.GetAABB();
-						ProjectileLevelBody.Mine(Context.Level, hitbox.Center.X, hitbox.Center.Y);
+						ProjectileLevelBody.Mine(level, hitbox.Center.X, hitbox.Center.Y);
 					}
 				} else if (ev.Entity is ProjectileLevelBody bd) {
 					if (Mines) {
 						var hitbox = ev.Fixture.GetAABB();
-						ProjectileLevelBody.Mine(Context.Level, hitbox.Center.X, hitbox.Center.Y);
+						ProjectileLevelBody.Mine(level, hitbox.Center.X, hitbox.Center.Y);
 					}
 					
-					if (Context.Level.Biome is IceBiome) {
+					if (level.Biome is IceBiome) {
 						var hitbox = ev.Fixture.GetAABB();
 
 						if (bd.Break(hitbox.Center.X, hitbox.Center.Y)) {
-							AudioEmitterComponent.Dummy(Area, Center).EmitRandomizedPrefixed("level_snow_break", 3);
+							AudioEmitterComponent.Dummy(Area!, Center).EmitRandomizedPrefixed("level_snow_break", 3);
 						}
 					}
 				} else if (ev.Entity is Bomb) {
-					ev.Entity.GetComponent<RectBodyComponent>().KnockbackFrom(Owner, 1f + Knockback);
+					ev.Entity.GetComponent<RectBodyComponent>()!.KnockbackFrom(Owner, 1f + Knockback);
 				} else if (ev.Entity is Projectile p) {
 					if ((p.Owner is Mob) != (Owner is Mob) && ((p.FirstOwner is Mob) != (Owner is Mob))) {
 						if (p.HasFlag(ProjectileFlags.Reflectable)) {
@@ -106,7 +107,7 @@ namespace BurningKnight.entity.item.util {
 							// p.Pattern?.Remove(p);
 
 							var b = p.GetAnyComponent<BodyComponent>();
-							var d = Math.Max(400, b.Velocity.Length() * 1.8f);
+							var d = Math.Max(400, b!.Velocity.Length() * 1.8f);
 							var a = Owner.AngleTo(p);
 
 							b.Velocity = new Vector2((float) Math.Cos(a) * d, (float) Math.Sin(a) * d);
@@ -117,8 +118,8 @@ namespace BurningKnight.entity.item.util {
 
 							p.Color = ProjectileColor.Yellow;
 
-							Context.Camera.ShakeMax(4f);
-							Owner.GetComponent<AudioEmitterComponent>().EmitRandomizedPrefixed("projectile_reflected", 2);
+							Context.Camera!.ShakeMax(4f);
+							Owner.GetComponent<AudioEmitterComponent>()!.EmitRandomizedPrefixed("projectile_reflected", 2);
 						} else if (p.HasFlag(ProjectileFlags.BreakableByMelee)) {
 							p.Break();
 						}
@@ -131,7 +132,7 @@ namespace BurningKnight.entity.item.util {
 							}
 
 							if (health.ModifyHealth(-Damage, Owner, DamageType.Melee)) {
-								Owner.GetComponent<AudioEmitterComponent>().EmitRandomizedPrefixed(Sound, 3);
+								Owner.GetComponent<AudioEmitterComponent>()!.EmitRandomizedPrefixed(Sound, 3);
 								OnHurt?.Invoke(this, ev.Entity);
 							}
 
@@ -139,7 +140,7 @@ namespace BurningKnight.entity.item.util {
 						}
 					} else if (ev.Entity is ProjectileLevelBody && !HitWall) {
 						HitWall = true;
-						Owner.GetComponent<AudioEmitterComponent>().EmitRandomized("item_sword_hit_wall");
+						Owner.GetComponent<AudioEmitterComponent>()!.EmitRandomized("item_sword_hit_wall");
 					}
 				}
 			}
@@ -162,9 +163,9 @@ namespace BurningKnight.entity.item.util {
 		}
 		
 		public class CreatedEvent : Event {
-			public MeleeArc Arc;
-			public Entity Owner;
-			public Item By;
+			public MeleeArc Arc = null!;
+			public Entity Owner = null!;
+			public Item By = null!;
 		}
 	}
 }

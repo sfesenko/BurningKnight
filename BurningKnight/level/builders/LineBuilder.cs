@@ -25,7 +25,7 @@ namespace BurningKnight.level.builders {
 			var i = 0;
 						
 			while (true) {
-				var an = PlaceRoom(Init, R, Boss, a);
+				var an = PlaceRoom(Init, R, Boss!, a);
 							
 				if ((int) an != -1) {
 					break;
@@ -45,7 +45,7 @@ namespace BurningKnight.level.builders {
 				i = 0;
 
 				while (true) {
-					var an = PlaceRoom(Init, Boss, Granny, a);
+					var an = PlaceRoom(Init, Boss!, Granny, a);
 
 					if ((int) an != -1) {
 						break;
@@ -66,7 +66,7 @@ namespace BurningKnight.level.builders {
 				i = 0;
 
 				while (true) {
-					var an = PlaceRoom(Init, Boss, OldMan, a);
+					var an = PlaceRoom(Init, Boss!, OldMan, a);
 
 					if ((int) an != -1) {
 						break;
@@ -85,7 +85,7 @@ namespace BurningKnight.level.builders {
 			return true;
 		}
 
-		public override List<RoomDef> Build(List<RoomDef> Init) {
+		public override List<RoomDef>? Build(List<RoomDef> Init) {
 			SetupRooms(Init);
 
 			if (Entrance == null) {
@@ -100,9 +100,9 @@ namespace BurningKnight.level.builders {
 			Branchable.Add(Entrance);
 
 			if (MultiConnection.Count == 0) {
-				PlaceRoom(Init, Entrance, Exit, Rnd.Angle());
+				PlaceRoom(Init, Entrance, Exit!, Rnd.Angle());
 
-				if (Boss != null && !PlaceBoss(Init, Exit)) {
+				if (Boss != null && !PlaceBoss(Init, Exit!)) {
 					return null;
 				}
 				
@@ -128,30 +128,30 @@ namespace BurningKnight.level.builders {
 
 				if (I != 0 && Context.Run.Depth != 0)
 					for (var J = 0; J < Tunnels; J++) {
-						var T = RoomRegistry.Generate(RoomType.Connection, LevelSave.BiomeGenerated);
+						var T = RoomRegistry.Generate(RoomType.Connection, LevelSave.BiomeGenerated!);
 
-						if (Math.Abs(PlaceRoom(Init, Curr, T, Direction + Rnd.Float(-PathVariance, PathVariance)) - (-1)) < 0.01f) {
+						if (Math.Abs(PlaceRoom(Init, Curr!, T!, Direction + Rnd.Float(-PathVariance, PathVariance)) - (-1)) < 0.01f) {
 							return null;
 						}
 
-						Branchable.Add(T);
-						Init.Add(T);
-						Curr = T;
+						Branchable.Add(T!);
+						Init.Add(T!);
+						Curr = T!;
 					}
 
 				var R = I == RoomsOnPath ? Exit : MultiConnection[I];
 
 
-				if (Math.Abs(PlaceRoom(Init, Curr, R, Direction + Rnd.Float(-PathVariance, PathVariance)) - (-1)) < 0.01f) {
+				if (Math.Abs(PlaceRoom(Init, Curr!, R!, Direction + Rnd.Float(-PathVariance, PathVariance)) - (-1)) < 0.01f) {
 					return null;
 				}
 				
-				if (R == Exit && Boss != null && !PlaceBoss(Init, R)) {
+				if (R == Exit && Boss != null && !PlaceBoss(Init, R!)) {
 					return null;
 				}
 
-				Branchable.Add(R);
-				Curr = R;
+				Branchable.Add(R!);
+				Curr = R!;
 			}
 
 			var RoomsToBranch = new List<RoomDef>();

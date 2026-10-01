@@ -20,7 +20,7 @@ namespace Lens.util.camera {
 		
 		public static bool Debug = true;
 
-		public static Action OnShake;
+		public static Action? OnShake;
 
 		public Vector2 TopLeft => new Vector2(X, Y);
 		// Todo: count zoom here?
@@ -64,19 +64,19 @@ namespace Lens.util.camera {
 		}
 		
 		public List<Target> Targets = new List<Target>();
-		public Entity MainTarget;
+		public Entity? MainTarget;
 		public bool Detached;
 		public float TextureZoom = 1f;
 		
-		private CameraDriver driver;
+		private CameraDriver? driver;
 		
-		public CameraDriver Driver {
+		public CameraDriver? Driver {
 			get => driver;
 
 			set {
 				driver?.Destroy();
 				driver = value;
-				driver.Camera = this;
+				value!.Camera = this; // a camera always has a driver
 				driver?.Init();
 			}
 		}
@@ -138,7 +138,7 @@ namespace Lens.util.camera {
 		}
 
 		public void Unfollow(Entity entity) {
-			Target tar = null;
+			Target? tar = null;
 			
 			foreach (var t in Targets) {
 				if (t.Entity == entity) {

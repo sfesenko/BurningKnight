@@ -42,7 +42,7 @@ namespace Lens.assets {
 
 		public static bool FailedToLoadAudio;
 
-		public static ContentManager Content;
+		public static ContentManager Content = null!; // set by the host
 		public static string Root { get; private set; } =
 			Path.Combine(AppContext.BaseDirectory, "Content") + Path.DirectorySeparatorChar;
 
@@ -64,7 +64,7 @@ namespace Lens.assets {
 		/// tree ships read-only — a Release install may not even be writable — and only the dev
 		/// editors write into it; their callers log and give up when this returns null.
 		/// </summary>
-		public static StreamWriter WriteContent(string path) {
+		public static StreamWriter? WriteContent(string path) {
 			if (!Engine.Debug) {
 				Log.Warning($"Not writing {path}: the content tree is read-only outside Debug");
 				return null;
@@ -73,7 +73,7 @@ namespace Lens.assets {
 			return File.CreateText(FileHandle.FromRoot(path).FullPath);
 		}
 		
-		private static string[] folders;
+		private static string[] folders = [];
 		private static List<FileSystemEventArgs> changed = [];
 		private static float lastUpdate;
 		

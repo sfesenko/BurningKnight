@@ -25,9 +25,9 @@ namespace BurningKnight.entity.creature.player {
 			base.Update(dt);
 
 			var controller = GetComponent<InputComponent>();
-			var data = controller.GamepadEnabled ? controller.GamepadData : null;
+			var data = controller!.GamepadEnabled ? controller.GamepadData : null;
 
-			var lamp = GetComponent<LampComponent>().Item;
+			var lamp = GetComponent<LampComponent>()!.Item;
 			var useLamp = lamp != null && lamp.Id == "bk:explosive_lamp";
 			var Item = useLamp ? lamp : this.Item;
 
@@ -39,17 +39,17 @@ namespace BurningKnight.entity.creature.player {
 						var t = Item.Data.WeaponType;
 						
 						if (t == WeaponType.Ranged) {
-							foreach (var u in Item.Uses) {
+							foreach (var u in Item!.Uses!) {
 								if (u is SimpleShootUse s) {
 									if (s.ReloadSfx) {
-										Entity.GetComponent<AudioEmitterComponent>().EmitRandomizedPrefixed("item_shotgun_reload", 2, 0.8f);
+										Entity.GetComponent<AudioEmitterComponent>()!.EmitRandomizedPrefixed("item_shotgun_reload", 2, 0.8f);
 									}
 
 									break;
 								}
 							}	
 						} else if (t == WeaponType.Melee) {
-							Entity.GetComponent<AudioEmitterComponent>().EmitRandomized("item_sword_cooldown", 0.5f);
+							Entity.GetComponent<AudioEmitterComponent>()!.EmitRandomized("item_sword_cooldown", 0.5f);
 						}
 					}
 					
@@ -60,7 +60,7 @@ namespace BurningKnight.entity.creature.player {
 				
 				var b = GetComponent<BuffsComponent>();
 				
-				if (b.Has<FrozenBuff>() || b.Has<CharmedBuff>() || GetComponent<StateComponent>().StateInstance is Player.RollState) {
+				if (b!.Has<FrozenBuff>() || b.Has<CharmedBuff>() || GetComponent<StateComponent>()!.StateInstance is Player.RollState) {
 					return;
 				}
 				
@@ -72,12 +72,12 @@ namespace BurningKnight.entity.creature.player {
 						return;
 					}
 
-					if (GetComponent<StateComponent>().StateInstance is Player.SleepingState) {
-						GetComponent<StateComponent>().Become<Player.IdleState>();
+					if (GetComponent<StateComponent>()!.StateInstance is Player.SleepingState) {
+						GetComponent<StateComponent>()!.Become<Player.IdleState>();
 					}
 					
 					if (Context.Run.Depth == -2) {
-						GetComponent<DialogComponent>().Close();
+						GetComponent<DialogComponent>()!.Close();
 					}
 
 					if (b.Has<InvisibleBuff>()) {
@@ -85,20 +85,20 @@ namespace BurningKnight.entity.creature.player {
 					}
 
 					if (useLamp) {
-						GetComponent<ConsumablesComponent>().SpawnBomb();
+						GetComponent<ConsumablesComponent>()!.SpawnBomb();
 						Item.Delay = 0.5f;
 					} else {
 						Item.Use((Player) Entity);
 					}
 
-					GetComponent<StatsComponent>().UsedWeaponInRoom = true;
+					GetComponent<StatsComponent>()!.UsedWeaponInRoom = true;
 				}
 			} else {
 				timeSinceReady = 0;
 			}
 	
-			if ((Input.WasPressed(Controls.Swap, controller) || (Input.Mouse.WheelDelta != 0 && stopped)) && Context.Run.Depth > 0 && GetComponent<WeaponComponent>().Item != null) {
-				if (!GetComponent<InventoryComponent>().Busy) {
+			if ((Input.WasPressed(Controls.Swap, controller) || (Input.Mouse.WheelDelta != 0 && stopped)) && Context.Run.Depth > 0 && GetComponent<WeaponComponent>()!.Item != null) {
+				if (!GetComponent<InventoryComponent>()!.Busy) {
 					stopped = false;
 					Swap();
 				}
@@ -108,7 +108,7 @@ namespace BurningKnight.entity.creature.player {
 		}
 
 		protected override bool ShouldReplace(Item item) {
-			return item.Type == ItemType.Weapon && (Item == null || Context.Run.Depth < 1 || Entity.GetComponent<WeaponComponent>().Item != null);
+			return item.Type == ItemType.Weapon && (Item == null || Context.Run.Depth < 1 || Entity.GetComponent<WeaponComponent>()!.Item != null);
 		}
 
 		protected override void OnItemSet(Item previous) {
@@ -124,11 +124,11 @@ namespace BurningKnight.entity.creature.player {
 			if (Context.Run.Depth == -2) {
 				var dialog = GetComponent<DialogComponent>();
 								
-				dialog.Dialog.Str.ClearIcons();
-				dialog.Dialog.Str.AddIcon(CommonAse.Ui.GetSlice(Controls.FindSlice(Controls.Use, false)));
+				dialog!.Dialog!.Str!.ClearIcons();
+				dialog.Dialog.Str.AddIcon(CommonAse.Ui.GetSlice(Controls.FindSlice(Controls.Use, false)!)!);
 
 				if (GamepadComponent.Current != null && GamepadComponent.Current.Attached) {
-					dialog.Dialog.Str.AddIcon(CommonAse.Ui.GetSlice(Controls.FindSlice(Controls.Use, true)));
+					dialog.Dialog.Str.AddIcon(CommonAse.Ui.GetSlice(Controls.FindSlice(Controls.Use, true)!)!);
 				}
 								
 				dialog.StartAndClose("control_2", 5);

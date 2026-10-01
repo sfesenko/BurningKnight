@@ -88,8 +88,8 @@ namespace BurningKnight.state {
 
 			foreach (var p in Area.Tagged[Tags.Player]) {
 				if (p is LocalPlayer) {
-					bool imp = p.GetComponent<InputComponent>().Index == 0;
-					Context.Camera.Follow(p, imp ? 1f : 0.5f, imp);
+					bool imp = p.GetComponent<InputComponent>()!.Index == 0;
+					Context.Camera!.Follow(p, imp ? 1f : 0.5f, imp);
 					
 					if (imp && Assets.ImGuiEnabled) {
 						FocusAreaDebug(p);
@@ -101,11 +101,11 @@ namespace BurningKnight.state {
 
 			if (!Menu) {
 				foreach (var e in TopUi.Tagged[Tags.Cursor]) {
-					Context.Camera.Follow(e, CursorPriority);
+					Context.Camera!.Follow(e, CursorPriority);
 				}
 			}
 
-			Context.Camera.Jump();
+			Context.Camera!.Jump();
 			
 			if (Context.Run.Depth == 0) {
 				if (Events.Halloween) {
@@ -137,7 +137,7 @@ namespace BurningKnight.state {
 				});
 			}
 			
-			Context.Level.Prepare();
+			Context.Level!.Prepare();
 
 			if (Context.Run.Depth < 1) {
 				Scourge.Clear();
@@ -154,14 +154,15 @@ namespace BurningKnight.state {
 			CaptureTime();
 		}
 		public void ResetFollowing() {
-			Context.Camera.Targets.Clear();
-			Context.Camera.MainTarget = null;
+			var camera = Context.Camera!;
+			camera.Targets.Clear();
+			camera.MainTarget = null;
 
 			var min = 16;
 			
 			foreach (var p in Area.Tagged[Tags.Player]) {
 				if (p is LocalPlayer lp && !lp.Dead) {
-					var index = p.GetComponent<InputComponent>().Index;
+					var index = p.GetComponent<InputComponent>()!.Index;
 
 					if (index < min) {
 						min = index;
@@ -171,14 +172,14 @@ namespace BurningKnight.state {
 			
 			foreach (var p in Area.Tagged[Tags.Player]) {
 				if (p is LocalPlayer) {
-					var imp = !Multiplayer || p.GetComponent<InputComponent>().Index == min;
-					Context.Camera.Follow(p, imp ? 1f : 0.5f, imp);
+					var imp = !Multiplayer || p.GetComponent<InputComponent>()!.Index == min;
+					camera.Follow(p, imp ? 1f : 0.5f, imp);
 				}
 			}
 
 			if (!Menu) {
 				foreach (var e in TopUi.Tagged[Tags.Cursor]) {
-					Context.Camera.Follow(e, CursorPriority);
+					camera.Follow(e, CursorPriority);
 				}
 			}
 		}
@@ -203,15 +204,15 @@ namespace BurningKnight.state {
 				}
 				
 				for (var i = 0; i < 40; i++) {
-					particles.Add(Context.Level.Area.Add(new RainParticle {
+					particles.Add(Context.Level!.Area!.Add(new RainParticle {
 						Custom = true
-					}));
+					})!);
 				}
 			} else if (Weather.Snows) {
 				for (var i = 0; i < 100; i++) {
-					particles.Add(Context.Level.Area.Add(new SnowParticle {
+					particles.Add(Context.Level!.Area!.Add(new SnowParticle {
 						Custom = true
-					}));
+					})!);
 				}
 			}
 		}
@@ -221,7 +222,7 @@ namespace BurningKnight.state {
 			renderer.End();
 			
 			var c = Context.Camera;
-			var z = c.Zoom;
+			var z = c!.Zoom;
 			var n = Math.Abs(z - 1) > 0.01f;
 				
 			if (n) {
@@ -233,7 +234,7 @@ namespace BurningKnight.state {
 
 			foreach (var e in Area.Tagged[Tags.HasShadow]) {
 				if (!e.Done && (e.AlwaysVisible || e.OnScreen)) {
-					e.GetComponent<ShadowComponent>().Callback();
+					e.GetComponent<ShadowComponent>()!.Callback();
 				}
 			}
 			
@@ -290,7 +291,7 @@ namespace BurningKnight.state {
 			}
 
 			var iv = player.GetComponent<InventoryComponent>();
-			var offset = Math.Min(iv.Items.Count, 10) * 24 * 0.5f; 
+			var offset = Math.Min(iv!.Items.Count, 10) * 24 * 0.5f; 
 
 			for (var i = 0; i < iv.Items.Count; i++) {
 				var item = new UiItem();

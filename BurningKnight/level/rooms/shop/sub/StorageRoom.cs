@@ -21,7 +21,7 @@ namespace BurningKnight.level.rooms.shop.sub {
 			var spot = new Dot(Rnd.Int(Left + 2, Right - 2), Rnd.Int(Top + 2, Bottom - 2));
 
 			try {
-				ChestRegistry.PlaceRandom(spot * 16 + new Vector2(8, 12), level.Area);
+				ChestRegistry.PlaceRandom(spot * 16 + new Vector2(8, 12), level.Area!);
 			} catch (Exception e) {
 				Log.Error(e);
 			}
@@ -36,7 +36,7 @@ namespace BurningKnight.level.rooms.shop.sub {
 						Sprite = infos[Rnd.Int(infos.Length)]
 					};
 
-					level.Area.Add(prop);
+					level.Area!.Add(prop);
 					prop.BottomCenter = new Vector2(x + 0.5f, y + 1f) * 16 + Rnd.Vector(-4, 4);
 				}
 			}
@@ -46,7 +46,7 @@ namespace BurningKnight.level.rooms.shop.sub {
 
 		public override void SetupDoors(Level level) {
 			foreach (var door in Connected.Values) {
-				door.Type = DoorPlaceholder.Variant.Locked;
+				door!.Type = DoorPlaceholder.Variant.Locked;
 			}
 		}
 

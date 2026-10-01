@@ -5,8 +5,8 @@ using Lens.entity;
 
 namespace BurningKnight.entity.item.stand {
 	public class VampireStand : CustomStand {
-		private Entity payer;
-		private Item takenItem;
+		private Entity? payer = null!;
+		private Item? takenItem = null!;
 		private int lastPrice;
 
 		public override void Init() {
@@ -53,7 +53,7 @@ namespace BurningKnight.entity.item.stand {
 			if ((e is ItemUsedEvent ite && ite.Who == payer && ite.Item == takenItem) || (e is ItemAddedEvent iae && iae.Who == payer && iae.Item == takenItem)) {
 				var component = payer.GetComponent<HealthComponent>();
 				 
-				component.ModifyHealth(-lastPrice, this, DamageType.Custom);
+				component!.ModifyHealth(-lastPrice, this, DamageType.Custom);
 				
 				payer = null;
 				takenItem = null;
@@ -63,7 +63,7 @@ namespace BurningKnight.entity.item.stand {
 		}
 		
 		protected override bool HasEnoughToPay(Entity p) {
-			return p.GetComponent<HealthComponent>().Health >= Price * 2;
+			return p.GetComponent<HealthComponent>()!.Health >= Price * 2;
 		}
 	}
 }

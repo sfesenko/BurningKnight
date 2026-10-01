@@ -1,6 +1,6 @@
 namespace BurningKnight.util {
 	public class BArray {
-		public static bool[] Not(bool[] A, bool[] Result) {
+		public static bool[] Not(bool[] A, bool[]? Result) {
 			int Length = A.Length;
 
 			if (Result == null) {

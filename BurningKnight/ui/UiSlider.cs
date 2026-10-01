@@ -13,7 +13,7 @@ namespace BurningKnight.ui {
 				RelativeCenterY = y
 			});
 
-			UiSliderLabel c = null;
+			UiSliderLabel? c = null;
 
 			var b = pane.Add(new UiButton {
 				Label = "-",
@@ -23,7 +23,7 @@ namespace BurningKnight.ui {
 				Type = ButtonType.Slider,
 				RelativeCenterY = y,
 				Click = bt => {
-					c.Value = Math.Max(min, c.Value - 10);
+					c!.Value = Math.Max(min, c.Value - 10);
 				},
 				ScaleMod = 3
 			});
@@ -73,7 +73,7 @@ namespace BurningKnight.ui {
 
 		public class UiSliderLabel : UiButton {
 			private int value;
-			public Action<UiSliderLabel> OnValueChange;
+			public Action<UiSliderLabel>? OnValueChange;
 
 			public override void Init() {
 				base.Init();
@@ -100,8 +100,8 @@ namespace BurningKnight.ui {
 		}
 
 		public class UiSliderButton : UiButton {
-			public UiButton Minus;
-			public UiButton Plus;
+			public UiButton Minus = null!;
+			public UiButton Plus = null!;
 			
 			public override void Update(float dt) {
 				base.Update(dt);

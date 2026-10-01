@@ -53,7 +53,7 @@ namespace BurningKnight.entity.creature.npc {
 
 			var id = GetId();
 
-			saved = id == TrashGoblin || GlobalSave.IsTrue(id);
+			saved = id == TrashGoblin || GlobalSave.IsTrue(id!);
 			AlwaysActive = true;
 			Hidden = Context.Run.Depth == 0 && !saved;
 		}
@@ -63,7 +63,7 @@ namespace BurningKnight.entity.creature.npc {
 			
 			if (Context.Run.Depth == 0) {
 				var h = GetComponent<HealthComponent>();
-				h.Unhittable = false;
+				h!.Unhittable = false;
 				h.InitMaxHealth = 50;
 				h.SetHealth(50, this);
 			}
@@ -83,11 +83,11 @@ namespace BurningKnight.entity.creature.npc {
 					Timer.Add(() => {
 						var d = GetComponent<DialogComponent>();
 
-						if (d.Current != null && d.Current.Id != "quack") {
+						if (d!.Current != null && d.Current.Id != "quack") {
 							d.StartAndClose("quack", 3);
 						}
 
-						GetComponent<AudioEmitterComponent>().EmitRandomized("quck");
+						GetComponent<AudioEmitterComponent>()!.EmitRandomized("quck");
 					}, 0.5f);
 				}));
 			}
@@ -98,7 +98,7 @@ namespace BurningKnight.entity.creature.npc {
 				if (!hided) {
 					hided = true;
 
-					foreach (var item in Area.Tagged[Tags.Item]) {
+					foreach (var item in Area!.Tagged[Tags.Item]) {
 						if (item is ItemStand stand && OwnsStand(stand)) {
 							stand.Done = true;
 						}
@@ -113,9 +113,9 @@ namespace BurningKnight.entity.creature.npc {
 				Hidden = true;
 
 				var stand = new ItemStand();
-				Area.Add(stand);
+				Area!.Add(stand);
 				stand.Center = Center;
-				stand.SetItem(Items.CreateAndAdd("bk:emerald", Area), null);
+				stand.SetItem(Items.CreateAndAdd("bk:emerald", Area)!, null);
 				
 				return;
 			}
@@ -130,7 +130,7 @@ namespace BurningKnight.entity.creature.npc {
 
 			if (delay <= 0) {
 				delay = Rnd.Float(1, 10);
-				GraphicsComponent.Flipped = !GraphicsComponent.Flipped;
+				GraphicsComponent!.Flipped = !GraphicsComponent.Flipped;
 			}
 		}
 
@@ -154,7 +154,7 @@ namespace BurningKnight.entity.creature.npc {
 			return false;
 		}
 
-		protected virtual string GetHiDialog() {
+		protected virtual string? GetHiDialog() {
 			return null;
 		}
 
@@ -164,35 +164,35 @@ namespace BurningKnight.entity.creature.npc {
 			}
 			
 			if (e is RoomChangedEvent rce) {
-				if (rce.Who is Player && rce.New == GetComponent<RoomComponent>().Room) {
+				if (rce.Who is Player && rce.New == GetComponent<RoomComponent>()!.Room) {
 					if (Context.Run.Depth > 0 && !saved) {
-						GetComponent<AudioEmitterComponent>().EmitRandomized("hi");
+						GetComponent<AudioEmitterComponent>()!.EmitRandomized("hi");
 
 						if ((rce.Who.TryGetComponent<ActiveWeaponComponent>(out var a) && a.Item != null && a.Item.Id == "bk:cage_key") ||
 						    (rce.Who.TryGetComponent<WeaponComponent>(out var w) && w.Item != null && w.Item.Id == "bk:cage_key")) {
 
-							GetComponent<DialogComponent>().StartAndClose("npc_2", 3);
+							GetComponent<DialogComponent>()!.StartAndClose("npc_2", 3);
 						} else {
-							GetComponent<DialogComponent>().StartAndClose("npc_0", 3);
+							GetComponent<DialogComponent>()!.StartAndClose("npc_0", 3);
 						}
 					} else {
 						var s = GetHiDialog();
 						
 						if (s != null) {
-							GetComponent<DialogComponent>().StartAndClose(s, 3);
+							GetComponent<DialogComponent>()!.StartAndClose(s, 3);
 						}
 					}
 				}
 			} else if (e is ItemBoughtEvent ibe) {
-				if (OwnsStand(ibe.Stand) && ibe.Stand.GetComponent<RoomComponent>().Room == GetComponent<RoomComponent>().Room) {
-					GetComponent<DialogComponent>().StartAndClose(GetDealDialog(), 3);
+				if (OwnsStand(ibe.Stand) && ibe.Stand.GetComponent<RoomComponent>()!.Room == GetComponent<RoomComponent>()!.Room) {
+					GetComponent<DialogComponent>()!.StartAndClose(GetDealDialog(), 3);
 					OnItemBought(ibe);
 				}
 			} else if (e is DiedEvent) {
-				GlobalSave.Put(GetId(), false);
+				GlobalSave.Put(GetId()!, false);
 				ExplosionMaker.Make(this);
 			} else if (e is HealthModifiedEvent hme && hme.Amount < 0) {
-				GetComponent<DialogComponent>().StartAndClose($"npc_hurt_{Rnd.Int(3)}", 2);
+				GetComponent<DialogComponent>()!.StartAndClose($"npc_hurt_{Rnd.Int(3)}", 2);
 			}
 			
 			return base.HandleEvent(e);
@@ -210,9 +210,9 @@ namespace BurningKnight.entity.creature.npc {
 			if (Context.Run.Depth > 0 && !saved) {
 				saved = true;
 				Remove = true;
-				GetComponent<DialogComponent>().StartAndClose("npc_1", 6);
+				GetComponent<DialogComponent>()!.StartAndClose("npc_1", 6);
 				
-				GlobalSave.Put(GetId(), true);
+				GlobalSave.Put(GetId()!, true);
 				GlobalSave.Put("saved_npc", true);
 				
 				RemoveComponent<InteractableComponent>();
@@ -233,12 +233,12 @@ namespace BurningKnight.entity.creature.npc {
 			return $"shopkeeper_{Rnd.Int(15, 18)}";
 		}
 		
-		public virtual string GetId() {
+		public virtual string? GetId() {
 			return null;
 		}
 
 		public class SavedEvent : Event {
-			public ShopNpc Npc;
+			public ShopNpc Npc = null!;
 		}
 		
 		public static ShopNpc FromId(string id) {

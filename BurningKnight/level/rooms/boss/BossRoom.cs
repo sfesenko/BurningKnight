@@ -93,14 +93,14 @@ namespace BurningKnight.level.rooms.boss {
 				}
 
 				var exit = new Exit();
-				level.Area.Add(exit);
+				level.Area!.Add(exit);
 				exit.Center = GetCenterVector();
 
 				Log.Error("Failed to generate the boss!");
 				return;
 			}
 			
-			level.Area.Add(boss);
+			level.Area!.Add(boss);
 			boss.Center = GetCenterVector();
 
 			/*var trigger = new SpawnTrigger();
@@ -170,7 +170,7 @@ namespace BurningKnight.level.rooms.boss {
 
 		public override void SetupDoors(Level level) {
 			foreach (var d in Connected.Values) {
-				d.Type = DoorPlaceholder.Variant.Boss;
+				d!.Type = DoorPlaceholder.Variant.Boss;
 			}
 		}
 

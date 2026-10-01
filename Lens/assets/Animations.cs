@@ -53,7 +53,7 @@ namespace Lens.assets {
 			sources.Clear();
 		}
 
-		public static AnimationData Get(string id) {
+		public static AnimationData? Get(string id) {
 			if (animations.TryGetValue(id, out var animation)) {
 				return animation;
 			}
@@ -73,11 +73,11 @@ namespace Lens.assets {
 			return animation;
 		}
 
-		public static Animation Create(string id, string layer = null) {
-			return new Animation(Get(id), layer);
+		public static Animation Create(string id, string? layer = null) {
+			return new Animation(Get(id)!, layer);
 		}
 
-		public static AnimationData GetColored(string id, ColorMap colorMap) {
+		public static AnimationData? GetColored(string id, ColorMap colorMap) {
 			if (colorMap.IsEmpty())
 			{
 				return Get(id);

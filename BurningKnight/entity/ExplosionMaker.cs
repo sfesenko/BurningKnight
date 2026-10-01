@@ -25,7 +25,7 @@ using Microsoft.Xna.Framework;
 namespace BurningKnight.entity {
 	public static class ExplosionMaker {
 		public static void BreakRock(Level level, Dot ww, int x, int y, Tile l) {
-			AudioEmitterComponent.Dummy(level.Area, ww).Emit($"level_rock_{Rnd.Int(1, 3)}", 0.5f);
+			AudioEmitterComponent.Dummy(level.Area!, ww).Emit($"level_rock_{Rnd.Int(1, 3)}", 0.5f);
 
 			if (l.IsRock()) {
 				Drop.Create(l == Tile.TintedRock ? "bk:tinted_rock" : "bk:rock", null, level.Area, ww);
@@ -35,18 +35,19 @@ namespace BurningKnight.entity {
 				var part = new ParticleEntity(Particles.Dust());
 
 				part.Position = ww;
-				level.Area.Add(part);
+				level.Area!.Add(part);
 			}
 
-			Particles.BreakSprite(level.Area, (l == Tile.TintedRock ? level.Tileset.TintedRock : (l == Tile.MetalBlock ? level.Tileset.MetalBlock : level.Tileset.Rock))[Rnd.Int(4)], ww);
+			Particles.BreakSprite(level.Area!, (l == Tile.TintedRock ? level!.Tileset!.TintedRock : (l == Tile.MetalBlock ? level!.Tileset!.MetalBlock : level!.Tileset!.Rock))[Rnd.Int(4)], ww);
 
 			level.Set(x, y, Tile.Ember);
 			level.UpdateTile(x, y);
 			level.ReCreateBodyChunk(x, y);
 		}
 
-		public static void Make(Entity whoHurts, float hurtRadius = 32f, bool leave = true, Vec2 where = null, float damage = 16, float scale = 1, bool damageOwner = true) {
-			Context.Camera.Shake(10 * scale);
+		public static void Make(Entity whoHurts, float hurtRadius = 32f, bool leave = true, Vec2? where = null, float damage = 16, float scale = 1, bool damageOwner = true) {
+			var camera = Context.Camera!;
+			camera.Shake(10 * scale);
 			
 			Context.Audio.SfxVolumeBuffer = 0.5f;
 			Context.Audio.SfxVolumeBufferResetTimer = 1f;
@@ -58,7 +59,7 @@ namespace BurningKnight.entity {
 			for (var i = 0; i < 4; i++) {
 				var explosion = new ParticleEntity(Particles.Animated("explosion", "smoke"));
 				explosion.Position = w;
-				whoHurts.Area.Add(explosion);
+				whoHurts.Area!.Add(explosion);
 				explosion.Depth = 31;
 				explosion.Particle.Scale = scale;
 				explosion.Particle.AngleVelocity = 0;
@@ -74,7 +75,7 @@ namespace BurningKnight.entity {
 						DestroySounds = false
 					});
 					
-					explosion.GetComponent<AudioEmitterComponent>().EmitRandomizedPrefixed("level_explosion", 3);
+					explosion.GetComponent<AudioEmitterComponent>()!.EmitRandomizedPrefixed("level_explosion", 3);
 				}
 			}
 			
@@ -82,7 +83,7 @@ namespace BurningKnight.entity {
 				var part = new ParticleEntity(Particles.Dust());
 						
 				part.Position = w + new Vector2(Rnd.Int(-4, 4), Rnd.Int(-4, 4));
-				whoHurts.Area.Add(part);
+				whoHurts.Area!.Add(part);
 				part.Depth = 30;
 				part.Particle.Velocity = MathUtils.CreateVector(Rnd.AnglePI(), 80);
 			}
@@ -96,22 +97,22 @@ namespace BurningKnight.entity {
 				damager = b.Owner;
 			}
 					
-			foreach (var e in whoHurts.Area.GetEntitesInRadius(w, hurtRadius, typeof(ExplodableComponent))) {
+			foreach (var e in whoHurts.Area!.GetEntitesInRadius(w, hurtRadius, typeof(ExplodableComponent))) {
 				if (e == whoHurts && !damageOwner) {
 					continue;
 				}
 				
 				e.GetAnyComponent<BodyComponent>()?.KnockbackFrom(whoHurts, 4f);
-				e.GetComponent<ExplodableComponent>().HandleExplosion(damager, whoHurts, damage);
+				e.GetComponent<ExplodableComponent>()!.HandleExplosion(damager, whoHurts, damage);
 			}
 
 			if (Settings.Flashes) {
-				Context.Camera.TextureZoom -= 0.05f;
-				Tween.To(1f, Context.Camera.TextureZoom, x => Context.Camera.TextureZoom = x, 0.2f);
+				camera.TextureZoom -= 0.05f;
+				Tween.To(1f, camera.TextureZoom, x => camera.TextureZoom = x, 0.2f);
 			}
 
 			if (leave) {
-				whoHurts.Area.Add(new ExplosionLeftOver {
+				whoHurts.Area!.Add(new ExplosionLeftOver {
 					Center = w
 				});
 			}
@@ -120,7 +121,7 @@ namespace BurningKnight.entity {
 			var yy = (int) Math.Floor(w.Y / 16f);
 			var r = (int) Math.Floor(hurtRadius / 16f);
 			var level = Context.Level;
-			var ice = level.Biome is IceBiome;
+			var ice = level!.Biome is IceBiome;
 				
 			for (int x = -r; x <= r; x++) {
 				for (int y = -r; y <= r; y++) {
@@ -177,7 +178,7 @@ namespace BurningKnight.entity {
 			Achievements.Unlock("bk:treasure_hunter");
 			
 			LightUp(x * 16 + 8, y * 16 + 8);
-			Level.Animate(who.Area, x, y);
+			Level.Animate(who.Area!, x, y);
 		}
 
 		public static void LightUp(float X, float Y) {
@@ -191,7 +192,7 @@ namespace BurningKnight.entity {
 
 					if (ds <= d) {
 						var level = Context.Level;
-						var index = level.ToIndex(xx + x, yy + y);
+						var index = level!.ToIndex(xx + x, yy + y);
 
 						level.Light[index] = (float) Math.Max(level.Light[index], Math.Max(0.1f, (d - ds) / d));
 					}

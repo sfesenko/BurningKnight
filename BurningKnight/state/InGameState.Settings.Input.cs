@@ -67,7 +67,7 @@ namespace BurningKnight.state {
 			});
 
 			var first = true;
-			UiButton gamepad = null;
+			UiButton? gamepad = null;
 			
 			inputSettings.Add(new UiChoice {
 				Name = "gamepad",
@@ -83,7 +83,7 @@ namespace BurningKnight.state {
 					// Settings.Gamepad = e ? null : GamepadData.Identifiers[i];
 					if (p != null) {
 						var d = p.GetComponent<GamepadComponent>();
-						d.Controller?.StopRumble();
+						d!.Controller?.StopRumble();
 						d.Controller = null;
 						d.GamepadId = null;
 					}
@@ -302,7 +302,7 @@ namespace BurningKnight.state {
 			gamepadSettings.Add(new UiControl {
 				Key = Controls.Use,
 				Gamepad = true,
-				GamepadComponent = g,
+				GamepadComponent = g!,
 				RelativeX = sx - spX,
 				RelativeCenterY = sy - space * 3,
 			});
@@ -310,7 +310,7 @@ namespace BurningKnight.state {
 			gamepadSettings.Add(new UiControl {
 				Key = Controls.Active,
 				Gamepad = true,
-				GamepadComponent = g,
+				GamepadComponent = g!,
 				RelativeX = sx + spX,
 				RelativeCenterY = sy - space * 3,
 			});
@@ -318,7 +318,7 @@ namespace BurningKnight.state {
 			gamepadSettings.Add(new UiControl {
 				Key = Controls.Bomb,
 				Gamepad = true,
-				GamepadComponent = g,
+				GamepadComponent = g!,
 				RelativeX = sx - spX,
 				RelativeCenterY = sy - space * 2,
 			});
@@ -326,7 +326,7 @@ namespace BurningKnight.state {
 			gamepadSettings.Add(new UiControl {
 				Key = Controls.Interact,
 				Gamepad = true,
-				GamepadComponent = g,
+				GamepadComponent = g!,
 				RelativeX = sx + spX,
 				RelativeCenterY = sy - space * 2,
 			});
@@ -334,7 +334,7 @@ namespace BurningKnight.state {
 			gamepadSettings.Add(new UiControl {
 				Key = Controls.Swap,
 				Gamepad = true,
-				GamepadComponent = g,
+				GamepadComponent = g!,
 				RelativeX = sx - spX,
 				RelativeCenterY = sy - space,
 			});
@@ -342,7 +342,7 @@ namespace BurningKnight.state {
 			gamepadSettings.Add(new UiControl {
 				Key = Controls.Roll,
 				Gamepad = true,
-				GamepadComponent = g,
+				GamepadComponent = g!,
 				RelativeX = sx + spX,
 				RelativeCenterY = sy - space,
 			});
@@ -350,7 +350,7 @@ namespace BurningKnight.state {
 			gamepadSettings.Add(new UiControl {
 				Key = Controls.Duck,
 				Gamepad = true,
-				GamepadComponent = g,
+				GamepadComponent = g!,
 				RelativeX = sx,
 				RelativeCenterY = sy,
 			});

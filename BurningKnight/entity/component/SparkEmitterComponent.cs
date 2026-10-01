@@ -24,7 +24,7 @@ namespace BurningKnight.entity.component {
 				sinceLast = 0;
 
 				if (Rnd.Chance(chance)) {
-					var p = Particles.Wrap(Particles.Spark(), Entity.Area, new Vector2(Rnd.Float(Entity.Width) + Entity.X,
+					var p = Particles.Wrap(Particles.Spark(), Entity.Area!, new Vector2(Rnd.Float(Entity.Width) + Entity.X,
 						Rnd.Float(Entity.Height) + Entity.Y));
 
 					p.Depth = 1;

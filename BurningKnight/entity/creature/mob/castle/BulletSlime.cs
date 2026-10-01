@@ -27,7 +27,7 @@ namespace BurningKnight.entity.creature.mob.castle {
 			var body = new RectBodyComponent(1, 15, 14, 1);
 			AddComponent(body);
 
-			body.Body.LinearDamping = 2;
+			body!.Body!.LinearDamping = 2;
 			body.KnockbackModifier = 0.5f;
 			
 			AddComponent(new SensorBodyComponent(2, 7, 12, 9));
@@ -49,7 +49,7 @@ namespace BurningKnight.entity.creature.mob.castle {
 
 		protected virtual void DoSpit() {
 			var am = 8;
-			GetComponent<AudioEmitterComponent>().EmitRandomized("mob_fire");
+			GetComponent<AudioEmitterComponent>()!.EmitRandomized("mob_fire");
 
 			var builder = new ProjectileBuilder(this, "small") {
 				LightRadius = 32f
@@ -58,7 +58,7 @@ namespace BurningKnight.entity.creature.mob.castle {
 			for (var i = 0; i < am; i++) {
 				var a = Math.PI * 2 * (((float) i) / am);
 				var projectile = builder.Shoot(a, 5f).Build();
-				projectile.Center = BottomCenter;
+				projectile!.Center = BottomCenter;
 			}
 		}
 	}

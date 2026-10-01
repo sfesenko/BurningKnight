@@ -17,7 +17,7 @@ namespace BurningKnight.entity.creature.mob.prefix {
 
 				var health = Mob.GetComponent<HealthComponent>();
 
-				if (!health.IsFull()) {
+				if (!health!.IsFull()) {
 					health.ModifyHealth(1f, Mob);
 				}
 			}

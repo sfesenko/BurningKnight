@@ -6,17 +6,17 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.bomb.controller {
 	public static class TargetBombController {
-		public static BombUpdateCallback Make(Entity target, float speed = 1f) {
+		public static BombUpdateCallback Make(Entity? target, float speed = 1f) {
 			return (p, dt) => {
 				var b = p.GetAnyComponent<BodyComponent>();
-				var d = Math.Max(100, b.Velocity.Length());
+				var d = Math.Max(100, b!.Velocity.Length());
 				var a = b.Velocity.ToAngle();
 				
 				if (target == null) {
 					var md = 320000f;
 
-					foreach (var m in (p.Owner.TryGetComponent<RoomComponent>(out var c) ? c.Room.Tagged[Tags.Mob] : p.Area.Tagged[Tags.Mob])) {
-						if (m.GetComponent<HealthComponent>().Unhittable) {
+					foreach (var m in (p.Owner.TryGetComponent<RoomComponent>(out var c) ? c!.Room!.Tagged[Tags.Mob] : p.Area!.Tagged[Tags.Mob])) {
+						if (m.GetComponent<HealthComponent>()!.Unhittable) {
 							continue;
 						}
 						
@@ -34,7 +34,7 @@ namespace BurningKnight.entity.bomb.controller {
 				}
 				
 				if (target.Done) {
-					target = null;
+					target = null!;
 					return;
 				}
 

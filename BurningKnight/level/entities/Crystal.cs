@@ -32,7 +32,7 @@ namespace BurningKnight.level.entities {
 
 					var exit = new Exit();
 					exit.To = 13;
-					Area.Add(exit);
+					Area!.Add(exit);
 					
 					var x = (int) Math.Floor(CenterX / 16);
 					var y = (int) Math.Floor(CenterY / 16);
@@ -40,8 +40,8 @@ namespace BurningKnight.level.entities {
 			
 					exit.Center = p;
 
-					Painter.Fill(Context.Level, x - 1, y - 1, 3, 3, Tiles.RandomFloor());
-					Context.Level.ReTileAndCreateBodyChunks(x - 1, y - 1, 3, 3);
+					Painter.Fill(Context.Level!, x - 1, y - 1, 3, 3, Tiles.RandomFloor());
+					Context.Level!.ReTileAndCreateBodyChunks(x - 1, y - 1, 3, 3);
 				}
 			}
 			

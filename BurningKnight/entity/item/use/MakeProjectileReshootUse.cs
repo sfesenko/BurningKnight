@@ -9,7 +9,7 @@ namespace BurningKnight.entity.item.use {
 		public override bool HandleEvent(Event e) {
 			if (e is ProjectileCreatedEvent pce && !pce.Projectile.HasFlag(ProjectileFlags.Artificial)) {
 				ProjectileCallbacks.AttachHurtCallback(pce.Projectile, (p, en) => {
-					var room = p.Owner.GetComponent<RoomComponent>().Room;
+					var room = p.Owner.GetComponent<RoomComponent>()!.Room;
 
 					if (room == null || room.Tagged[Tags.MustBeKilled].Count == 0 || Rnd.Chance(20)) {
 						return;
@@ -27,7 +27,7 @@ namespace BurningKnight.entity.item.use {
 
 						var pr = builder.Shoot(p.AngleTo(target), 10).Build();
 
-						pr.EntitiesHurt.AddRange(p.EntitiesHurt);
+						pr!.EntitiesHurt!.AddRange(p.EntitiesHurt);
 						pr.Center = p.Center;
 					}
 				});

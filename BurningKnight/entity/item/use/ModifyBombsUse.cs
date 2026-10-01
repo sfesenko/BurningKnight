@@ -31,7 +31,7 @@ namespace BurningKnight.entity.item.use {
 				var bomb = bpe.Bomb;
 				var c = bomb.GetComponent<ExplodeComponent>();
 
-				c.Radius *= RadiusMod;
+				c!.Radius *= RadiusMod;
 				
 				if (SetFuseTime) {
 					c.Timer = FuseTime + Rnd.Float(-0.1f, 1f);
@@ -45,7 +45,7 @@ namespace BurningKnight.entity.item.use {
 
 						for (var i = 0; i < 4; i++) {
 							var bm = new Bomb(b.Owner, Bomb.ExplosionTime, b);
-							b.Area.Add(bm);
+							b.Area!.Add(bm);
 							bm.Center = b.Center + Rnd.Vector(-4, 4);
 							bm.VelocityTo(i / 2f * (float) Math.PI, 300f);
 						}
@@ -59,7 +59,7 @@ namespace BurningKnight.entity.item.use {
 						};
 
 						for (var i = 0; i < 8; i++) {
-							builder.Shoot((float) i / 8 * (float) Math.PI * 2, 8).Build().Center = b.Center;
+							builder!.Shoot((float) i / 8 * (float) Math.PI * 2, 8).Build()!.Center = b.Center;
 						}
 					};
 				}

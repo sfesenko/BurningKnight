@@ -12,18 +12,18 @@ namespace BurningKnight.entity.item.use {
 		private bool rerollStands;
 		private bool spawnNewItems;
 		private bool ignore;
-		private ItemType[] types;
+		private ItemType[] types = null!;
 		private float consumeChance;
 		private bool d2;
 		
 		public override void Use(Entity entity, Item self) {
-			var room = entity.GetComponent<RoomComponent>().Room;
+			var room = entity.GetComponent<RoomComponent>()!.Room;
 
 			if (room == null) {
 				return;
 			}
 			
-			Reroller.Reroll(entity.Area, room, rerollStands, spawnNewItems, ignore, types, ProcessItem, d2);
+			Reroller.Reroll(entity.Area!, room, rerollStands, spawnNewItems, ignore, types, ProcessItem, d2);
 		}
 
 		protected virtual void ProcessItem(Item item) {

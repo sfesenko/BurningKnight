@@ -40,16 +40,16 @@ namespace BurningKnight.level {
 		public static Color ShadowColor = new Color(0f, 0f, 0f, 0.5f);
 		public static Color FloorColor = new Color(1f, 1f, 1f, 1f);
 		
-		public Tileset Tileset;
-		public Tileset MatrixTileset;
-		public Biome Biome;
+		public Tileset? Tileset;
+		public Tileset? MatrixTileset;
+		public Biome? Biome;
 		public bool DrawLight = true;
 		public bool NoLightNoRender = true;
 		public bool Dark;
 		public bool Rains;
 		public bool Snows;
 
-		public List<string> ItemsToSpawn;
+		public List<string>? ItemsToSpawn = null!;
 
 		private int width;
 		private int height;
@@ -74,27 +74,27 @@ namespace BurningKnight.level {
 		}
 		
 		public int Size;
-		public byte[] Tiles;
-		public byte[] Liquid;
-		public byte[] Variants;
-		public byte[] LiquidVariants;
-		public byte[] Flags;
-		public byte[] WallDecor;
-		public bool[] Explored;
-		public bool[] Passable;
-		public bool[] MatrixLeak;
-		public float[] Light;
+		public byte[] Tiles = null!;
+		public byte[] Liquid = null!;
+		public byte[] Variants = null!;
+		public byte[] LiquidVariants = null!;
+		public byte[] Flags = null!;
+		public byte[] WallDecor = null!;
+		public bool[] Explored = null!;
+		public bool[] Passable = null!;
+		public bool[] MatrixLeak = null!;
+		public float[] Light = null!;
 
-		public Chasm Chasm;
-		public HalfWall HalfWall;
-		public HalfProjectileLevel HalfProjectile;
-		public ProjectileLevelBody ProjectileLevelBody;
-		public RenderTarget2D WallSurface;
-		public RenderTarget2D MessSurface;
+		public Chasm? Chasm;
+		public HalfWall HalfWall = null!;
+		public HalfProjectileLevel HalfProjectile = null!;
+		public ProjectileLevelBody ProjectileLevelBody = null!;
+		public RenderTarget2D? WallSurface;
+		public RenderTarget2D? MessSurface;
 
-		public LevelVariant Variant;
+		public LevelVariant? Variant;
 
-		public Level(BiomeInfo biome) {
+		public Level(BiomeInfo? biome) {
 			SetBiome(biome);
 			
 			Context.Level = this;
@@ -108,7 +108,7 @@ namespace BurningKnight.level {
 
 			if (Chasm != null) {
 				HalfProjectile.Done = true;
-				Area.Remove(HalfProjectile);
+				Area!.Remove(HalfProjectile);
 				
 				HalfWall.Done = true;
 				Area.Remove(HalfWall);
@@ -132,10 +132,10 @@ namespace BurningKnight.level {
 			manager?.Destroy();
 		}
 
-		public void SetBiome(BiomeInfo biome) {
+		public void SetBiome(BiomeInfo? biome) {
 			if (biome != null) {
-				Biome = (Biome) Activator.CreateInstance(biome.Type);
-				Tileset = Tilesets.Get(Biome.Tileset);
+				Biome = (Biome) Activator.CreateInstance(biome.Type)!;
+				Tileset = Tilesets.Get(Biome!.Tileset);
 
 				if (Tilesets.Biome != null && Tileset != null) {
 					Tileset.Tiles[(int) Tile.EvilFloor] = Tilesets.Biome.EvilFloor;
@@ -152,7 +152,7 @@ namespace BurningKnight.level {
 			}
 		}
 
-		private RenderTriggerManager manager;
+		private RenderTriggerManager? manager;
 
 		public override void Init() {
 			base.Init();
@@ -199,7 +199,7 @@ namespace BurningKnight.level {
 			manager.Add(new RenderTrigger(this, RenderRocks, Layers.Rocks));
 		}
 
-		private SoundEffectInstance rainSound;
+		private SoundEffectInstance? rainSound;
 		
 		public void Prepare() {
 			try {
@@ -211,7 +211,7 @@ namespace BurningKnight.level {
 
 				if (Rains) {
 					for (var i = 0; i < 40; i++) {
-						Context.Level.Area.Add(new RainParticle());
+						Context.Level!.Area!.Add(new RainParticle());
 					}
 
 					if (Assets.LoadSfx) {
@@ -242,7 +242,7 @@ namespace BurningKnight.level {
 
 				if (Snows) {
 					for (var i = 0; i < 120; i++) {
-						Context.Level.Area.Add(new SnowParticle());
+						Context.Level!.Area!.Add(new SnowParticle());
 					}
 				}
 			} catch (Exception e) {
@@ -271,8 +271,8 @@ namespace BurningKnight.level {
 			}
 		}
 
-		private BlendState blend;
-		private BlendState messBlend;
+		private BlendState blend = null!;
+		private BlendState messBlend = null!;
 
 		public override void Update(float dt) {
 			base.Update(dt);
@@ -286,7 +286,7 @@ namespace BurningKnight.level {
 		}
 		
 		public virtual Tile GetFilling() {
-			return Biome.GetFilling();
+			return Biome!.GetFilling();
 		}
 
 		public virtual int GetPadding() {
@@ -343,16 +343,16 @@ namespace BurningKnight.level {
 				Engine.Graphics.PreferredBackBufferFormat, DepthFormat.Depth24, 0, RenderTargetUsage.PreserveContents);
 		}
 
-		public virtual string GetMusic() {
-			return Biome.GetMusic();
+		public virtual string? GetMusic() {
+			return Biome!.GetMusic();
 		}
 
 		public static string GetDepthString(bool eng = false) {
 			if (GameContext.Current.Run.Depth < 1) {
-				return Locale.Get(GameContext.Current.Level.Biome.Id, eng);
+				return Locale.Get(GameContext.Current!.Level!.Biome!.Id, eng);
 			}
 
-			var s = $"{Locale.Get(GameContext.Current.Level.Biome.Id, eng)} {MathUtils.ToRoman((GameContext.Current.Run.Depth - 1) % 2 + 1)}";
+			var s = $"{Locale.Get(GameContext.Current!.Level!.Biome!.Id, eng)} {MathUtils.ToRoman((GameContext.Current.Run.Depth - 1) % 2 + 1)}";
 
 			if (GameContext.Current.Run.Loop > 0) {
 				s = $"L{GameContext.Current.Run.Loop} {s}";

@@ -14,7 +14,7 @@ using Microsoft.Xna.Framework;
 namespace BurningKnight.entity.pc {
 	public partial class Pico : SaveableEntity, PlaceableEntity {
 		private bool on;
-		private Controller controller;
+		private Controller controller = null!;
 		// private Emulator emulator;
 		// private MonoGameGraphicsBackend backend;
 		private const float UpdateTime30 = 1 / 30f;
@@ -27,13 +27,13 @@ namespace BurningKnight.entity.pc {
 		private string cart = "ma_puzzle";
 #pragma warning restore CS0169, CS0414
 
-		public Entity Entity;
+		public Entity? Entity = null!;
 
 		public override void PostInit() {
 			base.PostInit();
 
 			controller = new Controller();
-			Area.Add(controller);
+			Area!.Add(controller);
 
 			controller.Y = Bottom + 16;
 			controller.X = X + 16;
@@ -65,8 +65,8 @@ namespace BurningKnight.entity.pc {
 			
 			on = true;
 
-			Context.Camera.Targets.Clear();
-			Context.Camera.Position = Position + new Vector2(Display.Width * 0.25f, 0);// + new Vector2(5 + 64, 16 + 64);
+			Context.Camera!.Targets.Clear();
+			Context.Camera!.Position = Position + new Vector2(Display.Width * 0.25f, 0);// + new Vector2(5 + 64, 16 + 64);
 
 			LoadCart();
 		}
@@ -82,10 +82,10 @@ namespace BurningKnight.entity.pc {
 				return;
 			}
 			
-			Entity.AddComponent(new PlayerInputComponent());
+			Entity!.AddComponent(new PlayerInputComponent());
 			Entity = null;
 			
-			Context.Camera.Targets.Clear();
+			Context.Camera!.Targets.Clear();
 			((InGameState) Engine.Instance.State).ResetFollowing();
 
 			on = false;

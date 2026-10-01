@@ -52,7 +52,7 @@ namespace BurningKnight.entity.creature.player {
 	public partial class Player {
 		public void RenderOutline() {
 			var component = GetComponent<PlayerGraphicsComponent>();
-			var color = component.Tint;
+			var color = component!.Tint;
 			
 			component.Tint = new Color(0f, 0f, 0f, 0.65f);
 			component.SimpleRender(false);
@@ -69,7 +69,7 @@ namespace BurningKnight.entity.creature.player {
 
 			var b = GetComponent<RectBodyComponent>();
 			
-			b.Knockback = Vector2.Zero;
+			b!.Knockback = Vector2.Zero;
 			b.Velocity = Vector2.Zero;
 			
 			if (d.From != null && d.From != this) {
@@ -104,7 +104,7 @@ namespace BurningKnight.entity.creature.player {
 
 			if (ing.Killer.Slice == null && ing.Killer.Animation == null) {
 				ing.Killer.Slice = CommonAse.Items.GetSlice("unknown");
-				ing.Killer.Width = ing.Killer.Slice.Width;
+				ing.Killer.Width = ing!.Killer!.Slice!.Width;
 				ing.Killer.Height = ing.Killer.Slice.Height;
 			}
 
@@ -116,35 +116,35 @@ namespace BurningKnight.entity.creature.player {
 			return true;
 		}
 		private bool died;
-		public override void AnimateDeath(DiedEvent d) {
+		public override void AnimateDeath(DiedEvent? d) {
 			Dead = true;
 			
 			base.AnimateDeath(d);
 			
 			for (var i = 0; i < 6; i++) {
-				Area.Add(new ParticleEntity(Particles.Dust()) {
+				Area!.Add(new ParticleEntity(Particles.Dust()) {
 					Position = Center + new Vector2(Rnd.Int(-4, 4), Rnd.Int(-4, 4)), 
 					Depth = 30
 				});
 			}
 
-			GetComponent<OrbitGiverComponent>().DestroyAll();
-			GetComponent<FollowerComponent>().DestroyAll();
+			GetComponent<OrbitGiverComponent>()!.DestroyAll();
+			GetComponent<FollowerComponent>()!.DestroyAll();
 			
 			var stone = new Tombstone();
 			stone.DisableDialog = true;
 
 			if (InGameState.Multiplayer) {
 				stone.HasPlayer = true;
-				stone.Index = GetComponent<InputComponent>().Index;
-				stone.WasGamepad = GetComponent<InputComponent>().GamepadEnabled;
+				stone.Index = GetComponent<InputComponent>()!.Index;
+				stone.WasGamepad = GetComponent<InputComponent>()!.GamepadEnabled;
 
-				if (GetComponent<InputComponent>().Index == 0) {
+				if (GetComponent<InputComponent>()!.Index == 0) {
 					var minIndex = 1024;
-					Player pl = null;
+					Player? pl = null;
 
-					foreach (var p in Area.Tagged[Tags.Player]) {
-						var i = p.GetComponent<InputComponent>().Index;
+					foreach (var p in Area!.Tagged[Tags.Player]) {
+						var i = p.GetComponent<InputComponent>()!.Index;
 
 						if (p != this && i < minIndex) {
 							minIndex = i;
@@ -154,7 +154,7 @@ namespace BurningKnight.entity.creature.player {
 
 					if (pl != null) {
 						var c = ForceGetComponent<ConsumablesComponent>();
-						c.Entity = pl;
+						c!.Entity = pl;
 						Components.Remove(typeof(ConsumablesComponent));
 						pl.Components[typeof(ConsumablesComponent)] = c;
 						AddComponent(new ConsumablesComponent());
@@ -164,25 +164,25 @@ namespace BurningKnight.entity.creature.player {
 
 			var pool = new List<string>();
 
-			foreach (var i in GetComponent<InventoryComponent>().Items) {
+			foreach (var i in GetComponent<InventoryComponent>()!.Items) {
 				if (i.Type != ItemType.Hat && i.Id != "bk:no_lamp") {
 					pool.Add(i.Id);
 				}
 			}
 
-			var w = GetComponent<ActiveItemComponent>().Item;
+			var w = GetComponent<ActiveItemComponent>()!.Item;
 
 			if (w != null) {
 				pool.Add(w.Id);
 			}
 
-			w = GetComponent<WeaponComponent>().Item;
+			w = GetComponent<WeaponComponent>()!.Item;
 
 			if (w != null) {
 				pool.Add(w.Id);
 			}
 			
-			w = GetComponent<ActiveWeaponComponent>().Item;
+			w = GetComponent<ActiveWeaponComponent>()!.Item;
 
 			if (w != null) {
 				pool.Add(w.Id);
@@ -195,14 +195,14 @@ namespace BurningKnight.entity.creature.player {
 			GlobalSave.Put("next_tomb", pool[Rnd.Int(pool.Count)]);
 			GlobalSave.Put("tomb_depth", Context.Run.Depth);
 			
-			Area.Add(stone);
+			Area!.Add(stone);
 				
 			stone.CenterX = CenterX;
 			stone.Bottom = Bottom;
 
 			if (InGameState.EveryoneDied(this)) {
-				Context.Camera.Targets.Clear();
-				Context.Camera.Follow(stone, 0.5f);
+				Context.Camera!.Targets.Clear();
+				Context.Camera!.Follow(stone, 0.5f);
 			} else {
 				((InGameState) Engine.Instance.State).ResetFollowing();
 			}

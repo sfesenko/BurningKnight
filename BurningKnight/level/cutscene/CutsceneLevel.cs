@@ -36,7 +36,7 @@ namespace BurningKnight.level.cutscene {
 			};
 		}
 
-		public override string GetMusic() {
+		public override string? GetMusic() {
 			return null;
 		}
 	}

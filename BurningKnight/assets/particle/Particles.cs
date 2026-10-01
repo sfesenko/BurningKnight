@@ -40,7 +40,7 @@ namespace BurningKnight.assets.particle {
 			return new Particle(Controllers.Simple, new TexturedParticleRenderer(slice));
 		}
 		
-		public static AnimatedParticle Animated(string animation, string tag = null) {
+		public static AnimatedParticle Animated(string animation, string? tag = null) {
 			return new AnimatedParticle(Controllers.Animated, AnimatedRenderer, animation, tag);
 		}
 

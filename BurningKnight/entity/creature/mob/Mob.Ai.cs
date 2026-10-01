@@ -42,9 +42,9 @@ namespace BurningKnight.entity.creature.mob {
 			List<Entity> targets;
 
 			if (TargetEverywhere) {
-				targets = Area.Tagged[IsFriendly() ? Tags.Mob : Tags.PlayerTarget];
+				targets = Area!.Tagged[IsFriendly() ? Tags.Mob : Tags.PlayerTarget];
 			} else {
-				var room = GetComponent<RoomComponent>().Room;
+				var room = GetComponent<RoomComponent>()!.Room;
 
 				if (room == null) {
 					return;
@@ -56,7 +56,7 @@ namespace BurningKnight.entity.creature.mob {
 			var closestDistance = float.MaxValue;
 			var friendly = IsFriendly();
 			
-			Entity closest = null;
+			Entity? closest = null;
 			
 			foreach (var target in targets) {
 				if (target == this || target is bk.BurningKnight || ((Creature) target).IsFriendly() == friendly || 
@@ -76,18 +76,18 @@ namespace BurningKnight.entity.creature.mob {
 			if (Target != closest) {
 				HandleEvent(new MobTargetChange {
 					Mob = this,
-					New = closest,
-					Old = Target 
+					New = closest!,
+					Old = Target! 
 				});
 			}			
 			
 			// Might be null, thats ok
 			Target = closest;
-			OnTargetChange(closest);
+			OnTargetChange(closest!);
 		}
 		private void BuildPath(Vector2 to, bool back = false) {
 			var level = Context.Level;
-			var fp = level.ToIndex((int) Math.Floor(CenterX / 16f), (int) Math.Floor(Bottom / 16f));
+			var fp = level!.ToIndex((int) Math.Floor(CenterX / 16f), (int) Math.Floor(Bottom / 16f));
 			var tp = level.ToIndex((int) Math.Floor(to.X / 16f), (int) Math.Floor(to.Y / 16f));
 
 			var p = back ? PathFinder.GetStepBack(fp, tp, level.Passable, prevStepBack) : PathFinder.GetStep(fp, tp, level.Passable);
@@ -139,7 +139,7 @@ namespace BurningKnight.entity.creature.mob {
 			}
 
 			speed *= Engine.Delta * 60;
-			GetAnyComponent<BodyComponent>().Velocity = new Vector2(dx / d * speed, dy / d * speed);
+			GetAnyComponent<BodyComponent>()!.Velocity = new Vector2(dx / d * speed, dy / d * speed);
 
 			return false;
 		}
@@ -151,7 +151,7 @@ namespace BurningKnight.entity.creature.mob {
 			var min = 1f;
 			var found = false;
 			
-			Physics.World.RayCast((fixture, point, normal, fraction) => {
+			Physics.World!.RayCast((fixture, point, normal, fraction) => {
 				if (min > fraction && fixture.Body.UserData is BodyComponent b && RayShouldCollide(b.Entity)) {
 					min = fraction;
 					found = true;
@@ -162,8 +162,8 @@ namespace BurningKnight.entity.creature.mob {
 
 			return !found;
 		}
-		protected void PushFromOtherEnemies(float dt, Func<Creature, bool> filter = null) {
-			var room = GetComponent<RoomComponent>().Room;
+		protected void PushFromOtherEnemies(float dt, Func<Creature, bool>? filter = null) {
+			var room = GetComponent<RoomComponent>()!.Room;
 			var body = GetAnyComponent<BodyComponent>();
 
 			if (room == null || body == null) {
@@ -192,8 +192,8 @@ namespace BurningKnight.entity.creature.mob {
 				}
 			}
 		}
-		protected void PushOthersFromMe(float dt, Func<Creature, bool> filter = null) {
-			var room = GetComponent<RoomComponent>().Room;
+		protected void PushOthersFromMe(float dt, Func<Creature, bool>? filter = null) {
+			var room = GetComponent<RoomComponent>()!.Room;
 
 			if (room == null) {
 				return;

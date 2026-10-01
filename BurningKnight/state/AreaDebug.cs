@@ -18,8 +18,8 @@ namespace BurningKnight.state {
 		private static bool onlyOnScreen;
 		private static Vector2 pos;
 		private static Vector2 size;
-		private static Entity selected;
-		private static Entity toFocus;
+		private static Entity? selected;
+		private static Entity? toFocus;
 		
 		public static bool PassFilter(Entity e) {
 			return !(e is Level || e is RenderTrigger || e is Room || e is Chasm || e is ParticleEntity || e is ParticleSystem || e is ChasmFx || e is WaterfallFx || e is FireParticle);

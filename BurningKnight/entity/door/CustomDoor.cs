@@ -5,8 +5,8 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.door {
 	public class CustomDoor : LockableDoor {
-		private TextureRegion bar;
-		private TextureRegion pad;
+		private TextureRegion? bar;
+		private TextureRegion pad = null!;
 		
 		public CustomDoor() {
 			OpenByDefault = true;
@@ -17,10 +17,10 @@ namespace BurningKnight.entity.door {
 			var p = GetPad();
 
 			if (p != null) {
-				pad = CommonAse.Props.GetSlice(p);
+				pad = CommonAse.Props.GetSlice(p)!;
 				
-				Area.Add(new RenderTrigger(this, () => {
-					Graphics.Render(pad, Position);
+				Area!.Add(new RenderTrigger(this, () => {
+					Graphics.Render(pad!, Position);
 				}, -1));
 			}
 			
@@ -31,18 +31,18 @@ namespace BurningKnight.entity.door {
 			}
 			
 			bar = CommonAse.Props.GetSlice(b);
-			Area.Add(new RenderTrigger(this, () => RenderFrame(false), Layers.FlyingMob));
+			Area!.Add(new RenderTrigger(this, () => RenderFrame(false), Layers.FlyingMob));
 		}
 
 		protected override float GetShadowOffset() {
 			return 0;
 		}
 
-		protected virtual string GetBar() {
+		protected virtual string? GetBar() {
 			return null;
 		}
 
-		protected virtual string GetPad() {
+		protected virtual string? GetPad() {
 			return null;
 		}
 
@@ -55,7 +55,7 @@ namespace BurningKnight.entity.door {
 		}
 
 		private void RenderFrame(bool shadow) {
-			Graphics.Render(bar, shadow ? new Vector2(X, Bottom + Height) : Position, 0, Vector2.Zero, shadow ? MathUtils.InvertY : MathUtils.Normal);
+			Graphics.Render(bar!, shadow ? new Vector2(X, Bottom + Height) : Position, 0, Vector2.Zero, shadow ? MathUtils.InvertY : MathUtils.Normal);
 		}
 	}
 }

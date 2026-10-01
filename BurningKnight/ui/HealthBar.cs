@@ -18,11 +18,11 @@ namespace BurningKnight.ui {
 		private const float ChangeDelay = 1f;
 		private static Vector2 barOffset = new Vector2(1, 6);
 		
-		private TextureRegion frame;
-		private TextureRegion fill;
-		private TextureRegion damage;
-		private TextureRegion phase;
-		private TextureRegion phaseB;
+		private TextureRegion frame = null!;
+		private TextureRegion fill = null!;
+		private TextureRegion damage = null!;
+		private TextureRegion phase = null!;
+		private TextureRegion phaseB = null!;
 		
 		private float lastHp;
 		private float sinceLastDamage;
@@ -52,13 +52,13 @@ namespace BurningKnight.ui {
 			AlwaysActive = true;
 			AlwaysVisible = true;
 
-			frame = CommonAse.Ui.GetSlice("hb_frame");
-			fill = CommonAse.Ui.GetSlice("hb");
-			damage = CommonAse.Ui.GetSlice("hb_damage");
-			phase = CommonAse.Ui.GetSlice("hb_phase");
-			phaseB = CommonAse.Ui.GetSlice("hb_b");
+			frame = CommonAse.Ui.GetSlice("hb_frame")!;
+			fill = CommonAse.Ui.GetSlice("hb")!;
+			damage = CommonAse.Ui.GetSlice("hb_damage")!;
+			phase = CommonAse.Ui.GetSlice("hb_phase")!;
+			phaseB = CommonAse.Ui.GetSlice("hb_b")!;
 			
-			Width = frame.Width;
+			Width = frame!.Width;
 			Height = frame.Height;
 
 			CenterX = Display.UiWidth / 2f;
@@ -78,7 +78,7 @@ namespace BurningKnight.ui {
 
 				if (sinceLastDamage >= ChangeDelay) {
 					var health = entity.GetComponent<HealthComponent>();
-					var h = health.Health;
+					var h = health!.Health;
 					var s = (lastChange - h) / health.MaxHealth * fill.Width;
 
 					var p = new ParticleEntity(new Particle(new HealthParticleController(), new HealthParticleRenderer(damage, s)));
@@ -86,7 +86,7 @@ namespace BurningKnight.ui {
 					p.Position = p.Particle.Position;
 					p.AlwaysActive = true;
 					p.AlwaysVisible = true;
-					Area.Add(p);
+					Area!.Add(p);
 					p.Depth = Depth + 1;
 					
 					Tween.To(h, lastChange, x => lastChange = x, 0.3f);
@@ -122,8 +122,8 @@ namespace BurningKnight.ui {
 			Graphics.Render(frame, Position);
 
 			var health = entity.GetComponent<HealthComponent>();
-			var region = new TextureRegion(fill.Texture, fill.Source);
-			var h = health.Health;
+			var region = new TextureRegion(fill.Texture!, fill.Source);
+			var h = health!.Health;
 			
 			if (h < lastDamage) {
 				sinceLastDamage = 0;

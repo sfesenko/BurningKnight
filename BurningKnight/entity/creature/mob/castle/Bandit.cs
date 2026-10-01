@@ -24,7 +24,7 @@ namespace BurningKnight.entity.creature.mob.castle {
 
 			var body = new RectBodyComponent(3, 13, 10, 1);
 			AddComponent(body);
-			body.Body.LinearDamping = 10;
+			body!.Body!.LinearDamping = 10;
 
 			AddComponent(new SensorBodyComponent(2, 2, 12, 12));
 
@@ -64,7 +64,7 @@ namespace BurningKnight.entity.creature.mob.castle {
 
 					var a = Self.GetComponent<MobAnimationComponent>();
 					
-					Tween.To(0.6f, a.Scale.X, x => a.Scale.X = x, 0.2f);
+					Tween.To(0.6f, a!.Scale.X, x => a.Scale.X = x, 0.2f);
 					Tween.To(1.6f, a.Scale.Y, x => a.Scale.Y = x, 0.2f).OnEnd = () => {
 
 						Tween.To(1.8f, a.Scale.X, x => a.Scale.X = x, 0.1f);
@@ -77,7 +77,7 @@ namespace BurningKnight.entity.creature.mob.castle {
 								return;
 							}
 								
-							Self.GetComponent<AudioEmitterComponent>().EmitRandomized("mob_fire");
+							Self.GetComponent<AudioEmitterComponent>()!.EmitRandomized("mob_fire");
 							
 							var ac = 0.1f;
 							var angle = Self.AngleTo(Self.Target) + Rnd.Float(-ac, ac);
@@ -118,12 +118,12 @@ namespace BurningKnight.entity.creature.mob.castle {
 				velocity.X = (float) Math.Cos(angle) * force;
 				velocity.Y = (float) Math.Sin(angle) * force;
 
-				Self.GetComponent<RectBodyComponent>().Velocity = velocity;
+				Self.GetComponent<RectBodyComponent>()!.Velocity = velocity;
 			}
 
 			public override void Destroy() {
 				base.Destroy();
-				Self.GetComponent<RectBodyComponent>().Velocity = Vector2.Zero;
+				Self.GetComponent<RectBodyComponent>()!.Velocity = Vector2.Zero;
 			}
 
 			public override void Update(float dt) {
@@ -132,7 +132,7 @@ namespace BurningKnight.entity.creature.mob.castle {
 				if (timer <= T) {
 					Become<IdleState>();
 				} else {
-					Self.GetComponent<RectBodyComponent>().Velocity = velocity * Math.Min(1, timer - T * 0.4f);
+					Self.GetComponent<RectBodyComponent>()!.Velocity = velocity * Math.Min(1, timer - T * 0.4f);
 				}
 			}
 		}
@@ -141,7 +141,7 @@ namespace BurningKnight.entity.creature.mob.castle {
 		public override bool HandleEvent(Event e) {
 			if (e is CollisionStartedEvent ev) {
 				if (ev.Entity is Door) {
-					var s = GetComponent<StateComponent>().StateInstance;
+					var s = GetComponent<StateComponent>()!.StateInstance;
 
 					if (s is RunState) {
 						Become<IdleState>();

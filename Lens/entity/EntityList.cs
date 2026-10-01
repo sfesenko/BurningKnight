@@ -108,7 +108,7 @@ namespace Lens.entity {
 			}
 		}
 
-		public Entity Find(Func<Entity, bool> filter) {
+		public Entity? Find(Func<Entity, bool> filter) {
 			foreach (var e in Entities) {
 				if (filter(e)) {
 					return e;
@@ -118,7 +118,7 @@ namespace Lens.entity {
 			return null;
 		}
 
-		public Entity Find<T>() where T : Entity {
+		public Entity? Find<T>() where T : Entity {
 			var t = typeof(T);
 			return Find(e => e.GetType() == t);
 		}

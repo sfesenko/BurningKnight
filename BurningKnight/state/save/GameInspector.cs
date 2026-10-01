@@ -8,14 +8,14 @@ namespace BurningKnight.state.save {
 		private int killCount;
 		private float time;
 		private int id;
-		private string seed;
+		private string seed = null!;
 
 		public override void Inspect(FileReader reader) {
 			depth = reader.ReadSbyte();
 			killCount = reader.ReadInt32();
 			time = reader.ReadFloat();
 			id = reader.ReadInt32();
-			seed = reader.ReadString();
+			seed = reader.ReadString()!;
 		}
 
 		public override void Render() {

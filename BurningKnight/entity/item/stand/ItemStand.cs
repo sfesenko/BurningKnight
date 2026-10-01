@@ -20,13 +20,13 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.item.stand {
 	public partial class ItemStand : Prop, CollisionFilterEntity {
-		private static TextureRegion itemShadow;
-		private static TextureRegion standShadow;
+		private static TextureRegion? itemShadow;
+		private static TextureRegion standShadow = null!;
 		private static Vector2 shadowOffset = new Vector2(3, 3);
 
-		protected Item item;
+		protected Item? item;
 		
-		public Item Item => item;
+		public Item Item => item!;
 		public bool Hidden;
 
 		public bool ShouldCollide(Entity entity) {
@@ -38,7 +38,7 @@ namespace BurningKnight.entity.item.stand {
 
 			if (itemShadow == null) {
 				itemShadow = CommonAse.Props.GetSlice("item_shadow");
-				standShadow = CommonAse.Props.GetSlice("stand_shadow");
+				standShadow = CommonAse.Props.GetSlice("stand_shadow")!;
 			}
 		}
 
@@ -46,7 +46,7 @@ namespace BurningKnight.entity.item.stand {
 			
 		}
 
-		public virtual void SetItem(Item i, Entity entity, bool remove = true) {
+		public virtual void SetItem(Item? i, Entity? entity, bool remove = true) {
 			if (item == i) {
 				return;
 			}
@@ -59,11 +59,11 @@ namespace BurningKnight.entity.item.stand {
 
 				HandleEvent(new ItemTakenEvent {
 					Item = item,
-					Who = entity,
+					Who = entity!,
 					Stand = this
 				});
 
-				OnTake(item, entity);
+				OnTake(item, entity!);
 			}
 
 			item = i;
@@ -82,7 +82,7 @@ namespace BurningKnight.entity.item.stand {
 				
 				HandleEvent(new ItemPlacedEvent {
 					Item = item,
-					Who = entity,
+					Who = entity!,
 					Stand = this
 				});
 			}
@@ -116,7 +116,7 @@ namespace BurningKnight.entity.item.stand {
 			
 			var body = new RectBodyComponent(0, 4, 14, 10);
 			AddComponent(body);
-			body.Body.Mass = 100000000f;
+			body!.Body!.Mass = 100000000f;
 			
 			AddComponent(new SensorBodyComponent(-2, -2, Width + 4, Height + 4, BodyType.Static));
 
@@ -158,9 +158,9 @@ namespace BurningKnight.entity.item.stand {
 							return true;
 						} else if (this is PermanentStand && Item != null && Item.Type == ItemType.Weapon) {
 							var c = entity.GetComponent<ActiveWeaponComponent>();
-							var item = c.Item;
+							var item = c!.Item;
 
-							c.Set(Items.CreateAndAdd(Item.Id, Area), false);
+							c.Set(Items.CreateAndAdd(Item.Id, Area!)!, false);
 							Audio.PlaySfx("item_pickup");
 
 							if (item != null) {
@@ -170,9 +170,9 @@ namespace BurningKnight.entity.item.stand {
 							return true;
 						} else if (this is PermanentStand && Item != null && Item.Type == ItemType.Active) {
 							var c = entity.GetComponent<ActiveItemComponent>();
-							var item = c.Item;
+							var item = c!.Item;
 
-							c.Set(Items.CreateAndAdd(Item.Id, Area), false);
+							c.Set(Items.CreateAndAdd(Item.Id, Area!)!, false);
 							Audio.PlaySfx("item_pickup");
 
 							if (item != null) {
@@ -182,9 +182,9 @@ namespace BurningKnight.entity.item.stand {
 							return true;
 						} else if (this is LampStand && Item != null && Item.Type == ItemType.Lamp) {
 							var c = entity.GetComponent<LampComponent>();
-							var item = c.Item;
+							var item = c!.Item;
 
-							c.Set(Items.CreateAndAdd(Item.Id, Area), false);
+							c.Set(Items.CreateAndAdd(Item.Id, Area!)!, false);
 							Audio.PlaySfx("item_pickup");
 
 							if (item != null) {
@@ -251,23 +251,23 @@ namespace BurningKnight.entity.item.stand {
 				shader.Parameters["flashColor"].SetValue(ColorUtils.White);
 
 				foreach (var d in MathUtils.Directions) {
-					Graphics.Render(((SliceComponent) GraphicsComponent).Sprite, Position + d);
+					Graphics.Render(((SliceComponent) GraphicsComponent!).Sprite, Position + d);
 				}
 				
 				Shaders.End();
 			}
 
-			GraphicsComponent.Render(false);
+			GraphicsComponent!.Render(false);
 			
 			if (item == null) {
 				return;
 			}
 
 			Graphics.Color = Level.ShadowColor;
-			Graphics.Render(itemShadow, Position + shadowOffset);
+			Graphics.Render(itemShadow!, Position + shadowOffset);
 			Graphics.Color = ColorUtils.WhiteColor;
 
-			var t = item.Animation == null ? item.GetComponent<ItemGraphicsComponent>().T : 0;
+			var t = item.Animation == null ? item.GetComponent<ItemGraphicsComponent>()!.T : 0;
 			var angle = (float) Math.Cos(t * 3f) * 0.4f;
 			
 			var region = item.Region;
@@ -321,7 +321,7 @@ namespace BurningKnight.entity.item.stand {
 			if (stream.ReadBoolean()) {
 				var item = new Item();
 
-				Area.Add(item, false);
+				Area!.Add(item, false);
 				
 				item.Load(stream);
 				item.LoadedSelf = false;

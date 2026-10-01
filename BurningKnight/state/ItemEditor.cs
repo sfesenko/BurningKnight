@@ -30,9 +30,9 @@ namespace BurningKnight.state {
 
 		private static int id;
 		private static int ud;
-		private static string selectedUse;
-		private static string selectedRenderer;
-		public static ItemData Selected;
+		private static string selectedUse = null!;
+		private static string selectedRenderer = null!;
+		public static ItemData? Selected;
 		private static JsonValue toAdd;
 		
 		public static readonly string[] Types = Enum.GetNames<ItemType>();
@@ -45,7 +45,7 @@ namespace BurningKnight.state {
 
 		public static void DrawItem(TextureRegion region) {
 			ImGui.Image(ImGuiHelper.ItemsTexture, new Num.Vector2(region.Width * 3, region.Height * 3),
-				new Num.Vector2(region.X / region.Texture.Width, region.Y / region.Texture.Height),
+				new Num.Vector2(region.X / region!.Texture!.Width, region.Y / region.Texture.Height),
 				new Num.Vector2((region.X + region.Width) / region.Texture.Width, 
 					(region.Y + region.Height) / region.Texture.Height));
 		}

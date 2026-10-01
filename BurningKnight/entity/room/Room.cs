@@ -47,9 +47,9 @@ namespace BurningKnight.entity.room {
 		public RoomType Type;
 		public bool Explored;
 		public bool Cleared;
-		public string Id;
-		public RoomDef Parent;
-		public Rect Rect;
+		public string Id = null!;
+		public RoomDef Parent = null!;
+		public Rect Rect = null!;
 		
 		public List<RoomControllable> Controllable = new List<RoomControllable>();
 		public List<RoomInput> Inputs = new List<RoomInput>();
@@ -58,7 +58,7 @@ namespace BurningKnight.entity.room {
 		public List<Door> Doors = new List<Door>();
 
 		private bool checkCleared;
-		private Entity cleared;
+		private Entity cleared = null!;
 		private float t;
 
 		public void CheckCleared(Entity entity) {
@@ -76,7 +76,7 @@ namespace BurningKnight.entity.room {
 			AddTag(Tags.Room);
 		}
 
-		public ItemPool GetPool() {
+		public ItemPool? GetPool() {
 			switch (Type) {
 				case RoomType.Shop: return ItemPool.Shop;
 				case RoomType.Secret: return ItemPool.Secret;
@@ -130,7 +130,7 @@ namespace BurningKnight.entity.room {
 				var found = false;
 
 				foreach (var m in Tagged[Tags.MustBeKilled]) {
-					if (m.GetComponent<HealthComponent>().Health > 0) {
+					if (m.GetComponent<HealthComponent>()!.Health > 0) {
 						found = true;
 						break;
 					}
@@ -156,7 +156,7 @@ namespace BurningKnight.entity.room {
 		
 		private void Setup() {
 			var level = Context.Level;
-			Explored = level.Explored[level.ToIndex(MapX + 1, MapY + 1)];
+			Explored = level!.Explored[level.ToIndex(MapX + 1, MapY + 1)];
 			
 			ApplyToEachTile((x, y) => {
 				var tile = level.Get(x, y);
@@ -187,23 +187,24 @@ namespace BurningKnight.entity.room {
 			Explored = true;
 			
 			ApplyToEachTile((x, y) => {
-				Context.Level.Explored[Context.Level.ToIndex(x, y)] = true;
+				Context.Level!.Explored[Context.Level!.ToIndex(x, y)] = true;
 			});
 		}
 
 		public void Hide(bool fast = false) {
+			var level = Context.Level!;
 			Explored = false;
 			
 			ApplyToEachTile((x, y) => {
-				var i = Context.Level.ToIndex(x, y);
+				var i = Context.Level!.ToIndex(x, y);
 
-				if (!Context.Level.Get(i).IsWall() || !Context.Level.Get(i + Context.Level.Width).IsWall()) {
-					Context.Level.Explored[i] = false;
+				if (!Context.Level!.Get(i).IsWall() || !Context.Level!.Get(i + Context.Level!.Width).IsWall()) {
+					level.Explored[i] = false;
 
 					if (fast) {
-						Context.Level.Light[i] = 0;
+						level.Light[i] = 0;
 					} else {
-						Tween.To(0, 1f, xx => Context.Level.Light[i] = xx, 0.5f);
+						Tween.To(0, 1f, xx => level.Light[i] = xx, 0.5f);
 					}
 				}
 			}, Type == RoomType.DarkMarket || Type == RoomType.Hidden ? 1 : 0);
@@ -228,7 +229,7 @@ namespace BurningKnight.entity.room {
 			var count = stream.ReadByte();
 
 			for (var i = 0; i < count; i++) {
-				var c = RoomControllerRegistery.Get(stream.ReadString());
+				var c = RoomControllerRegistery.Get(stream.ReadString()!);
 
 				if (c != null) {
 					Controllers.Add(c);
@@ -237,7 +238,7 @@ namespace BurningKnight.entity.room {
 				}
 			}
 
-			Id = stream.ReadString();
+			Id = stream.ReadString()!;
 		}
 		
 		public override void Save(FileWriter stream) {
@@ -295,9 +296,9 @@ namespace BurningKnight.entity.room {
 			}
 		}
 
-		public Entity FindClosest(Vector2 to, int tag, Func<Entity, bool> filter = null) {
+		public Entity? FindClosest(Vector2 to, int tag, Func<Entity, bool>? filter = null) {
 			var min = float.MaxValue;
-			Entity en = null;
+			Entity? en = null;
 			
 			foreach (var e in Tagged[tag]) {
 				if (filter?.Invoke(e) ?? true) {

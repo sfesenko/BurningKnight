@@ -22,9 +22,9 @@ namespace BurningKnight.debug {
 			foreach (var type in EntityEditor.Types) {
 				if (type.Name.ToLower() == small) {
 					try {
-						var entity = (Entity) Activator.CreateInstance(type.Type);
+						var entity = (Entity) Activator.CreateInstance(type.Type)!;
 						Console.GameArea.Add(entity);
-						entity.BottomCenter = Console.GameArea.Tagged[Tags.Player][0].BottomCenter;
+						entity!.BottomCenter = Console.GameArea.Tagged[Tags.Player][0].BottomCenter;
 					} catch (Exception e) {
 						Log.Error(e);
 						Console.Print($"Failed to create entity {name}, consult @egordorichev");

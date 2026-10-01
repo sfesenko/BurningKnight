@@ -8,14 +8,14 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.level.builders {
 	public class InfinityBuilder : RegularBuilder {
-		private RoomDef landmarkRoom;
+		private RoomDef? landmarkRoom;
 		private int curveExponent;
     private float curveIntensity = 1;
     private float curveOffset;
     
     
-		private List<RoomDef> firstLoop;
-		private List<RoomDef> secondLoop;
+		private List<RoomDef> firstLoop = null!;
+		private List<RoomDef> secondLoop = null!;
 		private Vector2 firstLoopCenter;
 		private Vector2 secondLoopCenter;
     
@@ -40,7 +40,7 @@ namespace BurningKnight.level.builders {
 			       + 0.25 + 0.5*Math.Floor(2*x);
 		}
 		
-		public override List<RoomDef> Build(List<RoomDef> rooms) {
+		public override List<RoomDef>? Build(List<RoomDef> rooms) {
 			SetupRooms(rooms);
 			
 			if (landmarkRoom == null) {
@@ -83,7 +83,7 @@ namespace BurningKnight.level.builders {
 				pathTunnels[tunnels]--;
 				
 				for (var j = 0; j < tunnels; j++){
-					firstLoop.Add(RoomRegistry.Generate(RoomType.Connection, LevelSave.BiomeGenerated));
+					firstLoop.Add(RoomRegistry.Generate(RoomType.Connection, LevelSave.BiomeGenerated!)!);
 				}
 			}
 
@@ -112,7 +112,7 @@ namespace BurningKnight.level.builders {
 				pathTunnels[tunnels]--;
 				
 				for (var j = 0; j < tunnels; j++){
-					secondLoop.Add(RoomRegistry.Generate(RoomType.Connection, LevelSave.BiomeGenerated));
+					secondLoop.Add(RoomRegistry.Generate(RoomType.Connection, LevelSave.BiomeGenerated!)!);
 				}
 			}
 
@@ -141,15 +141,15 @@ namespace BurningKnight.level.builders {
 				}
 			}
 			
-			while (!prev.ConnectWithRoom(landmarkRoom)){
-				var c = RoomRegistry.Generate(RoomType.Connection, LevelSave.BiomeGenerated);
+			while (!prev!.ConnectWithRoom(landmarkRoom)){
+				var c = RoomRegistry.Generate(RoomType.Connection, LevelSave.BiomeGenerated!);
 
-				if ((int) PlaceRoom(rooms, prev, c, AngleBetweenRooms(prev, landmarkRoom)) == -1){
+				if ((int) PlaceRoom(rooms, prev, c!, AngleBetweenRooms(prev, landmarkRoom)) == -1){
 					return null;
 				}
 				
-				firstLoop.Add(c);
-				rooms.Add(c);
+				firstLoop.Add(c!);
+				rooms.Add(c!);
 				prev = c;
 			}
 			

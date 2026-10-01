@@ -44,7 +44,7 @@ namespace BurningKnight.assets.dialogs {
 		}
 
 		public Dialog Convert() {
-			List<string[]> variants = null;
+			List<string[]>? variants = null;
 			
 			if (Outputs.Count > 0) {
 				variants = new List<string[]>();
@@ -62,7 +62,7 @@ namespace BurningKnight.assets.dialogs {
 				}
 			}
 			
-			return new ChoiceDialog(LocaleId, choices.ToArray(), variants);
+			return new ChoiceDialog(LocaleId, choices.ToArray(), variants!);
 		}
 	}
 }

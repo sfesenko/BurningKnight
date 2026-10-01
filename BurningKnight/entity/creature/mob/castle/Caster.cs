@@ -24,7 +24,7 @@ namespace BurningKnight.entity.creature.mob.castle {
 			AddComponent(body);
 
 			body.KnockbackModifier = 0.5f;
-			body.Body.LinearDamping = 0;
+			body!.Body!.LinearDamping = 0;
 
 			Width = 22;
 			
@@ -57,7 +57,7 @@ namespace BurningKnight.entity.creature.mob.castle {
 						var an = Self.AngleTo(Self.Target);
 						var a = Self.GetComponent<AnimationComponent>();
 
-						Tween.To(1.8f, a.Scale.X, x => a.Scale.X = x, 0.1f);
+						Tween.To(1.8f, a!.Scale.X, x => a.Scale.X = x, 0.1f);
 						Tween.To(0.2f, a.Scale.Y, x => a.Scale.Y = x, 0.1f).OnEnd = () => {
 
 							Tween.To(1, a.Scale.X, x => a.Scale.X = x, 0.2f);
@@ -73,7 +73,7 @@ namespace BurningKnight.entity.creature.mob.castle {
 							builder.AddFlags(ProjectileFlags.AutomaticRotation, ProjectileFlags.FlyOverStones, ProjectileFlags.FlyOverWalls);
 
 							var projectile = builder.Shoot(an, 7f).Build();
-							ProjectileCallbacks.AttachUpdateCallback(projectile, MakeController());
+							ProjectileCallbacks.AttachUpdateCallback(projectile!, MakeController());
 						};
 					}
 				}
@@ -94,7 +94,7 @@ namespace BurningKnight.entity.creature.mob.castle {
 					lastPart = 0;
 
 					var p = new ProjectileParticle();
-					pr.Area.Add(p);
+					pr.Area!.Add(p);
 					p.Center = pr.Center; // + Random.Vector(3, 3);
 					// give some velocity too??
 				}
@@ -113,20 +113,20 @@ namespace BurningKnight.entity.creature.mob.castle {
 			public override void Init() {
 				base.Init();
 				
-				Self.GetComponent<AudioEmitterComponent>().EmitRandomized("door_close");
-				Self.GetComponent<AnimationComponent>().SetAutoStop(true);
+				Self.GetComponent<AudioEmitterComponent>()!.EmitRandomized("door_close");
+				Self.GetComponent<AnimationComponent>()!.SetAutoStop(true);
 			}
 
 			public override void Destroy() {
 				base.Destroy();
-				Self.GetComponent<AnimationComponent>().SetAutoStop(false);
+				Self.GetComponent<AnimationComponent>()!.SetAutoStop(false);
 			}
 
 			public override void Update(float dt) {
 				base.Update(dt);
 
-				if (Self.GetComponent<AnimationComponent>().Animation.Paused) {
-					Self.GetComponent<StateComponent>().Become<AppearState>();
+				if (Self!.GetComponent<AnimationComponent>()!.Animation!.Paused) {
+					Self.GetComponent<StateComponent>()!.Become<AppearState>();
 				}
 			}
 		}
@@ -135,22 +135,22 @@ namespace BurningKnight.entity.creature.mob.castle {
 			public override void Init() {
 				base.Init();
 
-				Self.Center = Self.GetComponent<RoomComponent>().Room.GetRandomFreeTile() * 16;
+				Self.Center = Self!.GetComponent<RoomComponent>()!.Room!.GetRandomFreeTile() * 16;
 				
-				Self.GetComponent<AudioEmitterComponent>().EmitRandomized("door_close");
-				Self.GetComponent<AnimationComponent>().SetAutoStop(true);
+				Self.GetComponent<AudioEmitterComponent>()!.EmitRandomized("door_close");
+				Self.GetComponent<AnimationComponent>()!.SetAutoStop(true);
 			}
 
 			public override void Destroy() {
 				base.Destroy();
-				Self.GetComponent<AnimationComponent>().SetAutoStop(false);
+				Self.GetComponent<AnimationComponent>()!.SetAutoStop(false);
 			}
 
 			public override void Update(float dt) {
 				base.Update(dt);
 
-				if (Self.GetComponent<AnimationComponent>().Animation.Paused) {
-					Self.GetComponent<StateComponent>().Become<IdleState>();
+				if (Self!.GetComponent<AnimationComponent>()!.Animation!.Paused) {
+					Self.GetComponent<StateComponent>()!.Become<IdleState>();
 				}
 			}
 		}

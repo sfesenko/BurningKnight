@@ -38,7 +38,7 @@ namespace BurningKnight.level.rooms.special {
 			tomb.Item = GlobalSave.GetString("next_tomb") ?? "bk:coin";
 			GlobalSave.Put("tomb_depth", 0);
 			
-			level.Area.Add(tomb);
+			level.Area!.Add(tomb);
 			tomb.Center = GetCenter() * 16 + new Vector2(8);
 		}
 	}

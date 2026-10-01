@@ -37,14 +37,14 @@ using Vector2 = Microsoft.Xna.Framework.Vector2;
 namespace BurningKnight.entity.creature.bk {
 	public partial class BurningKnight {
 		public class LaserSwingAttack : SmartState<BurningKnight> {
-			private Laser laser;
+			private Laser? laser;
 			private float vy;
 			private float angle;
 			
 			public override void Init() {
 				base.Init();
 
-				angle = Self.AngleTo(Self.Target) - (Rnd.Chance() ? -1 : 1) * 1.2f;
+				angle = Self.AngleTo(Self.Target!) - (Rnd.Chance() ? -1 : 1) * 1.2f;
 				Self.WarnLaser(angle);
 			}
 
@@ -64,7 +64,7 @@ namespace BurningKnight.entity.creature.bk {
 					laser.LifeTime = 10f;
 					laser.Position = Self.Center;
 					laser.Angle = angle;
-					Self.GetComponent<AudioEmitterComponent>().EmitRandomizedPrefixed("item_laser", 4);
+					Self.GetComponent<AudioEmitterComponent>()!.EmitRandomizedPrefixed("item_laser", 4);
 				}
 
 				if (laser.Done) {
@@ -75,7 +75,7 @@ namespace BurningKnight.entity.creature.bk {
 				laser.Position = Self.Center;
 
 				var aa = laser.Angle;
-				var a = Self.AngleTo(Self.Target);
+				var a = Self.AngleTo(Self.Target!);
 				
 				vy += (float) MathUtils.ShortAngleDistance(aa, a) * dt * 4;
 

@@ -10,8 +10,8 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.component {
 	public class FollowerComponent : Component {
-		public Entity Following;
-		public Entity Follower;
+		public Entity? Following;
+		public Entity? Follower;
 		public float MaxDistance = 16;
 		public float Pause = -1;
 		public bool Paused;
@@ -19,7 +19,7 @@ namespace BurningKnight.entity.component {
 
 		public void DestroyAll() {
 			if (Follower != null) {
-				Follower.GetComponent<FollowerComponent>().DestroyAll();
+				Follower.GetComponent<FollowerComponent>()!.DestroyAll();
 				Follower.Done = true;
 			}
 		}
@@ -28,10 +28,10 @@ namespace BurningKnight.entity.component {
 			if (Following != null) {
 				var f = Following.GetComponent<FollowerComponent>();
 
-				f.Follower = Follower;
+				f!.Follower = Follower;
 
 				if (Follower != null) {
-					f.Follower.GetComponent<FollowerComponent>().Following = Following;
+					f!.Follower!.GetComponent<FollowerComponent>()!.Following = Following;
 				}
 			}
 
@@ -48,7 +48,7 @@ namespace BurningKnight.entity.component {
 			
 			if (Following != null) {
 				if (Following.Done) {
-					Following.GetComponent<FollowerComponent>().Remove();
+					Following.GetComponent<FollowerComponent>()!.Remove();
 					Following = null;
 				}
 
@@ -113,10 +113,10 @@ namespace BurningKnight.entity.component {
 			}
 
 			if (Follower != null) {
-				Follower.GetComponent<FollowerComponent>().AddFollower(e);
+				Follower.GetComponent<FollowerComponent>()!.AddFollower(e);
 			} else {
 				Follower = e;
-				e.GetComponent<FollowerComponent>().Following = Entity;
+				e.GetComponent<FollowerComponent>()!.Following = Entity;
 			}
 
 			if (Entity is Player) {
@@ -124,7 +124,7 @@ namespace BurningKnight.entity.component {
 				var entity = Entity;
 
 				while (entity != null) {
-					entity = entity.GetComponent<FollowerComponent>().Follower;
+					entity = entity.GetComponent<FollowerComponent>()!.Follower;
 
 					if (entity != null) {
 						depth++;

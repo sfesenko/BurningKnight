@@ -33,14 +33,14 @@ namespace BurningKnight.level.rooms.special.minigame {
 			}
 
 			var maanex = new Maanex();
-			level.Area.Add(maanex);
+			level.Area!.Add(maanex);
 			maanex.BottomCenter = new Vector2(Left + 4.5f, Top + 2) * 16;
 
 			var prize = Rnd.Int(4);
 			
 			for (var i = 0; i < 3; i++) {
 				var chest = new WoodenChest();
-				level.Area.Add(chest);
+				level.Area!.Add(chest);
 
 				chest.Empty = i != prize;
 				chest.BottomCenter = new Vector2(Left + 2.5f + i * 2, Bottom - 1.5f) * 16;

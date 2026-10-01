@@ -39,7 +39,7 @@ namespace BurningKnight.assets.achievements {
 				return;
 			}
 			
-			ImGui.Text(_selected.Id);
+			ImGui.Text(_selected!.Id);
 			ImGui.Separator();
 
 			ImGui.InputText("Unlocks", ref _selected.Unlock, 128);
@@ -189,11 +189,11 @@ namespace BurningKnight.assets.achievements {
 
 						if (ImGui.IsMouseDown(ImGuiMouseButton.Right)) {
 							if (ImGui.Button("Give")) {
-								LocalPlayer.Locate(Context.Area)
-									?.GetComponent<InventoryComponent>()
+								LocalPlayer.Locate(Context.Area!)
+									?.GetComponent<InventoryComponent>()!
 									.Pickup(Items.CreateAndAdd(
-										_selected.Id, Context.Area
-									), true);
+										_selected.Id, Context.Area!
+									)!, true);
 							}
 						}
 					}

@@ -6,7 +6,7 @@ namespace BurningKnight.entity.item {
 		public bool Transparent;
 		public bool Won;
 		
-		protected override BodyComponent GetBody() {
+		protected override BodyComponent? GetBody() {
 			return GetComponent<CircleBodyComponent>();
 		}
 

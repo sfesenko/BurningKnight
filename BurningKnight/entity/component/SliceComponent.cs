@@ -8,16 +8,16 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.component {
 	public class SliceComponent : GraphicsComponent {
-		public TextureRegion Sprite;
+		public TextureRegion Sprite = null!;
 		public int ShadowZ;
 		public float Angle;
 		
-		public SliceComponent(string image, string slice) {
-			Set(image, slice);
+		public SliceComponent(string image, string? slice) {
+			Set(image, slice!);
 		}
 
 		public SliceComponent(AnimationData image, string slice) {
-			Set(image.GetSlice(slice));
+			Set(image.GetSlice(slice)!);
 		}
 
 		public SliceComponent(TextureRegion region) {
@@ -30,7 +30,7 @@ namespace BurningKnight.entity.component {
 				return;
 			}
 			
-			Set(Animations.Get(image).GetSlice(slice));
+			Set(Animations.Get(image)!.GetSlice(slice)!);
 		}
 		
 		public virtual void Set(TextureRegion region) {

@@ -2,7 +2,7 @@
 
 namespace BurningKnight.entity.buff {
 	public class Buff {
-		public Entity Entity;
+		public Entity Entity = null!;
 		public float TimeLeft;
 		public float Duration = 1f;
 		public bool Infinite;
@@ -30,7 +30,7 @@ namespace BurningKnight.entity.buff {
 			
 		}
 
-		public virtual string GetIcon() {
+		public virtual string? GetIcon() {
 			return null;
 		}
 	}

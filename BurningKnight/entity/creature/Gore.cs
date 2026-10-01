@@ -35,7 +35,7 @@ namespace BurningKnight.entity.creature {
 
 		private void RenderShadow() {
 			Graphics.Color.A = (byte) (a * 255f);
-			GraphicsComponent.Render(true);
+			GraphicsComponent!.Render(true);
 			Graphics.Color.A = 255;
 		}
 
@@ -63,13 +63,13 @@ namespace BurningKnight.entity.creature {
 				var z = GetComponent<ZComponent>();
 
 				vz -= dt * 4;
-				z.Z = Math.Max(z.Z + vz, 0);
+				z!.Z = Math.Max(z.Z + vz, 0);
 
 				if (z.Z <= 0) {
 					zdid = true;
 
 					if (TryGetComponent<RectBodyComponent>(out var bd)) {
-						bd.Body.LinearVelocity *= 0.5f;
+						bd!.Body!.LinearVelocity *= 0.5f;
 					}
 				}
 			}
@@ -78,9 +78,9 @@ namespace BurningKnight.entity.creature {
 				return;
 			}
 
-			var b = GetComponent<RectBodyComponent>().Body;
+			var b = GetComponent<RectBodyComponent>()!.Body;
 
-			if (b.LinearVelocity.Length() < 4) {
+			if (b!.LinearVelocity.Length() < 4) {
 				b.LinearVelocity = Vector2.Zero;
 				RemoveComponent<RectBodyComponent>();
 				did = true;

@@ -22,7 +22,7 @@ namespace BurningKnight.entity.item.use {
 		public float Chance;
 		public bool ToAny;
 		public bool EventCreated = true;
-		public string BuffToApply;
+		public string? BuffToApply;
 		public bool InfiniteBuff;
 		public float BuffDuration;
 		public bool Explosive;
@@ -80,17 +80,17 @@ namespace BurningKnight.entity.item.use {
 				}
 
 				var e = lastEffect == effects.Length;
-				ApplyBuff(projectile, e ? null : effects[lastEffect], e);
+				ApplyBuff(projectile, e ? null : effects[lastEffect]!, e);
 				
 				return;
 			}
 			
 			if (BuffToApply != null || Explosive) {
-				ApplyBuff(projectile, BuffToApply, Explosive);
+				ApplyBuff(projectile, BuffToApply!, Explosive);
 			}
 		}
 
-		private void ApplyBuff(Projectile projectile, string buff, bool explosive) {
+		private void ApplyBuff(Projectile projectile, string? buff, bool explosive) {
 			if (explosive) {
 				projectile.Color = ProjectileColor.Brown;
 
@@ -109,13 +109,13 @@ namespace BurningKnight.entity.item.use {
 				projectile.Color = info.Effect.GetColor();
 
 				ProjectileCallbacks.AttachHurtCallback(projectile, (p, e) => {
-					if (e.TryGetComponent<BuffsComponent>(out var buffs) && !e.GetComponent<HealthComponent>().Unhittable) {
+					if (e.TryGetComponent<BuffsComponent>(out var buffs) && !e.GetComponent<HealthComponent>()!.Unhittable) {
 						var b = BuffRegistry.Create(buff);
 
 						if (InfiniteBuff) {
-							b.Infinite = true;
+							b!.Infinite = true;
 						} else {
-							b.TimeLeft = b.Duration = BuffDuration;
+							b!.TimeLeft = b.Duration = BuffDuration;
 						}
 
 						buffs.Add(b);

@@ -12,7 +12,7 @@ namespace BurningKnight.entity.component {
 				Offset = new Vector2(w / 2, h / 2);
 			}
 
-			Body = Physics.World.CreateBody(Vector2.Zero, 0, type);
+			Body = Physics.World!.CreateBody(Vector2.Zero, 0, type);
 
 			Body.FixedRotation = true;
 			Body.UserData = this;
@@ -28,7 +28,7 @@ namespace BurningKnight.entity.component {
 		}
 
 		public override void Resize(float x, float y, float w, float h, bool center = false) {
-			var fixture = Body.FixtureList[0];
+			var fixture = Body!.FixtureList[0];
 			var sensor = fixture.IsSensor;
 			
 			Body.DestroyFixture(fixture);

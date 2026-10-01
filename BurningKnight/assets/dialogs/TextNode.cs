@@ -24,7 +24,7 @@ namespace BurningKnight.assets.dialogs {
 		}
 
 		public virtual Dialog Convert() {
-			string[] variants = null;
+			string[]? variants = null;
 
 			if (Outputs.Count == 1) {
 				var t = Outputs[0].ConnectedTo;
@@ -37,7 +37,7 @@ namespace BurningKnight.assets.dialogs {
 				}
 			}
 			
-			return CreateDialog(LocaleId, variants);
+			return CreateDialog(LocaleId, variants!);
 		}
 
 		protected virtual Dialog CreateDialog(string id, string[] variants) {

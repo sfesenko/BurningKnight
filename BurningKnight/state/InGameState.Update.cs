@@ -99,7 +99,7 @@ namespace BurningKnight.state {
 			}
 
 			if (credits is { Enabled: true }) {
-				if (lastCreditsLabel.Y <= Display.UiHeight * 0.75f) {
+				if (lastCreditsLabel!.Y <= Display.UiHeight * 0.75f) {
 					if (!stopped) {
 						stopped = true;
 						
@@ -140,7 +140,7 @@ namespace BurningKnight.state {
 					}
 				} else if (UiButton.Selected > -1) {
 					if (Input.WasPressed(Controls.UiDown, gamepad, true) || (inControl && Input.WasPressed(Controls.UiRight, gamepad, true))) {
-						UiButton sm = null;
+						UiButton? sm = null;
 						var mn = UiButton.LastId;
 						
 						foreach (var b in TopUi.Tagged[Tags.Button]) {
@@ -161,7 +161,7 @@ namespace BurningKnight.state {
 							}
 						} else {
 							var min = UiButton.Selected;
-							UiButton btn = null;
+							UiButton? btn = null;
 							
 							foreach (var b in TopUi.Tagged[Tags.Button]) {
 								var bt = ((UiButton) b);
@@ -182,7 +182,7 @@ namespace BurningKnight.state {
 							}
 						}
 					} else if (Input.WasPressed(Controls.UiUp, gamepad, true) || (inControl && Input.WasPressed(Controls.UiLeft, gamepad, true))) {
-						UiButton sm = null;
+						UiButton? sm = null;
 						var mn = -1;
 						
 						foreach (var b in TopUi.Tagged[Tags.Button]) {
@@ -203,7 +203,7 @@ namespace BurningKnight.state {
 							}
 						} else {
 							var max = -1;
-							UiButton btn = null;
+							UiButton? btn = null;
 							
 							foreach (var b in TopUi.Tagged[Tags.Button]) {
 								var bt = ((UiButton) b);
@@ -297,18 +297,18 @@ namespace BurningKnight.state {
 
 					Tween.To(this, new {blur = 0}, 0.5f).OnEnd = () => {
 						foreach (var e in TopUi.Tagged[Tags.Cursor]) {
-							Context.Camera.Follow(e, CursorPriority);
+							Context.Camera!.Follow(e, CursorPriority);
 						}
 					};
 
-					Context.Camera.Detached = false;
+					Context.Camera!.Detached = false;
 					Tween.To(-Display.UiHeight, offset, x => offset = x, 0.5f, Ease.QuadIn).OnEnd = () => {
 						Menu = false;
 
 						Timer.Add(() => {
 							foreach (var n in Area.Tagged[Tags.Npc]) {
 								if (n is OldMan m) {
-									m.GetComponent<DialogComponent>().StartAndClose("shopkeeper_6", 3);
+									m.GetComponent<DialogComponent>()!.StartAndClose("shopkeeper_6", 3);
 									break;
 								}
 							}
@@ -380,7 +380,7 @@ namespace BurningKnight.state {
 							if (UiControl.Focused != null) {
 								doCheck = true;
 							} else if (currentBack != null) {
-								currentBack.Click(currentBack);
+								currentBack!.Click?.Invoke(currentBack);
 							} else {
 								Paused = false;
 							}

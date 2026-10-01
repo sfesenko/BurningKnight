@@ -5,7 +5,7 @@ using Lens.lightJson;
 
 namespace BurningKnight.entity.item.use {
 	public partial class EnableScourgeUse : ItemUse {
-		private string scourge;
+		private string scourge = null!;
 
 		public override void Use(Entity entity, Item item) {
 			base.Use(entity, item);

@@ -27,14 +27,14 @@ namespace BurningKnight.entity.item {
 			}
 
 			var filter = CheckDistance(entity);
-			MobRegistry.SetupForBiome(Context.Level.Biome.Id);
+			MobRegistry.SetupForBiome(Context.Level!.Biome!.Id);
 			
 			for (var i = 0; i < Count; i++) {
 				Timer.Add(() => {
 					var mob = MobRegistry.Generate();
-					entity.Area.Add(mob);
+					entity.Area!.Add(mob);
 
-					if (MobRegistry.FindFor(mob.GetType())?.NearWall ?? false) {
+					if (MobRegistry.FindFor(mob!.GetType())?.NearWall ?? false) {
 						mob.Center = r.Room.GetRandomFreeTileNearWall(filter) * 16;
 					} else {
 						mob.Center = r.Room.GetRandomFreeTile(filter) * 16;
@@ -53,7 +53,7 @@ namespace BurningKnight.entity.item {
 							}
 						};
 
-						Context.Level.Area.Add(part);
+						Context.Level!.Area!.Add(part);
 						part.Depth = 1;
 					}
 					

@@ -17,7 +17,7 @@ namespace BurningKnight.entity.creature.mob.library {
 			var body = new RectBodyComponent(2, 20, 11, 1);
 			AddComponent(body);
 
-			body.Body.LinearDamping = 4f;
+			body!.Body!.LinearDamping = 4f;
 			
 			AddComponent(new SensorBodyComponent(3, 3, 9, 18));
 			AddComponent(new MobAnimationComponent("skeleton"));
@@ -45,7 +45,7 @@ namespace BurningKnight.entity.creature.mob.library {
 		public class SummonState : SmartState<Skeleton> {
 			public override void Init() {
 				base.Init();
-				Self.GetComponent<MobAnimationComponent>().Animation.Tag = "idle";
+				Self!.GetComponent<MobAnimationComponent>()!.Animation!.Tag = "idle";
 			}
 
 			public override void Update(float dt) {
@@ -65,9 +65,9 @@ namespace BurningKnight.entity.creature.mob.library {
 				if (T >= 5f) {
 					T = -5;
 
-					Self.GetComponent<MobAnimationComponent>().Animate(() => {
+					Self.GetComponent<MobAnimationComponent>()!.Animate(() => {
 						var summon = new Mummy();
-						Self.Area.Add(summon);
+						Self.Area!.Add(summon);
 					
 						summon.BottomCenter = Self.BottomCenter + new Vector2(0, 2);
 						summon.Target = Self.Target;	

@@ -61,11 +61,11 @@ namespace BurningKnight.state {
 
 			CreateEditor(Camera);
 
-			var id = Context.Level.Biome.Id;
+			var id = Context.Level!.Biome!.Id;
 
 			if (id != Biome.Castle && id != Biome.Hub) {
 				Achievements.Unlock($"bk:{id}");
-				var i = Context.Level.Biome.GetItemUnlock();
+				var i = Context.Level!.Biome.GetItemUnlock();
 
 				if (i != null) {
 					Items.Unlock(i);
@@ -78,7 +78,7 @@ namespace BurningKnight.state {
 				};
 				
 				TopUi.Add(cursor);
-				p.GetComponent<CursorComponent>().Cursor = cursor;
+				p.GetComponent<CursorComponent>()!.Cursor = cursor;
 			}
 			
 			Ui.Add(indicator = new SaveIndicator());
@@ -86,7 +86,7 @@ namespace BurningKnight.state {
 			var player = LocalPlayer.Locate(Area);
 
 			if (!Multiplayer && Context.Run.Depth > 0) {
-				Ui.Add(map = new UiMap(player));
+				Ui.Add(map = new UiMap(player!));
 			}	
 			
 			CreateConsole();
@@ -145,7 +145,7 @@ namespace BurningKnight.state {
 
 						try {
 							// Needs xclip on linux
-							Clipboard.SetText(Context.Run.Seed);
+							Clipboard.SetText(Context.Run.Seed!);
 						} catch (Exception e) {
 							Log.Error(e);
 						}
@@ -231,7 +231,7 @@ namespace BurningKnight.state {
 							pauseMenu.Enabled = true;
 
 							Tween.To(0, pauseMenu.X, x => pauseMenu.X = x, PaneTransitionTime).OnEnd = () => {
-								pauseMenu.Remove(confirmationPane);
+								pauseMenu.Remove(confirmationPane!);
 								confirmationPane = null;
 								SelectFirst();
 							};
@@ -355,7 +355,7 @@ namespace BurningKnight.state {
 				});
 				
 				var offset = 0;
-				string lastS = null;
+				string? lastS = null;
 				
 				d = (s) =>{
 					if (s == null) {
@@ -370,7 +370,7 @@ namespace BurningKnight.state {
 					leaderStats.Clear();
 					offset = Math.Max(0, offset);
 
-					SetupLeaderboard(leaderStats, s, choice.Options[choice.Option], offset, () => {
+					SetupLeaderboard(leaderStats, s, choice!.Options![choice.Option], offset, () => {
 						leaderStats.Prepare();
 
 						leaderStats.RelativeCenterX = Display.UiWidth * 0.5f;

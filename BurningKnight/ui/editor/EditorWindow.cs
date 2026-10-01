@@ -20,7 +20,7 @@ using Microsoft.Xna.Framework.Input;
 namespace BurningKnight.ui.editor {
 	public class EditorWindow {
 		private static string levelName = "new_level";
-		private static string[] levels;
+		private static string[] levels = null!;
 		private static int currentLevel;
 		private static int levelWidth = 32;
 		private static int levelHeight = 32;
@@ -76,7 +76,7 @@ namespace BurningKnight.ui.editor {
 		}
 		
 		private void Load() {
-			Editor.Area.Destroy();
+			Editor.Area!.Destroy();
 			Editor.Area = new GameArea();
 			Engine.Instance.State.Area = Editor.Area;
 			
@@ -91,7 +91,7 @@ namespace BurningKnight.ui.editor {
 				};
 
 				Editor.Level = level;
-				Editor.Area.Add(level);
+				Editor.Area!.Add(level);
 
 				level.SetBiome(BiomeRegistry.Get(Biome.Castle));
 				level.Setup();
@@ -101,10 +101,10 @@ namespace BurningKnight.ui.editor {
 				Editor.Camera.Position = Vector2.Zero;
 			} else {
 				SaveManager.Load(Editor.Area, SaveType.Level, $"Content/Prefabs/{levels[currentLevel]}.lvl");
-				Editor.Level = Context.Level;
+				Editor.Level = Context.Level!;
 			}
 
-			for (var i = 0; i < Editor.Level.Size; i++) {
+			for (var i = 0; i < Editor!.Level!.Size; i++) {
 				Editor.Level.Explored[i] = true;
 			}
 			
@@ -237,11 +237,11 @@ namespace BurningKnight.ui.editor {
 
 						ImGui.CloseCurrentPopup();
 
-						foreach (var e in Editor.Area.Tagged[Tags.LevelSave]) {
+						foreach (var e in Editor.Area!.Tagged[Tags.LevelSave]) {
 							e.Done = true;
 						}
 
-						Editor.Area.AutoRemove();
+						Editor.Area!.AutoRemove();
 						Context.Level = null;
 
 						var level = new RegularLevel {
@@ -252,7 +252,7 @@ namespace BurningKnight.ui.editor {
 						};
 
 						Editor.Level = level;
-						Editor.Area.Add(level);
+						Editor.Area!.Add(level);
 
 						level.SetBiome(BiomeRegistry.Get(Biome.Castle));
 						level.Setup();

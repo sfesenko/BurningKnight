@@ -14,7 +14,7 @@ namespace BurningKnight.ui {
 		private string title;
 		private string description;
 		private TextureRegion icon;
-		private TextureRegion iconBg;
+		private TextureRegion iconBg = null!;
 
 		private Vector2 bgOffset;
 		private Vector2 iconOffset;
@@ -24,14 +24,14 @@ namespace BurningKnight.ui {
 		public UiError(string t, string desc) {
 			title = t;
 			description = desc;
-			icon = Animations.Get("items").GetSlice("bk:no_hat");
-			iconBg = CommonAse.Ui.GetSlice("er_bg");
+			icon = Animations.Get("items")!.GetSlice("bk:no_hat")!;
+			iconBg = CommonAse.Ui.GetSlice("er_bg")!;
 
 			var titleSize = Font.Small.MeasureString(title);
 			var descriptionSize = Font.Small.MeasureString(description);
 
 			bgOffset = new Vector2(Padding);
-			iconOffset = new Vector2(Padding + (20 - icon.Width) / 2f, Padding + (20 - icon.Height) / 2f);
+			iconOffset = new Vector2(Padding + (20 - icon!.Width) / 2f, Padding + (20 - icon.Height) / 2f);
 			titleOffset = new Vector2(Padding * 2 + 20, Padding - 1);
 			descriptionOffset = new Vector2(Padding * 2 + 20, Padding + 10);
 

@@ -46,9 +46,9 @@ namespace BurningKnight.level.walls {
 			Add(new PatchWall(), 0.5f);
 		}
 
-		public static void Paint(Level level, RoomDef room, WallRegistry registry = null, int i = -1) {
+		public static void Paint(Level level, RoomDef room, WallRegistry? registry = null, int i = -1) {
 			var painter = i == -1 ? (registry ?? Instance).Generate() : (registry ?? Instance).Get(i);
-			painter.Paint(level, room, new Rect(room.Left + 1, room.Top + 1, 
+			painter!.Paint(level, room, new Rect(room.Left + 1, room.Top + 1, 
 				room.Left + 1 + room.GetWidth() - 2, room.Top + 1 + room.GetHeight() - 2));
 		}
 	}

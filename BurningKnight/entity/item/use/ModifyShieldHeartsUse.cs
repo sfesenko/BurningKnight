@@ -7,7 +7,7 @@ namespace BurningKnight.entity.item.use {
 		public int Amount;
 
 		public override void Use(Entity entity, Item item) {
-			entity.GetComponent<HeartsComponent>().ModifyShields(Amount * 2, entity);
+			entity.GetComponent<HeartsComponent>()!.ModifyShields(Amount * 2, entity);
 		}
 
 		public override void Setup(JsonValue settings) {

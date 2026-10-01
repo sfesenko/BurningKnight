@@ -56,7 +56,7 @@ namespace Desktop.core {
 			resizing = false;
 		}
 
-		protected virtual void OnClientSizeChanged(object sender, EventArgs e) {
+		protected virtual void OnClientSizeChanged(object? sender, EventArgs e) {
 			if (Window.ClientBounds.Width > 0 && Window.ClientBounds.Height > 0 && !resizing) {
 				resizing = true;
 

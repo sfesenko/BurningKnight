@@ -17,12 +17,12 @@ namespace BurningKnight.entity.creature.mob.jungle {
 			Flying = true;
 			Height = 12;
 
-			GetComponent<MobAnimationComponent>().ShadowOffset = -2;
+			GetComponent<MobAnimationComponent>()!.ShadowOffset = -2;
 
 			var body = new RectBodyComponent(1, 9, 14, 1);
 			AddComponent(body);
 			
-			body.Body.LinearDamping = 2;
+			body!.Body!.LinearDamping = 2;
 			body.Body.Restitution = 1;
 			body.Body.Friction = 0;
 
@@ -58,8 +58,8 @@ namespace BurningKnight.entity.creature.mob.jungle {
 					return;
 				}
 				
-				Self.GetComponent<AudioEmitterComponent>().EmitRandomized("mob_wombat_fly");
-				Self.GetComponent<RectBodyComponent>().Velocity = MathUtils.CreateVector(Self.Target.AngleTo(Self), 10f);
+				Self.GetComponent<AudioEmitterComponent>()!.EmitRandomized("mob_wombat_fly");
+				Self.GetComponent<RectBodyComponent>()!.Velocity = MathUtils.CreateVector(Self.Target.AngleTo(Self), 10f);
 			}
 
 			public override void Update(float dt) {
@@ -69,18 +69,18 @@ namespace BurningKnight.entity.creature.mob.jungle {
 				if (sinceLast <= 0) {
 					sinceLast = 0.2f;
 					
-					Self.GetComponent<AudioEmitterComponent>().EmitRandomized("mob_fire");
+					Self.GetComponent<AudioEmitterComponent>()!.EmitRandomized("mob_fire");
 					var builder = new ProjectileBuilder(Self, "square") {
 						Scale = Rnd.Float(0.4f, 0.8f),
 						RectHitbox = true
 					};
 
-					builder.Shoot(Self.GetComponent<RectBodyComponent>().Velocity.ToAngle() - Math.PI + Rnd.Float(-0.2f, 0.2f), Rnd.Float(4, 7)).Build();
+					builder.Shoot(Self.GetComponent<RectBodyComponent>()!.Velocity.ToAngle() - Math.PI + Rnd.Float(-0.2f, 0.2f), Rnd.Float(4, 7)).Build();
 				}
 				
 				if (T < 5f) {
 					var body = Self.GetComponent<RectBodyComponent>();
-					body.Velocity += body.Velocity * (dt * 40);
+					body!.Velocity += body.Velocity * (dt * 40);
 				} else {
 					Become<IdleState>();
 				}

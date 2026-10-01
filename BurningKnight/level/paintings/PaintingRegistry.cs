@@ -84,17 +84,17 @@ namespace BurningKnight.level.paintings {
 			Add("bgang", "Friendship", 0.1f);
 		}
 		
-		public static void Add(string id, string author, float chance = 1f, string[] biomes = null, bool animated = false) {
+		public static void Add(string id, string author, float chance = 1f, string[]? biomes = null, bool animated = false) {
 			paintings.Add(new Info {
 				Id = id,
 				Author = author,
 				Chance = chance,
-				Biomes = biomes,
+				Biomes = biomes!,
 				Animated = animated
 			});
 		}
 
-		public static Painting Generate(Biome biome) {
+		public static Painting? Generate(Biome biome) {
 			var length = paintings.Count;
 			float sum = 0;
 
@@ -135,10 +135,10 @@ namespace BurningKnight.level.paintings {
 		}
 
 		private class Info {
-			public string Id;
-			public string Author;
+			public string Id = null!;
+			public string Author = null!;
 			public float Chance;
-			public string[] Biomes;
+			public string[] Biomes = null!;
 			public bool Animated;
 		}
 	}

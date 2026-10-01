@@ -66,13 +66,13 @@ namespace BurningKnight.entity.creature.player {
 					
 					part.Position = Self.Center;
 					part.Particle.Scale = Rnd.Float(0.4f, 0.8f);
-					Self.Area.Add(part);
+					Self.Area!.Add(part);
 				}
 
 				if (!Self.HasFlight) {
-					var anim = Self.GetComponent<PlayerGraphicsComponent>().Animation;
+					var anim = Self.GetComponent<PlayerGraphicsComponent>()!.Animation;
 
-					if (anim.Frame != lastFrame) {
+					if (anim!.Frame != lastFrame) {
 						lastFrame = anim.Frame;
 
 						if (GameContext.Current.Level != null && (lastFrame == 2 || lastFrame == 6)) {
@@ -86,9 +86,9 @@ namespace BurningKnight.entity.creature.player {
 							var i = GameContext.Current.Level.ToIndex(x, y);
 							var tile = GameContext.Current.Level.Get(i);
 							var liquid = GameContext.Current.Level.Liquid[i];
-							var room = Self.GetComponent<RoomComponent>().Room;
+							var room = Self.GetComponent<RoomComponent>()!.Room;
 
-							Audio.PlaySfx(GameContext.Current.Level.Biome.GetStepSound(liquid == 0 ? tile : (Tile) liquid),
+							Audio.PlaySfx(GameContext.Current!.Level!.Biome!.GetStepSound(liquid == 0 ? tile : (Tile) liquid),
 								room != null && room.Tagged[Tags.MustBeKilled].Count > 0 ? 0.18f : 0.25f);
 						}
 					}

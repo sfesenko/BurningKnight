@@ -35,7 +35,7 @@ namespace BurningKnight.level.builders {
 					}
 				}
 
-				RoomDef closestRoomDef = null;
+				RoomDef? closestRoomDef = null;
 				var ClosestDiff = int.MaxValue;
 				var Inside = true;
 				var CurDiff = 0;
@@ -136,7 +136,7 @@ namespace BurningKnight.level.builders {
 			return Angle;
 		}
 
-		protected Rect LastSpace;
+		protected Rect? LastSpace = null!;
 		
 		protected virtual float PlaceRoom(List<RoomDef> Collision, RoomDef Prev, RoomDef Next, float Angle) {
 			LastSpace = null;
@@ -248,7 +248,7 @@ namespace BurningKnight.level.builders {
 			return -1;
 		}
 
-		public virtual List<RoomDef> Build(List<RoomDef> Init) {
+		public virtual List<RoomDef>? Build(List<RoomDef> Init) {
 			return null;
 		}
 	}

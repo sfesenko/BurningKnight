@@ -13,18 +13,18 @@ using Lens.util.math;
 
 namespace BurningKnight.entity.creature.pet {
 	public static class PetRegistry {
-		private static Dictionary<string, Func<Entity, Entity>> defined = new Dictionary<string, Func<Entity, Entity>>();
+		private static Dictionary<string, Func<Entity, Entity?>> defined = new Dictionary<string, Func<Entity, Entity?>>();
 
-		public static Entity Create(string id, Entity owner) {
+		public static Entity? Create(string id, Entity owner) {
 			return !defined.TryGetValue(id, out var d) ? null : d(owner);
 		}
 		
 		public static Entity CreateRandom(Entity owner) {
 			var keys = defined.Keys.ToArray();
-			return Create(keys[Rnd.Int(keys.Length)], owner);
+			return Create(keys[Rnd.Int(keys.Length)], owner)!;
 		}
 
-		public static void Define(string id, Func<Entity, Entity> pet, Mod mod = null) {
+		public static void Define(string id, Func<Entity, Entity?> pet, Mod? mod = null) {
 			defined[$"{(mod == null ? Mods.BurningKnight : mod.Prefix)}:{id}"] = pet;
 		}
 
@@ -33,23 +33,23 @@ namespace BurningKnight.entity.creature.pet {
 		}
 
 		static PetRegistry() {
-			Define("backpack", o => o.Area.Add(new Backpack {
+			Define("backpack", o => o.Area!.Add(new Backpack {
 				Owner = o
 			}));
 			
-			Define("crystal", o => o.Area.Add(new Crystal {
+			Define("crystal", o => o.Area!.Add(new Crystal {
 				Owner = o
 			}));
 			
-			Define("lil_boo", o => o.Area.Add(new LilBoo {
+			Define("lil_boo", o => o.Area!.Add(new LilBoo {
 				Owner = o
 			}));
 
-			Define("strawberry", o => o.Area.Add(new Strawberry() {
+			Define("strawberry", o => o.Area!.Add(new Strawberry() {
 				Owner = o
 			}));
 
-			Define("snek", o => o.Area.Add(new SnekPet {
+			Define("snek", o => o.Area!.Add(new SnekPet {
 				Owner = o
 			}));
 
@@ -65,13 +65,13 @@ namespace BurningKnight.entity.creature.pet {
 					if (timer >= 2f) {
 						timer = 0;
 
-						if ((o.GetComponent<RoomComponent>().Room?.Tagged[Tags.MustBeKilled].Count ?? 0) == 0) {
+						if ((o.GetComponent<RoomComponent>()!.Room?.Tagged[Tags.MustBeKilled].Count ?? 0) == 0) {
 							return;
 						}
 						
-						o.GetComponent<AudioEmitterComponent>().EmitRandomizedPrefixed("item_meatguy", 4, 0.5f);
+						o.GetComponent<AudioEmitterComponent>()!.EmitRandomizedPrefixed("item_meatguy", 4, 0.5f);
 						
-						var a = pet.AngleTo(o.GetComponent<AimComponent>().RealAim);
+						var a = pet.AngleTo(o.GetComponent<AimComponent>()!.RealAim);
 						var builder = new ProjectileBuilder(o, "small") {
 							LightRadius = 32f,
 							Color = ProjectileColor.Yellow
@@ -81,12 +81,12 @@ namespace BurningKnight.entity.creature.pet {
 
 						var projectile = builder.Build();
 
-						projectile.Center = pet.Center + MathUtils.CreateVector(a, 5f);
+						projectile!.Center = pet.Center + MathUtils.CreateVector(a, 5f);
 						projectile.Owner = pet;
 					}
 				};
 
-				o.Area.Add(pet);
+				o.Area!.Add(pet);
 				return pet;
 			});
 			
@@ -102,13 +102,13 @@ namespace BurningKnight.entity.creature.pet {
 					if (timer >= 2f) {
 						timer = 0;
 
-						if ((o.GetComponent<RoomComponent>().Room?.Tagged[Tags.MustBeKilled].Count ?? 0) == 0) {
+						if ((o.GetComponent<RoomComponent>()!.Room?.Tagged[Tags.MustBeKilled].Count ?? 0) == 0) {
 							return;
 						}
 						
-						o.GetComponent<AudioEmitterComponent>().EmitRandomizedPrefixed("item_meatguy", 4, 0.5f);
+						o.GetComponent<AudioEmitterComponent>()!.EmitRandomizedPrefixed("item_meatguy", 4, 0.5f);
 						
-						var a = pet.AngleTo(o.GetComponent<AimComponent>().RealAim) - Math.PI;
+						var a = pet.AngleTo(o.GetComponent<AimComponent>()!.RealAim) - Math.PI;
 						var builder = new ProjectileBuilder(o, "circle") {
 							Scale = Rnd.Float(0.6f, 1f),
 							LightRadius = 32f,
@@ -118,61 +118,61 @@ namespace BurningKnight.entity.creature.pet {
 						for (var i = 0; i < 3; i++) {
 							var projectile = builder.Shoot(a + (i - 1) * 0.3f + Rnd.Float(-0.1f, 0.1f), Rnd.Float(4, 6)).Build();
 
-							projectile.Center = pet.Center + MathUtils.CreateVector(a, 5f);
+							projectile!.Center = pet.Center + MathUtils.CreateVector(a, 5f);
 							projectile.Owner = pet;
 						}
 					}
 				};
 
-				o.Area.Add(pet);
+				o.Area!.Add(pet);
 				return pet;
 			});
 
-			Define("coin_pouch", o => o.Area.Add(new GeneratorPet("bk:coin_pouch", 2, a => Items.CreateAndAdd("bk:coin", a)) {
+			Define("coin_pouch", o => o.Area!.Add(new GeneratorPet("bk:coin_pouch", 2, a => Items.CreateAndAdd("bk:coin", a)!) {
 				Owner = o
 			}));
 
-			Define("key_pouch", o => o.Area.Add(new GeneratorPet("bk:key_pouch", 3, a => Items.CreateAndAdd("bk:key", a)) {
+			Define("key_pouch", o => o.Area!.Add(new GeneratorPet("bk:key_pouch", 3, a => Items.CreateAndAdd("bk:key", a)!) {
 				Owner = o
 			}));
 
-			Define("bomb_pouch", o => o.Area.Add(new GeneratorPet("bk:bomb_pouch", 3, a => Items.CreateAndAdd("bk:bomb", a)) {
+			Define("bomb_pouch", o => o.Area!.Add(new GeneratorPet("bk:bomb_pouch", 3, a => Items.CreateAndAdd("bk:bomb", a)!) {
 				Owner = o
 			}));
 			
-			Define("batman", o => o.Area.Add(new GeneratorPet("bk:batman", 3, a => Items.CreateAndAdd("bk:battery", a)) {
+			Define("batman", o => o.Area!.Add(new GeneratorPet("bk:batman", 3, a => Items.CreateAndAdd("bk:battery", a)!) {
 				Owner = o
 			}));
 
-			Define("pouch_pouch", o => o.Area.Add(new GeneratorPet("bk:pouch_pouch", 4, a => Items.CreateAndAdd("bk:pouch", a)) {
+			Define("pouch_pouch", o => o.Area!.Add(new GeneratorPet("bk:pouch_pouch", 4, a => Items.CreateAndAdd("bk:pouch", a)!) {
 				Owner = o
 			}));
 
-			Define("shield_pouch", o => o.Area.Add(new GeneratorPet("bk:shield_pouch", 8, a => Items.CreateAndAdd("bk:shield", a)) {
+			Define("shield_pouch", o => o.Area!.Add(new GeneratorPet("bk:shield_pouch", 8, a => Items.CreateAndAdd("bk:shield", a)!) {
 				Owner = o
 			}));
 
-			Define("shield_buddy", o => o.Area.Add(new ShieldBuddy() {
+			Define("shield_buddy", o => o.Area!.Add(new ShieldBuddy() {
 				Owner = o
 			}));
 
-			Define("wallet", o => o.Area.Add(new Wallet() {
+			Define("wallet", o => o.Area!.Add(new Wallet() {
 				Owner = o
 			}));
 
-			Define("spiked_cookie", o => o.Area.Add(new SpikedCookie() {
+			Define("spiked_cookie", o => o.Area!.Add(new SpikedCookie() {
 				Owner = o
 			}));
 
-			Define("shooty", o => o.Area.Add(new Shooty() {
+			Define("shooty", o => o.Area!.Add(new Shooty() {
 				Owner = o
 			}));
 			
-			Define("bubblo", o => o.Area.Add(new Bubblo() {
+			Define("bubblo", o => o.Area!.Add(new Bubblo() {
 				Owner = o
 			}));
 			
-			Define("the_eye", o => o.Area.Add(new TheEye() {
+			Define("the_eye", o => o.Area!.Add(new TheEye() {
 				Owner = o
 			}));
 		}

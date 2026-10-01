@@ -6,7 +6,7 @@ namespace Lens.graphics.animation {
 	
 	public class Animation {
 		public AnimationData Data;
-		public AnimationCallback OnEnd;
+		public AnimationCallback? OnEnd;
 		
 		private AnimationFrame frame;
 		
@@ -33,10 +33,10 @@ namespace Lens.graphics.animation {
 			}
 		}
 
-		private string layer;
-		private string tag;
+		private string? layer;
+		private string? tag;
 
-		public string Layer {
+		public string? Layer {
 			get => layer;
 
 			set {
@@ -49,7 +49,7 @@ namespace Lens.graphics.animation {
 			}
 		}
 		
-		public string Tag {
+		public string? Tag {
 			get => tag;
 
 			set {
@@ -92,7 +92,7 @@ namespace Lens.graphics.animation {
 		public bool PingGoingForward;
 		public bool SkipNextFrame;
 		
-		public Animation(AnimationData data, string layer = null) {
+		public Animation(AnimationData data, string? layer = null) {
 			Data = data;
 
 			if (layer != null) {
@@ -122,7 +122,7 @@ namespace Lens.graphics.animation {
 			return frame.Texture;
 		}
 		
-		public TextureRegion GetFirstCurrent() {
+		public TextureRegion? GetFirstCurrent() {
 			return tag == null ? Data.GetFrame(layer, 0)?.Texture : GetFrame(tag, 0);
 		}
 		
@@ -157,7 +157,7 @@ namespace Lens.graphics.animation {
 			}
 		}
 
-		public TextureRegion GetFrame(string tag, int frame) {
+		public TextureRegion? GetFrame(string? tag, int frame) {
 			if (tag == null || !Data.Tags.TryGetValue(tag, out var t)) {
 				return null;
 			}

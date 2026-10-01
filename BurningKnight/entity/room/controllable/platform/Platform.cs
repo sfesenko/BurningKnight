@@ -44,7 +44,7 @@ namespace BurningKnight.entity.room.controllable.platform {
 			}
 			
 			base.Apply(e, dt);
-			b.Position += GetComponent<RectBodyComponent>().Velocity * dt;
+			b.Position += GetComponent<RectBodyComponent>()!.Velocity * dt;
 		}
 
 		protected virtual bool ShouldMove(Entity e) {

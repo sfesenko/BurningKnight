@@ -12,13 +12,13 @@ namespace BurningKnight.assets.mod {
 		public abstract void Update(float dt);
 		public abstract void Render();
 		
-		public static Mod Load(FileHandle file) {
+		public static Mod? Load(FileHandle file) {
 			var dll = Assembly.LoadFile(file.FullPath);
 
 			foreach (var type in dll.ExportedTypes) {
 				if (typeof(Mod).IsAssignableFrom(type)) {
 					try {
-						var mod = (Mod) Activator.CreateInstance(type);
+						var mod = (Mod) Activator.CreateInstance(type)!;
 						
 						return mod;
 					} catch (Exception e) {

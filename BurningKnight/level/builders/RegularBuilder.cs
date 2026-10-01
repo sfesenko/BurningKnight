@@ -17,11 +17,11 @@ using Lens.util.math;
 namespace BurningKnight.level.builders {
 	public class RegularBuilder : Builder {
 		protected float[] BranchTunnelChances = {1, 0, 0};
-		protected EntranceRoom Entrance;
-		protected ExitRoom Exit;
-		protected BossRoom Boss;
-		protected GrannyRoom Granny;
-		protected OldManRoom OldMan;
+		protected EntranceRoom? Entrance = null!;
+		protected ExitRoom? Exit = null!;
+		protected BossRoom? Boss = null!;
+		protected GrannyRoom? Granny = null!;
+		protected OldManRoom? OldMan = null!;
 		protected List<RoomDef> SubShop = new List<RoomDef>();
 		protected float ExtraConnectionChance = 0.2f;
 		protected List<RoomDef> MultiConnection = new List<RoomDef>();
@@ -81,7 +81,7 @@ namespace BurningKnight.level.builders {
 			}*/
 		}
 
-		public override List<RoomDef> Build(List<RoomDef> Init) {
+		public override List<RoomDef>? Build(List<RoomDef> Init) {
 			return Init;
 		}
 
@@ -139,11 +139,11 @@ namespace BurningKnight.level.builders {
 				ConnectionChances[ConnectingRooms]--;
 
 				for (var J = 0; J < ConnectingRooms; J++) {
-					var T = RoomRegistry.Generate(RoomType.Connection, LevelSave.BiomeGenerated);
+					var T = RoomRegistry.Generate(RoomType.Connection, LevelSave.BiomeGenerated!);
 					Tries = 3;
 
 					do {
-						Angle = PlaceRoom(Rooms, Curr, T, RandomBranchAngle(Curr));
+						Angle = PlaceRoom(Rooms, Curr!, T!, RandomBranchAngle(Curr!));
 						Tries--;
 					} while (Math.Abs(Angle - (-1)) < 0.01f && Tries > 0);
 
@@ -158,11 +158,11 @@ namespace BurningKnight.level.builders {
 						break;
 					}
 
-					ConnectingRoomsThisBranch.Add(T);
-					Rooms.Add(T);
+					ConnectingRoomsThisBranch.Add(T!);
+					Rooms.Add(T!);
 
 
-					Curr = T;
+					Curr = T!;
 				}
 
 				if (ConnectingRoomsThisBranch.Count != ConnectingRooms) {
@@ -176,7 +176,7 @@ namespace BurningKnight.level.builders {
 				Tries = 10;
 
 				do {
-					Angle = PlaceRoom(Rooms, Curr, R, RandomBranchAngle(Curr));
+					Angle = PlaceRoom(Rooms, Curr!, R, RandomBranchAngle(Curr!));
 					Tries--;
 				} while (Math.Abs(Angle - (-1)) < 0.01f && Tries > 0);
 

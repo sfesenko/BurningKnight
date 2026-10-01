@@ -20,9 +20,9 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.level.entities {
 	public partial class Gramophone : Prop {
-		private TextureRegion top;
-		private TextureRegion bottom;
-		private TextureRegion tdisk;
+		private TextureRegion top = null!;
+		private TextureRegion bottom = null!;
+		private TextureRegion tdisk = null!;
 		private float t;
 		private float tillNext;
 		private bool broken;
@@ -33,15 +33,15 @@ namespace BurningKnight.level.entities {
 
 			disk = GlobalSave.GetInt("disk");
 
-			top = CommonAse.Props.GetSlice("player_top");
-			bottom = CommonAse.Props.GetSlice("player");
-			tdisk = CommonAse.Props.GetSlice("disk");
+			top = CommonAse.Props.GetSlice("player_top")!;
+			bottom = CommonAse.Props.GetSlice("player")!;
+			tdisk = CommonAse.Props.GetSlice("disk")!;
 		}
 
 		public override void Load(FileReader stream) {
 			base.Load(stream);
 			disk = stream.ReadByte();
-			broken = GetComponent<HealthComponent>().HasNoHealth;
+			broken = GetComponent<HealthComponent>()!.HasNoHealth;
 		}
 
 		public override void Save(FileWriter stream) {
@@ -69,7 +69,7 @@ namespace BurningKnight.level.entities {
 
 		private bool Interact(Entity entity) {
 			var h = entity.TryGetComponent<ActiveWeaponComponent>(out var c);
-			var l = h && c.Item != null && c.Item.Id.StartsWith("bk:disk_");
+			var l = h && c!.Item != null && c.Item.Id.StartsWith("bk:disk_");
 			var hd = false;
 
 			if (disk > 0) {
@@ -82,11 +82,11 @@ namespace BurningKnight.level.entities {
 
 			if (l) {
 				try {
-					var id = byte.Parse(c.Item.Id.Replace("bk:disk_", ""));
+					var id = byte.Parse(c!.Item!.Id!.Replace("bk:disk_", ""));
 					var old = c.Item;
 
 					if (hd) {
-						entity.GetComponent<InventoryComponent>().Pickup(Items.CreateAndAdd($"bk:disk_{disk}", Area));
+						entity.GetComponent<InventoryComponent>()!.Pickup(Items.CreateAndAdd($"bk:disk_{disk}", Area!)!);
 					} else {
 						c.Set(null, false);
 					}
@@ -98,7 +98,7 @@ namespace BurningKnight.level.entities {
 					Log.Error(e);
 				}
 			} else if (hd) {
-				entity.GetComponent<InventoryComponent>().Pickup(Items.CreateAndAdd($"bk:disk_{disk}", Area));
+				entity.GetComponent<InventoryComponent>()!.Pickup(Items.CreateAndAdd($"bk:disk_{disk}", Area!)!);
 				disk = 0;
 			}
 			
@@ -113,7 +113,7 @@ namespace BurningKnight.level.entities {
 			
 			t += dt;
 
-			if (GetComponent<HealthComponent>().HasNoHealth || disk == 0) {
+			if (GetComponent<HealthComponent>()!.HasNoHealth || disk == 0) {
 				return;
 			}
 			
@@ -122,9 +122,9 @@ namespace BurningKnight.level.entities {
 			if (tillNext <= 0) {
 				tillNext = Rnd.Float(1, 3f);
 				
-				var part = new ParticleEntity(new Particle(Controllers.Float, new TexturedParticleRenderer(CommonAse.Particles.GetSlice($"note_{Rnd.Int(1, 3)}"))));
+				var part = new ParticleEntity(new Particle(Controllers.Float, new TexturedParticleRenderer(CommonAse.Particles.GetSlice($"note_{Rnd.Int(1, 3)}")!)));
 				part.Position = Center;
-				Area.Add(part);
+				Area!.Add(part);
 				
 				part.Particle.Velocity = new Vector2(Rnd.Float(8, 16) * (Rnd.Chance() ? -1 : 1), -Rnd.Float(40, 66));
 				part.Particle.Angle = 0;
@@ -175,7 +175,7 @@ namespace BurningKnight.level.entities {
 			var stopShader = false;
 			var h = GetComponent<HealthComponent>();
 			
-			if (h.RenderInvt) {
+			if (h!.RenderInvt) {
 				var i = h.InvincibilityTimer;
 
 				if (i > h.InvincibilityTimerMax / 2f || i % 0.1f > 0.05f) {
@@ -212,7 +212,7 @@ namespace BurningKnight.level.entities {
 
 		public override bool HandleEvent(Event e) {
 			if (e is PostHealthModifiedEvent) {
-				if (GetComponent<HealthComponent>().HasNoHealth) {
+				if (GetComponent<HealthComponent>()!.HasNoHealth) {
 					if (!broken) {
 						HandleEvent(new GramophoneBrokenEvent {
 							Gramophone = this
@@ -233,8 +233,8 @@ namespace BurningKnight.level.entities {
 				return;
 			}
 
-			var item = Items.CreateAndAdd($"bk:disk_{disk}", Area);
-			item.CenterX = CenterX;
+			var item = Items.CreateAndAdd($"bk:disk_{disk}", Area!);
+			item!.CenterX = CenterX;
 			item.Y = Bottom + 4;
 
 			disk = 0;
@@ -248,7 +248,7 @@ namespace BurningKnight.level.entities {
 			});
 		}
 
-		public string GetTune() {
+		public string? GetTune() {
 			if (disk == 0) {
 				return null;
 			} else if (disk == 10) {
@@ -259,7 +259,7 @@ namespace BurningKnight.level.entities {
 		}
 		
 		public class DiskChangedEvent : Event {
-			public Gramophone Gramophone;
+			public Gramophone Gramophone = null!;
 			public int Disk;
 		}
 

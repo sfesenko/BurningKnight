@@ -19,7 +19,7 @@ using Lens.util.timer;
 namespace BurningKnight.entity.creature.npc {
 	public class Maanex2 : Npc {
 		private const int Cost = 8;
-		internal ClawControll clawControll;
+		internal ClawControll clawControll = null!;
 		
 		public override void AddComponents() {
 			base.AddComponents();
@@ -28,7 +28,7 @@ namespace BurningKnight.entity.creature.npc {
 			Height = 15;
 
 			AddComponent(new AnimationComponent("maanex"));
-			GetComponent<DropsComponent>().Add(new SingleDrop("bk:maanex_head"));
+			GetComponent<DropsComponent>()!.Add(new SingleDrop("bk:maanex_head"));
 
 			AddComponent(new InteractableComponent(Interact) {
 				CanInteract = e => !clawControll.Payed
@@ -40,22 +40,22 @@ namespace BurningKnight.entity.creature.npc {
 			Dialogs.RegisterCallback("maanex2_0", (d, c) => {
 				if (((ChoiceDialog) d).Choice == 0) {
 					try {
-						if (!c.To.TryGetComponent<ConsumablesComponent>(out var component) || component.Coins < Cost) {
-							return Dialogs.Get("maanex_11");
+						if (!c!.To!.TryGetComponent<ConsumablesComponent>(out var component) || component.Coins < Cost) {
+							return Dialogs.Get("maanex_11")!;
 						}
 
 						component.Coins -= Cost;
 						clawControll.Payed = true;
 
-						Timer.Add(() => { GetComponent<DialogComponent>().StartAndClose(Locale.Get("m2_3"), 1); }, 0.2f);
+						Timer.Add(() => { GetComponent<DialogComponent>()!.StartAndClose(Locale.Get("m2_3"), 1); }, 0.2f);
 					} catch (Exception e) {
-						GetComponent<DialogComponent>().StartAndClose(e.Message, 10);
+						GetComponent<DialogComponent>()!.StartAndClose(e.Message, 10);
 					}
 
-					return null;
+					return null!;
 				}
 
-				return null;
+				return null!;
 			});
 		}
 
@@ -63,7 +63,7 @@ namespace BurningKnight.entity.creature.npc {
 			base.PostInit();
 			
 			var h = GetComponent<HealthComponent>();
-			h.Unhittable = false;
+			h!.Unhittable = false;
 			h.InitMaxHealth = 50;
 			h.SetHealth(50, this);
 		}
@@ -71,7 +71,7 @@ namespace BurningKnight.entity.creature.npc {
 		private bool Interact(Entity e) {
 			var d = GetComponent<DialogComponent>();
 			
-			d.Dialog.Str.SetVariable("cost", Cost);
+			d!.Dialog!.Str!.SetVariable("cost", Cost);
 			d.Start("maanex2_0", e);
 			
 			return true;
@@ -80,24 +80,24 @@ namespace BurningKnight.entity.creature.npc {
 		public override bool HandleEvent(Event e) {
 			if (e is RoomChangedEvent rce) {
 				if (rce.Who is Player) {
-					var r = GetComponent<RoomComponent>().Room;
+					var r = GetComponent<RoomComponent>()!.Room;
 					
 					if (rce.New == r) {
 						// Wanna try out your skill?
-						GetComponent<DialogComponent>().Start("m2_2");
+						GetComponent<DialogComponent>()!.Start("m2_2");
 					} else if (rce.Old == r) {
-						GetComponent<DialogComponent>().Close();
+						GetComponent<DialogComponent>()!.Close();
 					}
 				}
 			} else if (e is DiedEvent de) {
 				Items.Unlock("bk:maanex_head");
 				ExplosionMaker.Make(this);
 
-				if (de.From is Player p && p.GetComponent<HatComponent>().Item?.Id == "bk:maanex_head") {
+				if (de.From is Player p && p.GetComponent<HatComponent>()!.Item?.Id == "bk:maanex_head") {
 					Achievements.Unlock("bk:maanex");
 				}
 			} else if (e is HealthModifiedEvent hme && hme.Amount < 0) {
-				GetComponent<DialogComponent>().StartAndClose(Maanex.Bruh[Rnd.Int(Maanex.Bruh.Length)], 2);
+				GetComponent<DialogComponent>()!.StartAndClose(Maanex.Bruh[Rnd.Int(Maanex.Bruh.Length)], 2);
 			}
 			
 			return base.HandleEvent(e);

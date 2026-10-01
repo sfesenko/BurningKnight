@@ -46,10 +46,10 @@ namespace BurningKnight.entity.creature.mob.boss {
 					delay = 3f;
 					count++;
 
-					Self.GetComponent<BkGraphicsComponent>().Animate();
+					Self.GetComponent<BkGraphicsComponent>()!.Animate();
 
-					var m = new Missile(Self, Self.Target);
-					Self.Area.Add(m);
+					var m = new Missile(Self, Self.Target!);
+					Self.Area!.Add(m);
 
 					m.HurtOwner = false;
 
@@ -66,14 +66,14 @@ namespace BurningKnight.entity.creature.mob.boss {
 							};
 
 							for (var j = 0; j < 5; j++) {
-								pp.Add(bb.Build());
+								pp.Add(bb.Build()!);
 							}
 				
 							pp.Launch(an, 40);
-							Self.Area.Add(pp);
+							Self.Area!.Add(pp);
 						}
 
-						var aa = Self.AngleTo(Self.Target);
+						var aa = Self.AngleTo(Self.Target!);
 						var bbb = new ProjectileBuilder(Self, "circle") {
 							Color = ProjectileColor.Orange
 						};
@@ -84,7 +84,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 							bbb.Scale = Rnd.Float(0.5f, 1f);
 							var b = bbb.Shoot(aa + Rnd.Float(-0.3f, 0.3f), Rnd.Float(2, 12)).Build();
 						
-							b.Center = p.Center;
+							b!.Center = p.Center;
 						}
 					});
 				}

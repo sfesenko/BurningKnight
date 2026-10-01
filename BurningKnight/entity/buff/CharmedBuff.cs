@@ -26,14 +26,14 @@ namespace BurningKnight.entity.buff {
 			if (lastParticle >= 0.4f) {
 				lastParticle = 0;
 
-				var part = new ParticleEntity(new Particle(Controllers.Float, new TexturedParticleRenderer(CommonAse.Particles.GetSlice($"heart_{Rnd.Int(1, 4)}"))));
+				var part = new ParticleEntity(new Particle(Controllers.Float, new TexturedParticleRenderer(CommonAse.Particles.GetSlice($"heart_{Rnd.Int(1, 4)}")!)));
 				part.Position = Entity.Center;
 
 				if (Entity.TryGetComponent<ZComponent>(out var z)) {
 					part.Position -= new Vector2(0, z.Z);
 				}
 				
-				Entity.Area.Add(part);
+				Entity.Area!.Add(part);
 				
 				part.Particle.Velocity = new Vector2(Rnd.Float(8, 16) * (Rnd.Chance() ? -1 : 1), -Rnd.Float(30, 56));
 				part.Particle.Angle = 0;

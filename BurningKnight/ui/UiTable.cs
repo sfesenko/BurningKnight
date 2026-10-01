@@ -21,13 +21,13 @@ namespace BurningKnight.ui {
 
 		public void Clear() {
 			foreach (var e in entries) {
-				((UiPane) Super).Remove(e);
+				((UiPane) Super!).Remove(e);
 			}
 			
 			entries.Clear();
 		}
 
-		public void Add(string key, string value, bool h = false, Action<UiButton> a = null) {
+		public void Add(string key, string value, bool h = false, Action<UiButton>? a = null) {
 			value = value ?? "";
 
 			var entry = new UiTableEntry() {
@@ -40,7 +40,7 @@ namespace BurningKnight.ui {
 				entry.Color = ProjectileColor.Cyan;
 			}
 
-			((UiPane) Super).Add(entry);
+			((UiPane) Super!).Add(entry);
 			entries.Add(entry);
 		}
 
@@ -53,7 +53,7 @@ namespace BurningKnight.ui {
 		public override void Update(float dt) {
 			base.Update(dt);
 
-			var p = ((UiPane) Super).Position;
+			var p = ((UiPane) Super!).Position;
 			
 			for (var i = 0; i < entries.Count; i++) {
 				var e = entries[i];

@@ -5,7 +5,7 @@ namespace BurningKnight.entity.room.controllable {
 	public class AlwaysOnSpikes : Spikes {
 		protected override void InitState() {
 			On = true;
-			GetComponent<StateComponent>().Become<IdleState>();
+			GetComponent<StateComponent>()!.Become<IdleState>();
 		}
 	}
 }

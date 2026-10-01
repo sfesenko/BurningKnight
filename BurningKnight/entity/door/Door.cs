@@ -31,14 +31,14 @@ namespace BurningKnight.entity.door {
 		public bool Open {
 			get {
 				var component = GetComponent<StateComponent>();
-				return component.StateInstance is OpenState || component.StateInstance is OpeningState;
+				return component!.StateInstance is OpenState || component.StateInstance is OpeningState;
 			}	
 		}
 		
 		protected List<Entity> Colliding = new List<Entity>();
 		private float lastCollisionTimer;
 		private bool lit;
-		internal Room[] Rooms;
+		internal Room[]? Rooms;
 
 		public virtual Vector2 GetOffset() {
 			return new Vector2(0, Vertical ? -7 : -7);
@@ -56,9 +56,9 @@ namespace BurningKnight.entity.door {
 			// AddComponent(new ExplodableComponent());
 
 			if (OpenByDefault) {
-				GetComponent<StateComponent>().Become<OpenState>();
+				GetComponent<StateComponent>()!.Become<OpenState>();
 			} else {
-				GetComponent<StateComponent>().Become<ClosedState>();
+				GetComponent<StateComponent>()!.Become<ClosedState>();
 			}
 
 			AddTag(Tags.Door);
@@ -85,7 +85,7 @@ namespace BurningKnight.entity.door {
 		}
 
 		protected virtual void RenderShadow() {
-			GraphicsComponent.Render(true);
+			GraphicsComponent!.Render(true);
 		}
 
 		public override void Load(FileReader stream) {
@@ -110,7 +110,7 @@ namespace BurningKnight.entity.door {
 					if (Colliding.Count >= 1 && CanOpen()) {
 						var state = GetComponent<StateComponent>();
 
-						if (!(state.StateInstance is OpeningState || state.StateInstance is OpenState)) {
+						if (!(state!.StateInstance is OpeningState || state.StateInstance is OpenState)) {
 							HandleEvent(new DoorOpenedEvent {
 								Who = this
 							});
@@ -151,14 +151,14 @@ namespace BurningKnight.entity.door {
 				var x = (int) Math.Floor(CenterX / 16);
 				var y = (int) Math.Floor(Bottom / 16);
 
-				if (Context.Level.IsInside(x, y)) {
-					Context.Level.Passable[Context.Level.ToIndex(x, y)] = false;
+				if (Context.Level!.IsInside(x, y)) {
+					Context.Level!.Passable[Context.Level!.ToIndex(x, y)] = false;
 				}
 			}
 			
 			var state = GetComponent<StateComponent>();
 			
-			if (state.StateInstance is OpenState && Colliding.Count == 0 && !OpenByDefault) {
+			if (state!.StateInstance is OpenState && Colliding.Count == 0 && !OpenByDefault) {
 				lastCollisionTimer -= dt;
 
 				if (lastCollisionTimer <= 0) {
@@ -176,7 +176,7 @@ namespace BurningKnight.entity.door {
 				var pad = 4;
 				var rc = new Rectangle((int) (X + pad), (int) Y, (int) (Width - pad * 2), (int) Height);
 
-				foreach (var room in Area.Tagged[Tags.Room]) {
+				foreach (var room in Area!.Tagged[Tags.Room]) {
 					if (room.Overlaps(rc)) {
 						var r = (Room) room;
 						Rooms[i] = r;
@@ -223,20 +223,20 @@ namespace BurningKnight.entity.door {
 			public override void Init() {
 				base.Init();
 				
-				Self.GetComponent<AnimationComponent>().SetAutoStop(true);
+				Self.GetComponent<AnimationComponent>()!.SetAutoStop(true);
 			}
 
 			public override void Destroy() {
 				base.Destroy();
-				Self.GetComponent<AnimationComponent>().SetAutoStop(false);
+				Self.GetComponent<AnimationComponent>()!.SetAutoStop(false);
 			}
 
 			public override void Update(float dt) {
 				base.Update(dt);
 
-				if (Self.GetComponent<AnimationComponent>().Animation.Paused) {				
-					Self.GetComponent<AudioEmitterComponent>().EmitRandomizedPrefixed("level_door_close", 2);
-					Self.GetComponent<StateComponent>().Become<ClosedState>();
+				if (Self!.GetComponent<AnimationComponent>()!.Animation!.Paused) {				
+					Self.GetComponent<AudioEmitterComponent>()!.EmitRandomizedPrefixed("level_door_close", 2);
+					Self.GetComponent<StateComponent>()!.Become<ClosedState>();
 				}
 			}
 		}
@@ -249,20 +249,20 @@ namespace BurningKnight.entity.door {
 			public override void Init() {
 				base.Init();
 				
-				Self.GetComponent<AudioEmitterComponent>().EmitRandomizedPrefixed("level_door_open", 5);
-				Self.GetComponent<AnimationComponent>().SetAutoStop(true);
+				Self.GetComponent<AudioEmitterComponent>()!.EmitRandomizedPrefixed("level_door_open", 5);
+				Self.GetComponent<AnimationComponent>()!.SetAutoStop(true);
 			}
 
 			public override void Destroy() {
 				base.Destroy();
-				Self.GetComponent<AnimationComponent>().SetAutoStop(false);
+				Self.GetComponent<AnimationComponent>()!.SetAutoStop(false);
 			}
 
 			public override void Update(float dt) {
 				base.Update(dt);
 				
-				if (Self.GetComponent<AnimationComponent>().Animation.Paused) {
-					Self.GetComponent<StateComponent>().Become<OpenState>();
+				if (Self!.GetComponent<AnimationComponent>()!.Animation!.Paused) {
+					Self.GetComponent<StateComponent>()!.Become<OpenState>();
 				}
 			}
 		}

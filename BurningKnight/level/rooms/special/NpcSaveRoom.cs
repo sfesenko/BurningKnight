@@ -65,7 +65,7 @@ namespace BurningKnight.level.rooms.special {
 			return Achievements.IsComplete("bk:democracy") && Achievements.IsComplete("bk:mummified") && Achievements.IsComplete("bk:ice_boss") && Achievements.IsComplete("bk:bk_no_more") && Achievements.IsComplete("bk:sting_operation");
 		}
 
-		private static string GenerateNpc() {
+		private static string? GenerateNpc() {
 			var d = Context.Run.Depth;
 
 			foreach (var info in npcs) {
@@ -84,6 +84,7 @@ namespace BurningKnight.level.rooms.special {
 		}
 
 		public override void Paint(Level level) {
+			var area = level.Area!;
 			var ice = LevelSave.BiomeGenerated is IceBiome;
 		
 			if (ice) {
@@ -103,11 +104,11 @@ namespace BurningKnight.level.rooms.special {
 
 			var d = Connected.Values.First();
 			var npc = ShopNpc.FromId(id);
-			level.Area.Add(npc);
+			area.Add(npc);
 
 			var fl = Tiles.RandomFloorOrSpike();
 			
-			if (d.X == Left || d.X == Right) {
+			if (d!.X == Left || d.X == Right) {
 				var w = (int) (GetWidth() / 2f + Rnd.Int(-1, 1));
 				var door = new Dot(Left + w, Rnd.Int(Top + 2, Bottom - 2));
 				
@@ -121,7 +122,7 @@ namespace BurningKnight.level.rooms.special {
 				};
 				
 				dr.Center = door * 16 + new Vector2(12, 0);
-				level.Area.Add(dr);
+				area.Add(dr);
 				
 				var v = (d.X == Left ? -1 : 1);
 				
@@ -138,7 +139,7 @@ namespace BurningKnight.level.rooms.special {
 				
 				var dr = new CageDoor();
 				dr.Center = door * 16 + new Vector2(7, 8);
-				level.Area.Add(dr);
+				area.Add(dr);
 
 				var v = (d.Y == Top ? -1 : 1);
 				

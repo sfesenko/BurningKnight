@@ -7,7 +7,7 @@ using Lens.entity.component;
 
 namespace BurningKnight.entity.component {
 	public partial class RoomComponent : Component {
-		public Room Room;
+		public Room? Room;
 
 		public override void Init() {
 			base.Init();
@@ -33,7 +33,7 @@ namespace BurningKnight.entity.component {
 				}
 			}
 
-			foreach (var room in Entity.Area.Tagged[Tags.Room]) {
+			foreach (var room in Entity.Area!.Tagged[Tags.Room]) {
 				if (room.Contains(Entity.Center)) {
 					Room = (Room) room;
 					break;
@@ -51,7 +51,7 @@ namespace BurningKnight.entity.component {
 				Send(new RoomChangedEvent {
 					Who = Entity,
 					Old = old,
-					New = Room,
+					New = Room!,
 					WasDiscovered = Room == null || Room.Explored,
 					JustDiscovered = Room != null && !Room.Explored
 				});

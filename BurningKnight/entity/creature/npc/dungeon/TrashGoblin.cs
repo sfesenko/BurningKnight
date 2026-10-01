@@ -30,9 +30,9 @@ namespace BurningKnight.entity.creature.npc.dungeon {
 			
 			var dl = GetComponent<DialogComponent>();
 
-			dl.InitCallback = () => {
-				dl.Dialog.Str.AddIcon(CommonAse.Ui.GetSlice("note_0"));
-				dl.Dialog.Str.AddIcon(CommonAse.Ui.GetSlice("note_1"));
+			dl!.InitCallback = () => {
+				dl!.Dialog!.Str!.AddIcon(CommonAse.Ui.GetSlice("note_0")!);
+				dl.Dialog.Str.AddIcon(CommonAse.Ui.GetSlice("note_1")!);
 			};
 		}
 
@@ -50,7 +50,7 @@ namespace BurningKnight.entity.creature.npc.dungeon {
 			base.PostInit();
 
 			if (freed) {
-				GetComponent<AnimationComponent>().Animation.Tag = "free";
+				GetComponent<AnimationComponent>()!.Animation!.Tag = "free";
 			}
 		}
 
@@ -65,12 +65,12 @@ namespace BurningKnight.entity.creature.npc.dungeon {
 
 			freed = true;
 			
-			GetComponent<AnimationComponent>().Animation.Tag = "free";
-			GetComponent<DialogComponent>().StartAndClose("trash_goblin_1", 5);
+			GetComponent<AnimationComponent>()!.Animation!.Tag = "free";
+			GetComponent<DialogComponent>()!.StartAndClose("trash_goblin_1", 5);
 
 			Timer.Add(() => {
 				try {
-					ChestRegistry.PlaceRandom(BottomCenter + new Vector2(0, 12), Area);
+					ChestRegistry.PlaceRandom(BottomCenter + new Vector2(0, 12), Area!);
 				} catch (Exception ex) {
 					Log.Error(ex);
 				}
@@ -97,7 +97,7 @@ namespace BurningKnight.entity.creature.npc.dungeon {
 			area.Add(stand);
 			stand.Center = where + new Vector2(0, 4 + stand.Height);
 
-			stand.SetItem(Items.CreateAndAdd(Scourge.GenerateItemId(), area, false), null);
+			stand.SetItem(Items.CreateAndAdd(Scourge.GenerateItemId()!, area, false)!, null);
 		}
 
 		public override bool ShouldCollide(Entity entity) {

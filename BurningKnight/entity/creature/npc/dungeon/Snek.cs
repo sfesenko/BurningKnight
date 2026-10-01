@@ -27,7 +27,7 @@ namespace BurningKnight.entity.creature.npc.dungeon {
 		}
 
 		protected override void OnItemBought(ItemBoughtEvent ibe) {
-			foreach (var s in GetComponent<RoomComponent>().Room.Tagged[Tags.Item]) {
+			foreach (var s in GetComponent<RoomComponent>()!.Room!.Tagged[Tags.Item]) {
 				if (s is SnekStand st && st != ibe.Stand && st.Item != null) {
 					return;
 				}
@@ -35,7 +35,7 @@ namespace BurningKnight.entity.creature.npc.dungeon {
 
 			var d = GetComponent<DialogComponent>();
 			
-			d.StartAndClose("snek_6", 3);
+			d!.StartAndClose("snek_6", 3);
 
 			Timer.Add(() => {
 				d.StartAndClose("snek_7", 3);
@@ -45,9 +45,9 @@ namespace BurningKnight.entity.creature.npc.dungeon {
 					Done = true;
 
 					var stand = new SnekStand();
-					Area.Add(stand);
+					Area!.Add(stand);
 					stand.Center = Center;
-					stand.SetItem(Items.CreateAndAdd("bk:snek", Area), this);
+					stand.SetItem(Items.CreateAndAdd("bk:snek", Area)!, this);
 				}, 4f);
 			}, 4f);
 		}
@@ -69,7 +69,7 @@ namespace BurningKnight.entity.creature.npc.dungeon {
 				stand.Center = where + new Vector2((stand.Width + 4) * i, 4 + stand.Height);
 
 				var id = Items.GenerateAndRemove(pool, null, true);
-				stand.SetItem(Items.CreateAndAdd(id, area, false), null);
+				stand.SetItem(Items.CreateAndAdd(id, area, false)!, null);
 			}
 		}
 

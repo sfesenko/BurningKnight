@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.item.use {
 	public class TeleportToPrevRoomUse : ItemUse {
-		private Room previous;
+		private Room? previous;
 
 		public override void Use(Entity e, Item item) {
 			base.Use(e, item);
@@ -18,7 +18,7 @@ namespace BurningKnight.entity.item.use {
 			
 			AnimationUtil.TeleportAway(e, () => {
 				e.Center = previous.GetRandomFreeTile() * 16 + new Vector2(8);
-				Context.Camera.Jump();
+				Context.Camera!.Jump();
 				AnimationUtil.TeleportIn(e);
 
 				previous = null;

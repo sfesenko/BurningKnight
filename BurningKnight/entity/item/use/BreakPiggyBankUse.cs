@@ -10,7 +10,7 @@ namespace BurningKnight.entity.item.use {
 			base.Use(entity, item);
 
 			var amount = Context.Run.Depth * 5;
-			entity.GetComponent<ConsumablesComponent>().Coins += amount;
+			entity.GetComponent<ConsumablesComponent>()!.Coins += amount;
 			
 			TextParticle.Add(entity, Locale.Get("coins"), amount, true);
 		}

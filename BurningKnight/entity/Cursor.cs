@@ -16,7 +16,7 @@ using Color = Microsoft.Xna.Framework.Color;
 
 namespace BurningKnight.entity {
 	public class Cursor : Entity, CustomCameraJumper {
-		private static TextureRegion[] regions;
+		private static TextureRegion[] regions = null!;
 
 		private Vector2 scale = new Vector2(1);
 		private Vector2 stickOffset;
@@ -25,7 +25,7 @@ namespace BurningKnight.entity {
 		private Color tint;
 		private Vector2 lastPos;
 
-		public Player Player;
+		public Player Player = null!;
 		public Vector2 GamePosition;
 
 		public override void Init() {
@@ -40,23 +40,24 @@ namespace BurningKnight.entity {
 			AddTag(Tags.Cursor);
 			regions ??=
 			[
-				CommonAse.Ui.GetSlice("cursor_a"),
-				CommonAse.Ui.GetSlice("cursor_b"),
-				CommonAse.Ui.GetSlice("cursor_c"),
-				CommonAse.Ui.GetSlice("cursor_d"),
-				CommonAse.Ui.GetSlice("cursor_e"),
-				CommonAse.Ui.GetSlice("cursor_f"),
-				CommonAse.Ui.GetSlice("cursor_g"),
-				CommonAse.Ui.GetSlice("cursor_j"),
-				CommonAse.Ui.GetSlice("cursor_k")
+				CommonAse.Ui.GetSlice("cursor_a")!,
+				CommonAse.Ui.GetSlice("cursor_b")!,
+				CommonAse.Ui.GetSlice("cursor_c")!,
+				CommonAse.Ui.GetSlice("cursor_d")!,
+				CommonAse.Ui.GetSlice("cursor_e")!,
+				CommonAse.Ui.GetSlice("cursor_f")!,
+				CommonAse.Ui.GetSlice("cursor_g")!,
+				CommonAse.Ui.GetSlice("cursor_j")!,
+				CommonAse.Ui.GetSlice("cursor_k")!
 			];
 		}
 
 		public override void Update(float dt) {
+			var camera = Context.Camera!;
 			base.Update(dt);
 
 			if (Player.Dead) {
-				var found = Area.Entities.Entities.Any(e => e is Cursor && e != this);
+				var found = Area!.Entities.Entities.Any(e => e is Cursor && e != this);
 
 				if (found) {
 					Done = true;
@@ -71,12 +72,12 @@ namespace BurningKnight.entity {
 
 			var input = Player.GetComponent<InputComponent>();
 			
-			if (input.KeyboardEnabled && (Input.Mouse.WasMoved || !input.GamepadEnabled || input.GamepadData == null || input.GamepadData.Attached)) {
+			if (input!.KeyboardEnabled && (Input.Mouse.WasMoved || !input.GamepadEnabled || input.GamepadData == null || input.GamepadData.Attached)) {
 				var pos = Input.Mouse.ScreenPosition;
 
 				if (pos != lastPos) {
 					lastPos = pos;
-					Position = Context.Camera.CameraToUi(GamePosition = Context.Camera.ScreenToCamera(pos));
+					Position = camera.CameraToUi(GamePosition = camera.ScreenToCamera(pos));
 				}
 			}
 
@@ -85,7 +86,7 @@ namespace BurningKnight.entity {
 			if (controller != null && Engine.Instance.State is InGameState { Paused: false, Died: false } && !Context.Run.Won) {
 				if (needsAdjusting) {
 					needsAdjusting = false;
-					Position = Context.Camera.CameraToUi(GamePosition = Player.Center);
+					Position = camera.CameraToUi(GamePosition = Player.Center);
 				}
 				
 				var stick = controller.GetRightStick();
@@ -119,7 +120,7 @@ namespace BurningKnight.entity {
 					}
 
 					stickOffset += l * new Vector2(dx, dy) * dt * 10f * Settings.Sensivity;
-					Position = Context.Camera.CameraToUi(GamePosition = (Player.Center + stickOffset * (48 * Settings.CursorRadius)));
+					Position = camera.CameraToUi(GamePosition = (Player.Center + stickOffset * (48 * Settings.CursorRadius)));
 
 					double a = 0;
 					var pressed = false;
@@ -138,7 +139,7 @@ namespace BurningKnight.entity {
 					}
 
 					if (pressed) {
-						Position = Context.Camera.CameraToUi(GamePosition = (Player.Center + MathUtils.CreateVector(a, 48)));
+						Position = camera.CameraToUi(GamePosition = (Player.Center + MathUtils.CreateVector(a, 48)));
 					}
 				}
 			}

@@ -12,21 +12,21 @@ namespace BurningKnight.entity.creature.npc {
 			var anim = new AnimationComponent("ord");
 			AddComponent(anim);
 
-			anim.Animation.AutoStop = true;
+			anim!.Animation!.AutoStop = true;
 			anim.Animation.OnEnd += OnAnimationEnd;
 
 			AddComponent(new RectBodyComponent(-4, -4, Width + 8, Height + 8));
 			
 			AddComponent(new InteractableComponent(e => {
-				GetComponent<AnimationComponent>().Animation.Tag = "turnon";
+				GetComponent<AnimationComponent>()!.Animation!.Tag = "turnon";
 				return true;
 			}));
 		}
 
 		private void OnAnimationEnd() {
-			var anim = GetComponent<AnimationComponent>().Animation;
+			var anim = GetComponent<AnimationComponent>()!.Animation;
 
-			if (anim.Tag == "turnon") {
+			if (anim!.Tag == "turnon") {
 				anim.Tag = "choice";
 			}
 		}

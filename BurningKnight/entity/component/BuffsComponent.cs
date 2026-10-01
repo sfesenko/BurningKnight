@@ -29,7 +29,7 @@ namespace BurningKnight.entity.component {
 			}
 		}
 		
-		public Buff Add(Buff buff) {
+		public Buff? Add(Buff buff) {
 			if (buff == null) {
 				return null;
 			}
@@ -71,7 +71,7 @@ namespace BurningKnight.entity.component {
 		}
 
 		public Buff Add(string id) {
-			return Add(BuffRegistry.Create(id));
+			return Add(BuffRegistry.Create(id)!)!;
 		}
 
 		public bool Has<T>() {
@@ -150,7 +150,7 @@ namespace BurningKnight.entity.component {
 			var count = reader.ReadByte();
 
 			for (int i = 0; i < count; i++) {
-				var buff = Add(reader.ReadString());
+				var buff = Add(reader.ReadString()!);
 				buff.TimeLeft = reader.ReadFloat();
 				buff.Entity = Entity;
 				buff.Init();

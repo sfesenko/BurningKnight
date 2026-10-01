@@ -6,7 +6,7 @@ using Lens.util.file;
 
 namespace BurningKnight.entity.item.stand {
 	public partial class PermanentStand : ItemStand {
-		protected string SavedItem;
+		protected string? SavedItem;
 
 		public override void PostInit() {
 			base.PostInit();
@@ -24,10 +24,10 @@ namespace BurningKnight.entity.item.stand {
 			}
 
 			debugItem = SavedItem;
-			SetItem(Items.CreateAndAdd(SavedItem, Area), null);
+			SetItem(Items.CreateAndAdd(SavedItem, Area!)!, null);
 		}
 
-		public override void SetItem(Item i, Entity entity, bool remove = true) {
+		public override void SetItem(Item? i, Entity? entity, bool remove = true) {
 			base.SetItem(i, entity, remove);
 			Item?.CheckMasked();
 		}
@@ -35,7 +35,7 @@ namespace BurningKnight.entity.item.stand {
 
 		public override void Save(FileWriter stream) {
 			base.Save(stream);
-			stream.WriteString(SavedItem);
+			stream.WriteString(SavedItem!);
 		}
 
 		public override void Load(FileReader stream) {

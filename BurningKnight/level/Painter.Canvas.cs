@@ -35,7 +35,7 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.level {
 	public partial class Painter {
-		public static Rect Clip;
+		public static Rect? Clip;
 		public static void Set(Level Level, int cell, Tile Value) {
 			if (Clip != null && !Clip.Contains(Level.FromIndexX(cell), Level.FromIndexY(cell))) {
 				return;

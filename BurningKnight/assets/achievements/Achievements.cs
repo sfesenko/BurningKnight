@@ -28,16 +28,16 @@ namespace BurningKnight.assets.achievements {
 
 		private static readonly System.Numerics.Vector2 size = new(300, 400);
 
-		public static AchievementUnlockedCallback UnlockedCallback;
-		public static AchievementLockedCallback LockedCallback;
-		public static AchievementProgressSetCallback ProgressSetCallback;
-		public static Action PostLoadCallback;
+		public static AchievementUnlockedCallback? UnlockedCallback;
+		public static AchievementLockedCallback? LockedCallback;
+		public static AchievementProgressSetCallback? ProgressSetCallback;
+		public static Action? PostLoadCallback = null!;
 
 		// Created on first use: a field initializer would make an ImGui native call as soon as the
 		// class is touched, and a release run must not touch ImGui at all.
 
 
-		public static Achievement Get(string id)
+		public static Achievement? Get(string id)
 		{
 			if (!Defined.TryGetValue(id, out var a))
 			{
@@ -100,7 +100,7 @@ namespace BurningKnight.assets.achievements {
 		public static void LoadState() {
 			foreach (var a in Defined.Values) {
 				a.Unlocked = GlobalSave.IsTrue($"ach_{a.Id}");
-				a.CompletionDate = GlobalSave.GetString($"ach_{a.Id}_date", "???");
+				a.CompletionDate = GlobalSave.GetString($"ach_{a.Id}_date", "???")!;
 			}
 		}
 
@@ -234,7 +234,7 @@ namespace BurningKnight.assets.achievements {
 				Achievement = a
 			};
 			
-			Context.Area.EventListener.Handle(e);
+			Context.Area!.EventListener.Handle(e);
 			Engine.Instance.State.Ui.EventListener.Handle(e);
 			
 			try {
@@ -251,7 +251,7 @@ namespace BurningKnight.assets.achievements {
 #if DEBUG
 		// The achievement editor (Achievements.Debug.cs) is Debug-only, and so are its fields.
 		private static string _achievementName = "";
-		private static Achievement _selected;
+		private static Achievement? _selected;
 		private static bool _hideLocked;
 		private static bool _hideUnlocked;
 		private static bool _forceFocus;

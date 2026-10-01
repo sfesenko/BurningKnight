@@ -22,7 +22,7 @@ namespace BurningKnight.entity.creature.mob.desert {
 			AddComponent(body);
 
 			TouchDamage = 0;
-			body.Body.LinearDamping = 4;
+			body!.Body!.LinearDamping = 4;
 			
 			AddComponent(new ZAnimationComponent("fly"));
 			AddComponent(new ZComponent());
@@ -45,10 +45,10 @@ namespace BurningKnight.entity.creature.mob.desert {
 				return;
 			}
 			
-			GetComponent<AudioEmitterComponent>().EmitRandomized("mob_fire");
+			GetComponent<AudioEmitterComponent>()!.EmitRandomized("mob_fire");
 			var a = GetComponent<ZAnimationComponent>();
 					
-			Tween.To(0.6f, a.Scale.X, x => a.Scale.X = x, 0.2f);
+			Tween.To(0.6f, a!.Scale.X, x => a.Scale.X = x, 0.2f);
 			Tween.To(1.6f, a.Scale.Y, x => a.Scale.Y = x, 0.2f).OnEnd = () => {
 				Tween.To(1.8f, a.Scale.X, x => a.Scale.X = x, 0.1f);
 				Tween.To(0.2f, a.Scale.Y, x => a.Scale.Y = x, 0.1f).OnEnd = () => {
@@ -63,7 +63,7 @@ namespace BurningKnight.entity.creature.mob.desert {
 					};
 
 					var projectile = builder.Shoot(an, 8).Build();
-					projectile.Center = Center + MathUtils.CreateVector(an, 2f);
+					projectile!.Center = Center + MathUtils.CreateVector(an, 2f);
 				};
 			};
 		}
@@ -71,13 +71,13 @@ namespace BurningKnight.entity.creature.mob.desert {
 		#region Fly States
 		public class IdleState : SmartState<Fly> {
 			private bool searched;
-			private Entity target;
+			private Entity? target;
 
 			public override void Init() {
 				base.Init();
 				
 				var component = Self.GetComponent<ZComponent>();
-				Tween.To(0, component.Z, x => component.Z = x, 0.4f, Ease.BackOut);
+				Tween.To(0, component!.Z, x => component.Z = x, 0.4f, Ease.BackOut);
 			}
 
 			public override void Update(float dt) {
@@ -85,7 +85,7 @@ namespace BurningKnight.entity.creature.mob.desert {
 
 				if (!searched) {
 					searched = true;
-					target = Self.GetComponent<RoomComponent>().Room?.FindClosest(Self.Center, Tags.Mob, e => !e.HasComponent<OrbitalComponent>() && !(e is WallWalker || e is Boss));
+					target = Self.GetComponent<RoomComponent>()!.Room?.FindClosest(Self.Center, Tags.Mob, e => !e.HasComponent<OrbitalComponent>() && !(e is WallWalker || e is Boss));
 				}
 
 				if (target != null) {
@@ -93,7 +93,7 @@ namespace BurningKnight.entity.creature.mob.desert {
 						target.AddComponent(new OrbitGiverComponent());
 					}
 					
-					target.GetComponent<OrbitGiverComponent>().AddOrbiter(Self);
+					target.GetComponent<OrbitGiverComponent>()!.AddOrbiter(Self);
 					Become<OrbitingState>();
 					return;
 				}
@@ -108,7 +108,7 @@ namespace BurningKnight.entity.creature.mob.desert {
 
 				var s = dt * 300;
 
-				Self.GetComponent<SensorBodyComponent>().Velocity += new Vector2(dx / d * s, dy / d * s);
+				Self.GetComponent<SensorBodyComponent>()!.Velocity += new Vector2(dx / d * s, dy / d * s);
 				Self.PushFromOtherEnemies(dt, e => e.InAir());
 
 				if (T >= 3f) {
@@ -123,13 +123,13 @@ namespace BurningKnight.entity.creature.mob.desert {
 				base.Init();
 				
 				var component = Self.GetComponent<ZComponent>();
-				Tween.To(DefaultZ, component.Z, x => component.Z = x, 0.4f, Ease.BackOut);
+				Tween.To(DefaultZ, component!.Z, x => component.Z = x, 0.4f, Ease.BackOut);
 			}
 
 			public override void Update(float dt) {
 				base.Update(dt);
 
-				var orbiting = Self.GetComponent<OrbitalComponent>().Orbiting;
+				var orbiting = Self.GetComponent<OrbitalComponent>()!.Orbiting;
 				
 				if (orbiting == null) {
 					Become<IdleState>();
@@ -137,7 +137,7 @@ namespace BurningKnight.entity.creature.mob.desert {
 				}
 				
 				if (orbiting.TryGetComponent<ZComponent>(out var z)) {
-					Self.GetComponent<ZComponent>().Z = z.Z + DefaultZ;
+					Self.GetComponent<ZComponent>()!.Z = z.Z + DefaultZ;
 				}
 				
 				if (T >= 3f) {

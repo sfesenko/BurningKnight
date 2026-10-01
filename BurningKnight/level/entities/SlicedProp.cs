@@ -5,10 +5,10 @@ using Lens.util.file;
 
 namespace BurningKnight.level.entities {
 	public class SlicedProp : Prop {
-		public string Sprite;
+		public string Sprite = null!;
 		
-		public SlicedProp(string slice = null, int depth = 0) {
-			Sprite = slice;
+		public SlicedProp(string? slice = null, int depth = 0) {
+			Sprite = slice!;
 			Depth = depth;
 		}
 
@@ -40,7 +40,7 @@ namespace BurningKnight.level.entities {
 
 		public override void Load(FileReader stream) {
 			base.Load(stream);
-			Sprite = stream.ReadString();
+			Sprite = stream.ReadString()!;
 			Depth = stream.ReadSbyte();
 		}
 	}

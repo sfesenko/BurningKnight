@@ -14,7 +14,7 @@ namespace BurningKnight.entity.item {
 		private Item item;
 		private bool tweened;
 		private float y;
-		private TweenTask task;
+		private TweenTask task = null!;
 		
 		public ItemPickupFx(Item it) {
 			item = it;
@@ -59,11 +59,11 @@ namespace BurningKnight.entity.item {
 			
 			if (item.Animation == null) {
 				var c = item.GetComponent<ItemGraphicsComponent>();
-				yy = ItemGraphicsComponent.CalculateMove(c.T) * Display.UiScale;
+				yy = ItemGraphicsComponent.CalculateMove(c!.T) * Display.UiScale;
 			}
 			
-			Center = Context.Camera.CameraToUi(new Vector2(item.CenterX, item.Y - 8 + y + yy));
-			GetComponent<TextGraphicsComponent>().Angle = (float) (Math.Cos(Engine.Instance.State.Time) * 0.05f);
+			Center = Context.Camera!.CameraToUi(new Vector2(item.CenterX, item.Y - 8 + y + yy));
+			GetComponent<TextGraphicsComponent>()!.Angle = (float) (Math.Cos(Engine.Instance.State.Time) * 0.05f);
 		}
 		
 		public override void Render() {
@@ -79,13 +79,13 @@ namespace BurningKnight.entity.item {
 
 			if (!tweened) {
 				if (!item.TryGetComponent<InteractableComponent>(out var component) || component.CurrentlyInteracting == null) {
-					if (item.TryGetComponent<OwnerComponent>(out var owner) && owner.Owner is ItemStand stand && stand.GetComponent<InteractableComponent>().CurrentlyInteracting != null) {
+					if (item.TryGetComponent<OwnerComponent>(out var owner) && owner.Owner is ItemStand stand && stand.GetComponent<InteractableComponent>()!.CurrentlyInteracting != null) {
 						return;
 					}
 
 					task.Ended = true;
 					
-					Tween.To(GetComponent<TextGraphicsComponent>(), new {Scale = 0}, 0.2f).OnEnd = () => Done = true;
+					Tween.To(GetComponent<TextGraphicsComponent>()!, new {Scale = 0}, 0.2f).OnEnd = () => Done = true;
 					Tween.To(12, y, x => y = x, 0.5f);
 					
 					tweened = true;

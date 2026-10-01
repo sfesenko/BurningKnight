@@ -23,7 +23,7 @@ namespace BurningKnight.assets.particle.custom {
 		private Action callback;
 		private Vector2 offset;
 		
-		public ConsumableParticle(TextureRegion r, Player p, bool item = false, Action call = null, bool emerald = false) {
+		public ConsumableParticle(TextureRegion r, Player p, bool item = false, Action? call = null, bool emerald = false) {
 			AlwaysActive = true;
 			AlwaysVisible = true;
 
@@ -47,7 +47,7 @@ namespace BurningKnight.assets.particle.custom {
 				target += new Vector2(Display.UiWidth, 0);
 			}
 
-			callback = call;
+			callback = call!;
 		}
 
 		public override void PostInit() {
@@ -59,7 +59,7 @@ namespace BurningKnight.assets.particle.custom {
 				return;
 			}
 
-			Center = Context.Camera.CameraToUi(player.TopCenter) - offset;
+			Center = Context.Camera!.CameraToUi(player.TopCenter) - offset;
 
 			Timer.Add(() => {
 				tweened = true;
@@ -92,7 +92,7 @@ namespace BurningKnight.assets.particle.custom {
 					pos -= new Vector2(0, z.Z);
 				}
 				
-				Center = Context.Camera.CameraToUi(pos) - offset;
+				Center = Context.Camera!.CameraToUi(pos) - offset;
 			}
 		}
 

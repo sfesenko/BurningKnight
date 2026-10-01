@@ -14,10 +14,10 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.component {
 	public class AnimationComponent : GraphicsComponent {
-		public Animation Animation;
+		public Animation? Animation;
 		public Color Tint = Color.White;
 		private string name;
-		private ColorMap colorMap;
+		private ColorMap? colorMap;
 
 		public float ShadowOffset;
 		public Vector2 Scale = Vector2.One;
@@ -30,7 +30,7 @@ namespace BurningKnight.entity.component {
 		public bool Flash;
 		public readonly string Id;
 		
-		public AnimationComponent(string animationName, string layer = null, string tag = null) {
+		public AnimationComponent(string animationName, string? layer = null, string? tag = null) {
 			name = animationName;
 			Id = animationName;
 			
@@ -47,10 +47,10 @@ namespace BurningKnight.entity.component {
 		}
 
 		public void SetAutoStop(bool stop) {
-			Animation.AutoStop = stop;
+			Animation!.AutoStop = stop;
 		}
 		
-		private void ReloadAnimation(string layer = null, string tag = null) {
+		private void ReloadAnimation(string? layer = null, string? tag = null) {
 			var data = (colorMap == null) 
 				? Animations.Get(name) 
 				: Animations.GetColored(name, colorMap);
@@ -82,7 +82,7 @@ namespace BurningKnight.entity.component {
 
 			if (shadow) {
 				FlippedVerticaly = !FlippedVerticaly;
-				pos.Y += Animation.GetCurrentTexture().Height - ShadowOffset * 2;
+				pos.Y += Animation!.GetCurrentTexture().Height - ShadowOffset * 2;
 			}
 			
 			if (Entity.TryGetComponent<InteractableComponent>(out var component) && component.OutlineAlpha > 0.05f) {
@@ -238,7 +238,7 @@ namespace BurningKnight.entity.component {
 			return base.HandleEvent(e);
 		}
 
-		public void Animate(Action callback = null) {
+		public void Animate(Action? callback = null) {
 			Tween.To(1.8f, Scale.X, x => Scale.X = x, 0.1f);
 			Tween.To(0.2f, Scale.Y, x => Scale.Y = x, 0.1f).OnEnd = () => {
 				Tween.To(1, Scale.X, x => Scale.X = x, 0.4f);

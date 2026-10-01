@@ -16,14 +16,14 @@ namespace BurningKnight.entity.fx {
 		private string text;
 		private Entity entity;
 		private float y;
-		private TweenTask task;
+		private TweenTask task = null!;
 		private TextureRegion region;
 		private float offset;
 		
-		public InteractFx(Entity e, string str, TextureRegion sprite = null, float of = 0) {
+		public InteractFx(Entity e, string? str, TextureRegion? sprite = null, float of = 0) {
 			entity = e;
-			text = str;
-			region = sprite;
+			text = str!;
+			region = sprite!;
 			AlwaysActive = true;
 			AlwaysVisible = true;
 			offset = of;
@@ -71,10 +71,10 @@ namespace BurningKnight.entity.fx {
 				return;
 			}
 			
-			Center = Context.Camera.CameraToUi(new Vector2(entity.CenterX + offset, entity.Y - 8 + y));
+			Center = Context.Camera!.CameraToUi(new Vector2(entity.CenterX + offset, entity.Y - 8 + y));
 
 			if (region == null) {
-				GetComponent<TextGraphicsComponent>().Angle = (float) (Math.Cos(Engine.Instance.State.Time) * 0.05f);
+				GetComponent<TextGraphicsComponent>()!.Angle = (float) (Math.Cos(Engine.Instance.State.Time) * 0.05f);
 			}
 		}
 
@@ -93,7 +93,7 @@ namespace BurningKnight.entity.fx {
 				var d = entity.Done;
 
 				if (d || !entity.TryGetComponent<InteractableComponent>(out var component) || component.CurrentlyInteracting == null) {
-					if (!d && entity.TryGetComponent<OwnerComponent>(out var owner) && owner.Owner is ItemStand stand && stand.GetComponent<InteractableComponent>().CurrentlyInteracting != null) {
+					if (!d && entity.TryGetComponent<OwnerComponent>(out var owner) && owner.Owner is ItemStand stand && stand.GetComponent<InteractableComponent>()!.CurrentlyInteracting != null) {
 						return;
 					}
 
@@ -107,9 +107,9 @@ namespace BurningKnight.entity.fx {
 
 			if (region != null) {
 				var c = GetComponent<ScalableSliceComponent>();
-				Tween.To(0, c.Scale.X, x => c.Scale = new Vector2(x), 0.25f, Ease.BackOut).OnEnd = () => Done = true;
+				Tween.To(0, c!.Scale.X, x => c.Scale = new Vector2(x), 0.25f, Ease.BackOut).OnEnd = () => Done = true;
 			} else {
-				Tween.To(GetComponent<TextGraphicsComponent>(), new {Scale = 0}, 0.2f).OnEnd = () => Done = true;
+				Tween.To(GetComponent<TextGraphicsComponent>()!, new {Scale = 0}, 0.2f).OnEnd = () => Done = true;
 			}
 
 			Tween.To(12, y, x => y = x, 0.5f);

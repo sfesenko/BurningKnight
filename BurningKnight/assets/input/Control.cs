@@ -3,9 +3,9 @@ using Microsoft.Xna.Framework.Input;
 
 namespace BurningKnight.assets.input {
 	public class Control {
-		public Keys[] Keys;
-		public MouseButtons[] MouseButtons;
-		public Buttons[] Buttons;
+		public Keys[]? Keys;
+		public MouseButtons[]? MouseButtons;
+		public Buttons[] Buttons = null!;
 		public string Id;
 
 		public Control(string id, params Keys[] keys) {

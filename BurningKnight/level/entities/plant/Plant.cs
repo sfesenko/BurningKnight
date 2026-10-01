@@ -22,7 +22,7 @@ namespace BurningKnight.level.entities.plant {
 			if (GraphicsComponent == null) {
 				var s = variants[Variant % variants.Length];
 				var g = Variant == 255 ? new PlantGraphicsComponent("props", Events.Halloween ? "pumpkin" : "cabbadge")
-					: new PlantGraphicsComponent($"{Context.Level.Biome.Id}_biome", $"{s}{(Variant >= variants.Length ? "s" : "")}");
+					: new PlantGraphicsComponent($"{Context!.Level!.Biome!.Id}_biome", $"{s}{(Variant >= variants.Length ? "s" : "")}");
 				
 				AddComponent(g);
 				g.Flipped = Rnd.Chance();
@@ -30,7 +30,7 @@ namespace BurningKnight.level.entities.plant {
 				Width = g.Sprite.Width;
 				Height = g.Sprite.Height;
 
-				var caves = Context.Level.Biome is CaveBiome;
+				var caves = Context.Level!.Biome is CaveBiome;
 
 				if (Variant != 255 && (caves || Context.Run.Depth != 0 || (s != "plant_k" && s != "plant_m"))) {
 					if (caves) {

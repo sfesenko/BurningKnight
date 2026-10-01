@@ -6,7 +6,7 @@ using Lens.util.math;
 
 namespace BurningKnight.entity.creature.drop {
 	public partial class OneOfDrop : Drop {
-		public static string[] DropNames;
+		public static string[] DropNames = null!;
 		public static int CurrentDrop;
 		
 		public Drop[] Drops;
@@ -27,7 +27,7 @@ namespace BurningKnight.entity.creature.drop {
 					var results = drop.GetItems();
 					dropResults[i++] = results;
 
-					if (results == null || results.Count > 0) {
+					if (results.Count > 0) {
 						sum += drop.Chance;
 					}
 				}			
@@ -39,16 +39,14 @@ namespace BurningKnight.entity.creature.drop {
 				foreach (var drop in Drops) {
 					var d = dropResults[i++];
 					
-					if (d != null && d.Count == 0) {
+					if (d.Count == 0) {
 						continue;
 					}	
 					
 					sum += drop.Chance;
 
 					if (value <= sum) {
-						if (d != null) {
-							items.AddRange(d);
-						}
+						items.AddRange(d);
 						
 						break;
 					}
@@ -70,7 +68,7 @@ namespace BurningKnight.entity.creature.drop {
 				Drops = new Drop[drops.Count];
 
 				for (var i = 0; i < Drops.Length; i++) {
-					Drops[i] = LootTables.ParseDrop(drops[i]);
+					Drops[i] = LootTables.ParseDrop(drops[i])!;
 				}
 			}
 		}

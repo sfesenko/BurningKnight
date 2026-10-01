@@ -22,11 +22,11 @@ namespace BurningKnight.entity.orbital {
 	public static class OrbitalRegistry {
 		private static Dictionary<string, Func<Entity, Entity>> defined = new Dictionary<string, Func<Entity, Entity>>();
 
-		public static Entity Create(string id, Entity owner) {
+		public static Entity? Create(string id, Entity owner) {
 			return !defined.TryGetValue(id, out var d) ? null : d(owner);
 		}
 		
-		public static void Define(string id, Func<Entity, Entity> orbital, Mod mod = null) {
+		public static void Define(string id, Func<Entity, Entity> orbital, Mod? mod = null) {
 			defined[$"{(mod == null ? Mods.BurningKnight : mod.Prefix)}:{id}"] = orbital;
 		}
 
@@ -38,14 +38,14 @@ namespace BurningKnight.entity.orbital {
 
 			Define("prism", o => {
 				var orbital = new Prism();
-				o.Area.Add(orbital);
+				o.Area!.Add(orbital);
 				
 				return orbital;
 			});
 		
 			Define("goo", o => {
 				var orbital = new Orbital();
-				o.Area.Add(orbital);
+				o.Area!.Add(orbital);
 
 				var g = new ScalableSliceComponent("items", "bk:goo") {
 					ShadowZ = 2
@@ -68,7 +68,7 @@ namespace BurningKnight.entity.orbital {
 			
 			Define("bullet_stone", o => {
 				var orbital = new Orbital();
-				o.Area.Add(orbital);
+				o.Area!.Add(orbital);
 
 				var g = new ScalableSliceComponent("items", "bk:bullet_stone") {
 					ShadowZ = 2
@@ -94,14 +94,14 @@ namespace BurningKnight.entity.orbital {
 					if (timer >= 2f) {
 						timer = 0;
 						
-						if ((o.GetComponent<RoomComponent>().Room?.Tagged[Tags.MustBeKilled].Count ?? 0) == 0) {
+						if ((o.GetComponent<RoomComponent>()!.Room?.Tagged[Tags.MustBeKilled].Count ?? 0) == 0) {
 							return;
 						}
 						
-						o.GetComponent<AudioEmitterComponent>().EmitRandomizedPrefixed("item_gun_fire", 2, 0.5f);
+						o.GetComponent<AudioEmitterComponent>()!.EmitRandomizedPrefixed("item_gun_fire", 2, 0.5f);
 
 
-						var a = orbital.AngleTo(o.GetComponent<AimComponent>().RealAim);
+						var a = orbital.AngleTo(o.GetComponent<AimComponent>()!.RealAim);
 
 
 						var builder = new ProjectileBuilder(o, "small") {
@@ -119,8 +119,8 @@ namespace BurningKnight.entity.orbital {
 							Owner = Owner
 						});*/
 
-						projectile.Owner = orbital;
-						orbital.GetComponent<ScalableSliceComponent>().Animate();
+						projectile!.Owner = orbital;
+						orbital.GetComponent<ScalableSliceComponent>()!.Animate();
 					}
 				};
 				
@@ -129,7 +129,7 @@ namespace BurningKnight.entity.orbital {
 			
 			Define("sword", o => {
 				var orbital = new Orbital();
-				o.Area.Add(orbital);
+				o.Area!.Add(orbital);
 
 				var g = new ScalableSliceComponent("items", "bk:sword_orbital") {
 					ShadowZ = 2
@@ -142,8 +142,8 @@ namespace BurningKnight.entity.orbital {
 				orbital.AddComponent(new RectBodyComponent(0, 0, 9, 15, BodyType.Dynamic, true));
 				
 				orbital.OnCollision += (or, e) => {
-					if (e is Creature c && c.IsFriendly() != ((Creature) orbital.Owner).IsFriendly()) {
-						c.GetComponent<HealthComponent>().ModifyHealth(-1, orbital);
+					if (e is Creature c && c.IsFriendly() != ((Creature) orbital.Owner!).IsFriendly()) {
+						c.GetComponent<HealthComponent>()!.ModifyHealth(-1, orbital);
 					} else if (e is Projectile p && p.Owner != orbital.Owner) {
 						p.Break();
 					}
@@ -154,7 +154,7 @@ namespace BurningKnight.entity.orbital {
 			
 			Define("broken_stone", o => {
 				var orbital = new Orbital();
-				o.Area.Add(orbital);
+				o.Area!.Add(orbital);
 				
 				var g = new ScalableSliceComponent("items", "bk:broken_stone") {
 					ShadowZ = 2
@@ -182,7 +182,7 @@ namespace BurningKnight.entity.orbital {
 			
 			Define("jelly", o => {
 				var orbital = new Orbital();
-				o.Area.Add(orbital);
+				o.Area!.Add(orbital);
 
 				var g = new ScalableSliceComponent("items", "bk:jelly") {
 					ShadowZ = 2
@@ -199,7 +199,7 @@ namespace BurningKnight.entity.orbital {
 						p.Owner = o;
 
 						var b = p.GetAnyComponent<BodyComponent>();
-						var d = b.Velocity.Length();
+						var d = b!.Velocity.Length();
 						var a = b.Velocity.ToAngle() - Math.PI + Rnd.Float(-0.3f, 0.3f);
 
 						b.Velocity = new Vector2((float) Math.Cos(a) * d, (float) Math.Sin(a) * d);
@@ -215,7 +215,7 @@ namespace BurningKnight.entity.orbital {
 			
 			Define("nano_orb", o => {
 				var orbital = new Orbital();
-				o.Area.Add(orbital);
+				o.Area!.Add(orbital);
 
 				var g = new ScalableSliceComponent("items", "bk:nano_orb") {
 					ShadowZ = 2
@@ -238,7 +238,7 @@ namespace BurningKnight.entity.orbital {
 			
 			Define("planet", o => {
 				var orbital = new Orbital();
-				o.Area.Add(orbital);
+				o.Area!.Add(orbital);
 
 				var g = new ScalableSliceComponent("items", "bk:earth") {
 					ShadowZ = 2
@@ -253,15 +253,15 @@ namespace BurningKnight.entity.orbital {
 				orbital.OnCollision += (or, e) => {
 					if (e is Projectile p && p.Owner != orbital.Owner) {
 						p.Break();
-						var s = (ScalableSliceComponent) or.GraphicsComponent;
+						var s = (ScalableSliceComponent) or.GraphicsComponent!;
 
-						if (Math.Abs(s.Scale.Y - 1) > 0.01f) {
+						if (Math.Abs(s!.Scale.Y - 1) > 0.01f) {
 							return; // Already animating
 						}
 
 						Tween.To(1, 1.5f, x => s.Scale.X = x, 0.3f);
 						Tween.To(0, 1, x => s.Scale.Y = x, 0.2f).OnEnd = () => {
-							s.Sprite = CommonAse.Items.GetSlice(planets[Rnd.Int(planets.Length)]);
+							s.Sprite = CommonAse.Items.GetSlice(planets[Rnd.Int(planets.Length)])!;
 							s.SetOwnerSize();
 							
 							orbital.RemoveComponent<CircleBodyComponent>();
@@ -278,7 +278,7 @@ namespace BurningKnight.entity.orbital {
 		
 			Define("marshmallow", o => {
 				var orbital = new Marshmallow();
-				o.Area.Add(orbital);
+				o.Area!.Add(orbital);
 				return orbital;
 			});
 		}

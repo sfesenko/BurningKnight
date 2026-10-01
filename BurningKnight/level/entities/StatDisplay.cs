@@ -11,7 +11,7 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.level.entities {
 	public partial class StatDisplay : SolidProp {
-		private string board;
+		private string board = null!;
 		private int challengeId;
 
 		protected override Rectangle GetCollider() {
@@ -74,7 +74,7 @@ namespace BurningKnight.level.entities {
 		public override void Load(FileReader stream) {
 			base.Load(stream);
 			
-			board = stream.ReadString();
+			board = stream.ReadString()!;
 
 			if (board == "challenge") {
 				challengeId = stream.ReadInt32();

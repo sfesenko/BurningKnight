@@ -16,9 +16,9 @@ using MathUtils = Lens.util.MathUtils;
 
 namespace BurningKnight.assets.particle.custom {
 	public class FireParticle : Entity {
-		public static TextureRegion Region;
+		public static TextureRegion? Region;
 		
-		public Entity Owner;
+		public Entity? Owner;
 		public float Delay;
 
 		public float T;
@@ -84,7 +84,7 @@ namespace BurningKnight.assets.particle.custom {
 			T += dt;
 
 			if (T > 0.3f) {
-				if (Context.Level != null && Context.Level.Biome is CaveBiome) {
+				if (Context.Level != null && Context.Level!.Biome is CaveBiome) {
 					R = Math.Max(0, R - dt * 3 * Mod);
 					G = Math.Max(0, G - dt * 0.3f * Mod);
 					B = Math.Max(0, B - dt * Mod);
@@ -142,14 +142,14 @@ namespace BurningKnight.assets.particle.custom {
 			}
 
 			if (Hurts) {
-				GetComponent<CircleBodyComponent>().Position = Position + Offset;
+				GetComponent<CircleBodyComponent>()!.Position = Position + Offset;
 			}
 		}
 
 		public override bool HandleEvent(Event e) {
 			if (e is CollisionStartedEvent cse) {
 				if (cse.Entity is Player p) {
-					p.GetComponent<HealthComponent>().ModifyHealth(-1, this);
+					p.GetComponent<HealthComponent>()!.ModifyHealth(-1, this);
 				}
 			}
 			
@@ -168,7 +168,7 @@ namespace BurningKnight.assets.particle.custom {
 			}
 			
 			var a = (float) Math.Cos(T * 5f + SinOffset) * 0.4f;
-			var pos = Position + Offset + Region.Center;
+			var pos = Position + Offset + Region!.Center;
 
 			pos.X += (float) Math.Cos(SinOffset + T * 2.5f) * Scale * 8 * XChange;
 		

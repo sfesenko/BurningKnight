@@ -90,7 +90,7 @@ namespace BurningKnight.level.rooms {
 			var DoorCenter = new Dot(0, 0);
 
 			foreach (var Door in Connected.Values) {
-				DoorCenter.X += Door.X;
+				DoorCenter.X += Door!.X;
 				DoorCenter.Y += Door.Y;
 			}
 

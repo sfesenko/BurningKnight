@@ -70,7 +70,7 @@ namespace BurningKnight.ui.imgui {
 				if (current == 0) {
 					Engine.Instance.SetState(new LoadState());
 				} else {
-					Engine.Instance.SetState((GameState) Activator.CreateInstance(types[current]));
+					Engine.Instance.SetState((GameState) Activator.CreateInstance(types[current])!);
 				}
 			}
 			
@@ -81,7 +81,7 @@ namespace BurningKnight.ui.imgui {
 				ImGui.Text($"Render time: {Engine.RenderTime} ms");
 
 				if (Engine.Instance?.State?.Area?.Tagged?[Tags.Projectile] != null) {
-					ImGui.Text($"Projectiles: {Context.Area.Tagged[Tags.Projectile].Count}");
+					ImGui.Text($"Projectiles: {Context.Area!.Tagged[Tags.Projectile].Count}");
 				}
 
 				float mem;
@@ -119,7 +119,7 @@ namespace BurningKnight.ui.imgui {
 						fps[i - 1] = fps[i];
 					}
 
-					fps[^1] = Engine.Instance.AverageFramesPerSecond;
+					fps[^1] = Engine.Instance!.AverageFramesPerSecond;
 				}
 
 				ImGui.PlotHistogram("FPS", ref fps[0], fps.Length, 0, null, 0, 60);
@@ -139,7 +139,7 @@ namespace BurningKnight.ui.imgui {
 				ImGui.PlotHistogram("CPU", ref cpuUsage[0], cpuUsage.Length, 0, null, 0, 100);
 
 
-				ImGui.DragFloat("Speed", ref Engine.Instance.Speed, 0.01f, 0.1f, 2f);
+				ImGui.DragFloat("Speed", ref Engine.Instance!.Speed, 0.01f, 0.1f, 2f);
 
 				ImGui.Text($"Draw calls: {Engine.Graphics.GraphicsDevice.Metrics.DrawCount}");
 				ImGui.Text($"Clear calls: {Engine.Graphics.GraphicsDevice.Metrics.ClearCount}");
@@ -165,7 +165,7 @@ namespace BurningKnight.ui.imgui {
 
 			if (ImGui.CollapsingHeader("Camera")) {
 				var c = Context.Camera;
-				var v = c.X;
+				var v = c!.X;
 
 				if (ImGui.DragFloat("X", ref v)) {
 					c.X = v;
@@ -207,16 +207,16 @@ namespace BurningKnight.ui.imgui {
 			ImGui.SameLine();
 
 			if (ImGui.Button("Kill")) {
-				LocalPlayer.Locate(Context.Level.Area)?.GetComponent<HealthComponent>().Kill(null);
+				LocalPlayer.Locate(Context.Level!.Area!)?.GetComponent<HealthComponent>()!.Kill(null);
 			}
 
 			ImGui.Separator();
 
 			if (Context.Level != null) {
-				var player = LocalPlayer.Locate(Context.Level.Area);
+				var player = LocalPlayer.Locate(Context.Level!.Area!);
 
 				if (player != null) {
-					ImGui.Checkbox("Unhittable", ref player.GetComponent<HealthComponent>().Unhittable);
+					ImGui.Checkbox("Unhittable", ref player.GetComponent<HealthComponent>()!.Unhittable);
 				}
 			}
 

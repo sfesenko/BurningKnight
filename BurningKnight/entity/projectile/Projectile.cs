@@ -37,14 +37,14 @@ namespace BurningKnight.entity.projectile {
 	public class Projectile : Entity, CollisionFilterEntity {
 		public const ProjectileFlags DefaultFlags = ProjectileFlags.Reflectable | ProjectileFlags.BreakableByMelee | ProjectileFlags.Fresh;
 
-		public Projectile Parent; // Potentially not needed
-		public Entity Owner;
-		public Entity FirstOwner; // Potentially not needed
-		public Item Item;
+		public Projectile Parent = null!; // Potentially not needed
+		public Entity Owner = null!;
+		public Entity FirstOwner = null!; // Potentially not needed
+		public Item Item = null!;
 		public Color Color = ProjectileColor.Red;
 		public ProjectileFlags Flags = DefaultFlags;
-		public ProjectileCallbacks Callbacks;
-		public string Slice;
+		public ProjectileCallbacks? Callbacks;
+		public string Slice = null!;
 
 		public List<Entity> EntitiesHurt = new List<Entity>(); // can we get rid of it?
 
@@ -59,7 +59,7 @@ namespace BurningKnight.entity.projectile {
 		}
 
 		public bool NearingDeath => T < 0.9f && T % 0.6f >= 0.3f;
-		public BodyComponent BodyComponent => GetAnyComponent<BodyComponent>();
+		public BodyComponent BodyComponent => GetAnyComponent<BodyComponent>()!;
 
 		public override void Init() {
 			base.Init();
@@ -77,7 +77,7 @@ namespace BurningKnight.entity.projectile {
 		}
 
 		protected virtual void RenderShadow() {
-			GraphicsComponent.Render(true);
+			GraphicsComponent!.Render(true);
 		}
 
 		public override void Update(float dt) {
@@ -116,26 +116,26 @@ namespace BurningKnight.entity.projectile {
 			var bodyComponent = GetAnyComponent<BodyComponent>();
 
 			if (!Dying && (Owner is Player || Owner is Sniper)) {
-				Position += bodyComponent.Body.LinearVelocity * dt;
+				Position += bodyComponent!.Body!.LinearVelocity * dt;
 			}
 
 			if (!HasFlag(ProjectileFlags.ManualRotation)) {
 				if (HasFlag(ProjectileFlags.AutomaticRotation)) {
-					bodyComponent.Body.Rotation += dt * 10;
+					bodyComponent!.Body!.Rotation += dt * 10;
 				} else {
-					bodyComponent.Body.Rotation = VectorExtension.ToAngle(bodyComponent.Body.LinearVelocity);
+					bodyComponent!.Body!.Rotation = VectorExtension.ToAngle(bodyComponent.Body.LinearVelocity);
 				}
 			}
 
 			if (Owner is Mob) {
-				if (Area.Tagged[Tags.Player].Count == 0) {
+				if (Area!.Tagged[Tags.Player].Count == 0) {
 					Break();
 
 					// Future proofing return, do not remove
 					return;
 				}
 			} else if (Owner is Player) {
-				if (Area.Tagged[Tags.PlayerProjectile].Count >= 69 && HasTag(Tags.PlayerProjectile)) {
+				if (Area!.Tagged[Tags.PlayerProjectile].Count >= 69 && HasTag(Tags.PlayerProjectile)) {
 					RemoveTag(Tags.PlayerProjectile);
 					Break();
 
@@ -175,7 +175,7 @@ namespace BurningKnight.entity.projectile {
 		}
 
 		// Aka should break on collision with it or no
-		public virtual bool BreaksFrom(Entity entity, BodyComponent body) {
+		public virtual bool BreaksFrom(Entity entity, BodyComponent? body) {
 			if (TryGetComponent<CollisionFilterComponent>(out var c)) {
 				var rs = c.Invoke(entity);
 
@@ -210,7 +210,7 @@ namespace BurningKnight.entity.projectile {
 				return false;
 			}
 
-			if (IsWall(entity, body)) {
+			if (IsWall(entity, body!)) {
 				return !HasFlag(ProjectileFlags.FlyOverWalls);
 			}
 
@@ -278,10 +278,10 @@ namespace BurningKnight.entity.projectile {
 
 				var mute = false;
 
-				if (Context.Level.Biome is IceBiome && !(Owner is creature.bk.BurningKnight) && cse.Entity is ProjectileLevelBody lvl) {
+				if (Context.Level!.Biome is IceBiome && !(Owner is creature.bk.BurningKnight) && cse.Entity is ProjectileLevelBody lvl) {
 					if (lvl.Break(CenterX, CenterY)) {
 						mute = true;
-						AudioEmitterComponent.Dummy(Area, Center).EmitRandomizedPrefixed("level_snow_break", 3);
+						AudioEmitterComponent.Dummy(Area!, Center).EmitRandomizedPrefixed("level_snow_break", 3);
 					}
 				}
 
@@ -289,9 +289,9 @@ namespace BurningKnight.entity.projectile {
 					if (IsWall(entity, cse.Body)) {
 						if (!mute) {
 							if (Owner is Player) {
-								AudioEmitterComponent.Dummy(Area, Center).EmitRandomizedPrefixed("projectile_wall", 2, 0.5f);
+								AudioEmitterComponent.Dummy(Area!, Center).EmitRandomizedPrefixed("projectile_wall", 2, 0.5f);
 							} else {
-								AudioEmitterComponent.Dummy(Area, Center).EmitRandomized("projectile_wall_enemy", 0.5f);
+								AudioEmitterComponent.Dummy(Area!, Center).EmitRandomized("projectile_wall_enemy", 0.5f);
 							}
 						}
 					}
@@ -310,7 +310,7 @@ namespace BurningKnight.entity.projectile {
 		public virtual void Resize(float scale) {
 			var graphics = GetComponent<ProjectileGraphicsComponent>();
 
-			var w = graphics.Sprite.Source.Width * scale;
+			var w = graphics!.Sprite.Source.Width * scale;
 			var h = graphics.Sprite.Source.Height * scale;
 			var center = Center;
 
@@ -319,13 +319,13 @@ namespace BurningKnight.entity.projectile {
 			Center = center;
 
 			if (HasComponent<CircleBodyComponent>()) {
-				GetComponent<CircleBodyComponent>().Resize(0, 0, w / 2f, w / 2, true);
+				GetComponent<CircleBodyComponent>()!.Resize(0, 0, w / 2f, w / 2, true);
 			} else {
-				GetComponent<RectBodyComponent>().Resize(0, 0, w, h, true);
+				GetComponent<RectBodyComponent>()!.Resize(0, 0, w, h, true);
 			}
 		}
 
-		public void Break(Entity from = null, bool timeout = false) {
+		public void Break(Entity? from = null, bool timeout = false) {
 			if (Dying) {
 				return;
 			}
@@ -334,9 +334,9 @@ namespace BurningKnight.entity.projectile {
 
 			try {
 				var bodyComponent = GetAnyComponent<BodyComponent>();
-				var l = Math.Min(15, bodyComponent.Velocity.Length());
+				var l = Math.Min(15, bodyComponent!.Velocity.Length());
 
-				if (l > 1f && Area.Tagged[Tags.Projectile].Count < 99) {
+				if (l > 1f && Area!.Tagged[Tags.Projectile].Count < 99) {
 					var a = VectorExtension.ToAngle(bodyComponent.Velocity);
 
 					for (var i = 0; i < 4; i++) {
@@ -344,15 +344,15 @@ namespace BurningKnight.entity.projectile {
 							Position = Center
 						};
 
-						Context.Level.Area.Add(part);
+						Context.Level!.Area!.Add(part);
 						part.Particle.Velocity = MathUtils.CreateVector(a + Rnd.Float(-0.4f, 0.4f), l);
 						part.Depth = Layers.WindFx;
 						part.Particle.Scale = 0.7f;
 					}
 				}
 
-				Context.Camera.ShakeMax(4);
-				Callbacks?.OnDeath?.Invoke(this, from, timeout);
+				Context.Camera!.ShakeMax(4);
+				Callbacks?.OnDeath?.Invoke(this, from!, timeout);
 
 				bodyComponent.Velocity = Vector2.Zero;
 			} catch (Exception e) {

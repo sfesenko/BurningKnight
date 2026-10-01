@@ -37,7 +37,7 @@ namespace BurningKnight.entity.creature.mob.prefabs {
 			Height = 16;
 			Left = Rnd.Chance();
 			
-			GetComponent<BuffsComponent>().AddImmunity<FrozenBuff>();
+			GetComponent<BuffsComponent>()!.AddImmunity<FrozenBuff>();
 		}
 
 		private bool locked;
@@ -50,7 +50,7 @@ namespace BurningKnight.entity.creature.mob.prefabs {
 				var y = (int) Math.Round((Y + 8) / 16f);
 				var level = Context.Level;
 
-				if (level.Get(x + 1, y).IsWall()) {
+				if (level!.Get(x + 1, y).IsWall()) {
 					dirs.Add(Direction.Left);
 				}
 
@@ -88,8 +88,8 @@ namespace BurningKnight.entity.creature.mob.prefabs {
 				AddComponent(body);
 				body.KnockbackModifier = 0;
 
-				GetComponent<WallAnimationComponent>().WallAngle = angle;
-				GetComponent<StateComponent>().State = GetIdleState();
+				GetComponent<WallAnimationComponent>()!.WallAngle = angle;
+				GetComponent<StateComponent>()!.State = GetIdleState();
 			} catch (Exception) {
 
 				Timer.Add(() => {
@@ -125,7 +125,7 @@ namespace BurningKnight.entity.creature.mob.prefabs {
 				velocity = Vector2.Zero;
 				vx = 0;
 				vy = 0;
-				Self.GetComponent<RectBodyComponent>().Velocity = velocity;
+				Self.GetComponent<RectBodyComponent>()!.Velocity = velocity;
 			}
 
 			public void InvertVelocity() {
@@ -133,7 +133,7 @@ namespace BurningKnight.entity.creature.mob.prefabs {
 				velocity *= -1;
 				vx *= -1;
 				vy *= -1;
-				Self.GetComponent<RectBodyComponent>().Velocity = velocity;
+				Self.GetComponent<RectBodyComponent>()!.Velocity = velocity;
 				T = 0;
 			}
 
@@ -182,8 +182,8 @@ namespace BurningKnight.entity.creature.mob.prefabs {
 				var mx = Self.X + (this.mx) * 16;
 				var my = Self.CenterY + (this.my) * 16;
 
-				if (!GameContext.Current.Level.Get((int) Math.Round(mx / 16f), (int) Math.Round(my / 16f)).IsWall()) {
-					Self.GetComponent<HealthComponent>().Kill(Self);
+				if (!GameContext.Current!.Level!.Get((int) Math.Round(mx / 16f), (int) Math.Round(my / 16f)).IsWall()) {
+					Self.GetComponent<HealthComponent>()!.Kill(Self);
 					return;
 				}
 				
@@ -210,7 +210,7 @@ namespace BurningKnight.entity.creature.mob.prefabs {
 				}
 
 				DoLogic(dt);
-				Self.GetComponent<RectBodyComponent>().Velocity = velocity;
+				Self.GetComponent<RectBodyComponent>()!.Velocity = velocity;
 			}
 
 			public virtual void DoLogic(float dt) {
@@ -232,7 +232,7 @@ namespace BurningKnight.entity.creature.mob.prefabs {
 				var en = ev.Entity;
 
 				if (en is Door || (en is SolidProp && !(en is BreakableProp))) {
-					var state = GetComponent<StateComponent>().StateInstance;
+					var state = GetComponent<StateComponent>()!.StateInstance;
 
 					if (state is IdleState s) {
 						s.Flip();
@@ -256,7 +256,7 @@ namespace BurningKnight.entity.creature.mob.prefabs {
 			base.Update(dt);
 			T += dt;
 
-			var room = GetComponent<RoomComponent>().Room;
+			var room = GetComponent<RoomComponent>()!.Room;
 
 			if (room == null) {
 				return;

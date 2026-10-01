@@ -71,7 +71,7 @@ namespace BurningKnight.state {
 
 					try {
 						// Needs xclip on linux
-						Clipboard.SetText(Context.Run.Seed);
+						Clipboard.SetText(Context.Run.Seed!);
 					} catch (Exception e) {
 						Log.Error(e);
 					}
@@ -134,7 +134,7 @@ namespace BurningKnight.state {
 			var lamp = "none";
 
 			try {
-				var l = player.GetComponent<LampComponent>().Item;
+				var l = player.GetComponent<LampComponent>()!.Item;
 
 				if (l != null) {
 					lamp = l.Id;
@@ -162,7 +162,7 @@ namespace BurningKnight.state {
 				} else if (Context.Run.Type == RunType.Daily) {
 					Achievements.Unlock("bk:daily");
 				} else if (Context.Run.Type == RunType.Regular) {
-					if (player.GetComponent<LampComponent>().Item?.Id != "bk:no_lamp") {
+					if (player.GetComponent<LampComponent>()!.Item?.Id != "bk:no_lamp") {
 						Achievements.Unlock("bk:unstoppable");
 					}
 
@@ -182,20 +182,20 @@ namespace BurningKnight.state {
 				Clickable = false
 			});
 
-			Context.Camera.Targets.Clear();
+			Context.Camera!.Targets.Clear();
 
 			var stats = new UiTable();
 
 			gameOverMenu.Add(stats);
 
 			stats.Add(Locale.Get("run_type"), Locale.Get($"run_{Context.Run.Type.ToString().ToLower()}") + (Context.Run.CustomSeed ? " " + Locale.Get("seeded") : ""));
-			stats.Add(Locale.Get("seed"), Context.Run.Seed, false, bt => {
+			stats.Add(Locale.Get("seed"), Context.Run.Seed!, false, bt => {
 				var b = (UiTableEntry) bt;
 				b.RealLocaleLabel = "copied_to_clipboard";
 
 				try {
 					// Needs xclip on linux
-					Clipboard.SetText(Context.Run.Seed);
+					Clipboard.SetText(Context.Run.Seed!);
 				} catch (Exception e) {
 					Log.Error(e);
 				}
@@ -206,7 +206,7 @@ namespace BurningKnight.state {
 			stats.Add(Locale.Get("lamp"), Locale.Get(lamp));
 			stats.Add(Locale.Get("time"), GetRunTime());
 			stats.Add(Locale.Get("depth"), Level.GetDepthString(true));
-			stats.Add(Locale.Get("coins_collected"), Context.Run.Statistics.CoinsObtained.ToString());
+			stats.Add(Locale.Get("coins_collected"), Context.Run.Statistics!.CoinsObtained!.ToString());
 			stats.Add(Locale.Get("items_collected"), Context.Run.Statistics.Items.Count.ToString());
 			stats.Add(Locale.Get("damage_taken"), Context.Run.Statistics.DamageTaken.ToString());
 			stats.Add(Locale.Get("kills"), Context.Run.Statistics.MobsKilled.ToString());
@@ -269,7 +269,7 @@ namespace BurningKnight.state {
 							var id2 = $"top_{i + 1}";
 
 							GlobalSave.Put(id2, GlobalSave.GetInt(id1));
-							GlobalSave.Put($"{id2}_data", GlobalSave.GetString($"{id1}_data"));
+							GlobalSave.Put($"{id2}_data", GlobalSave.GetString($"{id1}_data")!);
 						}
 					}
 

@@ -28,10 +28,10 @@ namespace BurningKnight.entity.creature.npc.dungeon {
 			});
 
 			Dialogs.RegisterCallback("elon_4", (d, cm) => {
-				var c = cm.To.GetComponent<ActiveWeaponComponent>();
+				var c = cm!.To!.GetComponent<ActiveWeaponComponent>();
 			
-				if (c.Item == null) {
-					return Dialogs.Get("elon_7");
+				if (c!.Item == null) {
+					return Dialogs.Get("elon_7")!;
 				}
 
 				interacted = true;
@@ -41,11 +41,11 @@ namespace BurningKnight.entity.creature.npc.dungeon {
 			
 				c.Drop();
 				i.Done = true;
-				c.Set(Items.CreateAndAdd(id, Area));
+				c.Set(Items.CreateAndAdd(id!, Area!)!);
 			
 				Context.Run.AddScourge(true);
 
-				return null;
+				return null!;
 			});
 		}
 
@@ -54,7 +54,7 @@ namespace BurningKnight.entity.creature.npc.dungeon {
 				return true;
 			}
 			
-			GetComponent<DialogComponent>().Start("elon_3", e);
+			GetComponent<DialogComponent>()!.Start("elon_3", e);
 			return true;
 		}
 

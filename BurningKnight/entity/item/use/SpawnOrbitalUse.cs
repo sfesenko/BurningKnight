@@ -8,7 +8,7 @@ using Lens.util;
 
 namespace BurningKnight.entity.item.use {
 	public partial class SpawnOrbitalUse : ItemUse {
-		private string orbital;
+		private string orbital = null!;
 		private bool random;
 		private bool onlyIfHasNone;
 
@@ -16,7 +16,7 @@ namespace BurningKnight.entity.item.use {
 			if (onlyIfHasNone) {
 				var inventory = entity.GetComponent<InventoryComponent>();
 
-				foreach (var i in inventory.Items) {
+				foreach (var i in inventory!.Items) {
 					if (ItemPool.Orbital.Contains(i.Data.Pools)) {
 						return;
 					}
@@ -24,7 +24,7 @@ namespace BurningKnight.entity.item.use {
 			}
 			
 			if (random) {
-				entity.GetComponent<InventoryComponent>().Pickup(Items.CreateAndAdd(Items.Generate(ItemPool.Orbital), entity.Area, true));
+				entity.GetComponent<InventoryComponent>()!.Pickup(Items.CreateAndAdd(Items.Generate(ItemPool.Orbital)!, entity.Area!, true)!);
 				return;
 			}
 			
@@ -35,7 +35,7 @@ namespace BurningKnight.entity.item.use {
 				return;
 			}
 			
-			entity.GetComponent<OrbitGiverComponent>().AddOrbiter(o);
+			entity.GetComponent<OrbitGiverComponent>()!.AddOrbiter(o);
 		}
 
 		public override void Setup(JsonValue settings) {

@@ -40,7 +40,7 @@ namespace BurningKnight.entity.door {
 			if (TryGetComponent<LockComponent>(out var l)) {
 				if (l.Lock == null || l.Lock.Done) {
 					ReplaceLock();
-				} else if ((state.StateInstance is OpenState || state.StateInstance is OpeningState) && l.Lock.IsLocked) {
+				} else if ((state!.StateInstance is OpenState || state.StateInstance is OpeningState) && l.Lock.IsLocked) {
 					state.Become<ClosingState>();
 				} else if (OpenByDefault && (state.StateInstance is ClosedState || state.StateInstance is ClosingState) && !l.Lock.IsLocked) {
 					state.Become<ClosingState>();

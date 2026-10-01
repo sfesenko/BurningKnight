@@ -19,14 +19,14 @@ namespace BurningKnight.entity.item.use {
 		public override bool HandleEvent(Event e) {
 			if (e is ItemUsedEvent ite && !ite.Fake && ite.Item != Item) {
 				if (Rnd.Chance(chance + Context.Run.Luck * 10)) {
-					var weapon = Item.Owner.GetComponent<ActiveWeaponComponent>().Item;
+					var weapon = Item.Owner.GetComponent<ActiveWeaponComponent>()!.Item;
 
 					if (weapon == null) {
 						return base.HandleEvent(e);
 					}
 
 					var aim = Item.Owner.GetComponent<AimComponent>();
-					var a = (aim.RealAim - aim.Center).ToAngle();
+					var a = (aim!.RealAim - aim.Center).ToAngle();
 
 					if (up) {
 						aim.RealAim = aim.Aim = MathUtils.CreateVector(a + Math.PI * 0.5f, 48) + aim.Center;

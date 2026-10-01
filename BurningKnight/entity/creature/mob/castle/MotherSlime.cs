@@ -36,11 +36,11 @@ namespace BurningKnight.entity.creature.mob.castle {
 		protected override bool HandleDeath(DiedEvent d) {
 			for (var i = 0; i < 2; i++) {
 				var slime = new BabySlime();
-				Area.Add(slime);
+				Area!.Add(slime);
 				slime.Center = Center + new Vector2(Rnd.Float(-4, 4), Rnd.Float(-4, 4));
-				slime.GetComponent<HealthComponent>().InvincibilityTimer = 0.1f;
+				slime.GetComponent<HealthComponent>()!.InvincibilityTimer = 0.1f;
 
-				slime.GetAnyComponent<BodyComponent>().KnockbackFrom(d.From, Rnd.Float(1f, 2f), 2);
+				slime!.GetAnyComponent<BodyComponent>()!.KnockbackFrom(d.From, Rnd.Float(1f, 2f), 2);
 			}
 			
 			return base.HandleDeath(d);

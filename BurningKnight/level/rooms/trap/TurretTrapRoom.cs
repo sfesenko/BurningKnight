@@ -101,7 +101,7 @@ namespace BurningKnight.level.rooms.trap {
 
 			var input = new Button();
 			input.Position = where * 16;
-			level.Area.Add(input);
+			level.Area!.Add(input);
 		}
 		
 		public override bool CanConnect(RoomDef R, Dot P) {
@@ -118,14 +118,14 @@ namespace BurningKnight.level.rooms.trap {
 
 		private bool Place(Level level, int x, int y, uint a, float offset) {
 			foreach (var d in Connected.Values) {
-				if ((d.X == x && (d.Y == y + 1 || d.Y == y - 1)) || (d.Y == y && (d.X == x + 1 || d.X == x - 1))) {
+				if ((d!.X == x && (d.Y == y + 1 || d.Y == y - 1)) || (d.Y == y && (d.X == x + 1 || d.X == x - 1))) {
 					return false;
 				}
 			}
 			
 			Painter.Set(level, x, y, Tile.FloorA);
 
-			level.Area.Add(new Turret {
+			level.Area!.Add(new Turret {
 				Position = new Vector2(x, y) * 16,
 				StartingAngle = a,
 				TimingOffset = offset

@@ -11,19 +11,19 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.cutscene.controller {
 	public class GobboCutsceneController : CutsceneController {
-		private BabyGobbo baby;
-		private OldGobbo dad;
-		private Gobbo gobbo;
+		private BabyGobbo baby = null!;
+		private OldGobbo dad = null!;
+		private Gobbo gobbo = null!;
 		private Vector2 dadStart;
 		
 		public override void PostInit() {
 			base.PostInit();
 
-			baby = Area.Find<BabyGobbo>();
-			dad = Area.Find<OldGobbo>();
-			dadStart = dad.BottomCenter;
+			baby = Area!.Find<BabyGobbo>()!;
+			dad = Area.Find<OldGobbo>()!;
+			dadStart = dad!.BottomCenter;
 
-			dad.GraphicsComponent.Flipped = true;
+			dad!.GraphicsComponent!.Flipped = true;
 
 			Timer.Add(() => FirstPart(), 1);
 			GameRenderer.GameScale = 2;
@@ -38,8 +38,8 @@ namespace BurningKnight.entity.cutscene.controller {
 			var dadDialog = dad.GetComponent<DialogComponent>();
 			var sonDialog = baby.GetComponent<DialogComponent>();
 
-			dadDialog.Dialog.AlwaysShowArrow = true;
-			sonDialog.Dialog.AlwaysShowArrow = true;
+			dadDialog!.Dialog!.AlwaysShowArrow = true;
+			sonDialog!.Dialog!.AlwaysShowArrow = true;
 			
 			Start(dadDialog, "dad_0", () => {
 				dadDialog.Close();
@@ -49,17 +49,17 @@ namespace BurningKnight.entity.cutscene.controller {
 
 					Start(dadDialog, "dad_1", () => {
 						dadDialog.Close();
-						dad.GraphicsComponent.Flipped = false;
-						dad.GetComponent<AnimationComponent>().Animation.Tag = "run";
+						dad!.GraphicsComponent!.Flipped = false;
+						dad!.GetComponent<AnimationComponent>()!.Animation!.Tag = "run";
 						dad.RunAway = true;
 
 						Timer.Add(() => {
 							State.Say(Locale.Get("20_years_later"), () => {
 								dad.Done = true;
 								gobbo = new Gobbo();
-								Area.Add(gobbo);
+								Area!.Add(gobbo);
 								gobbo.BottomCenter = dadStart;
-								gobbo.GraphicsComponent.Flipped = true;
+								gobbo!.GraphicsComponent!.Flipped = true;
 
 								Timer.Add(() => {
 									SecondPart();
@@ -75,18 +75,18 @@ namespace BurningKnight.entity.cutscene.controller {
 			var gobboDialog = gobbo.GetComponent<DialogComponent>();
 			var sonDialog = baby.GetComponent<DialogComponent>();
 
-			gobboDialog.Dialog.AlwaysShowArrow = true;
+			gobboDialog!.Dialog!.AlwaysShowArrow = true;
 
 			Start(gobboDialog, "gobbo_0", () => {
 				gobboDialog.Close();
 
-				Start(sonDialog, "son_0", () => {
-					sonDialog.Close();
+				Start(sonDialog!, "son_0", () => {
+					sonDialog!.Close();
 
 					Start(gobboDialog, "gobbo_1", () => {
 						gobboDialog.Close();
-						gobbo.GraphicsComponent.Flipped = false;
-						gobbo.GetComponent<AnimationComponent>().Animation.Tag = "run";
+						gobbo!.GraphicsComponent!.Flipped = false;
+						gobbo!.GetComponent<AnimationComponent>()!.Animation!.Tag = "run";
 						gobbo.RunAway = true;
 
 						Timer.Add(() => {

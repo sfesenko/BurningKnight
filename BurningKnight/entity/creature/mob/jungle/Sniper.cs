@@ -28,7 +28,7 @@ namespace BurningKnight.entity.creature.mob.jungle {
 
 			var body = new RectBodyComponent(3, 13, 10, 1);
 			AddComponent(body);
-			body.Body.LinearDamping = 10;
+			body!.Body!.LinearDamping = 10;
 
 			AddComponent(new SensorBodyComponent(2, 2, 12, 12));
 		}
@@ -58,10 +58,10 @@ namespace BurningKnight.entity.creature.mob.jungle {
 			public override void Init() {
 				base.Init();
 
-				Self.GetComponent<AudioEmitterComponent>().Emit("mob_sniper_focus");
+				Self.GetComponent<AudioEmitterComponent>()!.Emit("mob_sniper_focus");
 				Self.AlwaysVisible = true; // So that the line is visible
-				Self.lastAngle = Self.AngleTo(Self.Target);
-				lastSeen = Self.Target.Center;
+				Self.lastAngle = Self.AngleTo(Self.Target!);
+				lastSeen = Self!.Target!.Center;
 			}
 
 			public override void Update(float dt) {
@@ -69,7 +69,7 @@ namespace BurningKnight.entity.creature.mob.jungle {
 
 				if (T < 1f) {
 					if (Self.CanSeeTarget()) {
-						Self.GraphicsComponent.Flipped = Self.Target.CenterX < Self.CenterX;
+						Self!.GraphicsComponent!.Flipped = Self!.Target!.CenterX < Self.CenterX;
 						lastSeen = Self.Target.Center;
 					}
 
@@ -90,7 +90,7 @@ namespace BurningKnight.entity.creature.mob.jungle {
 
 				var a = Self.GetComponent<MobAnimationComponent>();
 					
-				Tween.To(0.6f, a.Scale.X, x => a.Scale.X = x, 0.2f);
+				Tween.To(0.6f, a!.Scale.X, x => a.Scale.X = x, 0.2f);
 				Tween.To(1.6f, a.Scale.Y, x => a.Scale.Y = x, 0.2f).OnEnd = () => {
 
 					Tween.To(1.8f, a.Scale.X, x => a.Scale.X = x, 0.1f);
@@ -103,7 +103,7 @@ namespace BurningKnight.entity.creature.mob.jungle {
 							return;
 						}
 								
-						Self.GetComponent<AudioEmitterComponent>().EmitRandomized("mob_fire_static");
+						Self.GetComponent<AudioEmitterComponent>()!.EmitRandomized("mob_fire_static");
 						var builder = new ProjectileBuilder(Self, "rect") {
 							RectHitbox = true,
 							Scale = 1.5f,
@@ -124,7 +124,7 @@ namespace BurningKnight.entity.creature.mob.jungle {
 		public override void Render() {
 			base.Render();
 
-			if (GetComponent<StateComponent>().StateInstance is AimState) {
+			if (GetComponent<StateComponent>()!.StateInstance is AimState) {
 				Graphics.Batch.DrawLine(Center - new Vector2(0, 2), new Vector2((int) (Center.X + Math.Cos(lastAngle) * Display.UiWidth), 
 					(int) (Center.Y + Math.Sin(lastAngle) * Display.UiWidth)), PlayerGraphicsComponent.AimLineColor, 1);
 			}

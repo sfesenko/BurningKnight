@@ -21,7 +21,7 @@ namespace BurningKnight.entity.creature.pet {
 			if (t >= 2f) {
 				t = 0;
 
-				var r = GetComponent<RoomComponent>().Room;
+				var r = GetComponent<RoomComponent>()!.Room;
 
 				if (r == null) {
 					return;
@@ -30,9 +30,9 @@ namespace BurningKnight.entity.creature.pet {
 				if (r.Tagged[Tags.MustBeKilled].Count > 0) {
 					var o = Owner;
 						
-					GetComponent<AudioEmitterComponent>().EmitRandomizedPrefixed("item_meatguy", 4, 0.5f);
+					GetComponent<AudioEmitterComponent>()!.EmitRandomizedPrefixed("item_meatguy", 4, 0.5f);
 
-					var builder = new ProjectileBuilder(o, "small") {
+					var builder = new ProjectileBuilder(o!, "small") {
 						Color = ProjectileColor.Yellow,
 						Range = 32f
 					};
@@ -43,11 +43,11 @@ namespace BurningKnight.entity.creature.pet {
 						var a = i * Math.PI * 0.5f;
 						var projectile = builder.Shoot(a, 4f).Build();
 
-						projectile.Center = Center + MathUtils.CreateVector(a, 5f);
+						projectile!.Center = Center + MathUtils.CreateVector(a, 5f);
 						projectile.Owner = this;
 					}
 					
-					GetComponent<AnimationComponent>().Animate();
+					GetComponent<AnimationComponent>()!.Animate();
 				}
 			}
 		}

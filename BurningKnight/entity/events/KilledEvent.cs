@@ -3,7 +3,7 @@ using Lens.entity;
 
 namespace BurningKnight.entity.events {
 	public class KilledEvent : Event {
-		public Creature Who;
-		public Creature KilledBy;
+		public Creature Who = null!;
+		public Creature KilledBy = null!;
 	}
 }

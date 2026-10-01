@@ -124,7 +124,7 @@ namespace BurningKnight.entity.item.use {
 
 				if (region != null) {
 					ImGui.Image(ImGuiHelper.ProjectilesTexture, new Num.Vector2(region.Width * 3, region.Height * 3),
-						new Num.Vector2(region.X / region.Texture.Width, region.Y / region.Texture.Height),
+						new Num.Vector2(region.X / region!.Texture!.Width, region.Y / region.Texture.Height),
 						new Num.Vector2((region.X + region.Width) / region.Texture.Width,
 							(region.Y + region.Height) / region.Texture.Height));
 				}

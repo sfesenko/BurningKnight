@@ -22,7 +22,7 @@ namespace BurningKnight.entity.room.controller {
 		public override void Init() {
 			base.Init();
 
-			var e = Room.Area.EventListener;
+			var e = Room.Area!.EventListener;
 			
 			e.Subscribe<Chest.OpenedEvent>(this);
 			e.Subscribe<ItemTakenEvent>(this);
@@ -54,15 +54,15 @@ namespace BurningKnight.entity.room.controller {
 
 		private void SpawnWave(Entity entity) {
 			var filter = CheckDistance(entity);
-			MobRegistry.SetupForBiome(Context.Level.Biome.Id);
+			MobRegistry.SetupForBiome(Context.Level!.Biome!.Id);
 
 			var c = Rnd.Int(5, 11);
 			
 			for (var i = 0; i < c; i++) {
 				Timer.Add(() => {
 					var mob = MobRegistry.Generate();
-					entity.Area.Add(mob);
-					var v = MobRegistry.FindFor(mob.GetType());
+					entity.Area!.Add(mob);
+					var v = MobRegistry.FindFor(mob!.GetType());
 
 					if (v?.NearWall ?? false) {
 						mob.Center = Room.GetRandomFreeTileNearWall(filter) * 16;
@@ -91,7 +91,7 @@ namespace BurningKnight.entity.room.controller {
 							}
 						};
 
-						Context.Level.Area.Add(part);
+						Context.Level!.Area!.Add(part);
 						part.Depth = 1;
 					}
 					
@@ -107,11 +107,11 @@ namespace BurningKnight.entity.room.controller {
 				return false;
 			}
 		
-			if (e is DiedEvent de && de.Who.GetComponent<RoomComponent>().Room == Room) {
+			if (e is DiedEvent de && de.Who.GetComponent<RoomComponent>()!.Room == Room) {
 				foreach (var m in Room.Tagged[Tags.MustBeKilled]) {
 					var mob = (Mob) m;
 
-					if (!mob.GetComponent<HealthComponent>().HasNoHealth) {
+					if (!mob.GetComponent<HealthComponent>()!.HasNoHealth) {
 						return false;
 					}
 				}
@@ -125,11 +125,11 @@ namespace BurningKnight.entity.room.controller {
 			}
 			
 			if (e is ItemTakenEvent ite) {
-				if (ite.Stand.GetComponent<RoomComponent>().Room == Room) {
+				if (ite.Stand.GetComponent<RoomComponent>()!.Room == Room) {
 					Spawn(ite.Who);
 				}
 			} else if (e is Chest.OpenedEvent coe) {
-				if (coe.Chest.GetComponent<RoomComponent>().Room == Room) {
+				if (coe.Chest.GetComponent<RoomComponent>()!.Room == Room) {
 					Spawn(coe.Who);
 				}
 			}

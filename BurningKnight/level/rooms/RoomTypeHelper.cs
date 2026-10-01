@@ -20,7 +20,7 @@ namespace BurningKnight.level.rooms {
 		}
 
 		private static void LoadIcon(RoomType type, string id) {
-			Icons[(int) type] = CommonAse.Ui.GetSlice(id);
+			Icons[(int) type] = CommonAse.Ui.GetSlice(id)!;
 		}
 		
 		public static bool ShouldBeDisplayOnMap(RoomType type) {

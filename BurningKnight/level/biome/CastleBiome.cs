@@ -46,7 +46,7 @@ namespace BurningKnight.level.biome {
 		}
 
 		public override Tile GetFilling() {
-			return Context.Level.Variant.Id == LevelVariant.Gold ? Tile.WallB : base.GetFilling();
+			return Context.Level!.Variant!.Id == LevelVariant.Gold ? Tile.WallB : base.GetFilling();
 		}
 
 		public override string GetStepSound(Tile tile) {

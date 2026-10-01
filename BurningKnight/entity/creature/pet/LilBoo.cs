@@ -23,7 +23,7 @@ namespace BurningKnight.entity.creature.pet {
 			};
 			
 			AddComponent(b);
-			b.Body.LinearDamping = 3;
+			b!.Body!.LinearDamping = 3;
 			
 			
 			Become<IdleState>();
@@ -34,7 +34,7 @@ namespace BurningKnight.entity.creature.pet {
 				return true;
 			}
 
-			if (GetComponent<StateComponent>().StateInstance is WanderState) {
+			if (GetComponent<StateComponent>()!.StateInstance is WanderState) {
 				return entity is Level;
 			}
 
@@ -46,7 +46,7 @@ namespace BurningKnight.entity.creature.pet {
 			public override void Update(float dt) {
 				base.Update(dt);
 
-				var d = Self.DistanceTo(Self.Owner);
+				var d = Self.DistanceTo(Self.Owner!);
 
 				if (d > 48) {
 					Self.Become<FollowState>();
@@ -58,13 +58,13 @@ namespace BurningKnight.entity.creature.pet {
 			public override void Update(float dt) {
 				base.Update(dt);
 
-				var dx = Self.DxTo(Self.Owner);
-				var dy = Self.DyTo(Self.Owner);
+				var dx = Self.DxTo(Self.Owner!);
+				var dy = Self.DyTo(Self.Owner!);
 				var d = MathUtils.Distance(dx, dy);
 				
 				if (d > 256) {
 					AnimationUtil.Poof(Self.Center);
-					Self.Center = Self.Owner.Center + Rnd.Offset(24);
+					Self.Center = Self!.Owner!.Center + Rnd.Offset(24);
 					AnimationUtil.Poof(Self.Center);
 					
 					Self.Become<HappyState>();
@@ -80,7 +80,7 @@ namespace BurningKnight.entity.creature.pet {
 				var body = Self.GetComponent<RectBodyComponent>();
 				var s = dt * 20;
 				
-				body.Velocity += new Vector2(dx / d * s, dy / d * s);
+				body!.Velocity += new Vector2(dx / d * s, dy / d * s);
 			}
 		}
 

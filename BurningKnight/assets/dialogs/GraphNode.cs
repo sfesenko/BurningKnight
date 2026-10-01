@@ -19,8 +19,8 @@ namespace BurningKnight.assets.dialogs {
 		public Vector2 Size;
 		public List<GraphConnection> Inputs = new List<GraphConnection>();
 		public List<GraphConnection> Outputs = new List<GraphConnection>();
-		public string Tip;
-		public string File;
+		public string Tip = null!;
+		public string File = null!;
 		
 		public string LocaleId => $"{File}_{Id}";
 		
@@ -43,13 +43,13 @@ namespace BurningKnight.assets.dialogs {
 			});
 		}
 
-		private JsonArray outputs;
+		private JsonArray? outputs = null!;
 
 		public void ReadOutputs() {
 			var j = -1;
 
 			if (outputs != JsonValue.Null) {
-				foreach (var i in outputs) {
+				foreach (var i in outputs!) {
 					j++;
 
 					if (!i.IsJsonArray) {
@@ -119,7 +119,7 @@ namespace BurningKnight.assets.dialogs {
 			return "Node";
 		}
 
-		public static GraphNode Create(string file, JsonValue vl, bool ignoreId = false) {
+		public static GraphNode? Create(string file, JsonValue vl, bool ignoreId = false) {
 			if (!vl.IsJsonObject) {
 				return null;
 			}

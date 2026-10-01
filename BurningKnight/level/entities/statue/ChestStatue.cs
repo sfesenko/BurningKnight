@@ -22,9 +22,9 @@ namespace BurningKnight.level.entities.statue {
 		}
 
 		protected override bool Interact(Entity e) {
-			if (e.GetComponent<HealthComponent>().ModifyHealth(-4, this, DamageType.Custom)) {
+			if (e.GetComponent<HealthComponent>()!.ModifyHealth(-4, this, DamageType.Custom)) {
 				try {
-					ChestRegistry.PlaceRandom(BottomCenter + new Vector2(0, 12), Area);
+					ChestRegistry.PlaceRandom(BottomCenter + new Vector2(0, 12), Area!);
 					Audio.PlaySfx("level_summon_chest");
 				} catch (Exception ex) {
 					Log.Error(ex);

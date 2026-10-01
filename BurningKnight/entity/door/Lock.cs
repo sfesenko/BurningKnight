@@ -10,10 +10,10 @@ namespace BurningKnight.entity.door {
 	public class Lock : Entity {
 		protected bool LockedByDefault = true;
 
-		public Entity Owner;
+		public Entity Owner = null!;
 		public bool IsLocked { get; private set; }
 
-		public void SetLocked(bool value, Entity entity) {
+		public void SetLocked(bool value, Entity? entity) {
 			if (value == IsLocked || Done) {
 				return;
 			}
@@ -23,19 +23,19 @@ namespace BurningKnight.entity.door {
 			if (!IsLocked) {
 				HandleEvent(new LockOpenedEvent {
 					Lock = this,
-					Who = entity
+					Who = entity!
 				});
 
 				if (Owner is Door) {
-					Owner.GetComponent<StateComponent>().Become<Door.OpeningState>();
+					Owner.GetComponent<StateComponent>()!.Become<Door.OpeningState>();
 				}
 
-				GetComponent<StateComponent>().Become<OpeningState>();
-				GetComponent<AudioEmitterComponent>().EmitRandomized("unlock");
+				GetComponent<StateComponent>()!.Become<OpeningState>();
+				GetComponent<AudioEmitterComponent>()!.EmitRandomized("unlock");
 			} else {
 				HandleEvent(new LockClosedEvent {
 					Lock = this,
-					Who = entity
+					Who = entity!
 				});
 			}
 		}
@@ -56,7 +56,7 @@ namespace BurningKnight.entity.door {
 				return true;
 			}
 
-			Context.Camera.Shake(3);
+			Context.Camera!.Shake(3);
 			shake = 1f;
 			
 			return false;
@@ -113,7 +113,7 @@ namespace BurningKnight.entity.door {
 				return;
 			}
 			
-			var offset = GetComponent<AnimationComponent>().Offset;
+			var offset = GetComponent<AnimationComponent>()!.Offset;
 
 			if (Move) {
 				t += dt;
@@ -127,7 +127,7 @@ namespace BurningKnight.entity.door {
 			}
 							
 			offset.X = (float) (Math.Cos(shake * 20f) * shake * 2.5f);
-			GetComponent<AnimationComponent>().Offset = offset;
+			GetComponent<AnimationComponent>()!.Offset = offset;
 		}
 
 		public override void Render() {
@@ -135,7 +135,7 @@ namespace BurningKnight.entity.door {
 		}
 
 		public void RealRender() {
-			if (/*!Done && */GetComponent<StateComponent>().StateInstance is not OpenState) {
+			if (/*!Done && */GetComponent<StateComponent>()!.StateInstance is not OpenState) {
 				base.Render();
 			}
 		}
@@ -164,13 +164,13 @@ namespace BurningKnight.entity.door {
 		public class OpeningState : EntityState {
 			public override void Init() {
 				base.Init();
-				Self.GetComponent<AnimationComponent>().SetAutoStop(true);
+				Self.GetComponent<AnimationComponent>()!.SetAutoStop(true);
 			}
 
 			public override void Update(float dt) {
 				base.Update(dt);
 
-				if (Self.GetComponent<AnimationComponent>().Animation.Paused) {
+				if (Self!.GetComponent<AnimationComponent>()!.Animation!.Paused) {
 					if (((Lock) Self).Disposable()) {
 						Self.Done = true;
 					} else {
@@ -182,27 +182,27 @@ namespace BurningKnight.entity.door {
 
 			public override void Destroy() {
 				base.Destroy();
-				Self.GetComponent<AnimationComponent>().SetAutoStop(false);
+				Self.GetComponent<AnimationComponent>()!.SetAutoStop(false);
 			}
 		}
 
 		protected class ClosingState : EntityState {
 			public override void Init() {
 				base.Init();
-				Self.GetComponent<AnimationComponent>().SetAutoStop(true);
+				Self.GetComponent<AnimationComponent>()!.SetAutoStop(true);
 			}
 
 			public override void Update(float dt) {
 				base.Update(dt);
 
-				if (Self.GetComponent<AnimationComponent>().Animation.Paused) {
+				if (Self!.GetComponent<AnimationComponent>()!.Animation!.Paused) {
 					Become<IdleState>();
 				}
 			}
 
 			public override void Destroy() {
 				base.Destroy();
-				Self.GetComponent<AnimationComponent>().SetAutoStop(false);
+				Self.GetComponent<AnimationComponent>()!.SetAutoStop(false);
 			}
 		}
 		#endregion

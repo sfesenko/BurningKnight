@@ -33,14 +33,14 @@ namespace BurningKnight.entity.creature.mob.ice {
 		private void Fire() {
 			var a = GetComponent<MobAnimationComponent>();
 
-			Tween.To(0.4f, a.Scale.X, x => a.Scale.X = x, 0.1f);
+			Tween.To(0.4f, a!.Scale.X, x => a.Scale.X = x, 0.1f);
 			Tween.To(1.8f, a.Scale.Y, x => a.Scale.Y = x, 0.1f).OnEnd = () => {
 
 				Tween.To(1, a.Scale.X, x => a.Scale.X = x, 0.4f);
 				Tween.To(1, a.Scale.Y, x => a.Scale.Y = x, 0.4f);
 
 				if (Target != null) {
-					Area.Add(new Missile(this, Target));
+					Area!.Add(new Missile(this, Target));
 				}
 			};
 		}

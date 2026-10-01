@@ -33,14 +33,14 @@ namespace BurningKnight.save {
 			
 			var input = player.GetComponent<InputComponent>();
 			
-			input.Index = 0;
+			input!.Index = 0;
 			input.KeyboardEnabled = true;
 			input.GamepadEnabled = Context.Run.NumPlayers <= 1;
 
 			for (var i = 1; i < Context.Run.NumPlayers; i++) {
-				input = area.Add(new LocalPlayer()).GetComponent<InputComponent>();
+				input = area!.Add(new LocalPlayer())!.GetComponent<InputComponent>();
 
-				input.Index = (byte) i;
+				input!.Index = (byte) i;
 				input.KeyboardEnabled = false;
 				input.GamepadEnabled = true;
 			}
@@ -57,7 +57,7 @@ namespace BurningKnight.save {
 						Log.Error(e);
 					}
 				} else if (Context.Run.Type == RunType.Daily) {
-					Rnd.Seed = Context.Run.Seed;
+					Rnd.Seed = Context.Run.Seed!;
 					
 					var count = Rnd.Int(1, 4);
 
@@ -74,9 +74,9 @@ namespace BurningKnight.save {
 					var sl = Items.Generate(ItemType.Lamp);
 
 					for (var i = 0; i < Player.MaxPlayers; i++) {
-						Player.StartingItems[i] = si;
-						Player.StartingWeapons[i] = sw;
-						Player.StartingLamps[i] = sl;
+						Player.StartingItems[i] = si!;
+						Player.StartingWeapons[i] = sw!;
+						Player.StartingLamps[i] = sl!;
 					}
 				}
 				

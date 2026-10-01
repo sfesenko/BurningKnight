@@ -12,19 +12,19 @@ namespace BurningKnight.entity.item.use {
 		public override void Use(Entity e, Item item) {
 			base.Use(e, item);
 			
-			var rooms = e.Area.Tagged[Tags.Room];
+			var rooms = e.Area!.Tagged[Tags.Room];
 
 			if (rooms.Count < 2) {
 				return;
 			}
 
-			var room = e.GetComponent<RoomComponent>().Room;
-			var newRoom = (Room) Rnd.Element<Entity>(rooms, r => r != room && r is Room rm && rm.Type == RoomType.Shop);
+			var room = e.GetComponent<RoomComponent>()!.Room;
+			var newRoom = (Room) Rnd.Element<Entity>(rooms, r => r != room && r is Room rm && rm.Type == RoomType.Shop)!;
 
 			if (newRoom != null) {
 				AnimationUtil.TeleportAway(e, () => {
 					e.Center = newRoom.GetRandomFreeTile() * 16 + new Vector2(8);
-					Context.Camera.Jump();
+					Context.Camera!.Jump();
 					AnimationUtil.TeleportIn(e);
 				});
 			}

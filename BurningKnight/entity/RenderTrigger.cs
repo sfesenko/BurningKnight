@@ -5,7 +5,7 @@ using Lens.util;
 namespace BurningKnight.entity {
 	public class RenderTrigger : Entity {
 		private Action method;
-		public Entity Entity;
+		public Entity? Entity;
 		
 		
 		public RenderTrigger(Action method, int depth) {

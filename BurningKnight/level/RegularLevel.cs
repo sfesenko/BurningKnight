@@ -27,9 +27,9 @@ using Builder = BurningKnight.level.builders.Builder;
 
 namespace BurningKnight.level {
 	public class RegularLevel : Level {
-		private List<RoomDef> rooms;
+		private List<RoomDef>? rooms;
 
-		public RegularLevel(BiomeInfo biome) : base(biome) {
+		public RegularLevel(BiomeInfo? biome) : base(biome) {
 			
 		}
 
@@ -45,13 +45,13 @@ namespace BurningKnight.level {
 			Context.Level = this;
 			rooms = null;
 			ItemsToSpawn = [];
-			Variant = VariantRegistry.Generate(LevelSave.BiomeGenerated.Id) 
+			Variant = VariantRegistry.Generate(LevelSave.BiomeGenerated!.Id) 
 			          ?? new RegularLevelVariant();
 
 			if (Context.Run.Depth > 0) {
 				var c = Rnd.Int(1, Context.Run.Depth);
 
-				if (Context.Level.Biome is CaveBiome) {
+				if (Context.Level!.Biome is CaveBiome) {
 					c = Rnd.Int(5, 15);
 				}
 				
@@ -84,9 +84,9 @@ namespace BurningKnight.level {
 		private bool Paint() {
 			Log.Info("Painting...");
 			var p = GetPainter();
-			LevelSave.BiomeGenerated.ModifyPainter(this, p);
+			LevelSave.BiomeGenerated!.ModifyPainter(this, p);
 			
-			return p.Paint(this, rooms);
+			return p.Paint(this, rooms!);
 		}
 
 		private void Build() {
@@ -125,7 +125,7 @@ namespace BurningKnight.level {
 					rooms = null;
 				
 					Log.Error($"Failed! {Builder.GetType().Name}");
-					Area.Destroy();
+					Area!.Destroy();
 					Area.Add(Context.Level);
 					LevelSave.FailedAttempts++;
 					Builder = GetBuilder();
@@ -160,14 +160,14 @@ namespace BurningKnight.level {
 			}
 
 			if (cave) {
-				AddRoom(rooms, RoomType.Treasure, biome);
+				AddRoom(rooms, RoomType.Treasure, biome!);
 			}
 
 			if (final) {
 				Log.Info("Prepare for the final!");
 			}
 			
-			Log.Info($"Generating a level for {biome.Id} biome");
+			Log.Info($"Generating a level for {biome!.Id} biome");
 			
 			rooms.Add(new EntranceRoom());
 			
@@ -354,7 +354,7 @@ namespace BurningKnight.level {
 			if (IsFinal() || Context.Run.Type == RunType.BossRush) {
 				builder = new LineBuilder();
 			} else {
-				builder = LevelSave.BiomeGenerated.GetBuilder();
+				builder = LevelSave.BiomeGenerated!.GetBuilder();
 
 				if (builder is RegularBuilder b) {
 					if (LevelSave.BiomeGenerated.Id == Biome.Ice) {

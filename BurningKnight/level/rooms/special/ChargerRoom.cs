@@ -7,7 +7,7 @@ namespace BurningKnight.level.rooms.special {
 			base.Paint(level);
 			
 			var charger = new Charger();
-			level.Area.Add(charger);
+			level.Area!.Add(charger);
 			charger.BottomCenter = GetCenterVector();
 		}
 

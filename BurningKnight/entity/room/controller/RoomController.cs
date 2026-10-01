@@ -4,9 +4,9 @@ using Lens.util.file;
 
 namespace BurningKnight.entity.room.controller {
 	public class RoomController {
-		public Room Room;
+		public Room Room = null!;
 		public float T;
-		public string Id;
+		public string Id = null!;
 
 		public virtual void Init() {
 			

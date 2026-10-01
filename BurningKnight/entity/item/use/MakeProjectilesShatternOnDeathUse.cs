@@ -19,7 +19,7 @@ namespace BurningKnight.entity.item.use {
 					var cnt = Rnd.Int(3, 5);
 					
 					if (p is Laser l) {
-						var a = l.BodyComponent.Body.Rotation - (float) Math.PI;
+						var a = l!.BodyComponent.Body!.Rotation - (float) Math.PI;
 						var end = l.End + MathUtils.CreateVector(a, 5);
 						
 						for (var i = 0; i < cnt; i++) {
@@ -29,7 +29,7 @@ namespace BurningKnight.entity.item.use {
 							laser.Recalculate();
 						}
 					} else {
-						var v = p.GetAnyComponent<BodyComponent>().Velocity;
+						var v = p!.GetAnyComponent<BodyComponent>()!.Velocity;
 						var a = v.ToAngle() - (float) Math.PI;
 						var s = v.Length();
 						var c = p.HasComponent<CircleBodyComponent>();
@@ -41,7 +41,7 @@ namespace BurningKnight.entity.item.use {
 						};
 
 						for (var i = 0; i < cnt; i++) {
-							builder.Shoot(a + Rnd.Float(-1.4f, 1.4f), s * Rnd.Float(0.3f, 0.7f)).Build().Center = p.Center;
+							builder!.Shoot(a + Rnd.Float(-1.4f, 1.4f), s * Rnd.Float(0.3f, 0.7f)).Build()!.Center = p.Center;
 						}	
 					}
 				});

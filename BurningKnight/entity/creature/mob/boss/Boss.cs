@@ -36,7 +36,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 		public bool Awoken;
 		
 		protected bool HasHealthbar = true;
-		protected HealthBar HealthBar;
+		protected HealthBar? HealthBar;
 
 		protected bool Died;
 		private float deathTimer;
@@ -50,14 +50,14 @@ namespace BurningKnight.entity.creature.mob.boss {
 			AddComponent(new DialogComponent());
 
 			var b = GetComponent<BuffsComponent>();
-			b.AddImmunity<CharmedBuff>();
+			b!.AddImmunity<CharmedBuff>();
 			b.AddImmunity<FrozenBuff>();
 
 			if (!(this is BkHead || this is DM)) {
 				Become<FriendlyState>();
 			}
 
-			GetComponent<HealthComponent>().AutoKill = true;
+			GetComponent<HealthComponent>()!.AutoKill = true;
 			
 			AddTag(Tags.Boss);
 		}
@@ -71,15 +71,15 @@ namespace BurningKnight.entity.creature.mob.boss {
 			if (Died) {
 				if (!cleared) {
 					cleared = true;
-					GetComponent<DialogComponent>().Close();
+					GetComponent<DialogComponent>()!.Close();
 					
-					foreach (var p in Area.Tagged[Tags.Projectile]) {
+					foreach (var p in Area!.Tagged[Tags.Projectile]) {
 						AnimationUtil.Poof(p.Center);
 						((Projectile) p).Break(null);
 					}
 
 					try {
-						var a = GetComponent<RoomComponent>().Room.Tagged[Tags.MustBeKilled].ToArray();
+						var a = GetComponent<RoomComponent>()!.Room!.Tagged[Tags.MustBeKilled].ToArray();
 
 						foreach (var p in a) {
 							if (!(p is Boss)) {
@@ -103,14 +103,14 @@ namespace BurningKnight.entity.creature.mob.boss {
 						});
 					}
 
-					var player = LocalPlayer.Locate(Area);
+					var player = LocalPlayer.Locate(Area!);
 					var doors = new List<DoorTile>();
 					
 					if (player != null) {
 						var stats = player.GetComponent<StatsComponent>();
 						var e = new DealChanceCalculateEvent();
 						
-						if (!stats.TookDamageInRoom) {
+						if (!stats!.TookDamageInRoom) {
 							Achievements.Unlock("bk:dodge_master");
 						}
 						
@@ -125,7 +125,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 						var dm = Rnd.Chance(e.DmChance * 100);
 						
 						if (gr || (dm && e.OpenBoth)) {
-							foreach (var r in Area.Tagged[Tags.Room]) {
+							foreach (var r in Area!.Tagged[Tags.Room]) {
 								var room = (Room) r;
 
 								if (room.Type == RoomType.Granny) {
@@ -144,7 +144,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 						}
 						
 						if (dm || (gr && e.OpenBoth)) {
-							foreach (var r in Area.Tagged[Tags.Room]) {
+							foreach (var r in Area!.Tagged[Tags.Room]) {
 								var room = (Room) r;
 
 								if (room.Type == RoomType.OldMan) {
@@ -164,9 +164,9 @@ namespace BurningKnight.entity.creature.mob.boss {
 					}
 
 					if (doors.Count > 0) {
-						var rm = GetComponent<RoomComponent>().Room;
+						var rm = GetComponent<RoomComponent>()!.Room;
 						var level = Context.Level;
-						var cx = rm.MapX + rm.MapW / 2f;
+						var cx = rm!.MapX + rm.MapW / 2f;
 						var cy = rm.MapY + rm.MapH / 2f;
 						var grannyDoors = new List<Door>();
 						var evilDoors = new List<Door>();
@@ -183,7 +183,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 						rm.PaintTunnel(evilDoors, Tile.EvilFloor);
 
 						rm.ApplyToEachTile((x, y) => {
-							var t = level.Get(x, y);
+							var t = level!.Get(x, y);
 							
 							if (t == Tile.GrannyFloor || t == Tile.EvilFloor) {
 								level.Set(x, y, Tile.FloorA);
@@ -191,10 +191,10 @@ namespace BurningKnight.entity.creature.mob.boss {
 								Timer.Add(() => {
 									var part = new TileParticle();
 
-									part.Top = t == Tile.GrannyFloor ? Tilesets.Biome.GrannyFloor[0] : Tilesets.Biome.EvilFloor[0];
-									part.TopTarget = Context.Level.Tileset.WallTopADecor;
-									part.Side = Context.Level.Tileset.FloorSidesD[0];
-									part.Sides = Context.Level.Tileset.WallSidesA[2];
+									part.Top = t == Tile.GrannyFloor ? Tilesets.Biome!.GrannyFloor[0] : Tilesets.Biome!.EvilFloor[0];
+									part.TopTarget = Context!.Level!.Tileset!.WallTopADecor;
+									part.Side = Context.Level!.Tileset.FloorSidesD[0];
+									part.Sides = Context.Level!.Tileset.WallSidesA[2];
 									part.Tile = t;
 
 									part.X = x * 16;
@@ -203,12 +203,12 @@ namespace BurningKnight.entity.creature.mob.boss {
 									part.Target.Y = y * 16;
 									part.TargetZ = -8f;
 
-									Area.Add(part);
+									Area!.Add(part);
 								}, 1f + Rnd.Float(0.2f) + MathUtils.Distance(x - cx, y - cy) / 6f);
 							}
 						}, -1);
 						
-						level.TileUp();
+						level!.TileUp();
 						level.CreateBody();
 					}
 
@@ -225,7 +225,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 					if (lastExplosion <= 0) {
 						lastExplosion = 0.3f;
 						AnimationUtil.Explosion(Center + new Vector2(Rnd.Float(-16, 16), Rnd.Float(-16, 16)));
-						Context.Camera.Shake(10);
+						Context.Camera!.Shake(10);
 						Audio.PlaySfx($"level_explosion_{Rnd.Int(1, 4)}");
 					}
 
@@ -238,7 +238,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 				return;
 			}
 			
-			if (!(GetComponent<StateComponent>().StateInstance is FriendlyState) && HasHealthbar && HealthBar == null) {
+			if (!(GetComponent<StateComponent>()!.StateInstance is FriendlyState) && HasHealthbar && HealthBar == null) {
 				HealthBar = new HealthBar(this);
 				Engine.Instance.State.Ui.Add(HealthBar);
 				AddPhases();
@@ -266,13 +266,13 @@ namespace BurningKnight.entity.creature.mob.boss {
 				var c = GetAnyComponent<AnimationComponent>();
 
 				if (c != null) {
-					c.Animation.Tag = "idle";
+					c!.Animation!.Tag = "idle";
 				}
 			} else {
 				Awoken = true;
 			}
 			
-			base.OnTargetChange(target);
+			base.OnTargetChange(target!);
 		}
 
 		public override bool HandleEvent(Event e) {
@@ -283,8 +283,8 @@ namespace BurningKnight.entity.creature.mob.boss {
 						Died = true;
 						HealthBar?.Remove();
 
-						Context.Camera.Targets.Clear();
-						Context.Camera.Follow(this, 1f);
+						Context.Camera!.Targets.Clear();
+						Context.Camera!.Follow(this, 1f);
 						Become<DefeatedState>();
 
 						Audio.Stop();
@@ -299,14 +299,15 @@ namespace BurningKnight.entity.creature.mob.boss {
 		}
 
 		public virtual void PlaceRewards() {
+			var level = Context.Level!;
 			var exit = new Exit();
 
 			Exploding = false;
-			Area.Add(exit);
+			Area!.Add(exit);
 
 			exit.To = Context.Run.Depth + 1;
 
-			var center = GetComponent<RoomComponent>().Room.Center;
+			var center = GetComponent<RoomComponent>()!.Room!.Center;
 
 			var x = (int) Math.Floor(center.X / 16);
 			var y = (int) Math.Floor(center.Y / 16);
@@ -314,17 +315,17 @@ namespace BurningKnight.entity.creature.mob.boss {
 
 			exit.Center = p;
 
-			Painter.Fill(Context.Level, x - 1, y - 1, 3, 3, Tiles.RandomFloor());
-			Painter.Fill(Context.Level, x - 1, y - 3, 3, 3, Tiles.RandomFloor());
+			Painter.Fill(level, x - 1, y - 1, 3, 3, Tiles.RandomFloor());
+			Painter.Fill(level, x - 1, y - 3, 3, 3, Tiles.RandomFloor());
 
-			Context.Level.ReTileAndCreateBodyChunks(x - 1, y - 1, 3, 7);
+			level.ReTileAndCreateBodyChunks(x - 1, y - 1, 3, 7);
 			var w = p - new Vector2(0, 32f);
 
 			if (!(this is DM || this is BkHead || Context.Run.Type == RunType.BossRush)) {
 				var stand = new BossStand();
 				Area.Add(stand);
 				stand.Center = w;
-				stand.SetItem(Items.CreateAndAdd(Items.Generate(ItemPool.Boss), Area), null);
+				stand.SetItem(Items.CreateAndAdd(Items.Generate(ItemPool.Boss)!, Area)!, null);
 			}
 
 			var rewards = new List<string>();
@@ -360,7 +361,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 
 			foreach (var reward in rewards) {
 				var item = Items.CreateAndAdd(reward, Area);
-				item.Center = w + MathUtils.CreateVector(j / ((float) rewards.Count) * Math.PI * 2 + Rnd.Float(-0.1f, 0.1f), Rnd.Float(12, 18));
+				item!.Center = w + MathUtils.CreateVector(j / ((float) rewards.Count) * Math.PI * 2 + Rnd.Float(-0.1f, 0.1f), Rnd.Float(12, 18));
 				j++;
 			}
 		}
@@ -378,26 +379,26 @@ namespace BurningKnight.entity.creature.mob.boss {
 				base.Init();
 
 				Exploding = false;
-				Self.GetComponent<HealthComponent>().Unhittable = true;
+				Self.GetComponent<HealthComponent>()!.Unhittable = true;
 			}
 
 			public override void Destroy() {
 				base.Destroy();
 
 				Exploding = false;
-				Self.GetComponent<HealthComponent>().Unhittable = false;
+				Self.GetComponent<HealthComponent>()!.Unhittable = false;
 			}
 		}
 
 		public override bool IsFriendly() {
-			return GetComponent<StateComponent>().StateInstance is FriendlyState;
+			return GetComponent<StateComponent>()!.StateInstance is FriendlyState;
 		}
 
 		public class DefeatedEvent : Event {
-			public Boss Boss;
+			public Boss Boss = null!;
 		}
 		
-		public override void Kill(Entity w, DamageType type = DamageType.Regular) {
+		public override void Kill(Entity? w, DamageType type = DamageType.Regular) {
 			
 		}
 

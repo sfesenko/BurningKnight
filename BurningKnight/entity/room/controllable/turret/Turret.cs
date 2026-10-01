@@ -20,8 +20,8 @@ namespace BurningKnight.entity.room.controllable.turret {
 		protected bool Rotates;
 
 		protected uint Angle {
-			get => GetComponent<AnimationComponent>().Animation.Frame;
-			set => GetComponent<AnimationComponent>().Animation.Frame = value;
+			get => GetComponent<AnimationComponent>()!.Animation!.Frame;
+			set => GetComponent<AnimationComponent>()!.Animation!.Frame = value;
 		}
 
 		public uint StartingAngle;
@@ -42,7 +42,7 @@ namespace BurningKnight.entity.room.controllable.turret {
 			var a = new AnimationComponent("turret", "on");
 			AddComponent(a);
 
-			a.Animation.Tag = "single";
+			a!.Animation!.Tag = "single";
 			a.Animation.Paused = true;
 			a.ShadowOffset = 4;
 			
@@ -109,9 +109,9 @@ namespace BurningKnight.entity.room.controllable.turret {
 			
 			var a = GetComponent<AnimationComponent>();
 
-			a.Scale.X = 2f;
+			a!.Scale.X = 2f;
 			a.Scale.Y = 0.4f;
-			a.Animation.Layer = "on";
+			a!.Animation!.Layer = "on";
 
 			Tween.To(1f, a.Scale.X, x => a.Scale.X = x, 0.3f);
 			Tween.To(1f, a.Scale.Y, x => a.Scale.Y = x, 0.3f);
@@ -122,9 +122,9 @@ namespace BurningKnight.entity.room.controllable.turret {
 			
 			var a = GetComponent<AnimationComponent>();
 
-			a.Scale.X = 2f;
+			a!.Scale.X = 2f;
 			a.Scale.Y = 0.4f;
-			a.Animation.Layer = "off";
+			a!.Animation!.Layer = "off";
 
 			Tween.To(1f, a.Scale.X, x => a.Scale.X = x, 0.3f);
 			Tween.To(1f, a.Scale.Y, x => a.Scale.Y = x, 0.3f);
@@ -135,7 +135,7 @@ namespace BurningKnight.entity.room.controllable.turret {
 			
 			// Always enabled in tutorial
 			if (Context.Run.Depth != -2 && On) {
-				var room = GetComponent<RoomComponent>().Room;
+				var room = GetComponent<RoomComponent>()!.Room;
 
 				if (room != null && room.Type == RoomType.Regular) {
 					if (room.Tagged[Tags.MustBeKilled].Count == 0) {
@@ -157,7 +157,7 @@ namespace BurningKnight.entity.room.controllable.turret {
 				
 				var a = GetComponent<AnimationComponent>();
 
-				Tween.To(0.6f, a.Scale.X, x => a.Scale.X = x, 0.2f);
+				Tween.To(0.6f, a!.Scale.X, x => a.Scale.X = x, 0.2f);
 				Tween.To(1.6f, a.Scale.Y, x => a.Scale.Y = x, 0.2f).OnEnd = () => {
 
 					Tween.To(1.8f, a.Scale.X, x => a.Scale.X = x, 0.1f);
@@ -169,18 +169,18 @@ namespace BurningKnight.entity.room.controllable.turret {
 						if (Rotates) {
 							t.OnEnd = () => {
 								a.Animate();
-								GetComponent<AudioEmitterComponent>().EmitRandomized("level_turret_rotating");
+								GetComponent<AudioEmitterComponent>()!.EmitRandomized("level_turret_rotating");
 								Angle = (uint) ((Angle + (ReverseDirection ? -1 : 1)) % 8);
 							};
 						}
 
 						var r = GetComponent<RoomComponent>();
 
-						if (r.Room != null && r.Room.Tagged[Tags.Player].Count > 0) {
+						if (r!.Room != null && r.Room.Tagged[Tags.Player].Count > 0) {
 							Fire(Angle / 4f * Math.PI);
 
 							if (OnScreen) {
-								GetComponent<AudioEmitterComponent>().EmitRandomized("level_turret_fire");
+								GetComponent<AudioEmitterComponent>()!.EmitRandomized("level_turret_fire");
 							}
 						}
 					};
@@ -214,7 +214,7 @@ namespace BurningKnight.entity.room.controllable.turret {
 
 		public void RenderShadow() {
 			if (Context.Run.Depth != -2 || On) {
-				GraphicsComponent.Render(true);
+				GraphicsComponent!.Render(true);
 			}
 		}
 

@@ -35,7 +35,7 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.level {
 	public partial class Painter {
-		public static void PlaceMobs(Level level, Room room, Action<List<MobInfo>> modifier = null) {
+		public static void PlaceMobs(Level level, Room room, Action<List<MobInfo>>? modifier = null) {
 			var parent = room.Parent;
 			var w = parent.GetWidth() - 2;
 			var h = parent.GetHeight() - 2;
@@ -50,14 +50,14 @@ namespace BurningKnight.level {
 			var chances = new List<float>();
 
 			for (var i = 0; i < mobs.Count; i++) {
-				chances.Add(parent.WeightMob(mobs[i], mobs[i].GetChanceFor(level.Biome.Id)));
+				chances.Add(parent.WeightMob(mobs[i], mobs[i].GetChanceFor(level!.Biome!.Id)!));
 			}
 
 			var types = new List<MobInfo>();
 			var spawnChances = new List<float>();
 			var curseOfBlood = Scourge.IsEnabled(Scourge.OfBlood);
 
-			if (level.Biome.SpawnAllMobs()) {
+			if (level!.Biome!.SpawnAllMobs()) {
 				types.AddRange(mobs);
 				spawnChances.AddRange(chances);
 			} else {
@@ -98,18 +98,18 @@ namespace BurningKnight.level {
 
 			for (var y = parent.Top + 1; y < parent.Bottom; y++) {
 				for (var x = parent.Left + 1; x < parent.Right; x++) {
-					patch[toIndex(x, y)] = !Context.Level.IsPassable(x, y, true);
+					patch[toIndex(x, y)] = !Context.Level!.IsPassable(x, y, true);
 				}
 			}
 
 			var hasDoors = parent.Connected.Count > 0;
-			Dot start = null;
+			Dot? start = null;
 			
 			if (hasDoors) {
 				PathFinder.SetMapSize(w, h);
 
 				var door = parent.Connected.Values.First();
-				start = new Dot(door.X, door.Y);
+				start = new Dot(door!.X, door.Y);
 
 				if ((int) start.X == parent.Left) {
 					start.X++;
@@ -136,7 +136,7 @@ namespace BurningKnight.level {
 						var found = false;
 
 						foreach (var dr in parent.Connected.Values) {
-							var dx = (int) (dr.X - x);
+							var dx = (int) (dr!.X - x);
 							var dy = (int) (dr.Y - y);
 							var d = (float) Math.Sqrt(dx * dx + dy * dy);
 
@@ -166,15 +166,15 @@ namespace BurningKnight.level {
 
 					var dt = new Dot(x, y);
 
-					if ((Context.Level.IsPassable(x - 1, y) || Context.Level.IsPassable(x + 1, y)) && (Context.Level.IsPassable(x, y + 1) || Context.Level.IsPassable(x, y - 1))) {
+					if ((Context.Level!.IsPassable(x - 1, y) || Context.Level!.IsPassable(x + 1, y)) && (Context.Level!.IsPassable(x, y + 1) || Context.Level!.IsPassable(x, y - 1))) {
 						points.Add(dt);
 						
-						if (Context.Level.IsPassable(x - 1, y) && Context.Level.IsPassable(x + 1, y) && Context.Level.IsPassable(x, y + 1) && Context.Level.IsPassable(x, y - 1)) {
+						if (Context.Level!.IsPassable(x - 1, y) && Context.Level!.IsPassable(x + 1, y) && Context.Level!.IsPassable(x, y + 1) && Context.Level!.IsPassable(x, y - 1)) {
 							wallFreePoints.Add(dt);
 						}
 					}
 
-					if (Context.Level.Get(x - 1, y).IsWall() || Context.Level.Get(x + 1, y).IsWall() || Context.Level.Get(x, y - 1).IsWall() || Context.Level.Get(x , y + 1).IsWall()) {
+					if (Context.Level!.Get(x - 1, y).IsWall() || Context.Level!.Get(x + 1, y).IsWall() || Context.Level!.Get(x, y - 1).IsWall() || Context.Level!.Get(x , y + 1).IsWall()) {
 						wallPoints.Add(dt);
 					}
 				}
@@ -203,7 +203,7 @@ namespace BurningKnight.level {
 				}
 				
 				var type = types[id];
-				Dot point = null;
+				Dot? point = null;
 
 				if (type.NearWall) {
 					if (wallPoints.Count == 0) {
@@ -235,15 +235,15 @@ namespace BurningKnight.level {
 					continue;
 				}
 
-				var mob = (Mob) Activator.CreateInstance(type.Type);
+				var mob = (Mob) Activator.CreateInstance(type.Type)!;
 				
 				weight -= type.Weight;
-				level.Area.Add(mob);
+				level.Area!.Add(mob);
 				
 				if (type.NearWall) {
-					mob.Position = new Vector2(point.X * 16, point.Y * 16 - 8);
+					mob!.Position = new Vector2(point.X * 16, point.Y * 16 - 8);
 				} else {
-					mob.BottomCenter = new Vector2(point.X * 16 + 8 + Rnd.Float(-2, 2), point.Y * 16 + 8 + Rnd.Float(-2, 2));
+					mob!.BottomCenter = new Vector2(point.X * 16 + 8 + Rnd.Float(-2, 2), point.Y * 16 + 8 + Rnd.Float(-2, 2));
 				}
 				
 				mob.GeneratePrefix();
@@ -258,8 +258,8 @@ namespace BurningKnight.level {
 				}
 			}
 		}
-		private void PlaceMobs(Level level, List<Room> rooms, Action<List<MobInfo>> modifier = null) {
-			MobRegistry.SetupForBiome(level.Biome.Id);
+		private void PlaceMobs(Level level, List<Room> rooms, Action<List<MobInfo>>? modifier = null) {
+			MobRegistry.SetupForBiome(level!.Biome!.Id);
 			// level.CreatePassable(true);
 			
 			foreach (var room in rooms) {

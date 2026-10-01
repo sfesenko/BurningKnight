@@ -11,8 +11,8 @@ namespace BurningKnight.ui {
 		private new const float XPadding = 3;
 		public new const float YPadding = 1;
 		
-		private TextureRegion texture;
-		private string value;
+		private TextureRegion texture = null!;
+		private string value = null!;
 		private float vw;
 		private Vector2 textOrigin;
 		private Vector2 valueOrigin;
@@ -40,8 +40,8 @@ namespace BurningKnight.ui {
 		public override void AddComponents() {
 			base.AddComponents();
 
-			texture = CommonAse.Ui.GetSlice("table_item");
-			Width = texture.Width;
+			texture = CommonAse.Ui.GetSlice("table_item")!;
+			Width = texture!.Width;
 			Height = texture.Height;
 		}
 

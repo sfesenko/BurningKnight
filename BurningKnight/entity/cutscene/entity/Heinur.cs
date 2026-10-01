@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework;
 namespace BurningKnight.entity.cutscene.entity {
 	public class Heinur : CutsceneEntity {
 		public bool Attract;
-		public Action Callback;
+		public Action Callback = null!;
 		
 		public override void AddComponents() {
 			base.AddComponents();
@@ -21,7 +21,7 @@ namespace BurningKnight.entity.cutscene.entity {
 			AddComponent(new BkGraphicsComponent("heinur"));
 			AddComponent(new SensorBodyComponent(0, 0, 42, 42));
 
-			GetComponent<SensorBodyComponent>().Body.LinearDamping = 2;
+			GetComponent<SensorBodyComponent>()!.Body!.LinearDamping = 2;
 		}
 
 		public override void Update(float dt) {
@@ -31,7 +31,7 @@ namespace BurningKnight.entity.cutscene.entity {
 				return;
 			}
 
-			foreach (var p in Area.Tagged[Tags.Player]) {
+			foreach (var p in Area!.Tagged[Tags.Player]) {
 				var dx = p.DxTo(this);
 				var dy = p.DyTo(this);
 
@@ -42,14 +42,14 @@ namespace BurningKnight.entity.cutscene.entity {
 					Done = true;
 					Callback();
 
-					Context.Camera.Shake(20);
+					Context.Camera!.Shake(20);
 					Engine.Instance.Flash = 2;
 					
 					var ba = GetComponent<SensorBodyComponent>();
-					ba.Velocity = ba.Knockback = Vector2.Zero;
+					ba!.Velocity = ba.Knockback = Vector2.Zero;
 						
 					var bb = p.GetComponent<SensorBodyComponent>(); 
-					bb.Velocity = bb.Knockback = Vector2.Zero;
+					bb!.Velocity = bb.Knockback = Vector2.Zero;
 
 					return; 
 				}
@@ -61,9 +61,9 @@ namespace BurningKnight.entity.cutscene.entity {
 					force *= 2;
 				}
 				
-				p.GetComponent<RectBodyComponent>().Velocity += new Vector2((float) Math.Cos(a) * force, (float) Math.Sin(a) * force);
+				p.GetComponent<RectBodyComponent>()!.Velocity += new Vector2((float) Math.Cos(a) * force, (float) Math.Sin(a) * force);
 				a += (float) Math.PI;
-				GetComponent<SensorBodyComponent>().Velocity += new Vector2((float) Math.Cos(a) * force, (float) Math.Sin(a) * force);
+				GetComponent<SensorBodyComponent>()!.Velocity += new Vector2((float) Math.Cos(a) * force, (float) Math.Sin(a) * force);
 			}
 		}
 	}

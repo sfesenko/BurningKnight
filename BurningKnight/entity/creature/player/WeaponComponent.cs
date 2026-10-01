@@ -82,15 +82,15 @@ namespace BurningKnight.entity.creature.player {
 					
 					if (ev.Item != null && ev.Old == null && AtBack) {
 						if (GlobalSave.IsTrue("control_swap")) {
-							Entity.GetComponent<ActiveWeaponComponent>().requestSwap = InGameState.Ready;
+							Entity.GetComponent<ActiveWeaponComponent>()!.requestSwap = InGameState.Ready;
 						} else {
 							var dialog = GetComponent<DialogComponent>();
 								
-							dialog.Dialog.Str.ClearIcons();
-							dialog.Dialog.Str.AddIcon(CommonAse.Ui.GetSlice(Controls.FindSlice(Controls.Swap, false)));
+							dialog!.Dialog!.Str!.ClearIcons();
+							dialog.Dialog.Str.AddIcon(CommonAse.Ui.GetSlice(Controls.FindSlice(Controls.Swap, false)!)!);
 
 							if (GamepadComponent.Current != null && GamepadComponent.Current.Attached) {
-								dialog.Dialog.Str.AddIcon(CommonAse.Ui.GetSlice(Controls.FindSlice(Controls.Swap, true)));
+								dialog.Dialog.Str.AddIcon(CommonAse.Ui.GetSlice(Controls.FindSlice(Controls.Swap, true)!)!);
 							}
 								
 							dialog.StartAndClose("control_5", 5);
@@ -105,15 +105,15 @@ namespace BurningKnight.entity.creature.player {
 		protected void Swap() {
 			if (GlobalSave.IsFalse("control_swap")) {
 				GlobalSave.Put("control_swap", true);
-				Entity.GetComponent<DialogComponent>().Close();
+				Entity.GetComponent<DialogComponent>()!.Close();
 			}
 			
 			var component = AtBack ? Entity.GetComponent<ActiveWeaponComponent>() : Entity.GetComponent<WeaponComponent>();
 			
 			if (!Send(new WeaponSwappedEvent {
 				Who = (Player) Entity,
-				Old = Item,
-				Current = component.Item
+				Old = Item!,
+				Current = component!.Item!
 			})) {
 				// Swap the items
 				var tmp = component.Item;

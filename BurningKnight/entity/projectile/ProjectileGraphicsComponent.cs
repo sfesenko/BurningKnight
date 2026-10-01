@@ -10,11 +10,11 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.projectile {
 	public class ProjectileGraphicsComponent : BasicProjectileGraphicsComponent {
-		public static TextureRegion Flash;
+		public static TextureRegion? Flash;
 		public bool IgnoreRotation;
-		public float Rotation => IgnoreRotation ? 0 : ((Projectile) Entity).GetAnyComponent<BodyComponent>().Body.Rotation;
-		public TextureRegion Aura;
-		public TextureRegion Light;
+		public float Rotation => IgnoreRotation ? 0 : ((Projectile) Entity).GetAnyComponent<BodyComponent>()!.Body!.Rotation;
+		public TextureRegion? Aura;
+		public TextureRegion? Light;
 
 		public ProjectileGraphicsComponent(string image, string slice) : base(image, slice) {
 			if (Flash == null) {
@@ -23,7 +23,7 @@ namespace BurningKnight.entity.projectile {
 
 			var a = Animations.Get(image);
 
-			Aura = a.GetSlice($"{slice}_aura", false);
+			Aura = a!.GetSlice($"{slice}_aura", false);
 			Light = a.GetSlice($"{slice}_light", false);
 		}
 
@@ -45,7 +45,7 @@ namespace BurningKnight.entity.projectile {
 			var a = Rotation;
 			var b = false; // p.FlashTimer > 0; // future egor: do we really need this frame that no one notices anyway? think about it, requires extra 4 bytes per bullet
 			var spr = b ? Flash : Sprite;
-			var or = spr.Center;
+			var or = spr!.Center;
 
 			if (shadow) {
 				Graphics.Render(spr, Entity.Center + new Vector2(0, 6), a, or, scale);

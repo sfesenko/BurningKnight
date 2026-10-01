@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.fx {
 	public class SplashFx : Entity {
-		private TextureRegion region;
+		private TextureRegion region = null!;
 		private float angle;
 		private Vector2 scale;
 		private float targetScale;
@@ -29,7 +29,7 @@ namespace BurningKnight.entity.fx {
 			
 			AddTag(Tags.Mess);
 
-			var list = Animations.Get("splash_fx").Layers.First().Value;
+			var list = Animations.Get("splash_fx")!.Layers.First()!.Value;
 			region = list[Rnd.Int(list.Count)].Texture;
 		}
 

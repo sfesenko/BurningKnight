@@ -3,6 +3,6 @@ using Lens.entity;
 
 namespace BurningKnight.entity.events {
 	public class DoorOpenedEvent : Event {
-		public Door Who;
+		public Door Who = null!;
 	}
 }

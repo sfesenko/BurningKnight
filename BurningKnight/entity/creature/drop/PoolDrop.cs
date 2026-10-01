@@ -7,7 +7,7 @@ using Lens.util.math;
 
 namespace BurningKnight.entity.creature.drop {
 	public partial class PoolDrop : Drop {
-		public ItemPool Pool;
+		public ItemPool Pool = null!;
 		public int Min;
 		public int Max;
 
@@ -26,7 +26,7 @@ namespace BurningKnight.entity.creature.drop {
 			var list = new List<string>();
 
 			for (var i = 0; i < Rnd.Int(Min, Max + 1); i++) {
-				list.Add(Items.Generate(Pool));
+				list.Add(Items.Generate(Pool)!);
 			}
 
 			return list;

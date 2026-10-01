@@ -18,8 +18,8 @@ using Microsoft.Xna.Framework;
 namespace BurningKnight.level.entities {
 	public partial class AchievementStatue : Prop {
 		private string id = "bk:rip";
-		private Achievement achievement;
-		private TextureRegion achievementTexture;
+		private Achievement? achievement;
+		private TextureRegion achievementTexture = null!;
 		private float offset;
 		private bool hidden;
 
@@ -41,11 +41,11 @@ namespace BurningKnight.level.entities {
 			AddComponent(new InteractableSliceComponent("props", "achievement_statue"));
 			AddComponent(new RectBodyComponent(0, 13, 24, 19, BodyType.Static));
 
-			GetComponent<DialogComponent>().Dialog.Voice = 30;
+			GetComponent<DialogComponent>()!.Dialog!.Voice = 30;
 			
 			AddTag(Tags.Statue);
 
-			Area.Add(new RenderTrigger(this, RenderTop, Layers.FlyingMob));
+			Area!.Add(new RenderTrigger(this, RenderTop, Layers.FlyingMob));
 			
 			Achievements.UnlockedCallback += UpdateState;
 			Achievements.LockedCallback += UpdateState;
@@ -65,7 +65,7 @@ namespace BurningKnight.level.entities {
 		}
 		
 		private bool Interact(Entity e) {
-			foreach (var s in Area.Tagged[Tags.Statue]) {
+			foreach (var s in Area!.Tagged[Tags.Statue]) {
 				if (s.TryGetComponent<DialogComponent>(out var d)) {
 					d.Close();
 				}
@@ -84,21 +84,21 @@ namespace BurningKnight.level.entities {
 			} else {
 				state = $"[sp 2][cl orange]{Locale.Get($"ach_{id}")}[cl]";
 
-				if (achievement.Max > 0) {
+				if (achievement!.Max > 0) {
 					var p = GlobalSave.GetInt($"ach_{id}", 0);
 					state += $"\n[cl gray]{MathUtils.Clamp(0, achievement.Max, p)}/{achievement.Max} {Locale.Get("complete")}[cl]";
 				}
 			}
 			
-			GetComponent<DialogComponent>().Start(state);
+			GetComponent<DialogComponent>()!.Start(state);
 			return true; 
 		}
 
 		private void SetupSprite() {
-			achievementTexture = Animations.Get("achievements").GetSlice(id);
+			achievementTexture = Animations.Get("achievements")!.GetSlice(id)!;
 		}
 
-		private void UpdateState(string i = null) {
+		private void UpdateState(string? i = null) {
 			achievement = Achievements.Get(id);
 
 			if (achievement == null || Engine.EditingLevel) {
@@ -107,16 +107,16 @@ namespace BurningKnight.level.entities {
 
 			if (!achievement.Unlocked && achievement.Secret) {
 				hidden = true;
-				GetComponent<RectBodyComponent>().Body.IsSensor = true;
+				GetComponent<RectBodyComponent>()!.Body!.IsSensor = true;
 			} else {
 				hidden = false;
-				GetComponent<RectBodyComponent>().Body.IsSensor = false;
+				GetComponent<RectBodyComponent>()!.Body!.IsSensor = false;
 			}
 		}
 
 		public override void Load(FileReader stream) {
 			base.Load(stream);
-			id = stream.ReadString();
+			id = stream.ReadString()!;
 		}
 
 		public override void Save(FileWriter stream) {
@@ -137,7 +137,7 @@ namespace BurningKnight.level.entities {
 				return;
 			}
 			
-			GraphicsComponent.Render(true);
+			GraphicsComponent!.Render(true);
 		}
 
 		public void RenderTop() {

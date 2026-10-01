@@ -40,7 +40,7 @@ namespace BurningKnight.ui.inventory {
 				var point = Player.Center + new Vector2((float) Math.Cos(a) * dd, (float) Math.Sin(a) * dd);
 				var center = new Vector2(Display.UiWidth, Display.UiHeight) * 0.5f;
 					
-				point = Context.Camera.CameraToUi(point);
+				point = Context.Camera!.CameraToUi(point);
 				point.X = MathUtils.Clamp((float) -Math.Cos(a) * (center.X - 16) + center.X, (float) Math.Cos(a) * (center.X - 16) + center.X, point.X);
 				point.Y = MathUtils.Clamp((float) -Math.Sin(a) * (center.Y - 16) + center.Y,  (float) Math.Sin(a) * (center.Y - 16) + center.Y, point.Y);
 				point -= MathUtils.CreateVector(a, m);
@@ -57,22 +57,22 @@ namespace BurningKnight.ui.inventory {
 			}
 			
 			Entity target;
-			var r = Player.GetComponent<RoomComponent>().Room;
+			var r = Player.GetComponent<RoomComponent>()!.Room;
 			
 			if (!Second && !Engine.Instance.State.Paused && r != null) {
 				if (r.Tagged[Tags.MustBeKilled].Count == 1 && r.Type != RoomType.Connection && !(r.Tagged[Tags.MustBeKilled][0] is Boss)) {
 					target = r.Tagged[Tags.MustBeKilled][0];
 
-					if (target != null && (!(target is Mob mb) || mb.Target != null) && target is Creature c && c.GetComponent<HealthComponent>().Health >= 1f && r.Contains(c.Center)) {
+					if (target != null && (!(target is Mob mb) || mb.Target != null) && target is Creature c && c.GetComponent<HealthComponent>()!.Health >= 1f && r.Contains(c.Center)) {
 						RenderArrow(target.Center);
 					}
-				} else if (Context.Run.Depth > 0 && r.Tagged[Tags.MustBeKilled].Count == 0 && Exit.Instance != null && Player.CheckClear(Context.Area)) {
+				} else if (Context.Run.Depth > 0 && r.Tagged[Tags.MustBeKilled].Count == 0 && Exit.Instance != null && Player.CheckClear(Context.Area!)) {
 					RenderArrow(Exit.Instance.Center, true);
 				}
 			}
 
 			var show = Context.Run.Depth > 0;
-			var hasMana = Player.GetComponent<WeaponComponent>().Item?.Data?.WeaponType == WeaponType.Magic || Player.GetComponent<ActiveWeaponComponent>().Item?.Data?.WeaponType == WeaponType.Magic;
+			var hasMana = Player.GetComponent<WeaponComponent>()!.Item?.Data?.WeaponType == WeaponType.Magic || Player.GetComponent<ActiveWeaponComponent>()!.Item?.Data?.WeaponType == WeaponType.Magic;
 
 			RenderHealthBar(true);
 
@@ -120,14 +120,14 @@ namespace BurningKnight.ui.inventory {
 		}
 		private Vector2 GetHeartPosition(bool pad, int i, bool bg = false) {
 			var d = 0;
-			var it = Player.GetComponent<ActiveItemComponent>().Item;
+			var it = Player.GetComponent<ActiveItemComponent>()!.Item;
 
 			if (pad && it != null && Math.Abs(it.UseTime) > 0.01f) {
 				d = 4;
 			}
 
 			var a = (pad ? (4 + (4 + ItemSlot.Source.Width + d) * (activeSlot.ActivePosition + 1)) : 6) + 4;
-			var c = Second ? Math.Min(HeartsComponent.PerRow, Bump(Player.GetComponent<HealthComponent>().MaxHealth + Player.GetComponent<HeartsComponent>().TotalMax)) : 0;
+			var c = Second ? Math.Min(HeartsComponent.PerRow, Bump(Player.GetComponent<HealthComponent>()!.MaxHealth + Player.GetComponent<HeartsComponent>()!.TotalMax)) : 0;
 			
 			return new Vector2(
 				(bg ? 0 : 1) + (Second ? Display.UiWidth - a - c * 5.5f : a) + (int) (i % HeartsComponent.PerRow * 5.5f),
@@ -137,7 +137,7 @@ namespace BurningKnight.ui.inventory {
 		}
 		private void RenderHealthBar(bool pad) {
 			var red = Player.GetComponent<HealthComponent>();
-			var phases = red.Phases;
+			var phases = red!.Phases;
 
 			if (Scourge.IsEnabled(Scourge.OfRisk)) {
 				Graphics.Render(question, new Vector2(8 + (int) ((4 + ItemSlot.Source.Width) * (activeSlot.ActivePosition + 1)), 11));
@@ -161,7 +161,7 @@ namespace BurningKnight.ui.inventory {
 			var r = (int) lastRed;
 			var maxRed = red.MaxHealth;
 			var hurt = red.InvincibilityTimer > 0;
-			var shields = hearts.ShieldHalfs;
+			var shields = hearts!.ShieldHalfs;
 			var bombs = (int) hearts.Bombs;
 			var dbombs = bombs * 2;
 			var mbombs = (int) hearts.BombsMax;
@@ -217,7 +217,7 @@ namespace BurningKnight.ui.inventory {
 		}
 		private Vector2 GetStarPosition(bool pad, int i, bool bg = false) {
 			var d = 0;
-			var it = Player.GetComponent<ActiveItemComponent>().Item;
+			var it = Player.GetComponent<ActiveItemComponent>()!.Item;
 
 			if (pad && it != null && Math.Abs(it.UseTime) > 0.01f) {
 				d = 4;
@@ -228,14 +228,14 @@ namespace BurningKnight.ui.inventory {
 			
 			return new Vector2(
 				(bg ? 0 : 1) + (Second ? Display.UiWidth - a - 8 : a) - 2,
-				(bg ? 0 : 1) + (i / HeartsComponent.PerRow) * 10 + 11 + (Player.GetComponent<HealthComponent>().MaxHealth + Player.GetComponent<HeartsComponent>().Total > HeartsComponent.PerRow ? 10 : 0) + 10
+				(bg ? 0 : 1) + (i / HeartsComponent.PerRow) * 10 + 11 + (Player.GetComponent<HealthComponent>()!.MaxHealth + Player.GetComponent<HeartsComponent>()!.Total > HeartsComponent.PerRow ? 10 : 0) + 10
 				+ (float) Math.Cos(i / 8f * Math.PI + Engine.Time * 12 - 1) * 0.5f * Math.Max(0, (float) (Math.Cos(Engine.Time * 0.25f - 1) - 0.9f) * 10f)
 			);
 		}
 		private void RenderMana() {
 			var manaComponent = Player.GetComponent<ManaComponent>();
 			
-			var totalMana = manaComponent.Mana;
+			var totalMana = manaComponent!.Mana;
 			
 			if (changedTime > 0) {
 				changedTime -= Engine.Delta;
@@ -266,7 +266,7 @@ namespace BurningKnight.ui.inventory {
 			}
 		}
 		private void RenderConsumables(bool hasMana) {
-			var bottomY = 8 + 9 + 8 + (hasMana ? 10 : 0) + (Player.GetComponent<HealthComponent>().MaxHealth + Player.GetComponent<HeartsComponent>().Total > HeartsComponent.PerRow ? 10 : 0) + (int) (12 * (activeSlot.ActivePosition + 1));
+			var bottomY = 8 + 9 + 8 + (hasMana ? 10 : 0) + (Player.GetComponent<HealthComponent>()!.MaxHealth + Player.GetComponent<HeartsComponent>()!.Total > HeartsComponent.PerRow ? 10 : 0) + (int) (12 * (activeSlot.ActivePosition + 1));
 
 			if (Scourge.IsEnabled(Scourge.OfKeys)) {
 				Graphics.Render(question, new Vector2(8, bottomY + 1));

@@ -29,9 +29,9 @@ namespace BurningKnight.entity.room.input {
 			var s = GetComponent<StateComponent>();
 			
 			if (On) {
-				s.Become<OnState>();
+				s!.Become<OnState>();
 			} else {
-				s.Become<OffState>();
+				s!.Become<OffState>();
 			}
 		}
 
@@ -52,7 +52,7 @@ namespace BurningKnight.entity.room.input {
 			base.UpdateState();			
 			
 			ApplyState();
-			Context.Camera.ShakeMax(6);
+			Context.Camera!.ShakeMax(6);
 		}
 
 		public override void Load(FileReader stream) {

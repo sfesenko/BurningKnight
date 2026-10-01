@@ -4,8 +4,8 @@ using Lens.util.camera;
 
 namespace BurningKnight.state {
 	public class Editor {
-		public Camera Camera;
-		public Level Level;
-		public Area Area;
+		public Camera Camera = null!;
+		public Level Level = null!;
+		public Area Area = null!;
 	}
 }

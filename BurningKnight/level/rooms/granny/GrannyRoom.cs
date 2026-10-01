@@ -20,7 +20,7 @@ namespace BurningKnight.level.rooms.granny {
 
 		public override void SetupDoors(Level level) {
 			foreach (var door in Connected.Values) {
-				door.Type = DoorPlaceholder.Variant.Hidden;
+				door!.Type = DoorPlaceholder.Variant.Hidden;
 			}
 		}
 
@@ -33,7 +33,7 @@ namespace BurningKnight.level.rooms.granny {
 			PaintTunnel(level, Tile.GrannyFloor, GetCenterRect(), false, false, false);
 			
 			var granny = new Granny();
-			level.Area.Add(granny);
+			level.Area!.Add(granny);
 			granny.BottomCenter = new Vector2(Left + GetWidth() / 2 + 0.5f, Top + 3) * 16;
 
 			var count = Math.Ceiling((GetWidth() - 6) / 2f);
@@ -41,10 +41,10 @@ namespace BurningKnight.level.rooms.granny {
 
 			for (var i = 0; i < count; i++) {
 				var stand = new GrannyStand();
-				level.Area.Add(stand);
+				level.Area!.Add(stand);
 				stand.Center = new Vector2(Left + 3.5f + i * 2, Top + 4.5f) * 16;
 				
-				stand.SetItem(Items.CreateAndAdd(Items.GenerateAndRemove(pool), level.Area), null);
+				stand.SetItem(Items.CreateAndAdd(Items.GenerateAndRemove(pool), level.Area)!, null);
 			}
 		}
 

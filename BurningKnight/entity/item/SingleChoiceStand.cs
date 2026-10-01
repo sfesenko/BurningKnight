@@ -24,7 +24,7 @@ namespace BurningKnight.entity.item {
 		}
 
 		protected virtual void RemoveStands() {
-			var rm = GetComponent<RoomComponent>().Room;
+			var rm = GetComponent<RoomComponent>()!.Room;
 
 			if (rm == null) {
 				return;
@@ -47,18 +47,18 @@ namespace BurningKnight.entity.item {
 				}
 			}
 					
-			Context.Camera.Shake(10);
+			Context.Camera!.Shake(10);
 		}
 
 		public override bool HandleEvent(Event e) {
 			if (e is ItemTakenEvent ite && !(ite.Who is SingleChoiceStand || !(ite.Stand is SingleChoiceStand))) {
-				var rm = GetComponent<RoomComponent>().Room;
+				var rm = GetComponent<RoomComponent>()!.Room;
 
 				if (rm == null) {
 					return false;
 				}
 				
-				if (ite.Stand != this && ite.Stand.GetComponent<RoomComponent>().Room == rm) {
+				if (ite.Stand != this && ite.Stand.GetComponent<RoomComponent>()!.Room == rm) {
 					RemoveStands();
 				}
 			}

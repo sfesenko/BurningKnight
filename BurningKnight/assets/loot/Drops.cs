@@ -163,13 +163,13 @@ namespace BurningKnight.assets.loot {
 			));
 		}
 
-		public static Drop Get(string drop) {
+		public static Drop? Get(string drop) {
 			if (Defined.TryGetValue(drop, out var d)) return d;
 			Log.Error($"Unknown drop {drop}");
 			return null;
 		}
 
-		private static void Define(string id, Drop drop, Mod mod = null) {
+		private static void Define(string id, Drop drop, Mod? mod = null) {
 			Defined[$"{(mod == null ? Mods.BurningKnight : mod.Prefix)}:{id}"] = drop;
 		}
 	}

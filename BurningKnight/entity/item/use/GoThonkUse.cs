@@ -8,7 +8,7 @@ namespace BurningKnight.entity.item.use {
 	public class GoThonkUse : ItemUse {
 		public override void Use(Entity entity, Item item) {
 			base.Use(entity, item);
-			var room = entity.GetComponent<RoomComponent>().Room;
+			var room = entity.GetComponent<RoomComponent>()!.Room;
 
 			if (room == null) {
 				return;
@@ -26,14 +26,14 @@ namespace BurningKnight.entity.item.use {
 			do {
 				var enemy = enemies[Rnd.Int(enemies.Count)];
 
-				if (enemy.GetComponent<BuffsComponent>().Add(new FrozenBuff {
+				if (enemy.GetComponent<BuffsComponent>()!.Add(new FrozenBuff {
 						Duration = 50
 				}) != null) {
 					if (!enemy.HasComponent<DialogComponent>()) {
 						enemy.AddComponent(new DialogComponent());
 					}
 					
-					enemy.GetComponent<DialogComponent>().Start("mob_0");
+					enemy.GetComponent<DialogComponent>()!.Start("mob_0");
 					count++;
 
 					if (count >= 3) {

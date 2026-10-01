@@ -20,11 +20,11 @@ namespace BurningKnight.entity.creature.mob.boss {
 			All.AddRange(infos);
 		}
 		
-		public static Boss Generate() {
+		public static Boss? Generate() {
 			var current = new List<BossInfo>();
 			
 			foreach (var info in All) {
-				if (info.SpawnsIn(Context.Level.Biome.Id)) {
+				if (info.SpawnsIn(Context.Level!.Biome!.Id)) {
 					current.Add(info);
 				}
 			}
@@ -32,7 +32,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 			var chances = new float[current.Count];
 
 			for (var i = 0; i < current.Count; i++) {
-				chances[i] = current[i].GetChanceFor(Context.Level.Biome.Id).Chance;
+				chances[i] = current[i].GetChanceFor(Context.Level!.Biome!.Id)!.Chance;
 			}
 
 			var index = Rnd.Chances(chances);
@@ -41,7 +41,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 				return null;
 			}
 
-			return (Boss) Activator.CreateInstance(current[index].Type);
+			return (Boss) Activator.CreateInstance(current[index].Type)!;
 		}
 	}
 }

@@ -20,8 +20,8 @@ namespace BurningKnight.entity.projectile.controller {
 
 		public static ProjectileCallbacks.UpdateCallback MakeFadingParticles(float time, Color tint) {
 			return Make(time, p => {
-				var pr = new FadingParticle(p.GetComponent<ProjectileGraphicsComponent>().Sprite, tint);
-				p.Area.Add(pr);
+				var pr = new FadingParticle(p.GetComponent<ProjectileGraphicsComponent>()!.Sprite, tint);
+				p.Area!.Add(pr);
 				pr.Center = p.Center;
 			});
 		}

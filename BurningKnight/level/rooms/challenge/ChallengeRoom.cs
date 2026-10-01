@@ -18,7 +18,7 @@ namespace BurningKnight.level.rooms.challenge {
 	public class ChallengeRoom : SpecialRoom {
 		public override void SetupDoors(Level level) {
 			foreach (var door in Connected.Values) {
-				door.Type = DoorPlaceholder.Variant.Challenge;
+				door!.Type = DoorPlaceholder.Variant.Challenge;
 			}
 		}
 
@@ -42,10 +42,10 @@ namespace BurningKnight.level.rooms.challenge {
 			
 			if (Rnd.Chance(20)) {
 				var stand = new ItemStand();
-				level.Area.Add(stand);
+				level.Area!.Add(stand);
 				stand.Center = center;
 
-				stand.SetItem(Items.CreateAndAdd(Items.Generate(ItemPool.Treasure), level.Area), null);
+				stand.SetItem(Items.CreateAndAdd(Items.Generate(ItemPool.Treasure)!, level.Area)!, null);
 			} else {
 				var chests = new List<Chest>();
 				var i = Rnd.Int(4);
@@ -90,7 +90,7 @@ namespace BurningKnight.level.rooms.challenge {
 				var cn = chests.Count;
 				
 				foreach (var c in chests) {
-					level.Area.Add(c);
+					level.Area!.Add(c);
 					c.Center = center + new Vector2((j - cn / 2f) * 16, 0);
 					
 					j++;

@@ -26,9 +26,9 @@ namespace BurningKnight.entity.creature.mob.boss {
 			public override void Init() {
 				base.Init();
 
-				var r = Self.GetComponent<RoomComponent>().Room;
+				var r = Self.GetComponent<RoomComponent>()!.Room;
 
-				if (r.CenterX < Self.CenterX) {
+				if (r!.CenterX < Self.CenterX) {
 					x = r.X + 32;
 					sign = -1;
 				} else {
@@ -36,7 +36,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 					sign = 1;
 				}
 
-				GameContext.Current.Camera.Shake(10);
+				GameContext.Current!.Camera!.Shake(10);
 			}
 
 			public override void Destroy() {
@@ -56,7 +56,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 				var body = Self.GetComponent<RectBodyComponent>();
 
 				if ((Self.CenterX - x) * sign >= -16) {
-					body.Velocity -= body.Velocity * (dt * 2);
+					body!.Velocity -= body.Velocity * (dt * 2);
 					delay -= dt;
 
 					if (delay <= 0) {
@@ -84,13 +84,13 @@ namespace BurningKnight.entity.creature.mob.boss {
 
 						var p = builder.Shoot(a, Rnd.Float(3f, 10f)).Build();
 
-						ProjectileCallbacks.AttachUpdateCallback(p, SlowdownProjectileController.Make(0.25f));
-						Self.GetComponent<AudioEmitterComponent>().EmitRandomized("mob_bee_shot");
+						ProjectileCallbacks.AttachUpdateCallback(p!, SlowdownProjectileController.Make(0.25f));
+						Self.GetComponent<AudioEmitterComponent>()!.EmitRandomized("mob_bee_shot");
 					}
 				}
 
 				Self.X += sign * dt * 360;
-				body.Velocity += new Vector2(sign * dt * 3600, 0);
+				body!.Velocity += new Vector2(sign * dt * 3600, 0);
 			}
 		}
 	}

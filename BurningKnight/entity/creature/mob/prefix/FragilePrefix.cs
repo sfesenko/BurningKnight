@@ -12,7 +12,7 @@ namespace BurningKnight.entity.creature.mob.prefix {
 			if (e is HealthModifiedEvent hme) {
 				if (hme.Amount < 0) {
 					AnimationUtil.Poof(Mob.Center, 1);
-					var room = Mob.GetComponent<RoomComponent>().Room;
+					var room = Mob.GetComponent<RoomComponent>()!.Room;
 
 					if (room == null) {
 						return base.HandleEvent(e);

@@ -15,21 +15,21 @@ namespace BurningKnight.entity.component {
 
 		public override void Init() {
 			base.Init();
-			Entity.GetComponent<InputComponent>().InitCallback = Setup;
+			Entity.GetComponent<InputComponent>()!.InitCallback = Setup;
 		}
 
 		public void Setup() {
 			loaded = true;
 			
 			if (Item == null) {
-				var hat = GlobalSave.GetString($"hat_{Entity.GetComponent<InputComponent>().Index}");
+				var hat = GlobalSave.GetString($"hat_{Entity.GetComponent<InputComponent>()!.Index}");
 				Log.Debug($"HatComponent.Setup: {hat}");
 				// Log.Debug($"hat_{Entity.GetComponent<InputComponent>().Index}");
 
 				if (hat != null) {
-					Set(Items.CreateAndAdd(hat, Entity.Area), false);
+					Set(Items.CreateAndAdd(hat, Entity.Area!)!, false);
 				} else {
-					Set(Items.CreateAndAdd("bk:no_hat", Entity.Area), false);
+					Set(Items.CreateAndAdd("bk:no_hat", Entity.Area!)!, false);
 				}
 			}
 		}
@@ -38,18 +38,18 @@ namespace BurningKnight.entity.component {
 			return item.Type == ItemType.Hat;
 		}
 		
-		public override void Set(Item item, bool animate = true) {
+		public override void Set(Item? item, bool animate = true) {
 			base.Set(item, animate);
 
 			if (loaded) {
-				GlobalSave.Put($"hat_{Entity.GetComponent<InputComponent>().Index}", item?.Id);
+				GlobalSave.Put($"hat_{Entity.GetComponent<InputComponent>()!.Index}", item?.Id!);
 			}
 
 			if (item != null) {
 				DoNotRender = item.Id == "bk:no_hat";
 
 				if (Entity.HasComponent<LightComponent>()) {
-					Entity.GetComponent<LightComponent>().Light.Color =
+					Entity.GetComponent<LightComponent>()!.Light.Color =
 						item.Id == "bk:glowing_mushroom" ? new Color(0.05f, 0.4f, 1f, 1f) : Player.LightColor;
 				}
 			}
@@ -58,7 +58,7 @@ namespace BurningKnight.entity.component {
 		protected override void OnItemSet(Item previous) {
 			base.OnItemSet(previous);
 			
-			foreach (var i in Entity.Area.Tagged[Tags.Item]) {
+			foreach (var i in Entity.Area!.Tagged[Tags.Item]) {
 				if (i is EmeraldStand st) {
 					st.RecalculatePrice();
 				}

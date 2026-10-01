@@ -121,7 +121,7 @@ namespace Lens.graphics.gamerenderer {
 				var shake = camera.GetComponent<ShakeComponent>()!;
 				var scale = Engine.Instance.Upscale * camera.TextureZoom;
 
-				Graphics.Render(GameTarget,
+				Graphics.Render(GameTarget!,
 					new Vector2(Engine.Viewport.X + Display.Width / 2f * Engine.Instance.Upscale + scale * shake.Position.X,
 						Engine.Viewport.Y + Display.Height / 2f * Engine.Instance.Upscale + scale * shake.Position.Y),
 					shake.Angle,
@@ -175,7 +175,7 @@ namespace Lens.graphics.gamerenderer {
 		public override void Destroy() {
 			base.Destroy();
 			
-			GameTarget.Dispose();
+			GameTarget?.Dispose();
 			UiTarget?.Dispose();
 			Batcher2D.Dispose();
 		}

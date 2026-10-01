@@ -6,7 +6,7 @@ using Lens.util;
 
 namespace BurningKnight.entity.item.use {
 	public partial class GiveBuffUse : ItemUse {
-		protected string Buff;
+		protected string Buff = null!;
 		protected float Time;
 
 		public override void Use(Entity entity, Item item) {

@@ -12,7 +12,7 @@ namespace BurningKnight.level.entities {
 			base.Save(stream);
 			
 			var d = GetComponent<CloseDialogComponent>(); 
-			stream.WriteString(d.Variants.Length == 0 ? "" : d.Variants[0]);
+			stream.WriteString(d!.Variants.Length == 0 ? "" : d.Variants[0]);
 			stream.WriteString(Region);
 			stream.WriteBoolean(DemoOnly);
 		}
@@ -20,13 +20,13 @@ namespace BurningKnight.level.entities {
 		public override void Load(FileReader stream) {
 			base.Load(stream);
 			
-			SetMessage(stream.ReadString());
+			SetMessage(stream.ReadString()!);
 			Region = stream.ReadString() ?? "sign";
 			DemoOnly = stream.ReadBoolean();
 		}
 
 		public void SetMessage(string m) {
-			GetComponent<CloseDialogComponent>().Variants = new [] { m };
+			GetComponent<CloseDialogComponent>()!.Variants = new [] { m };
 		}
 		
 		public override void AddComponents() {
@@ -36,7 +36,7 @@ namespace BurningKnight.level.entities {
 			AddComponent(new CloseDialogComponent());
 			AddComponent(new ShadowComponent());
 			
-			GetComponent<DialogComponent>().Dialog.Voice = 30;
+			GetComponent<DialogComponent>()!.Dialog!.Voice = 30;
 		}
 
 		public override void PostInit() {

@@ -10,12 +10,12 @@ using Lens.lightJson;
 
 namespace BurningKnight.entity.item.use {
 	public partial class MakeProjectilesKillWithBuffUse : ItemUse {
-		private Type buff;
+		private Type buff = null!;
 		
 		public override bool HandleEvent(Event e) {
 			if (e is ProjectileCreatedEvent pce) {
 				ProjectileCallbacks.AttachHurtCallback(pce.Projectile, (p, w) => {
-					if (w is Mob m && w.GetComponent<BuffsComponent>().Buffs.ContainsKey(buff)) {
+					if (w is Mob m && w.GetComponent<BuffsComponent>()!.Buffs.ContainsKey(buff)) {
 						m.Kill(Item);
 					}
 				});

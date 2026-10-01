@@ -5,8 +5,8 @@ namespace Lens.graphics.gamerenderer {
 	public class GameRenderer {
 		public static bool EnableBatcher = true;
 		
-		public RenderTarget2D GameTarget;
-		public RenderTarget2D UiTarget;
+		public RenderTarget2D? GameTarget;
+		public RenderTarget2D? UiTarget;
 
 		public static readonly SpriteSortMode DefaultSortMode = SpriteSortMode.Deferred;
 
@@ -29,9 +29,9 @@ namespace Lens.graphics.gamerenderer {
 			ScissorTestEnable = true
 		};
 		
-		public Effect GameEffect;
-		public Effect UiEffect;
-		public Effect SurfaceEffect;
+		public Effect? GameEffect;
+		public Effect? UiEffect;
+		public Effect? SurfaceEffect;
 		public Color Bg = Color.Black;
 
 		public virtual void Begin() {

@@ -16,12 +16,12 @@ namespace BurningKnight.level.entities.statue {
 			Height = 20;
 		}
 
-		protected override string GetFxText() {
+		protected override string? GetFxText() {
 			return null;
 		}
 
 		protected override bool CanInteract(Entity e) {
-			return Area.Tagged[Tags.Player].Count < 2 && base.CanInteract(e);
+			return Area!.Tagged[Tags.Player].Count < 2 && base.CanInteract(e);
 		}
 
 		protected override Rectangle GetCollider() {
@@ -39,7 +39,7 @@ namespace BurningKnight.level.entities.statue {
 		public override void Update(float dt) {
 			base.Update(dt);
 
-			var with = GetComponent<InteractableComponent>().CurrentlyInteracting;
+			var with = GetComponent<InteractableComponent>()!.CurrentlyInteracting;
 
 			if (with == null) {
 				return;
@@ -50,10 +50,10 @@ namespace BurningKnight.level.entities.statue {
 					var index = ((int) gamepad.PlayerIndex) + 1;
 					var found = false;
 
-					foreach (var p in Area.Tagged[Tags.Player]) {
+					foreach (var p in Area!.Tagged[Tags.Player]) {
 						var i = p.GetComponent<InputComponent>();
 					
-						if (i.Index == index) {
+						if (i!.Index == index) {
 							found = true;
 							break;
 						}
@@ -66,13 +66,13 @@ namespace BurningKnight.level.entities.statue {
 					foreach (var p in Area.Tagged[Tags.Player]) {
 						var i = p.GetComponent<InputComponent>();
 
-						if (i.Index == 0 && i.KeyboardEnabled) {
+						if (i!.Index == 0 && i.KeyboardEnabled) {
 							i.GamepadEnabled = false;
 							break;
 						}
 					}
 					
-					with.GetComponent<InteractorComponent>().EndInteraction();
+					with.GetComponent<InteractorComponent>()!.EndInteraction();
 					Tombstone.CreatePlayer(Area, (byte) index, true, with.BottomCenter + new Vector2(0, 2));
 					
 					break;

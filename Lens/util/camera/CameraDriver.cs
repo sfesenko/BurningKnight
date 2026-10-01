@@ -1,6 +1,6 @@
 ﻿namespace Lens.util.camera {
 	public class CameraDriver {
-		public Camera Camera;
+		public Camera Camera = null!; // set by the Camera that owns this driver
 		
 		public virtual void Init() {
 			

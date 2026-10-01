@@ -11,7 +11,7 @@ namespace BurningKnight.entity.component {
 		public Color Tint = ColorUtils.WhiteColor;
 		
 		public RandomFrameComponent(string anim) {
-			var list = Animations.Get(anim).Layers.First().Value;
+			var list = Animations.Get(anim)!.Layers.First()!.Value;
 			Sprite = list[Rnd.Int(list.Count)].Texture;
 		}
 		

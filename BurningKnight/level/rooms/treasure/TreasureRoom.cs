@@ -58,7 +58,7 @@ namespace BurningKnight.level.rooms.treasure {
 				return;
 			}
 
-			Func<ItemData, bool> filter = null;
+			Func<ItemData, bool>? filter = null;
 
 			if (Rnd.Chance(10)) {
 				filter = (i) => i.Type == ItemType.Weapon;
@@ -68,7 +68,7 @@ namespace BurningKnight.level.rooms.treasure {
 			var st = stands[id];
 
 			var stnd = stands[id] = Rnd.Chance(30) ? new ShieldChoiceStand() : new HealChoiceStand();
-			level.Area.Add(stnd);
+			level.Area!.Add(stnd);
 			stnd.Center = st.Center;
 
 			st.Done = true;
@@ -83,10 +83,10 @@ namespace BurningKnight.level.rooms.treasure {
 				var item = Items.CreateAndAdd(Items.GenerateAndRemove(pool, null, true), level.Area, false);
 
 				if (scourged) {
-					item.Scourged = true;
+					item!.Scourged = true;
 				}
 				
-				s.SetItem(item, null);
+				s.SetItem(item!, null);
 
 				if (pool.Count == 0) {
 					break;
@@ -104,7 +104,7 @@ namespace BurningKnight.level.rooms.treasure {
 
 		protected void PlaceStand(Level level, Dot where) {
 			var stand = new SingleChoiceStand();
-			level.Area.Add(stand);
+			level.Area!.Add(stand);
 			stand.Center = where * 16 + new Vector2(8, 8);
 			
 			stands.Add(stand);
@@ -139,7 +139,7 @@ namespace BurningKnight.level.rooms.treasure {
 			var rude = Rnd.Chance(5); // Hehe
 			
 			foreach (var door in Connected.Values) {
-				door.Type = rude ? DoorPlaceholder.Variant.Locked : DoorPlaceholder.Variant.Treasure;
+				door!.Type = rude ? DoorPlaceholder.Variant.Locked : DoorPlaceholder.Variant.Treasure;
 			}
 		}
 

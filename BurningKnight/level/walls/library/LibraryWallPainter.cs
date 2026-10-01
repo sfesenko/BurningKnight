@@ -24,7 +24,7 @@ namespace BurningKnight.level.walls.library {
 				Id = id
 			};
 			
-			level.Area.Add(at);
+			level.Area!.Add(at);
 			at.Position = a * 16;
 			
 			Painter.Set(level, a, Tiles.RandomFloor());
@@ -33,7 +33,7 @@ namespace BurningKnight.level.walls.library {
 				Id = id
 			};
 			
-			level.Area.Add(bt);
+			level.Area!.Add(bt);
 			bt.Position = b * 16;
 			
 			Painter.Set(level, b, Tiles.RandomFloor());

@@ -20,7 +20,7 @@ namespace BurningKnight.entity.item.stand {
 			base.OnTake(item, who);
 
 			var h = who.GetComponent<HealthComponent>();
-			h.ModifyHealth(h.MaxHealth, this);
+			h!.ModifyHealth(h.MaxHealth, this);
 			
 			TextParticle.Add(who, "HP", h.MaxHealth, true);
 		}

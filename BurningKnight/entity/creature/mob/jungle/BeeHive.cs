@@ -16,7 +16,7 @@ namespace BurningKnight.entity.creature.mob.jungle {
 	public class BeeHive : Mob {
 		private const float ZHeight = 8;
 		private bool loaded;
-		private Tree tree;
+		private Tree? tree;
 		
 		protected override void SetStats() {
 			base.SetStats();
@@ -32,7 +32,7 @@ namespace BurningKnight.entity.creature.mob.jungle {
 			AddComponent(body);
 			body.KnockbackModifier = 0;
 
-			GetComponent<MobAnimationComponent>().ShadowOffset = -ZHeight;
+			GetComponent<MobAnimationComponent>()!.ShadowOffset = -ZHeight;
 		}
 
 		public override void Load(FileReader stream) {
@@ -47,17 +47,17 @@ namespace BurningKnight.entity.creature.mob.jungle {
 				tree = new Tree();
 				tree.Id = 5;
 				tree.AlwaysShow = true;
-				Area.Add(tree);
+				Area!.Add(tree);
 			}
 
 			Timer.Add(() => { 
-				GetComponent<AudioEmitterComponent>().Emit("mob_hive_static", 0.8f, looped: true, tween: true);
+				GetComponent<AudioEmitterComponent>()!.Emit("mob_hive_static", 0.8f, looped: true, tween: true);
 			}, 5f);
 		}
 
 		public override void Destroy() {
 			base.Destroy();
-			GetComponent<AudioEmitterComponent>().StopAll();
+			GetComponent<AudioEmitterComponent>()!.StopAll();
 		}
 
 		public override void Update(float dt) {
@@ -78,12 +78,12 @@ namespace BurningKnight.entity.creature.mob.jungle {
 						T = 0;
 						
 						var bee = GenerateBee();
-						Self.GetComponent<MobAnimationComponent>().Animate();
-						Self.Area.Add(bee);
+						Self.GetComponent<MobAnimationComponent>()!.Animate();
+						Self.Area!.Add(bee);
 						bee.BottomCenter = Self.BottomCenter;
 						AnimationUtil.Ash(bee.Center);
 						
-						Self.GetComponent<AudioEmitterComponent>().Emit("mob_hive_pop");
+						Self.GetComponent<AudioEmitterComponent>()!.Emit("mob_hive_pop");
 					}
 				} else {
 					T = 0;
@@ -95,18 +95,18 @@ namespace BurningKnight.entity.creature.mob.jungle {
 			public override void Init() {
 				base.Init();
 				
-				Self.GetComponent<AudioEmitterComponent>().Emit("mob_hive_breaking");
+				Self.GetComponent<AudioEmitterComponent>()!.Emit("mob_hive_breaking");
 				Self.tree = null;
 
 				var y = Self.Y;
 				var c = Self.GetComponent<MobAnimationComponent>();
 				
-				Tween.To(0, c.ShadowOffset, x => c.ShadowOffset = x, 0.4f, Ease.QuadIn);
+				Tween.To(0, c!.ShadowOffset, x => c.ShadowOffset = x, 0.4f, Ease.QuadIn);
 				Tween.To(y + ZHeight, y, x => Self.Y = x, 0.4f, Ease.QuadIn).OnEnd = () => {
 					Audio.PlaySfx("mob_hive_release");
 					
 					Self.AnimateDeath(null);
-					Self.GetComponent<AudioEmitterComponent>().StopAll();
+					Self.GetComponent<AudioEmitterComponent>()!.StopAll();
 					
 					var am = 16;
 
@@ -121,12 +121,12 @@ namespace BurningKnight.entity.creature.mob.jungle {
 						builder.Scale = Rnd.Float(0.4f, 1f);
 						var p = builder.Shoot(a, Rnd.Float(3f, 10f)).Build();
 
-						ProjectileCallbacks.AttachUpdateCallback(p, SlowdownProjectileController.Make(0.25f, 0.5f, 1f));
+						ProjectileCallbacks.AttachUpdateCallback(p!, SlowdownProjectileController.Make(0.25f, 0.5f, 1f));
 					}
 
 					for (var i = 0; i < Rnd.Int(4, 10); i++) {
 						var bee = GenerateBee();
-						Self.Area.Add(bee);
+						Self.Area!.Add(bee);
 						bee.Center = Self.Center;
 					}
 				};

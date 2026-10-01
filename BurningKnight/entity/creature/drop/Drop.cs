@@ -16,7 +16,7 @@ namespace BurningKnight.entity.creature.drop {
 		public float Chance = 1f;
 		
 		public virtual List<string> GetItems() { 
-			return new List<string>();
+			return [];
 		}
 
 		public abstract string GetId();
@@ -29,7 +29,7 @@ namespace BurningKnight.entity.creature.drop {
 			root["chance"] = Chance;
 		}
 
-		public static void Create(string id, Entity entity, Area area = null, Dot where = null) {
+		public static void Create(string id, Entity? entity, Area? area = null, Dot? where = null) {
 			var drop = Drops.Get(id);
 
 			if (drop == null) {
@@ -39,10 +39,10 @@ namespace BurningKnight.entity.creature.drop {
 			Create(new List<Drop> { drop }, entity, area, where);
 		}
 
-		public static void Create(List<Drop> dr, Entity entity, Area area = null, Dot where = null) {
+		public static void Create(List<Drop> dr, Entity? entity, Area? area = null, Dot? where = null) {
 			var drops = new List<Item>();
 			var ar = entity?.Area ?? area;
-			var wh = entity?.BottomCenter ?? where;
+			var wh = entity?.BottomCenter ?? where!;
 			
 			foreach (var drop in dr) {
 				if (Rnd.Float() > drop.Chance) {
@@ -54,8 +54,8 @@ namespace BurningKnight.entity.creature.drop {
 				foreach (var id in ids) {
 					if (id != null) {
 						if (id == "bk:troll_bomb") {
-							var bomb = new Bomb(entity);
-							ar.Add(bomb);
+							var bomb = new Bomb(entity!);
+							ar!.Add(bomb);
 							bomb.Center = wh;
 							
 							continue;
@@ -77,7 +77,7 @@ namespace BurningKnight.entity.creature.drop {
 			foreach (var item in drops) {
 				item.CenterX = wh.X;
 				item.CenterY = wh.Y + 4;
-				ar.Add(item);
+				ar!.Add(item);
 				item.AddDroppedComponents();
 				item.RandomizeVelocity(1f);
 			}

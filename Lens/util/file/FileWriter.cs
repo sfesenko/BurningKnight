@@ -5,7 +5,7 @@ using BinaryWriter = System.IO.BinaryWriter;
 
 namespace Lens.util.file {
 	public class FileWriter {
-		private BinaryWriter stream;
+		private BinaryWriter stream = null!; // opened by the constructor
 		private List<byte> cache = [];
 
 		public int CacheSize => cache.Count;
@@ -76,7 +76,7 @@ namespace Lens.util.file {
 			WriteByte((byte) (value & 0xFF));
 		}
 
-		public void WriteString(string str) {
+		public void WriteString(string? str) {
 			if (str == null) {
 				WriteByte(0);
 			} else {

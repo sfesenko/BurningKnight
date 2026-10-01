@@ -52,9 +52,9 @@ namespace BurningKnight.state {
 		public static bool ShouldHide => Engine.Instance.State is InGameState { Paused: true, InStats: false } st && st.currentBack != st.graphicsBack;
 		
 		public static bool SkipPause;
-		public static Action<UiTable, string, string, int, Action> SetupLeaderboard;
+		public static Action<UiTable, string, string, int, Action> SetupLeaderboard = null!;
 		public static bool IgnoreSave;
-		public static Action SyncAchievements;
+		public static Action SyncAchievements = null!;
 		public static bool Multiplayer;
 		
 		private const float AutoSaveInterval = 60f;
@@ -64,31 +64,31 @@ namespace BurningKnight.state {
 		private static readonly float BackY = Display.UiHeight - BarsSize / 2f;
 
 		private float blur;
-		private static TextureRegion fog;
+		private static TextureRegion fog = null!;
 		
-		private UiPane pauseMenu;
-		private UiPane leaderMenu;
-		private UiPane statsMenu;
-		private UiPane gameOverMenu;
-		private UiPane credits;
+		private UiPane pauseMenu = null!;
+		private UiPane leaderMenu = null!;
+		private UiPane statsMenu = null!;
+		private UiPane gameOverMenu = null!;
+		private UiPane credits = null!;
 
-		private UiPane audioSettings;
-		private UiPane graphicsSettings;
-		private UiPane gameSettings;
-		private UiPane confirmationPane;
-		private UiPane inputSettings;
-		private UiPane gamepadSettings;
-		private UiPane keyboardSettings;
-		private UiPane languageSettings;
-		private UiPane inventory;
-		private UiLabel killedLabel;
-		private UiLabel placeLabel;
+		private UiPane audioSettings = null!;
+		private UiPane graphicsSettings = null!;
+		private UiPane gameSettings = null!;
+		private UiPane? confirmationPane = null!;
+		private UiPane inputSettings = null!;
+		private UiPane gamepadSettings = null!;
+		private UiPane keyboardSettings = null!;
+		private UiPane languageSettings = null!;
+		private UiPane inventory = null!;
+		private UiLabel killedLabel = null!;
+		private UiLabel placeLabel = null!;
 
 		public bool Died;
 		private float saveTimer;
-		private SaveIndicator indicator;
+		private SaveIndicator indicator = null!;
 
-		private Painting painting;
+		private Painting? painting;
 
 		// The dev-tool hooks; implemented in InGameState.Debug.cs, which a release build
 		// excludes (ADR-0003).
@@ -100,24 +100,24 @@ namespace BurningKnight.state {
 		partial void CreateConsole();
 
 		public bool Menu;
-		public Area TopUi;
+		public Area TopUi = null!;
 		
 		private float offset;
 		private bool menuExited;
 		private float blackBarsSize;
 		private bool doneAnimatingPause = true;
 		
-		private TextureRegion gardient;
-		private TextureRegion black;
-		private TextureRegion emerald;
+		private TextureRegion gardient = null!;
+		private TextureRegion black = null!;
+		private TextureRegion emerald = null!;
 
-		public UiAnimation Killer;
-		private UiLabel seedLabel;
-		private UiButton currentBack;
-		private UiButton inputBack;
-		private UiButton gamepadBack;
-		private UiButton keyboardBack;
-		private UiButton languageBack;
+		public UiAnimation Killer = null!;
+		private UiLabel seedLabel = null!;
+		private UiButton currentBack = null!;
+		private UiButton inputBack = null!;
+		private UiButton gamepadBack = null!;
+		private UiButton keyboardBack = null!;
+		private UiButton languageBack = null!;
 
 		private float timeWas;
 		private double startTime;
@@ -127,9 +127,9 @@ namespace BurningKnight.state {
 		
 		private static Audio Audio => Context.Audio;
 
-		public static void TransitionToBlack(Vector2 position, Action callback = null) {
-			Context.Camera.Targets.Clear();
-			var v = Context.Camera.CameraToScreen(position);
+		public static void TransitionToBlack(Vector2 position, Action? callback = null) {
+			Context.Camera!.Targets.Clear();
+			var v = Context.Camera!.CameraToScreen(position);
 
 			Shaders.Ui.Parameters["bx"].SetValue(v.X / Display.UiWidth);
 			Shaders.Ui.Parameters["by"].SetValue(v.Y / Display.UiHeight);
@@ -140,7 +140,7 @@ namespace BurningKnight.state {
 			Ready = false;
 		}
 
-		public static void TransitionToOpen(Action callback = null) {
+		public static void TransitionToOpen(Action? callback = null) {
 			Shaders.Ui.Parameters["bx"].SetValue(0.333f);
 			Shaders.Ui.Parameters["by"].SetValue(0.333f);
 
@@ -150,13 +150,13 @@ namespace BurningKnight.state {
 			};
 		}
 
-		public Painting CurrentPainting {
+		public Painting? CurrentPainting {
 			set {
 				painting = value;
 				Paused = painting != null;
 			}
 
-			get => painting;
+			get => painting!;
 		}
 
 		public InGameState(Area area, bool menu) {
@@ -172,8 +172,8 @@ namespace BurningKnight.state {
 			Area.EventListener.Subscribe<DiedEvent>(this);
 			Area.EventListener.Subscribe<GiveEmeraldsUse.GaveEvent>(this);
 
-			black = CommonAse.Ui.GetSlice("black");
-			emerald = CommonAse.Items.GetSlice("bk:emerald");
+			black = CommonAse.Ui.GetSlice("black")!;
+			emerald = CommonAse.Items.GetSlice("bk:emerald")!;
 
 			if (Menu) {
 				Achievements.PostLoadCallback?.Invoke();
@@ -182,7 +182,7 @@ namespace BurningKnight.state {
 				Input.Blocked = 1;
 
 				blackBarsSize = BarsSize;
-				gardient = CommonAse.Ui.GetSlice("gardient");
+				gardient = CommonAse.Ui.GetSlice("gardient")!;
 				blur = 1;
 
 				offset = Display.UiHeight;
@@ -239,7 +239,7 @@ namespace BurningKnight.state {
 			}
 		
 			var min = UiButton.LastId;
-			UiButton btn = null;
+			UiButton? btn = null;
 
 			foreach (var b in TopUi.Tagged[Tags.Button]) {
 				var bt = ((UiButton) b);
@@ -258,7 +258,7 @@ namespace BurningKnight.state {
 
 		private bool wasNight;
 		private bool wasRaining;
-		private SoundEffectInstance rainSound;
+		private SoundEffectInstance? rainSound;
 		private List<Entity> particles = new List<Entity>();
 
 		private bool stopped;
@@ -278,7 +278,7 @@ namespace BurningKnight.state {
 
 		private void TeleportTo(RoomType type) {
 			var player = LocalPlayer.Locate(Area);
-			var room = player.GetComponent<RoomComponent>().Room;
+			var room = player!.GetComponent<RoomComponent>()!.Room;
 
 			foreach (var r in Area.Tagged[Tags.Room].Where(r => r != room && ((Room) r).Type == type))
 			{
@@ -290,6 +290,7 @@ namespace BurningKnight.state {
 		public static bool ToolsEnabled = Engine.Version.Dev;
 		
 		public static void RenderFog() {
+			var camera = Context.Camera!;
 			var shader = Shaders.Fog;
 			Shaders.Begin(shader);
 
@@ -298,10 +299,10 @@ namespace BurningKnight.state {
 			shader.Parameters["time"].SetValue(Engine.Time * 0.01f);
 			shader.Parameters["tx"].SetValue(wind.X * -0.1f);
 			shader.Parameters["ty"].SetValue(wind.Y * -0.1f);
-			shader.Parameters["cx"].SetValue(Context.Camera.Position.X / 512f);
-			shader.Parameters["cy"].SetValue(Context.Camera.Position.Y / 512f);
+			shader.Parameters["cx"].SetValue(camera.Position.X / 512f);
+			shader.Parameters["cy"].SetValue(camera.Position.Y / 512f);
 		
-			Graphics.Render(fog, Context.Camera.TopLeft);
+			Graphics.Render(fog, camera.TopLeft);
 			
 			Shaders.End();
 		}
@@ -313,11 +314,11 @@ namespace BurningKnight.state {
 			return $"{(Math.Floor(t / 3600f) + "").PadLeft(2, '0')}:{(Math.Floor(t / 60f % 60f) + "").PadLeft(2, '0')}:{(Math.Floor(t % 60f) + "").PadLeft(2, '0')}";
 		}
 
-		private UiLabel loading;
-		private UiChoice choice;
-		private UiTable leaderStats;
-		private UiTable statsStats;
-		private Action<string> d;
+		private UiLabel loading = null!;
+		private UiChoice choice = null!;
+		private UiTable leaderStats = null!;
+		private UiTable statsStats = null!;
+		private Action<string?> d = null!;
 		private List<UiItem> inventoryItems = new List<UiItem>();
 
 		public void GoToInventory() {
@@ -336,30 +337,30 @@ namespace BurningKnight.state {
 			return $"{Context.Run.Score}".PadLeft(7, '0');
 		}
 
-		public Action OnPauseCallback;
-		private UiMap map;
-		private UiLabel scoreLabel;
-		private UiLabel boardType;
+		public Action? OnPauseCallback = null!;
+		private UiMap map = null!;
+		private UiLabel scoreLabel = null!;
+		private UiLabel boardType = null!;
 
-		private UiLabel lastCreditsLabel;
+		private UiLabel? lastCreditsLabel = null!;
 
-		private UiButton pauseBack;
-		private UiButton settingsBack;
-		private UiButton audioBack;
-		private UiButton graphicsBack;
-		private UiButton gameBack;
-		private UiButton overBack;
-		private UiButton overQuickBack;
-		private UiButton leaderBack;
-		private UiButton inventoryBack;
-		private UiButton statsBack;
+		private UiButton pauseBack = null!;
+		private UiButton settingsBack = null!;
+		private UiButton audioBack = null!;
+		private UiButton graphicsBack = null!;
+		private UiButton gameBack = null!;
+		private UiButton overBack = null!;
+		private UiButton overQuickBack = null!;
+		private UiButton leaderBack = null!;
+		private UiButton inventoryBack = null!;
+		private UiButton statsBack = null!;
 
 		public void UpdateRainVolume() {
 			if (rainSound != null) {
 				rainSound.Volume = (Player.InBuilding ? 0.1f : 0.5f) * Settings.MusicVolume * Settings.MasterVolume;
 			}
 
-			Context.Level.UpdateRainVolume();
+			Context.Level!.UpdateRainVolume();
 		}
 
 		private static readonly string[] Languages =
@@ -367,7 +368,7 @@ namespace BurningKnight.state {
 			"en", "ru", "de", "fr", "pl", "by", "it", "pt", "cn", "ua",
 		];
 		
-		public Action ReturnFromLeaderboard;
+		public Action? ReturnFromLeaderboard;
 		private bool busy;
 
 		private void HideLeaderboard() {
@@ -393,7 +394,7 @@ namespace BurningKnight.state {
 			t = 0;
 		}
 
-		public Action ReturnFromStats;
+		public Action? ReturnFromStats;
 		private bool sbusy;
 
 		private bool animating;
@@ -416,8 +417,8 @@ namespace BurningKnight.state {
 			Paused = false;
 		}
 
-		public static bool EveryoneDied(Player pl = null) {
-			foreach (var p in Context.Area.Tagged[Tags.Player]) {
+		public static bool EveryoneDied(Player? pl = null) {
+			foreach (var p in Context.Area!.Tagged[Tags.Player]) {
 				if (!((Player) p).Dead && p != pl) {
 					return false;
 				}

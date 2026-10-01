@@ -41,32 +41,32 @@ namespace BurningKnight.entity.creature.bk {
 				base.Init();
 
 				var bkDialog = Self.GetComponent<DialogComponent>();
-				var playerDialog = Self.Target.GetComponent<DialogComponent>();
+				var playerDialog = Self!.Target!.GetComponent<DialogComponent>();
 				
-				Start(bkDialog, "bkw_0", Self.Target, () => {
-					Start(bkDialog, "bkw_1", Self.Target, () => {
-						bkDialog.Close();
+				Start(bkDialog!, "bkw_0", Self.Target, () => {
+					Start(bkDialog!, "bkw_1", Self.Target, () => {
+						bkDialog!.Close();
 						
-						Start(playerDialog, "bkw_2", Self.Target, () => {
-							playerDialog.Close();
+						Start(playerDialog!, "bkw_2", Self.Target, () => {
+							playerDialog!.Close();
 							
 							Start(bkDialog, "bkw_3", Self.Target, () => {
 								Become<FollowState>();
 								bkDialog.OnEnd();
 								GlobalSave.Put("bk_who", true);
 
-								Self.Target.GetComponent<HealthComponent>().Unhittable = false;
+								Self.Target.GetComponent<HealthComponent>()!.Unhittable = false;
 							});	
 						});	
 					});	
 				});
 			}
 		
-			private void Start(DialogComponent d, string id, Entity to, Action callback = null) {
+			private void Start(DialogComponent d, string id, Entity to, Action? callback = null) {
 				d.Start(id, to);
 
 				if (callback != null) {
-					d.Dialog.ShowArrow = true;
+					d!.Dialog!.ShowArrow = true;
 					d.Dialog.OnEnd = () => {
 						Timer.Add(callback, 0.1f);
 						return true;

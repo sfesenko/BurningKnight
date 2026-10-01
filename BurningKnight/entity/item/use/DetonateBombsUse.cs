@@ -12,7 +12,7 @@ namespace BurningKnight.entity.item.use {
 				return;
 			}
 
-			var bombs = r.Room.Tagged[Tags.Bomb].ToArray();
+			var bombs = r!.Room!.Tagged[Tags.Bomb].ToArray();
 
 			foreach (var b in bombs) {
 				if (b is Bomb bm) {

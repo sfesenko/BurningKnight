@@ -10,13 +10,13 @@ using MonoGame.Extended.Graphics;
 
 namespace BurningKnight.assets {
 	public abstract class Font {
-		public static BitmapFont Small;
-		public static BitmapFont Medium;
-		public static SpriteFont Test;
+		public static BitmapFont Small = null!;
+		public static BitmapFont Medium = null!;
+		public static SpriteFont Test = null!;
 		
 		public static void Load() {
-			Small = LoadFont("Fonts/small_font");
-			Medium = LoadFont("Fonts/large_font");
+			Small = LoadFont("Fonts/small_font")!;
+			Medium = LoadFont("Fonts/large_font")!;
 			// Test = Assets.Content.Load<SpriteFont>("Fonts/fnt");
 		}
 
@@ -24,7 +24,7 @@ namespace BurningKnight.assets {
 		// only reads plain files relative to the working directory — so it cannot see the content
 		// source, and a packaged archive would lose its fonts. Its parser and character types are
 		// public, so the font is assembled here from streams the source supplies instead.
-		private static BitmapFont LoadFont(string name)
+		private static BitmapFont? LoadFont(string name)
 		{
 			using var stream = Assets.Source.Open($"{name}.fnt");
 

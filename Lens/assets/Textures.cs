@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 namespace Lens.assets {
 	public static class Textures {
 		private static Dictionary<string, TextureRegion> textures = new();
-		public static TextureRegion Missing;
+		public static TextureRegion Missing = null!; // Load() sets it
 		
 		public static void Load() {
 			var textureDir = FileHandle.FromRoot("Textures/");
@@ -50,7 +50,7 @@ namespace Lens.assets {
 
 		internal static void Destroy() {
 			foreach (var region in textures.Values) {
-				region.Texture.Dispose();
+				region.Texture?.Dispose();
 			}
 			
 			textures.Clear();

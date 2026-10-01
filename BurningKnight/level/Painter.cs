@@ -46,7 +46,7 @@ namespace BurningKnight.level {
 		public List<Action<Level, RoomDef>> RoomModifiers = new List<Action<Level, RoomDef>>();
 		public List<Action<Level, RoomDef, int, int>> Modifiers = new List<Action<Level, RoomDef, int, int>>();
 		public Tile DirtTile = Tile.Dirt;
-		public Action<List<MobInfo>> ModifyMobs;
+		public Action<List<MobInfo>> ModifyMobs = null!;
 
 		public Painter() {
 			AllGold = false;
@@ -109,13 +109,14 @@ namespace BurningKnight.level {
 		}
 
 		public bool Paint(Level Level, List<RoomDef> Rooms) {
+			var area = Level.Area!;
 			if (Rooms == null) {
 				return false;
 			}
 
 			Level.Rains = Context.Run.Depth > 0 && Rnd.Chance(15);
 
-			if (Level.Biome.Id == Biome.Ice) {
+			if (Level!.Biome!.Id == Biome.Ice) {
 				Level.Snows = true;
 				Level.Rains = false;
 			} else if (Level.Biome.Id == Biome.Castle) {
@@ -130,7 +131,7 @@ namespace BurningKnight.level {
 				Level.Dark = true;
 			}
 			
-			RoomDef current = null;
+			RoomDef? current = null;
 
 			foreach (var r in Rooms) {
 				if (r is ExitRoom) {
@@ -240,8 +241,8 @@ namespace BurningKnight.level {
 			}
 
 			var tr = Level.GetFilling();
-			RoomDef exit = null;
-			RoomDef entrance = null;
+			RoomDef? exit = null;
+			RoomDef? entrance = null;
 
 			for (var i = Rooms.Count - 1; i >= 0; i--) {
 				var Room = Rooms[i];
@@ -254,7 +255,7 @@ namespace BurningKnight.level {
 				}
 
 				foreach (var d in Room.Connected.Values) {
-					if (d.Type != DoorPlaceholder.Variant.Empty && d.Type != DoorPlaceholder.Variant.Secret &&
+					if (d!.Type != DoorPlaceholder.Variant.Empty && d.Type != DoorPlaceholder.Variant.Secret &&
 					    d.Type != DoorPlaceholder.Variant.Maze) {
 
 						if (d.X == Room.Left || d.X == Room.Right) {
@@ -302,7 +303,7 @@ namespace BurningKnight.level {
 
 				if (!(Room is TreasureRoom)) {
 					foreach (var d in Room.Connected.Values) {
-						if (d.Type != DoorPlaceholder.Variant.Secret) {
+						if (d!.Type != DoorPlaceholder.Variant.Secret) {
 							var a = d.X == Room.Left || d.X == Room.Right;
 							var w = a ? 2 : 1;
 							var h = a ? 1 : 2;
@@ -362,13 +363,13 @@ namespace BurningKnight.level {
 			UpdateTransition(Level);
 
 			if (check) {
-				var c = exit.GetCenter();
+				var c = exit!.GetCenter();
 				Level.CreatePassable(true);
 				PathFinder.SetMapSize(Level.Width, Level.Height);
 				var i1 = Level.ToIndex(c.X, c.Y);
 				
 				PathFinder.BuildDistanceMap(i1, Level.Passable);
-				c = entrance.GetCenter();
+				c = entrance!.GetCenter();
 
 				var i2 = Level.ToIndex(c.X, c.Y);
 				if (PathFinder.Distance[i2] == Int32.MaxValue) {
@@ -394,20 +395,20 @@ namespace BurningKnight.level {
 			}
 
 			if (rrms.Count > 0) {
-				foreach (var type in Level.ItemsToSpawn) {
-					var item = Items.CreateAndAdd(type, Level.Area);
+				foreach (var type in Level!.ItemsToSpawn!) {
+					var item = Items.CreateAndAdd(type, area);
 
 					if (item == null) {
 						continue;
 					}
 					
-					item.Center = (rrms[Rnd.Int(rrms.Count)].GetRandomFreeCell() * 16) + new Vector2(8, 8);
+					item.Center = (rrms[Rnd.Int(rrms.Count)].GetRandomFreeCell()! * 16) + new Vector2(8, 8);
 				}
 
 				if (Context.Run.Depth == 1) {
 					var crystal = new Crystal();
-					crystal.Center = (rrms[Rnd.Int(rrms.Count)].GetRandomFreeCell() * 16) + new Vector2(8, 8) + Rnd.Vector(-4, 4);
-					Level.Area.Add(crystal);
+					crystal.Center = (rrms[Rnd.Int(rrms.Count)].GetRandomFreeCell()! * 16) + new Vector2(8, 8) + Rnd.Vector(-4, 4);
+					area.Add(crystal);
 				}
 			} else {
 				Log.Error("Failed to place items");
@@ -431,7 +432,7 @@ namespace BurningKnight.level {
 				room.MapH = def.GetHeight();
 				room.Parent = def;
 				
-				Level.Area.Add(room);
+				area.Add(room);
 				rms.Add(room);
 
 				def.ModifyRoom(room);

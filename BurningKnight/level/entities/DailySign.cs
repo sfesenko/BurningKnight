@@ -25,7 +25,7 @@ namespace BurningKnight.level.entities {
 		public override void AddComponents() {
 			base.AddComponents();
 
-			GetComponent<CloseDialogComponent>().DecideVariant = (e) => {
+			GetComponent<CloseDialogComponent>()!.DecideVariant = (e) => {
 				var d = DateTime.UtcNow;
 				var dd = d.AddDays(1);
 				

@@ -9,7 +9,7 @@ namespace BurningKnight.entity.creature.mob.prefix {
 			base.Init();
 
 			var health = Mob.GetComponent<HealthComponent>();
-			health.InitMaxHealth = health.MaxHealth * 2;
+			health!.InitMaxHealth = health.MaxHealth * 2;
 		}
 
 		public override Vector4 GetColor() {

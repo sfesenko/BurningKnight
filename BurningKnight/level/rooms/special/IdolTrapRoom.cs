@@ -11,10 +11,10 @@ namespace BurningKnight.level.rooms.special {
 			Painter.Rect(level, this, 2, Tile.FloorD);
 
 			var stand = new ItemStand();
-			level.Area.Add(stand);
+			level.Area!.Add(stand);
 			
 			stand.BottomCenter = GetCenterVector();
-			stand.SetItem(Items.CreateAndAdd("bk:idol", level.Area), null);
+			stand.SetItem(Items.CreateAndAdd("bk:idol", level.Area)!, null);
 		}
 	}
 }

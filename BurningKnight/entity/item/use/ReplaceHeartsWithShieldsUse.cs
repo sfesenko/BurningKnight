@@ -10,13 +10,13 @@ namespace BurningKnight.entity.item.use {
 			base.Use(entity, item);
 
 			var h = entity.GetComponent<HealthComponent>();
-			var amount = h.MaxHealth;
+			var amount = h!.MaxHealth;
 
 			if (amount == 0) {
 				return;
 			}
 			
-			entity.GetComponent<HeartsComponent>().ModifyShields(amount, item);
+			entity.GetComponent<HeartsComponent>()!.ModifyShields(amount, item);
 			h.InitMaxHealth = 0;
 			
 			TextParticle.Add(entity, Locale.Get("max_hp"), amount, true, true);

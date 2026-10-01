@@ -12,8 +12,9 @@ public sealed class AnimationSource
     public int Width;
     public int Height;
     public int Frames;
-    public float[] Durations;
-    public string[] Layers;
-    public (string Name, Rectangle Bounds)[] Slices;
-    public (string Name, uint From, uint To, int Direction)[] Tags;
+    // All four are set by the loader's object initializer.
+    public float[] Durations = null!;
+    public string[] Layers = null!;
+    public (string Name, Rectangle Bounds)[] Slices = null!;
+    public (string Name, uint From, uint To, int Direction)[] Tags = null!;
 }

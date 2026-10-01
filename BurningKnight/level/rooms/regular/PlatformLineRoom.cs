@@ -17,7 +17,7 @@ namespace BurningKnight.level.rooms.regular {
 				platform.Y = (Rnd.Int(Top + 1, Bottom - 2)) * 16;
 				platform.Controller = PlatformController.UpDown;
 
-				level.Area.Add(platform);
+				level.Area!.Add(platform);
 			} else {
 				var y = Rnd.Int(Top + 1, Bottom - 2);
 				
@@ -29,7 +29,7 @@ namespace BurningKnight.level.rooms.regular {
 				platform.Y = y * 16;
 				platform.Controller = PlatformController.LeftRight;
 
-				level.Area.Add(platform);
+				level.Area!.Add(platform);
 			}
 		}
 	}

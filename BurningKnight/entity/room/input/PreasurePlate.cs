@@ -28,9 +28,9 @@ namespace BurningKnight.entity.room.input {
 			var s = GetComponent<StateComponent>();
 			
 			if (On) {
-				s.Become<OnState>();
+				s!.Become<OnState>();
 			} else {
-				s.Become<OffState>();
+				s!.Become<OffState>();
 			}
 		}
 

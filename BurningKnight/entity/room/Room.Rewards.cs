@@ -53,19 +53,19 @@ namespace BurningKnight.entity.room {
 		};
 		private Entity CreateReward() {
 			if (Rnd.Chance(LevelSave.ChestRewardChance)) {
-				return ChestRegistry.PlaceRandom(Vector2.Zero, Area);
+				return ChestRegistry.PlaceRandom(Vector2.Zero, Area!)!;
 			}
 
 			var id = rewards[Rnd.Int(rewards.Length)];
 
 			if (id == "bk:troll_bomb") {
 				var bomb = new Bomb(null);
-				Area.Add(bomb);
+				Area!.Add(bomb);
 				
 				return bomb;
 			}
 			
-			return Items.CreateAndAdd(id, Area);
+			return Items.CreateAndAdd(id, Area!)!;
 		}
 		private void SpawnReward() {
 			if (Context.Run.Depth < 1 || Type != RoomType.Regular || Rnd.Chance(40 - Context.Run.Luck)) {
@@ -89,10 +89,10 @@ namespace BurningKnight.entity.room {
 					Timer.Add(() => {
 						var part = new TileParticle();
 
-						part.Top = Context.Level.Tileset.FloorD[0];
-						part.TopTarget = Context.Level.Tileset.WallTopADecor;
-						part.Side = Context.Level.Tileset.FloorSidesD[0];
-						part.Sides = Context.Level.Tileset.WallSidesA[2];
+						part.Top = Context!.Level!.Tileset!.FloorD[0];
+						part.TopTarget = Context.Level!.Tileset.WallTopADecor;
+						part.Side = Context.Level!.Tileset.FloorSidesD[0];
+						part.Sides = Context.Level!.Tileset.WallSidesA[2];
 						part.Tile = Tile.FloorD;
 
 						part.X = (where.X + x1) * 16;
@@ -101,7 +101,7 @@ namespace BurningKnight.entity.room {
 						part.Target.Y = (where.Y + y1) * 16 + 8;
 						part.TargetZ = -8f;
 
-						Area.Add(part);
+						Area!.Add(part);
 					}, Rnd.Float(1f));
 				}
 			}

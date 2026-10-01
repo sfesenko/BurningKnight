@@ -11,12 +11,12 @@ namespace BurningKnight.ui.dialog {
 
 		public List<Func<Dialog, DialogComponent, Dialog>> Callbacks = new List<Func<Dialog, DialogComponent, Dialog>>();
 		
-		public Dialog(string id, string[] next = null) {
+		public Dialog(string id, string[]? next = null) {
 			Id = id;
-			Next = next;
+			Next = next!;
 		}
 
-		public virtual string DecideNext() {
+		public virtual string? DecideNext() {
 			if (Next == null || Next.Length == 0) {
 				return null;
 			}
@@ -24,7 +24,7 @@ namespace BurningKnight.ui.dialog {
 			return Next?[Rnd.Int(Next.Length)];
 		}
 
-		public virtual Dialog GetNext() {
+		public virtual Dialog? GetNext() {
 			var next = DecideNext();
 			return next != null ? Dialogs.Get(next) : null;
 		}
@@ -38,13 +38,13 @@ namespace BurningKnight.ui.dialog {
 		}
 
 		public class StartedEvent : Event {
-			public Dialog Dialog;
-			public Entity Owner;
+			public Dialog Dialog = null!;
+			public Entity Owner = null!;
 		}
 
 		public class EndedEvent : Event {
-			public Dialog Dialog;
-			public Entity Owner;
+			public Dialog Dialog = null!;
+			public Entity Owner = null!;
 		}
 	}
 }

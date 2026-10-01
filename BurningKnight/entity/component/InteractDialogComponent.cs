@@ -6,7 +6,7 @@ namespace BurningKnight.entity.component {
 	public class InteractDialogComponent(string dialog) : Component
 	{
 		private bool started;
-		private Entity toStart;
+		private Entity? toStart;
 
 		public override void Init() {
 			base.Init();
@@ -23,7 +23,7 @@ namespace BurningKnight.entity.component {
 			if (toStart != null) {
 				var d = GetComponent<DialogComponent>();
 
-				d.OnNext += OnNext;
+				d!.OnNext += OnNext;
 				d.Start(dialog, toStart);
 			
 				started = true;

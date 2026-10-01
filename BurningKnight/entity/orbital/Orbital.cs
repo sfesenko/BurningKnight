@@ -10,9 +10,9 @@ namespace BurningKnight.entity.orbital {
 	public delegate void OrbitalCollisionHandler(Orbital o, Entity e);
 	
 	public class Orbital : Entity {
-		public OrbitalCollisionHandler OnCollision;
-		public Entity Owner => GetComponent<OrbitalComponent>().Orbiting;
-		public Action<float> Controller; 
+		public OrbitalCollisionHandler? OnCollision;
+		public Entity? Owner => GetComponent<OrbitalComponent>()!.Orbiting;
+		public Action<float>? Controller; 
 		
 		public override void AddComponents() {
 			base.AddComponents();

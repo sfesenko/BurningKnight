@@ -8,8 +8,8 @@ using Lens.input;
 
 namespace BurningKnight.entity.cutscene.controller {
 	public class CutsceneController : Entity {
-		public DialogComponent Current;
-		public CutsceneState State;
+		public DialogComponent? Current;
+		public CutsceneState State = null!;
 
 		public override void Init() {
 			base.Init();
@@ -26,7 +26,7 @@ namespace BurningKnight.entity.cutscene.controller {
 			var dd = Current.Dialog;
 			var controller = GamepadComponent.Current;
 			
-			if (dd.Saying && !dd.JustStarted) {
+			if (dd!.Saying && !dd.JustStarted) {
 				if (Input.WasPressed(Controls.Interact, controller, true) || Input.WasPressed(Controls.UiSelect, controller, true)) {
 					if (dd.DoneSaying) {
 						dd.Finish();
@@ -35,7 +35,7 @@ namespace BurningKnight.entity.cutscene.controller {
 						c.FinishCallback?.Invoke();
 						c.FinishCallback = null;
 					} else {
-						dd.Str.FinishTyping();
+						dd!.Str!.FinishTyping();
 					}
 				}
 			}

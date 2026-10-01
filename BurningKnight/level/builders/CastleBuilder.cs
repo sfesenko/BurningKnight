@@ -4,7 +4,7 @@ using Lens.util.math;
 
 namespace BurningKnight.level.builders {
 	public class CastleBuilder : RegularBuilder {
-		public override List<RoomDef> Build(List<RoomDef> Init) {
+		public override List<RoomDef>? Build(List<RoomDef> Init) {
 			SetupRooms(Init);
 
 			if (Entrance == null) {
@@ -33,7 +33,7 @@ namespace BurningKnight.level.builders {
 
 			if (Boss != null) {
 				while (true) {
-					var an = PlaceRoom(Init, Exit, Boss, a);
+					var an = PlaceRoom(Init, Exit!, Boss, a);
 
 					if ((int) an != -1) {
 						break;

@@ -9,7 +9,7 @@ namespace BurningKnight.level.entities {
 	public partial class Sign {
 		public override void RenderImDebug() {
 			var d = GetComponent<CloseDialogComponent>();
-			var m = d.Variants.Length == 0 ? "" : d.Variants[0];
+			var m = d!.Variants!.Length == 0 ? "" : d.Variants[0];
 
 			if (m == null) {
 				m = "";

@@ -26,11 +26,11 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.creature.mob.boss {
 	public partial class BkHead : Boss {
-		public bool CanBeSaved => GetComponent<HealthComponent>().Percent <= 0.2f;
+		public bool CanBeSaved => GetComponent<HealthComponent>()!.Percent <= 0.2f;
 		
 		protected override void AddPhases() {
 			base.AddPhases();
-			HealthBar.AddPhase(0.2f);
+			HealthBar!.AddPhase(0.2f);
 		}
 
 		public override void AddComponents() {
@@ -41,7 +41,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 			AddComponent(new AimComponent(AimComponent.AimType.Target));
 
 			var b = GetComponent<RectBodyComponent>();
-			b.Body.LinearDamping = 2;
+			b!.Body!.LinearDamping = 2;
 			b.KnockbackModifier = 0;
 			
 			SetMaxHp(600);
@@ -54,7 +54,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 			base.OnTargetChange(target);
 
 			if (target != null) {
-				GetComponent<DialogComponent>().StartAndClose("head_0", 2f);
+				GetComponent<DialogComponent>()!.StartAndClose("head_0", 2f);
 
 				Timer.Add(() => {
 					Become<IdleState>();
@@ -78,7 +78,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 				var force = 40f * dt;
 				var a = AngleTo(Target);
 
-				GetComponent<RectBodyComponent>().Velocity += new Vector2((float) Math.Cos(a) * force, (float) Math.Sin(a) * force);
+				GetComponent<RectBodyComponent>()!.Velocity += new Vector2((float) Math.Cos(a) * force, (float) Math.Sin(a) * force);
 			}
 		}
 
@@ -93,7 +93,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 
 			var projectile = builder.Shoot(angle, 20f).Build();
 
-			projectile.Center += MathUtils.CreateVector(angle, 8);
+			projectile!.Center += MathUtils.CreateVector(angle, 8);
 
 			if (offset != null) {
 				projectile.Center += offset.Value;
@@ -110,7 +110,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 			Achievements.Unlock("bk:bk_no_more");
 		}
 
-		protected override TextureRegion GetDeathFrame() {
+		protected override TextureRegion? GetDeathFrame() {
 			return CommonAse.Particles.GetSlice("old_gobbo");
 		}
 
@@ -122,12 +122,13 @@ namespace BurningKnight.entity.creature.mob.boss {
 			}
 
 			saved = true;
-			GetComponent<HealthComponent>().Kill(this);
+			GetComponent<HealthComponent>()!.Kill(this);
 
 			Timer.Add(PlaceRewards, 1f);
 		}
 		
-		protected override void CreateGore(DiedEvent d) {
+		protected override void CreateGore(DiedEvent? d) {
+			var camera = Context.Camera!;
 			base.CreateGore(d);
 
 			if (saved) {
@@ -135,12 +136,12 @@ namespace BurningKnight.entity.creature.mob.boss {
 			}
 			
 			var heinur = new Heinur();
-			Area.Add(heinur);
+			Area!.Add(heinur);
 			heinur.Center = Center - new Vector2(0, 32);
 
 			var g = heinur.GetComponent<BkGraphicsComponent>();
 			
-			g.Scale = Vector2.Zero;
+			g!.Scale = Vector2.Zero;
 			
 			Timer.Add(() => {
 				Tween.To(1, 0, x => g.Scale.X = x, 3f);
@@ -151,7 +152,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 			Area.Add(dm);
 
 			dm.Center = Center + new Vector2(0, 32);
-			dm.GetComponent<AnimationComponent>().Animate();
+			dm.GetComponent<AnimationComponent>()!.Animate();
 
 			AnimationUtil.Poof(dm.Center);
 			
@@ -162,30 +163,30 @@ namespace BurningKnight.entity.creature.mob.boss {
 				p.RemoveComponent<PlayerInputComponent>();
 			}
 			
-			Context.Camera.Targets.Clear();
-			Context.Camera.Follow(dm, 1f);
-			Context.Camera.Follow(heinur, 1f);
+			camera.Targets.Clear();
+			camera.Follow(dm, 1f);
+			camera.Follow(heinur, 1f);
 			
-			dmDialog.Start("dm_5", null, () => Timer.Add(() => {
+			dmDialog!.Start("dm_5", null, () => Timer.Add(() => {
 				dmDialog.Close();
-				Context.Camera.Targets.Clear();
-				Context.Camera.Follow(dm, 1f);
-				Context.Camera.Follow(heinur, 1f);
+				Context.Camera!.Targets.Clear();
+				Context.Camera!.Follow(dm, 1f);
+				Context.Camera!.Follow(heinur, 1f);
 				
-				heinurDialog.Start("heinur_0", null, () => Timer.Add(() => {
+				heinurDialog!.Start("heinur_0", null, () => Timer.Add(() => {
 					heinurDialog.Close();
 					heinur.Attract = true;
-					Context.Camera.Targets.Clear();
-					Context.Camera.Follow(dm, 1f);
-					Context.Camera.Follow(heinur, 1f);
+					Context.Camera!.Targets.Clear();
+					Context.Camera!.Follow(dm, 1f);
+					Context.Camera!.Follow(heinur, 1f);
 
 					heinur.Callback = () => {
-						Context.Camera.Targets.Clear();
-						Context.Camera.Follow(dm, 1f);
-						Context.Camera.MainTarget = dm;
+						Context.Camera!.Targets.Clear();
+						Context.Camera!.Follow(dm, 1f);
+						Context.Camera!.MainTarget = dm;
 
 						foreach (var p in Area.Tagged[Tags.Player]) {
-							p.GetComponent<PlayerGraphicsComponent>().Hidden = true;
+							p.GetComponent<PlayerGraphicsComponent>()!.Hidden = true;
 							p.RemoveComponent<RectBodyComponent>();
 						}
 						
@@ -196,20 +197,20 @@ namespace BurningKnight.entity.creature.mob.boss {
 						Area.Add(bk);
 						bk.Center = Center;
 
-						bk.GetComponent<BkGraphicsComponent>().Animate();
-						Context.Camera.Follow(bk, 1f);
+						bk.GetComponent<BkGraphicsComponent>()!.Animate();
+						Context.Camera!.Follow(bk, 1f);
 						
 						dmDialog.Start("dm_6", null, () => Timer.Add(() => {
 							dmDialog.Close();
-							Context.Camera.Targets.Clear();
-							Context.Camera.Follow(bk, 1f);
+							Context.Camera!.Targets.Clear();
+							Context.Camera!.Follow(bk, 1f);
 							
 							var nbkDialog = bk.GetComponent<DialogComponent>();
 						
-							nbkDialog.Start("nbk_0", null, () => Timer.Add(() => {
+							nbkDialog!.Start("nbk_0", null, () => Timer.Add(() => {
 								nbkDialog.Close();
-								Context.Camera.Targets.Clear();
-								Context.Camera.Follow(bk, 1f);
+								Context.Camera!.Targets.Clear();
+								Context.Camera!.Follow(bk, 1f);
 								Context.Run.Win();
 							}, 2f));
 						}, 2f));

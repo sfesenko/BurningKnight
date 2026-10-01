@@ -53,12 +53,12 @@ namespace BurningKnight.entity.creature.player {
 		public class SleepingState : EntityState {
 			public override void Init() {
 				base.Init();
-				Self.GetComponent<PlayerGraphicsComponent>().Animate();
+				Self.GetComponent<PlayerGraphicsComponent>()!.Animate();
 			}
 			
 			public override void Destroy() {
 				base.Destroy();
-				Self.GetComponent<PlayerGraphicsComponent>().Animate();
+				Self.GetComponent<PlayerGraphicsComponent>()!.Animate();
 			}
 
 			public override void Update(float dt) {
@@ -70,7 +70,7 @@ namespace BurningKnight.entity.creature.player {
 					for (var i = 0; i < 3; i++) {
 						Timer.Add(() => {
 								var part = new ParticleEntity(new Particle(Controllers.Float,
-									new TexturedParticleRenderer(CommonAse.Particles.GetSlice($"sleep"))));
+									new TexturedParticleRenderer(CommonAse.Particles.GetSlice($"sleep")!)));
 
 								part.Position = Self.Center;
 
@@ -78,7 +78,7 @@ namespace BurningKnight.entity.creature.player {
 									part.Position -= new Vector2(0, z.Z);
 								}
 
-								Self.Area.Add(part);
+								Self.Area!.Add(part);
 
 								part.Particle.Velocity = new Vector2(Rnd.Float(8, 16) * (Rnd.Chance() ? -1 : 1), -Rnd.Float(30, 56));
 								part.Particle.Angle = 0;

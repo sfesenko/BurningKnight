@@ -26,10 +26,10 @@ namespace BurningKnight.ui {
 		private static Color doorColor = new Color(93, 44, 40);
 
 		private Player player;
-		private TextureRegion slice;
+		private TextureRegion slice = null!;
 
-		private TextureRegion playerIcon;
-		private TextureRegion frame;
+		private TextureRegion playerIcon = null!;
+		private TextureRegion frame = null!;
 
 		private RenderTarget2D target;
 
@@ -43,10 +43,10 @@ namespace BurningKnight.ui {
 			X = Display.UiWidth - W - 11;
 			Y = 11;
 
-			slice = CommonAse.Particles.GetSlice("fire");
+			slice = CommonAse.Particles.GetSlice("fire")!;
 
-			playerIcon = CommonAse.Ui.GetSlice("gps");
-			frame = CommonAse.Ui.GetSlice("map_frame");
+			playerIcon = CommonAse.Ui.GetSlice("gps")!;
+			frame = CommonAse.Ui.GetSlice("map_frame")!;
 
 			AlwaysVisible = true;
 		}
@@ -71,7 +71,7 @@ namespace BurningKnight.ui {
 			var y = (int) Math.Floor(fy);
 			var level = Context.Level;
 
-			var sx = MathUtils.Clamp(0, level.Width - 1, x - W / 2);
+			var sx = MathUtils.Clamp(0, level!.Width - 1, x - W / 2);
 			var sy = MathUtils.Clamp(0, level.Height - 1, y - H / 2);
 			var tx = MathUtils.Clamp(0, level.Width - 1, x + W / 2);
 			var ty = MathUtils.Clamp(0, level.Height - 1, y + H / 2);
@@ -89,7 +89,7 @@ namespace BurningKnight.ui {
 			Graphics.Render(slice, Vector2.Zero, 0, Vector2.Zero, new Vector2(W, H));
 			Graphics.Color.A = 255;
 
-			foreach (var rm in level.Area.Tagged[Tags.Room]) {
+			foreach (var rm in level.Area!.Tagged[Tags.Room]) {
 				var room = (Room) rm;
 
 				if (room.Explored && rect.Intersects(room.Rect)) {
@@ -105,10 +105,10 @@ namespace BurningKnight.ui {
 				}
 			}
 
-			var cl = Context.Level.Biome.GetMapColor();
+			var cl = Context.Level!.Biome!.GetMapColor();
 			Graphics.Color = cl;
 
-			foreach (var rm in level.Area.Tagged[Tags.Room]) {
+			foreach (var rm in level.Area!.Tagged[Tags.Room]) {
 				var room = (Room) rm;
 
 				if (room.Explored && rect.Intersects(room.Rect)) {
@@ -137,7 +137,7 @@ namespace BurningKnight.ui {
 
 			Graphics.Color = ColorUtils.WhiteColor;
 
-			foreach (var rm in level.Area.Tagged[Tags.Room]) {
+			foreach (var rm in level.Area!.Tagged[Tags.Room]) {
 				var room = (Room) rm;
 
 				if (!room.Explored) {

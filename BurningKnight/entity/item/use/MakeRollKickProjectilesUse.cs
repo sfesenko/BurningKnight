@@ -15,7 +15,7 @@ namespace BurningKnight.entity.item.use {
 	public class MakeRollKickProjectilesUse : ItemUse {
 		public override bool HandleEvent(Event e) {
 			if (e is CollisionStartedEvent cse) {
-				if (!(Item.Owner is Player pl) || !(pl.GetComponent<StateComponent>().StateInstance is Player.RollState)) {
+				if (!(Item.Owner is Player pl) || !(pl.GetComponent<StateComponent>()!.StateInstance is Player.RollState)) {
 					return base.HandleEvent(e);
 				}
 				
@@ -30,7 +30,7 @@ namespace BurningKnight.entity.item.use {
 					// p.Pattern?.Remove(p);
 
 					var b = p.GetAnyComponent<BodyComponent>();
-					var d = Math.Max(400, b.Velocity.Length() * 1.8f);
+					var d = Math.Max(400, b!.Velocity.Length() * 1.8f);
 
 					b.Velocity = MathUtils.CreateVector(a, d);
 					
@@ -40,8 +40,8 @@ namespace BurningKnight.entity.item.use {
 
 					p.Color = ProjectileColor.Yellow;
 
-					Context.Camera.ShakeMax(4f);
-					owner.GetComponent<AudioEmitterComponent>().EmitRandomizedPrefixed("projectile_reflected", 2);
+					Context.Camera!.ShakeMax(4f);
+					owner.GetComponent<AudioEmitterComponent>()!.EmitRandomizedPrefixed("projectile_reflected", 2);
 				}
 			}
 			

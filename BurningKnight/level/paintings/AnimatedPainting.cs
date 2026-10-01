@@ -10,8 +10,8 @@ namespace BurningKnight.level.paintings {
 		}
 
 		protected override TextureRegion GetRegion() {
-			GetComponent<AnimationComponent>().Update(Engine.Delta);
-			return GetComponent<AnimationComponent>().Animation.GetCurrentTexture();
+			GetComponent<AnimationComponent>()!.Update(Engine.Delta);
+			return GetComponent<AnimationComponent>()!.Animation!.GetCurrentTexture();
 		}
 	}
 }

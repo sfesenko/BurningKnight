@@ -3,13 +3,13 @@ using Lens.graphics;
 using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.component {
-	public class WallAnimationComponent(string animationName, string layer = null, string tag = null)
+	public class WallAnimationComponent(string animationName, string? layer = null, string? tag = null)
 		: MobAnimationComponent(animationName, layer, tag)
 	{
 		public float WallAngle;
 
 		protected override void CallRender(Vector2 pos, bool shadow) {
-			var region = Animation.GetCurrentTexture();
+			var region = Animation!.GetCurrentTexture();
 			var origin = new Vector2(0, region.Height / 2);
 			var w = region.Width / 2f;
 			

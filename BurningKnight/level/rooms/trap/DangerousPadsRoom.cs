@@ -41,7 +41,7 @@ namespace BurningKnight.level.rooms.trap {
 			}
 
 			foreach (var d in Connected.Values) {
-				Painter.Fill(level, new Rect(d.X - 2, d.Y - 2, d.X + 3, d.Y + 3), Tiles.RandomFloor());
+				Painter.Fill(level, new Rect(d!.X - 2, d.Y - 2, d.X + 3, d.Y + 3), Tiles.RandomFloor());
 			}
 		}
 		

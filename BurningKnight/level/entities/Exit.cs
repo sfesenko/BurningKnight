@@ -16,7 +16,7 @@ using Lens.physics;
 namespace BurningKnight.level.entities {
 	public partial class Exit : SaveableEntity, PlaceableEntity {
 		public int To;
-		public static Exit Instance;
+		public static Exit? Instance = null!;
 		
 		public override void Init() {
 			base.Init();
@@ -43,7 +43,7 @@ namespace BurningKnight.level.entities {
 			}
 			
 			entity.RemoveComponent<PlayerInputComponent>();
-			entity.GetComponent<HealthComponent>().Unhittable = true;
+			entity.GetComponent<HealthComponent>()!.Unhittable = true;
 			
 			if (Context.Run.Depth == Context.Run.ContentEndDepth || (Context.Run.Type == RunType.BossRush && Context.Run.Depth == 5)) {
 				if (Context.Run.Type == RunType.Regular) {
@@ -72,7 +72,7 @@ namespace BurningKnight.level.entities {
 				GlobalSave.Put("finished_tutorial", true);
 				Context.Run.Depth = 0;
 			} else if (To == 1 || this is BossRushExit) {
-				Context.Run.NumPlayers = Area.Tagged[Tags.Player].Count;
+				Context.Run.NumPlayers = Area!.Tagged[Tags.Player].Count;
 				Context.Run.StartNew();
 				// Caves secret location
 			} else if (Context.Run.Depth == 13) {

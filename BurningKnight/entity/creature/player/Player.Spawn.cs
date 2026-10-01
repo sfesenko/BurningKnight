@@ -53,39 +53,39 @@ namespace BurningKnight.entity.creature.player {
 		private int lastDepth = -3;
 		public void FindSpawnPoint() {
 			if (Context.Run.StartedNew && Context.Run.Depth > 0) {
-				var index = GetComponent<InputComponent>().Index;
+				var index = GetComponent<InputComponent>()!.Index;
 				
 				if (StartingLamps[index] != null) {
-					var i = Items.CreateAndAdd(StartingLamps[index], Area);
-					i.Scourged = false;
-					GetComponent<LampComponent>().Set(i, false);
+					var i = Items.CreateAndAdd(StartingLamps[index]!, Area!);
+					i!.Scourged = false;
+					GetComponent<LampComponent>()!.Set(i, false);
 					Log.Debug($"Starting lamp: {StartingLamps[index]}");
 				}
 				
-				if (StartingWeapons[index] == null || !ItemPool.StartingWeapon.Contains(Items.Datas[StartingWeapons[index]].Pools)) {
-					StartingWeapons[index] = Items.Generate(ItemPool.StartingWeapon, item => Item.Unlocked(item.Id));
+				if (StartingWeapons[index] == null || !ItemPool.StartingWeapon.Contains(Items.Datas[StartingWeapons[index]!].Pools)) {
+					StartingWeapons[index] = Items.Generate(ItemPool.StartingWeapon, item => Item.Unlocked(item.Id))!;
 				}
 
 				if (StartingWeapons[index] != null) {
-					var i = Items.CreateAndAdd(StartingWeapons[index], Area);
-					i.Scourged = false;
+					var i = Items.CreateAndAdd(StartingWeapons[index]!, Area!);
+					i!.Scourged = false;
 
-					var l = GetComponent<LampComponent>().Item;
+					var l = GetComponent<LampComponent>()!.Item;
 
 					if (l != null && l.Id == "bk:sharp_lamp" && i.Data.WeaponType != WeaponType.Melee) {
-						StartingWeapons[index] = Items.Generate(ItemPool.StartingWeapon, item => Item.Unlocked(item.Id));
+						StartingWeapons[index] = Items.Generate(ItemPool.StartingWeapon, item => Item.Unlocked(item.Id))!;
 						i.Done = true;
-						i = Items.CreateAndAdd(StartingWeapons[index], Area);
+						i = Items.CreateAndAdd(StartingWeapons[index]!, Area!);
 					}
 					
-					GetComponent<ActiveWeaponComponent>().Set(i, false);
+					GetComponent<ActiveWeaponComponent>()!.Set(i!, false);
 					Log.Debug($"Starting weapon: {StartingWeapons[index]}");
 				}
 				
 				if (StartingItems[index] != null) {
-					var i = Items.CreateAndAdd(StartingItems[index], Area);
-					i.Scourged = false;
-					GetComponent<ActiveItemComponent>().Set(i, false);
+					var i = Items.CreateAndAdd(StartingItems[index]!, Area!);
+					i!.Scourged = false;
+					GetComponent<ActiveItemComponent>()!.Set(i, false);
 					
 					Log.Debug($"Starting item: {StartingItems[index]}");
 				}
@@ -96,7 +96,7 @@ namespace BurningKnight.entity.creature.player {
 						
 						foreach (var id in DailyItems) {
 							Log.Info($"Giving {id}");
-							inventory.Pickup(Items.CreateAndAdd(id, Area), false);
+							inventory!.Pickup(Items.CreateAndAdd(id, Area!)!, false);
 						}
 					}
 					
@@ -113,7 +113,7 @@ namespace BurningKnight.entity.creature.player {
 
 			lastDepth = Context.Run.Depth;
 			
-			if (Context.Run.Depth > 1 && !GetComponent<StatsComponent>().TookDamageOnLevel) {
+			if (Context.Run.Depth > 1 && !GetComponent<StatsComponent>()!.TookDamageOnLevel) {
 				Achievements.Unlock("bk:dodge_overlord");
 			}
 			
@@ -127,7 +127,7 @@ namespace BurningKnight.entity.creature.player {
 			if (/*BK.Version.Dev || */ToBoss) {
 				ToBoss = false;
 				
-				foreach (var r in Area.Tagged[Tags.Room]) {
+				foreach (var r in Area!.Tagged[Tags.Room]) {
 					var rm = (Room) r;
 
 					if (rm.Type == RoomType.Boss) {
@@ -139,7 +139,7 @@ namespace BurningKnight.entity.creature.player {
 				}
 			}
 			
-			foreach (var cc in Area.Tagged[Tags.Checkpoint]) {
+			foreach (var cc in Area!.Tagged[Tags.Checkpoint]) {
 				Center = cc.Center + Rnd.Vector(-0.5f, 0.5f);
 				Log.Debug("Teleported to spawn point");
 				return true;

@@ -8,7 +8,7 @@ namespace BurningKnight.entity.creature.mob.prefix {
 
 		public override void Init() {
 			base.Init();
-			Mob.GetComponent<DropsComponent>().Add(new SimpleDrop(1f, 2, 5, "bk:emerald"));
+			Mob.GetComponent<DropsComponent>()!.Add(new SimpleDrop(1f, 2, 5, "bk:emerald"));
 		}
 
 		public override Vector4 GetColor() {

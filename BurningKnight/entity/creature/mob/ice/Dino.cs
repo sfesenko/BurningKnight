@@ -30,7 +30,7 @@ namespace BurningKnight.entity.creature.mob.ice {
 			var body = new RectBodyComponent(2, 19, 13, 1);
 			AddComponent(body);
 
-			body.Body.LinearDamping = 6;
+			body!.Body!.LinearDamping = 6;
 			body.Body.Restitution = 1;
 			body.Body.Friction = 0;
 			
@@ -85,7 +85,7 @@ namespace BurningKnight.entity.creature.mob.ice {
 					Self.sawTime = 0;
 				}
 
-				angle = !Self.fire ? Rnd.AnglePI() : Self.AngleTo(Self.Target);
+				angle = !Self.fire ? Rnd.AnglePI() : Self.AngleTo(Self.Target!);
 				timer = Self.fire ? 0.9f * 5 : Rnd.Float(0.8f, 2f);
 				start = Rnd.Float(0f, 10f);
 				
@@ -95,12 +95,12 @@ namespace BurningKnight.entity.creature.mob.ice {
 				velocity.X = (float) Math.Cos(a) * force;
 				velocity.Y = (float) Math.Sin(a) * force;
 
-				Self.GetComponent<RectBodyComponent>().Velocity = velocity;
+				Self.GetComponent<RectBodyComponent>()!.Velocity = velocity;
 			}
 
 			public override void Destroy() {
 				base.Destroy();
-				Self.GetComponent<RectBodyComponent>().Velocity = Vector2.Zero;
+				Self.GetComponent<RectBodyComponent>()!.Velocity = Vector2.Zero;
 			}
 
 			public override void Update(float dt) {
@@ -112,7 +112,7 @@ namespace BurningKnight.entity.creature.mob.ice {
 				}
 
 				var v = velocity * Math.Min(1, timer - T * 0.4f);
-				Self.GetComponent<RectBodyComponent>().Velocity = v;
+				Self.GetComponent<RectBodyComponent>()!.Velocity = v;
 
 				if (!Self.fire) {
 					if (Self.CanSeeTarget()) {
@@ -138,13 +138,13 @@ namespace BurningKnight.entity.creature.mob.ice {
 					var an = angle + Rnd.Float(-Accuracy, Accuracy) + Math.Cos(T * 6f + start) * 0.1f;
 					var a = Self.GetComponent<MobAnimationComponent>();
 					
-					Tween.To(1.8f, a.Scale.X, x => a.Scale.X = x, 0.1f);
+					Tween.To(1.8f, a!.Scale.X, x => a.Scale.X = x, 0.1f);
 					Tween.To(0.2f, a.Scale.Y, x => a.Scale.Y = x, 0.1f).OnEnd = () => {
 
 						Tween.To(1, a.Scale.X, x => a.Scale.X = x, 0.2f);
 						Tween.To(1, a.Scale.Y, x => a.Scale.Y = x, 0.2f);
 						
-						Self.GetComponent<AudioEmitterComponent>().EmitRandomized("mob_fire");
+						Self.GetComponent<AudioEmitterComponent>()!.EmitRandomized("mob_fire");
 
 						var builder = new ProjectileBuilder(Self, "circle") {
 							Scale = Rnd.Float(0.5f, 1.5f),
@@ -156,7 +156,7 @@ namespace BurningKnight.entity.creature.mob.ice {
 
 						var projectile = builder.Shoot(an, 15).Build();
 
-						projectile.Color = Rnd.Chance(70) ? ProjectileColor.Orange : ProjectileColor.Red;
+						projectile!.Color = Rnd.Chance(70) ? ProjectileColor.Orange : ProjectileColor.Red;
 						projectile.Center += MathUtils.CreateVector(angle, 8);
 					};
 				}
@@ -167,7 +167,7 @@ namespace BurningKnight.entity.creature.mob.ice {
 		public override bool HandleEvent(Event e) {
 			if (e is CollisionStartedEvent ev) {
 				if (ev.Entity is Door) {
-					var s = GetComponent<StateComponent>().StateInstance;
+					var s = GetComponent<StateComponent>()!.StateInstance;
 
 					if (s is RunState) {
 						Become<IdleState>();

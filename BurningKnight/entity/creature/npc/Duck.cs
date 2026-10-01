@@ -33,7 +33,7 @@ namespace BurningKnight.entity.creature.npc {
 			}
 			
 			Become<IdleState>();
-			GetComponent<DialogComponent>().Dialog.Voice = 4;
+			GetComponent<DialogComponent>()!.Dialog!.Voice = 4;
 		}
 
 		private bool set;
@@ -69,11 +69,11 @@ namespace BurningKnight.entity.creature.npc {
 				
 				var dialog = GetComponent<DialogComponent>();
 								
-				dialog.Dialog.Str.ClearIcons();
-				dialog.Dialog.Str.AddIcon(CommonAse.Ui.GetSlice(Controls.FindSlice(Controls.Duck, false)));
+				dialog!.Dialog!.Str!.ClearIcons();
+				dialog.Dialog.Str.AddIcon(CommonAse.Ui.GetSlice(Controls.FindSlice(Controls.Duck, false)!)!);
 
 				if (GamepadComponent.Current != null && GamepadComponent.Current.Attached) {
-					dialog.Dialog.Str.AddIcon(CommonAse.Ui.GetSlice(Controls.FindSlice(Controls.Duck, true)));
+					dialog.Dialog.Str.AddIcon(CommonAse.Ui.GetSlice(Controls.FindSlice(Controls.Duck, true)!)!);
 				}
 			}
 		}
@@ -89,7 +89,7 @@ namespace BurningKnight.entity.creature.npc {
 			public override void Update(float dt) {
 				base.Update(dt);
 
-				Self.GraphicsComponent.Flipped = toLeft;
+				Self!.GraphicsComponent!.Flipped = toLeft;
 
 				if (pauseTimer > 0) {
 					pauseTimer -= dt;

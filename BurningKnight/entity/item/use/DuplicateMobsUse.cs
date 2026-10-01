@@ -11,7 +11,7 @@ namespace BurningKnight.entity.item.use {
 		public override void Use(Entity entity, Item item) {
 			base.Use(entity, item);
 			
-			var room = entity.GetComponent<RoomComponent>().Room;
+			var room = entity.GetComponent<RoomComponent>()!.Room;
 
 			if (room == null) {
 				return;
@@ -22,9 +22,9 @@ namespace BurningKnight.entity.item.use {
 
 			foreach (var mob in mobs) {
 				try {
-					var m = (Mob) Activator.CreateInstance(mob.GetType());
-					entity.Area.Add(m);
-					m.Center = mob.Center;
+					var m = (Mob) Activator.CreateInstance(mob.GetType())!;
+					entity.Area!.Add(m);
+					m!.Center = mob.Center;
 
 					if (!(MobRegistry.FindFor(m.GetType())?.NearWall ?? false)) {
 						m.Center += Rnd.Vector(-8, 8);

@@ -18,7 +18,7 @@ namespace BurningKnight.entity.creature.mob.desert {
 			AddComponent(body);
 
 			body.KnockbackModifier = 2;
-			body.Body.LinearDamping = 6;
+			body!.Body!.LinearDamping = 6;
 
 			AddComponent(new SensorBodyComponent(5, 4, 7, 11));
 			
@@ -64,13 +64,13 @@ namespace BurningKnight.entity.creature.mob.desert {
 				velocity.X = (float) Math.Cos(angle) * force;
 				velocity.Y = (float) Math.Sin(angle) * force;
 
-				Self.GetComponent<RectBodyComponent>().Velocity = velocity;
-				Self.GetComponent<MobAnimationComponent>().Animation.Tag = "run";
+				Self.GetComponent<RectBodyComponent>()!.Velocity = velocity;
+				Self!.GetComponent<MobAnimationComponent>()!.Animation!.Tag = "run";
 			}
 
 			public override void Destroy() {
 				base.Destroy();
-				Self.GetComponent<RectBodyComponent>().Velocity = Vector2.Zero;
+				Self.GetComponent<RectBodyComponent>()!.Velocity = Vector2.Zero;
 			}
 
 			public override void Update(float dt) {
@@ -87,7 +87,7 @@ namespace BurningKnight.entity.creature.mob.desert {
 				}
 
 				var v = velocity * Math.Min(1, timer - T * 0.4f);
-				Self.GetComponent<RectBodyComponent>().Velocity = v;
+				Self.GetComponent<RectBodyComponent>()!.Velocity = v;
 			}
 		}
 
@@ -116,7 +116,7 @@ namespace BurningKnight.entity.creature.mob.desert {
 
 				var s = dt * 250;
 
-				Self.GetComponent<RectBodyComponent>().Velocity += new Vector2(dx / d * s, dy / d * s);
+				Self.GetComponent<RectBodyComponent>()!.Velocity += new Vector2(dx / d * s, dy / d * s);
 				Self.PushFromOtherEnemies(dt);
 			}
 		}
@@ -127,13 +127,13 @@ namespace BurningKnight.entity.creature.mob.desert {
 			public override void Destroy() {
 				base.Destroy();
 				
-				Self.GetComponent<MobAnimationComponent>().Flash = false;
+				Self.GetComponent<MobAnimationComponent>()!.Flash = false;
 			}
 
 			public override void Update(float dt) {
 				base.Update(dt);
 								
-				var d = Self.DistanceTo(Self.Target);
+				var d = Self.DistanceTo(Self.Target!);
 
 				if (d > 48f) {
 					Self.Become<RunState>();
@@ -143,24 +143,24 @@ namespace BurningKnight.entity.creature.mob.desert {
 				if (T >= 0.66f) {
 					Self.Done = true;
 					Self.Exploded = true;
-					AudioEmitterComponent.Dummy(Self.Area, Self.Center).EmitRandomized("mob_archeolog_explosion", sz: 0.2f);
+					AudioEmitterComponent.Dummy(Self.Area!, Self.Center).EmitRandomized("mob_archeolog_explosion", sz: 0.2f);
 					ExplosionMaker.Make(Self, 48f);
 				}
 
 				var flash = T % 0.33 < 0.15f;
 
 				if (flash && !lastFlash) {
-					Self.GetComponent<AudioEmitterComponent>().Emit("mob_spelunker_beep", 1f, T);
+					Self.GetComponent<AudioEmitterComponent>()!.Emit("mob_spelunker_beep", 1f, T);
 				}
 				
 				lastFlash = flash;
 				
-				Self.GetComponent<MobAnimationComponent>().Flash = flash;
+				Self.GetComponent<MobAnimationComponent>()!.Flash = flash;
 			}
 		}
 		#endregion
 
-		protected override string GetDeadSfx() {
+		protected override string? GetDeadSfx() {
 			return Exploded ? null : "mob_archeolog_death";
 		}
 

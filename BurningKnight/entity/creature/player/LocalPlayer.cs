@@ -13,7 +13,7 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.creature.player {
 	public class LocalPlayer : Player {
-		public static LocalPlayer Locate(Area area) {
+		public static LocalPlayer? Locate(Area area) {
 			foreach (var player in area.Tagged[Tags.Player]) {
 				if (player is LocalPlayer localPlayer) {
 					return localPlayer;
@@ -34,11 +34,11 @@ namespace BurningKnight.entity.creature.player {
 
 		public override bool HandleEvent(Event e) {
 			if (e is DiedEvent ev && ev.Who == this) {
-				if (!GetComponent<HealthComponent>().Dead && !died) {
+				if (!GetComponent<HealthComponent>()!.Dead && !died) {
 					died = true;
 					Done = false;
 
-					GetComponent<AudioEmitterComponent>().EmitRandomized("player_death");
+					GetComponent<AudioEmitterComponent>()!.EmitRandomized("player_death");
 					RemoveComponent<PlayerInputComponent>();
 					
 					Achievements.Unlock("bk:rip");
@@ -46,7 +46,7 @@ namespace BurningKnight.entity.creature.player {
 
 					var body = GetComponent<RectBodyComponent>();
 
-					body.KnockbackModifier = 0;
+					body!.KnockbackModifier = 0;
 					body.Velocity = Vector2.Zero;
 
 					if (InGameState.EveryoneDied(this)) {
@@ -54,8 +54,8 @@ namespace BurningKnight.entity.creature.player {
 
 						((InGameState) Engine.Instance.State).HandleDeath();
 
-						Context.Camera.Targets.Clear();
-						Context.Camera.Follow(this, 1);
+						Context.Camera!.Targets.Clear();
+						Context.Camera!.Follow(this, 1);
 
 						Tween.To(0.3f, Engine.Instance.Speed, x => Engine.Instance.Speed = x, 0.5f).OnEnd = () => {
 							var t = Tween.To(1, Engine.Instance.Speed, x => Engine.Instance.Speed = x, 0.5f);
@@ -79,11 +79,12 @@ namespace BurningKnight.entity.creature.player {
 				Engine.Instance.Split = 1f;
 				Engine.Instance.Flash = 1f;
 
-				Context.Camera.Shake(4);
+				var camera = Context.Camera;
+				camera?.Shake(4);
 
-				if (Context.Camera != null && Settings.Flashes) {
-					Context.Camera.TextureZoom -= 0.2f;
-					Tween.To(1f, Context.Camera.TextureZoom, x => Context.Camera.TextureZoom = x, 0.3f);					
+				if (camera != null && Settings.Flashes) {
+					camera.TextureZoom -= 0.2f;
+					Tween.To(1f, camera.TextureZoom, x => camera.TextureZoom = x, 0.3f);					
 				}	
 			}
 			

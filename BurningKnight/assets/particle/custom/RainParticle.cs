@@ -35,23 +35,24 @@ namespace BurningKnight.assets.particle.custom {
 			Reset();
 
 			if (!Custom) {
-				Y = Context.Camera.Y + Rnd.Float(Display.Height + 100);
+				Y = Context.Camera!.Y + Rnd.Float(Display.Height + 100);
 			} else {
 				delay = Rnd.Float(0, 2f);
 			}
 		}
 
 		private void Reset() {
+			var camera = Context.Camera!;
 			if (End) {
 				Done = true;
 				return;
 			}
 			
 			color = new Color(Rnd.Float(0.3f, 0.5f), Rnd.Float(0.4f, 0.7f), Rnd.Float(0.7f, 0.8f), Rnd.Float(0.5f, 1f));
-			X = Rnd.Float(Context.Camera.X - 150, Context.Camera.Right + 150);
-			Y = Context.Camera.Y - Rnd.Float(50, 60);
+			X = Rnd.Float(camera.X - 150, camera.Right + 150);
+			Y = camera.Y - Rnd.Float(50, 60);
 			size = Rnd.Float(20, 50);
-			target = Context.Camera.Y + Rnd.Float(Display.Height + 100);
+			target = camera.Y + Rnd.Float(Display.Height + 100);
 			speed = Rnd.Float(1f, 1.5f);
 			poofed = false;
 		}
@@ -82,7 +83,7 @@ namespace BurningKnight.assets.particle.custom {
 							part.Position = pos;
 							part.Particle.Velocity = new Vector2(Rnd.Float(-40, 40), Rnd.Float(-30, -50));
 							part.Particle.Scale = Rnd.Float(1f, 1.6f);
-							Area.Add(part);
+							Area!.Add(part);
 							part.Depth = 0;
 						}
 					}
@@ -96,7 +97,7 @@ namespace BurningKnight.assets.particle.custom {
 				}
 			}
 
-			if (Position.Y > Context.Camera.Bottom + 20) {
+			if (Position.Y > Context.Camera!.Bottom + 20) {
 				Reset();
 			}
 		}

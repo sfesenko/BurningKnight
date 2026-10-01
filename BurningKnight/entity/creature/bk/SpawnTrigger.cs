@@ -22,8 +22,8 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.creature.bk {
 	public class SpawnTrigger : SaveableEntity {
-		public byte[] Tiles;
-		public byte[] Liquid;
+		public byte[] Tiles = null!;
+		public byte[] Liquid = null!;
 		public ushort RoomX;
 		public ushort RoomY;
 		public byte RoomWidth;
@@ -37,19 +37,20 @@ namespace BurningKnight.entity.creature.bk {
 		private bool did;
 
 		public override void Update(float dt) {
+			var camera = Context.Camera!;
 			base.Update(dt);
 
 			if (!did && Triggered) {
-				Context.Camera.Shake(0.5f);
+				camera.Shake(0.5f);
 				t += dt;
 
 				if (t >= 1f) {
 					did = true;
 					var r = (int) Math.Ceiling(Math.Sqrt((RoomWidth + 1) * (RoomWidth + 1) + (RoomHeight + 1) * (RoomHeight + 1)));
 
-					Context.Camera.Targets.Clear();
-					Context.Camera.Follow(this, 3f);
-					Tween.To(0.5f, Context.Camera.Zoom, x => Context.Camera.Zoom = x, 0.3f);
+					camera.Targets.Clear();
+					camera.Follow(this, 3f);
+					Tween.To(0.5f, camera.Zoom, x => camera.Zoom = x, 0.3f);
 
 					for (var j = 1; j < r; j++) {
 						var level = Context.Level;
@@ -57,7 +58,7 @@ namespace BurningKnight.entity.creature.bk {
 
 						Timer.Add(() => {
 							if (Interrupted) {
-								level.CreateBody();
+								level!.CreateBody();
 								return;
 							}
 								
@@ -76,14 +77,14 @@ namespace BurningKnight.entity.creature.bk {
 										continue;
 									}
 									
-									var li = level.ToIndex(RoomX + x, RoomY + y);
+									var li = level!.ToIndex(RoomX + x, RoomY + y);
 									
 									if (level.Get(li).IsWall()) {
 										level.Variants[li] = 0;
 									}
 									
 									// tmp
-									Area.Add(new TileFx {
+									Area!.Add(new TileFx {
 										X = (RoomX + x) * 16,
 										Y = (RoomY + y) * 16 - 8
 									});
@@ -99,11 +100,11 @@ namespace BurningKnight.entity.creature.bk {
 							
 							for (var y = -1; y < RoomHeight + 1; y++) {
 								for (var x = -1; x < RoomWidth + 1; x++) {
-									LevelTiler.TileUp(level, level.ToIndex(RoomX + x, RoomY + y));
+									LevelTiler.TileUp(level!, level!.ToIndex(RoomX + x, RoomY + y));
 								}
 							}
 				
-							Context.Camera.Shake(2);
+							Context.Camera!.Shake(2);
 						}, j * 0.05f);
 					}
 
@@ -112,7 +113,7 @@ namespace BurningKnight.entity.creature.bk {
 							return;
 						}
 							
-						Tween.To(1f, Context.Camera.Zoom, x => Context.Camera.Zoom = x, 0.3f);
+						Tween.To(1f, Context.Camera!.Zoom, x => Context.Camera!.Zoom = x, 0.3f);
 
 						Timer.Add(() => {
 							if (Interrupted) {
@@ -198,7 +199,7 @@ namespace BurningKnight.entity.creature.bk {
 					var xx = (int) Math.Floor(CenterX / 16);
 					var xy = (int) Math.Floor(CenterY / 16);
 
-					Painter.Rect(Context.Level, xx - 3, xy - 3, 6, 6, Tile.Chasm);
+					Painter.Rect(Context.Level!, xx - 3, xy - 3, 6, 6, Tile.Chasm);
 
 					/*var torches = GetComponent<RoomComponent>().Room.Tagged[Tags.Torch];
 
@@ -225,7 +226,7 @@ namespace BurningKnight.entity.creature.bk {
 
 					for (var x = X - 16; x < X + Width + 16; x += 16) {
 						for (var i = 0; i < Rnd.Int(3, 9); i++) {
-							Area.Add(new FireParticle {
+							Area!.Add(new FireParticle {
 								Position = new Vector2(x + Rnd.Float(-2, 18), Y - 16 + Rnd.Float(-2, 18)),
 								Delay = Rnd.Float(0.5f),
 								XChange = 0.1f,
@@ -257,7 +258,7 @@ namespace BurningKnight.entity.creature.bk {
 
 					for (var y = Y; y < Y + Height; y += 16) {
 						for (var i = 0; i < Rnd.Int(3, 9); i++) {
-							Area.Add(new FireParticle {
+							Area!.Add(new FireParticle {
 								Position = new Vector2(X + Rnd.Float(-2, 18) - 16, y + Rnd.Float(-2, 18)),
 								Delay = Rnd.Float(0.5f),
 								XChange = 0.1f,
@@ -293,8 +294,8 @@ namespace BurningKnight.entity.creature.bk {
 		}
 
 		public class TriggeredEvent : Event {
-			public SpawnTrigger Trigger;
-			public Player Who;
+			public SpawnTrigger Trigger = null!;
+			public Player Who = null!;
 		}
 	}
 }

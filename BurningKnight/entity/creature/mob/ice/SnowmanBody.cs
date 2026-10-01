@@ -29,7 +29,7 @@ namespace BurningKnight.entity.creature.mob.ice {
 			
 			var body = new RectBodyComponent(4, 14, 17, 1);
 			AddComponent(body);
-			body.Body.LinearDamping = 10;
+			body!.Body!.LinearDamping = 10;
 			body.KnockbackModifier = 0.1f;
 			
 			AddComponent(new SensorBodyComponent(5, 2, 15, 12));
@@ -37,7 +37,7 @@ namespace BurningKnight.entity.creature.mob.ice {
 				ShadowOffset = 3
 			});
 			
-			GetComponent<AudioEmitterComponent>().PitchMod = -0.2f;
+			GetComponent<AudioEmitterComponent>()!.PitchMod = -0.2f;
 			
 			Become<IdleState>();
 
@@ -49,24 +49,24 @@ namespace BurningKnight.entity.creature.mob.ice {
 				return;
 			}
 			
-			GetComponent<AudioEmitterComponent>().EmitRandomized("mob_fire");
+			GetComponent<AudioEmitterComponent>()!.EmitRandomized("mob_fire");
 			var a = GetComponent<MobAnimationComponent>();
 					
-			Tween.To(1.8f, a.Scale.X, x => a.Scale.X = x, 0.1f);
+			Tween.To(1.8f, a!.Scale.X, x => a.Scale.X = x, 0.1f);
 			Tween.To(0.2f, a.Scale.Y, x => a.Scale.Y = x, 0.1f).OnEnd = () => {
 
 				Tween.To(1, a.Scale.X, x => a.Scale.X = x, 0.4f);
 				Tween.To(1, a.Scale.Y, x => a.Scale.Y = x, 0.4f);
 			
 				var an = AngleTo(Target) + t * 0.3f;
-				var d = GetComponent<HealthComponent>().Percent <= 0.3f;
+				var d = GetComponent<HealthComponent>()!.Percent <= 0.3f;
 
 				var builder = new ProjectileBuilder(this, "carrot");
 
 				for (var i = 0; i < (d ? 8 : 4); i++) {
 					var projectile = builder.Shoot(an + i * Math.PI * (d ? 0.25f : 0.5f), 4f).Build();
 
-					projectile.Color = d ? ProjectileColor.Red : ProjectileColor.Orange;
+					projectile!.Color = d ? ProjectileColor.Red : ProjectileColor.Orange;
 					projectile.Center = Center + MathUtils.CreateVector(an, 4f);
 				}
 			};

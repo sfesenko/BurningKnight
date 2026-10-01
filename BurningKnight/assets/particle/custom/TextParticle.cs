@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.assets.particle.custom {
 	public class TextParticle : Entity {
-		private string text;
+		private string text = null!;
 		
 		public string Text {
 			get => text;
@@ -52,7 +52,7 @@ namespace BurningKnight.assets.particle.custom {
 		public bool Negative;
 		public bool Stacks = true;
 		
-		private string fullText;
+		private string? fullText;
 		private Vector2 start;
 		private Vector2 origin;
 		private Vector2 scale;
@@ -108,7 +108,7 @@ namespace BurningKnight.assets.particle.custom {
 			}
 
 			if (!tweened) {
-				foreach (var p in Area.Tagged[Tags.TextParticle]) {
+				foreach (var p in Area!.Tagged[Tags.TextParticle]) {
 					var part = (TextParticle) p;
 
 					if (part == this) {
@@ -129,7 +129,7 @@ namespace BurningKnight.assets.particle.custom {
 				}
 			}
 
-			Center = Context.Camera.CameraToUi(gamePosition) + offset;
+			Center = Context.Camera!.CameraToUi(gamePosition) + offset;
 		}
 
 		public override void Render() {
@@ -141,7 +141,7 @@ namespace BurningKnight.assets.particle.custom {
 		public static TextParticle Add(Entity owner, string text, float count = 0, bool hasSign = false, bool minus = false) {
 			var where = owner.TopCenter - new Vector2(0, 4);
 			var min = 72f;
-			TextParticle prt = null;
+			TextParticle? prt = null;
 			
 			foreach (var p in Engine.Instance.State.Ui.Tagged[Tags.TextParticle]) {
 				var pr = (TextParticle) p;

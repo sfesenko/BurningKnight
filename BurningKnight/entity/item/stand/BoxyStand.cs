@@ -34,7 +34,7 @@ namespace BurningKnight.entity.item.stand {
 		}
 		
 		protected override bool HasEnoughToPay(Entity p) {
-			return p.GetComponent<ConsumablesComponent>().Keys >= Price;
+			return p.GetComponent<ConsumablesComponent>()!.Keys >= Price;
 		}
 	}
 }

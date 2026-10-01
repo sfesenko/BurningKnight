@@ -12,16 +12,16 @@ namespace BurningKnight.entity.creature.mob.boss.rooms {
 		public override void PlaceMage(Room room, DM mage) {
 			var w = new Dot(Rnd.Int(Left + 1, Right), Top + 2);
 			
-			Painter.Fill(Context.Level, new Rect().Setup(w.X - 1, w.Y - 1, 3, 2), Tile.FloorA);
+			Painter.Fill(Context.Level!, new Rect().Setup(w.X - 1, w.Y - 1, 3, 2), Tile.FloorA);
 			
 			mage.BottomCenter = w * 16 + new Vector2(8, -8);
-			Painter.DrawLine(Context.Level, new Dot(w.X - 1, w.Y), new Dot(w.X + 1, w.Y), Tile.WallA);
+			Painter.DrawLine(Context.Level!, new Dot(w.X - 1, w.Y), new Dot(w.X + 1, w.Y), Tile.WallA);
 		}
 
 		public override void PlacePlayer(Room room, Player player) {
 			var w = new Dot(Rnd.Int(Left + 1, Right), Bottom - 1);
 			
-			Painter.Fill(Context.Level, new Rect().Setup(w.X - 1, w.Y - 1, 3, 2), Tile.FloorA);
+			Painter.Fill(Context.Level!, new Rect().Setup(w.X - 1, w.Y - 1, 3, 2), Tile.FloorA);
 			player.BottomCenter = w * 16 + new Vector2(8);
 		}
 

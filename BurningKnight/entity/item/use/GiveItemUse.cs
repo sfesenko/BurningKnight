@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework;
 namespace BurningKnight.entity.item.use {
 	public partial class GiveItemUse : ItemUse {
 		public int Amount;
-		public new string Item;
+		public new string Item = null!;
 		public bool OnStand;
 		public bool Random;
 		public bool Animate;
@@ -20,7 +20,7 @@ namespace BurningKnight.entity.item.use {
 			var id = Random ? Items.Generate(i => i.Type == ItemType.Active || i.Type == ItemType.Weapon || i.Type == ItemType.Artifact) : Item;
 			
 			if (OnStand) {
-				var i = Items.CreateAndAdd(id, entity.Area);
+				var i = Items.CreateAndAdd(id, entity.Area!);
 
 				if (i == null) {
 					Log.Error($"Invalid item {id}");
@@ -28,7 +28,7 @@ namespace BurningKnight.entity.item.use {
 				}
 
 				var stand = new ItemStand();
-				entity.Area.Add(stand);
+				entity.Area!.Add(stand);
 				stand.Center = entity.Center - new Vector2(0, 8);
 				stand.SetItem(i, null);
 				
@@ -36,7 +36,7 @@ namespace BurningKnight.entity.item.use {
 			}
 			
 			for (var j = 0; j < Amount; j++) {
-				var i = Items.CreateAndAdd(id, entity.Area);
+				var i = Items.CreateAndAdd(id, entity.Area!);
 
 				if (i == null) {
 					Log.Error($"Invalid item {id}");
@@ -44,7 +44,7 @@ namespace BurningKnight.entity.item.use {
 				}
 
 				// i.Hide = Hide;
-				entity.GetComponent<InventoryComponent>().Pickup(i, Animate);
+				entity.GetComponent<InventoryComponent>()!.Pickup(i, Animate);
 			}
 		}
 

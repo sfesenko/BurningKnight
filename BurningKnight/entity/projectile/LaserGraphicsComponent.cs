@@ -10,27 +10,27 @@ namespace BurningKnight.entity.projectile {
 	public class LaserGraphicsComponent : BasicProjectileGraphicsComponent {
 		private TextureRegion aura;
 		private TextureRegion light;
-		private TextureRegion end;
-		private TextureRegion endAura;
-		private TextureRegion endLight;
+		private TextureRegion end = null!;
+		private TextureRegion endAura = null!;
+		private TextureRegion endLight = null!;
 		
 		private Vector2 origin;
 		private Vector2 centerOrigin;
 		private Vector2 lightOrigin;
-		public float Rotation => ((Projectile) Entity).GetAnyComponent<BodyComponent>().Body.Rotation;
+		public float Rotation => ((Projectile) Entity).GetAnyComponent<BodyComponent>()!.Body!.Rotation;
 		
 		public LaserGraphicsComponent(string image, string slice) : base(image, slice) {
 			var a = Animations.Get(image);
 			
-			aura = a.GetSlice($"{slice}_aura", false);
-			light = a.GetSlice($"{slice}_light", false);
-			end = a.GetSlice("end_aura", false);
-			endAura = a.GetSlice("end", false);
-			endLight = a.GetSlice("end_light", false);
+			aura = a!.GetSlice($"{slice}_aura", false)!;
+			light = a.GetSlice($"{slice}_light", false)!;
+			end = a.GetSlice("end_aura", false)!;
+			endAura = a.GetSlice("end", false)!;
+			endLight = a.GetSlice("end_light", false)!;
 
-			origin = new Vector2(0, aura.Height * 0.5f);
+			origin = new Vector2(0, aura!.Height * 0.5f);
 			centerOrigin = new Vector2(0, Sprite.Height * 0.5f);
-			lightOrigin = new Vector2(0, light.Height * 0.5f);
+			lightOrigin = new Vector2(0, light!.Height * 0.5f);
 		}
 
 		public override void Render(bool shadow) {

@@ -5,7 +5,7 @@ using Lens.util.math;
 
 namespace BurningKnight.entity.creature.drop {
 	public class SingleDrop : Drop {
-		public string Item;
+		public string Item = null!;
 
 		public SingleDrop() {
 			

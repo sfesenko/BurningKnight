@@ -30,7 +30,7 @@ public static class Generation {
 
 		var level = new RegularLevel(BiomeRegistry.GenerateForDepth(depth));
 		LevelSave.BiomeGenerated = level.Biome;
-		WallRegistry.Instance.ResetForBiome(LevelSave.BiomeGenerated);
+		WallRegistry.Instance.ResetForBiome(LevelSave.BiomeGenerated!);
 
 		area.Add(level);
 
@@ -48,8 +48,8 @@ public static class Generation {
 	// teardown (Physics.Destroy), so it never accumulates; this harness generates hundreds of
 	// levels into one world, so it has to clear per generation.
 	public static void Release(RegularLevel level) {
-		level.Area.Destroy();
-		Physics.World.Clear();
+		level.Area!.Destroy();
+		Physics.World!.Clear();
 
 		// The game presents every frame, and that is what lets the driver release the GL objects
 		// a level's render targets were backed by. A test host that never draws has to present

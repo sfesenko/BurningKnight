@@ -9,8 +9,8 @@ namespace BurningKnight.level.challenge {
 			var area = player.Area;
 			
 			// Fixme: this is super weak
-			inventory.Pickup(Items.CreateAndAdd("bk:blindfold", area), false);
-			inventory.Pickup(Items.CreateAndAdd("bk:tnt", area), false);
+			inventory!.Pickup(Items.CreateAndAdd("bk:blindfold", area!)!, false);
+			inventory.Pickup(Items.CreateAndAdd("bk:tnt", area!)!, false);
 		}
 	}
 }

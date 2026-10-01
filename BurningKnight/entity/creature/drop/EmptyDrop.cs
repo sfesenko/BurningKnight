@@ -8,7 +8,7 @@ namespace BurningKnight.entity.creature.drop {
 		}
 		
 		public override List<string> GetItems() {
-			return null;
+			return [];
 		}
 
 		public override string GetId() {

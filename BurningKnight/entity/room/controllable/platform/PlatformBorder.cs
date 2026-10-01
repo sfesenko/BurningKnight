@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.room.controllable.platform {
 	public class PlatformBorder : Entity, CollisionFilterEntity {
-		public Support Super;
+		public Support? Super;
 		public Vector2 Offset;
 		
 		private bool on = true;
@@ -18,7 +18,7 @@ namespace BurningKnight.entity.room.controllable.platform {
 		public bool On {
 			set {
 				on = value;
-				GetComponent<RectBodyComponent>().Body.IsSensor = !value;
+				GetComponent<RectBodyComponent>()!.Body!.IsSensor = !value;
 			}
 		}
 		
@@ -57,7 +57,7 @@ namespace BurningKnight.entity.room.controllable.platform {
 				|| entity is Chasm 
 				|| (entity is Creature c && c.InAir()) 
 				|| (entity.TryGetComponent<TileInteractionComponent>(out var t) && (!t.HasNoTileSupport)) 
-				|| (entity.TryGetComponent<SupportableComponent>(out var s) && s.HasAnotherSupportBesides(Super))
+				|| (entity.TryGetComponent<SupportableComponent>(out var s) && s.HasAnotherSupportBesides(Super!))
 			);
 		}
 	}

@@ -19,11 +19,11 @@ namespace BurningKnight.entity.creature.mob.ice {
 			base.SetStats();
 
 			SetMaxHp(6);
-			GetComponent<HealthComponent>().Unhittable = true;
+			GetComponent<HealthComponent>()!.Unhittable = true;
 			
 			var body = new SensorBodyComponent(1, 1, 14, 15);
 			AddComponent(body);
-			body.Body.LinearDamping = 0.3f;
+			body!.Body!.LinearDamping = 0.3f;
 			
 			AddComponent(new ZAnimationComponent("snowflake"));
 			AddComponent(new ZComponent() {
@@ -47,27 +47,27 @@ namespace BurningKnight.entity.creature.mob.ice {
 
 		public override void Update(float dt) {
 			base.Update(dt);
-			var rm = GetComponent<RoomComponent>().Room;
+			var rm = GetComponent<RoomComponent>()!.Room;
 
 			if (rm == null || rm.Tagged[Tags.Player].Count == 0 || rm.Tagged[Tags.MustBeKilled].Count > 0) {
 				return;
 			}
 
 			var h = GetComponent<HealthComponent>();
-			h.Unhittable = false;
+			h!.Unhittable = false;
 			h.Kill(this);
 		}
 
 		#region Snowflake States
 		public class IdleState : SmartState<Snowflake> {
 			private bool searched;
-			private Entity target;
+			private Entity? target;
 
 			public override void Init() {
 				base.Init();
 				
 				var component = Self.GetComponent<ZComponent>();
-				Tween.To(0, component.Z, x => component.Z = x, 0.4f, Ease.BackOut);
+				Tween.To(0, component!.Z, x => component.Z = x, 0.4f, Ease.BackOut);
 			}
 
 			public override void Update(float dt) {
@@ -88,7 +88,7 @@ namespace BurningKnight.entity.creature.mob.ice {
 							target.AddComponent(new OrbitGiverComponent());
 						}
 					
-						target.GetComponent<OrbitGiverComponent>().AddOrbiter(Self);
+						target.GetComponent<OrbitGiverComponent>()!.AddOrbiter(Self);
 						Become<OrbitingState>();
 
 						return;
@@ -97,13 +97,13 @@ namespace BurningKnight.entity.creature.mob.ice {
 					var body = Self.GetComponent<SensorBodyComponent>();
 					var s = dt * 200;
 					
-					body.Velocity += new Vector2(dx / d * s, dy / d * s);
+					body!.Velocity += new Vector2(dx / d * s, dy / d * s);
 					return;
 				}
 
 				if (!searched) {
 					searched = true;
-					target = Self.GetComponent<RoomComponent>().Room?.FindClosest(Self.Center, Tags.Mob, e => !e.HasComponent<OrbitalComponent>() && !(e is WallWalker || e is Boss));
+					target = Self.GetComponent<RoomComponent>()!.Room?.FindClosest(Self.Center, Tags.Mob, e => !e.HasComponent<OrbitalComponent>() && !(e is WallWalker || e is Boss));
 
 					if (target == null) {
 						Self.Kill(Self);
@@ -124,13 +124,13 @@ namespace BurningKnight.entity.creature.mob.ice {
 				base.Init();
 				
 				var component = Self.GetComponent<ZComponent>();
-				Tween.To(DefaultZ, component.Z, x => component.Z = x, 0.4f, Ease.BackOut);
+				Tween.To(DefaultZ, component!.Z, x => component.Z = x, 0.4f, Ease.BackOut);
 			}
 
 			public override void Update(float dt) {
 				base.Update(dt);
 
-				var orbiting = Self.GetComponent<OrbitalComponent>().Orbiting;
+				var orbiting = Self.GetComponent<OrbitalComponent>()!.Orbiting;
 				
 				if (orbiting == null) {
 					Become<IdleState>();
@@ -138,7 +138,7 @@ namespace BurningKnight.entity.creature.mob.ice {
 				}
 				
 				if (orbiting.TryGetComponent<ZComponent>(out var z)) {
-					Self.GetComponent<ZComponent>().Z = z.Z + DefaultZ;
+					Self.GetComponent<ZComponent>()!.Z = z.Z + DefaultZ;
 				}
 			}
 		}

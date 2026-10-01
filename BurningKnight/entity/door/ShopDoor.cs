@@ -26,7 +26,7 @@ namespace BurningKnight.entity.door {
 			return new GoldLock();
 		}
 
-		protected override string GetBar() {
+		protected override string? GetBar() {
 			return Vertical ? null : "shop_door";
 		}
 
@@ -34,7 +34,7 @@ namespace BurningKnight.entity.door {
 			return Vertical ? "vertical_shop_door" : "shop_door";
 		}
 
-		protected override string GetPad() {
+		protected override string? GetPad() {
 			return null;
 		}
 	}

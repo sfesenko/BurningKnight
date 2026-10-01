@@ -59,7 +59,7 @@ namespace BurningKnight.assets.loot {
 			return o;
 		}
 
-		public static Drop ParseDrop(JsonValue table) {
+		public static Drop? ParseDrop(JsonValue table) {
 			var type = table["type"].String(null);
 
 			if (type == null) {
@@ -71,9 +71,9 @@ namespace BurningKnight.assets.loot {
 				return null;
 			}
 
-			var drop = (Drop) Activator.CreateInstance(t.Type);
+			var drop = (Drop) Activator.CreateInstance(t.Type)!;
 			table["id"] = LastDropId++;
-			drop.Load(table);
+			drop!.Load(table);
 
 			return drop;
 		}

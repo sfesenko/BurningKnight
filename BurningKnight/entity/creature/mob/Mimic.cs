@@ -18,7 +18,7 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.creature.mob {
 	public class Mimic : Slime {
-		public string Kind;
+		public string? Kind;
 		public string Pool = "bk:wooden_chest";
 		private bool invoked;
 		
@@ -33,7 +33,7 @@ namespace BurningKnight.entity.creature.mob {
 			var body = CreateBodyComponent();
 			AddComponent(body);
 
-			body.Body.LinearDamping = 2;
+			body!.Body!.LinearDamping = 2;
 			body.KnockbackModifier = 0.5f;
 
 			AddComponent(CreateSensorBodyComponent());
@@ -47,7 +47,7 @@ namespace BurningKnight.entity.creature.mob {
 			}
 			
 			AddComponent(new InteractableSliceComponent("props", Kind));
-			GetComponent<DropsComponent>().Add(Pool);
+			GetComponent<DropsComponent>()!.Add(Pool);
 
 			if (!invoked) {
 				RemoveTag(Tags.MustBeKilled);
@@ -66,7 +66,7 @@ namespace BurningKnight.entity.creature.mob {
 				return true;
 			}
 
-			e.GetComponent<HealthComponent>().ModifyHealth(-2, this, DamageType.Custom);
+			e.GetComponent<HealthComponent>()!.ModifyHealth(-2, this, DamageType.Custom);
 			Target = e;
 			Become<JumpState>();
 			
@@ -81,7 +81,7 @@ namespace BurningKnight.entity.creature.mob {
 			return base.HandleEvent(e);
 		}
 
-		protected override TextureRegion GetDeathFrame() {
+		protected override TextureRegion? GetDeathFrame() {
 			return CommonAse.Props.GetSlice($"{Kind}_open");
 		}
 
@@ -109,12 +109,12 @@ namespace BurningKnight.entity.creature.mob {
 						return;
 					}
 				
-					GetComponent<AudioEmitterComponent>().EmitRandomized("mob_fire");
+					GetComponent<AudioEmitterComponent>()!.EmitRandomized("mob_fire");
 
 					var a = AngleTo(Target) + Rnd.Float(-0.1f, 0.1f);
 					var projectile = builder.Shoot(a, 9f).Build();
 
-					projectile.Center = Center + MathUtils.CreateVector(a, 5f) - new Vector2(0, GetComponent<ZComponent>().Z);
+					projectile!.Center = Center + MathUtils.CreateVector(a, 5f) - new Vector2(0, GetComponent<ZComponent>()!.Z);
 				}, i * 0.3f);
 			}
 		}
@@ -125,7 +125,7 @@ namespace BurningKnight.entity.creature.mob {
 			}
 			
 			var am = 16;
-			GetComponent<AudioEmitterComponent>().EmitRandomized("mob_fire");
+			GetComponent<AudioEmitterComponent>()!.EmitRandomized("mob_fire");
 
 			var builder = new ProjectileBuilder(this, "small") {
 				LightRadius = 32f
@@ -140,14 +140,14 @@ namespace BurningKnight.entity.creature.mob {
 				builder.Slice = fast ? "small" : "circle";
 				var projectile = builder.Shoot(a, fast ? 7f : 4f).Build();
 					
-				projectile.Center = BottomCenter;
+				projectile!.Center = BottomCenter;
 			}
 		}
 		
 		protected override void AnimateJump(Action callback) {
 			var anim = GetComponent<InteractableSliceComponent>();
 				
-			Tween.To(2f, anim.Scale.X, x => anim.Scale.X = x, 0.2f);
+			Tween.To(2f, anim!.Scale.X, x => anim.Scale.X = x, 0.2f);
 			Tween.To(0.3f, anim.Scale.Y, x => anim.Scale.Y = x, 0.2f).OnEnd = () => {
 				Tween.To(0.5f, anim.Scale.X, x => anim.Scale.X = x, 0.3f);
 
@@ -163,7 +163,7 @@ namespace BurningKnight.entity.creature.mob {
 		protected override void AnimateLand() {
 			var anim = GetComponent<InteractableSliceComponent>();
 
-			anim.Scale.X = 2f;
+			anim!.Scale.X = 2f;
 			anim.Scale.Y = 0.3f;
 			Tween.To(1, anim.Scale.X, x => anim.Scale.X = x, 0.3f);
 			Tween.To(1, anim.Scale.Y, x => anim.Scale.Y = x, 0.3f);
@@ -174,13 +174,13 @@ namespace BurningKnight.entity.creature.mob {
 			
 			Kind = stream.ReadString();
 			invoked = stream.ReadBoolean();
-			Pool = stream.ReadString();
+			Pool = stream.ReadString()!;
 		}
 
 		public override void Save(FileWriter stream) {
 			base.Save(stream);
 			
-			stream.WriteString(Kind);
+			stream.WriteString(Kind!);
 			stream.WriteBoolean(invoked);
 			stream.WriteString(Pool);
 		}

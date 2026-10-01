@@ -13,10 +13,10 @@ namespace BurningKnight.level {
 	public class LevelBodyComponent : BodyComponent {
 		public const byte ChunkSize = 8;
 
-		public Level Level;
+		public Level Level = null!;
 		
 		private bool dirty;
-		protected IPhysicsBody[] chunks;
+		protected IPhysicsBody[]? chunks;
 		protected int cw;
 		private int ch;
 		private int cs;
@@ -52,7 +52,7 @@ namespace BurningKnight.level {
 					}
 
 					updated.Add(ci);
-					Physics.RemoveBody(chunks[ci]);
+					Physics.RemoveBody(chunks![ci]);
 					RecreateChunk(cx, cy);
 				}
 
@@ -108,12 +108,12 @@ namespace BurningKnight.level {
 		protected virtual void RecreateChunk(int cx, int cy) {
 			var level = Level;
 			
-			var body = Physics.World.CreateBody(Vector2.Zero, 0, BodyType.Static);
+			var body = Physics.World!.CreateBody(Vector2.Zero, 0, BodyType.Static);
 			body.FixedRotation = true;
 			body.UserData = this;
 
 			var i = cx + cy * cw;
-			var c = chunks[i];
+			var c = chunks![i];
 
 			if (c != null) {
 				Physics.RemoveBody(c);
@@ -205,7 +205,7 @@ namespace BurningKnight.level {
 				return;
 			}
 			
-			toUpdate.Add(x + y * Context.Level.Width);
+			toUpdate.Add(x + y * Context.Level!.Width);
 		}
 
 		protected virtual bool Check(Level level, int x, int y) {

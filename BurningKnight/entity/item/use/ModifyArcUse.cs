@@ -18,7 +18,7 @@ namespace BurningKnight.entity.item.use {
 		public float Chance;
 		public bool ToAny;
 		public bool EventCreated = true;
-		public string BuffToApply;
+		public string? BuffToApply;
 		public bool InfiniteBuff;
 		public float BuffDuration;
 		public bool RandomEffect;
@@ -94,9 +94,9 @@ namespace BurningKnight.entity.item.use {
 						var b = BuffRegistry.Create(buff);
 
 						if (InfiniteBuff) {
-							b.Infinite = true;
+							b!.Infinite = true;
 						} else {
-							b.TimeLeft = b.Duration = BuffDuration;
+							b!.TimeLeft = b.Duration = BuffDuration;
 						}
 
 						buffs.Add(b);

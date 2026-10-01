@@ -15,10 +15,10 @@ namespace BurningKnight.entity.component {
 		public bool UseLineOfSight = true;
 
 		public string[] Variants;
-		private Entity trigger;
+		private Entity? trigger;
 
-		public Func<Entity, bool> CanTalk;
-		public Func<Entity, string> DecideVariant;
+		public Func<Entity, bool>? CanTalk;
+		public Func<Entity, string>? DecideVariant;
 
 		public CloseDialogComponent(params string[] vars) {
 			Variants = vars;
@@ -42,7 +42,7 @@ namespace BurningKnight.entity.component {
 				return;
 			}
 
-			foreach (var p in Entity.Area.Tagged[Tags.Player]) {
+			foreach (var p in Entity.Area!.Tagged[Tags.Player]) {
 				if (p.DistanceToSquared(Entity) <= Radius && (!UseLineOfSight || CanSee(p.Center, Entity))) {
 					if (CanTalk == null || CanTalk(Entity)) {
 						d.Start(DecideVariant?.Invoke(p) ?? Variants[Rnd.Int(Variants.Length)]);
@@ -61,7 +61,7 @@ namespace BurningKnight.entity.component {
 			var min = 1f;
 			var found = false;
 			
-			Physics.World.RayCast((fixture, point, normal, fraction) => {
+			Physics.World!.RayCast((fixture, point, normal, fraction) => {
 				if (min > fraction && fixture.Body.UserData is BodyComponent b && RayShouldCollide(b.Entity)) {
 					min = fraction;
 					found = true;

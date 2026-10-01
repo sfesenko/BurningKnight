@@ -43,7 +43,7 @@ namespace BurningKnight.entity.item.renderer {
 			var owner = Item.Owner;
 			
 			if (!atBack && !paused && !shadow) {
-				var to = owner.GetComponent<AimComponent>().Aim;
+				var to = owner.GetComponent<AimComponent>()!.Aim;
 				/*var dx = Nozzle.X - Origin.X;
 				var dy = Nozzle.Y - Origin.Y;
 				
@@ -54,14 +54,14 @@ namespace BurningKnight.entity.item.renderer {
 				lastAngle = MathUtils.LerpAngle(lastAngle, owner.AngleTo(to) + Math.PI * 0.5f, dt * 24f);
 			}
 
-			var angle = atBack ? (float) Math.PI * (owner.GraphicsComponent.Flipped ? 0.25f : -0.25f) : (float) lastAngle;
+			var angle = atBack ? (float) Math.PI * (owner!.GraphicsComponent!.Flipped ? 0.25f : -0.25f) : (float) lastAngle;
 
 			if (horizontal) {
 				angle -= (float) Math.PI * 0.5f;
 			}
 
 			var pos = new Vector2(
-				owner.CenterX + (owner.GraphicsComponent.Flipped ? -5 : 5) + (horizontal ? 0 : (region.Width / 2f) * (owner.GraphicsComponent.Flipped ? -1 : 1)),
+				owner.CenterX + (owner!.GraphicsComponent!.Flipped ? -5 : 5) + (horizontal ? 0 : (region.Width / 2f) * (owner.GraphicsComponent.Flipped ? -1 : 1)),
 				owner.CenterY + offset + (shadow ? owner.Height : 0)
 			);
 
@@ -76,7 +76,7 @@ namespace BurningKnight.entity.item.renderer {
 				var d = MathUtils.Distance(dx, dy);
 
 				var aim = owner.GetComponent<AimComponent>();
-				aim.Center = pos + MathUtils.CreateVector(a, d);
+				aim!.Center = pos + MathUtils.CreateVector(a, d);
 
 				d = (aim.Aim - pos).Length();
 				aim.RealAim = aim.Center + MathUtils.CreateVector(angle - (horizontal ? 0 : Math.PI / 2), d);

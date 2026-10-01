@@ -31,18 +31,18 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.item {
 	public partial class Item : SaveableEntity, CollisionFilterEntity, PlaceableEntity {
-		public static TextureRegion UnknownRegion;
+		public static TextureRegion UnknownRegion = null!;
 		public static bool Attact;
 		
 		public ItemType Type;
-		public string Id;
-		public string LastId;
+		public string Id = null!;
+		public string LastId = null!;
 		public string IdUnderScourge => Type != ItemType.Scourge && Scourge.IsEnabled(Scourge.OfEgg) ? Items.Datas.Values.ElementAt(Rnd.Int(Items.Datas.Count)).Id : Id;
 		public string Name => Masked ? "???" : Locale.Get(IdUnderScourge);
 		public string Description => Locale.Get($"{IdUnderScourge}_desc");
 		public float UseTime = 0.3f;
 		public float Delay;
-		public string Animation;
+		public string? Animation;
 		public bool AutoPickup;
 		public bool LoadedSelf;
 		public bool Used;
@@ -52,14 +52,14 @@ namespace BurningKnight.entity.item {
 		public bool Scourged;
 		public bool Hide;
 		
-		public ItemUse[] Uses;
+		public ItemUse[]? Uses;
 		public ItemUseCheck UseCheck = ItemUseChecks.Default;
-		public ItemRenderer Renderer;
+		public ItemRenderer Renderer = null!;
 
 		public bool Hidden => (Type != ItemType.Mana && Type != ItemType.Coin && Type != ItemType.Heart && Type != ItemType.Key && Type != ItemType.Bomb && (!TryGetComponent<OwnerComponent>(out var o) || !(o.Owner is Player)) && Scourge.IsEnabled(Scourge.OfUnknown));
-		public TextureRegion Region => (Hidden) ? UnknownRegion : (Animation != null ? GetComponent<AnimatedItemGraphicsComponent>().Animation.GetCurrentTexture() : GetComponent<ItemGraphicsComponent>().Sprite);
+		public TextureRegion Region => (Hidden) ? UnknownRegion : (Animation != null ? GetComponent<AnimatedItemGraphicsComponent>()!.Animation.GetCurrentTexture() : GetComponent<ItemGraphicsComponent>()!.Sprite);
 		
-		public Entity Owner => TryGetComponent<OwnerComponent>(out var o) ? o.Owner : null;
+		public Entity Owner => TryGetComponent<OwnerComponent>(out var o) ? o.Owner : null!;
 		public ItemData Data => Items.Datas[Id];
 
 		private bool updateLight;
@@ -121,12 +121,12 @@ namespace BurningKnight.entity.item {
 		}
 		
 		protected virtual bool ShouldInteract(Entity entity) {
-			return !(entity is Player c && ((Type == ItemType.Mana && (!c.GetComponent<ManaComponent>().CanPickup(this) || t < 1f)) ||
-			                                (Type == ItemType.Heart && !c.GetComponent<HealthComponent>().CanPickup(this)) ||
-			                                (Type == ItemType.Battery && c.GetComponent<ActiveItemComponent>().IsFullOrEmpty()) ||
-			                                (Type == ItemType.Coin && Id != "bk:emerald" && c.GetComponent<ConsumablesComponent>().Coins >= c.GetComponent<ConsumablesComponent>().MaxCoins) ||
-			                                (Type == ItemType.Bomb && c.GetComponent<ConsumablesComponent>().Bombs == 99 && c.TryGetComponent<HeartsComponent>(out var b) && b.BombsMax > b.Bombs) ||
-			                                (Type == ItemType.Key && c.GetComponent<ConsumablesComponent>().Keys == 99)
+			return !(entity is Player c && ((Type == ItemType.Mana && (!c.GetComponent<ManaComponent>()!.CanPickup(this) || t < 1f)) ||
+			                                (Type == ItemType.Heart && !c.GetComponent<HealthComponent>()!.CanPickup(this)) ||
+			                                (Type == ItemType.Battery && c.GetComponent<ActiveItemComponent>()!.IsFullOrEmpty()) ||
+			                                (Type == ItemType.Coin && Id != "bk:emerald" && c.GetComponent<ConsumablesComponent>()!.Coins >= c.GetComponent<ConsumablesComponent>()!.MaxCoins) ||
+			                                (Type == ItemType.Bomb && c.GetComponent<ConsumablesComponent>()!.Bombs == 99 && c.TryGetComponent<HeartsComponent>(out var b) && b.BombsMax > b.Bombs) ||
+			                                (Type == ItemType.Key && c.GetComponent<ConsumablesComponent>()!.Keys == 99)
 			         ));
 		}
 
@@ -134,7 +134,7 @@ namespace BurningKnight.entity.item {
 			if (!Scourged && AutoPickup && entity.TryGetComponent<InventoryComponent>(out var inventory)) {
 				if (ShouldInteract(entity)) {
 					inventory.Pickup(this);
-					entity.GetComponent<InteractorComponent>().EndInteraction();	
+					entity.GetComponent<InteractorComponent>()!.EndInteraction();	
 				}
 			} else if (!HasComponent<OwnerComponent>() && Context.Run.Depth != -2) {
 				Engine.Instance.State.Ui.Add(new ItemPickupFx(this));
@@ -173,9 +173,9 @@ namespace BurningKnight.entity.item {
 					for (var i = 0; i < Rnd.Int(0, 3); i++) {
 						var part = new ParticleEntity(Particles.Scourge());
 
-						part.Position = (hasOwner ? GetComponent<OwnerComponent>().Owner.Center : Center) + Rnd.Vector(-4, 4);
+						part.Position = (hasOwner ? GetComponent<OwnerComponent>()!.Owner.Center : Center) + Rnd.Vector(-4, 4);
 						part.Particle.Scale = Rnd.Float(0.5f, 1.2f);
-						Area.Add(part);
+						Area!.Add(part);
 						part.Depth = hasOwner ? 1 : -1;
 					}
 				}
@@ -185,23 +185,23 @@ namespace BurningKnight.entity.item {
 			if (hasOwner) {
 				var o = Owner;
 
-				foreach (var u in Uses) {
-					u.Update(o, this, dt);
+				foreach (var u in Uses!) {
+					u.Update(o!, this, dt);
 				}
 			} else {
 				if (Attact) {
-					var room = GetComponent<RoomComponent>().Room;
+					var room = GetComponent<RoomComponent>()!.Room;
 
-					if (room.Tagged[Tags.Player].Count > 0) {
+					if (room!.Tagged[Tags.Player].Count > 0) {
 						var force = 360 * dt;
 						var a = AngleTo(room.Tagged[Tags.Player][0]);
-						GetBody().Velocity += new Vector2((float) Math.Cos(a) * force, (float) Math.Sin(a) * force);
+						GetBody()!.Velocity += new Vector2((float) Math.Cos(a) * force, (float) Math.Sin(a) * force);
 					}
 				}
 				
 				if (updateLight) {
 					updateLight = false;
-					var room = GetComponent<RoomComponent>().Room;
+					var room = GetComponent<RoomComponent>()!.Room;
 
 					if (room == null || HasComponent<LightComponent>()) {
 						if (room == null || room.Type == RoomType.Secret) {
@@ -229,17 +229,17 @@ namespace BurningKnight.entity.item {
 			}
 
 			if (Type == ItemType.Mana && t >= 0.1f) {
-				var p = LocalPlayer.Locate(Area);
+				var p = LocalPlayer.Locate(Area!);
 
 				if (p == null) {
 					return;
 				}
 
-				if (p.GetComponent<ManaComponent>().IsFull() || t < 1f) {
+				if (p.GetComponent<ManaComponent>()!.IsFull() || t < 1f) {
 					return;
 				}
 
-				var room = GetComponent<RoomComponent>().Room;
+				var room = GetComponent<RoomComponent>()!.Room;
 				var limitRange = room != null && room.Tagged[Tags.MustBeKilled].Count > 0;
 				var d = DistanceTo(p);
 
@@ -251,12 +251,12 @@ namespace BurningKnight.entity.item {
 					return;
 				}
 
-				var b = GetBody().Body;
+				var b = GetBody()!.Body;
 				var dx = DxTo(p);
 				var dy = DyTo(p);
 				var s = dt * 4;
 
-				b.LinearVelocity -= new Vector2(dx / d * s, dy / d * s);
+				b!.LinearVelocity -= new Vector2(dx / d * s, dy / d * s);
 
 				var a = b.LinearVelocity.ToAngle(); 
 				d = Math.Min(b.LinearVelocity.Length() + dt * 300, 1000);
@@ -272,7 +272,7 @@ namespace BurningKnight.entity.item {
 					return false;
 				}
 				
-				var room = GetComponent<RoomComponent>().Room;
+				var room = GetComponent<RoomComponent>()!.Room;
 
 				if (room == null || room.Tagged[Tags.MustBeKilled].Count == 0) {
 					return false;
@@ -347,7 +347,7 @@ namespace BurningKnight.entity.item {
 		#endif
 
 		public class UnlockedEvent : Event {
-			public ItemData Data;
+			public ItemData Data = null!;
 		}
 	}
 }

@@ -9,7 +9,7 @@ using Lens.util.math;
 
 namespace BurningKnight.level.walls {
 	public class PatchWall : WallPainter {
-		protected bool[] Patch;
+		protected bool[]? Patch;
 
 		protected int ToIndex(RoomDef room, int x, int y) {
 			return (x - room.Left - 1) + (y - room.Top - 1) * (room.GetWidth() - 2);
@@ -31,7 +31,7 @@ namespace BurningKnight.level.walls {
 					var start = 0;
 
 					foreach (var d in room.Connected.Values) {
-						if (d.X == room.Left) {
+						if (d!.X == room.Left) {
 							start = ToIndex(room, d.X + 1, d.Y);
 							
 							Patch[ToIndex(room, d.X + 1, d.Y)] = false;
@@ -88,7 +88,7 @@ namespace BurningKnight.level.walls {
 			
 			for (var y = 0; y < room.GetHeight() - 2; y++) {
 				for (var x = 0; x < w; x++) {
-					if (Patch[x + y * w]) {
+					if (Patch![x + y * w]) {
 						level.Set(room.Left + x + 1, room.Top + y + 1, Tile.FloorA);						
 						level.Set(room.Left + x + 1, room.Top + y + 1, tile);						
 					}
@@ -133,13 +133,13 @@ namespace BurningKnight.level.walls {
 		public override void Paint(Level level, RoomDef room, Rect inside) {
 			var fill = 0.25f + (room.GetWidth() * room.GetHeight()) / 1024f;
 			var s = Rnd.Chance();
-			bool[] oldPatch = null;
+			bool[]? oldPatch = null;
 			
 			if (s) {
 				Setup(level, room, fill, 4, true);
 				CleanDiagonalEdges(room);
 				PaintPatch(level, room, Tiles.RandomSolid());
-				oldPatch = ArrayUtils.Clone(Patch);
+				oldPatch = ArrayUtils.Clone(Patch!);
 			}
 			
 			SimplePaint(level, room);
@@ -149,7 +149,7 @@ namespace BurningKnight.level.walls {
 				var start = 0;
 
 				foreach (var d in room.Connected.Values) {
-					if (d.X == room.Left) {
+					if (d!.X == room.Left) {
 						start = ToIndex(room, d.X + 1, d.Y);
 					} else if (d.X == room.Right) {
 						start = ToIndex(room, d.X - 1, d.Y);
@@ -160,8 +160,8 @@ namespace BurningKnight.level.walls {
 					}
 				}
 
-				for (var i = 0; i < Patch.Length; i++) {
-					if (oldPatch[i]) {
+				for (var i = 0; i < Patch!.Length; i++) {
+					if (oldPatch![i]) {
 						Patch[i] = true;
 					}
 				}

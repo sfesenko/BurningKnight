@@ -71,7 +71,7 @@ namespace BurningKnight.level.entities.chest {
 			var p = GetPool();
 
 			if (p != null) {
-				GetComponent<DropsComponent>().Add(p);
+				GetComponent<DropsComponent>()!.Add(p);
 			}
 		}
 
@@ -83,19 +83,19 @@ namespace BurningKnight.level.entities.chest {
 				UpdateSprite();
 			}
 
-			var body = GetComponent<RectBodyComponent>().Body;
+			var body = GetComponent<RectBodyComponent>()!.Body;
 
-			body.LinearDamping = 100;
+			body!.LinearDamping = 100;
 			body.Mass = 1000000;
 
-			GetComponent<RectBodyComponent>().KnockbackModifier = 0.1f;
+			GetComponent<RectBodyComponent>()!.KnockbackModifier = 0.1f;
 			Animate();
 		}
 		
 		protected virtual void Animate() {
 			var a = GetComponent<InteractableSliceComponent>();
 
-			a.Scale.X = 0.6f * Scale;
+			a!.Scale.X = 0.6f * Scale;
 			a.Scale.Y = 1.7f * Scale;
 					
 			Tween.To(1.8f * Scale, a.Scale.X, x => a.Scale.X = x, 0.15f);
@@ -109,12 +109,12 @@ namespace BurningKnight.level.entities.chest {
 			return "chest";
 		}
 
-		public virtual string GetPool() {
+		public virtual string? GetPool() {
 			return null;
 		}
 
 		protected virtual void UpdateSprite(bool open = true) {
-			GetComponent<InteractableSliceComponent>().Sprite = CommonAse.Props.GetSlice($"{GetSprite()}{(open ? "_open" : "")}");
+			GetComponent<InteractableSliceComponent>()!.Sprite = CommonAse.Props.GetSlice($"{GetSprite()}{(open ? "_open" : "")}")!;
 		}
 
 		public void Open(Entity who) {
@@ -130,7 +130,7 @@ namespace BurningKnight.level.entities.chest {
 				
 				UpdateSprite();
 				SpawnDrops();
-				GetComponent<AudioEmitterComponent>().EmitRandomized("level_chest_open");
+				GetComponent<AudioEmitterComponent>()!.EmitRandomized("level_chest_open");
 			});
 
 			HandleEvent(new OpenedEvent {
@@ -158,7 +158,7 @@ namespace BurningKnight.level.entities.chest {
 		protected virtual void Animate(Action callback) {
 			var a = GetComponent<InteractableSliceComponent>();
 					
-			Tween.To(1.8f * Scale, a.Scale.X, x => a.Scale.X = x, 0.2f);
+			Tween.To(1.8f * Scale, a!.Scale.X, x => a.Scale.X = x, 0.2f);
 			Tween.To(0.2f * Scale, a.Scale.Y, x => a.Scale.Y = x, 0.2f).OnEnd = () => {
 				callback();
 				
@@ -173,7 +173,7 @@ namespace BurningKnight.level.entities.chest {
 		protected virtual void SpawnDrops() {
 			if (!Empty) {
 				Empty = true;
-				GetComponent<DropsComponent>().SpawnDrops();
+				GetComponent<DropsComponent>()!.SpawnDrops();
 			}
 		}
 
@@ -214,8 +214,8 @@ namespace BurningKnight.level.entities.chest {
 
 
 		public class OpenedEvent : Event {
-			public Chest Chest;
-			public Entity Who;
+			public Chest Chest = null!;
+			public Entity Who = null!;
 		}
 
 		public virtual bool ShouldCollide(Entity entity) {

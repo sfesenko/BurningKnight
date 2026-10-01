@@ -18,7 +18,7 @@ namespace BurningKnight.entity.creature.npc {
 			AddComponent(b);
 			b.KnockbackModifier = 0;
 			
-			GetComponent<DialogComponent>().Dialog.Voice = 1;
+			GetComponent<DialogComponent>()!.Dialog!.Voice = 1;
 		}
 
 		protected override string GetDialog() {

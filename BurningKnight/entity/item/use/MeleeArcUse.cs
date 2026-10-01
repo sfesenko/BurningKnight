@@ -18,7 +18,7 @@ namespace BurningKnight.entity.item.use {
 		protected float Knockback;
 		
 		public override void Use(Entity entity, Item item) {
-			entity.GetComponent<AudioEmitterComponent>().EmitRandomizedPrefixed(AttackSound, 4);
+			entity.GetComponent<AudioEmitterComponent>()!.EmitRandomizedPrefixed(AttackSound, 4);
 
 			var arc = new MeleeArc {
 				Owner = entity,
@@ -29,7 +29,7 @@ namespace BurningKnight.entity.item.use {
 				Sound = HitSound,
 				Position = entity.Center,
 				Knockback = Knockback,
-				Angle = entity.AngleTo(entity.GetComponent<AimComponent>().RealAim) + Angle
+				Angle = entity.AngleTo(entity.GetComponent<AimComponent>()!.RealAim) + Angle
 			};
 
 			entity.HandleEvent(new MeleeArc.CreatedEvent {
@@ -38,7 +38,7 @@ namespace BurningKnight.entity.item.use {
 				By = item
 			});
 			
-			entity.Area.Add(arc);
+			entity.Area!.Add(arc);
 		}
 
 		public override void Setup(JsonValue settings) {

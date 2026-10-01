@@ -29,10 +29,10 @@ namespace BurningKnight.entity.room.controllable.platform {
 		private int step;
 		private Vector2 velocity;
 
-		private PlatformBorder left;
-		private PlatformBorder right;
-		private PlatformBorder up;
-		private PlatformBorder down;
+		private PlatformBorder left = null!;
+		private PlatformBorder right = null!;
+		private PlatformBorder up = null!;
+		private PlatformBorder down = null!;
 
 		protected virtual string GetAnimation() {
 			return "moving_platform";
@@ -53,9 +53,9 @@ namespace BurningKnight.entity.room.controllable.platform {
 			var b = new RectBodyComponent(0.5f, 0.5f - 1, w - 1, h + 3);
 			AddComponent(b);
 			
-			b.Body.Friction = 0;
+			b!.Body!.Friction = 0;
 			
-			Area.Add(left = new PlatformBorder());
+			Area!.Add(left = new PlatformBorder());
 			left.Setup(this, -12, 0, 8, th * 16);
 			
 			Area.Add(right = new PlatformBorder());
@@ -103,7 +103,7 @@ namespace BurningKnight.entity.room.controllable.platform {
 			public override void Update(float dt) {
 				base.Update(dt);
 
-				Self.GetComponent<RectBodyComponent>().Velocity = Vector2.Zero;
+				Self.GetComponent<RectBodyComponent>()!.Velocity = Vector2.Zero;
 
 				if (Self.On && T >= Delay) {
 					Become<MovingState>();
@@ -132,14 +132,14 @@ namespace BurningKnight.entity.room.controllable.platform {
 					Self.velocity.Y = 0;
 				}
 				
-				Self.GetComponent<RectBodyComponent>().Velocity = Self.velocity * Speed;
+				Self.GetComponent<RectBodyComponent>()!.Velocity = Self.velocity * Speed;
 
 				if (Math.Abs(Self.velocity.X) > 0.1f) {
 					var s = (int) Math.Round(Self.Y / 16);
 					var x = (int) (Self.velocity.X > 0 ? (Math.Ceiling(Self.X / 16) + Self.tw - 1) : (Math.Floor(Self.X / 16)));
 					
 					for (var y = s; y < s + Self.th; y++) {
-						var t = GameContext.Current.Level.Get(x, y);
+						var t = GameContext.Current!.Level!.Get(x, y);
 
 						if (t != Tile.Chasm) {
 							Self.RoundUp();
@@ -165,7 +165,7 @@ namespace BurningKnight.entity.room.controllable.platform {
 					var y = (int) (Self.velocity.Y > 0 ? (Math.Ceiling(Self.Y / 16) + Self.th - 1) : (Math.Floor(Self.Y / 16)));
 					
 					for (var x = s; x < s + Self.tw; x++) {
-						var t = GameContext.Current.Level.Get(x, y);
+						var t = GameContext.Current!.Level!.Get(x, y);
 
 						if (t != Tile.Chasm) {
 							Self.RoundUp();
@@ -193,7 +193,7 @@ namespace BurningKnight.entity.room.controllable.platform {
 
 			public override void Destroy() {
 				base.Destroy();
-				Self.GetComponent<RectBodyComponent>().Velocity = Vector2.Zero;
+				Self.GetComponent<RectBodyComponent>()!.Velocity = Vector2.Zero;
 			}
 		}
 		#endregion
@@ -206,7 +206,7 @@ namespace BurningKnight.entity.room.controllable.platform {
 		};
 
 		protected virtual void Stop() {
-			GetComponent<StateComponent>().Become<IdleState>();
+			GetComponent<StateComponent>()!.Become<IdleState>();
 			step++;
 
 			switch (Controller) {
@@ -246,18 +246,18 @@ namespace BurningKnight.entity.room.controllable.platform {
 			}
 			
 			if (OnScreen) {
-				Context.Camera.ShakeMax(4);
+				Context.Camera!.ShakeMax(4);
 			}
 		}
 
 		public override void TurnOn() {
 			base.TurnOn();
-			GetComponent<StateComponent>().Become<MovingState>();
+			GetComponent<StateComponent>()!.Become<MovingState>();
 		}
 
 		public override void TurnOff() {
 			base.TurnOff();
-			GetComponent<StateComponent>().Become<IdleState>();
+			GetComponent<StateComponent>()!.Become<IdleState>();
 		}
 
 		public override void Save(FileWriter stream) {

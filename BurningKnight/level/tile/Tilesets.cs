@@ -6,7 +6,7 @@ using Lens.util;
 namespace BurningKnight.level.tile {
 	public class Tilesets {
 		public static Dictionary<string, Tileset> Loaded = new Dictionary<string, Tileset>();
-		public static BiomeAssets Biome;
+		public static BiomeAssets? Biome;
 
 		public static void Load() {
 			if (Biome == null) {
@@ -29,7 +29,7 @@ namespace BurningKnight.level.tile {
 		public static Tileset Get(string id) {
 			Tileset tileset;
 			
-			if (Loaded.TryGetValue(id, out tileset)) {
+			if (Loaded.TryGetValue(id, out tileset!)) {
 				return tileset;
 			}
 			

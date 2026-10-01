@@ -37,8 +37,8 @@ namespace BurningKnight.entity.creature.npc {
 
 			var dl = GetComponent<DialogComponent>();
 
-			dl.InitCallback = () => {
-				dl.Dialog.Str.AddIcon(CommonAse.Ui.GetSlice("coin"));
+			dl!.InitCallback = () => {
+				dl!.Dialog!.Str!.AddIcon(CommonAse.Ui.GetSlice("coin")!);
 				dl.Dialog.Str.SetVariable("need", GetPrice());
 			};
 			
@@ -51,30 +51,30 @@ namespace BurningKnight.entity.creature.npc {
 
 			Dialogs.RegisterCallback("builder_0", (d, c) => {
 				if (((ChoiceDialog) d).Choice == 0) {
-					if (!c.To.TryGetComponent<ConsumablesComponent>(out var component) || component.Coins == 0) {
+					if (!c!.To!.TryGetComponent<ConsumablesComponent>(out var component) || component.Coins == 0) {
 						// Bro, you have no money!
-						return Dialogs.Get("builder_1");
+						return Dialogs.Get("builder_1")!;
 					}
 
 					var amount = Math.Min(GetPrice(), component.Coins);
 
 					paid += amount;
 					component.Coins -= amount;
-					dl.Dialog.Str.SetVariable("need", GetPrice());
+					dl!.Dialog!.Str!.SetVariable("need", GetPrice());
 
 					if (paid >= cost) {
 						GlobalSave.Put("builder_paid", 0);
 						GlobalSave.Put($"shortcut_{Context.Run.Depth}", true);
 
-						return Dialogs.Get("builder_3");
+						return Dialogs.Get("builder_3")!;
 					} else {
 						GlobalSave.Put("builder_paid", paid);
 					}
 					
-					return Dialogs.Get("builder_2");
+					return Dialogs.Get("builder_2")!;
 				}
 
-				return Dialogs.Get("builder_4");
+				return Dialogs.Get("builder_4")!;
 			});
 
 			Dialogs.RegisterCallback("builder_3", (d, c) => {
@@ -87,7 +87,7 @@ namespace BurningKnight.entity.creature.npc {
 					Done = true;
 				}, 5f);
 				
-				return null;
+				return null!;
 			});
 		}
 

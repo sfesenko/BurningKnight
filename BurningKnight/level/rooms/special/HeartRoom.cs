@@ -24,10 +24,10 @@ namespace BurningKnight.level.rooms.special {
 			PaintTunnel(level, Tiles.RandomNewFloor(), GetCenterRect());
 			
 			var stand = new HealthStand();
-			level.Area.Add(stand);
+			level.Area!.Add(stand);
 			stand.Center = c * 16 + new Vector2(8);
 			
-			stand.SetItem(Items.CreateAndAdd(Items.Generate(ItemType.Artifact, data => data.Quality == ItemQuality.Wooden && data.Id != "bk:pass"), level.Area), null);
+			stand.SetItem(Items.CreateAndAdd(Items.Generate(ItemType.Artifact, data => data.Quality == ItemQuality.Wooden && data.Id != "bk:pass")!, level.Area)!, null);
 		}
 
 		public override int GetMinWidth() {

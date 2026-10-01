@@ -3,7 +3,7 @@ using Lens.entity;
 
 namespace BurningKnight.entity.events {
 	public class TileCollisionStartEvent : Event {
-		public Entity Who;
+		public Entity Who = null!;
 		public Tile Tile;
 	}
 }

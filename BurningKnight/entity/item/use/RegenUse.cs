@@ -25,16 +25,16 @@ namespace BurningKnight.entity.item.use {
 
 					if (count >= speed) {
 						count = 0;
-						Item.Owner.GetComponent<HealthComponent>().ModifyHealth(1, Item);
+						Item.Owner.GetComponent<HealthComponent>()!.ModifyHealth(1, Item);
 					}
 				}
 			} else if (e is Chest.OpenedEvent) {
 				if (onChests) {
-					Item.Owner.GetComponent<HealthComponent>().ModifyHealth(1, Item);
+					Item.Owner.GetComponent<HealthComponent>()!.ModifyHealth(1, Item);
 				}
 			} else if (e is ItemBoughtEvent) {
 				if (onPurchase) {
-					Item.Owner.GetComponent<HealthComponent>().ModifyHealth(1, Item);
+					Item.Owner.GetComponent<HealthComponent>()!.ModifyHealth(1, Item);
 				}
 			}
 			

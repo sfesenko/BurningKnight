@@ -4,7 +4,7 @@ using MonoGame.Extended.BitmapFonts;
 
 namespace Lens.graphics {
 	public static class Graphics {
-		public static SpriteBatch Batch;
+		public static SpriteBatch Batch = null!; // Init() sets it
 		public static Color Color = Color.White;
 		
 		public static void Init() {
@@ -21,17 +21,17 @@ namespace Lens.graphics {
 
 		public static void Render(TextureRegion region, Vector2 position) {
 			// position.Floor();
-			Batch.Draw(region.Texture, position, region.Source, Color);
+			Batch.Draw(region.Texture!, position, region.Source, Color);
 		}
 
 		public static void Render(TextureRegion region, Vector2 position, float a, Vector2 origin) {
 			// position.Floor();
-			Batch.Draw(region.Texture, position, region.Source, Color, a, origin, Vector2.One, SpriteEffects.None, 0);
+			Batch.Draw(region.Texture!, position, region.Source, Color, a, origin, Vector2.One, SpriteEffects.None, 0);
 		}
 
 		public static void Render(TextureRegion region, Vector2 position, float a, Vector2 origin, Vector2 scale, SpriteEffects flip = SpriteEffects.None) {
 			// position.Floor();
-			Batch.Draw(region.Texture, position, region.Source, Color, a, origin, scale, flip, 0);
+			Batch.Draw(region.Texture!, position, region.Source, Color, a, origin, scale, flip, 0);
 		}
 
 		public static void Render(Texture2D texture, Vector2 position) {

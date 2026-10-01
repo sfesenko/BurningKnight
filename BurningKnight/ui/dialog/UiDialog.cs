@@ -15,21 +15,21 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.ui.dialog {
 	public class UiDialog : FrameRenderer {
-		public Entity Owner;
+		public Entity Owner = null!;
 
-		private TextureRegion triangle;
-		public UiString Str;
+		private TextureRegion triangle = null!;
+		public UiString? Str;
 		public bool ShowArrow;
 		public bool AlwaysShowArrow;
 
 		public bool Saying { get; private set; }
 		public bool DoneSaying { get; private set; }
 
-		public Func<bool> OnEnd;
+		public Func<bool>? OnEnd;
 		public bool JustStarted;
 		public int Voice = 5;
 		
-		private string toSay;
+		private string? toSay;
 		
 		public override void Init() {
 			base.Init();
@@ -38,10 +38,10 @@ namespace BurningKnight.ui.dialog {
 			Height = 4;
 				
 			Setup("ui", "dialog_");
-			triangle = CommonAse.Ui.GetSlice("dialog_tri");
+			triangle = CommonAse.Ui.GetSlice("dialog_tri")!;
 			
 			Str = new UiString(Font.Small);
-			Area.Add(Str);
+			Area!.Add(Str);
 
 			Depth = 2;
 			Str.Paused = true;
@@ -76,7 +76,7 @@ namespace BurningKnight.ui.dialog {
 				if (Owner is entity.creature.bk.BurningKnight) {
 					Audio.PlaySfx($"mob_bk_syllable_{sf % 5 + 1}", 1f, v - 0.5f);
 				} else {
-					Owner.GetComponent<AudioEmitterComponent>().Emit($"npc_voice_{Voice}", 1f - Audio.Db3, v + 0.5f);
+					Owner.GetComponent<AudioEmitterComponent>()!.Emit($"npc_voice_{Voice}", 1f - Audio.Db3, v + 0.5f);
 				}
 			};
 			
@@ -85,7 +85,9 @@ namespace BurningKnight.ui.dialog {
 
 		public override void Destroy() {
 			base.Destroy();
-			Str.Done = true;
+			if (Str != null) {
+				Str.Done = true;
+			}
 		}
 
 		public void Say(string s) {
@@ -140,14 +142,14 @@ namespace BurningKnight.ui.dialog {
 				return;
 			}
 			
-			Position = Context.Camera.CameraToUi(new Vector2(Owner.CenterX, Owner.Y - 4 - (!(Owner is Player) && Owner.TryGetComponent<ZComponent>(out var z) ? z.Z : 0)));
+			Position = Context.Camera!.CameraToUi(new Vector2(Owner.CenterX, Owner.Y - 4 - (!(Owner is Player) && Owner.TryGetComponent<ZComponent>(out var z) ? z.Z : 0)));
 			var s = dt * 10;
 
 			if (DoneSaying || JustStarted) {
 				s = 1;
 			}
 
-			Height += (Str.Height + 12 - Height) * s;
+			Height += (Str!.Height + 12 - Height) * s;
 			Width += (Str.Width + 16 - Width) * s;
 			X -= Width / 2;
 			Y -= Height;
@@ -171,7 +173,7 @@ namespace BurningKnight.ui.dialog {
 			}
 		}
 		
-		public void Close(Action callback = null) {
+		public void Close(Action? callback = null) {
 			Saying = false;
 			DoneSaying = false;
 			

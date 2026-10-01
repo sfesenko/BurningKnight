@@ -1,10 +1,8 @@
-#nullable enable
-
 namespace Lens.services;
 
 public interface IClipboard {
 	void SetText(string text);
-	string GetText();
+	string? GetText();
 }
 
 public static class Clipboard {

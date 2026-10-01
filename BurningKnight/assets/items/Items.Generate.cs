@@ -21,7 +21,7 @@ using Lens.util.math;
 
 namespace BurningKnight.assets.items {
 	public partial class Items {
-		public static Item Create(string id) {
+		public static Item? Create(string id) {
 			if (id == null) {
 				return null;
 			}
@@ -53,12 +53,12 @@ namespace BurningKnight.assets.items {
 			if (data.Renderer != JsonValue.Null) {
 				if (data.Renderer.IsString) {
 					var name = data.Renderer.AsString;
-					item.Renderer = RendererRegistry.Create(name);
+					item.Renderer = RendererRegistry.Create(name)!;
 
 					CheckRendererForNull(item, name);
 				} else if (data.Renderer.IsJsonObject) {
 					var name = data.Renderer["id"].String("bk:Angled");
-					item.Renderer = RendererRegistry.Create(name);
+					item.Renderer = RendererRegistry.Create(name)!;
 
 					CheckRendererForNull(item, name);
 					
@@ -97,7 +97,7 @@ namespace BurningKnight.assets.items {
 
 			return ShouldAppear(data);
 		}
-		public static string GenerateAndRemove(List<ItemData> datas, Func<ItemData, bool> filter = null, bool removeFromFloor = false) {
+		public static string GenerateAndRemove(List<ItemData> datas, Func<ItemData, bool>? filter = null, bool removeFromFloor = false) {
 			double sum = 0;
 			
 			foreach (var chance in datas) {
@@ -109,8 +109,8 @@ namespace BurningKnight.assets.items {
 			var value = Rnd.Double(sum);
 			sum = 0;
 
-			string id = null;
-			ItemData data = null;
+			string? id = null;
+			ItemData? data = null;
 			
 			foreach (var t in datas) {
 				if (filter == null || filter(t)) {
@@ -130,7 +130,7 @@ namespace BurningKnight.assets.items {
 					GeneratedOnFloor.Add(id);
 				}
 				
-				datas.Remove(data);
+				datas.Remove(data!);
 				return id;
 			}
 
@@ -157,7 +157,7 @@ namespace BurningKnight.assets.items {
 
 			return PlaceholderItem;
 		}
-		public static Item CreateAndAdd(string id, Area area, bool scourgeFree = true) {
+		public static Item? CreateAndAdd(string id, Area area, bool scourgeFree = true) {
 			var item = Create(id);
 
 			if (item == null) {
@@ -195,7 +195,7 @@ namespace BurningKnight.assets.items {
 
 			try {
 				Engine.Instance.State.Ui.EventListener.Handle(e);
-				Context.Area.EventListener.Handle(e);
+				Context.Area!.EventListener.Handle(e);
 
 				if (!Achievements.ItemBuffer.Contains(id)) {
 					Achievements.ItemBuffer.Add(id);

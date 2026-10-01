@@ -20,13 +20,13 @@ namespace BurningKnight.entity.orbital {
 			if (timer >= 1f) {
 				timer = 0;
 
-				if ((Owner.GetComponent<RoomComponent>().Room?.Tagged[Tags.MustBeKilled].Count ?? 0) == 0) {
+				if ((Owner!.GetComponent<RoomComponent>()!.Room?.Tagged[Tags.MustBeKilled].Count ?? 0) == 0) {
 					return;
 				}
 				
-				Owner.GetComponent<AudioEmitterComponent>().EmitRandomizedPrefixed("item_meatguy", 4, 0.5f);
+				Owner!.GetComponent<AudioEmitterComponent>()!.EmitRandomizedPrefixed("item_meatguy", 4, 0.5f);
 
-				var a = GetComponent<OrbitalComponent>().CurrentAngle;
+				var a = GetComponent<OrbitalComponent>()!.CurrentAngle;
 
 				var builder = new ProjectileBuilder(Owner, "small") {
 					Color = ProjectileColor.White,
@@ -43,8 +43,8 @@ namespace BurningKnight.entity.orbital {
 					Owner = Owner
 				});*/
 				
-				projectile.Owner = this;
-				GetComponent<AnimationComponent>().Animate();
+				projectile!.Owner = this;
+				GetComponent<AnimationComponent>()!.Animate();
 			}
 		}
 	}

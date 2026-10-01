@@ -12,8 +12,8 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.assets.particle.custom {
 	public class EpicSpawn : Entity {
-		private TextureRegion region;
-		private TextureRegion ray;
+		private TextureRegion region = null!;
+		private TextureRegion ray = null!;
 		private float scale;
 		private float angle;
 		private float t;
@@ -21,7 +21,7 @@ namespace BurningKnight.assets.particle.custom {
 		private float tt;
 		private float lastRay = 0.25f;
 
-		public Action OnEnd;
+		public Action? OnEnd;
 
 		public override void AddComponents() {
 			base.AddComponents();
@@ -32,10 +32,10 @@ namespace BurningKnight.assets.particle.custom {
 			AlwaysActive = true;
 			AlwaysVisible = true;
 
-			region = CommonAse.Particles.GetSlice("epic_spawn");
-			ray = CommonAse.Particles.GetSlice("ray");
+			region = CommonAse.Particles.GetSlice("epic_spawn")!;
+			ray = CommonAse.Particles.GetSlice("ray")!;
 			
-			Width = region.Width;
+			Width = region!.Width;
 			Height = region.Height;
 
 			AddComponent(new LightComponent(this, 64f, ColorUtils.WhiteColor));
@@ -54,7 +54,7 @@ namespace BurningKnight.assets.particle.custom {
 				});
 			}
 
-			GetComponent<LightComponent>().Light.Radius = scale * 2f;
+			GetComponent<LightComponent>()!.Light.Radius = scale * 2f;
 
 			t += dt;
 			tt += dt;

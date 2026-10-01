@@ -10,8 +10,8 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.creature.mob.boss.rooms {
 	public class DmPadsRoom : DmRoom {
-		private Dot magePos;
-		private Dot playerPos;
+		private Dot magePos = null!;
+		private Dot playerPos = null!;
 		
 		public override void PlaceMage(Room room, DM mage) {
 			mage.BottomCenter = magePos * 16 + new Vector2(8);

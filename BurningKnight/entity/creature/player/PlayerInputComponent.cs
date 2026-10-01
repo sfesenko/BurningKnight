@@ -25,14 +25,14 @@ namespace BurningKnight.entity.creature.player {
 		public static bool EnableUpdates;
 		
 		private const float Speed = 20f;
-		private DialogComponent dialog;
+		private DialogComponent? dialog;
 		private bool wasSitting;
 
 		public static float TimeIdle;
 		public bool InDialog;
 		private static Audio Audio => Context.Audio;
 		
-		public DialogComponent Dialog {
+		public DialogComponent? Dialog {
 			get => dialog;
 			
 			set {
@@ -45,13 +45,13 @@ namespace BurningKnight.entity.creature.player {
 						// Tween.To(1f, Camera.Instance.TextureZoom, x => Camera.Instance.TextureZoom = x, 1f);
 					}
 				} else if (dialog != null) {
-					Context.Camera.Targets.Clear();
+					Context.Camera!.Targets.Clear();
 
 					if (old == null) {				
 						// Tween.To(2f, Camera.Instance.TextureZoom, x => Camera.Instance.TextureZoom = x, 0.35f);
 					}
 					
-					Context.Camera.Follow(dialog.Entity, 1f);
+					Context.Camera!.Follow(dialog.Entity, 1f);
 				}
 			}
 		}
@@ -62,7 +62,7 @@ namespace BurningKnight.entity.creature.player {
 			base.Update(dt);
 			EnableUpdates = !((Player) Entity).SuperHot;
 
-			if (GetComponent<BuffsComponent>().Has<FrozenBuff>()) {
+			if (GetComponent<BuffsComponent>()!.Has<FrozenBuff>()) {
 				EnableUpdates = true;
 				return;
 			}
@@ -73,7 +73,7 @@ namespace BurningKnight.entity.creature.player {
 			
 			var idle = true;
 			var controller = GetComponent<InputComponent>();
-			var data = controller.GamepadData;
+			var data = controller!.GamepadData;
 
 			if (data != null && data.WasAttached && !data.Attached) {
 				data.WasAttached = false;
@@ -86,8 +86,8 @@ namespace BurningKnight.entity.creature.player {
 				var dd = dialog?.Dialog;
 
 				if (dd != null) {
-					var isAnswer = dialog.Current is AnswerDialog;
-					var a = isAnswer ? (AnswerDialog) dialog.Current : null;
+					var isAnswer = dialog!.Current is AnswerDialog;
+					var a = isAnswer ? (AnswerDialog) dialog.Current! : null!;
 					
 					if (dd.DoneSaying) {
 						if (dialog.Current is ChoiceDialog c) {
@@ -114,12 +114,12 @@ namespace BurningKnight.entity.creature.player {
 					}
 
 					if (dd.Saying && !dd.JustStarted) {
-						if ((!isAnswer && (Input.WasPressed(Controls.Interact, controller, true) || Input.WasPressed(Controls.UiSelect, controller, true))) || (isAnswer && !a.Focused)) {
+						if ((!isAnswer && (Input.WasPressed(Controls.Interact, controller, true) || Input.WasPressed(Controls.UiSelect, controller, true))) || (isAnswer && !a!.Focused)) {
 							if (dd.DoneSaying) {
 								dd.Finish();
 								Audio.PlaySfx("ui_moving");
 							} else {
-								dd.Str.FinishTyping();
+								dd!.Str!.FinishTyping();
 								Audio.PlaySfx("ui_moving");
 							}
 						}
@@ -139,14 +139,14 @@ namespace BurningKnight.entity.creature.player {
 			}
 
 			if (Context.Run.Depth == 0 && InGameState.Multiplayer && controller.Index > 0) {
-				if (controller.GamepadData.CurrentState.Buttons.B == ButtonState.Pressed) {
+				if (controller!.GamepadData!.CurrentState!.Buttons!.B == ButtonState.Pressed) {
 					if (holdTimer <= 0) {
 						holdTimer = 0;
 						var dialog = GetComponent<DialogComponent>();
 
-						if (dialog.Current == null) {
-							dialog.Dialog.Str.ClearIcons();
-							dialog.Dialog.Str.AddIcon(CommonAse.Ui.GetSlice("button_b"));
+						if (dialog!.Current == null) {
+							dialog!.Dialog!.Str!.ClearIcons();
+							dialog.Dialog.Str.AddIcon(CommonAse.Ui.GetSlice("button_b")!);
 
 							dialog.StartAndClose("remove_player", 2);
 						}
@@ -160,11 +160,11 @@ namespace BurningKnight.entity.creature.player {
 						((Player) Entity).Dead = true;
 						
 						((InGameState) Engine.Instance.State).ResetFollowing();
-						Context.Camera.Shake(10);
+						Context.Camera!.Shake(10);
 
 						var count = 0;
 
-						foreach (var p in Entity.Area.Tagged[Tags.Player]) {
+						foreach (var p in Entity.Area!.Tagged[Tags.Player]) {
 							if (p != Entity) {
 								count++;
 							}
@@ -187,7 +187,7 @@ namespace BurningKnight.entity.creature.player {
 			}
 			
 			var state = Entity.GetComponent<StateComponent>();
-			var duck = state.StateInstance is Player.DuckState;
+			var duck = state!.StateInstance is Player.DuckState;
 			
 			if (duck) {
 				if (Input.WasReleased(Controls.Duck, controller)) {
@@ -247,7 +247,7 @@ namespace BurningKnight.entity.creature.player {
 
 				if (controller.KeyboardEnabled && Input.Mouse.CheckMiddleButton) {
 					idle = false;
-					var a = Entity.AngleTo(GetComponent<CursorComponent>().Cursor.GamePosition);
+					var a = Entity.AngleTo(GetComponent<CursorComponent>()!.Cursor.GamePosition);
 					acceleration += new Vector2((float) Math.Cos(a), (float) Math.Sin(a));
 				}
 
@@ -294,7 +294,7 @@ namespace BurningKnight.entity.creature.player {
 		}
 
 		public void Accelerate(Vector2 acceleration, float dt) {
-			if (GetComponent<RectBodyComponent>().Confused) {
+			if (GetComponent<RectBodyComponent>()!.Confused) {
 				acceleration *= -1;
 			}
 			
@@ -305,12 +305,12 @@ namespace BurningKnight.entity.creature.player {
 			var s = Speed;
 			var sp = 20;
 
-			if (((Player) Entity).Sliding || !b.IceImmunity && i.Touching[(int) Tile.Ice]) {
+			if (((Player) Entity).Sliding || !b!.IceImmunity && i!.Touching[(int) Tile.Ice]) {
 				sp -= 19;
 				s *= 0.25f;
 			}
 
-			if (i.Touching[(int) Tile.Cobweb]) {
+			if (i!.Touching[(int) Tile.Cobweb]) {
 				s *= 0.6f;
 			}
 
@@ -319,9 +319,9 @@ namespace BurningKnight.entity.creature.player {
 			}
 
 			var ac = acceleration * s;
-			var st = (GetComponent<StatsComponent>().Speed);
+			var st = (GetComponent<StatsComponent>()!.Speed);
 			
-			body.Acceleration = ac * st * 1.5f;
+			body!.Acceleration = ac * st * 1.5f;
 			body.Velocity -= body.Velocity * dt * sp * 1.5f - body.Acceleration;
 
 			if (st > 1) {
@@ -338,7 +338,7 @@ namespace BurningKnight.entity.creature.player {
 			}
 
 			EnableUpdates = true;
-			Entity.GetComponent<StateComponent>().Become<Player.IdleState>();
+			Entity.GetComponent<StateComponent>()!.Become<Player.IdleState>();
 		}
 	}
 }

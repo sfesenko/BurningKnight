@@ -9,11 +9,11 @@ using Lens.util.math;
 
 namespace BurningKnight.entity.creature.player {
 	public class LampComponent : ItemComponent {
-		private FollowerPet pet;
+		private FollowerPet? pet;
 		private bool loaded;
-		private Item prev;
+		private Item? prev;
 		
-		public override void Set(Item item, bool animate = true) {
+		public override void Set(Item? item, bool animate = true) {
 			base.Set(item, (item == null || item.Id != "bk:no_lamp") && animate);
 		}
 
@@ -22,7 +22,7 @@ namespace BurningKnight.entity.creature.player {
 			loaded = true;
 
 			if (Item == null) {
-				Set(Items.CreateAndAdd("bk:no_lamp", Entity.Area), false);
+				Set(Items.CreateAndAdd("bk:no_lamp", Entity.Area!)!, false);
 			}
 		}
 
@@ -33,7 +33,7 @@ namespace BurningKnight.entity.creature.player {
 				if (pet.TryGetComponent<FollowerComponent>(out var f)) {
 					f.Remove();
 				} else {
-					pet.GetComponent<OrbitalComponent>().Orbiting.GetComponent<OrbitGiverComponent>().RemoveOrbiter(pet);
+					pet!.GetComponent<OrbitalComponent>()!.Orbiting!.GetComponent<OrbitGiverComponent>()!.RemoveOrbiter(pet);
 				}
 
 				pet.Done = true;
@@ -49,7 +49,7 @@ namespace BurningKnight.entity.creature.player {
 
 				var hp = Entity.GetComponent<HealthComponent>();
 					
-				hp.InitMaxHealth = 6;
+				hp!.InitMaxHealth = 6;
 				hp.SaveMaxHp = true;
 				hp.MaxHealthCap = 32;
 				hp.InvincibilityTimerMax = 1f;
@@ -85,7 +85,7 @@ namespace BurningKnight.entity.creature.player {
 				Owner = Entity
 			};
 
-			Entity.Area.Add(pet);
+			Entity.Area!.Add(pet);
 			pet.Center = Entity.Center + MathUtils.CreateVector(Rnd.AnglePI(), Rnd.Float(16f, 48f));
 			AnimationUtil.Poof(pet.Center);
 		}

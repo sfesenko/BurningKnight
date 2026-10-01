@@ -19,13 +19,13 @@ namespace BurningKnight.assets.lighting {
 		public static float Flash;
 		public const byte AuraAlpha = 100;
 		
-		private static TextureRegion region;
+		private static TextureRegion? region;
 
 		private static List<Light> lights = new List<Light>();
-		private static RenderTarget2D surface;
+		private static RenderTarget2D? surface;
 
-		public static BlendState Blend;
-		private static BlendState messBlend;
+		public static BlendState Blend = null!;
+		private static BlendState messBlend = null!;
 		
 		public static void Init() {
 			var v = Context.Run.Depth == 0 ? 0.9f : 0.25f;
@@ -85,12 +85,12 @@ namespace BurningKnight.assets.lighting {
 
 			Graphics.Color.A = AuraAlpha;
 
-			foreach (var p in Context.Level.Area.Tagged[Tags.Projectile]) {
-				((BasicProjectileGraphicsComponent) p.GraphicsComponent).RenderLight();
+			foreach (var p in Context.Level!.Area!.Tagged[Tags.Projectile]) {
+				((BasicProjectileGraphicsComponent) p.GraphicsComponent!).RenderLight();
 			}
 			
-			foreach (var p in Context.Level.Area.Tagged[Tags.Laser]) {
-				((LaserGraphicsComponent) p.GraphicsComponent).RenderTopLight();
+			foreach (var p in Context.Level!.Area!.Tagged[Tags.Laser]) {
+				((LaserGraphicsComponent) p.GraphicsComponent!).RenderTopLight();
 			}
 			
 			state.End();
@@ -100,7 +100,7 @@ namespace BurningKnight.assets.lighting {
 				state.ClipRasterizerState, null, Context.Camera?.Matrix);
 			
 			
-			Graphics.Render(surface, Context.Camera.TopLeft - new Vector2(Context.Camera.Position.X % 1, Context.Camera.Position.Y % 1));
+			Graphics.Render(surface!, Context.Camera!.TopLeft - new Vector2(Context.Camera!.Position.X % 1, Context.Camera!.Position.Y % 1));
 			
 			state.End();
 			Graphics.Color.A = 255;
@@ -113,7 +113,7 @@ namespace BurningKnight.assets.lighting {
 
 			foreach (var light in lights) {
 				Graphics.Color = light.Color;
-				Graphics.Render(region, light.GetPosition(), 0, region.Center, light.Scale * RadiusMod);	
+				Graphics.Render(region!, light.GetPosition(), 0, region!.Center, light.Scale * RadiusMod);	
 			}
 
 			Graphics.Color = ColorUtils.WhiteColor;
@@ -124,7 +124,7 @@ namespace BurningKnight.assets.lighting {
 			Engine.GraphicsDevice.SetRenderTarget(state.GameTarget);
 			
 			var c = Context.Camera;
-			var z = c.Zoom;
+			var z = c!.Zoom;
 			var n = Math.Abs(z - 1) > 0.01f;
 				
 			if (n) {
@@ -137,8 +137,8 @@ namespace BurningKnight.assets.lighting {
 			
 			Graphics.Color = new Color(color.X, color.Y, color.Z, alpha);
 
-			Graphics.Render(surface, Context.Camera.TopLeft - new Vector2(Context.Camera.Position.X % 1, 
-			Context.Camera.Position.Y % 1));
+			Graphics.Render(surface!, Context.Camera!.TopLeft - new Vector2(Context.Camera!.Position.X % 1, 
+			Context.Camera!.Position.Y % 1));
 			Graphics.Color = Color.White;
 			Graphics.Batch.End();
 			

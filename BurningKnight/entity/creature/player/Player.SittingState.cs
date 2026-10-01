@@ -53,7 +53,7 @@ namespace BurningKnight.entity.creature.player {
 		public class SittingState : EntityState {
 			public override void Init() {
 				base.Init();
-				Self.GetComponent<PlayerGraphicsComponent>().Animate();
+				Self.GetComponent<PlayerGraphicsComponent>()!.Animate();
 			}
 			
 			public override void Destroy() {
@@ -61,7 +61,7 @@ namespace BurningKnight.entity.creature.player {
 				
 				var pr = Engine.Instance.StateRenderer;
 				pr.EnableClip = false;
-				Self.GetComponent<PlayerGraphicsComponent>().Animate();
+				Self.GetComponent<PlayerGraphicsComponent>()!.Animate();
 			}
 			
 			public override void Update(float dt) {

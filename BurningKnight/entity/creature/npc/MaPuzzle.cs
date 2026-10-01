@@ -12,7 +12,7 @@ namespace BurningKnight.entity.creature.npc {
 			AddComponent(new AnimationComponent("mapuzzle"));
 			AddComponent(new CloseDialogComponent("mapuzzle_0"));
 			
-			GetComponent<DialogComponent>().Dialog.Voice = 17;
+			GetComponent<DialogComponent>()!.Dialog!.Voice = 17;
 		}
 	}
 }

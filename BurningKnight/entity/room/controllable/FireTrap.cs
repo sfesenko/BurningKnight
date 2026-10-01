@@ -14,7 +14,7 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.room.controllable {
 	public class FireTrap : RoomControllable {
-		private static TextureRegion tile;
+		private static TextureRegion? tile;
 		private float timer;
 		private bool flaming;
 		private float lastParticle;
@@ -50,9 +50,9 @@ namespace BurningKnight.entity.room.controllable {
 				ResetTimer();
 				return;
 			} else {
-				var room = GetComponent<RoomComponent>().Room;
+				var room = GetComponent<RoomComponent>()!.Room;
 
-				if (room.Tagged[Tags.Player].Count == 0 || room.Tagged[Tags.MustBeKilled].Count == 0) {
+				if (room!.Tagged[Tags.Player].Count == 0 || room.Tagged[Tags.MustBeKilled].Count == 0) {
 					ResetTimer();
 					return;
 				}
@@ -67,7 +67,7 @@ namespace BurningKnight.entity.room.controllable {
 					if (lastParticle <= 0) {
 						lastParticle = 0.1f;
 						
-						Area.Add(new FireParticle {
+						Area!.Add(new FireParticle {
 							Position = new Vector2(CenterX, CenterY),
 							XChange = 0.1f,
 							Scale = 0.3f,
@@ -82,7 +82,7 @@ namespace BurningKnight.entity.room.controllable {
 					if (lastParticle <= 0) {
 						lastParticle = 0.15f;
 						
-						Area.Add(new FireParticle {
+						Area!.Add(new FireParticle {
 							Position = new Vector2(CenterX, CenterY),
 							XChange = 0.1f,
 							Scale = 0.3f,
@@ -106,7 +106,7 @@ namespace BurningKnight.entity.room.controllable {
 		}
 
 		public override void Render() {
-			Graphics.Render(tile, Position);
+			Graphics.Render(tile!, Position);
 		}
 		
 		protected virtual bool ShouldHurt(Entity e) {
@@ -115,7 +115,7 @@ namespace BurningKnight.entity.room.controllable {
 		
 		protected void Hurt() {
 			foreach (var c in Colliding) {
-				c.GetComponent<HealthComponent>().ModifyHealth(-1, this);
+				c.GetComponent<HealthComponent>()!.ModifyHealth(-1, this);
 			}
 		}
 

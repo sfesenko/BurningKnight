@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.ui {
 	public class SaveIndicator : Entity {
-		private TextureRegion region;
+		private TextureRegion region = null!;
 		private bool saving;
 		private float timer;
 		
@@ -18,9 +18,9 @@ namespace BurningKnight.ui {
 			
 			AlwaysVisible = true;
 			AlwaysActive = true;
-			region = CommonAse.Ui.GetSlice("save");
+			region = CommonAse.Ui.GetSlice("save")!;
 
-			X = Display.UiWidth - region.Width * 2;
+			X = Display.UiWidth - region!.Width * 2;
 			Y = Display.UiHeight - region.Height * 2;
 		}
 		

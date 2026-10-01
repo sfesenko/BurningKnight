@@ -113,11 +113,11 @@ namespace BurningKnight.entity.creature.player {
 							if (Context.Run.Depth > 0 && GlobalSave.IsFalse("control_bomb")) {
 								var dialog = GetComponent<DialogComponent>();
 
-								dialog.Dialog.Str.ClearIcons();
-								dialog.Dialog.Str.AddIcon(CommonAse.Ui.GetSlice(Controls.FindSlice(Controls.Bomb, false)));
+								dialog!.Dialog!.Str!.ClearIcons();
+								dialog.Dialog.Str.AddIcon(CommonAse.Ui.GetSlice(Controls.FindSlice(Controls.Bomb, false)!)!);
 
 								if (GamepadComponent.Current != null && GamepadComponent.Current.Attached) {
-									dialog.Dialog.Str.AddIcon(CommonAse.Ui.GetSlice(Controls.FindSlice(Controls.Bomb, true)));
+									dialog.Dialog.Str.AddIcon(CommonAse.Ui.GetSlice(Controls.FindSlice(Controls.Bomb, true)!)!);
 								}
 
 								dialog.StartAndClose("control_0", 3);
@@ -190,7 +190,7 @@ namespace BurningKnight.entity.creature.player {
 					ev.Item.RemoveDroppedComponents();
 					
 					for (var i = 0; i < 4; i++) {
-						Entity.Area.Add(new ParticleEntity(Particles.Dust()) {
+						Entity.Area!.Add(new ParticleEntity(Particles.Dust()) {
 							Position = ev.Item.Center, 
 							Particle = {
 								Scale = Rnd.Float(0.4f, 0.8f)
@@ -199,7 +199,7 @@ namespace BurningKnight.entity.creature.player {
 					}
 
 					Engine.Instance.State.Ui.Add(new ConsumableParticle(ev.Item.Animation != null
-						? ev.Item.GetComponent<AnimatedItemGraphicsComponent>().Animation.GetFirstCurrent()
+						? ev.Item.GetComponent<AnimatedItemGraphicsComponent>()!.Animation.GetFirstCurrent()!
 						: ev.Item.Region, p, false, () => {
 							ev.Item.Use(p);
 							ev.Item.Done = true;
@@ -215,18 +215,18 @@ namespace BurningKnight.entity.creature.player {
 		public override void Update(float dt) {
 			base.Update(dt);
 
-			if (Context.Run.Depth > 0 && Input.WasPressed(Controls.Bomb, GetComponent<InputComponent>())) {
+			if (Context.Run.Depth > 0 && Input.WasPressed(Controls.Bomb, GetComponent<InputComponent>()!)) {
 				SpawnBomb();
 			}
 		}
 
 		public void SpawnBomb() {
-			if (GetComponent<PlayerInputComponent>().InDialog) {
+			if (GetComponent<PlayerInputComponent>()!.InDialog) {
 				return;
 			}
 
-			if (GetComponent<StateComponent>().StateInstance is Player.SleepingState) {
-				GetComponent<StateComponent>().Become<Player.IdleState>();
+			if (GetComponent<StateComponent>()!.StateInstance is Player.SleepingState) {
+				GetComponent<StateComponent>()!.Become<Player.IdleState>();
 			}
 
 			var spawn = false;
@@ -238,7 +238,7 @@ namespace BurningKnight.entity.creature.player {
 			} else {
 				var h = GetComponent<HeartsComponent>();
 
-				if (h.Bombs > 0) {
+				if (h!.Bombs > 0) {
 					h.ModifyBombs(-1, Entity, true);
 					spawn = true;
 				}
@@ -246,7 +246,7 @@ namespace BurningKnight.entity.creature.player {
 
 			if (spawn) {
 				var bomb = new Bomb(Entity);
-				Entity.Area.Add(bomb);
+				Entity.Area!.Add(bomb);
 				bomb.Center = Entity.Center;
 				bomb.MoveToMouse();
 			} else {
@@ -254,8 +254,8 @@ namespace BurningKnight.entity.creature.player {
 			}
 		}
 
-		public override void Set(Item item, bool animate = true) {
-			item.Done = true;
+		public override void Set(Item? item, bool animate = true) {
+			item!.Done = true;
 		}
 
 		protected override bool ShouldReplace(Item item) {

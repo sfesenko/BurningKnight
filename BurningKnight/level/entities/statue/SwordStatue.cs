@@ -24,12 +24,12 @@ namespace BurningKnight.level.entities.statue {
 		protected override bool Interact(Entity e) {
 			var h = e.GetComponent<HealthComponent>();
 
-			if (h.Health > 1) {
+			if (h!.Health > 1) {
 				TextParticle.Add(this, "HP", (int) h.Health - 1, true, true);
 			}
 			
 			h.SetHealth(1, this, type: DamageType.Custom);
-			e.GetComponent<InventoryComponent>().Pickup(Items.CreateAndAdd("bk:broken_heart", Area, true));
+			e.GetComponent<InventoryComponent>()!.Pickup(Items.CreateAndAdd("bk:broken_heart", Area!, true)!);
 			
 			Context.Run.AddScourge(true);
 			Break();

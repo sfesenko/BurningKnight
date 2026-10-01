@@ -15,7 +15,7 @@ using MonoGame.Extended;
 
 namespace BurningKnight.level.entities.building {
 	public partial class Thing : Prop, CollisionFilterEntity {
-		private TextureRegion shadow;
+		private TextureRegion shadow = null!;
 		// A shadow-rendering mode nothing sets; the branches below are kept for it.
 #pragma warning disable CS0649
 		private bool separateShadow;
@@ -57,7 +57,7 @@ namespace BurningKnight.level.entities.building {
 			if (!HasComponent<SliceComponent>()) {
 				AddComponent(new SliceComponent(file, sprite));
 			} else {
-				GetComponent<SliceComponent>().Sprite = sp;
+				GetComponent<SliceComponent>()!.Sprite = sp!;
 			}
 
 			if (sp != null) {
@@ -66,7 +66,7 @@ namespace BurningKnight.level.entities.building {
 			}
 			
 			if (separateShadow) {
-				shadow = f.GetSlice($"{sprite}_shadow");
+				shadow = f.GetSlice($"{sprite}_shadow")!;
 			}
 		}
 
@@ -108,8 +108,8 @@ namespace BurningKnight.level.entities.building {
 				collider.Height = stream.ReadInt16();
 			}
 
-			file = stream.ReadString();
-			sprite = stream.ReadString();
+			file = stream.ReadString()!;
+			sprite = stream.ReadString()!;
 		}
 
 		public override void Save(FileWriter stream) {

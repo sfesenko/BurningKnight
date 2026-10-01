@@ -20,16 +20,16 @@ namespace BurningKnight.entity.item {
 	public class EmeraldStand : ItemStand {
 		public static List<string> AlreadyOnStand = new List<string>();
 
-		private TextureRegion emerald;
+		private TextureRegion emerald = null!;
 		
 		private int price;
 		private float priceWidth;
-		private string priceString;
+		private string priceString = null!;
 		private float priceX;
 		
 		public EmeraldStand() {
 			dontSaveItem = true;
-			emerald = CommonAse.Ui.GetSlice("emerald");
+			emerald = CommonAse.Ui.GetSlice("emerald")!;
 		}
 
 		public override void Init() {
@@ -60,7 +60,7 @@ namespace BurningKnight.entity.item {
 
 			if (GlobalSave.Emeralds < price) {
 				AnimationUtil.ActionFailed();
-				var npc = Area.FindClosest(Center, Tags.Npc, n => n is ShopNpc);
+				var npc = Area!.FindClosest(Center, Tags.Npc, n => n is ShopNpc);
 
 				if (npc != null && npc.TryGetComponent<DialogComponent>(out var c)) {
 					c.StartAndClose($"shopkeeper_{Rnd.Int(15, 18)}", 3);
@@ -86,12 +86,12 @@ namespace BurningKnight.entity.item {
 			Achievements.Unlock("bk:unlock");
 			
 			entity.HandleEvent(new ItemBoughtEvent {
-				Item = item,
+				Item = item!,
 				Who = entity,
 				Stand = this
 			});
 
-			foreach (var i in Area.Tagged[Tags.Item]) {
+			foreach (var i in Area!.Tagged[Tags.Item]) {
 				if (i is Item it) {
 					it.CheckMasked();
 				} else if (i is ItemStand its) {
@@ -114,7 +114,7 @@ namespace BurningKnight.entity.item {
 
 		protected bool ShowUnlocked;
 
-		private Item PickItem() {
+		private Item? PickItem() {
 			var items = new List<ItemData>();
 
 			foreach (var i in Items.Datas.Values) {
@@ -134,7 +134,7 @@ namespace BurningKnight.entity.item {
 			var id = items[0].Id;
 			AlreadyOnStand.Add(id);
 
-			return Items.CreateAndAdd(id, Area);
+			return Items.CreateAndAdd(id, Area!);
 		}
 
 		protected override bool CanInteract(Entity e) {
@@ -150,7 +150,7 @@ namespace BurningKnight.entity.item {
 			}
 		}
 
-		public override void SetItem(Item i, Entity entity, bool remove = true) {
+		public override void SetItem(Item? i, Entity? entity, bool remove = true) {
 			base.SetItem(i, entity, remove);
 			RecalculatePrice();
 		}
@@ -164,9 +164,9 @@ namespace BurningKnight.entity.item {
 				price = 0;
 			} else {
 				price = Item.Data.UnlockPrice;
-				var player = LocalPlayer.Locate(Area);
+				var player = LocalPlayer.Locate(Area!);
 
-				if (player != null && player.GetComponent<HatComponent>().Item?.Id == "bk:dunce_hat") {
+				if (player != null && player.GetComponent<HatComponent>()!.Item?.Id == "bk:dunce_hat") {
 					price++;
 				}
 				

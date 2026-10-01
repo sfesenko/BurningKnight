@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.assets.particle.custom {
 	public class FireEmitter : Entity {
-		private TextureRegion region;
+		private TextureRegion region = null!;
 		private float t;
 		
 		public float Scale = 1;
@@ -14,8 +14,8 @@ namespace BurningKnight.assets.particle.custom {
 		public override void Init() {
 			base.Init();
 
-			region = CommonAse.Particles.GetSlice("fire_emitter");
-			Width = region.Width;
+			region = CommonAse.Particles.GetSlice("fire_emitter")!;
+			Width = region!.Width;
 			Height = region.Height;
 			t = Rnd.Float(6);
 		}

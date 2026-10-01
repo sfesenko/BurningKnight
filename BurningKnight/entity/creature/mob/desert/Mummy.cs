@@ -19,7 +19,7 @@ namespace BurningKnight.entity.creature.mob.desert {
 			AddComponent(body);
 
 			body.KnockbackModifier = 3;
-			body.Body.LinearDamping = 6;
+			body!.Body!.LinearDamping = 6;
 			
 			AddComponent(new SensorBodyComponent(3, 3, 7, 13));
 			
@@ -39,7 +39,7 @@ namespace BurningKnight.entity.creature.mob.desert {
 			public override void Update(float dt) {
 				base.Update(dt);
 
-				if (Self.GetComponent<StateComponent>().StateInstance is SummonedState) {
+				if (Self.GetComponent<StateComponent>()!.StateInstance is SummonedState) {
 					return;
 				}
 				
@@ -70,13 +70,13 @@ namespace BurningKnight.entity.creature.mob.desert {
 				velocity.X = (float) Math.Cos(angle) * force;
 				velocity.Y = (float) Math.Sin(angle) * force;
 
-				Self.GetComponent<RectBodyComponent>().Velocity = velocity;
-				Self.GetComponent<MobAnimationComponent>().Animation.Tag = "run";
+				Self.GetComponent<RectBodyComponent>()!.Velocity = velocity;
+				Self!.GetComponent<MobAnimationComponent>()!.Animation!.Tag = "run";
 			}
 
 			public override void Destroy() {
 				base.Destroy();
-				Self.GetComponent<RectBodyComponent>().Velocity = Vector2.Zero;
+				Self.GetComponent<RectBodyComponent>()!.Velocity = Vector2.Zero;
 			}
 
 			public override void Update(float dt) {
@@ -93,7 +93,7 @@ namespace BurningKnight.entity.creature.mob.desert {
 				}
 
 				var v = velocity * Math.Min(1, timer - T * 0.4f);
-				Self.GetComponent<RectBodyComponent>().Velocity = v;
+				Self.GetComponent<RectBodyComponent>()!.Velocity = v;
 			}
 		}
 
@@ -103,7 +103,7 @@ namespace BurningKnight.entity.creature.mob.desert {
 				
 				Self.TouchDamage = 0;
 				var a = Self.GetComponent<MobAnimationComponent>();
-				a.Scale.X = 3f;
+				a!.Scale.X = 3f;
 				a.Scale.Y = 0f;
 
 				Tween.To(1, a.Scale.X, x => a.Scale.X = x, 0.5f, Ease.BackOut);
@@ -140,7 +140,7 @@ namespace BurningKnight.entity.creature.mob.desert {
 
 				var s = dt * 300;
 
-				Self.GetComponent<RectBodyComponent>().Velocity += new Vector2(dx / d * s, dy / d * s);
+				Self.GetComponent<RectBodyComponent>()!.Velocity += new Vector2(dx / d * s, dy / d * s);
 				Self.PushFromOtherEnemies(dt);
 			}
 		}

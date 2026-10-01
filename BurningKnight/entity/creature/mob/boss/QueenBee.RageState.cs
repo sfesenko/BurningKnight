@@ -22,7 +22,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 			
 			public override void Init() {
 				base.Init();
-				GameContext.Current.Camera.Shake(10);
+				GameContext.Current!.Camera!.Shake(10);
 			}
 
 			public override void Update(float dt) {
@@ -48,8 +48,8 @@ namespace BurningKnight.entity.creature.mob.boss {
 
 					builder.Shoot(a, 30f).Build();
 
-					GameContext.Current.Camera.Shake(2);
-					Self.GetComponent<AudioEmitterComponent>().EmitRandomized("mob_bee_swirly_shot");
+					GameContext.Current!.Camera!.Shake(2);
+					Self.GetComponent<AudioEmitterComponent>()!.EmitRandomized("mob_bee_swirly_shot");
 				}
 			}
 		}

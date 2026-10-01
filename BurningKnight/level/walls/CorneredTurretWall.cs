@@ -7,24 +7,25 @@ using Microsoft.Xna.Framework;
 namespace BurningKnight.level.walls {
 	public class CorneredTurretWall : WallPainter {
 		public override void Paint(Level level, RoomDef room, Rect inside) {
+			var area = level.Area!;
 			base.Paint(level, room, inside);
 
-			level.Area.Add(new Turret {
+			area.Add(new Turret {
 				Position = new Vector2(room.Left + 2, room.Top + 2) * 16,
 				StartingAngle = 1
 			});
 			
-			level.Area.Add(new Turret {
+			area.Add(new Turret {
 				Position = new Vector2(room.Right - 2, room.Top + 2) * 16,
 				StartingAngle = 3
 			});
 			
-			level.Area.Add(new Turret {
+			area.Add(new Turret {
 				Position = new Vector2(room.Right - 2, room.Bottom - 2) * 16,
 				StartingAngle = 5
 			});
 
-			level.Area.Add(new Turret {
+			area.Add(new Turret {
 				Position = new Vector2(room.Left + 2, room.Bottom - 2) * 16,
 				StartingAngle = 7
 			});

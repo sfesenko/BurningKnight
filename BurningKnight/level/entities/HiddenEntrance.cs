@@ -14,10 +14,10 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.level.entities {
 	public partial class HiddenEntrance : SaveableEntity, PlaceableEntity {
-		internal string id;
+		internal string? id;
 		
 		private bool Interact(Entity entity) {
-			foreach (var e in Area.Tagged[Tags.HiddenEntrance]) {
+			foreach (var e in Area!.Tagged[Tags.HiddenEntrance]) {
 				if (e is HiddenExit h && h.id == id) {
 					var state = (InGameState) Engine.Instance.State;
 					Audio.PlaySfx("player_descending");			
@@ -28,7 +28,7 @@ namespace BurningKnight.level.entities {
 						}
 
 						state.ResetFollowing();
-						Context.Camera.Jump();
+						Context.Camera!.Jump();
 						InGameState.TransitionToOpen();
 					});
 					

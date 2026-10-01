@@ -57,9 +57,9 @@ namespace BurningKnight.entity.item {
 					var shader = Shaders.Entity;
 					Shaders.Begin(shader);
 
-					shader.Parameters["flash"].SetValue(cursed ? 1f : component.OutlineAlpha);
+					shader.Parameters["flash"].SetValue(cursed ? 1f : component!.OutlineAlpha);
 					shader.Parameters["flashReplace"].SetValue(1f);
-					shader.Parameters["flashColor"].SetValue(!cursed ? ColorUtils.White : ColorUtils.Mix(ScourgedColor, ColorUtils.White, component.OutlineAlpha));
+					shader.Parameters["flashColor"].SetValue(!cursed ? ColorUtils.White : ColorUtils.Mix(ScourgedColor, ColorUtils.White, component!.OutlineAlpha));
 
 					foreach (var d in MathUtils.Directions) {
 						Graphics.Render(s, position + d, angle, origin);

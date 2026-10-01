@@ -34,23 +34,23 @@ namespace BurningKnight.entity.creature.player {
 		private Vector2 scale = Vector2.One;
 		private Animation head;
 
-		private TextureRegion wing;
+		private TextureRegion wing = null!;
 		public bool Hidden;
 		
 		public PlayerGraphicsComponent() : base("gobbo", "body") {
 			CustomFlip = true;
 			ShadowOffset = 8;
 
-			head = Animations.Get("gobbo").CreateAnimation("head");
-			wing = CommonAse.Items.GetSlice("wing");
+			head = Animations.Get("gobbo")!.CreateAnimation("head");
+			wing = CommonAse.Items.GetSlice("wing")!;
 		}
 
 		public override void Update(float dt) {
 			base.Update(dt);
 			head.Update(dt);
 
-			if (!(GetComponent<StateComponent>().StateInstance is Player.SleepingState)) {
-				Flipped = Entity.CenterX > GetComponent<CursorComponent>().Cursor.GamePosition.X;
+			if (!(GetComponent<StateComponent>()!.StateInstance is Player.SleepingState)) {
+				Flipped = Entity.CenterX > GetComponent<CursorComponent>()!.Cursor.GamePosition.X;
 			}
 		}
 
@@ -61,15 +61,15 @@ namespace BurningKnight.entity.creature.player {
 				return;
 			}
 
-			var region = Animation.GetCurrentTexture();
+			var region = Animation!.GetCurrentTexture();
 			var origin = new Vector2(region.Source.Width / 2f, FlippedVerticaly ? 0 : region.Source.Height);
 			var s = scale * Scale;
 
-			var v = GetComponent<RectBodyComponent>().Acceleration;
+			var v = GetComponent<RectBodyComponent>()!.Acceleration;
 			var target = (v.Length() > 0.1f ? 1f : 0f) * 0.25f * (Flipped ? -1 : 1);
 			angle += (target - angle) * Engine.Delta * 3f;
 
-			var state = GetComponent<StateComponent>().StateInstance;
+			var state = GetComponent<StateComponent>()!.StateInstance;
 			var a = 0; // (state is Player.RollState || state is Player.DuckState || state is Player.PostRollState || state is Player.SittingState) ? 0 : angle;
 
 			if (shadow) {
@@ -81,33 +81,33 @@ namespace BurningKnight.entity.creature.player {
 			}
 			
 			if (!shadow) {
-				pos.Y -= GetComponent<ZComponent>().Z;
+				pos.Y -= GetComponent<ZComponent>()!.Z;
 			}
 
 			var p = pos + origin;
 			p.Floor();
 			Graphics.Render(region, p, a, origin, s, Graphics.ParseEffect(Flipped, FlippedVerticaly));
-			var st = GetComponent<StateComponent>().StateInstance;
+			var st = GetComponent<StateComponent>()!.StateInstance;
 			
 			if (st is Player.RollState or Player.SleepingState) {
 				return;
 			}
 
 			var h = GetComponent<HatComponent>();
-			var hat = h.Item;
+			var hat = h!.Item;
 
 			if (hat != null && !h.DoNotRender) {
-				var duck = Entity.GetComponent<StateComponent>().StateInstance is Player.DuckState 
+				var duck = Entity.GetComponent<StateComponent>()!.StateInstance is Player.DuckState 
 					? 'b' : 'a';
 
 				var r = $"{hat.Id}_{duck}";
 				var region1 = CommonAse.Items.GetSlice(r);
-				origin = new Vector2(region1.Width / 2, region1.Height + 4);
+				origin = new Vector2(region1!.Width / 2, region1.Height + 4);
 
 				var m = shadow ? -4 : 4;
 
 				var pp = new Vector2(Entity.CenterX, m +
-					Entity.Bottom - (shadow ? 0 : GetComponent<ZComponent>().Z) + (shadow ? -1 : 1) *
+					Entity.Bottom - (shadow ? 0 : GetComponent<ZComponent>()!.Z) + (shadow ? -1 : 1) *
 					(offsets[Math.Min(offsets.Length - 1, Animation.Frame + Animation.StartFrame)] - 15));
 
 				pp.Floor();
@@ -169,8 +169,8 @@ namespace BurningKnight.entity.creature.player {
 				return;
 			}
 
-			var o = (shadow ? -1 : 1) * (offsets[Math.Min(offsets.Length - 1, Animation.Frame + Animation.StartFrame)] - 11);
-			var s = GetComponent<StateComponent>().StateInstance;
+			var o = (shadow ? -1 : 1) * (offsets[Math.Min(offsets.Length - 1, Animation!.Frame + Animation.StartFrame)] - 11);
+			var s = GetComponent<StateComponent>()!.StateInstance;
 			var w = !(s is Player.RollState || s is Player.SleepingState);
 			var z = GetComponent<ZComponent>();
 
@@ -179,13 +179,13 @@ namespace BurningKnight.entity.creature.player {
 				var a = (float) (Math.Sin(Engine.Time * 5f) * 0.5f) * (shadow ? -1 : 1);
 
 				if (!shadow) {
-					z.Z = -a * 3 + 4;
+					z!.Z = -a * 3 + 4;
 				}
 
 				a -= (float) Math.PI / 4 * (shadow ? -1 : 1);
 				var wy = shadow ? Entity.Height : 0;
 
-				wy += GetComponent<ZComponent>().Z * (shadow ? 1 : -1);
+				wy += GetComponent<ZComponent>()!.Z * (shadow ? 1 : -1);
 
 				Graphics.Render(wing, Entity.Center + new Vector2(-1, wy), a, new Vector2(8),
 					shadow ? MathUtils.InvertY : Vector2.One);
@@ -194,10 +194,10 @@ namespace BurningKnight.entity.creature.player {
 					shadow ? MathUtils.InvertXY : MathUtils.InvertX);
 			}
 
-			var g = shadow ? 0 : (int) z.Z;
+			var g = shadow ? 0 : (int) z!.Z;
 
 			if (w) {
-				GetComponent<WeaponComponent>().Render(shadow, o - g);
+				GetComponent<WeaponComponent>()!.Render(shadow, o - g);
 			}
 
 			if (!shadow && InGameState.Multiplayer) {
@@ -207,7 +207,7 @@ namespace BurningKnight.entity.creature.player {
 
 				shader.Parameters["flash"].SetValue(1f);
 				shader.Parameters["flashReplace"].SetValue(1f);
-				shader.Parameters["flashColor"].SetValue(Player.VectorTints[Entity.GetComponent<InputComponent>().Index]);
+				shader.Parameters["flashColor"].SetValue(Player.VectorTints[Entity.GetComponent<InputComponent>()!.Index]);
 
 				foreach (var d in MathUtils.Directions) {
 					CallRender(pos + d, false);
@@ -227,13 +227,13 @@ namespace BurningKnight.entity.creature.player {
 			if (!shadow) {
 				var aim = GetComponent<AimComponent>();
 				
-				if (aim.ShowLaserLine) {
+				if (aim!.ShowLaserLine) {
 					var from = aim.Center;
 					var to = aim.RealAim;
 					var min = 1f;
 					var closest = MathUtils.CreateVector(MathUtils.Angle(to.X - from.X, to.Y - from.Y), Display.UiWidth) + from;
 
-					Physics.World.RayCast((fixture, point, normal, fraction) => {
+					Physics.World!.RayCast((fixture, point, normal, fraction) => {
 						if (min > fraction && fixture.Body.UserData is BodyComponent b && RayShouldCollide(b.Entity)) {
 							min = fraction;
 							closest = point;
@@ -248,7 +248,7 @@ namespace BurningKnight.entity.creature.player {
 			}
 
 			if (w) {
-				GetComponent<ActiveWeaponComponent>().Render(shadow, o - g);
+				GetComponent<ActiveWeaponComponent>()!.Render(shadow, o - g);
 			}
 		}
 	}

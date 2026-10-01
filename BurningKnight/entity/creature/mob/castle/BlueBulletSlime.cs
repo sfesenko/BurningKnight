@@ -25,7 +25,7 @@ namespace BurningKnight.entity.creature.mob.castle {
 
 		protected override void DoSpit() {
 			var am = 8;
-			GetComponent<AudioEmitterComponent>().EmitRandomized("mob_fire");
+			GetComponent<AudioEmitterComponent>()!.EmitRandomized("mob_fire");
 
 			var builder = new ProjectileBuilder(this, "small") {
 				Color = ProjectileColor.Cyan,
@@ -36,16 +36,16 @@ namespace BurningKnight.entity.creature.mob.castle {
 				var a = Math.PI * 2 * (((float) i) / am);
 				var projectile = builder.Shoot(a + Rnd.Float(-0.1f, 0.1f), 5f).Build();
 					
-				projectile.Center = BottomCenter;
+				projectile!.Center = BottomCenter;
 			}
 
 			Timer.Add(() => {
-				if (GetComponent<HealthComponent>().Dead) {
+				if (GetComponent<HealthComponent>()!.Dead) {
 					return;
 				}
 
-				GetComponent<AudioEmitterComponent>().EmitRandomized("mob_fire");
-				GetComponent<ZAnimationComponent>().Animate();
+				GetComponent<AudioEmitterComponent>()!.EmitRandomized("mob_fire");
+				GetComponent<ZAnimationComponent>()!.Animate();
 
 				var b = new ProjectileBuilder(this, "small") {
 					Color = ProjectileColor.Blue,
@@ -59,7 +59,7 @@ namespace BurningKnight.entity.creature.mob.castle {
 					var a = Math.PI * 2 * (((float) i) / am + 0.5f);
 					var projectile = b.Shoot(a + Rnd.Float(-0.1f, 0.1f), 8f).Build();
 					
-					projectile.Center = BottomCenter;
+					projectile!.Center = BottomCenter;
 					projectile.Color = ProjectileColor.Blue;
 				}
 			}, 1f);

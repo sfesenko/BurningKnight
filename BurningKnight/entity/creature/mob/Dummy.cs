@@ -15,7 +15,7 @@ namespace BurningKnight.entity.creature.mob {
 			
 			AddComponent(new RectBodyComponent(4, 2, 8, 14, BodyType.Static));
 			AddComponent(new DialogComponent());
-			GetComponent<DialogComponent>().Dialog.Voice = 2;
+			GetComponent<DialogComponent>()!.Dialog!.Voice = 2;
 			AddAnimation("dummy");
 			
 			SetMaxHp(1);
@@ -25,7 +25,7 @@ namespace BurningKnight.entity.creature.mob {
 
 			var health = GetComponent<HealthComponent>();
 
-			health.InvincibilityTimerMax = 0;
+			health!.InvincibilityTimerMax = 0;
 			health.RenderInvt = false;
 
 			TouchDamage = 0;
@@ -34,13 +34,13 @@ namespace BurningKnight.entity.creature.mob {
 		public override bool HandleEvent(Event e) {
 			if (e is HealthModifiedEvent ev && ev.Amount < 0) {
 				Become<HurtState>();
-				GraphicsComponent.Flipped = ev.From.CenterX > CenterX;
-				GetComponent<AudioEmitterComponent>().EmitRandomized(GetHurtSfx());
+				GraphicsComponent!.Flipped = ev!.From!.CenterX > CenterX;
+				GetComponent<AudioEmitterComponent>()!.EmitRandomized(GetHurtSfx());
 
 				if (Context.Run.Depth < 1 && Rnd.Chance(30)) {
 					var dialog = GetComponent<DialogComponent>();
 
-					if (dialog.Current == null) {
+					if (dialog!.Current == null) {
 						dialog.StartAndClose($"npc_hurt_{Rnd.Int(3)}", 2);
 					}
 				}
@@ -59,19 +59,19 @@ namespace BurningKnight.entity.creature.mob {
 		public class HurtState : EntityState {
 			public override void Init() {
 				base.Init();
-				Self.GetComponent<MobAnimationComponent>().SetAutoStop(true);
+				Self.GetComponent<MobAnimationComponent>()!.SetAutoStop(true);
 			}
 
 			public override void Destroy() {
 				base.Destroy();
-				Self.GetComponent<MobAnimationComponent>().SetAutoStop(false);
+				Self.GetComponent<MobAnimationComponent>()!.SetAutoStop(false);
 			}
 
 			public override void Update(float dt) {
 				base.Update(dt);
 				
-				if (Self.GetComponent<MobAnimationComponent>().Animation.Paused) {
-					Self.GetComponent<StateComponent>().Become<IdleState>(true);
+				if (Self!.GetComponent<MobAnimationComponent>()!.Animation!.Paused) {
+					Self.GetComponent<StateComponent>()!.Become<IdleState>(true);
 				}
 			}
 		}

@@ -30,7 +30,7 @@ namespace BurningKnight.ui {
 			Engine.Instance.Window.TextInput -= HandleInput;
 		}
 		
-		public void HandleInput(object e, TextInputEventArgs args) {
+		public void HandleInput(object? e, TextInputEventArgs args) {
 			if (Engine.Instance.State.Paused) {
 				return;
 			}
@@ -51,10 +51,10 @@ namespace BurningKnight.ui {
 							input = "##[cl red]NANI??!?!?";
 						}
 						
-						var player = LocalPlayer.Locate(Context.Area);
+						var player = LocalPlayer.Locate(Context.Area!);
 
 						if (player != null) {
-							player.GetComponent<DialogComponent>().StartAndClose(input, 5);
+							player.GetComponent<DialogComponent>()!.StartAndClose(input, 5);
 							input = "";
 						}
 					}

@@ -14,7 +14,7 @@ namespace BurningKnight.entity {
 			AddComponent(new ScalableSliceComponent("particles", $"lego_{Rnd.Int(3)}"));
 			
 			var s = GetComponent<ScalableSliceComponent>();
-			var region = s.Sprite;
+			var region = s!.Sprite;
 
 			Width = region.Width;
 			Height = region.Height;
@@ -29,11 +29,11 @@ namespace BurningKnight.entity {
 		public override bool HandleEvent(Event e)
 		{
 			if (e is CollisionStartedEvent { Entity: Creature c } && !c.IsFriendly() &&
-			    c.GetComponent<HealthComponent>().ModifyHealth(-10, this, DamageType.Custom))
+			    c.GetComponent<HealthComponent>()!.ModifyHealth(-10, this, DamageType.Custom))
 			{
 				AnimationUtil.Ash(Center);
 				Done = true;
-				Context.Camera.Shake(5);
+				Context.Camera!.Shake(5);
 			}
 
 			return base.HandleEvent(e);

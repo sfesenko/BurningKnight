@@ -22,15 +22,15 @@ namespace BurningKnight.level.entities.chest {
 			Instance.Add(typeof(GlassChest), 0.5f);
 		}
 
-		public static Entity PlaceRandom(Vector2 where, Area area) {
+		public static Entity? PlaceRandom(Vector2 where, Area area) {
 			try {
-				var chest = (Chest) Activator.CreateInstance(Instance.Generate());
+				var chest = (Chest) Activator.CreateInstance(Instance.Generate()!)!;
 				
 				
 				if (!(chest is GlassChest || chest is ProtoChest) && Rnd.Chance(LevelSave.MimicChance)) {
 					var mimic = new Mimic {
-						Kind = chest.GetSprite(),
-						Pool = chest.GetPool()
+						Kind = chest!.GetSprite(),
+						Pool = chest.GetPool()!
 					};
 
 					area.Add(mimic);
@@ -40,7 +40,7 @@ namespace BurningKnight.level.entities.chest {
 				}
 				
 				area.Add(chest);
-				chest.BottomCenter = where;
+				chest!.BottomCenter = where;
 
 				return chest;
 			} catch (Exception ex) {

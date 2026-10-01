@@ -28,7 +28,7 @@ namespace BurningKnight.entity.creature.mob.boss.rooms {
 					StartingAngle = 4
 				};
 
-				level.Area.Add(turret);
+				level.Area!.Add(turret);
 				turret.BottomCenter = new Vector2(x, y * 16 + 12);
 			}
 		}

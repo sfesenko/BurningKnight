@@ -59,9 +59,9 @@ namespace BurningKnight.entity.component {
 
 			var h = Entity.TryGetComponent<SupportableComponent>(out var sp);
 			
-			HasNoSupport = !h || sp.Supports.Count == 0;
+			HasNoSupport = !h || sp!.Supports.Count == 0;
 			
-			if (h && sp.Supports.Count > 0) {
+			if (h && sp!.Supports.Count > 0) {
 				LastSupportedPosition = Entity.Position;
 			}
 			
@@ -81,7 +81,7 @@ namespace BurningKnight.entity.component {
 		private void InspectTile(int index, int x, int y) {
 			var level = Context.Level;
 
-			if (!level.IsInside(x, y)) {
+			if (!level!.IsInside(x, y)) {
 				return;
 			}
 			
@@ -127,7 +127,7 @@ namespace BurningKnight.entity.component {
 			
 			for (int x = startX; x <= endX; x++) {
 				for (int y = startY; y <= endY; y++) {
-					var index = level.ToIndex(x, y);
+					var index = level!.ToIndex(x, y);
 
 					if (!level.IsInside(index)) {
 						continue;
@@ -155,7 +155,7 @@ namespace BurningKnight.entity.component {
 					
 					part.Position = Entity.Center;
 					part.Particle.Scale = Rnd.Float(0.4f, 0.8f);
-					Entity.Area.Add(part);
+					Entity.Area!.Add(part);
 				}
 			}
 		}

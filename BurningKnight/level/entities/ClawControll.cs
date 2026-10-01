@@ -18,10 +18,10 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.level.entities {
 	public class ClawControll : Prop {
-		private Claw claw;
-		private Entity interacting;
+		private Claw claw = null!;
+		private Entity? interacting;
 		public bool Payed;
-		private Maanex2 maanex;
+		private Maanex2? maanex;
 		
 		public override void AddComponents() {
 			base.AddComponents();
@@ -37,8 +37,8 @@ namespace BurningKnight.level.entities {
 			AddComponent(new RoomComponent());
 		}
 
-		private InteractFx ia;
-		private InteractFx ib;
+		private InteractFx ia = null!;
+		private InteractFx ib = null!;
 
 		private bool Interact(Entity e) {
 			if (!Payed) {
@@ -49,15 +49,15 @@ namespace BurningKnight.level.entities {
 			
 			e.RemoveComponent<PlayerInputComponent>();
 			interacting = e;
-			interacting.GetComponent<StateComponent>().Become<Player.SittingState>();
+			interacting.GetComponent<StateComponent>()!.Become<Player.SittingState>();
 			
 			var region = CommonAse.Ui.GetSlice("key_right");
 			Engine.Instance.State.Ui.Add(ia = new InteractFx(this, null, region, -5));
 			region = CommonAse.Ui.GetSlice("button_x");
 			Engine.Instance.State.Ui.Add(ib = new InteractFx(this, null, region, 5));
 			
-			Context.Camera.Targets.Clear();
-			Context.Camera.Follow(claw, 1f);
+			Context.Camera!.Targets.Clear();
+			Context.Camera!.Follow(claw, 1f);
 			Payed = false;
 			
 			return false;
@@ -70,9 +70,9 @@ namespace BurningKnight.level.entities {
 			base.Update(dt);
 
 			if (maanex == null) {
-				var room = GetComponent<RoomComponent>().Room;
+				var room = GetComponent<RoomComponent>()!.Room;
 
-				foreach (var n in room.Tagged[Tags.Npc]) {
+				foreach (var n in room!.Tagged[Tags.Npc]) {
 					if (n is Maanex2 m) {
 						maanex = m;
 						maanex.clawControll = this;
@@ -92,9 +92,9 @@ namespace BurningKnight.level.entities {
 
 				ia.Close();
 				ib.Close();
-				ia = ib = null;
+				ia = ib = null!;
 				
-				GetComponent<InteractableComponent>().CurrentlyInteracting?.GetComponent<InteractorComponent>()?.EndInteraction();
+				GetComponent<InteractableComponent>()!.CurrentlyInteracting?.GetComponent<InteractorComponent>()?.EndInteraction();
 
 				claw.Grab((won, mega) => {
 					interacting.AddComponent(new PlayerInputComponent());
@@ -102,9 +102,9 @@ namespace BurningKnight.level.entities {
 					grabbing = false;
 
 					if (won) {
-						maanex.GetComponent<DialogComponent>().StartAndClose(Locale.Get(mega ? "m2_0" : "m2_1"), 2);
+						maanex!.GetComponent<DialogComponent>()!.StartAndClose(Locale.Get(mega ? "m2_0" : "m2_1"), 2);
 					} else {
-						maanex.GetComponent<DialogComponent>().StartAndClose("F", 2);
+						maanex!.GetComponent<DialogComponent>()!.StartAndClose("F", 2);
 					}
 					
 					((InGameState) Engine.Instance.State).ResetFollowing();
@@ -113,14 +113,14 @@ namespace BurningKnight.level.entities {
 				return;
 			}
 
-			var body = claw.GetComponent<SensorBodyComponent>().Body;
+			var body = claw.GetComponent<SensorBodyComponent>()!.Body;
 			var speed = 420 * dt;
 
 			var wdown = wasDown;
 
 			if (Input.IsDown(Controls.Right, controller) || Input.IsDown(Controls.UiRight, controller)) {
 				wasDown = true;
-				body.LinearVelocity += new Vector2(speed, 0);
+				body!.LinearVelocity += new Vector2(speed, 0);
 			} else {
 				wasDown = false;
 			}
@@ -145,7 +145,7 @@ namespace BurningKnight.level.entities {
 				Position = new Vector2(((int) Math.Floor(CenterX / 16) - 0.5f) * 16, (int) (Math.Floor(CenterY / 16) - 3) * 16)
 			};
 
-			Area.Add(claw);
+			Area!.Add(claw);
 		}
 	}
 }

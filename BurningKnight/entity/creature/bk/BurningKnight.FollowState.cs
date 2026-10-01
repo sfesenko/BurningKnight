@@ -58,14 +58,14 @@ namespace BurningKnight.entity.creature.bk {
 					Self.Become<TeleportState>();
 				}
 
-				var room = Self.Target.GetComponent<RoomComponent>().Room;
+				var room = Self.Target.GetComponent<RoomComponent>()!.Room;
 
 				if (Self.OnScreen && room != null && room.Type == RoomType.Regular &&
 				    room.Tagged[Tags.MustBeKilled].Count > 0 && room.Contains(Self, 16f)) {
 					var aa = Self.AngleTo(room);
 					force = 400f * dt;
 
-					Self.GetComponent<RectBodyComponent>().Velocity -=
+					Self.GetComponent<RectBodyComponent>()!.Velocity -=
 						new Vector2((float) Math.Cos(aa) * force, (float) Math.Sin(aa) * force);
 
 					return;
@@ -73,7 +73,7 @@ namespace BurningKnight.entity.creature.bk {
 
 				var a = Self.AngleTo(Self.Target);
 
-				Self.GetComponent<RectBodyComponent>().Velocity +=
+				Self.GetComponent<RectBodyComponent>()!.Velocity +=
 					new Vector2((float) Math.Cos(a) * force, (float) Math.Sin(a) * force);
 			}
 		}

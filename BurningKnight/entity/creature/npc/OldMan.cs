@@ -33,7 +33,7 @@ namespace BurningKnight.entity.creature.npc {
 				
 				// AddComponent(new InteractDialogComponent("old_man_1"));
 			} else if (Context.Run.Depth == Context.Run.ContentEndDepth) {
-				GetComponent<DialogComponent>().Start("old_man_4");
+				GetComponent<DialogComponent>()!.Start("old_man_4");
 				// cycle = !BK.Version.Dev;;
 			} else if (Context.Run.Depth == -2) {
 				set = false;
@@ -49,7 +49,7 @@ namespace BurningKnight.entity.creature.npc {
 			}
 
 			AlwaysActive = true;
-			GetComponent<DialogComponent>().Dialog.Voice = 28;
+			GetComponent<DialogComponent>()!.Dialog!.Voice = 28;
 		}
 
 		private string[] song = {
@@ -65,17 +65,17 @@ namespace BurningKnight.entity.creature.npc {
 
 		private void StartSong() {
 			if (index >= song.Length) {
-				GetComponent<DialogComponent>().Close();
+				GetComponent<DialogComponent>()!.Close();
 				return;
 			}
 			
-			GetComponent<DialogComponent>().Start(song[index], null, () => {
+			GetComponent<DialogComponent>()!.Start(song[index], null, () => {
 				Timer.Add(() => {
 					StartSong();
 				}, 2);
 
 				if (RickRoll) {
-					foreach (var item in GetComponent<RoomComponent>().Room.Tagged[Tags.Item]) {
+					foreach (var item in GetComponent<RoomComponent>()!.Room!.Tagged[Tags.Item]) {
 						item.Done = true;
 						AnimationUtil.Poof(item.Center);
 					}
@@ -88,18 +88,18 @@ namespace BurningKnight.entity.creature.npc {
 		public override bool HandleEvent(Event e) {
 			if (inSecret) {
 				if (e is RoomChangedEvent rce && rce.Who is Player) {
-					if (rce.New == GetComponent<RoomComponent>().Room) {
+					if (rce.New == GetComponent<RoomComponent>()!.Room) {
 						if (RickRoll) {
 							StartSong();
 							index = 0;
 						} else {
-							GetComponent<DialogComponent>().Start("old_man_6");
+							GetComponent<DialogComponent>()!.Start("old_man_6");
 						}
 					} else {
-						GetComponent<DialogComponent>().Close();
+						GetComponent<DialogComponent>()!.Close();
 					}
-				} else if (e is ItemTakenEvent ite && ite.Stand.GetComponent<RoomComponent>().Room == GetComponent<RoomComponent>().Room) {
-					GetComponent<AnimationComponent>().Animate(() => {
+				} else if (e is ItemTakenEvent ite && ite.Stand.GetComponent<RoomComponent>()!.Room == GetComponent<RoomComponent>()!.Room) {
+					GetComponent<AnimationComponent>()!.Animate(() => {
 						Done = true;
 					});
 				}
@@ -126,7 +126,7 @@ namespace BurningKnight.entity.creature.npc {
 					t = 0;
 
 					var all = BiomeRegistry.Defined.Values.ToArray();
-					Context.Level.SetBiome(all[Rnd.Int(all.Length)]);
+					Context.Level!.SetBiome(all[Rnd.Int(all.Length)]);
 				}
 
 				return;
@@ -136,11 +136,11 @@ namespace BurningKnight.entity.creature.npc {
 				set = true;
 				var dialog = GetComponent<DialogComponent>();
 								
-				dialog.Dialog.Str.ClearIcons();
-				dialog.Dialog.Str.AddIcon(CommonAse.Ui.GetSlice(Controls.FindSlice(Controls.Roll, false)));
+				dialog!.Dialog!.Str!.ClearIcons();
+				dialog.Dialog.Str.AddIcon(CommonAse.Ui.GetSlice(Controls.FindSlice(Controls.Roll, false)!)!);
 
 				if (GamepadComponent.Current != null && GamepadComponent.Current.Attached) {
-					dialog.Dialog.Str.AddIcon(CommonAse.Ui.GetSlice(Controls.FindSlice(Controls.Roll, true)));
+					dialog.Dialog.Str.AddIcon(CommonAse.Ui.GetSlice(Controls.FindSlice(Controls.Roll, true)!)!);
 				}
 			}
 		}

@@ -18,22 +18,22 @@ namespace BurningKnight.ui.dialog {
 	public delegate void DialogCallback(DialogComponent d);
 	
 	public partial class DialogComponent : Component {
-		public static DialogComponent Talking;
+		public static DialogComponent? Talking = null!;
 		
-		public UiDialog Dialog;
-		public Dialog Last;
-		public Dialog Current;
+		public UiDialog? Dialog;
+		public Dialog? Last;
+		public Dialog? Current;
 		public bool AnimateTyping = true;
 
-		public DialogCallback OnNext;
-		public Entity To;
-		public Action InitCallback;
-		public Action FinishCallback;
+		public DialogCallback? OnNext;
+		public Entity? To;
+		public Action? InitCallback;
+		public Action? FinishCallback;
 
 		private bool added;
 		private float tillClose = -1;
 		
-		private void HandleInput(object sender, TextInputEventArgs args) {
+		private void HandleInput(object? sender, TextInputEventArgs args) {
 			if (Current is AnswerDialog a) {
 				if (a.Focused) {
 					a.HandleInput(args);
@@ -50,9 +50,9 @@ namespace BurningKnight.ui.dialog {
 			Dialog.Owner = Entity;
 			
 			Dialog.OnEnd += () => {
-				Dialog next = null;
+				Dialog? next = null;
 				
-				foreach (var c in Current.Callbacks) {
+				foreach (var c in Current!.Callbacks) {
 					var d = c(Current, this);
 
 					if (d != null) {
@@ -88,7 +88,7 @@ namespace BurningKnight.ui.dialog {
 		public override void Destroy() {
 			base.Destroy();
 			
-			Dialog.Close(() => { Dialog.Done = true; });
+			Dialog!.Close(() => { Dialog.Done = true; });
 			Engine.Instance.Window.TextInput -= HandleInput;
 
 			if (Talking == this) {
@@ -101,7 +101,7 @@ namespace BurningKnight.ui.dialog {
 		public override void Update(float dt) {
 			base.Update(dt);
 
-			if (tillClose > -1 && Dialog.DoneSaying) {
+			if (tillClose > -1 && Dialog!.DoneSaying) {
 				tillClose -= dt;
 
 				if (tillClose <= 0) {
@@ -125,9 +125,9 @@ namespace BurningKnight.ui.dialog {
 				Engine.Instance.State.Ui.Add(Dialog);
 			}
 
-			Dialog.Str.FinishedTyping += s => {
+			Dialog!.Str!.FinishedTyping += s => {
 				Entity.HandleEvent(new Dialog.EndedEvent {
-					Dialog = Last ?? Current,
+					Dialog = Last ?? Current!,
 					Owner = Entity
 				});
 
@@ -158,7 +158,7 @@ namespace BurningKnight.ui.dialog {
 			InitCallback?.Invoke();
 		}
 
-		public void Start(string id, Entity to = null, Action end = null) {
+		public void Start(string id, Entity? to = null, Action? end = null) {
 			var dialog = Dialogs.Get(id);
 			tillClose = -1;
 
@@ -172,7 +172,7 @@ namespace BurningKnight.ui.dialog {
 			Setup(dialog, to);
 		}
 
-		public void StartAndClose(string id, float time, Entity to = null) {
+		public void StartAndClose(string id, float time, Entity? to = null) {
 			Start(id, to);
 			tillClose = time;
 		}
@@ -197,14 +197,14 @@ namespace BurningKnight.ui.dialog {
 		private static string toSay = "";
 #endif
 
-		private void Setup(Dialog dialog, Entity to = null) {
+		private void Setup(Dialog dialog, Entity? to = null) {
 			Last = Current;
 			Current = dialog;
 
 			var c = Locale.Get(dialog.Id);
 			var s = dialog.Modify(c);
 			
-			Dialog.Say(s);
+			Dialog!.Say(s);
 			
 			if (Dialog.Str != null) {
 				Dialog.Str.Renderer = RenderChoice;
@@ -234,21 +234,21 @@ namespace BurningKnight.ui.dialog {
 		private bool wasUnhittable;
 
 		private void OnStart() {
-			var p = (Player) To;
+			var p = (Player) To!;
 
-			if (p.TryGetComponent<PlayerInputComponent>(out var input)) {
+			if (p!.TryGetComponent<PlayerInputComponent>(out var input)) {
 				input.InDialog = true;
 				input.Dialog = this;
-				Dialog.ShowArrow = true;
+				Dialog!.ShowArrow = true;
 			}
 
-			var health = To.GetComponent<HealthComponent>();
-			wasUnhittable = health.Unhittable;
+			var health = To!.GetComponent<HealthComponent>();
+			wasUnhittable = health!.Unhittable;
 			health.Unhittable = true;
 			
-			Tween.To(2, Context.Camera.TextureZoom, x => Context.Camera.TextureZoom = x, 0.3f, Ease.QuadInOut);
+			Tween.To(2, Context.Camera!.TextureZoom, x => Context.Camera!.TextureZoom = x, 0.3f, Ease.QuadInOut);
 						
-			p.GetComponent<StateComponent>().Become<Player.IdleState>();
+			p.GetComponent<StateComponent>()!.Become<Player.IdleState>();
 			((InGameState) Engine.Instance.State).OpenBlackBars();
 
 			Talking = this;
@@ -259,14 +259,14 @@ namespace BurningKnight.ui.dialog {
 				if (To.TryGetComponent<PlayerInputComponent>(out var input)) {
 					input.InDialog = false;
 					input.Dialog = null;
-					Dialog.ShowArrow = false;
+					Dialog!.ShowArrow = false;
 				}
 				
-				To.GetComponent<HealthComponent>().Unhittable = wasUnhittable;
+				To.GetComponent<HealthComponent>()!.Unhittable = wasUnhittable;
 				wasUnhittable = false;
 			}
 
-			Tween.To(1, Context.Camera.TextureZoom, x => Context.Camera.TextureZoom = x, 0.3f, Ease.QuadInOut);
+			Tween.To(1, Context.Camera!.TextureZoom, x => Context.Camera!.TextureZoom = x, 0.3f, Ease.QuadInOut);
 			((InGameState) Engine.Instance.State).CloseBlackBars();
 
 			Talking = null;

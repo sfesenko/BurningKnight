@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Lens.util.file {
 	public class FileReader {
-		protected byte[] read;
+		protected byte[] read = [];
 		public byte[] Data => read;
 
 		// The save format the data was written in; whoever reads a file's header sets it before
@@ -86,7 +86,7 @@ namespace Lens.util.file {
 			return (uint) ((ReadByte() << 24) | (ReadByte() << 16) | (ReadByte() << 8) | ReadByte());
 		}
 
-		public string ReadString() {
+		public string? ReadString() {
 			byte length = ReadByte();
 
 			if (length == 0) {

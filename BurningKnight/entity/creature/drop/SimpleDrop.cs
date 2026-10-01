@@ -13,7 +13,7 @@ namespace BurningKnight.entity.creature.drop {
 
 
 		
-		public string[] Items;
+		public string[]? Items;
 		public int Min = 1;
 		public int Max = 1;
 
@@ -69,7 +69,7 @@ namespace BurningKnight.entity.creature.drop {
 
 			var items = new JsonArray();
 
-			foreach (var item in Items) {
+			foreach (var item in Items!) {
 				items.Add(item);
 			}
 			

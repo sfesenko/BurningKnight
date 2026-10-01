@@ -5,7 +5,7 @@ using Lens.entity.component;
 
 namespace BurningKnight.entity.component {
 	public class ExplodableComponent : Component {
-		public Action OnExplosion;
+		public Action? OnExplosion;
 
 		public void HandleExplosion(Entity entity, Entity origin, float damage) {
 			OnExplosion?.Invoke();

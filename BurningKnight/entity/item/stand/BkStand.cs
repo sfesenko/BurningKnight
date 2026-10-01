@@ -31,7 +31,7 @@ namespace BurningKnight.entity.item.stand {
 			base.Update(dt);
 			
 			if (!did && triggered) {
-				Context.Camera.Shake(0.5f);
+				Context.Camera!.Shake(0.5f);
 				t += dt;
 
 				if (t >= 1f) {
@@ -75,7 +75,7 @@ namespace BurningKnight.entity.item.stand {
 			if (e is ItemTakenEvent && !triggered) {
 				Timer.Add(() => { triggered = true; }, 1f);
 				
-				Context.Camera.Shake(12);
+				Context.Camera!.Shake(12);
 				
 				var xx = (int) Math.Floor(CenterX / 16) * 16;
 				var xy = (int) Math.Floor(CenterY / 16) * 16;
@@ -97,7 +97,7 @@ namespace BurningKnight.entity.item.stand {
 
 				for (var x = xx - p; x < xx + Width + p; x += 16) {
 					for (var i = 0; i < Rnd.Int(3, 9); i++) {
-						Area.Add(new FireParticle {
+						Area!.Add(new FireParticle {
 								Position = new Vector2(x + Rnd.Float(-2, 18), xy - p + Rnd.Float(-2, 18)),
 								Delay = Rnd.Float(0.5f),
 								XChange = 0.1f,
@@ -121,7 +121,7 @@ namespace BurningKnight.entity.item.stand {
 
 				for (var y = xy; y < xy + Height; y += 16) {
 					for (var i = 0; i < Rnd.Int(3, 9); i++) {
-						Area.Add(new FireParticle {
+						Area!.Add(new FireParticle {
 								Position = new Vector2(xx + Rnd.Float(-2, 18) - p, y + Rnd.Float(-2, 18)),
 								Delay = Rnd.Float(0.5f),
 								XChange = 0.1f,

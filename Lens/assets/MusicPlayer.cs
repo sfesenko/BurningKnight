@@ -12,8 +12,8 @@ namespace Lens.assets {
 	public class MusicPlayer : IDisposable {
 		private const int SamplesPerBuffer = 4096;
 
-		private readonly VorbisReader reader;
-		private readonly DynamicSoundEffectInstance instance;
+		private readonly VorbisReader? reader;
+		private readonly DynamicSoundEffectInstance? instance;
 		private readonly float[] samples = new float[SamplesPerBuffer];
 		private readonly byte[] buffer = new byte[SamplesPerBuffer * 2];
 
@@ -56,12 +56,12 @@ namespace Lens.assets {
 		public SoundState State => instance?.State ?? SoundState.Stopped;
 
 		private void Submit() {
-			var read = reader.ReadSamples(samples, 0, SamplesPerBuffer);
+			var read = reader!.ReadSamples(samples, 0, SamplesPerBuffer);
 
 			if (read == 0) {
 				// The end: loop back to the start.
-				reader.SamplePosition = 0;
-				read = reader.ReadSamples(samples, 0, SamplesPerBuffer);
+				reader!.SamplePosition = 0;
+				read = reader!.ReadSamples(samples, 0, SamplesPerBuffer);
 			}
 
 			for (var i = 0; i < read; i++) {
@@ -71,18 +71,18 @@ namespace Lens.assets {
 				buffer[i * 2 + 1] = (byte) (value >> 8);
 			}
 
-			instance.SubmitBuffer(buffer, 0, read * 2);
+			instance!.SubmitBuffer(buffer, 0, read * 2);
 		}
 
 		public void Play() {
-			instance.Stop();
-			reader.SamplePosition = 0;
+			instance!.Stop();
+			reader!.SamplePosition = 0;
 			Submit();
-			instance.Play();
+			instance!.Play();
 		}
 
 		public void Stop() {
-			instance.Stop();
+			instance!.Stop();
 		}
 
 		public void Dispose() {

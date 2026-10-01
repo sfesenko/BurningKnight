@@ -21,10 +21,10 @@ using MonoGame.Extended;
 namespace BurningKnight.state {
 	public class CutsceneState : GameState {
 		private float blackBarsSize = 50;
-		private TextureRegion black;
-		public Area TopUi;
+		private TextureRegion black = null!;
+		public Area TopUi = null!;
 
-		private string text;
+		private string text = null!;
 		private float textW;
 		private bool saying;
 		private float a;
@@ -36,7 +36,7 @@ namespace BurningKnight.state {
 		public override void Destroy() {
 			Lights.Destroy();
 			Area.Destroy();
-			Area = null;
+			Area = null!;
 
 			Physics.Destroy();
 			base.Destroy();
@@ -62,7 +62,7 @@ namespace BurningKnight.state {
 			Ui.Add(Camera = new Camera(new FollowingDriver()));
 			Camera.Position = new Vector2(Display.Width / 2f, Display.Height / 2f) + new Vector2(32);
 			
-			black = CommonAse.Ui.GetSlice("black");
+			black = CommonAse.Ui.GetSlice("black")!;
 		}
 		
 		private void PrerenderShadows() {
@@ -74,7 +74,7 @@ namespace BurningKnight.state {
 
 			foreach (var e in Area.Tagged[Tags.HasShadow]) {
 				if (e.AlwaysVisible || e.OnScreen) {
-					e.GetComponent<ShadowComponent>().Callback();
+					e.GetComponent<ShadowComponent>()!.Callback();
 				}
 			}
 			
@@ -109,23 +109,24 @@ namespace BurningKnight.state {
 		}
 
 		public override void Update(float dt) {
+			var camera = Context.Camera!;
 			base.Update(dt);
 			float speed = dt * 120f;
 				
 			if (Input.Keyboard.IsDown(Keys.NumPad4)) {
-				Context.Camera.PositionX -= speed;
+				camera.PositionX -= speed;
 			}
 				
 			if (Input.Keyboard.IsDown(Keys.NumPad6)) {
-				Context.Camera.PositionX += speed;
+				camera.PositionX += speed;
 			}
 				
 			if (Input.Keyboard.IsDown(Keys.NumPad8)) {
-				Context.Camera.PositionY -= speed;
+				camera.PositionY -= speed;
 			}
 				
 			if (Input.Keyboard.IsDown(Keys.NumPad2)) {
-				Context.Camera.PositionY += speed;
+				camera.PositionY += speed;
 			}
 			
 			Physics.Update(dt);
@@ -133,11 +134,11 @@ namespace BurningKnight.state {
 			Context.Run.Update();
 		}
 
-		public void Say(string what, Action callback = null) {
+		public void Say(string what, Action? callback = null) {
 			text = what;
 			textW = Font.Medium.MeasureString(what).Width;
 			
-			Context.Camera.Targets.Clear();
+			Context.Camera!.Targets.Clear();
 			Shaders.Ui.Parameters["bx"].SetValue(0.333f);
 			Shaders.Ui.Parameters["by"].SetValue(0.333f);
 
@@ -163,7 +164,7 @@ namespace BurningKnight.state {
 		}
 
 		public void Transition(Action callback) {
-			Context.Camera.Targets.Clear();
+			Context.Camera!.Targets.Clear();
 			Shaders.Ui.Parameters["bx"].SetValue(0.333f);
 			Shaders.Ui.Parameters["by"].SetValue(0.333f);
 

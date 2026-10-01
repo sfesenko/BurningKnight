@@ -9,7 +9,7 @@ using Lens.util.math;
 
 namespace BurningKnight.entity.item.use {
 	public partial class DoWithUse : DoWithTagUse {
-		protected ItemUse[] Uses;
+		protected ItemUse[] Uses = null!;
 		protected float chance;
 
 		protected override void DoAction(Entity entity, Item item, List<Entity> entities) {

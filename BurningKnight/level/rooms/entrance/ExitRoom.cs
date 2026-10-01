@@ -45,7 +45,7 @@ namespace BurningKnight.level.rooms.entrance {
 			
 			Painter.Fill(level, where.X - 1, where.Y - 1, 3, 3, Tiles.RandomFloor());
 
-			level.Area.Add(prop);
+			level.Area!.Add(prop);
 			prop.Center = (where * 16 + new Vector2(8));
 		}
 

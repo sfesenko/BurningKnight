@@ -29,7 +29,7 @@ namespace BurningKnight.state {
 			}
 			
 			var show = true;
-			var player = LocalPlayer.Locate(Context.Area);
+			var player = LocalPlayer.Locate(Context.Area!);
 
 			if (!ImGui.Begin("Item editor", ref show, ImGuiWindowFlags.AlwaysAutoResize)) {
 				ImGui.End();
@@ -52,11 +52,11 @@ namespace BurningKnight.state {
 			ImGui.Text(Selected.Id);
 
 			if (ImGui.Button("Give")) {
-				LocalPlayer.Locate(Context.Area)
-					?.GetComponent<InventoryComponent>()
+				LocalPlayer.Locate(Context.Area!)
+					?.GetComponent<InventoryComponent>()!
 					.Pickup(Items.CreateAndAdd(
-						Selected.Id, Context.Area
-					));
+						Selected!.Id, Context.Area!
+					)!);
 			}
 
 			if (player != null) {
@@ -64,17 +64,17 @@ namespace BurningKnight.state {
 
 				if (ImGui.Button("Spawn")) {
 					var item = Items.CreateAndAdd(
-						Selected.Id, Context.Area, false
+						Selected.Id, Context.Area!, false
 					);
 
-					item.Center = player.Center;
+					item!.Center = player.Center;
 				}
 				
 				ImGui.SameLine();
 
 				if (ImGui.Button("Spawn on stand")) {
 					var stand = new ItemStand();
-					Context.Area.Add(stand);
+					Context.Area!.Add(stand);
 					var item = Items.CreateAndAdd(
 						Selected.Id, Context.Area, false
 					);
@@ -211,7 +211,7 @@ namespace BurningKnight.state {
 			}
 
 			if (ImGui.Checkbox("Animated", ref animated)) {
-				Selected.Animation = animated ? "" : null;
+				Selected.Animation = animated ? "" : null!;
 			}
 
 			if (animated) {
@@ -290,19 +290,19 @@ namespace BurningKnight.state {
 			if (Selected != null && player != null) {
 				var id = Selected.Id;
 				
-				if (player.GetComponent<InventoryComponent>().Has(id)) {
+				if (player.GetComponent<InventoryComponent>()!.Has(id)) {
 					ImGui.BulletText("Present in inventory");
 				}
 				
-				if (player.GetComponent<ActiveWeaponComponent>().Has(id)) {
+				if (player.GetComponent<ActiveWeaponComponent>()!.Has(id)) {
 					ImGui.BulletText("Present in active weapon slot");
 				}
 				
-				if (player.GetComponent<WeaponComponent>().Has(id)) {
+				if (player.GetComponent<WeaponComponent>()!.Has(id)) {
 					ImGui.BulletText("Present in weapon slot");
 				}
 				
-				if (player.GetComponent<ActiveItemComponent>().Has(id)) {
+				if (player.GetComponent<ActiveItemComponent>()!.Has(id)) {
 					ImGui.BulletText("Present in active item slot");
 				}
 			}

@@ -27,7 +27,7 @@ namespace BurningKnight.entity.creature.mob.ice {
 			
 			var body = new RectBodyComponent(5, 21, 15, 1);
 			AddComponent(body);
-			body.Body.LinearDamping = 10;
+			body!.Body!.LinearDamping = 10;
 			body.KnockbackModifier = 0.1f;
 			
 			AddComponent(new SensorBodyComponent(6, 2, 13, 19));
@@ -45,10 +45,10 @@ namespace BurningKnight.entity.creature.mob.ice {
 				return;
 			}
 			
-			GetComponent<AudioEmitterComponent>().EmitRandomized("mob_fire");
+			GetComponent<AudioEmitterComponent>()!.EmitRandomized("mob_fire");
 			var a = GetComponent<MobAnimationComponent>();
 					
-			Tween.To(0.6f, a.Scale.X, x => a.Scale.X = x, 0.2f);
+			Tween.To(0.6f, a!.Scale.X, x => a.Scale.X = x, 0.2f);
 			Tween.To(1.6f, a.Scale.Y, x => a.Scale.Y = x, 0.2f).OnEnd = () => {
 				Tween.To(1.8f, a.Scale.X, x => a.Scale.X = x, 0.1f);
 				Tween.To(0.2f, a.Scale.Y, x => a.Scale.Y = x, 0.1f).OnEnd = () => {
@@ -56,7 +56,7 @@ namespace BurningKnight.entity.creature.mob.ice {
 					Tween.To(1, a.Scale.X, x => a.Scale.X = x, 0.4f);
 					Tween.To(1, a.Scale.Y, x => a.Scale.Y = x, 0.4f);
 
-					GetComponent<HealthComponent>().InvincibilityTimer = 1f;
+					GetComponent<HealthComponent>()!.InvincibilityTimer = 1f;
 				
 					var an = AngleTo(Target);
 					var builder = new ProjectileBuilder(this, "carrot") {
@@ -69,7 +69,7 @@ namespace BurningKnight.entity.creature.mob.ice {
 
 					var projectile = builder.Shoot(an, 8f).Build();
 
-					projectile.Center = Center + MathUtils.CreateVector(an, 4f);
+					projectile!.Center = Center + MathUtils.CreateVector(an, 4f);
 
 					ProjectileCallbacks.AttachUpdateCallback(projectile, TargetProjectileController.Make(Target));
 				};
@@ -99,9 +99,9 @@ namespace BurningKnight.entity.creature.mob.ice {
 		}
 		#endregion
 
-		protected override void CreateGore(DiedEvent d) {
+		protected override void CreateGore(DiedEvent? d) {
 			var head = new Snowball();
-			Area.Add(head);
+			Area!.Add(head);
 			head.TopCenter = TopCenter;
 
 			var body = new SnowmanBody();

@@ -36,7 +36,7 @@ namespace BurningKnight.entity.component {
 		public bool HasNoHealth => health <= 0.01f;
 		public float Percent => Health / MaxHealth;
 
-		public bool SetHealth(float hp, Entity setter, bool mod = true, DamageType type = DamageType.Regular) {
+		public bool SetHealth(float hp, Entity? setter, bool mod = true, DamageType type = DamageType.Regular) {
 			if (Math.Abs(hp - health) < 0.01f) {
 				return false;
 			}
@@ -84,7 +84,7 @@ namespace BurningKnight.entity.component {
 			return false;
 		}
 
-		private void TryToKill(Entity e, DamageType type) {
+		private void TryToKill(Entity? e, DamageType type) {
 			if (health <= 0.1f && (!Entity.TryGetComponent<HeartsComponent>(out var c) || c.Total == 0) && AutoKill) { 
 				Kill(e, type);
 			}
@@ -92,7 +92,7 @@ namespace BurningKnight.entity.component {
 
 		public bool LastModifiedHearts;
 
-		public bool ModifyHealth(float amount, Entity setter, DamageType type = DamageType.Regular) {
+		public bool ModifyHealth(float amount, Entity? setter, DamageType type = DamageType.Regular) {
 			LastModifiedHearts = false;
 			if (amount < 0 && Entity is Player && (Context.Run.Depth != -2 && Context.Run.Depth < 1)) {
 				if (Unhittable || (PreventDamageInInvincibility && InvincibilityTimer > 0) || Health <= 0.01f) {
@@ -167,7 +167,7 @@ namespace BurningKnight.entity.component {
 
 		public bool Dead => dead;
 
-		public void Kill(Entity from, DamageType damageType = DamageType.Regular) {
+		public void Kill(Entity? from, DamageType damageType = DamageType.Regular) {
 			if (Phases > 0) {
 				Phases--;
 
@@ -175,7 +175,7 @@ namespace BurningKnight.entity.component {
 				health = (int) Math.Floor((Entity is Player ? 0.5f : 1f) * maxHealth);
 
 				Send(new RevivedEvent {
-					WhoDamaged = from,
+					WhoDamaged = from!,
 					Who = Entity
 				});
 
@@ -190,7 +190,7 @@ namespace BurningKnight.entity.component {
 			health = 0;
 
 			if (!Send(new DiedEvent {
-				From = from,
+				From = from!,
 				Who = Entity,
 				DamageType = damageType
 			})) {
@@ -221,14 +221,14 @@ namespace BurningKnight.entity.component {
 
 			for (var i = 0; i < 3; i++) {
 				Timer.Add(() => {
-						var part = new ParticleEntity(new Particle(Controllers.Float, new TexturedParticleRenderer(CommonAse.Particles.GetSlice($"{slice}_{Rnd.Int(1, 4)}"))));
+						var part = new ParticleEntity(new Particle(Controllers.Float, new TexturedParticleRenderer(CommonAse.Particles.GetSlice($"{slice}_{Rnd.Int(1, 4)}")!)));
 						part.Position = Entity.Center;
 
 						if (Entity.TryGetComponent<ZComponent>(out var z)) {
 							part.Position -= new Vector2(0, z.Z);
 						}
 				
-						Entity.Area.Add(part);
+						Entity.Area!.Add(part);
 				
 						part.Particle.Velocity = new Vector2(Rnd.Float(8, 16) * (Rnd.Chance() ? -1 : 1), -Rnd.Float(30, 56));
 						part.Particle.Angle = 0;
@@ -251,7 +251,7 @@ namespace BurningKnight.entity.component {
 				ev.Item.Use(Entity);
 
 				Engine.Instance.State.Ui.Add(new ConsumableParticle(ev.Item.Animation != null
-					? ev.Item.GetComponent<AnimatedItemGraphicsComponent>().Animation.GetFirstCurrent()
+					? ev.Item.GetComponent<AnimatedItemGraphicsComponent>()!.Animation.GetFirstCurrent()!
 					: ev.Item.Region, (Player) Entity));
 				
 				ev.Item.Done = true;
@@ -259,7 +259,7 @@ namespace BurningKnight.entity.component {
 			} else if (e is ExplodedEvent b && !b.Handled) {
 				Items.Unlock("bk:infinite_bomb");
 
-				if (Entity is Player && b.Who == Entity && Entity.GetComponent<LampComponent>().Item?.Id == "bk:explosive_lamp") {
+				if (Entity is Player && b.Who == Entity && Entity.GetComponent<LampComponent>()!.Item?.Id == "bk:explosive_lamp") {
 					
 				} else {
 					ModifyHealth(Entity is Player ? -2 : -b.Damage, b.Who, DamageType.Explosive);

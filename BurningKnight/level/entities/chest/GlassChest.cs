@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.level.entities.chest {
 	public class GlassChest : Chest {
-		private Item item;
+		private Item? item;
 		private float t;
 
 		public override string GetSprite() {
@@ -36,7 +36,7 @@ namespace BurningKnight.level.entities.chest {
 		}
 
 		protected override void SpawnDrops() {
-			item.AddDroppedComponents();
+			item!.AddDroppedComponents();
 			item.TopCenter = BottomCenter;
 			item = null;
 		}
@@ -46,14 +46,14 @@ namespace BurningKnight.level.entities.chest {
 			var id = stream.ReadString();
 
 			if (id != null) {
-				item = Items.CreateAndAdd(id, Area);
-				item.RemoveDroppedComponents();
+				item = Items.CreateAndAdd(id, Area!);
+				item!.RemoveDroppedComponents();
 			}
 		}
 
 		public override void Save(FileWriter stream) {
 			base.Save(stream);
-			stream.WriteString(item?.Id);
+			stream.WriteString(item?.Id!);
 		}
 
 		public override void Render() {
@@ -71,8 +71,8 @@ namespace BurningKnight.level.entities.chest {
 			base.PostInit();
 
 			if (!open && item == null) {
-				item = Items.CreateAndAdd(Items.Generate(ItemPool.GoldChest), Area);
-				item.RemoveDroppedComponents();
+				item = Items.CreateAndAdd(Items.Generate(ItemPool.GoldChest)!, Area!);
+				item!.RemoveDroppedComponents();
 			}
 		}
 	}

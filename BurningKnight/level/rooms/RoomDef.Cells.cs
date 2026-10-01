@@ -30,12 +30,12 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.level.rooms {
 	public partial class RoomDef {
-		public Dot GetRandomFreeCell() {
+		public Dot? GetRandomFreeCell() {
 			var passable = new List<Dot>();
 
 			for (var x = Left + 1; x < Right; x++) {
 				for (var y = Top + 1; y < Bottom; y++) {
-					if (Context.Level.IsPassable(x, y)) {
+					if (Context.Level!.IsPassable(x, y)) {
 						passable.Add(new Dot(x, y));
 					}
 				}
@@ -48,16 +48,16 @@ namespace BurningKnight.level.rooms {
 
 			return passable[Rnd.Int(passable.Count)];
 		}
-		public Dot GetRandomDoorFreeCell() {
+		public Dot? GetRandomDoorFreeCell() {
 			var passable = new List<Dot>();
 
 			for (var x = Left + 1; x < Right; x++) {
 				for (var y = Top + 1; y < Bottom; y++) {
-					if (Context.Level.IsPassable(x, y)) {
+					if (Context.Level!.IsPassable(x, y)) {
 						var found = false;
 						
 						foreach (var Door in Connected.Values) {
-							var Dx = (int) (Door.X - x);
+							var Dx = (int) (Door!.X - x);
 							var Dy = (int) (Door.Y - y);
 							var D = (float) Math.Sqrt(Dx * Dx + Dy * Dy);
 

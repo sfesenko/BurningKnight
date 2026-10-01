@@ -16,7 +16,7 @@ namespace BurningKnight.level.rooms.special.shop {
 		
 		public override void Paint(Level level) {
 			base.Paint(level);
-			TrashGoblin.Place(GetTileCenter() * 16 + new Vector2(8, 8), level.Area);
+			TrashGoblin.Place(GetTileCenter() * 16 + new Vector2(8, 8), level.Area!);
 			
 			for (var x = Left + 1; x < Right - 1; x++) {
 				for (var y = Top + 1; y < Bottom - 1; y++) {
@@ -28,7 +28,7 @@ namespace BurningKnight.level.rooms.special.shop {
 						Sprite = infos[Rnd.Int(infos.Length)]
 					};
 
-					level.Area.Add(prop);
+					level.Area!.Add(prop);
 					prop.BottomCenter = new Vector2(x + 0.5f, y + 1f) * 16 + Rnd.Vector(-4, 4);
 				}
 			}

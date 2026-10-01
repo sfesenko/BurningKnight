@@ -6,7 +6,7 @@ namespace BurningKnight.entity.door {
 		protected override void UpdateState() {
 			var found = false;
 
-			foreach (var n in Area.Tagged[Tags.Npc]) {
+			foreach (var n in Area!.Tagged[Tags.Npc]) {
 				if (n is ShopNpc sn && !sn.Hidden) {
 					found = true;
 					break;
@@ -15,10 +15,10 @@ namespace BurningKnight.entity.door {
 
 			if (!found && !IsLocked) {
 				SetLocked(true, null);
-				GetComponent<StateComponent>().Become<ClosingState>();
+				GetComponent<StateComponent>()!.Become<ClosingState>();
 			} else if (found && IsLocked) {
 				SetLocked(false, null);
-				GetComponent<StateComponent>().Become<OpeningState>();
+				GetComponent<StateComponent>()!.Become<OpeningState>();
 			}
 		}
 	}

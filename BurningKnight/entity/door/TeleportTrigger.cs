@@ -15,8 +15,8 @@ using MonoGame.Extended;
 namespace BurningKnight.entity.door {
 	public partial class TeleportTrigger : SaveableEntity, PlaceableEntity {
 		private sbyte depth;
-		private string id;
-		private string toId;
+		private string id = null!;
+		private string toId = null!;
 		private bool ignoreCollision;
 		private bool toTop;
 		
@@ -42,7 +42,7 @@ namespace BurningKnight.entity.door {
 				if (depth != 0) {
 					Context.Run.Depth = depth;
 				} else {
-					foreach (var t in Area.Tagged[Tags.TeleportTrigger]) {
+					foreach (var t in Area!.Tagged[Tags.TeleportTrigger]) {
 						var tr = (TeleportTrigger) t;
 						
 						if (tr.id == toId) {
@@ -71,10 +71,10 @@ namespace BurningKnight.entity.door {
 			Width = stream.ReadFloat();
 			Height = stream.ReadFloat();
 			depth = stream.ReadSbyte();
-			id = stream.ReadString();
+			id = stream.ReadString()!;
 
 			if (depth == 0) {
-				toId = stream.ReadString();
+				toId = stream.ReadString()!;
 			}
 
 			toTop = stream.ReadBoolean();

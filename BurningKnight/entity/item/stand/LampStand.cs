@@ -76,7 +76,7 @@ namespace BurningKnight.entity.item.stand {
 
 		protected bool ShowUnlocked = true;
 
-		private Item PickItem() {
+		private Item? PickItem() {
 			var items = new List<ItemData>();
 
 			foreach (var i in Items.Datas.Values) {
@@ -92,7 +92,7 @@ namespace BurningKnight.entity.item.stand {
 			var id = items[0].Id;
 			AlreadyOnStand.Add(id);
 
-			return Items.CreateAndAdd(id, Area);
+			return Items.CreateAndAdd(id, Area!);
 		}
 
 		protected override bool CanInteract(Entity e) {
@@ -104,7 +104,7 @@ namespace BurningKnight.entity.item.stand {
 		public override void Update(float dt) {
 			base.Update(dt);
 			t += dt;
-			GetComponent<LightComponent>().Light.Radius = 32f + (float) Math.Cos(t) * 6;
+			GetComponent<LightComponent>()!.Light.Radius = 32f + (float) Math.Cos(t) * 6;
 		}
 
 		public override bool HandleEvent(Event e) {

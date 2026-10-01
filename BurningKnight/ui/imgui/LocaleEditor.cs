@@ -16,15 +16,15 @@ namespace BurningKnight.ui.imgui {
 		private static string[] aviableLocales;
 		private static int locale;
 		private static string newKey = "";
-		private static string created;
+		private static string? created;
 		private static bool showEnglish = true;
 		private static string newLocaleName = "";
 		
 		private class ModifiedInfo {
-			public string OldKey;
-			public string OldValue;
-			public string Key;
-			public string Value;
+			public string OldKey = null!;
+			public string OldValue = null!;
+			public string Key = null!;
+			public string Value = null!;
 			public bool KeyChanged;
 		}
 
@@ -173,7 +173,7 @@ namespace BurningKnight.ui.imgui {
 			ImGui.PushStyleVar(ImGuiStyleVar.ItemSpacing, spacer);
 
 			var i = 0;
-			string remove = null;
+			string remove = null!;
 			
 			foreach (var t in Locale.Map) {
 				if (filter.PassFilter(filterByKey ? t.Key : t.Value)) {

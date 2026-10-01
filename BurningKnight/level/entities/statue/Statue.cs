@@ -14,7 +14,7 @@ namespace BurningKnight.level.entities.statue {
 	public class Statue : SolidProp {
 		protected bool Broken;
 
-		protected virtual string GetFxText() {
+		protected virtual string? GetFxText() {
 			return "touch";
 		}
 		
@@ -25,7 +25,7 @@ namespace BurningKnight.level.entities.statue {
 				CanInteract = CanInteract,
 				OnStart = (e) => {
 					if (GetFxText() != null) {
-						Engine.Instance.State.Ui.Add(new InteractFx(this, Locale.Get(GetFxText())));
+						Engine.Instance.State.Ui.Add(new InteractFx(this, Locale.Get(GetFxText()!)));
 					}
 				}
 			});
@@ -48,7 +48,7 @@ namespace BurningKnight.level.entities.statue {
 			AddSensor();
 
 			if (TryGetComponent<DialogComponent>(out var c)) {
-				c.Dialog.Voice = 30;
+				c!.Dialog!.Voice = 30;
 			}
 		}
 
@@ -65,11 +65,11 @@ namespace BurningKnight.level.entities.statue {
 				return;
 			}
 
-			Context.Camera.Shake(8);
+			Context.Camera!.Shake(8);
 			Broken = true;
 			UpdateSprite();
 
-			GetComponent<AudioEmitterComponent>().Emit(GetSfx());
+			GetComponent<AudioEmitterComponent>()!.Emit(GetSfx());
 		}
 
 		protected virtual string GetSfx() {
@@ -77,7 +77,7 @@ namespace BurningKnight.level.entities.statue {
 		}
 
 		protected virtual void UpdateSprite() {
-			GetComponent<InteractableSliceComponent>().Sprite = CommonAse.Props.GetSlice($"broken_{Sprite}");
+			GetComponent<InteractableSliceComponent>()!.Sprite = CommonAse.Props.GetSlice($"broken_{Sprite}")!;
 		}
 
 		public override void Load(FileReader stream) {

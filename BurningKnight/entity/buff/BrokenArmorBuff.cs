@@ -12,7 +12,7 @@ namespace BurningKnight.entity.buff {
 
 		public override void Init() {
 			base.Init();
-			Entity.GetComponent<BuffsComponent>().Remove<ArmoredBuff>();
+			Entity.GetComponent<BuffsComponent>()!.Remove<ArmoredBuff>();
 		}
 
 		public override void HandleEvent(Event e) {

@@ -16,7 +16,7 @@ namespace BurningKnight.entity.creature.mob.jungle {
 		protected override bool HandleDeath(DiedEvent d) {
 			for (var i = 0; i < Rnd.Int(2, 5); i++) {
 				var bee = new Bee();
-				Area.Add(bee);
+				Area!.Add(bee);
 				bee.Center = Center;
 			}
 			

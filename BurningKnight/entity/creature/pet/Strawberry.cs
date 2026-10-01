@@ -30,14 +30,14 @@ namespace BurningKnight.entity.creature.pet {
 
 				for (var i = 0; i < cn; i++) {
 					Timer.Add(() => {
-						var part = new ParticleEntity(new Particle(Controllers.Float, new TexturedParticleRenderer(CommonAse.Particles.GetSlice($"heart_{Rnd.Int(1, 4)}"))));
+						var part = new ParticleEntity(new Particle(Controllers.Float, new TexturedParticleRenderer(CommonAse.Particles.GetSlice($"heart_{Rnd.Int(1, 4)}")!)));
 						part.Position = Center;
 
 						if (TryGetComponent<ZComponent>(out var z)) {
 							part.Position -= new Vector2(0, z.Z);
 						}
 				
-						Area.Add(part);
+						Area!.Add(part);
 				
 						part.Particle.Velocity = new Vector2(Rnd.Float(8, 16) * (Rnd.Chance() ? -1 : 1), -Rnd.Float(30, 56));
 						part.Particle.Angle = 0;
@@ -51,7 +51,7 @@ namespace BurningKnight.entity.creature.pet {
 		public override bool HandleEvent(Event e) {
 			if (e is CollisionStartedEvent cse) {
 				if (cse.Entity is Mob m) {
-					m.GetComponent<BuffsComponent>().Add(new CharmedBuff {
+					m.GetComponent<BuffsComponent>()!.Add(new CharmedBuff {
 						Duration = 10
 					});
 				}

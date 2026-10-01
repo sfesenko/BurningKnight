@@ -16,10 +16,10 @@ namespace BurningKnight.assets.particle.custom {
 		private static Vector2 originB = new Vector2(8, 8);
 		public static readonly float MaxZ = Display.Height;
 		
-		public TextureRegion Top;
-		public TextureRegion TopTarget;
-		public TextureRegion Side;
-		public TextureRegion Sides;
+		public TextureRegion Top = null!;
+		public TextureRegion TopTarget = null!;
+		public TextureRegion Side = null!;
+		public TextureRegion Sides = null!;
 		public Vector2 Scale = new Vector2(0, 3);
 		public float Z;
 		public Tile Tile;
@@ -40,7 +40,7 @@ namespace BurningKnight.assets.particle.custom {
 				var x = (int) (X / 16);
 				var y = (int) ((Y + 8) / 16);
 
-				OriginalTile = level.Get(x, y);
+				OriginalTile = level!.Get(x, y);
 
 				if (OriginalTile == Tile.Chasm) {
 					Done = true;
@@ -106,7 +106,7 @@ namespace BurningKnight.assets.particle.custom {
 					Scale.Y = 0.3f;
 				}
 
-				AudioEmitterComponent.Dummy(Area, Center).Emit($"level_rock_{Rnd.Int(1, 3)}", 0.5f);
+				AudioEmitterComponent.Dummy(Area!, Center).Emit($"level_rock_{Rnd.Int(1, 3)}", 0.5f);
 
 				if (TargetZ < 0) {
 					Finish();
@@ -122,7 +122,7 @@ namespace BurningKnight.assets.particle.custom {
 			var x = (int) (CenterX / 16);
 			var y = (int) ((Y + 8) / 16);
 
-			level.Liquid[level.ToIndex(x, y)] = 0;
+			level!.Liquid[level.ToIndex(x, y)] = 0;
 			level.Set(x, y, Tile);
 			level.UpdateTile(x, y);
 			level.ReCreateBodyChunk(x, y);

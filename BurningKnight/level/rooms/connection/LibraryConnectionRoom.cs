@@ -23,7 +23,7 @@ namespace BurningKnight.level.rooms.connection {
 			var rooms = Connected.Keys.ToArray();
 			var spot = doorZero ? doors[0] : doors[1];
 
-			var dot = new Dot(spot.X, spot.Y);
+			var dot = new Dot(spot!.X, spot.Y);
 			
 			if (dot.X == Left) {
 				dot.X += 4;
@@ -44,7 +44,7 @@ namespace BurningKnight.level.rooms.connection {
 				Id = "a"
 			};
 			
-			level.Area.Add(t);
+			level.Area!.Add(t);
 			t.Position = dot * 16;
 		}
 
@@ -55,7 +55,7 @@ namespace BurningKnight.level.rooms.connection {
 			
 			foreach (var door in room.Connected) {
 				if (door.Value != cameFrom) {
-					return InvestigateDoor(door.Key, door.Value);
+					return InvestigateDoor(door.Key, door.Value!);
 				}
 			}
 
@@ -66,14 +66,14 @@ namespace BurningKnight.level.rooms.connection {
 			var pair = Connected.First();
 			var doors = Connected.Values.ToArray();
 
-			doorZero = !BottomHalf || InvestigateDoor(pair.Key, pair.Value);
+			doorZero = !BottomHalf || InvestigateDoor(pair.Key, pair.Value!);
 			
 			if (!doorZero) {
-				doors[0].Type = DoorPlaceholder.Variant.Regular;
-				doors[1].Type = DoorPlaceholder.Variant.Hidden;
+				doors[0]!.Type = DoorPlaceholder.Variant.Regular;
+				doors[1]!.Type = DoorPlaceholder.Variant.Hidden;
 			} else {
-				doors[1].Type = DoorPlaceholder.Variant.Regular;
-				doors[0].Type = DoorPlaceholder.Variant.Hidden;
+				doors[1]!.Type = DoorPlaceholder.Variant.Regular;
+				doors[0]!.Type = DoorPlaceholder.Variant.Hidden;
 			}
 		}
 

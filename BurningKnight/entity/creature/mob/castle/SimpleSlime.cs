@@ -18,12 +18,12 @@ namespace BurningKnight.entity.creature.mob.castle {
 			base.SetStats();
 			
 			AddComponent(new ZAnimationComponent(Events.Halloween ? "spooky_slime" : "slime"));
-			SetMaxHp((Context.Level != null && Context.Level.Biome is CaveBiome) ? 4 : 1 + Context.Run.Depth / 2);
+			SetMaxHp((Context.Level != null && Context.Level!.Biome is CaveBiome) ? 4 : 1 + Context.Run.Depth / 2);
 
 			var body = CreateBodyComponent();
 			AddComponent(body);
 
-			body.Body.LinearDamping = 2;
+			body!.Body!.LinearDamping = 2;
 			body.KnockbackModifier = 0.5f;
 			
 			AddComponent(CreateSensorBodyComponent());

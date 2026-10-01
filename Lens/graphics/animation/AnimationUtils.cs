@@ -26,7 +26,7 @@ public static class AnimationUtils
 
         foreach (var layer in entry.GetProperty("layers").EnumerateArray())
         {
-            layers.Add(layer.GetString());
+            layers.Add(layer.GetString()!);
         }
 
         var slices = new List<(string, Rectangle)>();

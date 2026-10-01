@@ -25,11 +25,12 @@ namespace BurningKnight.entity.projectile {
 	public static class ProjectileRegistry {
 		private static Dictionary<string, Action<Projectile>> registry = new Dictionary<string, Action<Projectile>>();
 
-		public static void Add(string id, Action<Projectile> fn, Mod mod = null) {
+		public static void Add(string id, Action<Projectile> fn, Mod? mod = null) {
 			registry[$"{mod?.Prefix ?? Mods.BurningKnight}:{id}"] = fn;
 		}
 
-		public static Action<Projectile> Get(string id) {
+		public static Action<Projectile>? Get(string id) {
+			var level = Context.Level!;
 			return registry.TryGetValue(id, out var f) ? f : null;
 		}
 
@@ -41,7 +42,7 @@ namespace BurningKnight.entity.projectile {
 
 					for (var i = 0; i < 8; i++) {
 						var bullet = b.Shoot(((float) i) / 4 * (float) Math.PI, (i % 2 == 0 ? 2 : 1) * 4 + 3).Build();
-						bullet.Center = p.Center;
+						bullet!.Center = p.Center;
 					}
 				});
 
@@ -49,7 +50,7 @@ namespace BurningKnight.entity.projectile {
 
 				skull.T = 5f;
 				skull.RemoveFlags(ProjectileFlags.BreakableByMelee, ProjectileFlags.Reflectable);
-				skull.GetComponent<ProjectileGraphicsComponent>().IgnoreRotation = true;
+				skull.GetComponent<ProjectileGraphicsComponent>()!.IgnoreRotation = true;
 			});
 		
 			Add("disk", p => {
@@ -58,12 +59,12 @@ namespace BurningKnight.entity.projectile {
 				p.Bounce += 10;
 				p.AddFlags(ProjectileFlags.HitsOwner);
 
-				p.GetComponent<CircleBodyComponent>().Body.AngularVelocity = 10f;
+				p!.GetComponent<CircleBodyComponent>()!.Body!.AngularVelocity = 10f;
 			});
 			
 			Add("what", p => {
 				ProjectileCallbacks.AttachUpdateCallback(p, WhatController.Make());
-				p.GetComponent<CircleBodyComponent>().Body.AngularVelocity = 10f;
+				p!.GetComponent<CircleBodyComponent>()!.Body!.AngularVelocity = 10f;
 			});
 			
 			Add("soap", p => {
@@ -159,7 +160,7 @@ namespace BurningKnight.entity.projectile {
 
 					for (var i = 0; i < 8; i++) {
 						var pr2 = b.Shoot((float) i / 8 * (float) Math.PI * 2, 8).Build();
-						pr2.Center = pr.Center;
+						pr2!.Center = pr.Center;
 
 						ProjectileCallbacks.AttachUpdateCallback(pr2, SlowdownProjectileController.Make(1));
 					}
@@ -177,8 +178,8 @@ namespace BurningKnight.entity.projectile {
 			});
 			
 			Add("portal", p => {
-				p.Center = p.Owner.GetComponent<CursorComponent>().Cursor.GamePosition;
-				p.GetAnyComponent<BodyComponent>().Velocity *= -1;
+				p.Center = p.Owner.GetComponent<CursorComponent>()!.Cursor.GamePosition;
+				p!.GetAnyComponent<BodyComponent>()!.Velocity *= -1;
 			});
 			
 			Add("axe", p => {
@@ -187,7 +188,7 @@ namespace BurningKnight.entity.projectile {
 				var ts = Timer.Add(() => {
 					p.Item.Renderer.Hidden = false;
 
-					foreach (var u in p.Item.Uses) {
+					foreach (var u in p!.Item!.Uses!) {
 						if (u is SimpleShootUse ss) {
 							ss.ProjectileDied = true;
 							break;
@@ -198,9 +199,9 @@ namespace BurningKnight.entity.projectile {
 				p.T = 5;
 
 				ProjectileCallbacks.AttachCollisionCallback(p, (projectile, e) => {
-					if (Context.Level.Biome is IceBiome && e is ProjectileLevelBody lvl) {
+					if (Context.Level!.Biome is IceBiome && e is ProjectileLevelBody lvl) {
 						if (lvl.Break(projectile.CenterX, projectile.CenterY)) {
-							AudioEmitterComponent.Dummy(projectile.Area, projectile.Center).EmitRandomizedPrefixed("level_snow_break", 3);
+							AudioEmitterComponent.Dummy(projectile.Area!, projectile.Center).EmitRandomizedPrefixed("level_snow_break", 3);
 						}
 					}
 					
@@ -209,7 +210,7 @@ namespace BurningKnight.entity.projectile {
 							projectile.Item.Renderer.Hidden = false;
 							projectile.Break();
 
-							foreach (var u in projectile.Item.Uses) {
+							foreach (var u in projectile!.Item!.Uses!) {
 								if (u is SimpleShootUse ss) {
 									ss.ProjectileDied = true;
 									break;
@@ -222,8 +223,8 @@ namespace BurningKnight.entity.projectile {
 						if (e is Painting || e is BreakableProp || e is ExplodingBarrel || e.HasComponent<HealthComponent>()) {
 							projectile.Bounce++;
 						} else {
-							var b = projectile.GetComponent<RectBodyComponent>().Body;
-							b.LinearVelocity *= -1;
+							var b = projectile.GetComponent<RectBodyComponent>()!.Body;
+							b!.LinearVelocity *= -1;
 
 							projectile.Bounce = 0;
 							projectile.EntitiesHurt.Clear();
@@ -234,15 +235,15 @@ namespace BurningKnight.entity.projectile {
 							ProjectileCallbacks.AttachDeathCallback(projectile, (pr, ee, t) => {
 								pr.Item.Renderer.Hidden = false;
 								
-								foreach (var u in pr.Item.Uses) {
+								foreach (var u in pr!.Item!.Uses!) {
 									if (u is SimpleShootUse ss) {
 										ss.ProjectileDied = true;
 										break;
 									}
 								}
 								
-								ts.Cancel();
-								pr.Owner.GetComponent<AudioEmitterComponent>().EmitRandomized("item_axe_catch");
+								ts!.Cancel();
+								pr.Owner.GetComponent<AudioEmitterComponent>()!.EmitRandomized("item_axe_catch");
 							});
 							
 							pi?.Invoke(projectile, e, false);
@@ -265,7 +266,7 @@ namespace BurningKnight.entity.projectile {
 				p.AddFlags(ProjectileFlags.AutomaticRotation);
 
 				ProjectileCallbacks.AttachDeathCallback(p, (pr, e, t) => {
-					AudioEmitterComponent.Dummy(pr.Area, pr.Center).EmitRandomized("item_magic_lava_appear");
+					AudioEmitterComponent.Dummy(pr.Area!, pr.Center).EmitRandomized("item_magic_lava_appear");
 				
 					var x = (int) Math.Round(pr.CenterX / 16f);
 					var y = (int) Math.Round(pr.CenterY / 16f);
@@ -276,18 +277,18 @@ namespace BurningKnight.entity.projectile {
 							var zx = (int) xx + x;
 							var zy = (int) yy + y;
 							
-							if (Math.Sqrt(xx * xx + yy * yy) <= r && Context.Level.Get(zx, zy).IsPassable()) {
-								Context.Level.Set(zx, zy, Tile.Lava);
+							if (Math.Sqrt(xx * xx + yy * yy) <= r && Context.Level!.Get(zx, zy).IsPassable()) {
+								Context.Level!.Set(zx, zy, Tile.Lava);
 
 								Timer.Add(() => {
-									Context.Level.Set(zx, zy, Tile.Ember);
-									Context.Level.UpdateTile(zx, zy);
+									Context.Level!.Set(zx, zy, Tile.Ember);
+									Context.Level!.UpdateTile(zx, zy);
 								}, Rnd.Float(5f, 15f));
 							}
 						}
 					}
 					
-					Context.Level.TileUp();
+					Context.Level!.TileUp();
 				});
 			});
 
@@ -306,7 +307,7 @@ namespace BurningKnight.entity.projectile {
 
 				p.AddFlags(ProjectileFlags.AutomaticRotation);
 				ProjectileCallbacks.AttachDeathCallback(p, (pr, e, t) => {
-					AudioEmitterComponent.Dummy(pr.Area, pr.Center).EmitRandomized("item_magic_web_appear");
+					AudioEmitterComponent.Dummy(pr.Area!, pr.Center).EmitRandomized("item_magic_web_appear");
 
 					var x = (int) Math.Round(pr.CenterX / 16f);
 					var y = (int) Math.Round(pr.CenterY / 16f);
@@ -317,13 +318,13 @@ namespace BurningKnight.entity.projectile {
 							var zx = (int) xx + x;
 							var zy = (int) yy + y;
 							
-							if (Math.Sqrt(xx * xx + yy * yy) <= r && Context.Level.Get(zx, zy).IsPassable()) {
-								Context.Level.Set(zx, zy, Tile.Cobweb);
+							if (Math.Sqrt(xx * xx + yy * yy) <= r && Context.Level!.Get(zx, zy).IsPassable()) {
+								Context.Level!.Set(zx, zy, Tile.Cobweb);
 							}
 						}
 					}
 					
-					Context.Level.TileUp();
+					Context.Level!.TileUp();
 				});
 			});
 		}

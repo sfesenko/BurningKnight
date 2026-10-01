@@ -51,7 +51,7 @@ namespace BurningKnight.entity.creature.bk {
 
 				if (delay <= 0) {
 					delay = 0.3f;
-					Self.GetComponent<BkGraphicsComponent>().Animate();
+					Self.GetComponent<BkGraphicsComponent>()!.Animate();
 
 					var angle = Rnd.AnglePI() * 0.5f + count * (float) Math.PI;
 
@@ -63,14 +63,14 @@ namespace BurningKnight.entity.creature.bk {
 					builder.RemoveFlags(ProjectileFlags.BreakableByMelee, ProjectileFlags.Reflectable);
 
 					var projectile = builder.Build();
-					projectile.Center += MathUtils.CreateVector(angle, 8);
+					projectile!.Center += MathUtils.CreateVector(angle, 8);
 
 					ProjectileCallbacks.AttachDeathCallback(projectile, (p, en, t) => {
 						var x = (int) Math.Floor(p.CenterX / 16);
 						var y = (int) Math.Floor(p.CenterY / 16);
 						
 						var mob = new WallCrawler();
-						Self.Area.Add(mob);
+						Self.Area!.Add(mob);
 						mob.X = x * 16;
 						mob.Y = y * 16 - 8;
 						mob.GeneratePrefix();

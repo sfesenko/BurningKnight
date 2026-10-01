@@ -16,11 +16,11 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.creature.mob.boss {
 	public class OldKing : Boss {
-		public bool Raging => GetComponent<HealthComponent>().Percent <= 0.25f;
+		public bool Raging => GetComponent<HealthComponent>()!.Percent <= 0.25f;
 
 		protected override void AddPhases() {
 			base.AddPhases();
-			HealthBar.AddPhase(0.25f);
+			HealthBar!.AddPhase(0.25f);
 		}
 
 		public override void AddComponents() {
@@ -35,7 +35,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 			AddComponent(body);
 
 			body.KnockbackModifier = 0.05f;
-			body.Body.LinearDamping = 1;
+			body!.Body!.LinearDamping = 1;
 
 			AddComponent(new ZComponent {
 				Gravity = 2
@@ -56,7 +56,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 				lastParticle = 0.1f;
 
 				if (!IsFriendly()) {
-					Area.Add(new FireParticle {
+					Area!.Add(new FireParticle {
 						Offset = new Vector2(-2, -13),
 						Owner = this,
 						Size = 0.5f,
@@ -82,7 +82,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 		}
 
 		public override bool InAir() {
-			var state = GetComponent<StateComponent>().StateInstance;
+			var state = GetComponent<StateComponent>()!.StateInstance;
 			
 			return state is UpState || state is DownState;
 		}
@@ -134,9 +134,9 @@ namespace BurningKnight.entity.creature.mob.boss {
 					}
 					
 					var a = Self.GetComponent<ZAnimationComponent>();
-					Self.GetComponent<AudioEmitterComponent>().EmitRandomized("mob_oldking_shoot");
+					Self.GetComponent<AudioEmitterComponent>()!.EmitRandomized("mob_oldking_shoot");
 
-					Tween.To(1.8f, a.Scale.X, x => a.Scale.X = x, 0.2f);
+					Tween.To(1.8f, a!.Scale.X, x => a.Scale.X = x, 0.2f);
 					Tween.To(0.2f, a.Scale.Y, x => a.Scale.Y = x, 0.2f).OnEnd = () => {
 
 						Tween.To(1, a.Scale.X, x => a.Scale.X = x, 0.3f);
@@ -153,24 +153,24 @@ namespace BurningKnight.entity.creature.mob.boss {
 						builder.RemoveFlags(ProjectileFlags.Reflectable, ProjectileFlags.BreakableByMelee);
 						var skull = builder.Shoot(Self.AngleTo(Self.Target), 8).Build();
 
-						ProjectileCallbacks.AttachDeathCallback(skull, (p, e, t) => {
+						ProjectileCallbacks.AttachDeathCallback(skull!, (p, e, t) => {
 							if (!t) {
 								return;
 							}
 
-							GameContext.Current.Camera.ShakeMax(8);
+							GameContext.Current!.Camera!.ShakeMax(8);
 
 							var b = new ProjectileBuilder(Self, "small");
 							b.RemoveFlags(ProjectileFlags.Reflectable, ProjectileFlags.BreakableByMelee);
 					
 							for (var i = 0; i < 8; i++) {
 								var bullet = b.Shoot(((float) i) / 4 * (float) Math.PI, (i % 2 == 0 ? 2 : 1) * 4 + 3).Build();
-								bullet.Center = p.Center;
+								bullet!.Center = p.Center;
 							}
 						});
 
-						ProjectileCallbacks.AttachUpdateCallback(skull, TargetProjectileController.Make(Self.Target, 0.5f));
-						skull.GetComponent<ProjectileGraphicsComponent>().IgnoreRotation = true;
+						ProjectileCallbacks.AttachUpdateCallback(skull!, TargetProjectileController.Make(Self.Target, 0.5f));
+						skull!.GetComponent<ProjectileGraphicsComponent>()!.IgnoreRotation = true;
 						
 						if (count == (Self.Raging ? 6 : 4)) {
 							Self.Become<IdleState>();
@@ -183,20 +183,20 @@ namespace BurningKnight.entity.creature.mob.boss {
 		public class JumpState : SmartState<OldKing> {
 			public override void Init() {
 				base.Init();
-				Self.GetComponent<ZAnimationComponent>().SetAutoStop(true);
+				Self.GetComponent<ZAnimationComponent>()!.SetAutoStop(true);
 			}
 
 			public override void Destroy() {
 				base.Destroy();
-				Self.GetComponent<ZAnimationComponent>().SetAutoStop(false);
+				Self.GetComponent<ZAnimationComponent>()!.SetAutoStop(false);
 			}
 
 			public override void Update(float dt) {
 				base.Update(dt);
 
-				if (Self.GetComponent<ZAnimationComponent>().Animation.Paused) {
+				if (Self!.GetComponent<ZAnimationComponent>()!.Animation!.Paused) {
 					Become<UpState>();
-					Self.GetComponent<AudioEmitterComponent>().EmitRandomized("mob_oldking_jump");
+					Self.GetComponent<AudioEmitterComponent>()!.EmitRandomized("mob_oldking_jump");
 				}
 			}
 		}
@@ -208,8 +208,8 @@ namespace BurningKnight.entity.creature.mob.boss {
 				var a = Self.Target == null || (!Self.Raging && Rnd.Chance()) ? Rnd.AnglePI() : Self.AngleTo(Self.Target) + Rnd.Float(-0.1f, 0.1f);
 				var force = Rnd.Float(20f) + (Self.Raging ? 240 : 120);
 				
-				Self.GetComponent<RectBodyComponent>().Velocity = new Vector2((float) Math.Cos(a) * force, (float) Math.Sin(a) * force);
-				Self.GetComponent<ZComponent>().ZVelocity = 10;
+				Self.GetComponent<RectBodyComponent>()!.Velocity = new Vector2((float) Math.Cos(a) * force, (float) Math.Sin(a) * force);
+				Self.GetComponent<ZComponent>()!.ZVelocity = 10;
 				
 				Self.TouchDamage = 0;
 				Self.Depth = Layers.FlyingMob;
@@ -218,7 +218,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 			public override void Update(float dt) {
 				base.Update(dt);
 
-				if (Self.GetComponent<ZComponent>().ZVelocity <= 0) {
+				if (Self.GetComponent<ZComponent>()!.ZVelocity <= 0) {
 					Become<DownState>();
 				}
 			}
@@ -235,7 +235,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 			public override void Update(float dt) {
 				base.Update(dt);
 
-				if (Self.GetComponent<ZComponent>().Z <= 0) {
+				if (Self.GetComponent<ZComponent>()!.Z <= 0) {
 					Become<LandState>();
 				}
 			}
@@ -251,11 +251,11 @@ namespace BurningKnight.entity.creature.mob.boss {
 				base.Init();
 				
 				var a = Self.GetComponent<ZAnimationComponent>();
-				a.SetAutoStop(true);
+				a!.SetAutoStop(true);
 
-				GameContext.Current.Camera.ShakeMax(12);
+				GameContext.Current!.Camera!.ShakeMax(12);
 				
-				Self.GetComponent<AudioEmitterComponent>().EmitRandomized("mob_oldking_land");
+				Self.GetComponent<AudioEmitterComponent>()!.EmitRandomized("mob_oldking_land");
 				
 				Tween.To(1.8f, a.Scale.X, x => a.Scale.X = x, 0.1f);
 				Tween.To(0.2f, a.Scale.Y, x => a.Scale.Y = x, 0.1f).OnEnd = () => {
@@ -263,7 +263,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 					Tween.To(1, a.Scale.Y, x => a.Scale.Y = x, 0.3f);
 				};
 				
-				Self.GetComponent<RectBodyComponent>().Velocity = Vector2.Zero;
+				Self.GetComponent<RectBodyComponent>()!.Velocity = Vector2.Zero;
 				var bb = new ProjectileBuilder(Self, "small");
 
 				bb.RemoveFlags(ProjectileFlags.Reflectable, ProjectileFlags.BreakableByMelee);
@@ -276,14 +276,14 @@ namespace BurningKnight.entity.creature.mob.boss {
 					};
 
 					for (var j = 0; j < 2; j++) {
-						pp.Add(bb.Build());
+						pp.Add(bb.Build()!);
 					}
 				
 					pp.Launch(an, 40);
-					Self.Area.Add(pp);
+					Self.Area!.Add(pp);
 				}
 
-				var aa = Self.AngleTo(Self.Target);
+				var aa = Self.AngleTo(Self.Target!);
 				var builder = new ProjectileBuilder(Self, "small") {
 					Color = ProjectileColor.Green,
 					Bounce = 2
@@ -295,21 +295,21 @@ namespace BurningKnight.entity.creature.mob.boss {
 					builder.Scale = Rnd.Float(0.5f, 1f);
 					var b = builder.Shoot(aa + Rnd.Float(-0.3f, 0.3f), Rnd.Float(2, 12)).Build();
 						
-					b.Center = Self.BottomCenter;
+					b!.Center = Self.BottomCenter;
 				}
 			}
 
 			public override void Destroy() {
 				base.Destroy();
-				Self.GetComponent<ZAnimationComponent>().SetAutoStop(false);
+				Self.GetComponent<ZAnimationComponent>()!.SetAutoStop(false);
 			}
 
 			public override void Update(float dt) {
 				base.Update(dt);
 
-				var animation = Self.GetComponent<ZAnimationComponent>().Animation;
+				var animation = Self.GetComponent<ZAnimationComponent>()!.Animation;
 
-				if (animation.Paused) {
+				if (animation!.Paused) {
 					if (Self.Raging) {
 						if (Self.jumpCounter < 2) {
 							Become<JumpState>();

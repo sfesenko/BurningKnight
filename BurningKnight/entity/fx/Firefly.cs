@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.fx {
 	public class Firefly : SaveableEntity, PlaceableEntity {
-		private static TextureRegion region;
+		private static TextureRegion? region;
 
 		private Vector2 size;
 		private Vector2 lightSize;
@@ -66,14 +66,14 @@ namespace BurningKnight.entity.fx {
 			X = (float) (start.X + Math.Cos(t / 8) * Math.Sin(t / 9) * 32);
 			Y = (float) (start.Y + Math.Sin(t / 7) * Math.Cos(t / 10) * 32);
 
-			var light = GetComponent<LightComponent>().Light;
+			var light = GetComponent<LightComponent>()!.Light;
 			
 			light.Radius += ((t % 20 <= 16f ? 96f : 0) - light.Radius) * dt * 3;
 		}
 		
 		public override void Render() {
 			Graphics.Color = lightColor;
-			Graphics.Render(region, Position, 0.1f, region.Center, lightSize);
+			Graphics.Render(region!, Position, 0.1f, region!.Center, lightSize);
 			Graphics.Color = color;
 			Graphics.Render(region, Position, 0.1f, region.Center, size);
 			Graphics.Color = ColorUtils.WhiteColor;

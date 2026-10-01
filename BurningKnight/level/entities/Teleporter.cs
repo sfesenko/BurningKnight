@@ -53,7 +53,7 @@ namespace BurningKnight.level.entities {
 
 		public override void Load(FileReader stream) {
 			base.Load(stream);
-			Id = stream.ReadString();
+			Id = stream.ReadString()!;
 		}
 
 		public override bool HandleEvent(Event e) {
@@ -68,13 +68,13 @@ namespace BurningKnight.level.entities {
 				}
 
 				played = true;
-				var room = GetComponent<RoomComponent>().Room;
+				var room = GetComponent<RoomComponent>()!.Room;
 
 				if (Id != "a" && room == null) {
 					return base.HandleEvent(e);
 				}
 
-				var l = Id == "a" ? Area.Tagged[Tags.Teleport] : room.Tagged[Tags.Teleport];
+				var l = Id == "a" ? Area!.Tagged[Tags.Teleport] : room!.Tagged[Tags.Teleport];
 				
 				foreach (var t in l) {
 					var tr = (Teleporter) t;
@@ -85,8 +85,8 @@ namespace BurningKnight.level.entities {
 						AnimationUtil.TeleportAway(c, () => {
 							tr.ignoreCollision = true;
 							c.BottomCenter = tr.Center;
-							Context.Camera.Jump();
-							c.GetComponent<HealthComponent>().InvincibilityTimer = 1;
+							Context.Camera!.Jump();
+							c.GetComponent<HealthComponent>()!.InvincibilityTimer = 1;
 							Audio.PlaySfx("level_teleport_arrive");
 							
 							AnimationUtil.TeleportIn(c);

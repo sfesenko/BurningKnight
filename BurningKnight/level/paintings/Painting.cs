@@ -22,20 +22,20 @@ namespace BurningKnight.level.paintings {
 	public class Painting : SaveableEntity {
 		private const float Padding = 64f;
 		
-		public string Id;
-		public string Author;
+		public string Id = null!;
+		public string Author = null!;
 		
-		private Entity from;
+		private Entity? from;
 		private float scale;
 		private float uiY;
 
-		private string name;
-		private string author;
+		private string name = null!;
+		private string author = null!;
 		
 		private float nameWidth;
 		private float authorWidth;
 
-		private TextureRegion big;
+		private TextureRegion big = null!;
 		
 		protected virtual TextureRegion GetRegion() {
 			return big;
@@ -58,11 +58,11 @@ namespace BurningKnight.level.paintings {
 			base.PostInit();
 
 			if (!HasComponent<AnimationComponent>()) {
-				big = Animations.Get("paintings").GetSlice(Id);
+				big = Animations.Get("paintings")!.GetSlice(Id)!;
 			}
 			
 			AddComponent(new InteractableSliceComponent("paintings", $"{Id}_small"));
-			var region = GetComponent<InteractableSliceComponent>().Sprite;
+			var region = GetComponent<InteractableSliceComponent>()!.Sprite;
 
 			Width = region.Width;
 			Height = region.Height;
@@ -112,8 +112,8 @@ namespace BurningKnight.level.paintings {
 
 		public override void Load(FileReader stream) {
 			base.Load(stream);
-			Id = stream.ReadString();
-			Author = stream.ReadString();
+			Id = stream.ReadString()!;
+			Author = stream.ReadString()!;
 		}
 
 		public override bool HandleEvent(Event e) {
@@ -124,7 +124,7 @@ namespace BurningKnight.level.paintings {
 
 				var h = GetComponent<HealthComponent>();
 
-				if (h.Health + ev.Amount == 0) {
+				if (h!.Health + ev.Amount == 0) {
 					if (Id != "egor") {
 						from = ev.From;
 					} else {
@@ -158,7 +158,7 @@ namespace BurningKnight.level.paintings {
 					part.Position = Center;
 					part.Particle.Scale = Lens.util.math.Rnd.Float(0.4f, 0.8f);
 					
-					Area.Add(part);
+					Area!.Add(part);
 
 					part.Depth = Depth;
 				}
@@ -167,10 +167,10 @@ namespace BurningKnight.level.paintings {
 					AddComponent(new AudioEmitterComponent());
 				}
 			
-				AudioEmitterComponent.Dummy(Area, Center).EmitRandomizedPrefixed("level_chair_break", 2, 0.5f);
+				AudioEmitterComponent.Dummy(Area!, Center).EmitRandomizedPrefixed("level_chair_break", 2, 0.5f);
 				
-				Particles.BreakSprite(Area, GetComponent<InteractableSliceComponent>().Sprite, Position, Depth);
-				Context.Camera.Shake(2f);
+				Particles.BreakSprite(Area!, GetComponent<InteractableSliceComponent>()!.Sprite, Position, Depth);
+				Context.Camera!.Shake(2f);
 			}
 		}
 

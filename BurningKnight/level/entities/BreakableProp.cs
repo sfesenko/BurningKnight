@@ -39,7 +39,7 @@ namespace BurningKnight.level.entities {
 			"gift_c"
 		};
 
-		private Entity from;
+		private Entity? from;
 		private bool hurts;
 
 		public override void AddComponents() {
@@ -56,11 +56,11 @@ namespace BurningKnight.level.entities {
 		}
 
 		private void RenderShadow() {
-			GraphicsComponent.Render(true);
+			GraphicsComponent!.Render(true);
 		}
 
 		protected override Rectangle GetCollider() {
-			var rect = GetComponent<SliceComponent>().Sprite.Source;
+			var rect = GetComponent<SliceComponent>()!.Sprite.Source;
 
 			/*if (Sprite.Contains("pot") || Sprite.Contains("crate")) {
 				AddComponent(new PoolDropsComponent(ItemPool.Crate, 0.3f, 1, 3));
@@ -78,13 +78,13 @@ namespace BurningKnight.level.entities {
 			if (e is HealthModifiedEvent ev) {
 				var h = GetComponent<HealthComponent>();
 				
-				if (Math.Abs(h.Health + ev.Amount) < 0.1f) {
+				if (Math.Abs(h!.Health + ev.Amount) < 0.1f) {
 					from = ev.From;
 				}
 			} else if (e is CollisionStartedEvent c && hurts) {
 				if (c.Entity is Player) {
-					c.Entity.GetComponent<HealthComponent>().ModifyHealth(-1, this);
-					c.Entity.GetAnyComponent<BodyComponent>().KnockbackFrom(this, 1);
+					c.Entity.GetComponent<HealthComponent>()!.ModifyHealth(-1, this);
+					c!.Entity.GetAnyComponent<BodyComponent>()!.KnockbackFrom(this, 1);
 				}
 			}
 			
@@ -97,7 +97,7 @@ namespace BurningKnight.level.entities {
 			if (from != null && TryGetComponent<HealthComponent>(out var h) && h.InvincibilityTimer <= 0.45f) {
 				Done = true;
 
-				if (!Context.Camera.Overlaps(this)) {
+				if (!Context.Camera!.Overlaps(this)) {
 					return;
 				}
 
@@ -111,10 +111,10 @@ namespace BurningKnight.level.entities {
 					part.Position = Center;
 					part.Particle.Scale = Lens.util.math.Rnd.Float(0.4f, 0.8f);
 					
-					Area.Add(part);
+					Area!.Add(part);
 				}
 
-				var d = AudioEmitterComponent.Dummy(Area, Center);
+				var d = AudioEmitterComponent.Dummy(Area!, Center);
 				
 				if (Sprite == "cup" || Sprite.StartsWith("pot")) {
 					d.EmitRandomizedPrefixed("level_cup", 2, 0.75f);
@@ -122,8 +122,8 @@ namespace BurningKnight.level.entities {
 					d.EmitRandomizedPrefixed("level_chair_break", 2, 0.75f);
 				}
 
-				Particles.BreakSprite(Area, GetComponent<SliceComponent>().Sprite, Position);
-				Context.Camera.Shake(2f);
+				Particles.BreakSprite(Area!, GetComponent<SliceComponent>()!.Sprite, Position);
+				Context.Camera!.Shake(2f);
 			}
 		}
 

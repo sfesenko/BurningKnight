@@ -69,10 +69,10 @@ namespace BurningKnight.state {
 			ImGui.SameLine();
 
 			if (ImGui.Button("Spawn All (super laggy!)")) {
-				var player = LocalPlayer.Locate(Context.Area);
+				var player = LocalPlayer.Locate(Context.Area!);
 
 				foreach (var id in Items.Datas.Keys) {
-					Items.CreateAndAdd(id, Context.Area, false).Center = player.Center;
+					Items.CreateAndAdd(id, Context.Area!, false)!.Center = player!.Center;
 				}
 			}
 
@@ -259,11 +259,11 @@ namespace BurningKnight.state {
 
 						if (ImGui.IsMouseDown(ImGuiMouseButton.Right)) {
 							if (ImGui.Button("Give")) {
-								LocalPlayer.Locate(Context.Area)
-									?.GetComponent<InventoryComponent>()
+								LocalPlayer.Locate(Context.Area!)
+									?.GetComponent<InventoryComponent>()!
 									.Pickup(Items.CreateAndAdd(
-										Selected.Id, Context.Area
-									));
+										Selected.Id, Context.Area!
+									)!);
 							}
 						}
 					}

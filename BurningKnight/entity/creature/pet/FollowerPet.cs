@@ -15,7 +15,7 @@ namespace BurningKnight.entity.creature.pet {
 
 			var region = CommonAse.Items.GetSlice(Sprite);
 
-			Width = region.Width;
+			Width = region!.Width;
 			Height = region.Height;
 			
 			AddComponent(new ZSliceComponent(CommonAse.Items, Sprite));
@@ -23,7 +23,7 @@ namespace BurningKnight.entity.creature.pet {
 			AddComponent(new ZComponent { Float = true });
 			AddComponent(new RectBodyComponent(0, 0, Width, Height, BodyType.Dynamic, true));
 			
-			GetComponent<ZSliceComponent>().Animate();
+			GetComponent<ZSliceComponent>()!.Animate();
 		}
 	}
 }

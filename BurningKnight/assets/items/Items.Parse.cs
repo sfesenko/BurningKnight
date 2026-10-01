@@ -37,7 +37,7 @@ namespace BurningKnight.assets.items {
 				Root = item,
 				Uses = item["uses"],
 				Renderer = (item["renderer"].IsJsonObject ? item["renderer"] : JsonValue.Null),
-				Animation = animation,
+				Animation = animation!,
 				AutoPickup = pickup,
 				Single = item["single"].Bool(true),
 				Automatic = item["auto"].Bool(false),

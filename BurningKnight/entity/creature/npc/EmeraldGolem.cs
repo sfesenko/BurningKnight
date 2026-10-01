@@ -37,84 +37,84 @@ namespace BurningKnight.entity.creature.npc {
 				CanInteract = e => !broken
 			});
 			
-			GetComponent<DialogComponent>().Dialog.Voice = 15;
+			GetComponent<DialogComponent>()!.Dialog!.Voice = 15;
 			
 			Dialogs.RegisterCallback("eg_0", (d, c) => {
 				if (broken) {
-					return null;
+					return null!;
 				}
 			
 				if (((ChoiceDialog) d).Choice == 0) {
 					Timer.Add(() => {
-						GetComponent<DialogComponent>().StartAndClose(Locale.Get("eg_1"), 3);
+						GetComponent<DialogComponent>()!.StartAndClose(Locale.Get("eg_1"), 3);
 					}, 0.2f);
 
-					var inv = c.To.GetComponent<InventoryComponent>();
+					var inv = c!.To!.GetComponent<InventoryComponent>();
 					var a = c.To.Area;
 			
 					for (var i = 0; i < Amount; i++) {
-						inv.Pickup(Items.CreateAndAdd("bk:emerald", a));
+						inv!.Pickup(Items.CreateAndAdd("bk:emerald", a!)!);
 					}
 
 					Timer.Add(() => {
-						inv.Pickup(Items.CreateAndAdd(Scourge.GenerateItemId(), a));
+						inv!.Pickup(Items.CreateAndAdd(Scourge.GenerateItemId()!, a!)!);
 					}, 1f);
 
 					Timer.Add(() => {
-						GetComponent<AnimationComponent>().Animate(() => {
+						GetComponent<AnimationComponent>()!.Animate(() => {
 							Done = true;
 							Engine.Instance.Flash = 1f;
-							Context.Camera.Shake(8);
+							Context.Camera!.Shake(8);
 							
 							for (var i = 0; i < 4; i++) {
 								var part = new ParticleEntity(Particles.Dust());
 						
 								part.Position = Center + Rnd.Vector(-16, 16);
 								part.Particle.Scale = Rnd.Float(1f, 2f);
-								Context.Level.Area.Add(part);
+								Context.Level!.Area!.Add(part);
 								part.Depth = 1;
 							}
 						});
 					}, 4f);
 
 					broken = true;
-					return null;
+					return null!;
 				} else if (GlobalSave.IsTrue("bk:emerald_gun")) {
 					Timer.Add(() => {
-						GetComponent<DialogComponent>().StartAndClose(Locale.Get("eg_1"), 3);
+						GetComponent<DialogComponent>()!.StartAndClose(Locale.Get("eg_1"), 3);
 					}, 0.2f);
 
-					var inv = c.To.GetComponent<InventoryComponent>();
+					var inv = c!.To!.GetComponent<InventoryComponent>();
 					var a = c.To.Area;
 			
-					inv.Pickup(Items.CreateAndAdd("bk:emerald_gun", a));
+					inv!.Pickup(Items.CreateAndAdd("bk:emerald_gun", a!)!);
 
 					Timer.Add(() => {
-						inv.Pickup(Items.CreateAndAdd(Scourge.GenerateItemId(), a));
+						inv.Pickup(Items.CreateAndAdd(Scourge.GenerateItemId()!, a!)!);
 					}, 1f);
 
 					Timer.Add(() => {
-						GetComponent<AnimationComponent>().Animate(() => {
+						GetComponent<AnimationComponent>()!.Animate(() => {
 							Done = true;
 							Engine.Instance.Flash = 1f;
-							Context.Camera.Shake(8);
+							Context.Camera!.Shake(8);
 							
 							for (var i = 0; i < 4; i++) {
 								var part = new ParticleEntity(Particles.Dust());
 						
 								part.Position = Center + Rnd.Vector(-16, 16);
 								part.Particle.Scale = Rnd.Float(1f, 2f);
-								Context.Level.Area.Add(part);
+								Context.Level!.Area!.Add(part);
 								part.Depth = 1;
 							}
 						});
 					}, 4f);
 
 					broken = true;
-					return null;
+					return null!;
 				}
 
-				return null;
+				return null!;
 			});
 			
 			Subscribe<RoomChangedEvent>();
@@ -122,10 +122,10 @@ namespace BurningKnight.entity.creature.npc {
 
 		public override bool HandleEvent(Event e) {
 			if (e is RoomChangedEvent rce && rce.Who is Player) {
-				if (rce.New == GetComponent<RoomComponent>().Room) {
-					GetComponent<DialogComponent>().StartAndClose("eg_3", 3);
+				if (rce.New == GetComponent<RoomComponent>()!.Room) {
+					GetComponent<DialogComponent>()!.StartAndClose("eg_3", 3);
 				} else {
-					GetComponent<DialogComponent>().Close();
+					GetComponent<DialogComponent>()!.Close();
 				}
 			}
 			
@@ -133,7 +133,7 @@ namespace BurningKnight.entity.creature.npc {
 		}
 
 		private bool Interact(Entity e) {
-			GetComponent<DialogComponent>().Start("eg_0", e);
+			GetComponent<DialogComponent>()!.Start("eg_0", e);
 			return true;
 		}
 

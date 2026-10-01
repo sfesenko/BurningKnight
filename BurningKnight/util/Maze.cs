@@ -24,7 +24,7 @@ namespace BurningKnight.util {
 
 			foreach (var D in R.Connected.Values) {
 				try {
-					Maze[D.X - R.Left][D.Y - R.Top] = Empty;
+					Maze[D!.X - R.Left][D.Y - R.Top] = Empty;
 				} catch (Exception) {
 					
 				}
@@ -68,7 +68,7 @@ namespace BurningKnight.util {
 					Y = Rnd.Int(Maze[0].Length);
 				} while (!Maze[X][Y]);
 
-				Mov = DecideDirection(Maze, X, Y);
+				Mov = DecideDirection(Maze, X, Y)!;
 
 				if (Mov == null) {
 					Fails++;
@@ -88,7 +88,7 @@ namespace BurningKnight.util {
 			return Maze;
 		}
 
-		private static int[] DecideDirection(bool[][] Maze, int X, int Y) {
+		private static int[]? DecideDirection(bool[][] Maze, int X, int Y) {
 			if (Rnd.Int(4) == 0 && CheckValidMove(Maze, X, Y, new[] {0, -1})) {
 				return new[] {0, -1};
 			}

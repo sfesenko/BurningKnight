@@ -29,7 +29,7 @@ namespace BurningKnight.entity.component {
 			base.Update(dt);
 
 			T += dt * Speed;
-			count += (Orbiting.Count - count) * dt * 4;
+			count += (Orbiting!.Count - count) * dt * 4;
 
 			if (Entity.DistanceTo(center) > 32f) {
 				center = Entity.Center;
@@ -40,7 +40,7 @@ namespace BurningKnight.entity.component {
 			for (var i = Orbiting.Count - 1; i >= 0; i--) {
 				var e = Orbiting[i];
 				var component = e.GetComponent<OrbitalComponent>();
-				var d = component.Radius * RadiusMultiplier;
+				var d = component!.Radius * RadiusMultiplier;
 				var a = i / count * Math.PI * 2 - T * 1.5f;
 
 				if (e.Done) {
@@ -68,8 +68,8 @@ namespace BurningKnight.entity.component {
 				Entity.GetComponent<AudioEmitterComponent>().Emit("item_orbitals", 0.5f, looped: true, tween: true);
 			}	*/		
 			
-			e.GetComponent<OrbitalComponent>().Orbiting = Entity;
-			Orbiting.Add(e);
+			e.GetComponent<OrbitalComponent>()!.Orbiting = Entity;
+			Orbiting!.Add(e);
 
 			if (Entity is Player && Orbiting.Count >= 3) {
 				Achievements.Unlock("bk:star");
@@ -77,8 +77,8 @@ namespace BurningKnight.entity.component {
 		}
 
 		public void RemoveOrbiter(Entity e) {
-			Orbiting.Remove(e);
-			e.GetComponent<OrbitalComponent>().Orbiting = null;
+			Orbiting!.Remove(e);
+			e.GetComponent<OrbitalComponent>()!.Orbiting = null;
 
 			if (Orbiting.Count == 0) {
 				RemoveSound();
@@ -89,7 +89,7 @@ namespace BurningKnight.entity.component {
 			base.Destroy();
 			
 			foreach (var o in Orbiting) {
-				o.GetComponent<OrbitalComponent>().Orbiting = null;
+				o.GetComponent<OrbitalComponent>()!.Orbiting = null;
 			}
 
 			RemoveSound();

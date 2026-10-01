@@ -40,42 +40,42 @@ namespace BurningKnight.entity.creature.bk {
 			public override void Init() {
 				base.Init();
 
-				GameContext.Current.Camera.Targets.Clear();
+				GameContext.Current!.Camera!.Targets!.Clear();
 				GameContext.Current.Camera.Follow(Self, 0.3f);
 
-				Timer.Add(() => { GameContext.Current.Camera.Follow(Self.captured, 0.3f); }, 0.5f);
+				Timer.Add(() => { GameContext.Current.Camera.Follow(Self.captured!, 0.3f); }, 0.5f);
 			}
 
 			public override void Update(float dt) {
 				base.Update(dt);
 
-				var d = Self.DistanceTo(Self.captured);
+				var d = Self.DistanceTo(Self.captured!);
 
 				if (d <= 8) {
 					Audio.PlayMusic("Fatiga", true);
 
 					// PREPARE TO DIE!
-					Self.captured.GetComponent<DialogComponent>().StartAndClose(Self.captured.GetScream(), 5);
-					Self.captured.GetComponent<AudioEmitterComponent>().EmitRandomized("mob_bk_capture");
-					GameContext.Current.Camera.Unfollow(Self);
+					Self!.captured!.GetComponent<DialogComponent>()!.StartAndClose(Self.captured.GetScream(), 5);
+					Self.captured.GetComponent<AudioEmitterComponent>()!.EmitRandomized("mob_bk_capture");
+					GameContext.Current!.Camera!.Unfollow(Self);
 
 					Become<HiddenState>();
 					Self.captured.SelectAttack();
 				} else if (d >= 400f &&
-				           Self.GetComponent<RoomComponent>().Room != Self.captured.GetComponent<RoomComponent>().Room) {
+				           Self.GetComponent<RoomComponent>()!.Room != Self!.captured!.GetComponent<RoomComponent>()!.Room) {
 					Become<TeleportState>();
 
 					return;
 				}
 
-				var a = Self.AngleTo(Self.captured);
+				var a = Self.AngleTo(Self.captured!);
 				var force = 500f * dt;
 
 				if (d <= 64f) {
 					force *= 2;
 				}
 
-				Self.GetComponent<RectBodyComponent>().Velocity +=
+				Self.GetComponent<RectBodyComponent>()!.Velocity +=
 					new Vector2((float) Math.Cos(a) * force, (float) Math.Sin(a) * force);
 			}
 		}

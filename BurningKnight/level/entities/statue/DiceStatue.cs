@@ -28,7 +28,7 @@ namespace BurningKnight.level.entities.statue {
 
 				{
 					"buffed", (s, e) => {
-						e.GetComponent<HealthComponent>().MaxHealth += 2;
+						e.GetComponent<HealthComponent>()!.MaxHealth += 2;
 						TextParticle.Add(e, Locale.Get("max_hp"), 2, true);
 						return true;
 					}
@@ -37,10 +37,10 @@ namespace BurningKnight.level.entities.statue {
 				// - Hp down
 				{
 					"nerfed", (s, e) => {
-						if (e.GetComponent<HeartsComponent>().Total > 2) {
-							e.GetComponent<HealthComponent>().ModifyHealth(-2, s, DamageType.Custom);
+						if (e.GetComponent<HeartsComponent>()!.Total > 2) {
+							e.GetComponent<HealthComponent>()!.ModifyHealth(-2, s, DamageType.Custom);
 						} else {
-							e.GetComponent<HealthComponent>().MaxHealth -= 2;
+							e.GetComponent<HealthComponent>()!.MaxHealth -= 2;
 						}
 
 						TextParticle.Add(e, Locale.Get("max_hp"), 2, true, true);
@@ -52,7 +52,7 @@ namespace BurningKnight.level.entities.statue {
 				{
 					"restored", (s, e) => {
 						var c = Rnd.Int(1, 3);
-						e.GetComponent<HealthComponent>().ModifyHealth(c, s);
+						e.GetComponent<HealthComponent>()!.ModifyHealth(c, s);
 						TextParticle.Add(e, "HP", c, true);
 						return true;
 					}
@@ -62,7 +62,7 @@ namespace BurningKnight.level.entities.statue {
 				{
 					"damaged", (s, e) => {
 						var c = Rnd.Int(1, 3);
-						e.GetComponent<HealthComponent>().ModifyHealth(-c, s);
+						e.GetComponent<HealthComponent>()!.ModifyHealth(-c, s);
 						TextParticle.Add(e, "HP", c, true, true);
 						return false;
 					}
@@ -88,7 +88,7 @@ namespace BurningKnight.level.entities.statue {
 				{
 					"gifted", (s, e) => {
 						var c = Rnd.Int(10, 21);
-						e.GetComponent<ConsumablesComponent>().Coins += c;
+						e.GetComponent<ConsumablesComponent>()!.Coins += c;
 						TextParticle.Add(e, Locale.Get("coins"), c, true);
 						return true;
 					}
@@ -98,8 +98,8 @@ namespace BurningKnight.level.entities.statue {
 				{
 					"robbed", (s, e) => {
 						var c = e.GetComponent<ConsumablesComponent>();
-						var cn = (int) Math.Ceiling(c.Coins * Rnd.Float(0.2f, 0.5f));
-						e.GetComponent<ConsumablesComponent>().Coins -= cn;
+						var cn = (int) Math.Ceiling(c!.Coins * Rnd.Float(0.2f, 0.5f));
+						e.GetComponent<ConsumablesComponent>()!.Coins -= cn;
 						TextParticle.Add(e, Locale.Get("coins"), cn, true, true);
 						return false;
 					}
@@ -109,7 +109,7 @@ namespace BurningKnight.level.entities.statue {
 				{
 					"lucky", (s, e) => {
 						try {
-							ChestRegistry.PlaceRandom(s.BottomCenter + new Vector2(0, 12), s.Area);
+							ChestRegistry.PlaceRandom(s.BottomCenter + new Vector2(0, 12), s.Area!);
 						} catch (Exception ex) {
 							Log.Error(ex);
 						}
@@ -121,14 +121,14 @@ namespace BurningKnight.level.entities.statue {
 				{
 					"unlucky", (s, e) => {
 						var c = e.GetComponent<ActiveWeaponComponent>();
-						var item = c.Item;
-						TextParticle.Add(e, item.Name, 1, true, true);
+						var item = c!.Item;
+						TextParticle.Add(e, item!.Name, 1, true, true);
 
 						c.Drop();
 						item.Done = true;
 
-						if (e.GetComponent<WeaponComponent>().Item == null) {
-							c.Set(Items.CreateAndAdd(LevelSave.MeleeOnly || item.Data.WeaponType == WeaponType.Melee ? "bk:ancient_sword" : "bk:ancient_revolver", s.Area));
+						if (e.GetComponent<WeaponComponent>()!.Item == null) {
+							c.Set(Items.CreateAndAdd(LevelSave.MeleeOnly || item.Data.WeaponType == WeaponType.Melee ? "bk:ancient_sword" : "bk:ancient_revolver", s.Area!)!);
 						} else {
 							c.RequestSwap();
 						}
@@ -166,15 +166,15 @@ namespace BurningKnight.level.entities.statue {
 				bad = Effects[key](this, e);
 
 				if (!Broken) {
-					GetComponent<AudioEmitterComponent>().Emit(bad ? "item_dice_good" : "item_dice_bad");
+					GetComponent<AudioEmitterComponent>()!.Emit(bad ? "item_dice_good" : "item_dice_bad");
 				}
 			}, 1f);
 
 			if (TimesUsed >= 3) {
-				GetComponent<AudioEmitterComponent>().Emit("item_dice_break");
+				GetComponent<AudioEmitterComponent>()!.Emit("item_dice_break");
 				
 				Timer.Add(() => {
-					GetComponent<AudioEmitterComponent>().Emit(bad ? "item_dice_good" : "item_dice_bad");
+					GetComponent<AudioEmitterComponent>()!.Emit(bad ? "item_dice_good" : "item_dice_bad");
 				}, 0.6f);
 				
 				Break();

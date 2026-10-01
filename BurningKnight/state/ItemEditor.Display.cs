@@ -23,7 +23,7 @@ using Num = System.Numerics;
 
 namespace BurningKnight.state {
 	public partial class ItemEditor {
-		public static void DisplayUse(JsonValue parent, JsonValue root, string useId = null) {
+		public static void DisplayUse(JsonValue parent, JsonValue root, string? useId = null) {
 			if (root == JsonValue.Null) {
 				return;
 			}
@@ -144,7 +144,7 @@ namespace BurningKnight.state {
 				if (RendererRegistry.DebugRenderers.TryGetValue(id, out var renderer)) {
 					ImGui.PushID(ud);
 					ud++;
-					renderer(Selected.Id, parent, root);
+					renderer(Selected!.Id, parent, root);
 					ImGui.PopID();
 				} else {
 					ImGui.Text($"No renderer found for '{id}'");
@@ -161,7 +161,7 @@ namespace BurningKnight.state {
 				
 				if (ImGui.Button("Remove")) {
 					parent["renderer"] = JsonValue.Null;
-					Selected.Renderer = JsonValue.Null;
+					Selected!.Renderer = JsonValue.Null;
 				}
 			}
 
@@ -191,7 +191,7 @@ namespace BurningKnight.state {
 						["id"] = selectedRenderer
 					};
 
-					Selected.Renderer = toAdd["renderer"];
+					Selected!.Renderer = toAdd["renderer"];
 					
 					ImGui.CloseCurrentPopup();
 				}

@@ -24,7 +24,7 @@ namespace BurningKnight.entity.item.use {
 				var hurt = false;
 
 				ProjectileCallbacks.AttachCollisionCallback(pce.Projectile, (p, en) => {
-					if (en.HasComponent<HealthComponent>() || (en is ProjectileLevelBody && Context.Level.Biome is IceBiome)) {
+					if (en.HasComponent<HealthComponent>() || (en is ProjectileLevelBody && Context.Level!.Biome is IceBiome)) {
 						hurt = true;
 					}
 					
@@ -33,7 +33,7 @@ namespace BurningKnight.entity.item.use {
 				
 				ProjectileCallbacks.AttachDeathCallback(pce.Projectile, (p, en, t) => {
 					if (!hurt) {
-						Item.Owner.GetComponent<HealthComponent>().ModifyHealth(-1, Item);
+						Item.Owner.GetComponent<HealthComponent>()!.ModifyHealth(-1, Item);
 					}
 				});
 			} else if (e is MeleeArc.CreatedEvent mac) {
@@ -44,14 +44,14 @@ namespace BurningKnight.entity.item.use {
 				var hurt = false;
 
 				mac.Arc.OnHurt += (m, en) => {
-					if (en.HasComponent<HealthComponent>() || (en is ProjectileLevelBody && Context.Level.Biome is IceBiome)) {
+					if (en.HasComponent<HealthComponent>() || (en is ProjectileLevelBody && Context.Level!.Biome is IceBiome)) {
 						hurt = true;
 					}
 				};
 
 				mac.Arc.OnDeath += (m) => {
 					if (!hurt) {
-						Item.Owner.GetComponent<HealthComponent>().ModifyHealth(-1, Item);
+						Item.Owner.GetComponent<HealthComponent>()!.ModifyHealth(-1, Item);
 					}
 				};
 			}

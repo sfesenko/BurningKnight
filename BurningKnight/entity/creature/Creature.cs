@@ -56,11 +56,11 @@ namespace BurningKnight.entity.creature {
 		}
 
 		protected virtual void Become<T>() {
-			GetComponent<StateComponent>().Become<T>();
+			GetComponent<StateComponent>()!.Become<T>();
 		}
 		
-		public virtual void Kill(Entity w, DamageType type = DamageType.Regular) {
-			GetComponent<HealthComponent>().Kill(w, type);
+		public virtual void Kill(Entity? w, DamageType type = DamageType.Regular) {
+			GetComponent<HealthComponent>()!.Kill(w, type);
 		}
 
 		public override bool HandleEvent(Event e) {
@@ -68,7 +68,7 @@ namespace BurningKnight.entity.creature {
 				if (HasNoHealth(ev)) {
 					Kill(ev.From, ev.Type);
 				} else if (!ev.PressedForBomb) {
-					GetComponent<AudioEmitterComponent>().EmitRandomized(GetHurtSfx());
+					GetComponent<AudioEmitterComponent>()!.EmitRandomized(GetHurtSfx()!);
 				}
 
 				if (ev.From != null && !ev.Handled && !ev.PressedForBomb) {
@@ -79,7 +79,7 @@ namespace BurningKnight.entity.creature {
 
 						if (Settings.Blood && !Settings.LowQuality) {
 							for (var i = 0; i < 8; i++) {
-								var p = Particles.Wrap(new Particle(Controllers.Blood, Particles.BloodRenderer), Area,
+								var p = Particles.Wrap(new Particle(Controllers.Blood, Particles.BloodRenderer), Area!,
 									Center + Rnd.Vector(-4, 4));
 
 								var a = ev.From.AngleTo(this);
@@ -108,15 +108,15 @@ namespace BurningKnight.entity.creature {
 				}
 			} else if (e is TileCollisionStartEvent tce) {
 				if (tce.Tile == Tile.Lava) {
-					if (GetComponent<HealthComponent>().ModifyHealth(-1, Context.Level)) {
+					if (GetComponent<HealthComponent>()!.ModifyHealth(-1, Context.Level!)) {
 						// GetComponent<BuffsComponent>().Add(BurningBuff.Id);
 
 						var set = false;
 						var center = Center;
 						var count = 0;
 
-						GetComponent<TileInteractionComponent>().ApplyForAllTouching((i, x, y) => {
-							if (Context.Level.Get(x, y, true) == Tile.Lava) {
+						GetComponent<TileInteractionComponent>()!.ApplyForAllTouching((i, x, y) => {
+							if (Context.Level!.Get(x, y, true) == Tile.Lava) {
 								var v = new Vector2(x * 16, y * 16);
 								count++;
 
@@ -150,11 +150,11 @@ namespace BurningKnight.entity.creature {
 			return false;
 		}
 
-		public virtual void AnimateDeath(DiedEvent d) {
-			AudioEmitterComponent.Dummy(Area, Center).EmitRandomized(GetDeadSfx(), sz: 0.2f);
+		public virtual void AnimateDeath(DiedEvent? d) {
+			AudioEmitterComponent.Dummy(Area!, Center).EmitRandomized(GetDeadSfx()!, sz: 0.2f);
 
-			if (!GetComponent<TileInteractionComponent>().HasNoSupport) {
-				GetComponent<DropsComponent>().SpawnDrops();
+			if (!GetComponent<TileInteractionComponent>()!.HasNoSupport) {
+				GetComponent<DropsComponent>()!.SpawnDrops();
 			}
 
 			Done = true;
@@ -165,13 +165,13 @@ namespace BurningKnight.entity.creature {
 				part.Position = Center;
 				part.Particle.Scale = Rnd.Float(1.5f, 2f);
 				part.Particle.Velocity = new Vector2(Rnd.Float(20, 30) * (Rnd.Chance() ? -1 : 1), -Rnd.Float(40, 66));
-				Context.Level.Area.Add(part);
+				Context.Level!.Area!.Add(part);
 				part.Depth = 1;
 			}
 
 			if (Settings.Blood) {
 				for (var i = 0; i < Rnd.Int(2, 8); i++) {
-					Area.Add(new SplashParticle {
+					Area!.Add(new SplashParticle {
 						Position = Center - new Vector2(2.5f),
 						Color = GetBloodColor()
 					});
@@ -179,12 +179,12 @@ namespace BurningKnight.entity.creature {
 			}
 		}
 
-		protected virtual TextureRegion GetDeathFrame() {
-			return GetAnyComponent<AnimationComponent>()?.Animation.GetFrame("dead", 0);
+		protected virtual TextureRegion? GetDeathFrame() {
+			return GetAnyComponent<AnimationComponent>()?.Animation?.GetFrame("dead", 0);
 		}
 
-		protected virtual void CreateGore(DiedEvent d) {
-			Context.Camera.ShakeMax(5);
+		protected virtual void CreateGore(DiedEvent? d) {
+			Context.Camera!.ShakeMax(5);
 			
 
 			if (!Settings.Blood) {
@@ -199,7 +199,7 @@ namespace BurningKnight.entity.creature {
 				return;
 			}
 			
-			Area.Add(gore);
+			Area!.Add(gore);
 			
 			gore.Position = Position;
 			gore.AddComponent(new ZSliceComponent(r));
@@ -211,7 +211,7 @@ namespace BurningKnight.entity.creature {
 			
 			gore.AddComponent(b);
 			
-			b.Body.LinearDamping = 2f;
+			b!.Body!.LinearDamping = 2f;
 			b.Body.Restitution = 1;
 			b.Body.Friction = 0;
 
@@ -221,21 +221,21 @@ namespace BurningKnight.entity.creature {
 				b.Body.LinearVelocity = v;
 
 				if (v.X > 0) {
-					gore.GetComponent<ZSliceComponent>().Flipped = true;
+					gore.GetComponent<ZSliceComponent>()!.Flipped = true;
 				}
 			}
 		}
 
 		protected void AddDrops(params Drop[] drops) {
-			GetComponent<DropsComponent>().Add(drops);
+			GetComponent<DropsComponent>()!.Add(drops);
 		}
 
-		public virtual bool HasNoHealth(HealthModifiedEvent e = null) {
-			return GetComponent<HealthComponent>().HasNoHealth || Math.Abs(GetComponent<HealthComponent>().Health - (-e?.Amount ?? 0)) < 0.01f;
+		public virtual bool HasNoHealth(HealthModifiedEvent? e = null) {
+			return GetComponent<HealthComponent>()!.HasNoHealth || Math.Abs(GetComponent<HealthComponent>()!.Health - (-e?.Amount ?? 0)) < 0.01f;
 		}
 
-		public virtual bool HasNoHealth(PostHealthModifiedEvent e = null) {
-			return GetComponent<HealthComponent>().HasNoHealth;
+		public virtual bool HasNoHealth(PostHealthModifiedEvent? e = null) {
+			return GetComponent<HealthComponent>()!.HasNoHealth;
 		}
 		
 		public virtual bool InAir() {
@@ -266,11 +266,11 @@ namespace BurningKnight.entity.creature {
 			return Color.Red;
 		}
 
-		protected virtual string GetHurtSfx() {
+		protected virtual string? GetHurtSfx() {
 			return $"hurt{Rnd.Int(1, 3)}";
 		}
 
-		protected virtual string GetDeadSfx() {
+		protected virtual string? GetDeadSfx() {
 			return $"dead{Rnd.Int(1, 4)}";
 		}
 	}

@@ -8,12 +8,12 @@ using Lens.util.file;
 namespace BurningKnight.save {
 	public abstract class EntitySaver : Saver {
 		public class Comparer : IComparer<Entity> {
-			public int Compare(Entity x, Entity y) {
-				return x.GetType().FullName.CompareTo(y.GetType().FullName);
+			public int Compare(Entity? x, Entity? y) {
+				return x!.GetType()!.FullName!.CompareTo(y!.GetType()!.FullName);
 			}
 		}
 
-		public static readonly Comparer DefaultComparer;
+		public static readonly Comparer DefaultComparer = null!;
 		public static bool Loading;
 		
 		public void SmartSave(List<Entity> a, FileWriter writer) {
@@ -29,7 +29,7 @@ namespace BurningKnight.save {
 			
 			writer.WriteInt32(all.Count);
 			
-			SaveableEntity last = null;
+			SaveableEntity? last = null;
 			
 			for (var i = 0; i < all.Count; i++) {
 				var entity = (SaveableEntity) all[i];
@@ -37,7 +37,7 @@ namespace BurningKnight.save {
 				if (last != null && last.GetType().FullName == entity.GetType().FullName) {
 					writer.WriteString(null);
 				} else {
-					writer.WriteString(entity.GetType().FullName.Replace("BurningKnight.", ""));
+					writer.WriteString(entity!.GetType()!.FullName!.Replace("BurningKnight.", ""));
 				}
 
 				writer.Cache = true;
@@ -88,10 +88,10 @@ namespace BurningKnight.save {
 			var position = reader.Position;
 
 			try {
-				var entity = (SaveableEntity) Activator.CreateInstance(Type.GetType($"BurningKnight.{type}", true, false));
+				var entity = (SaveableEntity) Activator.CreateInstance(Type.GetType($"BurningKnight.{type}", true, false)!)!;
 				area.Add(entity, false);
 
-				entity.Load(reader);
+				entity!.Load(reader);
 				var readSize = reader.Position - position;
 				var sum = readSize - size;
 

@@ -44,7 +44,7 @@ namespace BurningKnight.level {
 				loadMarked = true;
 			}
 
-			var rooms = Area.Tagged[Tags.Room];
+			var rooms = Area!.Tagged[Tags.Room];
 			var f = GetFilling() == Tile.Chasm;
 			
 			for (var i = 0; i < Size - Width; i++) {
@@ -191,7 +191,7 @@ namespace BurningKnight.level {
 		public override void Save(FileWriter stream) {
 			base.Save(stream);
 			
-			stream.WriteString(Biome.Id);
+			stream.WriteString(Biome!.Id);
 			stream.WriteInt32(width);
 			stream.WriteInt32(height);
 
@@ -217,7 +217,7 @@ namespace BurningKnight.level {
 
 			var biome = stream.ReadString();
 
-			if (BiomeRegistry.Defined.TryGetValue(biome, out var b)) {
+			if (BiomeRegistry.Defined.TryGetValue(biome!, out var b)) {
 				SetBiome(b);
 			} else {
 				SetBiome(BiomeRegistry.Defined[Biome.Castle]);
@@ -242,7 +242,7 @@ namespace BurningKnight.level {
 			Snows = stream.ReadBoolean();
 			Rains = stream.ReadBoolean();
 
-			Variant = VariantRegistry.Create(stream.ReadString());
+			Variant = VariantRegistry.Create(stream.ReadString()!);
 			LoadPassable();
 		}
 		public void MarkForClearing() {
@@ -338,10 +338,10 @@ namespace BurningKnight.level {
 			UpdateTile(tx, ty);
 			
 			ReCreateBodyChunk(tx, ty);
-			Animate(Area, tx, ty);
+			Animate(Area!, tx, ty);
 		}
 		public static void Animate(Area area, int x, int y) {
-			if (!GameContext.Current.Camera.Overlaps(new Rectangle(x * 16, y * 16, 16, 16))) {
+			if (!GameContext.Current!.Camera!.Overlaps(new Rectangle(x * 16, y * 16, 16, 16))) {
 				return;
 			}
 

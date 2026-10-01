@@ -38,20 +38,20 @@ namespace BurningKnight.entity.item.use {
 		private float range;
 		private float scaleMin;
 		private float scaleMax;
-		private string slice;
+		private string slice = null!;
 		private float accuracy;
 		private int count;
-		private string prefab;
+		private string prefab = null!;
 		private bool light;
 		private float knockback;
 		private bool rect;
-		private string sfx;
+		private string sfx = null!;
 		private int sfxNumber;
 		private int manaUsage;
 		protected bool wait;
 		private bool toCursor;
 		private bool toEnemy;
-		private string color;
+		private string color = null!;
 		public bool ReloadSfx;
 		private bool shells;
 		private int manaDrop;
@@ -59,7 +59,7 @@ namespace BurningKnight.entity.item.use {
 		private bool emeralds;
 		
 		public bool ProjectileDied = true;
-		private ItemUse[] modifiers;
+		private ItemUse[]? modifiers;
 
 		public override void Setup(JsonValue settings) {
 			base.Setup(settings);
@@ -112,7 +112,7 @@ namespace BurningKnight.entity.item.use {
 				if (manaUsage > 0) {
 					var mana = entity.GetComponent<ManaComponent>();
 
-					if (mana.Mana < manaUsage) {
+					if (mana!.Mana < manaUsage) {
 						AnimationUtil.ActionFailed();
 						return;
 					}
@@ -138,21 +138,21 @@ namespace BurningKnight.entity.item.use {
 				}
 
 				if (sfx == "item_gun_fire") {
-					entity.GetComponent<AudioEmitterComponent>().EmitRandomizedPrefixed(sfx, 2, 0.5f, sz: 0.2f);
+					entity.GetComponent<AudioEmitterComponent>()!.EmitRandomizedPrefixed(sfx, 2, 0.5f, sz: 0.2f);
 				} else {
 					if (sfxNumber == 0) {
-						entity.GetComponent<AudioEmitterComponent>().EmitRandomized(sfx, 0.5f, sz: 0.25f);
+						entity.GetComponent<AudioEmitterComponent>()!.EmitRandomized(sfx, 0.5f, sz: 0.25f);
 					} else {
-						entity.GetComponent<AudioEmitterComponent>().EmitRandomizedPrefixed(sfx, sfxNumber, 0.5f, sz: 0.25f);
+						entity.GetComponent<AudioEmitterComponent>()!.EmitRandomizedPrefixed(sfx, sfxNumber, 0.5f, sz: 0.25f);
 					}
 				}
 
 				var aim = entity.GetComponent<AimComponent>();
-				var from = toCursor ? entity.Center : aim.Center;
-				var am = toCursor ? entity.GetComponent<CursorComponent>().Cursor.GamePosition : aim.RealAim;
+				var from = toCursor ? entity.Center : aim!.Center;
+				var am = toCursor ? entity.GetComponent<CursorComponent>()!.Cursor.GamePosition : aim!.RealAim;
 
 				if (toEnemy) {
-					var target = entity.Area.FindClosest(from, Tags.MustBeKilled, e => true);
+					var target = entity.Area!.FindClosest(from, Tags.MustBeKilled, e => true);
 
 					if (target != null) {
 						am = target.Center;
@@ -211,7 +211,7 @@ namespace BurningKnight.entity.item.use {
 						builder.Range *= 3;
 					}
 
-					Context.Camera.Push(antiAngle, 4f);
+					Context.Camera!.Push(antiAngle, 4f);
 					entity.GetComponent<RectBodyComponent>()?.KnockbackFrom(antiAngle, 0.4f * knockback);
 
 					if (!string.IsNullOrEmpty(color) && ProjectileColor.Colors.TryGetValue(color, out var clr)) {
@@ -226,7 +226,7 @@ namespace BurningKnight.entity.item.use {
 					// projectile.FlashTimer = 0.05f;
 
 					var projectile = builder.Build();
-					projectile.Center = from;
+					projectile!.Center = from;
 
 					if (modifiers != null) {
 						foreach (var m in modifiers) {
@@ -253,15 +253,15 @@ namespace BurningKnight.entity.item.use {
 					if (manaUsage > 0) {
 						if (manaDrop == 0) {
 							ProjectileCallbacks.AttachDeathCallback(projectile, (prj, e, t) => {
-								PlaceMana(entity.Area, prj.Center);
+								PlaceMana(entity.Area!, prj.Center);
 							});
 						} else if (manaDrop == 1) {
-							PlaceMana(entity.Area, entity.Center);
+							PlaceMana(entity.Area!, entity.Center);
 						} else {
 							var where = entity.Center;
 
 							ProjectileCallbacks.AttachDeathCallback(projectile, (prj, e, t) => {
-								PlaceMana(entity.Area, where);
+								PlaceMana(entity.Area!, where);
 							});
 						}
 					}
@@ -270,18 +270,18 @@ namespace BurningKnight.entity.item.use {
 				if (shells) {
 					Timer.Add(() => {
 						var p = new ShellParticle(new Particle(Controllers.Destroy, new TexturedParticleRenderer {
-							Region = CommonAse.Particles.GetSlice("shell")
+							Region = CommonAse.Particles.GetSlice("shell")!
 						}));
 
 						p.Position = entity.Center;
 						p.Y += Rnd.Float(-4, 10);
 
-						entity.Area.Add(p);
+						entity.Area!.Add(p);
 
-						var f = (entity.CenterX > entity.GetComponent<CursorComponent>().Cursor.GamePosition.X ? 1 : -1);
+						var f = (entity.CenterX > entity.GetComponent<CursorComponent>()!.Cursor.GamePosition.X ? 1 : -1);
 
 						p.Particle.Velocity =
-							new Vector2(f * Rnd.Float(40, 60), 0) + entity.GetAnyComponent<BodyComponent>().Velocity;
+							new Vector2(f * Rnd.Float(40, 60), 0) + entity!.GetAnyComponent<BodyComponent>()!.Velocity;
 
 						p.Particle.Angle = 0;
 						p.Particle.Zv = Rnd.Float(1.5f, 2.5f);
@@ -305,7 +305,7 @@ namespace BurningKnight.entity.item.use {
 				if (!played && Particle.Z <= 0) {
 					played = true;
 					AddComponent(new AudioEmitterComponent());
-					GetComponent<AudioEmitterComponent>().EmitRandomizedPrefixed("projectile_shell", 3);
+					GetComponent<AudioEmitterComponent>()!.EmitRandomizedPrefixed("projectile_shell", 3);
 				}
 			}
 		}
@@ -320,11 +320,11 @@ namespace BurningKnight.entity.item.use {
 
 		private void PlaceMana(Area area, Vector2 where) {
 			for (var j = 0; j < Math.Floor(manaUsage / 2f); j++) {
-				Items.CreateAndAdd("bk:mana", area).Center = where;
+				Items.CreateAndAdd("bk:mana", area)!.Center = where;
 			}
 
 			if (manaUsage % 2 == 1) {
-				Items.CreateAndAdd("bk:half_mana", area).Center = where;
+				Items.CreateAndAdd("bk:half_mana", area)!.Center = where;
 			}
 
 			AnimationUtil.Poof(where);

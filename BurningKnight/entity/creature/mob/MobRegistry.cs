@@ -95,7 +95,7 @@ namespace BurningKnight.entity.creature.mob {
 			All.AddRange(infos);
 		}
 
-		public static MobInfo FindFor(Type type) {
+		public static MobInfo? FindFor(Type type) {
 			foreach (var info in All) {
 				if (info.Type == type) {
 					return info;
@@ -105,7 +105,7 @@ namespace BurningKnight.entity.creature.mob {
 			return null;
 		}
 
-		public static Mob Generate() {
+		public static Mob? Generate() {
 			var chances = new float[Current.Count];
 
 			for (var i = 0; i < Current.Count; i++) {
@@ -113,7 +113,7 @@ namespace BurningKnight.entity.creature.mob {
 					continue;
 				}
 				
-				chances[i] = Current[i].GetChanceFor(Context.Level.Biome.Id).Chance;
+				chances[i] = Current[i].GetChanceFor(Context.Level!.Biome!.Id)!.Chance;
 			}
 
 			var types = new List<MobInfo>();
@@ -142,7 +142,7 @@ namespace BurningKnight.entity.creature.mob {
 				return null;
 			}
 
-			return (Mob) Activator.CreateInstance(types[Rnd.Chances(spawnChances)].Type);
+			return (Mob) Activator.CreateInstance(types[Rnd.Chances(spawnChances)].Type)!;
 		}
 
 		public static void SetupForBiome(string biome) {
@@ -157,7 +157,7 @@ namespace BurningKnight.entity.creature.mob {
 
 		public static void Remove<T>() where T : Mob {
 			var type = typeof(T);
-			MobInfo i = null; 
+			MobInfo? i = null;
 			
 			foreach (var info in All) {
 				if (info.Type == type) {

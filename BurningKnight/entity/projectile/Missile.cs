@@ -49,7 +49,7 @@ namespace BurningKnight.entity.projectile {
 			RemoveFlags(ProjectileFlags.BreakableByMelee, ProjectileFlags.Reflectable);
 			AddComponent(new RectBodyComponent(0, 0, w, h));
 			
-			BodyComponent.Body.IsBullet = true;
+			BodyComponent!.Body!.IsBullet = true;
 			BodyComponent.Body.LinearVelocity = new Vector2(0, -100f);
 
 			Owner.HandleEvent(new ProjectileCreatedEvent {
@@ -89,7 +89,7 @@ namespace BurningKnight.entity.projectile {
 			return base.HandleEvent(e);
 		}
 
-		public override bool BreaksFrom(Entity entity, BodyComponent body) {
+		public override bool BreaksFrom(Entity entity, BodyComponent? body) {
 			return false;
 		}
 
@@ -105,13 +105,13 @@ namespace BurningKnight.entity.projectile {
 				if (Bottom >= toY && !exploded) {
 					Break();
 				}
-			} else if (T <= 1f && Bottom < Context.Camera.Y) {
+			} else if (T <= 1f && Bottom < Context.Camera!.Y) {
 				T = MinUpTime + 1;
 				goingDown = true;
 				CenterX = target.CenterX;
 				toY = target.Bottom;
-				GraphicsComponent.FlippedVerticaly = true;
-				BodyComponent.Body.LinearVelocity = new Vector2(0, 100f);
+				GraphicsComponent!.FlippedVerticaly = true;
+				BodyComponent!.Body!.LinearVelocity = new Vector2(0, 100f);
 
 				Tween.To(16, 0, x => shadowSize = x, 1f);
 			}

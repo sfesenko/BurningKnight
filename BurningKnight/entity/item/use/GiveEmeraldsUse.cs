@@ -9,7 +9,7 @@ namespace BurningKnight.entity.item.use {
 		public override void Use(Entity entity, Item item) {
 			GlobalSave.Emeralds += Amount;
 
-			entity.Area.EventListener.Handle(new GaveEvent {
+			entity.Area!.EventListener.Handle(new GaveEvent {
 				Amount = Amount
 			});
 		}

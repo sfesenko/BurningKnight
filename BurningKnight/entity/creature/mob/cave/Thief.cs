@@ -24,7 +24,7 @@ namespace BurningKnight.entity.creature.mob.cave {
 
 			var body = new RectBodyComponent(2, 15, 12, 1);
 			AddComponent(body);
-			body.Body.LinearDamping = 10;
+			body!.Body!.LinearDamping = 10;
 
 			AddComponent(new SensorBodyComponent(2, 2, 12, 14));
 			AddComponent(new LightComponent(this, 20, new Color(0.5f, 1f, 0.4f)));
@@ -69,12 +69,12 @@ namespace BurningKnight.entity.creature.mob.cave {
 				velocity.X = (float) Math.Cos(angle) * force;
 				velocity.Y = (float) Math.Sin(angle) * force;
 
-				Self.GetComponent<RectBodyComponent>().Velocity = velocity;
+				Self.GetComponent<RectBodyComponent>()!.Velocity = velocity;
 			}
 
 			public override void Destroy() {
 				base.Destroy();
-				Self.GetComponent<RectBodyComponent>().Velocity = Vector2.Zero;
+				Self.GetComponent<RectBodyComponent>()!.Velocity = Vector2.Zero;
 			}
 
 			public override void Update(float dt) {
@@ -83,7 +83,7 @@ namespace BurningKnight.entity.creature.mob.cave {
 				if (timer <= T) {
 					Become<IdleState>();
 				} else {
-					Self.GetComponent<RectBodyComponent>().Velocity = velocity * Math.Min(1, timer - T * 0.4f);
+					Self.GetComponent<RectBodyComponent>()!.Velocity = velocity * Math.Min(1, timer - T * 0.4f);
 				}
 			}
 		}
@@ -92,7 +92,7 @@ namespace BurningKnight.entity.creature.mob.cave {
 		public override bool HandleEvent(Event e) {
 			if (e is CollisionStartedEvent ev) {
 				if (ev.Entity is Door) {
-					var s = GetComponent<StateComponent>().StateInstance;
+					var s = GetComponent<StateComponent>()!.StateInstance;
 
 					if (s is RunState) {
 						Become<IdleState>();

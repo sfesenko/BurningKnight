@@ -15,7 +15,7 @@ namespace BurningKnight.entity.item.use {
 
 				ProjectileCallbacks.AttachHurtCallback(pce.Projectile, (p, en) => {
 					var v = p.GetAnyComponent<BodyComponent>();
-					var a = v.Velocity.ToAngle();
+					var a = v!.Velocity.ToAngle();
 					var s = v.Velocity.Length();
 					var c = p.HasComponent<CircleBodyComponent>();
 
@@ -28,7 +28,7 @@ namespace BurningKnight.entity.item.use {
 					for (var i = 0; i < 2; i++) {
 						var pr = builder.Shoot( a + 0.2f * (i == 0 ? -1 : 1), s).Build();
 
-						pr.EntitiesHurt.AddRange(p.EntitiesHurt);
+						pr!.EntitiesHurt!.AddRange(p.EntitiesHurt);
 						pr.Center = p.Center;
 					}
 

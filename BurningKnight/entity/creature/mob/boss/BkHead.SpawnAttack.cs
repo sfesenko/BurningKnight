@@ -41,7 +41,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 
 				if (delay <= 0) {
 					delay = 0.3f;
-					Self.GetComponent<BkGraphicsComponent>().Animate();
+					Self.GetComponent<BkGraphicsComponent>()!.Animate();
 
 					var angle = Rnd.AnglePI() * 0.5f + count * (float) Math.PI;
 					var builder = new ProjectileBuilder(Self, "big") {
@@ -52,7 +52,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 					builder.RemoveFlags(ProjectileFlags.BreakableByMelee, ProjectileFlags.Reflectable, ProjectileFlags.BreakableByMelee);
 
 					var projectile = builder.Shoot(angle, 15f).Build();
-					projectile.Center += MathUtils.CreateVector(angle, 8);
+					projectile!.Center += MathUtils.CreateVector(angle, 8);
 
 
 					ProjectileCallbacks.AttachDeathCallback(projectile, (p, en, t) => {
@@ -60,7 +60,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 						var y = (int) Math.Floor(p.CenterY / 16);
 						
 						var mob = Rnd.Chance(40) ? (Mob) new DesertBulletSlime() : new Gunner();
-						Self.Area.Add(mob);
+						Self.Area!.Add(mob);
 						mob.X = x * 16;
 						mob.Y = y * 16 - 8;
 						mob.GeneratePrefix();

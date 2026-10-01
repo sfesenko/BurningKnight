@@ -20,7 +20,7 @@ namespace BurningKnight.entity.projectile {
 	public class ProjectileBuilder {
 		public Entity Owner;
 
-		private Projectile parent;
+		private Projectile parent = null!;
 
 		public Projectile Parent {
 			get => parent;
@@ -30,7 +30,7 @@ namespace BurningKnight.entity.projectile {
 					Color = value.Color;
 				}
 
-				parent = value;
+				parent = value!;
 			}
 		}
 
@@ -105,12 +105,12 @@ namespace BurningKnight.entity.projectile {
 			return this;
 		}
 
-		public Projectile Build() {
-			if (empty || ((Owner is Mob && !(Owner is creature.bk.BurningKnight)) && Owner.Area.Tagged[Tags.MobProjectile].Count >= 199)) {
+		public Projectile? Build() {
+			if (empty || ((Owner is Mob && !(Owner is creature.bk.BurningKnight)) && Owner.Area!.Tagged[Tags.MobProjectile].Count >= 199)) {
 				return null;
 			}
 
-			Item item = null;
+			Item? item = null;
 
 			if (Owner is Item i) {
 				item = i;
@@ -127,10 +127,10 @@ namespace BurningKnight.entity.projectile {
 				Scale = Scale,
 				Color = Color,
 				Parent = parent,
-				Item = item
+				Item = item!
 			};
 
-			Owner.Area.Add(projectile);
+			Owner.Area!.Add(projectile);
 
 			if (Owner is Mob) {
 				projectile.AddTag(Tags.MobProjectile);
@@ -170,7 +170,7 @@ namespace BurningKnight.entity.projectile {
 
 			var body = bodyComponent.Body;
 
-			body.Restitution = 1;
+			body!.Restitution = 1;
 			body.Friction = 0;
 			body.IsBullet = true;
 			body.Rotation = Velocity.ToAngle();
@@ -187,7 +187,7 @@ namespace BurningKnight.entity.projectile {
 			Velocity *= 10f;
 			body.LinearVelocity = Velocity;
 
-			var count = Owner.Area.Tagged[Tags.Projectile].Count;
+			var count = Owner.Area!.Tagged[Tags.Projectile].Count;
 
 			if (count < 99) {
 				if (LightRadius > 0) {
@@ -201,7 +201,7 @@ namespace BurningKnight.entity.projectile {
 
 			Owner.HandleEvent(new ProjectileCreatedEvent {
 				Owner = Owner,
-				Item = item,
+				Item = item!,
 				Projectile = projectile
 			});
 

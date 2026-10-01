@@ -5,9 +5,9 @@ namespace BurningKnight.entity.component {
 	public class ShadowComponent : Component {
 		public Action Callback;
 		
-		public ShadowComponent(Action render = null) {
+		public ShadowComponent(Action? render = null) {
 			Callback = render ?? (() => {
-				Entity.GraphicsComponent.Render(true);
+				Entity!.GraphicsComponent!.Render(true);
 			});
 		}
 

@@ -13,7 +13,7 @@ namespace BurningKnight.entity.buff {
 
 		public override void Init() {
 			base.Init();
-			Entity.GetComponent<BuffsComponent>().Remove<BurningBuff>();
+			Entity.GetComponent<BuffsComponent>()!.Remove<BurningBuff>();
 
 			if (Entity.TryGetComponent<StateComponent>(out var s)) {
 				s.Pause++;
@@ -22,7 +22,7 @@ namespace BurningKnight.entity.buff {
 			var a = Entity.GetAnyComponent<AnimationComponent>();
 
 			if (a != null) {
-				a.Animation.Paused = true;
+				a!.Animation!.Paused = true;
 			}
 		}
 
@@ -46,7 +46,7 @@ namespace BurningKnight.entity.buff {
 			var a = Entity.GetAnyComponent<AnimationComponent>();
 
 			if (a != null) {
-				a.Animation.Paused = false;
+				a!.Animation!.Paused = false;
 			}
 		}
 

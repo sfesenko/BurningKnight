@@ -20,7 +20,7 @@ namespace BurningKnight.entity.item.use {
 			base.Use(entity, item);
 
 			if (water) {
-				var r = entity.GetComponent<RoomComponent>().Room;
+				var r = entity.GetComponent<RoomComponent>()!.Room;
 
 				if (r != null) {
 					Context.Audio.Stop();
@@ -33,7 +33,7 @@ namespace BurningKnight.entity.item.use {
 				}
 			} else if (snow) {
 				
-			} else if (Context.Level.Biome is IceBiome) {
+			} else if (Context.Level!.Biome is IceBiome) {
 				var x = (int) Math.Floor(entity.CenterX / 16);
 				var y = (int) Math.Floor(entity.CenterY / 16);
 
@@ -41,7 +41,7 @@ namespace BurningKnight.entity.item.use {
 					for (var yy = -1; yy <= 1; yy++) {
 						var d = Math.Sqrt(xx * xx + yy * yy);
 
-						if (d <= 1 && Context.Level.IsInside(x + xx, y + yy) && Context.Level.Get(x + xx, y + yy) == Tile.WallA) {
+						if (d <= 1 && Context.Level!.IsInside(x + xx, y + yy) && Context.Level!.Get(x + xx, y + yy) == Tile.WallA) {
 							ReplaceItem(entity, "bk:snow_bucket");
 							break;
 						}
@@ -52,12 +52,12 @@ namespace BurningKnight.entity.item.use {
 
 		private void ReplaceItem(Entity entity, string id) {
 			var c = entity.GetComponent<ActiveItemComponent>();
-			var i = c.Item;
+			var i = c!.Item;
 				
 			c.Drop();
-			i.Done = true;
+			i!.Done = true;
 
-			entity.GetComponent<InventoryComponent>().Pickup(Items.CreateAndAdd(id, entity.Area));
+			entity.GetComponent<InventoryComponent>()!.Pickup(Items.CreateAndAdd(id, entity.Area!)!);
 		}
 
 		public override void Setup(JsonValue settings) {

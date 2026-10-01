@@ -4,8 +4,8 @@ using Lens.entity;
 
 namespace BurningKnight.entity.events {
 	public class ItemPriceCalculationEvent : Event {
-		public Item Item;
-		public ShopStand Stand;
+		public Item Item = null!;
+		public ShopStand Stand = null!;
 		public float Percent;
 	}
 }

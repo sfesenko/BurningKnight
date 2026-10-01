@@ -6,7 +6,7 @@ using Lens.util;
 
 namespace Desktop.integration.rgb {
 	public class RgbIntegration : Integration {
-		private SerialPort port;
+		private SerialPort port = null!; // Init() opens it
 		
 		public override void Init() {
 			base.Init();

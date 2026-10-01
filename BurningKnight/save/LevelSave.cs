@@ -69,7 +69,7 @@ namespace BurningKnight.save {
 			return new RegularLevel(BiomeRegistry.GenerateForDepth(Context.Run.Depth));
 		}
 
-		public static Biome BiomeGenerated;
+		public static Biome? BiomeGenerated = null!;
 
 		private bool GenerationThread(string seed, Area area, int attempt, int c = 0) {
 			// Checked on entry so an abandoned attempt stops before it starts, and again after the
@@ -89,8 +89,8 @@ namespace BurningKnight.save {
 				Items.GeneratedOnFloor.Clear();
 				
 				var level = CreateLevel();
-				BiomeGenerated = level.Biome;
-				WallRegistry.Instance.ResetForBiome(BiomeGenerated);
+				BiomeGenerated = level.Biome!;
+				WallRegistry.Instance.ResetForBiome(BiomeGenerated!);
 
 				a.Add(level);
 
@@ -136,14 +136,14 @@ namespace BurningKnight.save {
 					return GenerationThread(seed, area, attempt, c + 1);
 				}
 				
-				return GenerationThread(seed, area, attempt);
+				return GenerationThread(seed!, area, attempt);
 			}
 
 			BiomeGenerated = null;
 			return true;
 		}
 
-		private string sd;
+		private string? sd;
 
 		// How long level generation may run before it is abandoned and retried with a new seed.
 		private const int GenerationTimeout = 7500;
@@ -170,7 +170,7 @@ namespace BurningKnight.save {
 
 				var thread = new Thread(() => {
 					try {
-						GenerationThread(seed, area, attempt);
+						GenerationThread(seed!, area, attempt);
 					} catch (ThreadInterruptedException) {
 						// The watchdog below already gave up on this attempt, so this is not a
 						// success. Re-establish the physics world, which the interrupted attempt may

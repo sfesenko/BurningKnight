@@ -10,7 +10,7 @@ using Lens.util;
 
 namespace BurningKnight.entity.item.use {
 	public class PokemonUse : ItemUse {
-		private Type type;
+		private Type? type;
 
 		public override void Use(Entity entity, Item item) {
 			base.Use(entity, item);
@@ -20,15 +20,15 @@ namespace BurningKnight.entity.item.use {
 			}
 
 			try {
-				var m = (Mob) Activator.CreateInstance(type);
-				entity.Area.Add(m);
+				var m = (Mob) Activator.CreateInstance(type)!;
+				entity.Area!.Add(m);
 
-				m.GetComponent<BuffsComponent>().Add(new CharmedBuff {
+				m!.GetComponent<BuffsComponent>()!.Add(new CharmedBuff {
 					Infinite = true
 				});
 
 				var h = m.GetComponent<HealthComponent>();
-				h.InitMaxHealth = (int) (h.Health * 3);
+				h!.InitMaxHealth = (int) (h.Health * 3);
 				
 				m.Center = entity.Center;
 			} catch (Exception e) {

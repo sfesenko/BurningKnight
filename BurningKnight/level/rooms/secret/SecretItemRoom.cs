@@ -11,15 +11,15 @@ namespace BurningKnight.level.rooms.secret {
 			var c = GetTileCenter();
 			var stand = new ItemStand();
 			
-			level.Area.Add(stand);
+			level.Area!.Add(stand);
 			stand.Center = c * 16 + new Vector2(8, 16);
-			stand.SetItem(Items.CreateAndAdd(Items.Generate(ItemPool.Secret), level.Area), null);
+			stand.SetItem(Items.CreateAndAdd(Items.Generate(ItemPool.Secret)!, level.Area)!, null);
 
 			var npc = new OldMan {
 				RickRoll = Rnd.Chance(5)
 			};
 			
-			level.Area.Add(npc);
+			level.Area!.Add(npc);
 			npc.BottomCenter = c * 16 + new Vector2(8, -8);
 		}
 	}

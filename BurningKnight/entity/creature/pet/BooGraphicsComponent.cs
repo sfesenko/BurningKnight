@@ -18,7 +18,7 @@ namespace BurningKnight.entity.creature.pet {
 		private Vector2 scale = Vector2.One;
 		
 		public BooGraphicsComponent(string anim) {
-			animation = Animations.Get(anim).CreateAnimation();
+			animation = Animations.Get(anim)!.CreateAnimation();
 		}
 
 		public override void Update(float dt) {
@@ -30,7 +30,7 @@ namespace BurningKnight.entity.creature.pet {
 			var slice = animation.GetCurrentTexture();
 			var origin = slice.Center;
 			var body = Entity.GetAnyComponent<BodyComponent>();
-			var vx = Math.Abs(body.Velocity.X);
+			var vx = Math.Abs(body!.Velocity.X);
 			
 			if (vx > 0.1f) {
 				flipped = vx < 0;

@@ -12,7 +12,7 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.level {
 	public class ProjectileLevelBody : Entity, CollisionFilterEntity {
-		public Level Level;
+		public Level Level = null!;
 
 		public override void AddComponents() {
 			base.AddComponents();
@@ -52,7 +52,7 @@ namespace BurningKnight.level {
 				Level.UpdateTile(x, y);
 				Level.ReTileAndCreateBodyChunks(x, y, 2, 2);
 				
-				Level.Area.Add(new TileFx {
+				Level.Area!.Add(new TileFx {
 					X = x * 16,
 					Y = y * 16 - 8
 				});
@@ -61,7 +61,7 @@ namespace BurningKnight.level {
 					var part = new ParticleEntity(Particles.Dust());
 						
 					part.Position = new Vector2(x * 16 + 8, y * 16 + 8);
-					Level.Area.Add(part);
+					Level.Area!.Add(part);
 				}
 
 				return true;
@@ -86,15 +86,15 @@ namespace BurningKnight.level {
 				level.UpdateTile(x, y);
 				level.ReCreateBodyChunk(x, y);
 
-				Context.Camera.ShakeMax(3);
+				Context.Camera!.ShakeMax(3);
 
-				Level.Animate(level.Area, x, y);
+				Level.Animate(level.Area!, x, y);
 			} else if (level.Get(x, y, true).Matches(Tile.Rock, Tile.TintedRock, Tile.MetalBlock)) {
 				level.Set(x, y, Tile.Ember);
 				level.UpdateTile(x, y);
 				level.ReCreateBodyChunk(x, y);
 
-				Context.Camera.ShakeMax(3);
+				Context.Camera!.ShakeMax(3);
 				
 				ExplosionMaker.BreakRock(level, new Dot(x * 16 + 8, y * 16 + 8), x, y, level.Get(x, y, true));
 			}

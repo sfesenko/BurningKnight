@@ -6,9 +6,9 @@ using Lens.util;
 
 namespace BurningKnight.entity.item.use {
 	public partial class UseOnEventUse : ItemUse {
-		private string type;
-		private Type typeInstance;
-		private string use;
+		private string type = null!;
+		private Type typeInstance = null!;
+		private string use = null!;
 		private JsonValue options;
 
 		public override void Setup(JsonValue settings) {
@@ -23,7 +23,7 @@ namespace BurningKnight.entity.item.use {
 			}
 
 			try {
-				typeInstance = Type.GetType(type, true, false);
+				typeInstance = Type.GetType(type, true, false)!;
 			} catch (Exception e) {
 				Log.Error(e);
 			}

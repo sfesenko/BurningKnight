@@ -13,7 +13,7 @@ namespace BurningKnight.state.save {
 				var key = reader.ReadString();
 				var val = reader.ReadString();
 
-				Values[key] = val;
+				Values[key!] = val!;
 			}
 		}
 

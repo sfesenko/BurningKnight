@@ -41,15 +41,15 @@ namespace BurningKnight.entity.creature.mob.boss {
 					}
 					
 					delay = 0.5f;
-					var a = Self.AngleTo(Self.Target);
+					var a = Self.AngleTo(Self.Target!);
 					Self.WarnLaser(a);
 
 					Timer.Add(() => {
-						Self.GetComponent<AudioEmitterComponent>().EmitRandomizedPrefixed("item_laser", 4);
+						Self.GetComponent<AudioEmitterComponent>()!.EmitRandomizedPrefixed("item_laser", 4);
 						var laser = Laser.Make(Self, a, 0, damage: 2, scale: 3, range: 64);
 						laser.LifeTime = 1f;
 						laser.Position = Self.Center;
-						Self.GetComponent<BkGraphicsComponent>().Animate();
+						Self.GetComponent<BkGraphicsComponent>()!.Animate();
 					}, 0.2f);
 
 					count++;

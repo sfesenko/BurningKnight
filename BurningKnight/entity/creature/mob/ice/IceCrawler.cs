@@ -47,7 +47,7 @@ namespace BurningKnight.entity.creature.mob.ice {
 				velocity *= -1;
 				vx *= -1;
 				vy *= -1;
-				Self.GetComponent<RectBodyComponent>().Velocity = velocity;
+				Self.GetComponent<RectBodyComponent>()!.Velocity = velocity;
 				T = 0;
 			}
 		}
@@ -60,19 +60,19 @@ namespace BurningKnight.entity.creature.mob.ice {
 
 				Self.T = 0;
 				
-				Self.GetComponent<RectBodyComponent>().Velocity = Vector2.Zero;
-				Self.GetComponent<WallAnimationComponent>().SetAutoStop(true);
+				Self.GetComponent<RectBodyComponent>()!.Velocity = Vector2.Zero;
+				Self.GetComponent<WallAnimationComponent>()!.SetAutoStop(true);
 			}
 
 			public override void Destroy() {
 				base.Destroy();
-				Self.GetComponent<WallAnimationComponent>().SetAutoStop(false);
+				Self.GetComponent<WallAnimationComponent>()!.SetAutoStop(false);
 			}
 
 			public override void Update(float dt) {
 				base.Update(dt);
 
-				if (!fired && Self.GetComponent<WallAnimationComponent>().Animation.Paused) {
+				if (!fired && Self!.GetComponent<WallAnimationComponent>()!.Animation!.Paused) {
 					fired = true;
 					T = 0;
 
@@ -82,7 +82,7 @@ namespace BurningKnight.entity.creature.mob.ice {
 
 					var a = Self.GetComponent<WallAnimationComponent>();
 
-					Tween.To(0.6f, a.Scale.X, x => a.Scale.X = x, 0.2f);
+					Tween.To(0.6f, a!.Scale.X, x => a.Scale.X = x, 0.2f);
 					Tween.To(1.6f, a.Scale.Y, x => a.Scale.Y = x, 0.2f).OnEnd = () => {
 
 						Tween.To(1.8f, a.Scale.X, x => a.Scale.X = x, 0.1f);
@@ -95,7 +95,7 @@ namespace BurningKnight.entity.creature.mob.ice {
 								return;
 							}
 
-							Self.GetComponent<AudioEmitterComponent>().EmitRandomized("mob_fire_wall");
+							Self.GetComponent<AudioEmitterComponent>()!.EmitRandomized("mob_fire_wall");
 						
 							var angle = Self.Direction.ToAngle();
 							var builder = new ProjectileBuilder(Self, "circle") {
@@ -110,7 +110,7 @@ namespace BurningKnight.entity.creature.mob.ice {
 
 								var projectile = builder.Shoot(angle + (i == 0 ? 0 : Rnd.Float(-0.5f, 0.5f)), i == 0 ? 5f : Rnd.Float(6, 10f)).Build();
 
-								projectile.Color = i == 0 ? ProjectileColor.Cyan : ProjectileColor.Blue;
+								projectile!.Color = i == 0 ? ProjectileColor.Cyan : ProjectileColor.Blue;
 								projectile.Center += MathUtils.CreateVector(angle, 8);
 
 								if (i == 0) {
@@ -128,7 +128,7 @@ namespace BurningKnight.entity.creature.mob.ice {
 						};
 					};
 				} else if (fired && T > 1f) {
-					Self.GetComponent<StateComponent>().Become<IdleState>();
+					Self.GetComponent<StateComponent>()!.Become<IdleState>();
 				}
 			}
 		}

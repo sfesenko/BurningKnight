@@ -13,11 +13,11 @@ using MonoGame.Extended;
 namespace BurningKnight.ui {
 	public class UiButton : UiLabel {
 		public static int Selected = -1;
-		public static UiButton SelectedInstance;
+		public static UiButton? SelectedInstance;
 
 		public static int LastId;
 		
-		public Action<UiButton> Click;
+		public Action<UiButton>? Click;
 		public ButtonType Type = ButtonType.Normal;
 		public float XPadding;
 		public float YPadding;

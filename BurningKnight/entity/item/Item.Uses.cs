@@ -53,7 +53,7 @@ namespace BurningKnight.entity.item {
 			return true;
 		}
 		private void ForEachUse(Action<ItemUse> action, bool skipUsed = false) {
-			foreach (var use in Uses) {
+			foreach (var use in Uses!) {
 				if (skipUsed && use.SingleUse && Used) {
 					continue;
 				}

@@ -68,7 +68,7 @@ namespace BurningKnight.ui.inventory {
 				return;
 			}
 			
-			UiItem old = null;
+			UiItem? old = null;
 
 			foreach (var i in items) {
 				if (i.Id == item.Id) {
@@ -87,7 +87,7 @@ namespace BurningKnight.ui.inventory {
 				old = new UiItem();
 				old.Id = item.Id;
 				old.Scourged = item.Scourged;
-				Area.Add(old);
+				Area!.Add(old);
 				items.Add(old);
 
 				old.Right = x;
@@ -124,7 +124,7 @@ namespace BurningKnight.ui.inventory {
 				return;
 			}
 			
-			UiItem old = null;
+			UiItem? old = null;
 			var j = 0;
 
 			foreach (var i in items) {

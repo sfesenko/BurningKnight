@@ -11,18 +11,18 @@ namespace BurningKnight.entity.item.use {
 
 		public override void Use(Entity entity, Item item) {
 			if (SetToMin) {
-				entity.GetComponent<ManaComponent>().SetMana(1);
+				entity.GetComponent<ManaComponent>()!.SetMana(1);
 				return;
 			}
 
 			if (SetToMax) {
 				var h = entity.GetComponent<ManaComponent>();
-				h.ModifyMana(h.ManaMax);
+				h!.ModifyMana(h.ManaMax);
 				
 				return;
 			}
 
-			entity.GetComponent<ManaComponent>().ModifyMana(Amount);
+			entity.GetComponent<ManaComponent>()!.ModifyMana(Amount);
 		}
 
 		public override void Setup(JsonValue settings) {

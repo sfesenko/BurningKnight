@@ -44,8 +44,8 @@ namespace BurningKnight.entity.creature.bk {
 				base.Init();
 				
 				var graphics = Self.GetComponent<BkGraphicsComponent>();
-				Self.GetComponent<HealthComponent>().Unhittable = true;
-				Tween.To(0, graphics.Alpha, x => graphics.Alpha = x, 0.3f);
+				Self.GetComponent<HealthComponent>()!.Unhittable = true;
+				Tween.To(0, graphics!.Alpha, x => graphics.Alpha = x, 0.3f);
 				Self.TouchDamage = 0;
 			}
 
@@ -53,12 +53,12 @@ namespace BurningKnight.entity.creature.bk {
 				base.Destroy();
 				
 				var graphics = Self.GetComponent<BkGraphicsComponent>();
-				Self.GetComponent<HealthComponent>().Unhittable = false;
+				Self.GetComponent<HealthComponent>()!.Unhittable = false;
 				Self.TouchDamage = 2;
-				Tween.To(1, graphics.Alpha, x => graphics.Alpha = x, 0.3f);
+				Tween.To(1, graphics!.Alpha, x => graphics.Alpha = x, 0.3f);
 
 				foreach (var l in last) {
-					GameContext.Current.Level.SetFlag(l, Flag.Burning, false);
+					GameContext.Current!.Level!.SetFlag(l, Flag.Burning, false);
 				}
 			}
 
@@ -78,7 +78,7 @@ namespace BurningKnight.entity.creature.bk {
 				for (var xx = (int) -r; xx <= r; xx++) {
 					for (var yy = (int) -r; yy <= r; yy++) {
 						if (Math.Sqrt(xx * xx + yy * yy) <= r) {
-							var i = GameContext.Current.Level.ToIndex(x + xx, y + yy);
+							var i = GameContext.Current!.Level!.ToIndex(x + xx, y + yy);
 
 							if (!GameContext.Current.Level.CheckFlag(i, Flag.Burning)) {
 								GameContext.Current.Level.SetFlag(i, Flag.Burning, true);
@@ -94,9 +94,9 @@ namespace BurningKnight.entity.creature.bk {
 				}
 				
 				var force = 250f * dt;
-				var a = Self.AngleTo(Self.Target);
+				var a = Self.AngleTo(Self.Target!);
 
-				Self.GetComponent<RectBodyComponent>().Velocity += new Vector2((float) Math.Cos(a) * force, (float) Math.Sin(a) * force);
+				Self.GetComponent<RectBodyComponent>()!.Velocity += new Vector2((float) Math.Cos(a) * force, (float) Math.Sin(a) * force);
 			}
 		}
 	}

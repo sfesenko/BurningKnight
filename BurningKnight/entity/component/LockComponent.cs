@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework;
 namespace BurningKnight.entity.component {
 	public class LockComponent : Component, Subscriber {
 		public Lock Lock;
-		public Action<Entity> OnOpen;
+		public Action<Entity>? OnOpen;
 
 		private Vector2 offset;
 		
@@ -21,8 +21,8 @@ namespace BurningKnight.entity.component {
 			Lock.AlwaysActive = true;
 			Lock.Move = false;
 
-			entity.Area.Add(Lock);
-			entity.Area.EventListener.Subscribe<LockOpenedEvent>(this);
+			entity.Area!.Add(Lock);
+			entity.Area!.EventListener.Subscribe<LockOpenedEvent>(this);
 
 			if (Lock.CanInteract()) {
 				Lock.AddComponent(new RectBodyComponent(-(entity.Width - Lock.Width) / 2f - offset.X - 2, 

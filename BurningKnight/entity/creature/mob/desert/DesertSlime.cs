@@ -24,7 +24,7 @@ namespace BurningKnight.entity.creature.mob.desert {
 			var body = new RectBodyComponent(2, 12, 12, 1);
 			AddComponent(body);
 
-			body.Body.LinearDamping = 2;
+			body!.Body!.LinearDamping = 2;
 			body.KnockbackModifier = 0.5f;
 			
 			AddComponent(new SensorBodyComponent(2, 7, 12, 9));
@@ -43,9 +43,9 @@ namespace BurningKnight.entity.creature.mob.desert {
 			};
 
 			builder.Shoot(a, 5f);
-			builder.Build().Center = Center + MathUtils.CreateVector(a, 5f);
+			builder!.Build()!.Center = Center + MathUtils.CreateVector(a, 5f);
 
-			GetComponent<RectBodyComponent>().KnockbackFrom(a - (float) Math.PI, 0.3f);
+			GetComponent<RectBodyComponent>()!.KnockbackFrom(a - (float) Math.PI, 0.3f);
 		}
 	}
 }

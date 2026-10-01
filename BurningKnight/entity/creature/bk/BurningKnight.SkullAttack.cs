@@ -56,9 +56,9 @@ namespace BurningKnight.entity.creature.bk {
 					}
 					
 					var a = Self.GetComponent<BkGraphicsComponent>();
-					Self.GetComponent<AudioEmitterComponent>().EmitRandomized("mob_oldking_shoot");
+					Self.GetComponent<AudioEmitterComponent>()!.EmitRandomized("mob_oldking_shoot");
 
-					Tween.To(1.8f, a.Scale.X, x => a.Scale.X = x, 0.2f);
+					Tween.To(1.8f, a!.Scale.X, x => a.Scale.X = x, 0.2f);
 					Tween.To(0.2f, a.Scale.Y, x => a.Scale.Y = x, 0.2f).OnEnd = () => {
 
 						Tween.To(1, a.Scale.X, x => a.Scale.X = x, 0.3f);
@@ -75,7 +75,7 @@ namespace BurningKnight.entity.creature.bk {
 						builder.RemoveFlags(ProjectileFlags.Reflectable, ProjectileFlags.BreakableByMelee);
 
 						var skull = builder.Build();
-						ProjectileCallbacks.AttachUpdateCallback(skull, TargetProjectileController.Make(Self.Target, 0.5f));
+						ProjectileCallbacks.AttachUpdateCallback(skull!, TargetProjectileController.Make(Self.Target, 0.5f));
 
 						if (explode) {
 							/*skull.NearDeath += p => {
@@ -87,7 +87,7 @@ namespace BurningKnight.entity.creature.bk {
 								c.Emit("mob_oldking_explode");
 							};*/
 						
-							ProjectileCallbacks.AttachDeathCallback(skull, (p, e, t) => {
+							ProjectileCallbacks.AttachDeathCallback(skull!, (p, e, t) => {
 								if (!t) {
 									return;
 								}
@@ -98,12 +98,12 @@ namespace BurningKnight.entity.creature.bk {
 						
 								for (var i = 0; i < 16; i++) {
 									var bullet = b.Shoot(((float) i) / 8 * (float) Math.PI, (i % 2 == 0 ? 2 : 1) * 4 + 3).Build();
-									bullet.Center = p.Center;
+									bullet!.Center = p.Center;
 								}
 							});
 						}
 
-						skull.GetComponent<ProjectileGraphicsComponent>().IgnoreRotation = true;
+						skull!.GetComponent<ProjectileGraphicsComponent>()!.IgnoreRotation = true;
 						
 						if (count == (Self.Raging ? 6 : 4)) {
 							Self.Become<FightState>();

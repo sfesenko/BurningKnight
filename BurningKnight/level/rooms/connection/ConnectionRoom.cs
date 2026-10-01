@@ -57,7 +57,7 @@ namespace BurningKnight.level.rooms.connection {
 		public override void SetupDoors(Level level) {
 			if (level.GetFilling() == Tile.Chasm) {
 				foreach (var door in Connected.Values) {
-					door.Type = DoorPlaceholder.Variant.Empty;
+					door!.Type = DoorPlaceholder.Variant.Empty;
 				}
 			} else {
 				base.SetupDoors(level);

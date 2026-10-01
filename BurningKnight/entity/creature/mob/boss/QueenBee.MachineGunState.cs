@@ -27,7 +27,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 
 				if (sinceLast >= 0.5f) {
 					sinceLast = 0;
-					var a = Self.AngleTo(Self.Target);
+					var a = Self.AngleTo(Self.Target!);
 					var second = Self.InThirdPhase;
 
 					for (var i = 0; i < (second ? 1 : 3); i++) {
@@ -49,11 +49,11 @@ namespace BurningKnight.entity.creature.mob.boss {
 									builder.Slice = j % 2 == 0 ? "circle" : "small";
 									builder.Color = j % 2 == 0 ? ProjectileColor.Orange : ProjectileColor.Red;
 
-									pp.Add(builder.Build());
+									pp.Add(builder.Build()!);
 								}
 
 								pp.Launch(a, 80);
-								Self.Area.Add(pp);
+								Self.Area!.Add(pp);
 							} else {
 								var builder = new ProjectileBuilder(Self, "circle") {
 									Scale = Rnd.Float(0.8f, 1f),
@@ -66,15 +66,15 @@ namespace BurningKnight.entity.creature.mob.boss {
 								builder.Shoot(a + Rnd.Float(-0.1f, 0.1f), 30f).Build();
 							}
 							
-							Self.GetComponent<AudioEmitterComponent>().EmitRandomized("mob_bee_shot");
+							Self.GetComponent<AudioEmitterComponent>()!.EmitRandomized("mob_bee_shot");
 						}, i * 0.15f);
 					}
 				}
 				
 				var t = T + Math.PI * 0.5f;
-				var r = Self.GetComponent<RoomComponent>().Room;
+				var r = Self.GetComponent<RoomComponent>()!.Room;
 
-				var x = r.CenterX + (float) Math.Cos(t) * (r.Width * 0.4f);
+				var x = r!.CenterX + (float) Math.Cos(t) * (r.Width * 0.4f);
 				var y = r.CenterY - r.Height * 0.2f + (float) Math.Sin(t * 2) * (r.Height * 0.2f);
 				
 				
@@ -85,7 +85,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 				
 				Self.CenterX += dx * s;
 				Self.CenterY += dy * s;
-				Self.GraphicsComponent.Flipped = dx < 0;
+				Self!.GraphicsComponent!.Flipped = dx < 0;
 				
 
 				if (t >= Math.PI * 4.5f) {

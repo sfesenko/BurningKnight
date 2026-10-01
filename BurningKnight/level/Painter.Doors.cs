@@ -39,7 +39,7 @@ namespace BurningKnight.level {
 			var connected = new Dictionary<RoomDef, DoorPlaceholder>();
 
 			foreach (var pair in R.Connected) {
-				connected[pair.Key] = pair.Value;
+				connected[pair.Key] = pair.Value!;
 			}
 			
 			foreach (var N in connected.Keys) {
@@ -71,7 +71,7 @@ namespace BurningKnight.level {
 		public static void PaintDoor(Level Level, RoomDef R) {
 			foreach (var N in R.Connected.Keys) {
 				var D = R.Connected[N];
-				PlaceDoor(Level, R, D, N);
+				PlaceDoor(Level, R, D!, N);
 			}
 		}
 		public static void PlaceDoor(Level Level, RoomDef R, DoorPlaceholder D, RoomDef from) {
@@ -82,7 +82,7 @@ namespace BurningKnight.level {
 			var vertical = Level.Get(D.X, D.Y + 1).IsWall() && Level.Get(D.X, D.Y - 1).IsWall();
 			
 			if (gt && !T.Matches(Tile.FloorA, Tile.FloorB, Tile.FloorC, Tile.FloorD, Tile.Crack)) {
-				Door door = null;
+				Door? door = null;
 
 				switch (type) {
 					case DoorPlaceholder.Variant.Locked: 
@@ -131,7 +131,7 @@ namespace BurningKnight.level {
 				}
 
 				door.Vertical = vertical;
-				Level.Area.Add(door);
+				Level.Area!.Add(door);
 
 				var offset = door.GetOffset();
 

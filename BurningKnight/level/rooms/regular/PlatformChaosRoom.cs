@@ -19,11 +19,11 @@ namespace BurningKnight.level.rooms.regular {
 				platform.Y = Rnd.Int(Top + 4, Bottom - 4) * 16;
 				platform.Controller = Rnd.Chance() ? PlatformController.ClockWise : PlatformController.CounterClockWise;
 
-				level.Area.Add(platform);
+				level.Area!.Add(platform);
 				
 				if (p && Rnd.Chance()) {
 					var turret = new RotatingTurret();
-					level.Area.Add(turret);
+					level.Area!.Add(turret);
 					turret.Center = platform.Position + new Vector2(16, 12);
 				}
 			}

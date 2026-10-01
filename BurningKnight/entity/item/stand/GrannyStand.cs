@@ -13,7 +13,7 @@ namespace BurningKnight.entity.item.stand {
 		protected override void OnTake(Item item, Entity who) {
 			base.OnTake(item, who);
 		
-			var rm = GetComponent<RoomComponent>().Room;
+			var rm = GetComponent<RoomComponent>()!.Room;
 			
 			if (rm == null) {
 				return;
@@ -30,7 +30,7 @@ namespace BurningKnight.entity.item.stand {
 			}
 			
 			Done = true;
-			Context.Camera.Shake(10);
+			Context.Camera!.Shake(10);
 			Achievements.Unlock("bk:grannys_gift");
 		}
 

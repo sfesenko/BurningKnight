@@ -11,7 +11,7 @@ namespace BurningKnight.entity.creature.mob.prefix {
 		public override bool HandleEvent(Event e) {
 			if (e is DiedEvent) {
 				var bomb = new Bomb(Mob);
-				Mob.Area.Add(bomb);
+				Mob.Area!.Add(bomb);
 				bomb.Center = Mob.Center;
 			}
 			

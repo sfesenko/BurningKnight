@@ -3,7 +3,7 @@ using Lens.util;
 
 namespace BurningKnight.ui.str {
 	public class IconRenderer : StrRenderer {
-		public TextureRegion Region;
+		public TextureRegion? Region;
 		
 		public override int GetWidth(UiString str) {
 			if (Region == null && str.Icons.Count > Id) {

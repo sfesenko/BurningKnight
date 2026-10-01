@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework;
 namespace BurningKnight.entity.creature.npc.dungeon {
 	public class DungeonDuck : DungeonShopNpc {
 		private bool interacted;
-		private Chest chest;
+		private Chest? chest;
 		
 		public override void AddComponents() {
 			base.AddComponents();
@@ -22,11 +22,11 @@ namespace BurningKnight.entity.creature.npc.dungeon {
 			AddComponent(new AnimationComponent("duck"));
 			AddComponent(new SensorBodyComponent(-Npc.Padding, -Npc.Padding, Width + Npc.Padding * 2, Height + Npc.Padding * 2, BodyType.Static));
 
-			GetComponent<DialogComponent>().Dialog.Voice = 4;
+			GetComponent<DialogComponent>()!.Dialog!.Voice = 4;
 			
 			if (!interacted) {
 				AddComponent(new InteractableComponent((e) => {
-					GetComponent<DialogComponent>().Start("duck_2", e);
+					GetComponent<DialogComponent>()!.Start("duck_2", e);
 					return true;
 				}));
 
@@ -39,14 +39,14 @@ namespace BurningKnight.entity.creature.npc.dungeon {
 					
 					RemoveComponent<InteractableComponent>();
 					
-					return null;
+					return null!;
 				});
 
 				Dialogs.RegisterCallback("duck_5", (d, c) => {
 					interacted = true;
 					RemoveComponent<InteractableComponent>();
 					
-					return null;
+					return null!;
 				});
 			}
 		}
@@ -87,7 +87,7 @@ namespace BurningKnight.entity.creature.npc.dungeon {
 			t += dt;
 
 			if (chest == null && t >= 0.1f) {
-				foreach (var c in GetComponent<RoomComponent>().Room.Tagged[Tags.Chest]) {
+				foreach (var c in GetComponent<RoomComponent>()!.Room!.Tagged[Tags.Chest]) {
 					if (c is DuckChest cs) {
 						chest = cs;
 						chest.CanOpen = false;

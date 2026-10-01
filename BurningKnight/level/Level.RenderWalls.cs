@@ -44,11 +44,11 @@ namespace BurningKnight.level {
 			var camera = Context.Camera;
 
 			// Cache the condition
-			var toX = GetRenderRight(camera);
-			var toY = GetRenderBottom(camera);
+			var toX = GetRenderRight(camera!);
+			var toY = GetRenderBottom(camera!);
 			
-			for (int y = GetRenderTop(camera); y < toY; y++) {
-				for (int x = GetRenderLeft(camera); x < toX; x++) {
+			for (int y = GetRenderTop(camera!); y < toY; y++) {
+				for (int x = GetRenderLeft(camera!); x < toX; x++) {
 					var index = ToIndex(x, y);
 					var tl = (Tile) Tiles[index];
 					
@@ -63,13 +63,13 @@ namespace BurningKnight.level {
 							}
 
 							var tileset = (MatrixLeak[index] ? MatrixTileset : Tileset);
-							var ar = tileset.WallA;
+							var ar = tileset!.WallA;
 							var arr = tileset.WallSidesA;
 
 							if (!a) {
 								switch (tl) {
 									case Tile.Planks: {
-										ar = Tilesets.Biome.Planks;
+										ar = Tilesets.Biome!.Planks;
 										arr = Tilesets.Biome.PlankSides;
 										break;
 									}
@@ -93,13 +93,13 @@ namespace BurningKnight.level {
 									}
 																		
 									case Tile.EvilWall: {
-										ar = Tilesets.Biome.EvilWall;
+										ar = Tilesets.Biome!.EvilWall;
 										arr = Tilesets.Biome.EvilWallSides;
 										break;
 									}
 
 									case Tile.GrannyWall: {
-										ar = Tilesets.Biome.GrannyWall;
+										ar = Tilesets.Biome!.GrannyWall;
 										arr = Tilesets.Biome.GrannyWallSides;
 										break;
 									}
@@ -126,26 +126,27 @@ namespace BurningKnight.level {
 						}
 					} else if (tl == Tile.Chasm) {
 						if (IsInside(index + width) && !Get(index + width).IsWall() && Get(index + width) != Tile.Chasm) {
-							Graphics.Render(Tilesets.Biome.ChasmBottom[CalcChasmIndex(x, y + 1)], new Vector2(x * 16, y * 16 + 16));
+							Graphics.Render(Tilesets.Biome!.ChasmBottom[CalcChasmIndex(x, y + 1)], new Vector2(x * 16, y * 16 + 16));
 						}
 								
 						if (IsInside(index + 1) && !Get(index + 1).IsWall() && Get(index + 1) != Tile.Chasm) {
-							Graphics.Render(Tilesets.Biome.ChasmRight[CalcChasmIndex(x + 1, y)], new Vector2(x * 16 + 16, y * 16));
+							Graphics.Render(Tilesets.Biome!.ChasmRight[CalcChasmIndex(x + 1, y)], new Vector2(x * 16 + 16, y * 16));
 						}
 								
 						if (index > 0 && !Get(index - 1).IsWall() && Get(index - 1) != Tile.Chasm) {
-							Graphics.Render(Tilesets.Biome.ChasmLeft[CalcChasmIndex(x - 1, y)], new Vector2(x * 16 - 16, y * 16));
+							Graphics.Render(Tilesets.Biome!.ChasmLeft[CalcChasmIndex(x - 1, y)], new Vector2(x * 16 - 16, y * 16));
 						}
 					}
 				}
 			}
 		}
 		private void RenderWall(int x, int y, int index, int tile, Tile t, int m) {
+			var biome = Tilesets.Biome!;
 			var a = false;
 			var tileset = (MatrixLeak[index] ? MatrixTileset : Tileset);
 			
 			if (t != Tile.Transition) {
-				var region = t == Tile.Planks ? Tilesets.Biome.PlanksTop : tileset.Tiles[tile][0];
+				var region = t == Tile.Planks ? biome.PlanksTop : tileset!.Tiles[tile][0];
 				a = t == Tile.WallA || t == Tile.Piston || t == Tile.PistonDown;
 				var ab = a || t == Tile.GrannyWall || t == Tile.EvilWall;
 				var effect = Graphics.ParseEffect(x % 2 == 0, y % 2 == 0);
@@ -154,14 +155,14 @@ namespace BurningKnight.level {
 					var v = WallDecor[index];
 
 					if (!t.Matches(Tile.Piston, Tile.PistonDown) && v > 0) {
-						region = Tileset.WallVariants[v - 1];
+						region = Tileset!.WallVariants[v - 1];
 					}
 				} else if (t == Tile.Crack) {
 					ab = (IsInside(index + 1) && Get(index + 1) == Tile.WallA) ||
 					     (IsInside(index + width) && Get(index + width) == Tile.WallA);
 					region = ab
-						? tileset.WallTopA
-						: tileset.WallTopB;
+						? tileset!.WallTopA
+						: tileset!.WallTopB;
 				} else {
 					effect = SpriteEffects.None;
 				}
@@ -192,7 +193,7 @@ namespace BurningKnight.level {
 							lv += 8;
 						}
 
-						var ar = tileset.WallTopsA;
+						var ar = tileset!.WallTopsA;
 
 						if (!a) {
 							switch (t) {
@@ -215,17 +216,17 @@ namespace BurningKnight.level {
 								}
 								
 								case Tile.Planks: {
-									ar = Tilesets.Biome.PlankTops;
+									ar = biome.PlankTops;
 									break;
 								}
 								
 								case Tile.GrannyWall: {
-									ar = Tilesets.Biome.GrannyWallTops;
+									ar = biome.GrannyWallTops;
 									break;
 								}
 								
 								case Tile.EvilWall: {
-									ar = Tilesets.Biome.EvilWallTops;
+									ar = biome.EvilWallTops;
 									break;
 								}
 							}
@@ -291,7 +292,7 @@ namespace BurningKnight.level {
 				}
 
 				if (t != Tile.Transition) {
-					var ar = tileset.WallAExtensions;
+					var ar = tileset!.WallAExtensions;
 
 					switch (t) {
 						case Tile.WallB: {
@@ -300,17 +301,17 @@ namespace BurningKnight.level {
 						}
 							
 						case Tile.Planks: {
-							ar = Tilesets.Biome.PlanksExtensions;
+							ar = biome.PlanksExtensions;
 							break;
 						}
 							
 						case Tile.GrannyWall: {
-							ar = Tilesets.Biome.GrannyExtensions;
+							ar = biome.GrannyExtensions;
 							break;
 						}
 							
 						case Tile.EvilWall: {
-							ar = Tilesets.Biome.EvilExtensions;
+							ar = biome.EvilExtensions;
 							break;
 						}
 					}
@@ -354,11 +355,11 @@ namespace BurningKnight.level {
 			Graphics.Color = ColorUtils.WhiteColor;
 			
 			// Cache the condition
-			var toX = GetRenderRight(camera);
-			var toY = GetRenderBottom(camera);
+			var toX = GetRenderRight(camera!);
+			var toY = GetRenderBottom(camera!);
 
-			for (int y = GetRenderTop(camera); y <= toY; y++) {
-				for (int x = GetRenderLeft(camera); x <= toX; x++) {
+			for (int y = GetRenderTop(camera!); y <= toY; y++) {
+				for (int x = GetRenderLeft(camera!); x <= toX; x++) {
 					var index = ToIndex(x, y);
 
 					var tile = Tiles[index];
@@ -375,7 +376,7 @@ namespace BurningKnight.level {
 			Graphics.Batch.Begin(SpriteSortMode.Immediate, blend, SamplerState.PointClamp, DepthStencilState.None, 
 				state.ClipRasterizerState, null, Context.Camera?.Matrix);
 			
-			foreach (var p in Area.Tagged[Tags.Player]) {
+			foreach (var p in Area!.Tagged[Tags.Player]) {
 				((Player) p).RenderOutline();
 			}
 			
@@ -383,7 +384,7 @@ namespace BurningKnight.level {
 			Engine.GraphicsDevice.SetRenderTarget(state.GameTarget);
 			
 			var c = Context.Camera;
-			var z = c.Zoom;
+			var z = c!.Zoom;
 			var n = Math.Abs(z - 1) > 0.01f;
 			
 			if (n) {
@@ -394,8 +395,8 @@ namespace BurningKnight.level {
 			Graphics.Batch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None,
 				state.ClipRasterizerState, null, Context.Camera?.Matrix);
 			
-			Graphics.Render(WallSurface, Context.Camera.TopLeft - new Vector2(Context.Camera.Position.X % 1, 
-				                             Context.Camera.Position.Y % 1));
+			Graphics.Render(WallSurface!, Context.Camera!.TopLeft - new Vector2(Context.Camera!.Position.X % 1, 
+				                             Context.Camera!.Position.Y % 1));
 			
 			Graphics.Batch.End();
 
@@ -414,8 +415,8 @@ namespace BurningKnight.level {
 			
 			var color = new Color(1f, 1f, 1f, 0.5f);
 
-			for (int y = GetRenderTop(camera); y <= toY; y++) {
-				for (int x = GetRenderLeft(camera); x <= toX; x++) {
+			for (int y = GetRenderTop(camera!); y <= toY; y++) {
+				for (int x = GetRenderLeft(camera!); x <= toX; x++) {
 					if (Passable[ToIndex(x, y)]) {
 						Graphics.Batch.DrawRectangle(new RectangleF(x * 16 + 1, y * 16 + 1, 14, 14), color);
 					}

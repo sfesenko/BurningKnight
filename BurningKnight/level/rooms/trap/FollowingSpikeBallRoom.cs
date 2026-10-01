@@ -13,7 +13,7 @@ namespace BurningKnight.level.rooms.trap {
 				var c = GetTileCenter();
 				Painter.Set(level, c, Tiles.RandomFloor());
 
-				level.Area.Add(new Button {
+				level.Area!.Add(new Button {
 					Position = c * 16
 				});
 			}

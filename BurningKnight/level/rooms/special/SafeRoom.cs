@@ -6,7 +6,7 @@ namespace BurningKnight.level.rooms.special {
 			base.Paint(level);
 			
 			var safe = new Safe();
-			level.Area.Add(safe);
+			level.Area!.Add(safe);
 			safe.BottomCenter = GetCenterVector();
 		}
 

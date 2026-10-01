@@ -20,8 +20,8 @@ namespace BurningKnight.entity.bomb {
 		public const float ExplosionTime = 1f;
 		private readonly float explosionTime; 
 
-		public BombUpdateCallback Controller;
-		public BombDeathCallback OnDeath;
+		public BombUpdateCallback? Controller;
+		public BombDeathCallback? OnDeath;
 
 		public Bomb Parent;
 		public Entity Owner;
@@ -30,15 +30,15 @@ namespace BurningKnight.entity.bomb {
 		public float T;
 		public bool ExplodeOnTouch;
 		
-		public Bomb(Entity owner, float time = ExplosionTime, Bomb parent = null) {
+		public Bomb(Entity? owner, float time = ExplosionTime, Bomb? parent = null) {
 			explosionTime = time + Rnd.Float(-0.1f, 1f);
 			
-			Parent = parent;
-			Owner = owner;
+			Parent = parent!;
+			Owner = owner!;
 
 			Scale = parent?.Scale * 0.7f ?? 1;
 			
-			Context.Camera.Shake(6);
+			Context.Camera!.Shake(6);
 		}
 		
 		public override void AddComponents() {
@@ -63,15 +63,15 @@ namespace BurningKnight.entity.bomb {
 			});
 			
 			AddComponent(new AudioEmitterComponent());
-			GetComponent<AudioEmitterComponent>().EmitRandomized("bomb_placed");
+			GetComponent<AudioEmitterComponent>()!.EmitRandomized("bomb_placed");
 		}
 
 		private void RenderShadow() {
-			GraphicsComponent.Render(true);
+			GraphicsComponent!.Render(true);
 		}
 
 		public void MoveToMouse() {
-			VelocityTo(AngleTo(Owner.GetComponent<CursorComponent>().Cursor.GamePosition));
+			VelocityTo(AngleTo(Owner.GetComponent<CursorComponent>()!.Cursor.GamePosition));
 		}
 
 		public void VelocityTo(float angle, float force = 100f) {
@@ -80,7 +80,7 @@ namespace BurningKnight.entity.bomb {
 			
 			Position += vec * 0.05f;
 			
-			component.Body.LinearDamping = 5;
+			component!.Body!.LinearDamping = 5;
 			component.Velocity = vec;
 		}
 
@@ -111,14 +111,14 @@ namespace BurningKnight.entity.bomb {
 		public void Explode() {
 			OnDeath?.Invoke(this);
 			Done = true;
-			var r = GetComponent<ExplodeComponent>().Radius;
+			var r = GetComponent<ExplodeComponent>()!.Radius;
 			ExplosionMaker.Make(this, r, scale: r / 32f);
 		}
 
 		public override bool HandleEvent(Event e) {
 			if (e is CollisionStartedEvent cse) {
 				if (cse.Entity is Projectile p) {
-					GetComponent<RectBodyComponent>().KnockbackFrom(p);
+					GetComponent<RectBodyComponent>()!.KnockbackFrom(p);
 
 					if (!p.HasFlag(ProjectileFlags.FlyOverStones)) {
 						p.Break();

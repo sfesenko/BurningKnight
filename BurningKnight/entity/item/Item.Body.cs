@@ -39,7 +39,7 @@ namespace BurningKnight.entity.item {
 			
 			AddComponent(body);
 
-			body.Body.LinearDamping = Type == ItemType.Mana ? 1 : 4;
+			body!.Body!.LinearDamping = Type == ItemType.Mana ? 1 : 4;
 			body.Body.Friction = 0;
 			body.Body.Mass = 0.1f;
 			
@@ -90,12 +90,12 @@ namespace BurningKnight.entity.item {
 			CheckMasked();
 		}
 		private void RenderShadow() {
-			GraphicsComponent.Render(true);
+			GraphicsComponent!.Render(true);
 		}
 		protected virtual bool HasBody() {
 			return HasComponent<RectBodyComponent>();
 		}
-		protected virtual BodyComponent GetBody() {
+		protected virtual BodyComponent? GetBody() {
 			return TryGetComponent<RectBodyComponent>(out var b) ? b : null;
 		}
 	}

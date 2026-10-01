@@ -20,7 +20,7 @@ namespace BurningKnight.entity.component {
 	public class ItemComponent : SaveableComponent {
 		protected static Audio Audio => Context.Audio;
 		
-		public Item Item { get; protected set; }
+		public Item? Item { get; protected set; }
 		public bool DontSave;
 		public bool UpdateItem;
 
@@ -28,7 +28,7 @@ namespace BurningKnight.entity.component {
 			return Item?.Id == id;
 		}
 		
-		public virtual void Set(Item item, bool animate = true) {
+		public virtual void Set(Item? item, bool animate = true) {
 			var prev = Item;
 			
 			if (!animate && Item != null) {
@@ -45,12 +45,12 @@ namespace BurningKnight.entity.component {
 				return;
 			}
 			
-			Entity.Area.Remove(item);
+			Entity.Area!.Remove(item);
 			item.RemoveDroppedComponents();
 			item.AddComponent(new OwnerComponent(Entity));
 
 			if (!animate) {
-				SetupItem(item, prev);
+				SetupItem(item, prev!);
 				return;
 			}
 			
@@ -64,10 +64,10 @@ namespace BurningKnight.entity.component {
 			
 			if (Entity is Player p) {
 				p.AnimateItemPickup(item, () => {
-					SetupItem(item, prev);
+					SetupItem(item, prev!);
 				}, false);
 			} else {
-				SetupItem(item, prev);
+				SetupItem(item, prev!);
 			}
 		}
 
@@ -102,13 +102,13 @@ namespace BurningKnight.entity.component {
 		
 		public Item Drop() {
 			var e = new ItemRemovedEvent {
-				Item = Item
+				Item = Item!
 			};
 			
 			Send(e);
 
-			Item.Center = Entity.Center - new Vector2(0, 4);
-			Entity.Area.Add(Item);
+			Item!.Center = Entity.Center - new Vector2(0, 4);
+			Entity.Area!.Add(Item);
 			Item.RemoveComponent<OwnerComponent>();
 			Item.AddDroppedComponents();
 
@@ -155,7 +155,7 @@ namespace BurningKnight.entity.component {
 				if (Entity is Player && Item != null && Item.Scourged) {
 					AnimationUtil.ActionFailed();
 					ev.Blocked = true;
-					Entity.GetComponent<DialogComponent>().StartAndClose($"~~{Locale.Get("scourged")}~~", 2);
+					Entity.GetComponent<DialogComponent>()!.StartAndClose($"~~{Locale.Get("scourged")}~~", 2);
 					
 					return false;
 				}
@@ -181,7 +181,7 @@ namespace BurningKnight.entity.component {
 			if (stream.ReadBoolean()) {
 				var item = new Item();
 
-				Entity.Area.Add(item, false);
+				Entity.Area!.Add(item, false);
 				
 				item.Load(stream);
 				item.LoadedSelf = false;
@@ -199,7 +199,7 @@ namespace BurningKnight.entity.component {
 				if (!Item.HasComponent<OwnerComponent>()) {
 					Item.AddComponent(new OwnerComponent(component.Entity));
 				} else {
-					Item.GetComponent<OwnerComponent>().Owner = component.Entity;
+					Item.GetComponent<OwnerComponent>()!.Owner = component.Entity;
 				}
 			}
 
@@ -212,7 +212,7 @@ namespace BurningKnight.entity.component {
 			if (!Item.HasComponent<OwnerComponent>()) {
 				Item.AddComponent(new OwnerComponent(Entity));
 			} else {
-				Item.GetComponent<OwnerComponent>().Owner = Entity;
+				Item.GetComponent<OwnerComponent>()!.Owner = Entity;
 			}
 		}
 		
@@ -226,7 +226,7 @@ namespace BurningKnight.entity.component {
 			}
 			
 			if (ImGui.InputText("Item", ref debugItem, 128, ImGuiInputTextFlags.EnterReturnsTrue)) {
-				var item = Items.CreateAndAdd(debugItem, Entity.Area);
+				var item = Items.CreateAndAdd(debugItem, Entity.Area!);
 				Set(item);
 			}
 		}

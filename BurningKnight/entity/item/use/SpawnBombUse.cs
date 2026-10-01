@@ -15,7 +15,7 @@ namespace BurningKnight.entity.item.use {
 		public override void Use(Entity entity, Item item) {
 			Items.Unlock("bk:grenade_launcher");
 
-			var room = entity.GetComponent<RoomComponent>().Room;
+			var room = entity.GetComponent<RoomComponent>()!.Room;
 
 			if (room == null) {
 				return;
@@ -29,7 +29,7 @@ namespace BurningKnight.entity.item.use {
 						}
 							
 						var bomb = new Bomb(entity, Timer);
-						entity.Area.Add(bomb);
+						entity.Area!.Add(bomb);
 						bomb.Center = room == null ? entity.Center + Rnd.Vector(-4, 4) : room.GetRandomFreeTile() * 16 + new Vector2(8);
 					}, i * 0.1f);
 				} else {
@@ -38,7 +38,7 @@ namespace BurningKnight.entity.item.use {
 					}
 					
 					var bomb = new Bomb(entity, Timer);
-					entity.Area.Add(bomb);
+					entity.Area!.Add(bomb);
 					
 					bomb.Center = entity.Center;
 					bomb.MoveToMouse();

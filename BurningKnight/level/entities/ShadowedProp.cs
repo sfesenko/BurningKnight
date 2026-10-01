@@ -6,7 +6,7 @@ namespace BurningKnight.level.entities {
 			
 		}
 		
-		public ShadowedProp(string slice = null, int depth = 0) : base(slice, depth) {
+		public ShadowedProp(string? slice = null, int depth = 0) : base(slice, depth) {
 			
 		}
 		

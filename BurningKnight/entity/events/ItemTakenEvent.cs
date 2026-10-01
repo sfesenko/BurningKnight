@@ -4,8 +4,8 @@ using Lens.entity;
 
 namespace BurningKnight.entity.events {
 	public class ItemTakenEvent : Event {
-		public Item Item;
-		public Entity Who;
-		public ItemStand Stand;
+		public Item Item = null!;
+		public Entity Who = null!;
+		public ItemStand Stand = null!;
 	}
 }

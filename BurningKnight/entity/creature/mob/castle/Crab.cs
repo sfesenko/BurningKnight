@@ -27,7 +27,7 @@ namespace BurningKnight.entity.creature.mob.castle {
 
 			var body = new RectBodyComponent(3, 13, 12, 1);
 			AddComponent(body);
-			body.Body.LinearDamping = 10;
+			body!.Body!.LinearDamping = 10;
 
 			AddComponent(new SensorBodyComponent(3, 2, 12, 12));
 			AddDrops(new SingleDrop("bk:crabs_claw", 0.01f));
@@ -67,10 +67,10 @@ namespace BurningKnight.entity.creature.mob.castle {
 
 				var f = 40;
 				velocity = new Vector2(Self.vertical ? 0 : (a ? -f : f), Self.vertical ? (a ? -f : f) : 0);
-				Self.GetComponent<RectBodyComponent>().Velocity = velocity;
+				Self.GetComponent<RectBodyComponent>()!.Velocity = velocity;
 
 				var an = Self.GetComponent<MobAnimationComponent>();
-				an.Animation.Frame = (uint) Rnd.Int(4);
+				an!.Animation!.Frame = (uint) Rnd.Int(4);
 				an.Animate();
 			}
 			
@@ -83,14 +83,14 @@ namespace BurningKnight.entity.creature.mob.castle {
 
 			public override void Destroy() {
 				base.Destroy();
-				Self.GetComponent<RectBodyComponent>().Velocity = Vector2.Zero;
+				Self.GetComponent<RectBodyComponent>()!.Velocity = Vector2.Zero;
 			}
 
 			public override void Update(float dt) {
 				base.Update(dt);
 				var b = Self.GetComponent<RectBodyComponent>();
 
-				if (T >= timer || b.Velocity.Length() < 20) {
+				if (T >= timer || b!.Velocity.Length() < 20) {
 					Flip(T >= timer);
 					T = 0;
 					return;
@@ -104,7 +104,7 @@ namespace BurningKnight.entity.creature.mob.castle {
 		public override bool HandleEvent(Event e) {
 			if (e is CollisionStartedEvent ev) {
 				if (ev.Entity is Door || ev.Entity is Level || ev.Entity is Chasm || (ev.Entity is SolidProp && !(ev.Entity is BreakableProp))) {
-					var s = GetComponent<StateComponent>().StateInstance;
+					var s = GetComponent<StateComponent>()!.StateInstance;
 
 					if (s is IdleState i) {
 						i.Flip();

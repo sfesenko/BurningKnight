@@ -33,16 +33,16 @@ namespace BurningKnight.entity.buff {
 			All.Remove(id);
 		}
 		
-		public static Buff Create(string id) {
+		public static Buff? Create(string id) {
 			if (!All.TryGetValue(id, out var buff)) {
 				return null;
 			}
 
-			return (Buff) Activator.CreateInstance(buff.Buff);
+			return (Buff) Activator.CreateInstance(buff.Buff)!;
 		}
 
 		public static Buff Create<T>() where T : Buff {
-			return (Buff) Activator.CreateInstance(typeof(T));
+			return (Buff) Activator.CreateInstance(typeof(T))!;
 		}
 	}
 }

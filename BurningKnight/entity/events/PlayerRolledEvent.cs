@@ -3,6 +3,6 @@ using Lens.entity;
 
 namespace BurningKnight.entity.events {
 	public class PlayerRolledEvent : Event {
-		public Player Who;
+		public Player Who = null!;
 	}
 }

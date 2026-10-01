@@ -33,7 +33,7 @@ namespace Lens.assets {
 			All.Clear();
 		}
 
-		public static Effect Get(string id) {
+		public static Effect? Get(string id) {
 			return All.TryGetValue(id, out var o) ? o : null;
 		}
 	}

@@ -72,14 +72,14 @@ namespace BurningKnight.save.statistics {
 			Items.Clear();
 			
 			for (var i = 0; i < count; i++) {
-				Items.Add(stream.ReadString());
+				Items.Add(stream.ReadString()!);
 			}
 		
 			count = stream.ReadUInt16();
 			Banned.Clear();
 			
 			for (var i = 0; i < count; i++) {
-				Banned.Add(stream.ReadString());
+				Banned.Add(stream.ReadString()!);
 			}
 
 			CoinsObtained = stream.ReadUInt16();
@@ -192,7 +192,7 @@ namespace BurningKnight.save.statistics {
 				return;
 			}
 
-			foreach (var p in Area.Tagged[Tags.Player]) {
+			foreach (var p in Area!.Tagged[Tags.Player]) {
 				if (p.TryGetComponent<RectBodyComponent>(out var c)) {
 					leftOver += (c.Velocity * dt).Length();
 
@@ -266,7 +266,7 @@ namespace BurningKnight.save.statistics {
 					MaxHealth = (ushort) (MaxHealth + mhme.Amount);
 				}
 			} else if (e is NewLevelStartedEvent) {
-				foreach (var r in Area.Tagged[Tags.Room]) {
+				foreach (var r in Area!.Tagged[Tags.Room]) {
 					if (((Room) r).Type == RoomType.Secret) {
 						SecretRoomsTotal++;
 					}

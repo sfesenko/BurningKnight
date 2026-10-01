@@ -74,7 +74,7 @@ namespace BurningKnight.entity.creature.bk {
 				}
 				
 				Timer.Add(() => {
-					Self.GetComponent<AudioEmitterComponent>().EmitRandomizedPrefixed("item_laser", 4);
+					Self.GetComponent<AudioEmitterComponent>()!.EmitRandomizedPrefixed("item_laser", 4);
 					
 					for (var i = 0; i < 8; i++) {
 						var laser = Laser.Make(Self, 0, (float) laserAngles[i], damage: 2, scale: 3, range: 64);
@@ -94,7 +94,7 @@ namespace BurningKnight.entity.creature.bk {
 					return;
 				}
 				
-				spot = spot.Lerp(Self.Target.Center, dt * 0.5f);
+				spot = spot.Lerp(Self!.Target!.Center, dt * 0.5f);
 
 				for (var i = 0; i < 8; i++) {
 					var laser = lasers[i];

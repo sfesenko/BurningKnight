@@ -41,7 +41,7 @@ namespace BurningKnight.entity.creature.bk {
 				base.Update(dt);
 				Self.CheckForScourgeRage();
 
-				var d = Self.DistanceTo(Self.Target);
+				var d = Self.DistanceTo(Self.Target!);
 				var force = -300f * dt;
 
 				if (d > 80f) {
@@ -50,9 +50,9 @@ namespace BurningKnight.entity.creature.bk {
 					return;
 				}
 
-				var a = Self.AngleTo(Self.Target);
+				var a = Self.AngleTo(Self.Target!);
 
-				Self.GetComponent<RectBodyComponent>().Velocity +=
+				Self.GetComponent<RectBodyComponent>()!.Velocity +=
 					new Vector2((float) Math.Cos(a) * force, (float) Math.Sin(a) * force);
 			}
 		}

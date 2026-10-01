@@ -60,22 +60,22 @@ namespace BurningKnight.entity.creature.player {
 		public bool HasFlight;
 		public bool SuperHot;
 		public override bool InAir() {
-			return HasFlight || base.InAir() || GetComponent<StateComponent>().StateInstance is RollState;
+			return HasFlight || base.InAir() || GetComponent<StateComponent>()!.StateInstance is RollState;
 		}
-		public override bool HasNoHealth(HealthModifiedEvent e = null) {
-			return base.HasNoHealth(e) && GetComponent<HeartsComponent>().Total == 0;
+		public override bool HasNoHealth(HealthModifiedEvent? e = null) {
+			return base.HasNoHealth(e) && GetComponent<HeartsComponent>()!.Total == 0;
 		}
-		public override bool HasNoHealth(PostHealthModifiedEvent e = null) {
-			return base.HasNoHealth(e) && GetComponent<HeartsComponent>().Total == 0;
+		public override bool HasNoHealth(PostHealthModifiedEvent? e = null) {
+			return base.HasNoHealth(e) && GetComponent<HeartsComponent>()!.Total == 0;
 		}
 		public override bool HandleEvent(Event e) {
 			if (e is LostSupportEvent) {
-				if (GetComponent<HealthComponent>().Unhittable) {
+				if (GetComponent<HealthComponent>()!.Unhittable) {
 					return true;
 				}
 
-				if (!GetComponent<BuffsComponent>().PitImmunity) {
-					GetComponent<HealthComponent>().ModifyHealth(-1, Context.Level);
+				if (!GetComponent<BuffsComponent>()!.PitImmunity) {
+					GetComponent<HealthComponent>()!.ModifyHealth(-1, Context.Level!);
 				}
 				
 
@@ -84,7 +84,7 @@ namespace BurningKnight.entity.creature.player {
 						
 					part.Position = Center;
 					part.Particle.Scale = Rnd.Float(0.4f, 0.8f);
-					Area.Add(part);
+					Area!.Add(part);
 				}
 			} else if (e is RoomChangedEvent c) {
 				if (c.New == null || Context.Level == null || Context.Camera == null) {
@@ -94,8 +94,8 @@ namespace BurningKnight.entity.creature.player {
 				if (c.New.Tagged[Tags.MustBeKilled].Count > 0) {
 					Audio.PlaySfx("level_door_shut");
 
-					foreach (var p in Area.Tagged[Tags.Player]) {
-						if (p.GetComponent<RoomComponent>().Room != c.New) {
+					foreach (var p in Area!.Tagged[Tags.Player]) {
+						if (p.GetComponent<RoomComponent>()!.Room != c.New) {
 							AnimationUtil.Poof(p.Center);
 							p.Center = Center;
 							AnimationUtil.Poof(p.Center);
@@ -150,8 +150,8 @@ namespace BurningKnight.entity.creature.player {
 						case RoomType.Treasure: {
 							foreach (var door in c.New.Doors) {
 								if (door.TryGetComponent<LockComponent>(out var component) && component.Lock is GoldLock) {
-									if (!(c.New.Type == RoomType.Shop && ((door.Rooms[0] != null && door.Rooms[0].Type == RoomType.SubShop) ||
-									                                    (door.Rooms[1] != null && door.Rooms[1].Type == RoomType.SubShop)))) {
+									if (!(c.New.Type == RoomType.Shop && ((door!.Rooms![0] != null && door.Rooms![0].Type == RoomType.SubShop) ||
+									                                    (door.Rooms![1] != null && door.Rooms![1].Type == RoomType.SubShop)))) {
 									
 										component.Lock.SetLocked(false, this);
 									} 
@@ -165,12 +165,12 @@ namespace BurningKnight.entity.creature.player {
 						case RoomType.OldMan:
 						case RoomType.Granny: {
 							if (c.New.Type == RoomType.OldMan) {
-								GetComponent<StatsComponent>().SawDeal = true;
+								GetComponent<StatsComponent>()!.SawDeal = true;
 							}
 							
 							c.New.OpenHiddenDoors();
 							
-							foreach (var r in Area.Tagged[Tags.Room]) {
+							foreach (var r in Area!.Tagged[Tags.Room]) {
 								var room = (Room) r;
 
 								if (room.Type == (c.New.Type == RoomType.OldMan ? RoomType.Granny : RoomType.OldMan)) {
@@ -228,22 +228,22 @@ namespace BurningKnight.entity.creature.player {
 									level.ReCreateBodyChunk(x, y);
 									level.LoadPassable();
 
-									Context.Camera.Shake(10);
+									Context.Camera!.Shake(10);
 								}
 							}
 
 							c.Old.ApplyToEachTile((x, y) => {
-								if (Context.Level.Get(x, y).IsWall()) {
+								if (Context.Level!.Get(x, y).IsWall()) {
 									return;
 								}
 
 								Timer.Add(() => {
 									var part = new TileParticle();
 
-									part.Top = Context.Level.Tileset.WallTopADecor;
-									part.TopTarget = Context.Level.Tileset.WallTopADecor;
-									part.Side = Context.Level.Tileset.FloorSidesD[0];
-									part.Sides = Context.Level.Tileset.WallSidesA[2];
+									part.Top = Context!.Level!.Tileset!.WallTopADecor;
+									part.TopTarget = Context.Level!.Tileset.WallTopADecor;
+									part.Side = Context.Level!.Tileset.FloorSidesD[0];
+									part.Sides = Context.Level!.Tileset.WallSidesA[2];
 									part.Tile = Tile.WallA;
 
 									part.X = x * 16;
@@ -252,7 +252,7 @@ namespace BurningKnight.entity.creature.player {
 									part.Target.Y = y * 16;
 									part.TargetZ = -8f;
 
-									Area.Add(part);
+									Area!.Add(part);
 								}, Rnd.Float(0.5f));
 							});
 
@@ -285,7 +285,7 @@ namespace BurningKnight.entity.creature.player {
 						Player = this
 					});
 
-					var hp = GetComponent<HealthComponent>().Health + GetComponent<HeartsComponent>().Total;
+					var hp = GetComponent<HealthComponent>()!.Health + GetComponent<HeartsComponent>()!.Total;
 
 					if (hp > 0) {
 						if (h.HealthType == HealthType.Shield) {
@@ -300,47 +300,47 @@ namespace BurningKnight.entity.creature.player {
 
 						if (Rnd.Chance(30)) {
 							for (var i = 0; i < Rnd.Int(1, 3); i++) {
-								Area.Add(new SplashParticle {
+								Area!.Add(new SplashParticle {
 									Position = Center - new Vector2(2.5f),
 									Color = cl
 								});
 							}
 						}
 
-						Area.Add(new SplashFx {
+						Area!.Add(new SplashFx {
 							Position = Center,
 							Color = ColorUtils.Mod(cl)
 						});
 					}
 				}
 			} else if (e is RoomClearedEvent rce) {
-				Context.Camera.Unfollow(rce.Room);
+				Context.Camera!.Unfollow(rce.Room);
 				Audio.PlaySfx("level_room_cleared", 0.25f + Audio.Db3);
 
-				if (Context.Run.Depth > 0 && !alerted && CheckClear(Area)) {
+				if (Context.Run.Depth > 0 && !alerted && CheckClear(Area!)) {
 					alerted = true;
 					AnimationUtil.Confetti(Center);
 					Audio.PlaySfx("level_cleared");
 				}
 			} else if (e is NewLevelStartedEvent) {
-				GetComponent<HealthComponent>().Unhittable = true;
+				GetComponent<HealthComponent>()!.Unhittable = true;
 			} else if (e is ProjectileCreatedEvent pce) {
 				if (Flying || HasFlight) {
 					pce.Projectile.AddFlags(ProjectileFlags.FlyOverStones);
 				}
 			} else if (e is FlagCollisionStartEvent fcse) {
 				if (fcse.Flag == Flag.Burning) {
-					GetComponent<HealthComponent>().ModifyHealth(-1, Context.Level);
+					GetComponent<HealthComponent>()!.ModifyHealth(-1, Context.Level!);
 				}
 			} else if (e is RevivedEvent re) {
 				AnimationUtil.TeleportAway(this, () => {
 					FindSpawn();
-					Context.Camera.Jump();
+					Context.Camera!.Jump();
 					AnimationUtil.TeleportIn(this);
 				});
 			} else if (e is CollisionStartedEvent cse) {
 				if (ItemDamage && cse.Entity is Item) {
-					GetComponent<HealthComponent>().ModifyHealth(-1, cse.Entity, DamageType.Custom);
+					GetComponent<HealthComponent>()!.ModifyHealth(-1, cse.Entity, DamageType.Custom);
 				}
 			}
 			
@@ -362,7 +362,7 @@ namespace BurningKnight.entity.creature.player {
 			return !HasFlight;
 		}
 		public override bool IgnoresProjectiles() {
-			return GetComponent<StateComponent>().StateInstance is RollState;
+			return GetComponent<StateComponent>()!.StateInstance is RollState;
 		}
 	}
 }

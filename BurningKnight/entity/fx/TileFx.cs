@@ -5,7 +5,7 @@ using Lens.util.math;
 
 namespace BurningKnight.entity.fx {
 	public class TileFx : Entity {
-		private TextureRegion region;
+		private TextureRegion region = null!;
 		private float t;
 		
 		public override void Init() {
@@ -15,7 +15,7 @@ namespace BurningKnight.entity.fx {
 			AlwaysActive = true;
 
 			t = Rnd.Float(0.5f);
-			region = Animations.Get("particles").GetSlice("wall");
+			region = Animations.Get("particles")!.GetSlice("wall")!;
 		}
 
 		public override void Update(float dt) {

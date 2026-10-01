@@ -7,7 +7,7 @@ namespace BurningKnight.entity.item.use {
 		private float mod;
 
 		public override void Use(Entity entity, Item item) {
-			entity.GetAnyComponent<BodyComponent>().KnockbackModifier = mod;
+			entity!.GetAnyComponent<BodyComponent>()!.KnockbackModifier = mod;
 		}
 
 		public override void Setup(JsonValue settings) {

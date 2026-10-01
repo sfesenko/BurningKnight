@@ -39,7 +39,7 @@ namespace BurningKnight.level {
 		public override void RenderImDebug() {
 			base.RenderImDebug();
 			ImGui.Text($"Size: {width}x{height} = {Size} (real {width * height})");
-			ImGui.Text($"Variant: {Variant.GetType().Name}");
+			ImGui.Text($"Variant: {Variant!.GetType()!.Name}");
 			ImGui.Text($"Tiles: {Tiles.Length}");
 			ImGui.Text($"Liquid: {Liquid.Length}");
 			ImGui.Text($"Variants: {Variants.Length}");

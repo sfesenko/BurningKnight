@@ -15,15 +15,15 @@ namespace BurningKnight.ui.imgui {
         // Graphics
         private GraphicsDevice _graphicsDevice;
 
-        private BasicEffect _effect;
+        private BasicEffect _effect = null!;
         private RasterizerState _rasterizerState;
 
-        private byte[] _vertexData;
-        private VertexBuffer _vertexBuffer;
+        private byte[] _vertexData = null!;
+        private VertexBuffer _vertexBuffer = null!;
         private int _vertexBufferSize;
 
-        private byte[] _indexData;
-        private IndexBuffer _indexBuffer;
+        private byte[] _indexData = null!;
+        private IndexBuffer _indexBuffer = null!;
         private int _indexBufferSize;
 
         // Textures

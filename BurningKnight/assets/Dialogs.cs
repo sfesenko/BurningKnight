@@ -77,7 +77,7 @@ namespace BurningKnight.assets {
 			dialogs[dialog.Id] = dialog;
 		}
 
-		public static Dialog Get(string id) {
+		public static Dialog? Get(string id) {
 			if (!dialogs.TryGetValue(id, out var dialog)) {
 				return null;
 			}

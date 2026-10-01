@@ -27,9 +27,9 @@ using Microsoft.Xna.Framework;
 namespace BurningKnight.level.entities.decor {
 	public class BurningStatue : SolidProp {
 		public bool Broken;
-		private FireEmitter fea;
-		private FireEmitter feb;
-		private SpawnTrigger trigger;
+		private FireEmitter? fea;
+		private FireEmitter feb = null!;
+		private SpawnTrigger? trigger;
 		private float XSpread = 0.1f;
 		// Only the disabled SetupSpawn assigns it; the emitters below read it as null.
 #pragma warning disable CS0649
@@ -81,7 +81,7 @@ namespace BurningKnight.level.entities.decor {
 			UpdateSprite();
 
 			if (!Broken) {
-				Area.Add(fea = new FireEmitter {
+				Area!.Add(fea = new FireEmitter {
 					Depth = Depth + 1,
 					Position = new Vector2(X + 11, Y + 15),
 					Scale = 0.8f
@@ -98,6 +98,7 @@ namespace BurningKnight.level.entities.decor {
 		}
 
 		private bool Interact(Entity e) {
+			var camera = Context.Camera!;
 			if (Broken || busy) {
 				return true;
 			}
@@ -114,9 +115,9 @@ namespace BurningKnight.level.entities.decor {
 
 			XSpread = 1;
 			
-			Tween.To(1f, Context.Camera.Zoom, xx => Context.Camera.Zoom = xx, 0.2f);
-			Tween.To(1.4f, Context.Camera.TextureZoom, xx => Context.Camera.TextureZoom = xx, 0.5f);
-			Context.Camera.GetComponent<ShakeComponent>().Amount = 0;
+			Tween.To(1f, camera.Zoom, xx => camera.Zoom = xx, 0.2f);
+			Tween.To(1.4f, camera.TextureZoom, xx => camera.TextureZoom = xx, 0.5f);
+			camera.GetComponent<ShakeComponent>()!.Amount = 0;
 			GameSave.Put("statue_broken", true);
 
 			/*var torches = GetComponent<RoomComponent>().Room.Tagged[Tags.Torch];
@@ -188,8 +189,8 @@ namespace BurningKnight.level.entities.decor {
 			if (Broken) {
 				var s = GetComponent<InteractableSliceComponent>();
 
-				s.Sprite = CommonAse.Props.GetSlice("broken_statue");
-				s.Offset.Y = Height - s.Sprite.Height;
+				s!.Sprite = CommonAse.Props.GetSlice("broken_statue")!;
+				s.Offset.Y = Height - s!.Sprite!.Height;
 
 				if (fea != null) {
 					fea.Done = true;
@@ -214,7 +215,7 @@ namespace BurningKnight.level.entities.decor {
 		public override void Update(float dt) {
 			base.Update(dt);
 
-			if (Area.Tagged[Tags.BurningKnight].Count > 0) {
+			if (Area!.Tagged[Tags.BurningKnight].Count > 0) {
 				Done = true;
 				return;
 			}
@@ -291,7 +292,7 @@ namespace BurningKnight.level.entities.decor {
 
 		public override bool HandleEvent(Event e) {
 			if (e is RoomChangedEvent rce) {
-				var r = GetComponent<RoomComponent>().Room;
+				var r = GetComponent<RoomComponent>()!.Room;
 
 				if (rce.Who is LocalPlayer) {
 					if (rce.New == r) {
@@ -311,7 +312,7 @@ namespace BurningKnight.level.entities.decor {
 		}
 
 		public class BrokenEvent : Event {
-			public BurningStatue BurningStatue;
+			public BurningStatue BurningStatue = null!;
 		}
 	}
 }

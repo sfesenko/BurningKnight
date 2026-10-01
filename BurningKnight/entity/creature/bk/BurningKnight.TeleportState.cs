@@ -48,10 +48,10 @@ namespace BurningKnight.entity.creature.bk {
 
 				did = true;
 				
-				Self.GetComponent<DialogComponent>().Close();
+				Self.GetComponent<DialogComponent>()!.Close();
 				var graphics = Self.GetComponent<BkGraphicsComponent>();
 
-				Tween.To(0, graphics.Alpha, x => graphics.Alpha = x, 0.3f, Ease.QuadIn).OnEnd = () => {
+				Tween.To(0, graphics!.Alpha, x => graphics.Alpha = x, 0.3f, Ease.QuadIn).OnEnd = () => {
 					if (Self.Target != null) {
 						Self.Center = Self.Target.Center + MathUtils.CreateVector(Rnd.AnglePI(), 64f);
 					}
@@ -64,7 +64,7 @@ namespace BurningKnight.entity.creature.bk {
 						
 						if (Self.sayNoRage) {
 							Self.sayNoRage = false;
-							Self.GetComponent<DialogComponent>().StartAndClose("bk_11", 5);
+							Self.GetComponent<DialogComponent>()!.StartAndClose("bk_11", 5);
 						}
 
 						if (Self.Target != null) {

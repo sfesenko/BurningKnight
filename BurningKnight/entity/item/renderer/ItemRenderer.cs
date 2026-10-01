@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.item.renderer {
 	public partial class ItemRenderer {
-		public Item Item;
+		public Item Item = null!;
 		public Vector2 Origin;
 		public Vector2 Nozzle;
 		public bool Hidden;

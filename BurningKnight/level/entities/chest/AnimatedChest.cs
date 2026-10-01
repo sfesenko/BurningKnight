@@ -9,13 +9,13 @@ namespace BurningKnight.level.entities.chest {
 		}
 
 		protected override void UpdateSprite(bool open = true) {
-			GetComponent<AnimationComponent>().Animation.Tag = open ? "open" : "idle";
+			GetComponent<AnimationComponent>()!.Animation!.Tag = open ? "open" : "idle";
 		}
 		
 		protected override void Animate() {
 			var a = GetComponent<AnimationComponent>();
 
-			a.Scale.X = 0.6f * Scale;
+			a!.Scale.X = 0.6f * Scale;
 			a.Scale.Y = 1.7f * Scale;
 					
 			Tween.To(1.8f * Scale, a.Scale.X, x => a.Scale.X = x, 0.15f);
@@ -28,7 +28,7 @@ namespace BurningKnight.level.entities.chest {
 		protected override void Animate(Action callback) {
 			var a = GetComponent<AnimationComponent>();
 					
-			Tween.To(1.8f * Scale, a.Scale.X, x => a.Scale.X = x, 0.2f);
+			Tween.To(1.8f * Scale, a!.Scale.X, x => a.Scale.X = x, 0.2f);
 			Tween.To(0.2f * Scale, a.Scale.Y, x => a.Scale.Y = x, 0.2f).OnEnd = () => {
 				callback();
 				

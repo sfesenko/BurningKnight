@@ -23,7 +23,7 @@ namespace BurningKnight.entity.creature.pet {
 				t = 0;
 				
 				foreach (var c in Colliding) {
-					c.GetComponent<HealthComponent>().ModifyHealth(-3, this);
+					c.GetComponent<HealthComponent>()!.ModifyHealth(-3, this);
 				}
 			}
 		}
@@ -32,7 +32,7 @@ namespace BurningKnight.entity.creature.pet {
 			if (e is CollisionStartedEvent cse) {
 				if (cse.Entity.HasTag(Tags.MustBeKilled)) {
 					Colliding.Add(cse.Entity);
-					cse.Entity.GetComponent<HealthComponent>().ModifyHealth(-3, this);
+					cse.Entity.GetComponent<HealthComponent>()!.ModifyHealth(-3, this);
 				}
 			} else if (e is CollisionEndedEvent cee) {
 				if (cee.Entity.HasTag(Tags.MustBeKilled)) {

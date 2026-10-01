@@ -46,29 +46,29 @@ namespace BurningKnight.entity.creature.bk {
 				base.Update(dt);
 				Self.CheckForScourgeRageFree();
 
-				var d = Self.DistanceTo(Self.Target);
+				var d = Self.DistanceTo(Self.Target!);
 				var force = 300f * dt;
 
 				if (d < 64f) {
 					Self.Become<FlyAwayAttackingState>();
 				} else if (d <= 128f) {
-					var r = Self.Target.GetComponent<RoomComponent>().Room;
+					var r = Self!.Target!.GetComponent<RoomComponent>()!.Room;
 
-					if (r.Type == RoomType.Shop || r.Type == RoomType.SubShop || r.Type == RoomType.OldMan) {
+					if (r!.Type == RoomType.Shop || r.Type == RoomType.SubShop || r.Type == RoomType.OldMan) {
 
 					} else {
 						Self.Become<AttackState>();
 					}
 				}
 
-				var room = Self.Target.GetComponent<RoomComponent>().Room;
+				var room = Self!.Target!.GetComponent<RoomComponent>()!.Room;
 
 				if (Self.OnScreen && room != null && room.Type == RoomType.Regular &&
 				    room.Tagged[Tags.MustBeKilled].Count > 0 && room.Contains(Self, 16f)) {
 					var aa = Self.AngleTo(room);
 					force = 400f * dt;
 
-					Self.GetComponent<RectBodyComponent>().Velocity -=
+					Self.GetComponent<RectBodyComponent>()!.Velocity -=
 						new Vector2((float) Math.Cos(aa) * force, (float) Math.Sin(aa) * force);
 
 					return;
@@ -76,7 +76,7 @@ namespace BurningKnight.entity.creature.bk {
 
 				var a = Self.AngleTo(Self.Target);
 
-				Self.GetComponent<RectBodyComponent>().Velocity +=
+				Self.GetComponent<RectBodyComponent>()!.Velocity +=
 					new Vector2((float) Math.Cos(a) * force, (float) Math.Sin(a) * force);
 			}
 		}

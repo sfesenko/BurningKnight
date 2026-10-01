@@ -6,10 +6,10 @@ using Lens.util;
 
 namespace BurningKnight.entity.item.use {
 	public partial class GiveWeaponUse : ItemUse {
-		public new string Item;
+		public new string Item = null!;
 
 		public override void Use(Entity entity, Item item) {
-			var i = Items.CreateAndAdd(Item, entity.Area);
+			var i = Items.CreateAndAdd(Item, entity.Area!);
 
 			if (i == null) {
 				Log.Error($"Invalid item {item}");
@@ -17,16 +17,16 @@ namespace BurningKnight.entity.item.use {
 			}
 
 			var o = entity.GetComponent<WeaponComponent>();
-			var c = (WeaponComponent) entity.GetComponent<ActiveWeaponComponent>();
+			var c = (WeaponComponent) entity.GetComponent<ActiveWeaponComponent>()!;
 
-			if (o.Item == item) {
+			if (o!.Item == item) {
 				c = o;
 			}
 			
-			var old = c.Item;
+			var old = c!.Item;
 
 			c.Set(i, false);
-			old.Done = true;
+			old!.Done = true;
 		}
 
 		public override void Setup(JsonValue settings) {

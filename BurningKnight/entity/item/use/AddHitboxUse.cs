@@ -5,12 +5,12 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.item.use {
 	public class AddHitboxUse : ItemUse {
-		private IPhysicsBody body;
+		private IPhysicsBody? body;
 
 		public override void Use(Entity entity, Item item) {
 			base.Use(entity, item);
 			
-			body = Physics.World.CreateBody(Vector2.Zero, 0, BodyType.Dynamic);
+			body = Physics.World!.CreateBody(Vector2.Zero, 0, BodyType.Dynamic);
 
 			body.FixedRotation = true;
 			body.UserData = this;

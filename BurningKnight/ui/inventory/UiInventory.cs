@@ -27,47 +27,47 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.ui.inventory {
 	public partial class UiInventory : UiEntity {
-		public TextureRegion ItemSlot;
-		public TextureRegion UseSlot;
+		public TextureRegion ItemSlot = null!;
+		public TextureRegion UseSlot = null!;
 		
-		private TextureRegion question;		
-		private TextureRegion bomb;
-		private TextureRegion key;
-		private TextureRegion coin;
-		private TextureRegion pointer;
-		private TextureRegion exitPointer;
+		private TextureRegion question = null!;		
+		private TextureRegion bomb = null!;
+		private TextureRegion key = null!;
+		private TextureRegion coin = null!;
+		private TextureRegion pointer = null!;
+		private TextureRegion exitPointer = null!;
 		
-		private UiString description;
-		private UiItem lastItem;
+		private UiString description = null!;
+		private UiItem lastItem = null!;
 
-		public static TextureRegion Heart;
-		public static TextureRegion HalfHeart;
-		public static TextureRegion HeartBackground;
-		private TextureRegion changedHeartBackground;
-		private static TextureRegion halfHeartBackground;
-		private TextureRegion changedHalfHeartBackground;
+		public static TextureRegion Heart = null!;
+		public static TextureRegion HalfHeart = null!;
+		public static TextureRegion HeartBackground = null!;
+		private TextureRegion changedHeartBackground = null!;
+		private static TextureRegion halfHeartBackground = null!;
+		private TextureRegion changedHalfHeartBackground = null!;
 
-		public static TextureRegion veganHeart;
-		public static TextureRegion veganHalfHeart;
-		public static TextureRegion veganHeartBackground;
-		private TextureRegion veganchangedHeartBackground;
-		private static TextureRegion veganhalfHeartBackground;
-		private TextureRegion veganchangedHalfHeartBackground;
+		public static TextureRegion veganHeart = null!;
+		public static TextureRegion veganHalfHeart = null!;
+		public static TextureRegion veganHeartBackground = null!;
+		private TextureRegion veganchangedHeartBackground = null!;
+		private static TextureRegion veganhalfHeartBackground = null!;
+		private TextureRegion veganchangedHalfHeartBackground = null!;
 		
-		public static TextureRegion Mana;
-		public static TextureRegion HalfMana;
-		public static TextureRegion ManaBackground;
-		public static TextureRegion ChangedManaBackground;
+		public static TextureRegion Mana = null!;
+		public static TextureRegion HalfMana = null!;
+		public static TextureRegion ManaBackground = null!;
+		public static TextureRegion ChangedManaBackground = null!;
 		
-		public static TextureRegion Bomb;
-		public static TextureRegion BombBg;
-		public static TextureRegion ChangedBombBg;
+		public static TextureRegion Bomb = null!;
+		public static TextureRegion BombBg = null!;
+		public static TextureRegion ChangedBombBg = null!;
 		
-		public static TextureRegion ShieldBackground;
-		private TextureRegion changedShieldBackground;
-		private static TextureRegion halfShieldBackground;
-		private TextureRegion changedHalfShieldBackground;
-		private UiButton more;
+		public static TextureRegion ShieldBackground = null!;
+		private TextureRegion changedShieldBackground = null!;
+		private static TextureRegion halfShieldBackground = null!;
+		private TextureRegion changedHalfShieldBackground = null!;
+		private UiButton more = null!;
 		
 		public Player Player;
 
@@ -81,7 +81,7 @@ namespace BurningKnight.ui.inventory {
 
 		private List<UiItem> items = new List<UiItem>();
 		private UiActiveItemSlot activeSlot;
-		private UiWeaponSlot weaponSlot;
+		private UiWeaponSlot? weaponSlot;
 		private UiWeaponSlot activeWeaponSlot;
 
 		private bool multiplayer;
@@ -101,7 +101,7 @@ namespace BurningKnight.ui.inventory {
 			};
 
 			this.multiplayer = multiplayer;
-			Second = multiplayer && player.GetComponent<InputComponent>().Index > 0;
+			Second = multiplayer && player.GetComponent<InputComponent>()!.Index > 0;
 		}
 
 		public override void Init() {
@@ -112,7 +112,7 @@ namespace BurningKnight.ui.inventory {
 			((InGameState) Engine.Instance.State).TopUi.Add(new RenderTrigger(RenderTop, 10));
 			description.DisableRender = true;
 			
-			Area.Add(activeSlot);
+			Area!.Add(activeSlot);
 
 			if (weaponSlot != null) {
 				Area.Add(weaponSlot);
@@ -122,49 +122,49 @@ namespace BurningKnight.ui.inventory {
 
 			var anim = Animations.Get("ui");
 
-			ItemSlot = anim.GetSlice("item_slot");
+			ItemSlot = anim!.GetSlice("item_slot")!;
 			UseSlot = new TextureRegion();
-			UseSlot.Set(ItemSlot);
+			UseSlot.Set(ItemSlot!);
 			
-			question = anim.GetSlice("question");
-			bomb = anim.GetSlice("bomb");
-			key = anim.GetSlice("key");
-			coin = anim.GetSlice("coin");
-			pointer = anim.GetSlice("pointer");
-			exitPointer = anim.GetSlice("exit_pointer");
+			question = anim.GetSlice("question")!;
+			bomb = anim.GetSlice("bomb")!;
+			key = anim.GetSlice("key")!;
+			coin = anim.GetSlice("coin")!;
+			pointer = anim.GetSlice("pointer")!;
+			exitPointer = anim.GetSlice("exit_pointer")!;
 
-			Heart = anim.GetSlice("heart");
-			HalfHeart = anim.GetSlice("half_heart");
-			HeartBackground = anim.GetSlice("heart_bg");
-			changedHeartBackground = anim.GetSlice("heart_hurt_bg");
-			halfHeartBackground = anim.GetSlice("half_heart_bg");
-			changedHalfHeartBackground = anim.GetSlice("half_heart_hurt");
+			Heart = anim.GetSlice("heart")!;
+			HalfHeart = anim.GetSlice("half_heart")!;
+			HeartBackground = anim.GetSlice("heart_bg")!;
+			changedHeartBackground = anim.GetSlice("heart_hurt_bg")!;
+			halfHeartBackground = anim.GetSlice("half_heart_bg")!;
+			changedHalfHeartBackground = anim.GetSlice("half_heart_hurt")!;
 			
-			veganHeart = anim.GetSlice("vegan");
-			veganHalfHeart = anim.GetSlice("half_vegan");
-			veganHeartBackground = anim.GetSlice("vegan_bg");
-			veganchangedHeartBackground = anim.GetSlice("vegan_hurt_bg");
-			veganhalfHeartBackground = anim.GetSlice("half_vegan_bg");
-			veganchangedHalfHeartBackground = anim.GetSlice("half_vegan_hurt_bg");
+			veganHeart = anim.GetSlice("vegan")!;
+			veganHalfHeart = anim.GetSlice("half_vegan")!;
+			veganHeartBackground = anim.GetSlice("vegan_bg")!;
+			veganchangedHeartBackground = anim.GetSlice("vegan_hurt_bg")!;
+			veganhalfHeartBackground = anim.GetSlice("half_vegan_bg")!;
+			veganchangedHalfHeartBackground = anim.GetSlice("half_vegan_hurt_bg")!;
 			
-			Bomb = anim.GetSlice("bmb");
-			BombBg = anim.GetSlice("bmb_bg");
-			ChangedBombBg = anim.GetSlice("bmb_hurt");
+			Bomb = anim.GetSlice("bmb")!;
+			BombBg = anim.GetSlice("bmb_bg")!;
+			ChangedBombBg = anim.GetSlice("bmb_hurt")!;
 			
-			Mana = anim.GetSlice("mana");
-			HalfMana = anim.GetSlice("half_mana");
-			ManaBackground = anim.GetSlice("mana_bg");
-			ChangedManaBackground = anim.GetSlice("mana_hurt_bg");
+			Mana = anim.GetSlice("mana")!;
+			HalfMana = anim.GetSlice("half_mana")!;
+			ManaBackground = anim.GetSlice("mana_bg")!;
+			ChangedManaBackground = anim.GetSlice("mana_hurt_bg")!;
 			
-			ShieldBackground = anim.GetSlice("shield_bg");
-			changedShieldBackground = anim.GetSlice("shield_hurt");
-			halfShieldBackground = anim.GetSlice("half_shield_bg");
-			changedHalfShieldBackground = anim.GetSlice("half_shield_hurt");
+			ShieldBackground = anim.GetSlice("shield_bg")!;
+			changedShieldBackground = anim.GetSlice("shield_hurt")!;
+			halfShieldBackground = anim.GetSlice("half_shield_bg")!;
+			changedHalfShieldBackground = anim.GetSlice("half_shield_hurt")!;
 			
 			if (Player != null) {
 				var component = Player.GetComponent<ConsumablesComponent>();
 
-				coins = component.Coins;
+				coins = component!.Coins;
 				keys = component.Keys;
 				bombs = component.Bombs;
 
@@ -193,7 +193,7 @@ namespace BurningKnight.ui.inventory {
 				
 				var inventory = Player.GetComponent<InventoryComponent>();
 
-				foreach (var item in inventory.Items) {
+				foreach (var item in inventory!.Items) {
 					AddArtifact(item);
 				}
 			}
@@ -211,7 +211,7 @@ namespace BurningKnight.ui.inventory {
 		public void UpdateConsumables() {
 			var c = Player.GetComponent<ConsumablesComponent>();
 
-			bombs = c.Bombs;
+			bombs = c!.Bombs;
 			keys = c.Keys;
 			coins = c.Coins;
 		}
@@ -237,7 +237,7 @@ namespace BurningKnight.ui.inventory {
 						items.Clear();
 						var inventory = Player.GetComponent<InventoryComponent>();
 
-						foreach (var item in inventory.Items) {
+						foreach (var item in inventory!.Items) {
 							AddArtifact(item);
 						}
 					}

@@ -11,7 +11,7 @@ namespace BurningKnight.entity.item.use {
 
 		public override void Use(Entity entity, Item item) {
 			if (!item.Used && (!Broken || Rnd.Chance())) {
-				entity.GetComponent<HealthComponent>().Phases += (byte) Amount;
+				entity.GetComponent<HealthComponent>()!.Phases += (byte) Amount;
 			}
 		}
 

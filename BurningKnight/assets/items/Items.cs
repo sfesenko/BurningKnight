@@ -104,7 +104,7 @@ namespace BurningKnight.assets.items {
 			}
 		}
 
-		private static ItemUse ParseItemUse(string id, JsonValue? data) {
+		private static ItemUse? ParseItemUse(string id, JsonValue? data) {
 			var use = UseRegistry.Create(id);
 
 			if (use == null) {
@@ -143,30 +143,30 @@ namespace BurningKnight.assets.items {
 
 		public static readonly List<string> GeneratedOnFloor = [];
 
-		public static List<ItemData> GeneratePool(List<ItemData> types, Func<ItemData, bool> filter = null, PlayerClass c = PlayerClass.Any)
+		public static List<ItemData> GeneratePool(List<ItemData> types, Func<ItemData, bool>? filter = null, PlayerClass c = PlayerClass.Any)
 		{
 			return types.Where(t => ShouldAppear(t) && (filter == null || filter(t)) && !GeneratedOnFloor.Contains(t.Id))
 				.ToList();
 		}
 
-		public static string Generate(ItemType type, Func<ItemData, bool> filter = null, PlayerClass c = PlayerClass.Any) {
+		public static string? Generate(ItemType type, Func<ItemData, bool>? filter = null, PlayerClass c = PlayerClass.Any) {
 			if (!byType.TryGetValue(type, out var types)) {
 				return null;
 			}
 
-			return Generate(types, filter, c);
+			return Generate(types, filter!, c);
 		}
 
-		public static string Generate(ItemPool pool, Func<ItemData, bool> filter = null, PlayerClass c = PlayerClass.Any) {
+		public static string? Generate(ItemPool pool, Func<ItemData, bool>? filter = null, PlayerClass c = PlayerClass.Any) {
 			if (!byPool.TryGetValue(pool.Id, out var types)) {
 				return null;
 			}
 
-			return Generate(types, filter, c);
+			return Generate(types, filter!, c);
 		}
 
-		public static string Generate(Func<ItemData, bool> filter = null, PlayerClass c = PlayerClass.Any) {
-			return Generate(Datas.Values.ToList(), filter, c);
+		public static string Generate(Func<ItemData, bool>? filter = null, PlayerClass c = PlayerClass.Any) {
+			return Generate(Datas.Values.ToList(), filter!, c);
 		}
 
 		public static bool Has(string id) {

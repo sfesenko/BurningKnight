@@ -14,10 +14,10 @@ namespace BurningKnight.ui.dialog {
 		public int Choice;
 		public int Last;
 		
-		public ChoiceDialog(string id, string[] options, List<string[]> branches, Action<string, int> callback = null) : base(id) {
+		public ChoiceDialog(string id, string[] options, List<string[]> branches, Action<string, int>? callback = null) : base(id) {
 			Options = options;
 			Branches  = branches;
-			Callback = callback;
+			Callback = callback!;
 		}
 
 		public override string Modify(string dialog) {
@@ -38,7 +38,7 @@ namespace BurningKnight.ui.dialog {
 			return builder.ToString();
 		}
 
-		public override string DecideNext() {
+		public override string? DecideNext() {
 			if (Branches.Count == 0) {
 				return null;
 			}
@@ -46,7 +46,7 @@ namespace BurningKnight.ui.dialog {
 			var array = Branches[Choice];
 			var option = array.Length == 0 ? null : array[Rnd.Int(array.Length)]; 
 			
-			Callback?.Invoke(option, Choice);
+			Callback?.Invoke(option!, Choice);
 			
 			Last = Choice;
 			Choice = 0;

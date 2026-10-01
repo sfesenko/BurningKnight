@@ -25,7 +25,7 @@ namespace BurningKnight.assets.prefabs {
 			Context.Level = null;
 		}
 
-		public static Prefab Get(string id) {
+		public static Prefab? Get(string id) {
 			return loaded.TryGetValue(id, out var fab) ? fab : null;
 		}
 
@@ -54,7 +54,7 @@ namespace BurningKnight.assets.prefabs {
 			
 			try {
 				var prefab = new Prefab();
-				var stream = new FileReader(handle.OpenRead());
+				var stream = new FileReader(handle.OpenRead()!);
 
 				if (stream.ReadInt32() != SaveManager.MagicNumber) {
 					Log.Error("Invalid magic number!");
@@ -77,7 +77,7 @@ namespace BurningKnight.assets.prefabs {
 
 				saver.Load(new GameArea {NoInit = true}, stream, false);
 
-				prefab.Level = Context.Level;
+				prefab.Level = Context.Level!;
 				prefab.Datas = ArrayUtils.Clone(saver.Datas);
 				saver.Datas.Clear();
 

@@ -14,7 +14,7 @@ using Lens.util.math;
 
 namespace BurningKnight.state {
 	public class Run {
-		public Action<int, string> SubmitScore;
+		public Action<int, string> SubmitScore = null!;
 		public readonly int ContentEndDepth = BK.Demo ? 5 : 11;
 
 		private int depth = BK.Version.Dev ? 1 : 0;
@@ -49,15 +49,15 @@ namespace BurningKnight.state {
 		public bool StartedNew;
 		public bool HasRun;
 		
-		public string Seed;
+		public string? Seed;
 
 		public bool IgnoreSeed;
 		public int Luck;
 		public int Scourge { get; private set; }
 		public int PermanentScourge { get; internal set; }
 		public bool IntoMenu;
-		public RunStatistics Statistics;
-		public string NextSeed;
+		public RunStatistics? Statistics;
+		public string? NextSeed;
 		public int LastSavedDepth;
 		public bool AlternateMusic;
 		public RunType Type;
@@ -162,7 +162,7 @@ namespace BurningKnight.state {
 				GlobalSave.RunId++;
 			}
 
-			Rnd.Seed = Seed;
+			Rnd.Seed = Seed!;
 			AlternateMusic = Rnd.Chance(0.5f);
 			
 			Log.Debug($"This run's seed is {Seed}");
@@ -198,7 +198,7 @@ namespace BurningKnight.state {
 			PermanentScourge = Math.Max(0, PermanentScourge - 1);
 			Scourge--;
 			
-			var player = LocalPlayer.Locate(Context.Area);
+			var player = LocalPlayer.Locate(Context.Area!);
 
 			if (player == null) {
 				return;
@@ -219,7 +219,7 @@ namespace BurningKnight.state {
 				Scourge = 10;
 			}
 			
-			var player = LocalPlayer.Locate(Context.Area);
+			var player = LocalPlayer.Locate(Context.Area!);
 
 			if (player == null) {
 				return;
@@ -233,7 +233,7 @@ namespace BurningKnight.state {
 						
 				part.Position = center + Rnd.Vector(-4, 4);
 				part.Particle.Scale = Rnd.Float(0.4f, 0.8f);
-				Context.Level.Area.Add(part);
+				Context.Level!.Area!.Add(part);
 				part.Depth = 1;
 			}
 			
@@ -284,17 +284,17 @@ namespace BurningKnight.state {
 			}
 			
 			Won = true;
-			Statistics.Won = true;
-			Player pl = null;
+			Statistics!.Won = true;
+			Player? pl = null;
 
-			foreach (var p in Context.Area.Tagged[Tags.Player]) {
+			foreach (var p in Context.Area!.Tagged[Tags.Player]) {
 				p.RemoveComponent<PlayerInputComponent>();
-				p.GetComponent<HealthComponent>().Unhittable = true;
+				p.GetComponent<HealthComponent>()!.Unhittable = true;
 
 				pl = (Player) p;
 			}
 			
-			((InGameState) Engine.Instance.State).AnimateDoneScreen(pl);
+			((InGameState) Engine.Instance.State).AnimateDoneScreen(pl!);
 		}
 
 		public string GetLeaderboardId() {

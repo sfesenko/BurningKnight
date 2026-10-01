@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.component {
 	public class ZSliceComponent : GraphicsComponent {
-		public TextureRegion Sprite;
+		public TextureRegion Sprite = null!;
 		public Vector2 Scale = Vector2.One;
 		public Vector2 Origin;
 		
@@ -17,11 +17,11 @@ namespace BurningKnight.entity.component {
 		}
 		
 		public ZSliceComponent(string image, string slice) {
-			Sprite = Animations.Get(image).GetSlice(slice);
+			Sprite = Animations.Get(image)!.GetSlice(slice)!;
 		}
 
 		public ZSliceComponent(AnimationData image, string slice) {
-			Sprite = image.GetSlice(slice);
+			Sprite = image.GetSlice(slice)!;
 		}
 
 		public override void Render(bool shadow) {
@@ -30,10 +30,10 @@ namespace BurningKnight.entity.component {
 				return;
 			}
 			
-			Graphics.Render(Sprite, Entity.Position - new Vector2(0, Entity.GetComponent<ZComponent>().Z), 0, Origin, Scale, Graphics.ParseEffect(Flipped, FlippedVerticaly));
+			Graphics.Render(Sprite, Entity.Position - new Vector2(0, Entity.GetComponent<ZComponent>()!.Z), 0, Origin, Scale, Graphics.ParseEffect(Flipped, FlippedVerticaly));
 		}
 		
-		public void Animate(Action callback = null) {
+		public void Animate(Action? callback = null) {
 			Tween.To(1.8f, Scale.X, x => Scale.X = x, 0.1f);
 			Tween.To(0.2f, Scale.Y, x => Scale.Y = x, 0.1f).OnEnd = () => {
 				Tween.To(1, Scale.X, x => Scale.X = x, 0.4f);

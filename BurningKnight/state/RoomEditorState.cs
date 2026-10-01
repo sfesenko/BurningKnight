@@ -21,14 +21,14 @@ namespace BurningKnight.state {
 	 * TODO: some actual doors?
 	 */
 	public class RoomEditorState : GameState {
-		private Level level;
+		private Level level = null!;
 
 		private bool fixedSize;
 		private int roomWidth = 10;
 		private int roomHeight = 10;
 
-		private string[] floors;
-		private string[] walls;
+		private string[] floors = null!;
+		private string[] walls = null!;
 		
 		private int currentFloor;
 		private int currentWall;

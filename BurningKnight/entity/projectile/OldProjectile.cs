@@ -219,7 +219,7 @@ namespace BurningKnight.entity.projectile {
 	    }
 		}
 
-		public virtual bool BreaksFrom(Entity entity, BodyComponent body) {
+		public virtual bool BreaksFrom(Entity entity, BodyComponent? body) {
 			if (entity is Projectile p && p.BreakOther && p.Owner != Owner) {
 				p.Break(this);
 				return true;

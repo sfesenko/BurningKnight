@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.item.stand {
 	public class CustomStand : ShopStand {
-		private TextureRegion icon;
+		private TextureRegion icon = null!;
 		private float priceWidth;
 		private float iconY;
 
@@ -26,7 +26,7 @@ namespace BurningKnight.entity.item.stand {
 
 		public override void Init() {
 			base.Init();
-			icon = CommonAse.Ui.GetSlice(GetIcon());
+			icon = CommonAse.Ui.GetSlice(GetIcon())!;
 		}
 
 		protected override void RenderPrice() {
@@ -34,9 +34,9 @@ namespace BurningKnight.entity.item.stand {
 				Graphics.Color = Palette.Default[35];
 			}
 				
-			var r = GetComponent<RoomComponent>().Room;
+			var r = GetComponent<RoomComponent>()!.Room;
 
-			foreach (var p in r.Tagged[Tags.Player]) {
+			foreach (var p in r!.Tagged[Tags.Player]) {
 				if (!HasEnoughToPay(p)) {
 					Graphics.Color *= 0.6f;
 					break;
@@ -49,7 +49,7 @@ namespace BurningKnight.entity.item.stand {
 		}
 		
 		protected virtual bool HasEnoughToPay(Entity p) {
-			return p.GetComponent<ConsumablesComponent>().Bombs >= Price;
+			return p.GetComponent<ConsumablesComponent>()!.Bombs >= Price;
 		}
 	}
 }

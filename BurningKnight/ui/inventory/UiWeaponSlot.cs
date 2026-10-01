@@ -13,7 +13,7 @@ namespace BurningKnight.ui.inventory {
 	public class UiWeaponSlot : UiEntity {
 		private UiInventory inventory;
 		private Vector2 activeScale = new Vector2(1);
-		private UiItem uiItem;
+		private UiItem uiItem = null!;
 
 		public new bool Active;
 		
@@ -28,7 +28,7 @@ namespace BurningKnight.ui.inventory {
 				OnTop = true
 			};
 			
-			Area.Add(uiItem);
+			Area!.Add(uiItem);
 			
 			var area = inventory.Player.Area;
 			
@@ -39,7 +39,7 @@ namespace BurningKnight.ui.inventory {
 		public override void Render() {
 			var component = Active ? inventory.Player.GetComponent<ActiveWeaponComponent>() : inventory.Player.GetComponent<WeaponComponent>();
 
-			if (component.Disabled) {
+			if (component!.Disabled) {
 				return;
 			}
 			

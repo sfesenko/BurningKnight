@@ -4,10 +4,10 @@ using System.Collections.Generic;
 namespace Lens.util.tween;
 
 public class TweenTask {
-	public Action OnStart;
-	public Action OnEnd;
-	public Action OnUpdate;
-	public Func<float, float> EaseFn;
+	public Action? OnStart;
+	public Action? OnEnd;
+	public Action? OnUpdate;
+	public Func<float, float>? EaseFn;
 
 	private float Timer;
 	public float Duration;
@@ -20,7 +20,7 @@ public class TweenTask {
 	public bool Single;
 	public float From;
 	public float To;
-	public Action<float> Set;
+	public Action<float>? Set;
 		
 	public void Update(float dt) {
 		if (Delay >= 0) {
@@ -76,7 +76,7 @@ public class TweenTask {
 
 	private void Interpolate(float t) {
 		if (Single) {
-			Set(From + (To - From) * t);
+			Set!(From + (To - From) * t); // Single tasks always carry Set
 			return;
 		}
 			

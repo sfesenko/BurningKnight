@@ -35,7 +35,7 @@ namespace BurningKnight.entity.fx {
 			var f = Rnd.Float(60, 90);
 			var a = Rnd.AnglePI();
 			
-			body.Body.LinearVelocity = new Vector2((float) Math.Cos(a) * f, (float) Math.Sin(a) * f);
+			body!.Body!.LinearVelocity = new Vector2((float) Math.Cos(a) * f, (float) Math.Sin(a) * f);
 			zv = Rnd.Float(1, 3);
 		}
 
@@ -43,7 +43,7 @@ namespace BurningKnight.entity.fx {
 			base.Update(dt);
 
 			var c = GetComponent<ZComponent>();
-			c.Z += zv * dt * 60;
+			c!.Z += zv * dt * 60;
 			zv -= dt * 10;
 
 			if (c.Z <= 0) {
@@ -52,7 +52,7 @@ namespace BurningKnight.entity.fx {
 		}
 
 		private void RenderShadow() {
-			GraphicsComponent.Render(true);
+			GraphicsComponent!.Render(true);
 		}
 
 		public bool ShouldCollide(Entity entity) {
@@ -62,7 +62,7 @@ namespace BurningKnight.entity.fx {
 		private void Remove() {
 			Done = true;
 				
-			Area.Add(new SplashFx {
+			Area!.Add(new SplashFx {
 				Position = Center,
 				Color = Color
 			});

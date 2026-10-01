@@ -9,9 +9,9 @@ using Timer = Lens.util.timer.Timer;
 
 namespace BurningKnight.ui {
 	public class UiDescriptionBanner : UiString {
-		private static UiDescriptionBanner last;
+		private static UiDescriptionBanner? last;
 		
-		private string title;
+		private string? title;
 		private int titleWidth;
 		
 		public UiDescriptionBanner() : base(Font.Small) {

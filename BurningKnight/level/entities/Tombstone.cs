@@ -23,7 +23,7 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.level.entities {
 	public partial class Tombstone : Prop {
-		public string Item;
+		public string? Item;
 		public bool DisableDialog;
 		public byte Index;
 		public bool HasPlayer;
@@ -57,16 +57,16 @@ namespace BurningKnight.level.entities {
 			AddComponent(new LightComponent(this, 64, new Color(0.7f, 0.6f, 0.3f, 1f)));
 			
 			Subscribe<RoomChangedEvent>();
-			GetComponent<DialogComponent>().Dialog.Voice = 30;
+			GetComponent<DialogComponent>()!.Dialog!.Voice = 30;
 		}
 
 		public static Player CreatePlayer(Area area, byte index, bool gamepad, Vector2 where) {
 			InGameState.Multiplayer = true;
 			
 			Player p;
-			var input = area.Add(p = new LocalPlayer()).GetComponent<InputComponent>();
+			var input = area!.Add(p = new LocalPlayer())!.GetComponent<InputComponent>();
 			
-			input.Index = index;
+			input!.Index = index;
 			input.KeyboardEnabled = !gamepad;
 			input.GamepadEnabled = gamepad;
 			
@@ -83,10 +83,10 @@ namespace BurningKnight.level.entities {
 			((InGameState) Engine.Instance.State).Ui.Add(u);
 			((InGameState) Engine.Instance.State).TopUi.Add(cursor);
 
-			p.GetComponent<CursorComponent>().Cursor = cursor;
+			p.GetComponent<CursorComponent>()!.Cursor = cursor;
 			
 			AnimationUtil.Poof(where, 1);
-			GameContext.Current.Camera.Shake(16);
+			GameContext.Current!.Camera!.Shake(16);
 			
 			return p;
 		}
@@ -94,7 +94,7 @@ namespace BurningKnight.level.entities {
 		public bool Revive(Entity e) {
 			Item = null;
 			UpdateSprite();
-			var p = CreatePlayer(Area, Index, WasGamepad, BottomCenter + new Vector2(0, 2));
+			var p = CreatePlayer(Area!, Index, WasGamepad, BottomCenter + new Vector2(0, 2));
 			Index = 255;
 
 			var h1 = e.GetComponent<HealthComponent>();
@@ -102,11 +102,11 @@ namespace BurningKnight.level.entities {
 			var h2 = p.GetComponent<HealthComponent>();
 			var hr2 = p.GetComponent<HeartsComponent>();
 			
-			p.GetComponent<ActiveWeaponComponent>().Set(Items.CreateAndAdd(Items.Generate(ItemPool.StartingWeapon), Area));
+			p.GetComponent<ActiveWeaponComponent>()!.Set(Items.CreateAndAdd(Items.Generate(ItemPool.StartingWeapon)!, Area!)!);
 
-			h1.InvincibilityTimer = 0;
+			h1!.InvincibilityTimer = 0;
 			h1.Unhittable = false;
-			h2.InvincibilityTimer = 0;
+			h2!.InvincibilityTimer = 0;
 			h2.Unhittable = false;
 			
 			if (h1.Health > 0) {
@@ -114,24 +114,24 @@ namespace BurningKnight.level.entities {
 
 				h1.SetHealth(half, e, true, DamageType.Custom);
 				h2.SetHealth(half, e, true, DamageType.Custom);
-			} else if (hr1.ShieldHalfs > 0) {
+			} else if (hr1!.ShieldHalfs > 0) {
 				var half = (int) Math.Max(1, Math.Floor(hr1.ShieldHalfs / 2f));
 				hr1.ModifyShields(-(hr1.ShieldHalfs - half), e);
-				hr2.ModifyShields(-(hr2.ShieldHalfs - half), e);
+				hr2!.ModifyShields(-(hr2.ShieldHalfs - half), e);
 			} else {
 				var half = (int) Math.Max(1, Math.Floor(hr1.Bombs / 2f));
-				hr2.BombsMax = hr1.BombsMax;
+				hr2!.BombsMax = hr1.BombsMax;
 
 				hr1.ModifyBombs(-(hr1.Bombs - half), e);
 				hr2.ModifyBombs(-(hr2.Bombs - half), e);
 			}
 
-			if (p.GetComponent<InputComponent>().Index == 0) {
+			if (p.GetComponent<InputComponent>()!.Index == 0) {
 				var minIndex = 1024;
-				Player pl = null;
+				Player? pl = null;
 
-				foreach (var pr in Area.Tagged[Tags.Player]) {
-					var i = pr.GetComponent<InputComponent>().Index;
+				foreach (var pr in Area!.Tagged[Tags.Player]) {
+					var i = pr.GetComponent<InputComponent>()!.Index;
 
 					if (p != pr && i < minIndex) {
 						minIndex = i;
@@ -141,7 +141,7 @@ namespace BurningKnight.level.entities {
 
 				if (pl != null) {
 					var c = pl.ForceGetComponent<ConsumablesComponent>();
-					c.Entity = p;
+					c!.Entity = p;
 					pl.Components.Remove(typeof(ConsumablesComponent));
 					p.Components[typeof(ConsumablesComponent)] = c;
 					pl.AddComponent(new ConsumablesComponent());
@@ -175,7 +175,7 @@ namespace BurningKnight.level.entities {
 				Interact(d.From);
 				return true;
 			} else if (e is RoomChangedEvent rce) {
-				if (rce.Who is Player && rce.New == GetComponent<RoomComponent>().Room) {
+				if (rce.Who is Player && rce.New == GetComponent<RoomComponent>()!.Room) {
 					// Daddy? What did they do with you?!?!
 					// rce.Who.GetComponent<DialogComponent>().StartAndClose("player_0", 3f);
 				}
@@ -189,7 +189,7 @@ namespace BurningKnight.level.entities {
 				return true;
 			}
 		
-			var i = Items.CreateAndAdd(Item, entity.Area);
+			var i = Items.CreateAndAdd(Item, entity.Area!);
 
 			if (i != null) {
 				i.CenterX = CenterX;
@@ -201,10 +201,10 @@ namespace BurningKnight.level.entities {
 			UpdateSprite();
 			Context.Run.AddScourge(true);
 
-			GetComponent<DialogComponent>().Close();
+			GetComponent<DialogComponent>()!.Close();
 			
 			AnimationUtil.Poof(Center);
-			Context.Camera.Shake(16);
+			Context.Camera!.Shake(16);
 			
 			// fixme: spawn ghosts, dialog should not appear when player is ded
 			
@@ -228,7 +228,7 @@ namespace BurningKnight.level.entities {
 		public override void Save(FileWriter stream) {
 			base.Save(stream);
 			
-			stream.WriteString(Item);
+			stream.WriteString(Item!);
 			stream.WriteBoolean(WasGamepad);
 			stream.WriteBoolean(HasPlayer);
 			
@@ -239,7 +239,7 @@ namespace BurningKnight.level.entities {
 
 
 		private void UpdateSprite() {
-			GetComponent<InteractableSliceComponent>().Set("props", Item == null ? "broken_tombstone" : "tombstone");
+			GetComponent<InteractableSliceComponent>()!.Set("props", Item == null ? "broken_tombstone" : "tombstone");
 		}
 	}
 }

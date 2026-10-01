@@ -3,8 +3,8 @@ using BurningKnight.state;
 
 namespace BurningKnight.entity.creature.mob {
 	public class MobInfo {
-		public Type Type;
-		public SpawnChance[] Spawns;
+		public Type Type = null!;
+		public SpawnChance[] Spawns = null!;
 		public bool SpawnsOnFirst = true;
 		public bool NearWall;
 		public bool Single;
@@ -55,7 +55,7 @@ namespace BurningKnight.entity.creature.mob {
 			return GetChanceFor(biome) != null;
 		}
 
-		public SpawnChance GetChanceFor(string biome) {
+		public SpawnChance? GetChanceFor(string biome) {
 			foreach (var b in Spawns) {
 				foreach (var a in b.Areas) {
 					if (a == biome && (!b.LoopOnly || Context.Run.Loop > 0)) {

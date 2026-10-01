@@ -19,7 +19,7 @@ namespace BurningKnight.level.entities.decor {
 		public Vector2? Target;
 		
 		private bool broken;
-		private FireEmitter emitter;
+		private FireEmitter? emitter;
 		private float t;
 		
 		public override void Init() {
@@ -51,7 +51,7 @@ namespace BurningKnight.level.entities.decor {
 			base.PostInit();
 
 			if (!broken) {
-				Area.Add(emitter = new FireEmitter {
+				Area!.Add(emitter = new FireEmitter {
 					Depth = Depth + 1,
 					Position = new Vector2(CenterX, Y + 3),
 					Scale = 0.5f
@@ -65,7 +65,7 @@ namespace BurningKnight.level.entities.decor {
 			if (broken) {
 				var s = GetComponent<SliceComponent>();
 
-				s.Sprite = CommonAse.Props.GetSlice("broken_torch");
+				s!.Sprite = CommonAse.Props.GetSlice("broken_torch")!;
 				s.Offset = new Vector2(0, 5);
 			}
 		}
@@ -83,7 +83,7 @@ namespace BurningKnight.level.entities.decor {
 			}
 			
 			AnimationUtil.Poof(Center);
-			Particles.BreakSprite(Area, GetComponent<SliceComponent>().Sprite, Position);
+			Particles.BreakSprite(Area!, GetComponent<SliceComponent>()!.Sprite, Position);
 			
 			UpdateSprite();
 		}
@@ -98,11 +98,11 @@ namespace BurningKnight.level.entities.decor {
 			}
 			
 			t += dt * 0.5f;
-			GetComponent<LightComponent>().Light.Radius = 38f + (float) Math.Cos(t) * 6;
+			GetComponent<LightComponent>()!.Light.Radius = 38f + (float) Math.Cos(t) * 6;
 			lastFlame += dt;
 
 			if (lastFlame > 0.1f) {
-				Area.Add(new FireParticle {
+				Area!.Add(new FireParticle {
 					X = CenterX,
 					Y = Y + 2,
 					Target = Target,

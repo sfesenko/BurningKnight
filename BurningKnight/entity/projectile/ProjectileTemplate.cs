@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.projectile {
 	public static class ProjectileTemplate {
-		public static void Make(Entity owner, string texture, Vector2 center, float angle, float speed, int bounce, int start, Action<Projectile> modifier,  params string[] data) {
+		public static void Make(Entity owner, string texture, Vector2 center, float angle, float speed, int bounce, int start, Action<Projectile>? modifier,  params string[] data) {
 			var height = data.Length;
 			var width = 0;
 
@@ -30,7 +30,7 @@ namespace BurningKnight.entity.projectile {
 						if (data[y][x1] != ' ') {
 							var p = builder.Build();
 
-							p.Center = center + MathUtils.RotateAround(new Vector2(0, (y - height / 2f) * 10), angle, c);
+							p!.Center = center + MathUtils.RotateAround(new Vector2(0, (y - height / 2f) * 10), angle, c);
 							modifier?.Invoke(p);
 						}
 					}	
@@ -61,7 +61,7 @@ namespace BurningKnight.entity.projectile {
 
 						Timer.Add(() => {
 							var p = builder.Build();
-							p.Center = center + MathUtils.RotateAround(new Vector2(x2 * 10, (y1 - height / 2f) * 10), angle, c);
+							p!.Center = center + MathUtils.RotateAround(new Vector2(x2 * 10, (y1 - height / 2f) * 10), angle, c);
 
 							modifier?.Invoke(p);
 

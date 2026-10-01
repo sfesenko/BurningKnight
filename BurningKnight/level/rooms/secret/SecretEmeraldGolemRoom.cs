@@ -8,7 +8,7 @@ namespace BurningKnight.level.rooms.secret {
 			new EllipseWalls().Paint(level, this, Shrink());
 			
 			var golem = new EmeraldGolem();
-			level.Area.Add(golem);
+			level.Area!.Add(golem);
 			golem.BottomCenter = GetCenter() * 16 + new Vector2(8, 0);
 		}
 

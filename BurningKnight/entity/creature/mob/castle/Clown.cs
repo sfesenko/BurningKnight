@@ -22,7 +22,7 @@ namespace BurningKnight.entity.creature.mob.castle {
 			AddComponent(body);
 
 			body.KnockbackModifier = 2;
-			body.Body.LinearDamping = 0;
+			body!.Body!.LinearDamping = 0;
 			
 			AddComponent(new SensorBodyComponent(2, 2, 12, 12));
 			
@@ -35,7 +35,7 @@ namespace BurningKnight.entity.creature.mob.castle {
 		public class IdleState : SmartState<Clown> {
 			public override void Init() {
 				base.Init();
-				Self.GetComponent<RectBodyComponent>().Velocity = Vector2.Zero;
+				Self.GetComponent<RectBodyComponent>()!.Velocity = Vector2.Zero;
 			}
 		}
 		
@@ -49,7 +49,7 @@ namespace BurningKnight.entity.creature.mob.castle {
 				T = 0;
 				
 				if (away) {
-					target = Self.Center + MathUtils.CreateVector(Self.Target.AngleTo(Self) + Rnd.Float(-1, 1), 96f);
+					target = Self.Center + MathUtils.CreateVector(Self!.Target!.AngleTo(Self) + Rnd.Float(-1, 1), 96f);
 					delay = Rnd.Float(1f, 2f);
 					return;
 				}
@@ -58,9 +58,9 @@ namespace BurningKnight.entity.creature.mob.castle {
 				var toTarget = Self.Target != null && Rnd.Chance();
 
 				if (toTarget) {
-					target = Self.Target.Center;
+					target = Self!.Target!.Center;
 				} else {
-					target = Self.GetComponent<RoomComponent>().Room.GetRandomFreeTile();
+					target = Self!.GetComponent<RoomComponent>()!.Room!.GetRandomFreeTile();
 				}
 			}
 
@@ -73,7 +73,7 @@ namespace BurningKnight.entity.creature.mob.castle {
 				var s = dt * 150;
 
 				var b = Self.GetComponent<RectBodyComponent>();
-				b.Velocity += new Vector2(dx / d * s, dy / d * s);
+				b!.Velocity += new Vector2(dx / d * s, dy / d * s);
 
 				if (d <= 8 || T >= delay) {
 					if (away) {
@@ -85,11 +85,11 @@ namespace BurningKnight.entity.creature.mob.castle {
 
 				if (!away && Self.Target != null && Self.DistanceTo(Self.Target) < 32) {
 					var bomb = new Bomb(Self, 1);
-					Self.Area.Add(bomb);
+					Self.Area!.Add(bomb);
 					bomb.Center = Self.Center;
 					bomb.VelocityTo(Self.AngleTo(Self.Target));
 
-					Self.GetComponent<AudioEmitterComponent>().EmitRandomizedPrefixed("mob_clown_bomb", 2);
+					Self.GetComponent<AudioEmitterComponent>()!.EmitRandomizedPrefixed("mob_clown_bomb", 2);
 
 					away = true;
 					Init();

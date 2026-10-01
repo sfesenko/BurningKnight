@@ -25,15 +25,15 @@ namespace BurningKnight.entity.item.use {
 		private bool IsTrue(Entity entity) {
 			switch (option) {
 				case 0: {
-					return entity.GetComponent<HealthComponent>().IsFull();
+					return entity.GetComponent<HealthComponent>()!.IsFull();
 				}
 				
 				case 1: {
-					return Math.Abs(entity.GetComponent<HealthComponent>().Health) < 1.1f;
+					return Math.Abs(entity.GetComponent<HealthComponent>()!.Health) < 1.1f;
 				}
 				
 				case 2: {
-					return !entity.GetComponent<HealthComponent>().IsFull();
+					return !entity.GetComponent<HealthComponent>()!.IsFull();
 				}
 
 				default: {

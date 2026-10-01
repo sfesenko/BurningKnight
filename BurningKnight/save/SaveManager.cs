@@ -21,7 +21,7 @@ namespace BurningKnight.save {
 
 		public static string BackupDir => Paths.DataDir;
 
-		public static Saver[] Savers;
+		public static Saver[] Savers = null!;
 
 		public static void Init() {
 			Migrate();
@@ -68,7 +68,7 @@ namespace BurningKnight.save {
 			}
 		}
 
-		public static string GetSavePath(SaveType saveType, bool old = false, string path = null) {
+		public static string GetSavePath(SaveType saveType, bool old = false, string? path = null) {
 			return ForType(saveType).GetPath((path ?? (saveType == SaveType.Statistics || saveType == SaveType.Global ||
 			                                           (saveType == SaveType.Level && (old ? Context.Run.LastDepth : Context.Run.Depth) < 1)
 				? SaveDir
@@ -87,7 +87,7 @@ namespace BurningKnight.save {
 			return new FileReader(path);
 		}
 
-		public static void Save(Area area, SaveType saveType, bool old = false, string path = null) {
+		public static void Save(Area area, SaveType saveType, bool old = false, string? path = null) {
 			var p = GetSavePath(saveType, old, path);
 			var file = new FileInfo(p);
 
@@ -111,7 +111,7 @@ namespace BurningKnight.save {
 			}
 		}
 
-		public static bool ExistsAndValid(SaveType saveType, Action<FileReader> action = null, string path = null) {
+		public static bool ExistsAndValid(SaveType saveType, Action<FileReader>? action = null, string? path = null) {
 			var save = GetFileHandle(GetSavePath(saveType, false, path));
 
 			if (!save.Exists()) {
@@ -137,7 +137,7 @@ namespace BurningKnight.save {
 			return true;
 		}
 
-		public static void Load(Area area, SaveType saveType, string path = null) {
+		public static void Load(Area area, SaveType saveType, string? path = null) {
 			var save = GetFileHandle(GetSavePath(saveType, false, path));
 
 			if (!save.Exists()) {

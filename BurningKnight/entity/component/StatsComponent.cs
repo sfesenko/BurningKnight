@@ -91,7 +91,7 @@ namespace BurningKnight.entity.component {
 					DMChance -= 0.5f;
 				}
 
-				var rm = Entity.GetComponent<RoomComponent>().Room;
+				var rm = Entity.GetComponent<RoomComponent>()!.Room;
 				
 				if (rm != null && !TookDamageInRoom && rm.Type == RoomType.Boss) {
 					DMChance -= 0.25f;

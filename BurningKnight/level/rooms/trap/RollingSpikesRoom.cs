@@ -10,7 +10,7 @@ namespace BurningKnight.level.rooms.trap {
 			var a = 0;
 			
 			foreach (var d in Connected.Values) {
-				if (d.Type != DoorPlaceholder.Variant.Secret) {
+				if (d!.Type != DoorPlaceholder.Variant.Secret) {
 					var w = 2;
 					var h = 2;
 					
@@ -31,7 +31,7 @@ namespace BurningKnight.level.rooms.trap {
 					spike.Center = new Vector2(i, y) * 16 + new Vector2(8, 8);
 					spike.StartVelocity = new Vector2(0, (a % 2 == 0 ? 1 : -1) * 32);
 				
-					level.Area.Add(spike);
+					level.Area!.Add(spike);
 				
 					a++;
 				}
@@ -48,7 +48,7 @@ namespace BurningKnight.level.rooms.trap {
 					spike.Center = new Vector2(x, i) * 16 + new Vector2(8, 8);
 					spike.StartVelocity = new Vector2((a % 2 == 0 ? 1 : -1) * 32, 0);
 				
-					level.Area.Add(spike);
+					level.Area!.Add(spike);
 				
 					a++;
 				}

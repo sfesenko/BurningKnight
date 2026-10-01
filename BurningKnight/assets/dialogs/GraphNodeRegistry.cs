@@ -19,13 +19,13 @@ namespace BurningKnight.assets.dialogs {
 			Defined[name] = typeof(T);
 		}
 
-		public static GraphNode Create(string name) {
+		public static GraphNode? Create(string name) {
 			if (!Defined.TryGetValue(name, out var type)) {
 				return null;
 			}
 			
-			var node = (GraphNode) Activator.CreateInstance(type);
-			node.Tip = name;
+			var node = (GraphNode) Activator.CreateInstance(type)!;
+			node!.Tip = name;
 			
 			return node;
 		}

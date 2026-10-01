@@ -12,25 +12,25 @@ using Microsoft.Xna.Framework;
 namespace BurningKnight.entity.item.use {
 	public class TeleportUse : DoWithTagUse {
 		protected override void DoAction(Entity entity, Item item, List<Entity> entities) {
-			var rooms = entity.Area.Tagged[Tags.Room];
+			var rooms = entity.Area!.Tagged[Tags.Room];
 
 			if (rooms.Count < 2) {
 				return;
 			}
 			
 			foreach (var e in entities) {
-				var room = e.GetComponent<RoomComponent>().Room;
-				var newRoom = (Room) Rnd.Element<Entity>(rooms, r => r != room && r is Room rm && rm.Type != RoomType.Granny && rm.Type != RoomType.OldMan && rm.Type != RoomType.Secret && rm.Type != RoomType.Special && rm.Type != RoomType.Hidden);
+				var room = e.GetComponent<RoomComponent>()!.Room;
+				var newRoom = (Room) Rnd.Element<Entity>(rooms, r => r != room && r is Room rm && rm.Type != RoomType.Granny && rm.Type != RoomType.OldMan && rm.Type != RoomType.Secret && rm.Type != RoomType.Special && rm.Type != RoomType.Hidden)!;
 
 				if (newRoom != null) {
 					AnimationUtil.TeleportAway(e, () => {
 						e.Center = newRoom.GetRandomFreeTile() * 16 + new Vector2(8);
-						Context.Camera.Jump();
+						Context.Camera!.Jump();
 						AnimationUtil.TeleportIn(e);
-						e.GetComponent<HealthComponent>().Unhittable = false;
+						e.GetComponent<HealthComponent>()!.Unhittable = false;
 					});
 
-					entity.GetComponent<AudioEmitterComponent>().EmitRandomized("quck");
+					entity.GetComponent<AudioEmitterComponent>()!.EmitRandomized("quck");
 				}
 			}
 		}

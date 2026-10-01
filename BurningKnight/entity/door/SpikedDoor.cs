@@ -22,14 +22,14 @@ namespace BurningKnight.entity.door {
 		
 		public override bool HandleEvent(Event e) {
 			if (e is RoomChangedEvent rce && rce.Who is Player p && Colliding.Contains(p)) {
-				var rolling = p.GetComponent<StateComponent>().StateInstance is Player.RollState;
+				var rolling = p.GetComponent<StateComponent>()!.StateInstance is Player.RollState;
 				var h = p.GetComponent<HealthComponent>();
 				
 				if (rolling && Rnd.Chance(95)) {
-					h.Unhittable = false;
+					h!.Unhittable = false;
 				}
 				
-				h.ModifyHealth(-1, this);
+				h!.ModifyHealth(-1, this);
 				
 				if (rolling) {
 					h.Unhittable = true;

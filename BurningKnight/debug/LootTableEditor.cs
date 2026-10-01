@@ -15,7 +15,7 @@ namespace BurningKnight.debug {
 
 		private static int id;
 		private static int count;
-		private static string selectedTable;
+		private static string? selectedTable;
 		private static string poolName = "";
 	
 		public static void Render() {

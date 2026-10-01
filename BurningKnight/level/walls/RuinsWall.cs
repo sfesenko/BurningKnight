@@ -14,7 +14,7 @@ namespace BurningKnight.level.walls {
 
 			for (var i = room.Top + 1; i < room.Bottom; i++) {
 				for (var j = room.Left + 1; j < room.Right; j++) {
-					if (Patch[ToIndex(room, j, i)]) {
+					if (Patch![ToIndex(room, j, i)]) {
 						level.Set(j, i, t);
 					}
 				}

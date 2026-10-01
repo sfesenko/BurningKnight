@@ -9,13 +9,13 @@ using Lens.util.file;
 
 namespace Lens.assets {
 	public class Locale {
-		public static Dictionary<string, string> Map;
+		public static Dictionary<string, string> Map = null!; // Load() sets it
 		
 		public static Dictionary<string, string> Fallback = new();
 		public static readonly Dictionary<string, Dictionary<string, string>> Loaded = new();
 		private static bool LoadedFallback;
 		
-		public static string Current;
+		public static string Current = null!; // SetLanguage sets it
 		public static string PrefferedClientLanguage = "en";
 
 		private static readonly string[] quacks = ["quack", "QUACK", "quaaak", "qk"];
