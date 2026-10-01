@@ -48,7 +48,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 
 					Self.GetComponent<BkGraphicsComponent>()!.Animate();
 
-					var m = new Missile(Self, Self.Target);
+					var m = new Missile(Self, Self.Target!);
 					Self.Area!.Add(m);
 
 					m.HurtOwner = false;

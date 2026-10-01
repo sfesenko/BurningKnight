@@ -27,9 +27,9 @@ namespace BurningKnight.entity.component {
 				// Log.Debug($"hat_{Entity.GetComponent<InputComponent>().Index}");
 
 				if (hat != null) {
-					Set(Items.CreateAndAdd(hat, Entity.Area), false);
+					Set(Items.CreateAndAdd(hat, Entity.Area!), false);
 				} else {
-					Set(Items.CreateAndAdd("bk:no_hat", Entity.Area), false);
+					Set(Items.CreateAndAdd("bk:no_hat", Entity.Area!), false);
 				}
 			}
 		}
@@ -42,7 +42,7 @@ namespace BurningKnight.entity.component {
 			base.Set(item, animate);
 
 			if (loaded) {
-				GlobalSave.Put($"hat_{Entity.GetComponent<InputComponent>()!.Index}", item?.Id);
+				GlobalSave.Put($"hat_{Entity.GetComponent<InputComponent>()!.Index}", item?.Id!);
 			}
 
 			if (item != null) {

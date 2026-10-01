@@ -96,7 +96,7 @@ namespace BurningKnight.level.entities.machine {
 			
 			// Reset the luck for the next uses
 			coinsConsumed = 0;
-			Reroller.Reroll(entity.Area, room, true, false, true, ignoredTypes);
+			Reroller.Reroll(entity.Area!, room, true, false, true, ignoredTypes);
 
 			numRolled += (consumeCoin ? 1 : 2);
 			Audio.PlaySfx("level_vending_machine");

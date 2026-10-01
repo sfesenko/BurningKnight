@@ -80,13 +80,13 @@ namespace BurningKnight.entity.item.use {
 				}
 
 				var e = lastEffect == effects.Length;
-				ApplyBuff(projectile, e ? null : effects[lastEffect], e);
+				ApplyBuff(projectile, e ? null : effects[lastEffect]!, e);
 				
 				return;
 			}
 			
 			if (BuffToApply != null || Explosive) {
-				ApplyBuff(projectile, BuffToApply, Explosive);
+				ApplyBuff(projectile, BuffToApply!, Explosive);
 			}
 		}
 

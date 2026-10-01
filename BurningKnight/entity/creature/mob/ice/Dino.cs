@@ -85,7 +85,7 @@ namespace BurningKnight.entity.creature.mob.ice {
 					Self.sawTime = 0;
 				}
 
-				angle = !Self.fire ? Rnd.AnglePI() : Self.AngleTo(Self.Target);
+				angle = !Self.fire ? Rnd.AnglePI() : Self.AngleTo(Self.Target!);
 				timer = Self.fire ? 0.9f * 5 : Rnd.Float(0.8f, 2f);
 				start = Rnd.Float(0f, 10f);
 				

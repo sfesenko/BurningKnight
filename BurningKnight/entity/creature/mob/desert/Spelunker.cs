@@ -133,7 +133,7 @@ namespace BurningKnight.entity.creature.mob.desert {
 			public override void Update(float dt) {
 				base.Update(dt);
 								
-				var d = Self.DistanceTo(Self.Target);
+				var d = Self.DistanceTo(Self.Target!);
 
 				if (d > 48f) {
 					Self.Become<RunState>();
@@ -143,7 +143,7 @@ namespace BurningKnight.entity.creature.mob.desert {
 				if (T >= 0.66f) {
 					Self.Done = true;
 					Self.Exploded = true;
-					AudioEmitterComponent.Dummy(Self.Area, Self.Center).EmitRandomized("mob_archeolog_explosion", sz: 0.2f);
+					AudioEmitterComponent.Dummy(Self.Area!, Self.Center).EmitRandomized("mob_archeolog_explosion", sz: 0.2f);
 					ExplosionMaker.Make(Self, 48f);
 				}
 

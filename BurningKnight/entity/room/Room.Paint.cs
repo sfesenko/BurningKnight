@@ -117,7 +117,7 @@ namespace BurningKnight.entity.room {
 
 					ExplosionMaker.LightUp(x * 16 + 8, y * 16 + 8);
 
-					Level.Animate(Area, x, y);
+					Level.Animate(Area!, x, y);
 				}
 			}
 		}
@@ -211,7 +211,7 @@ namespace BurningKnight.entity.room {
 					End = new Dot(MathUtils.Clamp(MapX + 1, Right - 1, Mid.X + RightShift), MathUtils.Clamp(MapY + 1, Bottom - 1, Mid.Y));
 				}
 
-				Painter.DrawLine(Level, Start, Mid, Floor, Bold);
+				Painter.DrawLine(Level!, Start, Mid, Floor, Bold);
 				Painter.DrawLine(Level, Mid, End, Floor, Bold);
 
 				if (Rnd.Chance(10)) {
@@ -248,9 +248,9 @@ namespace BurningKnight.entity.room {
 			maxBottom = MathUtils.Clamp(MapY + 1, Bottom - 1, maxBottom);
 
 			if (Rnd.Chance()) {
-				Painter.Fill(Level, minLeft, minTop, maxRight - minLeft + 1, maxBottom - minTop + 1, Rnd.Chance() ? Floor : Tiles.RandomFloor());
+				Painter.Fill(Level!, minLeft, minTop, maxRight - minLeft + 1, maxBottom - minTop + 1, Rnd.Chance() ? Floor : Tiles.RandomFloor());
 			} else {
-				Painter.Rect(Level, minLeft, minTop, maxRight - minLeft + 1, maxBottom - minTop + 1, Rnd.Chance() ? Floor : Tiles.RandomFloor());
+				Painter.Rect(Level!, minLeft, minTop, maxRight - minLeft + 1, maxBottom - minTop + 1, Rnd.Chance() ? Floor : Tiles.RandomFloor());
 			}
 			
 			Painter.Clip = null;

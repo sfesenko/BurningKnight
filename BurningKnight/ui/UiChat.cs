@@ -51,7 +51,7 @@ namespace BurningKnight.ui {
 							input = "##[cl red]NANI??!?!?";
 						}
 						
-						var player = LocalPlayer.Locate(Context.Area);
+						var player = LocalPlayer.Locate(Context.Area!);
 
 						if (player != null) {
 							player.GetComponent<DialogComponent>()!.StartAndClose(input, 5);

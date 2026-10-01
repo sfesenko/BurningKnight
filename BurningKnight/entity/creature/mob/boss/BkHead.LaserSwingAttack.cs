@@ -37,7 +37,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 			
 			public override void Init() {
 				base.Init();
-				var a = Self.AngleTo(Self.Target);
+				var a = Self.AngleTo(Self.Target!);
 
 				for (var i = 0; i < 2; i++) {
 					var angle = a - (i == 0 ? -1 : 1) * 1.2f;
@@ -79,7 +79,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 					info.Laser.Position = Self.Center;
 
 					var aa = info.Laser.Angle;
-					var a = Self.AngleTo(Self.Target);
+					var a = Self.AngleTo(Self.Target!);
 
 					info.Vy += (float) MathUtils.ShortAngleDistance(aa, a) * dt * 4;
 					info.Laser.Angle += info.Vy * dt * 0.5f;

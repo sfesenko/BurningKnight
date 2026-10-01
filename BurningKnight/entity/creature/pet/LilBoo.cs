@@ -46,7 +46,7 @@ namespace BurningKnight.entity.creature.pet {
 			public override void Update(float dt) {
 				base.Update(dt);
 
-				var d = Self.DistanceTo(Self.Owner);
+				var d = Self.DistanceTo(Self.Owner!);
 
 				if (d > 48) {
 					Self.Become<FollowState>();
@@ -58,7 +58,7 @@ namespace BurningKnight.entity.creature.pet {
 			public override void Update(float dt) {
 				base.Update(dt);
 
-				var dx = Self.DxTo(Self.Owner);
+				var dx = Self.DxTo(Self.Owner!);
 				var dy = Self.DyTo(Self.Owner);
 				var d = MathUtils.Distance(dx, dy);
 				

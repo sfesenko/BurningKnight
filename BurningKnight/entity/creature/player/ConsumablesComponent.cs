@@ -114,10 +114,10 @@ namespace BurningKnight.entity.creature.player {
 								var dialog = GetComponent<DialogComponent>();
 
 								dialog!.Dialog.Str!.ClearIcons();
-								dialog.Dialog.Str.AddIcon(CommonAse.Ui.GetSlice(Controls.FindSlice(Controls.Bomb, false)));
+								dialog.Dialog.Str.AddIcon(CommonAse.Ui.GetSlice(Controls.FindSlice(Controls.Bomb, false))!);
 
 								if (GamepadComponent.Current != null && GamepadComponent.Current.Attached) {
-									dialog.Dialog.Str.AddIcon(CommonAse.Ui.GetSlice(Controls.FindSlice(Controls.Bomb, true)));
+									dialog.Dialog.Str.AddIcon(CommonAse.Ui.GetSlice(Controls.FindSlice(Controls.Bomb, true))!);
 								}
 
 								dialog.StartAndClose("control_0", 3);
@@ -198,7 +198,7 @@ namespace BurningKnight.entity.creature.player {
 						});
 					}
 
-					Engine.Instance.State.Ui.Add(new ConsumableParticle(ev.Item.Animation != null
+					Engine.Instance.State.Ui.Add(new ConsumableParticle(ev.Item.Animation != null!
 						? ev.Item.GetComponent<AnimatedItemGraphicsComponent>()!.Animation.GetFirstCurrent()
 						: ev.Item.Region, p, false, () => {
 							ev.Item.Use(p);
@@ -215,7 +215,7 @@ namespace BurningKnight.entity.creature.player {
 		public override void Update(float dt) {
 			base.Update(dt);
 
-			if (Context.Run.Depth > 0 && Input.WasPressed(Controls.Bomb, GetComponent<InputComponent>())) {
+			if (Context.Run.Depth > 0 && Input.WasPressed(Controls.Bomb, GetComponent<InputComponent>()!)) {
 				SpawnBomb();
 			}
 		}

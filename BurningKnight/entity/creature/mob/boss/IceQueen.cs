@@ -269,7 +269,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 					T = 0;
 					count++;
 
-					var a = Self.AngleTo(Self.Target) + Rnd.Float(-0.1f, 0.1f) + (count == 1 ? 0 : Math.PI);
+					var a = Self.AngleTo(Self.Target!) + Rnd.Float(-0.1f, 0.1f) + (count == 1 ? 0 : Math.PI);
 					var builder = new ProjectileBuilder(Self, "square") {
 						LightRadius = 32f,
 						Range = 5
@@ -372,7 +372,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 					T = 0;
 					count++;
 
-					var a = Self.AngleTo(Self.Target) + Rnd.Float(-0.1f, 0.1f) + (count == 1 ? 0 : Math.PI);
+					var a = Self.AngleTo(Self.Target!) + Rnd.Float(-0.1f, 0.1f) + (count == 1 ? 0 : Math.PI);
 					var builder = new ProjectileBuilder(Self, "big") {
 						LightRadius = 32f
 					};
@@ -419,7 +419,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 			public override void Destroy() {
 				base.Destroy();
 
-				var aa = Self.AngleTo(Self.Target);
+				var aa = Self.AngleTo(Self.Target!);
 				Self.Animate();
 
 				var builder = new ProjectileBuilder(Self, "donut") {

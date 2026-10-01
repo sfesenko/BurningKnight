@@ -142,7 +142,7 @@ namespace BurningKnight.level.builders {
 				var R = I == RoomsOnPath ? Exit : MultiConnection[I];
 
 
-				if (Math.Abs(PlaceRoom(Init, Curr, R, Direction + Rnd.Float(-PathVariance, PathVariance)) - (-1)) < 0.01f) {
+				if (Math.Abs(PlaceRoom(Init, Curr, R!, Direction + Rnd.Float(-PathVariance, PathVariance)) - (-1)) < 0.01f) {
 					return null;
 				}
 				

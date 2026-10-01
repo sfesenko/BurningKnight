@@ -79,19 +79,19 @@ namespace BurningKnight.entity.item.util {
 				if (ev.Entity is HalfProjectileLevel bdd) {
 					if (Mines) {
 						var hitbox = ev.Fixture.GetAABB();
-						ProjectileLevelBody.Mine(Context.Level, hitbox.Center.X, hitbox.Center.Y);
+						ProjectileLevelBody.Mine(Context.Level!, hitbox.Center.X, hitbox.Center.Y);
 					}
 				} else if (ev.Entity is ProjectileLevelBody bd) {
 					if (Mines) {
 						var hitbox = ev.Fixture.GetAABB();
-						ProjectileLevelBody.Mine(Context.Level, hitbox.Center.X, hitbox.Center.Y);
+						ProjectileLevelBody.Mine(Context.Level!, hitbox.Center.X, hitbox.Center.Y);
 					}
 					
 					if (Context.Level!.Biome is IceBiome) {
 						var hitbox = ev.Fixture.GetAABB();
 
 						if (bd.Break(hitbox.Center.X, hitbox.Center.Y)) {
-							AudioEmitterComponent.Dummy(Area, Center).EmitRandomizedPrefixed("level_snow_break", 3);
+							AudioEmitterComponent.Dummy(Area!, Center).EmitRandomizedPrefixed("level_snow_break", 3);
 						}
 					}
 				} else if (ev.Entity is Bomb) {

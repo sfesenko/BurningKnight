@@ -75,7 +75,7 @@ namespace BurningKnight.entity.creature.player {
 				}
 
 				if (!GetComponent<BuffsComponent>()!.PitImmunity) {
-					GetComponent<HealthComponent>()!.ModifyHealth(-1, Context.Level);
+					GetComponent<HealthComponent>()!.ModifyHealth(-1, Context.Level!);
 				}
 				
 
@@ -317,7 +317,7 @@ namespace BurningKnight.entity.creature.player {
 				Context.Camera!.Unfollow(rce.Room);
 				Audio.PlaySfx("level_room_cleared", 0.25f + Audio.Db3);
 
-				if (Context.Run.Depth > 0 && !alerted && CheckClear(Area)) {
+				if (Context.Run.Depth > 0 && !alerted && CheckClear(Area!)) {
 					alerted = true;
 					AnimationUtil.Confetti(Center);
 					Audio.PlaySfx("level_cleared");
@@ -330,7 +330,7 @@ namespace BurningKnight.entity.creature.player {
 				}
 			} else if (e is FlagCollisionStartEvent fcse) {
 				if (fcse.Flag == Flag.Burning) {
-					GetComponent<HealthComponent>()!.ModifyHealth(-1, Context.Level);
+					GetComponent<HealthComponent>()!.ModifyHealth(-1, Context.Level!);
 				}
 			} else if (e is RevivedEvent re) {
 				AnimationUtil.TeleportAway(this, () => {

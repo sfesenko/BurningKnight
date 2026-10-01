@@ -103,7 +103,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 						});
 					}
 
-					var player = LocalPlayer.Locate(Area);
+					var player = LocalPlayer.Locate(Area!);
 					var doors = new List<DoorTile>();
 					
 					if (player != null) {
@@ -272,7 +272,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 				Awoken = true;
 			}
 			
-			base.OnTargetChange(target);
+			base.OnTargetChange(target!);
 		}
 
 		public override bool HandleEvent(Event e) {
@@ -314,7 +314,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 
 			exit.Center = p;
 
-			Painter.Fill(Context.Level, x - 1, y - 1, 3, 3, Tiles.RandomFloor());
+			Painter.Fill(Context.Level!, x - 1, y - 1, 3, 3, Tiles.RandomFloor());
 			Painter.Fill(Context.Level, x - 1, y - 3, 3, 3, Tiles.RandomFloor());
 
 			Context.Level!.ReTileAndCreateBodyChunks(x - 1, y - 1, 3, 7);

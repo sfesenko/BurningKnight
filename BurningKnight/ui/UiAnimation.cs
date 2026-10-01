@@ -30,7 +30,7 @@ namespace BurningKnight.ui {
 			}
 
 			var region = UseSlice ? Slice : Animation!.GetCurrentTexture();
-			Graphics.Render(region, Center, 0, region!.Center, new Vector2(2));
+			Graphics.Render(region!, Center, 0, region!.Center, new Vector2(2));
 		}
 	}
 }

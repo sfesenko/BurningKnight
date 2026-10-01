@@ -25,7 +25,7 @@ using Microsoft.Xna.Framework;
 namespace BurningKnight.entity {
 	public static class ExplosionMaker {
 		public static void BreakRock(Level level, Dot ww, int x, int y, Tile l) {
-			AudioEmitterComponent.Dummy(level.Area, ww).Emit($"level_rock_{Rnd.Int(1, 3)}", 0.5f);
+			AudioEmitterComponent.Dummy(level.Area!, ww).Emit($"level_rock_{Rnd.Int(1, 3)}", 0.5f);
 
 			if (l.IsRock()) {
 				Drop.Create(l == Tile.TintedRock ? "bk:tinted_rock" : "bk:rock", null, level.Area, ww);
@@ -177,7 +177,7 @@ namespace BurningKnight.entity {
 			Achievements.Unlock("bk:treasure_hunter");
 			
 			LightUp(x * 16 + 8, y * 16 + 8);
-			Level.Animate(who.Area, x, y);
+			Level.Animate(who.Area!, x, y);
 		}
 
 		public static void LightUp(float X, float Y) {

@@ -179,7 +179,7 @@ namespace BurningKnight.entity.creature.bk {
 			}, 1f);
 
 			for (var i = 0; i < 4; i++) {
-				var angle = AngleTo(Target) + (i / 4f + 1 / 8f) * (float) Math.PI * 2f;
+				var angle = AngleTo(Target!) + (i / 4f + 1 / 8f) * (float) Math.PI * 2f;
 
 				WarnLaser(angle);
 

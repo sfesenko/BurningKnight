@@ -31,8 +31,8 @@ namespace BurningKnight.entity.creature.npc.dungeon {
 			var dl = GetComponent<DialogComponent>();
 
 			dl!.InitCallback = () => {
-				dl!.Dialog.Str!.AddIcon(CommonAse.Ui.GetSlice("note_0"));
-				dl.Dialog.Str.AddIcon(CommonAse.Ui.GetSlice("note_1"));
+				dl!.Dialog.Str!.AddIcon(CommonAse.Ui.GetSlice("note_0")!);
+				dl.Dialog.Str.AddIcon(CommonAse.Ui.GetSlice("note_1")!);
 			};
 		}
 
@@ -70,7 +70,7 @@ namespace BurningKnight.entity.creature.npc.dungeon {
 
 			Timer.Add(() => {
 				try {
-					ChestRegistry.PlaceRandom(BottomCenter + new Vector2(0, 12), Area);
+					ChestRegistry.PlaceRandom(BottomCenter + new Vector2(0, 12), Area!);
 				} catch (Exception ex) {
 					Log.Error(ex);
 				}

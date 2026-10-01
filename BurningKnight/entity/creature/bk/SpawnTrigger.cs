@@ -99,7 +99,7 @@ namespace BurningKnight.entity.creature.bk {
 							
 							for (var y = -1; y < RoomHeight + 1; y++) {
 								for (var x = -1; x < RoomWidth + 1; x++) {
-									LevelTiler.TileUp(level, level!.ToIndex(RoomX + x, RoomY + y));
+									LevelTiler.TileUp(level!, level!.ToIndex(RoomX + x, RoomY + y));
 								}
 							}
 				
@@ -198,7 +198,7 @@ namespace BurningKnight.entity.creature.bk {
 					var xx = (int) Math.Floor(CenterX / 16);
 					var xy = (int) Math.Floor(CenterY / 16);
 
-					Painter.Rect(Context.Level, xx - 3, xy - 3, 6, 6, Tile.Chasm);
+					Painter.Rect(Context.Level!, xx - 3, xy - 3, 6, 6, Tile.Chasm);
 
 					/*var torches = GetComponent<RoomComponent>().Room.Tagged[Tags.Torch];
 

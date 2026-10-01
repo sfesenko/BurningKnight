@@ -97,7 +97,7 @@ namespace BurningKnight.level {
 			var camera = Context.Camera;
 
 			// Cache the condition
-			var toX = GetRenderRight(camera);
+			var toX = GetRenderRight(camera!);
 			var toY = GetRenderBottom(camera);
 
 			for (int y = toY; y >= GetRenderTop(camera); y--) {
@@ -129,7 +129,7 @@ namespace BurningKnight.level {
 			var camera = Context.Camera;
 
 			// Cache the condition
-			var toX = GetRenderRight(camera);
+			var toX = GetRenderRight(camera!);
 			var toY = GetRenderBottom(camera);
 
 			var region = new TextureRegion();
@@ -218,7 +218,7 @@ namespace BurningKnight.level {
 
 							if ((t == Tile.Water || t == Tile.Lava) && !Settings.LowQuality && !paused) {
 								if (t == Tile.Lava && Rnd.Chance(0.5f)) {
-									var p = Particles.Wrap(Particles.Lava(), Area, pos + Rnd.Vector(0, 16));
+									var p = Particles.Wrap(Particles.Lava(), Area!, pos + Rnd.Vector(0, 16));
 									p.Particle.Velocity = MathUtils.CreateVector(Rnd.Float(-10, 10), -Rnd.Float(30, 45));
 									p.Particle.Scale = Rnd.Float(0.3f, 0.5f);
 									p.Particle.T = 0;
@@ -256,7 +256,7 @@ namespace BurningKnight.level {
 			var camera = Context.Camera;
 
 			// Cache the condition
-			var toX = GetRenderRight(camera);
+			var toX = GetRenderRight(camera!);
 			var toY = GetRenderBottom(camera);
 			
 			var active = !Engine.Instance.State.Paused;
@@ -274,7 +274,7 @@ namespace BurningKnight.level {
 			for (int y = GetRenderTop(camera); y < toY; y++) {
 				for (int x = GetRenderLeft(camera); x < toX; x++) {
 					if ((Tile) Tiles[ToIndex(x, y)] == Tile.Chasm) {
-						Graphics.Render(clear, new Vector2(x * 16, y * 16));
+						Graphics.Render(clear!, new Vector2(x * 16, y * 16));
 					}
 				}
 			}

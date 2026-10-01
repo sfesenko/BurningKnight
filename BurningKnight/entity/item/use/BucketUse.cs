@@ -57,7 +57,7 @@ namespace BurningKnight.entity.item.use {
 			c.Drop();
 			i!.Done = true;
 
-			entity.GetComponent<InventoryComponent>()!.Pickup(Items.CreateAndAdd(id, entity.Area));
+			entity.GetComponent<InventoryComponent>()!.Pickup(Items.CreateAndAdd(id, entity.Area!));
 		}
 
 		public override void Setup(JsonValue settings) {

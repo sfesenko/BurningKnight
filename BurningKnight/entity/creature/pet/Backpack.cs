@@ -48,7 +48,7 @@ namespace BurningKnight.entity.creature.pet {
 				var id = GameSave.GetString("backpack");
 
 				if (id != null) {
-					var item = Items.CreateAndAdd(id, Area);
+					var item = Items.CreateAndAdd(id, Area!);
 					GetComponent<ItemComponent>()!.Set(item, false);
 					item.GetComponent<OwnerComponent>()!.Owner = Owner;
 					itemRegion = item.Region;
@@ -62,7 +62,7 @@ namespace BurningKnight.entity.creature.pet {
 
 		public override void Destroy() {
 			base.Destroy();
-			GameSave.Put("backpack", GetComponent<ItemComponent>()!.Item?.Id);
+			GameSave.Put("backpack", GetComponent<ItemComponent>()!.Item?.Id!);
 		}
 
 		private void AddFx() {

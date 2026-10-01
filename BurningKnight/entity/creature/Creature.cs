@@ -79,7 +79,7 @@ namespace BurningKnight.entity.creature {
 
 						if (Settings.Blood && !Settings.LowQuality) {
 							for (var i = 0; i < 8; i++) {
-								var p = Particles.Wrap(new Particle(Controllers.Blood, Particles.BloodRenderer), Area,
+								var p = Particles.Wrap(new Particle(Controllers.Blood, Particles.BloodRenderer), Area!,
 									Center + Rnd.Vector(-4, 4));
 
 								var a = ev.From.AngleTo(this);
@@ -108,7 +108,7 @@ namespace BurningKnight.entity.creature {
 				}
 			} else if (e is TileCollisionStartEvent tce) {
 				if (tce.Tile == Tile.Lava) {
-					if (GetComponent<HealthComponent>()!.ModifyHealth(-1, Context.Level)) {
+					if (GetComponent<HealthComponent>()!.ModifyHealth(-1, Context.Level!)) {
 						// GetComponent<BuffsComponent>().Add(BurningBuff.Id);
 
 						var set = false;
@@ -151,7 +151,7 @@ namespace BurningKnight.entity.creature {
 		}
 
 		public virtual void AnimateDeath(DiedEvent d) {
-			AudioEmitterComponent.Dummy(Area, Center).EmitRandomized(GetDeadSfx(), sz: 0.2f);
+			AudioEmitterComponent.Dummy(Area!, Center).EmitRandomized(GetDeadSfx(), sz: 0.2f);
 
 			if (!GetComponent<TileInteractionComponent>()!.HasNoSupport) {
 				GetComponent<DropsComponent>()!.SpawnDrops();

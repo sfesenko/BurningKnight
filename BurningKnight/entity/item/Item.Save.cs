@@ -94,7 +94,7 @@ namespace BurningKnight.entity.item {
 				Id = stream.ReadString();
 				Scourged = false;
 
-				if (!Items.Has(Id)) {
+				if (!Items.Has(Id!)) {
 					Id = "bk:revolver";
 				}
 

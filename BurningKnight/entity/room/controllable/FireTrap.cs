@@ -106,7 +106,7 @@ namespace BurningKnight.entity.room.controllable {
 		}
 
 		public override void Render() {
-			Graphics.Render(tile, Position);
+			Graphics.Render(tile!, Position);
 		}
 		
 		protected virtual bool ShouldHurt(Entity e) {

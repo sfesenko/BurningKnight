@@ -46,7 +46,7 @@ namespace BurningKnight.ui.dialog {
 			var array = Branches[Choice];
 			var option = array.Length == 0 ? null : array[Rnd.Int(array.Length)]; 
 			
-			Callback?.Invoke(option, Choice);
+			Callback?.Invoke(option!, Choice);
 			
 			Last = Choice;
 			Choice = 0;

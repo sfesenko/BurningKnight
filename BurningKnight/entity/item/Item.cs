@@ -186,7 +186,7 @@ namespace BurningKnight.entity.item {
 				var o = Owner;
 
 				foreach (var u in Uses!) {
-					u.Update(o, this, dt);
+					u.Update(o!, this, dt);
 				}
 			} else {
 				if (Attact) {
@@ -229,7 +229,7 @@ namespace BurningKnight.entity.item {
 			}
 
 			if (Type == ItemType.Mana && t >= 0.1f) {
-				var p = LocalPlayer.Locate(Area);
+				var p = LocalPlayer.Locate(Area!);
 
 				if (p == null) {
 					return;

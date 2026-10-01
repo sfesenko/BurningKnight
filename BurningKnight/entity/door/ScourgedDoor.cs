@@ -35,8 +35,8 @@ namespace BurningKnight.entity.door {
 					return base.HandleEvent(e);
 				}
 				
-				var a = Scourge(p.GetComponent<ActiveWeaponComponent>());	
-				var b = Scourge(p.GetComponent<WeaponComponent>());
+				var a = Scourge(p.GetComponent<ActiveWeaponComponent>()!);	
+				var b = Scourge(p.GetComponent<WeaponComponent>()!);
 
 				if (!a && !b) {
 					Context.Run.AddScourge();

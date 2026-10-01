@@ -59,10 +59,10 @@ namespace BurningKnight.entity.item.stand {
 			var ht = entity.GetComponent<HatComponent>();
 			var old = ht!.Item;
 			
-			ht.Set(item, true);
+			ht.Set(item!, true);
 			item = null;
 			
-			SetItem(old, entity);
+			SetItem(old!, entity);
 		
 			return false;
 		}
@@ -90,7 +90,7 @@ namespace BurningKnight.entity.item.stand {
 			var id = items[0].Id;
 			AlreadyOnStand.Add(id);
 
-			return Items.CreateAndAdd(id, Area);
+			return Items.CreateAndAdd(id, Area!);
 		}
 	}
 }

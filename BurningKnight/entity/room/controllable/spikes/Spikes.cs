@@ -51,7 +51,7 @@ namespace BurningKnight.entity.room.controllable.spikes {
 		}
 
 		private void RenderBase() {
-			Graphics.Render(tile, Position + offset);
+			Graphics.Render(tile!, Position + offset);
 		}
 
 		private void RenderShadow() {

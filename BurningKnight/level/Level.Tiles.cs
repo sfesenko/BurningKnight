@@ -217,7 +217,7 @@ namespace BurningKnight.level {
 
 			var biome = stream.ReadString();
 
-			if (BiomeRegistry.Defined.TryGetValue(biome, out var b)) {
+			if (BiomeRegistry.Defined.TryGetValue(biome!, out var b)) {
 				SetBiome(b);
 			} else {
 				SetBiome(BiomeRegistry.Defined[Biome.Castle]);
@@ -242,7 +242,7 @@ namespace BurningKnight.level {
 			Snows = stream.ReadBoolean();
 			Rains = stream.ReadBoolean();
 
-			Variant = VariantRegistry.Create(stream.ReadString());
+			Variant = VariantRegistry.Create(stream.ReadString()!);
 			LoadPassable();
 		}
 		public void MarkForClearing() {
@@ -338,7 +338,7 @@ namespace BurningKnight.level {
 			UpdateTile(tx, ty);
 			
 			ReCreateBodyChunk(tx, ty);
-			Animate(Area, tx, ty);
+			Animate(Area!, tx, ty);
 		}
 		public static void Animate(Area area, int x, int y) {
 			if (!GameContext.Current!.Camera.Overlaps(new Rectangle(x * 16, y * 16, 16, 16))) {

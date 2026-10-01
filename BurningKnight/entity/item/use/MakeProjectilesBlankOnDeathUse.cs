@@ -10,7 +10,7 @@ namespace BurningKnight.entity.item.use {
 			if (e is ProjectileCreatedEvent pce) {
 				ProjectileCallbacks.AttachDeathCallback(pce.Projectile, (p, en, t) => {
 					if (Rnd.Chance(20 + Context.Run.Luck * 10)) {
-						BlankMaker.Make(p.Center, p.Area, 18f);
+						BlankMaker.Make(p.Center, p.Area!, 18f);
 					}
 				});
 			}

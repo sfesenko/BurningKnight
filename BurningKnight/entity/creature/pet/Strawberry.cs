@@ -30,7 +30,7 @@ namespace BurningKnight.entity.creature.pet {
 
 				for (var i = 0; i < cn; i++) {
 					Timer.Add(() => {
-						var part = new ParticleEntity(new Particle(Controllers.Float, new TexturedParticleRenderer(CommonAse.Particles.GetSlice($"heart_{Rnd.Int(1, 4)}"))));
+						var part = new ParticleEntity(new Particle(Controllers.Float, new TexturedParticleRenderer(CommonAse.Particles.GetSlice($"heart_{Rnd.Int(1, 4)}")!)));
 						part.Position = Center;
 
 						if (TryGetComponent<ZComponent>(out var z)) {

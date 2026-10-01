@@ -28,9 +28,9 @@ namespace BurningKnight.entity.item.use {
 				}
 			}
 
-			Cleanse(entity.GetComponent<WeaponComponent>());
-			Cleanse(entity.GetComponent<ActiveWeaponComponent>());
-			Cleanse(entity.GetComponent<ActiveItemComponent>());
+			Cleanse(entity.GetComponent<WeaponComponent>()!);
+			Cleanse(entity.GetComponent<ActiveWeaponComponent>()!);
+			Cleanse(entity.GetComponent<ActiveItemComponent>()!);
 
 			// fixme: doesnt do anything to ui inventory
 			foreach (var i in toRemove) {

@@ -94,7 +94,7 @@ namespace BurningKnight.save {
 				var Key = reader.ReadString();
 				var Val = reader.ReadString();
 				
-				Values[Key] = Val;
+				Values[Key!] = Val;
 			}
 
 			RunId = reader.ReadUInt32();

@@ -20,7 +20,7 @@ namespace BurningKnight.level.entities {
 		public override void Load(FileReader stream) {
 			base.Load(stream);
 			
-			SetMessage(stream.ReadString());
+			SetMessage(stream.ReadString()!);
 			Region = stream.ReadString() ?? "sign";
 			DemoOnly = stream.ReadBoolean();
 		}

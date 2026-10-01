@@ -46,7 +46,7 @@ namespace BurningKnight.level.rooms {
 			var doors = to == null
 				? Connected
 				: new Dictionary<RoomDef, DoorPlaceholder>() {
-					{ defTo, to }
+					{ defTo!, to }
 				};
 
 			foreach (var pair in doors) {

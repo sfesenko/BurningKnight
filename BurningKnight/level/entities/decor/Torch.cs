@@ -83,7 +83,7 @@ namespace BurningKnight.level.entities.decor {
 			}
 			
 			AnimationUtil.Poof(Center);
-			Particles.BreakSprite(Area, GetComponent<SliceComponent>()!.Sprite, Position);
+			Particles.BreakSprite(Area!, GetComponent<SliceComponent>()!.Sprite, Position);
 			
 			UpdateSprite();
 		}

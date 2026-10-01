@@ -131,7 +131,7 @@ namespace BurningKnight.entity.creature.bk {
 				Awoken = false;
 			}
 
-			base.OnTargetChange(target);
+			base.OnTargetChange(target!);
 		}
 
 		private void FreeSelf() {

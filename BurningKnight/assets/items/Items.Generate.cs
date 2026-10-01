@@ -130,7 +130,7 @@ namespace BurningKnight.assets.items {
 					GeneratedOnFloor.Add(id);
 				}
 				
-				datas.Remove(data);
+				datas.Remove(data!);
 				return id;
 			}
 

@@ -44,7 +44,7 @@ namespace BurningKnight.entity.creature.bk {
 			public override void Init() {
 				base.Init();
 
-				angle = Self.AngleTo(Self.Target) - (Rnd.Chance() ? -1 : 1) * 1.2f;
+				angle = Self.AngleTo(Self.Target!) - (Rnd.Chance() ? -1 : 1) * 1.2f;
 				Self.WarnLaser(angle);
 			}
 
@@ -75,7 +75,7 @@ namespace BurningKnight.entity.creature.bk {
 				laser.Position = Self.Center;
 
 				var aa = laser.Angle;
-				var a = Self.AngleTo(Self.Target);
+				var a = Self.AngleTo(Self.Target!);
 				
 				vy += (float) MathUtils.ShortAngleDistance(aa, a) * dt * 4;
 

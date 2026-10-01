@@ -23,7 +23,7 @@ namespace BurningKnight.entity.item.use {
 				return;
 			}
 			
-			Reroller.Reroll(entity.Area, room, rerollStands, spawnNewItems, ignore, types, ProcessItem, d2);
+			Reroller.Reroll(entity.Area!, room, rerollStands, spawnNewItems, ignore, types, ProcessItem, d2);
 		}
 
 		protected virtual void ProcessItem(Item item) {

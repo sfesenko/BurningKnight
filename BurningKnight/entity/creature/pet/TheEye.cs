@@ -136,7 +136,7 @@ namespace BurningKnight.entity.creature.pet {
 		private class AttackState : SmartState<TheEye> {
 			public override void Init() {
 				base.Init();
-				Self.GetComponent<RectBodyComponent>()!.Velocity = MathUtils.CreateVector(Self.AngleTo(Self.target), 600);
+				Self.GetComponent<RectBodyComponent>()!.Velocity = MathUtils.CreateVector(Self.AngleTo(Self.target!), 600);
 			}
 
 			public override void Destroy() {

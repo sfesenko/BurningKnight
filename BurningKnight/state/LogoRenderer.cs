@@ -155,7 +155,7 @@ namespace BurningKnight.state {
 			
 			var o = new Vector2(0, offset);
 			
-			Render(letterBB, letterB, positions[0] + o);
+			Render(letterBB, letterB!, positions[0] + o);
 			Render(letterBU, letterU, positions[1] + o);
 			Render(letterBR, letterR, positions[2] + o, flipR);
 			Render(letterBN1, letterN1, positions[3] + o);

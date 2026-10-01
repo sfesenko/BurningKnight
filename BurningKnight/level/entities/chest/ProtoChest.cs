@@ -37,7 +37,7 @@ namespace BurningKnight.level.entities.chest {
 				var id = GlobalSave.GetString("proto_chest", LevelSave.MeleeOnly ? "bk:ancient_sword" : "bk:ancient_revolver");
 
 				if (id != null) {
-					var item = Items.CreateAndAdd(id, Area);
+					var item = Items.CreateAndAdd(id, Area!);
 					GetComponent<ItemComponent>()!.Set(item, false);
 					itemRegion = item.Region;
 				}
@@ -47,7 +47,7 @@ namespace BurningKnight.level.entities.chest {
 		}
 
 		public override void Destroy() {
-			GlobalSave.Put("proto_chest", GetComponent<ItemComponent>()!.Item?.Id);
+			GlobalSave.Put("proto_chest", GetComponent<ItemComponent>()!.Item?.Id!);
 			base.Destroy();
 		}
 
@@ -82,7 +82,7 @@ namespace BurningKnight.level.entities.chest {
 
 		protected override bool Interact(Entity entity) {
 			var w = entity.GetComponent<ActiveWeaponComponent>();
-			GetComponent<ItemComponent>()!.Exchange(w);
+			GetComponent<ItemComponent>()!.Exchange(w!);
 
 			if (w.Item != null) {
 				Audio.PlaySfx(w.Item.Data.WeaponType.GetSwapSfx());

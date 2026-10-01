@@ -88,7 +88,7 @@ namespace BurningKnight.level {
 
 				Context.Camera!.ShakeMax(3);
 
-				Level.Animate(level.Area, x, y);
+				Level.Animate(level.Area!, x, y);
 			} else if (level.Get(x, y, true).Matches(Tile.Rock, Tile.TintedRock, Tile.MetalBlock)) {
 				level.Set(x, y, Tile.Ember);
 				level.UpdateTile(x, y);

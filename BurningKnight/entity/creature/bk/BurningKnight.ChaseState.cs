@@ -46,7 +46,7 @@ namespace BurningKnight.entity.creature.bk {
 				base.Update(dt);
 				Self.CheckForScourgeRageFree();
 
-				var d = Self.DistanceTo(Self.Target);
+				var d = Self.DistanceTo(Self.Target!);
 				var force = 300f * dt;
 
 				if (d < 64f) {

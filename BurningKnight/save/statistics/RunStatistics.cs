@@ -72,14 +72,14 @@ namespace BurningKnight.save.statistics {
 			Items.Clear();
 			
 			for (var i = 0; i < count; i++) {
-				Items.Add(stream.ReadString());
+				Items.Add(stream.ReadString()!);
 			}
 		
 			count = stream.ReadUInt16();
 			Banned.Clear();
 			
 			for (var i = 0; i < count; i++) {
-				Banned.Add(stream.ReadString());
+				Banned.Add(stream.ReadString()!);
 			}
 
 			CoinsObtained = stream.ReadUInt16();

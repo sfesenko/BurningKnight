@@ -27,7 +27,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 
 				if (sinceLast >= 0.5f) {
 					sinceLast = 0;
-					var a = Self.AngleTo(Self.Target);
+					var a = Self.AngleTo(Self.Target!);
 					var second = Self.InThirdPhase;
 
 					for (var i = 0; i < (second ? 1 : 3); i++) {

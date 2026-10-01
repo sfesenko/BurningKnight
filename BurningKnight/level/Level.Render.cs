@@ -60,7 +60,7 @@ namespace BurningKnight.level {
 			var camera = Context.Camera;
 			
 			// Cache the condition
-			var toX = GetRenderRight(camera);
+			var toX = GetRenderRight(camera!);
 			var toY = GetRenderTop(camera);
 
 			Graphics.Color = new Color(1f, 1f, 0f, 1f);
@@ -100,7 +100,7 @@ namespace BurningKnight.level {
 			var camera = Context.Camera;
 			
 			// Cache the condition
-			var toX = GetRenderRight(camera);
+			var toX = GetRenderRight(camera!);
 			var toY = GetRenderTop(camera);
 			var active = !Engine.Instance.State.Paused;
 
@@ -168,7 +168,7 @@ namespace BurningKnight.level {
 			var camera = Context.Camera;
 
 			// Cache the condition
-			var toX = GetRenderRight(camera);
+			var toX = GetRenderRight(camera!);
 			var toY = GetRenderBottom(camera);
 
 			for (int y = toY; y >= GetRenderTop(camera); y--) {
@@ -278,7 +278,7 @@ namespace BurningKnight.level {
 			var camera = Context.Camera;
 
 			// Cache the condition
-			var toX = GetRenderRight(camera);
+			var toX = GetRenderRight(camera!);
 			var toY = GetRenderBottom(camera);
 
 			var dt = Engine.Delta * 10f;

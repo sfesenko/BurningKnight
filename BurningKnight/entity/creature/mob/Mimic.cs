@@ -180,7 +180,7 @@ namespace BurningKnight.entity.creature.mob {
 		public override void Save(FileWriter stream) {
 			base.Save(stream);
 			
-			stream.WriteString(Kind);
+			stream.WriteString(Kind!);
 			stream.WriteBoolean(invoked);
 			stream.WriteString(Pool);
 		}

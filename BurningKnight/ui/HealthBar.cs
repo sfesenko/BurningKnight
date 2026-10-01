@@ -122,7 +122,7 @@ namespace BurningKnight.ui {
 			Graphics.Render(frame, Position);
 
 			var health = entity.GetComponent<HealthComponent>();
-			var region = new TextureRegion(fill.Texture, fill.Source);
+			var region = new TextureRegion(fill.Texture!, fill.Source);
 			var h = health!.Health;
 			
 			if (h < lastDamage) {

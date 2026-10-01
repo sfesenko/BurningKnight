@@ -12,12 +12,12 @@ namespace BurningKnight.entity.item.use {
 			base.Use(entity, item);
 
 			if (rerollArtifacts) {
-				Reroll(entity, entity.GetComponent<InventoryComponent>());
+				Reroll(entity, entity.GetComponent<InventoryComponent>()!);
 			}
 
 			if (rerollWeapons) {
-				Reroll(entity.GetComponent<ActiveWeaponComponent>());
-				Reroll(entity.GetComponent<WeaponComponent>());
+				Reroll(entity.GetComponent<ActiveWeaponComponent>()!);
+				Reroll(entity.GetComponent<WeaponComponent>()!);
 			}
 
 			entity.HandleEvent(new RerolledEvent {

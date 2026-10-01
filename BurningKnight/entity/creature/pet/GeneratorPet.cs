@@ -49,7 +49,7 @@ namespace BurningKnight.entity.creature.pet {
 						Tween.To(1.8f, a.Scale.X, x => a.Scale.X = x, 0.2f);
 						Tween.To(0.2f, a.Scale.Y, x => a.Scale.Y = x, 0.2f).OnEnd = () => {
 					
-							var item = callback(Area);
+							var item = callback(Area!);
 
 							if (item != null) {
 								item.Center = Center;

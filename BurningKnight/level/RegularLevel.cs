@@ -86,7 +86,7 @@ namespace BurningKnight.level {
 			var p = GetPainter();
 			LevelSave.BiomeGenerated.ModifyPainter(this, p);
 			
-			return p.Paint(this, rooms);
+			return p.Paint(this, rooms!);
 		}
 
 		private void Build() {

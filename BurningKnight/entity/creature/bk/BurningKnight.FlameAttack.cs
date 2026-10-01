@@ -94,7 +94,7 @@ namespace BurningKnight.entity.creature.bk {
 				}
 				
 				var force = 250f * dt;
-				var a = Self.AngleTo(Self.Target);
+				var a = Self.AngleTo(Self.Target!);
 
 				Self.GetComponent<RectBodyComponent>()!.Velocity += new Vector2((float) Math.Cos(a) * force, (float) Math.Sin(a) * force);
 			}

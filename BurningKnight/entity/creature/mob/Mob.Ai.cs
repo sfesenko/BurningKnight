@@ -83,7 +83,7 @@ namespace BurningKnight.entity.creature.mob {
 			
 			// Might be null, thats ok
 			Target = closest;
-			OnTargetChange(closest);
+			OnTargetChange(closest!);
 		}
 		private void BuildPath(Vector2 to, bool back = false) {
 			var level = Context.Level;

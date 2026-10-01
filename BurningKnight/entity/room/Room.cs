@@ -228,7 +228,7 @@ namespace BurningKnight.entity.room {
 			var count = stream.ReadByte();
 
 			for (var i = 0; i < count; i++) {
-				var c = RoomControllerRegistery.Get(stream.ReadString());
+				var c = RoomControllerRegistery.Get(stream.ReadString()!);
 
 				if (c != null) {
 					Controllers.Add(c);

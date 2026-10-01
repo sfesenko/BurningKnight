@@ -57,7 +57,7 @@ namespace BurningKnight.entity.room.controllable.platform {
 				|| entity is Chasm 
 				|| (entity is Creature c && c.InAir()) 
 				|| (entity.TryGetComponent<TileInteractionComponent>(out var t) && (!t.HasNoTileSupport)) 
-				|| (entity.TryGetComponent<SupportableComponent>(out var s) && s.HasAnotherSupportBesides(Super))
+				|| (entity.TryGetComponent<SupportableComponent>(out var s) && s.HasAnotherSupportBesides(Super!))
 			);
 		}
 	}

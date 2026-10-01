@@ -32,7 +32,7 @@ namespace BurningKnight.entity.creature.pet {
 						
 					GetComponent<AudioEmitterComponent>()!.EmitRandomizedPrefixed("item_meatguy", 4, 0.5f);
 
-					var builder = new ProjectileBuilder(o, "small") {
+					var builder = new ProjectileBuilder(o!, "small") {
 						Color = ProjectileColor.Yellow,
 						Range = 32f
 					};

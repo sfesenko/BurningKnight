@@ -76,7 +76,7 @@ namespace BurningKnight.entity.creature.mob.cave {
 				base.Init();
 
 				fire = Self.Target != null && Self.moveId % 2 == 0;
-				angle = !fire ? Rnd.AnglePI() : Self.AngleTo(Self.Target);
+				angle = !fire ? Rnd.AnglePI() : Self.AngleTo(Self.Target!);
 				timer = fire ? 0.9f : Rnd.Float(0.8f, 2f);
 				start = Rnd.Float(0f, 10f);
 				

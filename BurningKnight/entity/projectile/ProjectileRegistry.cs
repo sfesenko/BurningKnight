@@ -200,7 +200,7 @@ namespace BurningKnight.entity.projectile {
 				ProjectileCallbacks.AttachCollisionCallback(p, (projectile, e) => {
 					if (Context.Level!.Biome is IceBiome && e is ProjectileLevelBody lvl) {
 						if (lvl.Break(projectile.CenterX, projectile.CenterY)) {
-							AudioEmitterComponent.Dummy(projectile.Area, projectile.Center).EmitRandomizedPrefixed("level_snow_break", 3);
+							AudioEmitterComponent.Dummy(projectile.Area!, projectile.Center).EmitRandomizedPrefixed("level_snow_break", 3);
 						}
 					}
 					
@@ -265,7 +265,7 @@ namespace BurningKnight.entity.projectile {
 				p.AddFlags(ProjectileFlags.AutomaticRotation);
 
 				ProjectileCallbacks.AttachDeathCallback(p, (pr, e, t) => {
-					AudioEmitterComponent.Dummy(pr.Area, pr.Center).EmitRandomized("item_magic_lava_appear");
+					AudioEmitterComponent.Dummy(pr.Area!, pr.Center).EmitRandomized("item_magic_lava_appear");
 				
 					var x = (int) Math.Round(pr.CenterX / 16f);
 					var y = (int) Math.Round(pr.CenterY / 16f);
@@ -306,7 +306,7 @@ namespace BurningKnight.entity.projectile {
 
 				p.AddFlags(ProjectileFlags.AutomaticRotation);
 				ProjectileCallbacks.AttachDeathCallback(p, (pr, e, t) => {
-					AudioEmitterComponent.Dummy(pr.Area, pr.Center).EmitRandomized("item_magic_web_appear");
+					AudioEmitterComponent.Dummy(pr.Area!, pr.Center).EmitRandomized("item_magic_web_appear");
 
 					var x = (int) Math.Round(pr.CenterX / 16f);
 					var y = (int) Math.Round(pr.CenterY / 16f);

@@ -205,13 +205,13 @@ namespace BurningKnight.state {
 				for (var i = 0; i < 40; i++) {
 					particles.Add(Context.Level!.Area!.Add(new RainParticle {
 						Custom = true
-					}));
+					})!);
 				}
 			} else if (Weather.Snows) {
 				for (var i = 0; i < 100; i++) {
 					particles.Add(Context.Level!.Area!.Add(new SnowParticle {
 						Custom = true
-					}));
+					})!);
 				}
 			}
 		}

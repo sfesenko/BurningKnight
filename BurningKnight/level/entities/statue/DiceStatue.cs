@@ -109,7 +109,7 @@ namespace BurningKnight.level.entities.statue {
 				{
 					"lucky", (s, e) => {
 						try {
-							ChestRegistry.PlaceRandom(s.BottomCenter + new Vector2(0, 12), s.Area);
+							ChestRegistry.PlaceRandom(s.BottomCenter + new Vector2(0, 12), s.Area!);
 						} catch (Exception ex) {
 							Log.Error(ex);
 						}
@@ -128,7 +128,7 @@ namespace BurningKnight.level.entities.statue {
 						item.Done = true;
 
 						if (e.GetComponent<WeaponComponent>()!.Item == null) {
-							c.Set(Items.CreateAndAdd(LevelSave.MeleeOnly || item.Data.WeaponType == WeaponType.Melee ? "bk:ancient_sword" : "bk:ancient_revolver", s.Area));
+							c.Set(Items.CreateAndAdd(LevelSave.MeleeOnly || item.Data.WeaponType == WeaponType.Melee ? "bk:ancient_sword" : "bk:ancient_revolver", s.Area!));
 						} else {
 							c.RequestSwap();
 						}

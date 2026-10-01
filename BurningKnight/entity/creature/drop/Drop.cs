@@ -42,7 +42,7 @@ namespace BurningKnight.entity.creature.drop {
 		public static void Create(List<Drop> dr, Entity entity, Area? area = null, Dot? where = null) {
 			var drops = new List<Item>();
 			var ar = entity?.Area ?? area;
-			var wh = entity?.BottomCenter ?? where;
+			var wh = entity?.BottomCenter ?? where!;
 			
 			foreach (var drop in dr) {
 				if (Rnd.Float() > drop.Chance) {
@@ -54,7 +54,7 @@ namespace BurningKnight.entity.creature.drop {
 				foreach (var id in ids) {
 					if (id != null) {
 						if (id == "bk:troll_bomb") {
-							var bomb = new Bomb(entity);
+							var bomb = new Bomb(entity!);
 							ar.Add(bomb);
 							bomb.Center = wh;
 							

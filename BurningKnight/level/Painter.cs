@@ -395,7 +395,7 @@ namespace BurningKnight.level {
 
 			if (rrms.Count > 0) {
 				foreach (var type in Level.ItemsToSpawn) {
-					var item = Items.CreateAndAdd(type, Level.Area);
+					var item = Items.CreateAndAdd(type, Level.Area!);
 
 					if (item == null) {
 						continue;

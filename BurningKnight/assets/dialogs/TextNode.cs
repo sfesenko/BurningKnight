@@ -37,7 +37,7 @@ namespace BurningKnight.assets.dialogs {
 				}
 			}
 			
-			return CreateDialog(LocaleId, variants);
+			return CreateDialog(LocaleId, variants!);
 		}
 
 		protected virtual Dialog CreateDialog(string id, string[] variants) {

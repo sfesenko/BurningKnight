@@ -86,7 +86,7 @@ namespace BurningKnight.level.entities {
 					var old = c.Item;
 
 					if (hd) {
-						entity.GetComponent<InventoryComponent>()!.Pickup(Items.CreateAndAdd($"bk:disk_{disk}", Area));
+						entity.GetComponent<InventoryComponent>()!.Pickup(Items.CreateAndAdd($"bk:disk_{disk}", Area!));
 					} else {
 						c.Set(null, false);
 					}
@@ -98,7 +98,7 @@ namespace BurningKnight.level.entities {
 					Log.Error(e);
 				}
 			} else if (hd) {
-				entity.GetComponent<InventoryComponent>()!.Pickup(Items.CreateAndAdd($"bk:disk_{disk}", Area));
+				entity.GetComponent<InventoryComponent>()!.Pickup(Items.CreateAndAdd($"bk:disk_{disk}", Area!));
 				disk = 0;
 			}
 			
@@ -122,7 +122,7 @@ namespace BurningKnight.level.entities {
 			if (tillNext <= 0) {
 				tillNext = Rnd.Float(1, 3f);
 				
-				var part = new ParticleEntity(new Particle(Controllers.Float, new TexturedParticleRenderer(CommonAse.Particles.GetSlice($"note_{Rnd.Int(1, 3)}"))));
+				var part = new ParticleEntity(new Particle(Controllers.Float, new TexturedParticleRenderer(CommonAse.Particles.GetSlice($"note_{Rnd.Int(1, 3)}")!)));
 				part.Position = Center;
 				Area!.Add(part);
 				
@@ -233,7 +233,7 @@ namespace BurningKnight.level.entities {
 				return;
 			}
 
-			var item = Items.CreateAndAdd($"bk:disk_{disk}", Area);
+			var item = Items.CreateAndAdd($"bk:disk_{disk}", Area!);
 			item.CenterX = CenterX;
 			item.Y = Bottom + 4;
 

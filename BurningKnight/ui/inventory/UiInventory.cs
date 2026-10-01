@@ -124,7 +124,7 @@ namespace BurningKnight.ui.inventory {
 
 			ItemSlot = anim!.GetSlice("item_slot");
 			UseSlot = new TextureRegion();
-			UseSlot.Set(ItemSlot);
+			UseSlot.Set(ItemSlot!);
 			
 			question = anim.GetSlice("question");
 			bomb = anim.GetSlice("bomb");

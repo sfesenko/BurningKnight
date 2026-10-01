@@ -225,7 +225,7 @@ namespace BurningKnight.entity.creature.mob {
 
 		public override void Save(FileWriter stream) {
 			base.Save(stream);
-			stream.WriteString(prefix?.Id);
+			stream.WriteString(prefix?.Id!);
 		}
 
 		public void GeneratePrefix() {

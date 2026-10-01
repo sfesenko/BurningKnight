@@ -41,7 +41,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 					}
 					
 					delay = 0.5f;
-					var a = Self.AngleTo(Self.Target);
+					var a = Self.AngleTo(Self.Target!);
 					Self.WarnLaser(a);
 
 					Timer.Add(() => {

@@ -20,7 +20,7 @@ namespace BurningKnight.entity.door {
 				pad = CommonAse.Props.GetSlice(p);
 				
 				Area!.Add(new RenderTrigger(this, () => {
-					Graphics.Render(pad, Position);
+					Graphics.Render(pad!, Position);
 				}, -1));
 			}
 			
@@ -55,7 +55,7 @@ namespace BurningKnight.entity.door {
 		}
 
 		private void RenderFrame(bool shadow) {
-			Graphics.Render(bar, shadow ? new Vector2(X, Bottom + Height) : Position, 0, Vector2.Zero, shadow ? MathUtils.InvertY : MathUtils.Normal);
+			Graphics.Render(bar!, shadow ? new Vector2(X, Bottom + Height) : Position, 0, Vector2.Zero, shadow ? MathUtils.InvertY : MathUtils.Normal);
 		}
 	}
 }

@@ -198,7 +198,7 @@ namespace BurningKnight.state {
 			PermanentScourge = Math.Max(0, PermanentScourge - 1);
 			Scourge--;
 			
-			var player = LocalPlayer.Locate(Context.Area);
+			var player = LocalPlayer.Locate(Context.Area!);
 
 			if (player == null) {
 				return;
@@ -219,7 +219,7 @@ namespace BurningKnight.state {
 				Scourge = 10;
 			}
 			
-			var player = LocalPlayer.Locate(Context.Area);
+			var player = LocalPlayer.Locate(Context.Area!);
 
 			if (player == null) {
 				return;
@@ -294,7 +294,7 @@ namespace BurningKnight.state {
 				pl = (Player) p;
 			}
 			
-			((InGameState) Engine.Instance.State).AnimateDoneScreen(pl);
+			((InGameState) Engine.Instance.State).AnimateDoneScreen(pl!);
 		}
 
 		public string GetLeaderboardId() {

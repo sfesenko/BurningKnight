@@ -368,7 +368,7 @@ namespace BurningKnight.entity.creature.npc {
 					target = new Vector2(p.X * 16, p.Y * 16);
 
 					if (Self.shotgun == null) {
-						Self.shotgun = Items.CreateAndAdd("bk:shotgun", Self.Area);
+						Self.shotgun = Items.CreateAndAdd("bk:shotgun", Self.Area!);
 						Self.shotgun.RemoveDroppedComponents();
 						Self.shotgun.AddComponent(new OwnerComponent(Self));
 					}

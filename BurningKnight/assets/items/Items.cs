@@ -154,7 +154,7 @@ namespace BurningKnight.assets.items {
 				return null;
 			}
 
-			return Generate(types, filter, c);
+			return Generate(types, filter!, c);
 		}
 
 		public static string Generate(ItemPool pool, Func<ItemData, bool>? filter = null, PlayerClass c = PlayerClass.Any) {
@@ -162,11 +162,11 @@ namespace BurningKnight.assets.items {
 				return null;
 			}
 
-			return Generate(types, filter, c);
+			return Generate(types, filter!, c);
 		}
 
 		public static string Generate(Func<ItemData, bool>? filter = null, PlayerClass c = PlayerClass.Any) {
-			return Generate(Datas.Values.ToList(), filter, c);
+			return Generate(Datas.Values.ToList(), filter!, c);
 		}
 
 		public static bool Has(string id) {

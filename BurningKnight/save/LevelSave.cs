@@ -90,7 +90,7 @@ namespace BurningKnight.save {
 				
 				var level = CreateLevel();
 				BiomeGenerated = level.Biome;
-				WallRegistry.Instance.ResetForBiome(BiomeGenerated);
+				WallRegistry.Instance.ResetForBiome(BiomeGenerated!);
 
 				a.Add(level);
 

@@ -92,7 +92,7 @@ namespace BurningKnight.entity.item.stand {
 			var id = items[0].Id;
 			AlreadyOnStand.Add(id);
 
-			return Items.CreateAndAdd(id, Area);
+			return Items.CreateAndAdd(id, Area!);
 		}
 
 		protected override bool CanInteract(Entity e) {

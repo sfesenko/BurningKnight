@@ -221,7 +221,7 @@ namespace BurningKnight.entity.component {
 
 			for (var i = 0; i < 3; i++) {
 				Timer.Add(() => {
-						var part = new ParticleEntity(new Particle(Controllers.Float, new TexturedParticleRenderer(CommonAse.Particles.GetSlice($"{slice}_{Rnd.Int(1, 4)}"))));
+						var part = new ParticleEntity(new Particle(Controllers.Float, new TexturedParticleRenderer(CommonAse.Particles.GetSlice($"{slice}_{Rnd.Int(1, 4)}")!)));
 						part.Position = Entity.Center;
 
 						if (Entity.TryGetComponent<ZComponent>(out var z)) {
@@ -250,7 +250,7 @@ namespace BurningKnight.entity.component {
 				
 				ev.Item.Use(Entity);
 
-				Engine.Instance.State.Ui.Add(new ConsumableParticle(ev.Item.Animation != null
+				Engine.Instance.State.Ui.Add(new ConsumableParticle(ev.Item.Animation != null!
 					? ev.Item.GetComponent<AnimatedItemGraphicsComponent>()!.Animation.GetFirstCurrent()
 					: ev.Item.Region, (Player) Entity));
 				

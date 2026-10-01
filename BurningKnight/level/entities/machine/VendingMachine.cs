@@ -90,7 +90,7 @@ namespace BurningKnight.level.entities.machine {
 				return false;
 			}
 
-			var e = Items.CreateAndAdd(item, Area);
+			var e = Items.CreateAndAdd(item, Area!);
 			
 			e.CenterX = CenterX;
 			e.CenterY = Bottom;

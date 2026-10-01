@@ -106,7 +106,7 @@ namespace BurningKnight.assets.particle.custom {
 					Scale.Y = 0.3f;
 				}
 
-				AudioEmitterComponent.Dummy(Area, Center).Emit($"level_rock_{Rnd.Int(1, 3)}", 0.5f);
+				AudioEmitterComponent.Dummy(Area!, Center).Emit($"level_rock_{Rnd.Int(1, 3)}", 0.5f);
 
 				if (TargetZ < 0) {
 					Finish();

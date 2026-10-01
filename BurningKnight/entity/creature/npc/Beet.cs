@@ -17,7 +17,7 @@ namespace BurningKnight.entity.creature.npc {
 
 		static Beet() {
 			Dialogs.RegisterCallback("beet_0", (d, c) => {
-				c!.Dialog.Str!.SetVariable("seed", GameContext.Current.Run.NextSeed);
+				c!.Dialog.Str!.SetVariable("seed", GameContext.Current.Run.NextSeed!);
 				return Dialogs.Get($"beet_{(GameContext.Current.Run.IgnoreSeed ? 4 : 1)}");
 			});
 			

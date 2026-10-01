@@ -44,7 +44,7 @@ namespace BurningKnight.level {
 			var camera = Context.Camera;
 
 			// Cache the condition
-			var toX = GetRenderRight(camera);
+			var toX = GetRenderRight(camera!);
 			var toY = GetRenderBottom(camera);
 			
 			for (int y = GetRenderTop(camera); y < toY; y++) {
@@ -354,7 +354,7 @@ namespace BurningKnight.level {
 			Graphics.Color = ColorUtils.WhiteColor;
 			
 			// Cache the condition
-			var toX = GetRenderRight(camera);
+			var toX = GetRenderRight(camera!);
 			var toY = GetRenderBottom(camera);
 
 			for (int y = GetRenderTop(camera); y <= toY; y++) {
@@ -394,7 +394,7 @@ namespace BurningKnight.level {
 			Graphics.Batch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None,
 				state.ClipRasterizerState, null, Context.Camera?.Matrix);
 			
-			Graphics.Render(WallSurface, Context.Camera!.TopLeft - new Vector2(Context.Camera!.Position.X % 1, 
+			Graphics.Render(WallSurface!, Context.Camera!.TopLeft - new Vector2(Context.Camera!.Position.X % 1, 
 				                             Context.Camera!.Position.Y % 1));
 			
 			Graphics.Batch.End();

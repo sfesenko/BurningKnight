@@ -134,7 +134,7 @@ namespace BurningKnight.entity.item {
 			var id = items[0].Id;
 			AlreadyOnStand.Add(id);
 
-			return Items.CreateAndAdd(id, Area);
+			return Items.CreateAndAdd(id, Area!);
 		}
 
 		protected override bool CanInteract(Entity e) {
@@ -164,7 +164,7 @@ namespace BurningKnight.entity.item {
 				price = 0;
 			} else {
 				price = Item.Data.UnlockPrice;
-				var player = LocalPlayer.Locate(Area);
+				var player = LocalPlayer.Locate(Area!);
 
 				if (player != null && player.GetComponent<HatComponent>()!.Item?.Id == "bk:dunce_hat") {
 					price++;

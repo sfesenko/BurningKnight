@@ -114,7 +114,7 @@ namespace BurningKnight.level.entities {
 					Area!.Add(part);
 				}
 
-				var d = AudioEmitterComponent.Dummy(Area, Center);
+				var d = AudioEmitterComponent.Dummy(Area!, Center);
 				
 				if (Sprite == "cup" || Sprite.StartsWith("pot")) {
 					d.EmitRandomizedPrefixed("level_cup", 2, 0.75f);

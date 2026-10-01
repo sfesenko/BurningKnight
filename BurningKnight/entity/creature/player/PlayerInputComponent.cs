@@ -146,7 +146,7 @@ namespace BurningKnight.entity.creature.player {
 
 						if (dialog!.Current == null) {
 							dialog!.Dialog.Str!.ClearIcons();
-							dialog.Dialog.Str.AddIcon(CommonAse.Ui.GetSlice("button_b"));
+							dialog.Dialog.Str.AddIcon(CommonAse.Ui.GetSlice("button_b")!);
 
 							dialog.StartAndClose("remove_player", 2);
 						}

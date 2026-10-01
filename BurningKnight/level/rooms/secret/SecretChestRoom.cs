@@ -14,7 +14,7 @@ namespace BurningKnight.level.rooms.secret {
 				chest = new ProtoChest();
 			} else {
 				try {
-					chest = ChestRegistry.PlaceRandom(Vector2.Zero, level.Area);
+					chest = ChestRegistry.PlaceRandom(Vector2.Zero, level.Area!);
 				} catch (Exception e) {
 					Log.Error(e);
 					chest = new WoodenChest();

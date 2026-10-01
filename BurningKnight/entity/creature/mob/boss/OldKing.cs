@@ -283,7 +283,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 					Self.Area!.Add(pp);
 				}
 
-				var aa = Self.AngleTo(Self.Target);
+				var aa = Self.AngleTo(Self.Target!);
 				var builder = new ProjectileBuilder(Self, "small") {
 					Color = ProjectileColor.Green,
 					Bounce = 2

@@ -21,7 +21,7 @@ namespace BurningKnight.level.rooms.shop.sub {
 			var spot = new Dot(Rnd.Int(Left + 2, Right - 2), Rnd.Int(Top + 2, Bottom - 2));
 
 			try {
-				ChestRegistry.PlaceRandom(spot * 16 + new Vector2(8, 12), level.Area);
+				ChestRegistry.PlaceRandom(spot * 16 + new Vector2(8, 12), level.Area!);
 			} catch (Exception e) {
 				Log.Error(e);
 			}

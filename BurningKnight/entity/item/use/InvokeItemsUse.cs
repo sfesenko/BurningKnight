@@ -31,7 +31,7 @@ namespace BurningKnight.entity.item.use {
 			}
 
 			foreach (var i in items) {
-				inventory.Pickup(Items.CreateAndAdd(i, entity.Area), false);
+				inventory.Pickup(Items.CreateAndAdd(i, entity.Area!), false);
 			}
 		}
 

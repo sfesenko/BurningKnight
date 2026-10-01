@@ -20,7 +20,7 @@ namespace BurningKnight.entity.item.use {
 			var id = Random ? Items.Generate(i => i.Type == ItemType.Active || i.Type == ItemType.Weapon || i.Type == ItemType.Artifact) : Item;
 			
 			if (OnStand) {
-				var i = Items.CreateAndAdd(id, entity.Area);
+				var i = Items.CreateAndAdd(id, entity.Area!);
 
 				if (i == null) {
 					Log.Error($"Invalid item {id}");
@@ -36,7 +36,7 @@ namespace BurningKnight.entity.item.use {
 			}
 			
 			for (var j = 0; j < Amount; j++) {
-				var i = Items.CreateAndAdd(id, entity.Area);
+				var i = Items.CreateAndAdd(id, entity.Area!);
 
 				if (i == null) {
 					Log.Error($"Invalid item {id}");

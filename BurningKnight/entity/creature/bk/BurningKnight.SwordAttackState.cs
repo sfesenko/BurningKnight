@@ -43,7 +43,7 @@ namespace BurningKnight.entity.creature.bk {
 				Timer.Add(() => {
 					Self.GetComponent<AudioEmitterComponent>()!.EmitRandomized("mob_fire_static");
 
-					var a = Self.AngleTo(Self.Target);
+					var a = Self.AngleTo(Self.Target!);
 					
 					var p = new ProjectilePattern(KeepShapePattern.Make(0)) {
 						Position = Self.Center

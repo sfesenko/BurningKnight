@@ -63,7 +63,7 @@ namespace BurningKnight.level.rooms.scourged {
 			switch (Rnd.Int(GlobalSave.IsTrue(ShopNpc.Gobetta) ? 6 : 5)) {
 				case 0: {
 					for (var i = 0; i < Rnd.Int(1, 3); i++) {
-						Items.CreateAndAdd("bk:heart", level.Area).Center = center;
+						Items.CreateAndAdd("bk:heart", level.Area!).Center = center;
 					}
 
 					break;
@@ -71,7 +71,7 @@ namespace BurningKnight.level.rooms.scourged {
 
 				case 1: {
 					for (var i = 0; i < Rnd.Int(1, 4); i++) {
-						Items.CreateAndAdd("bk:shield", level.Area).Center = center;
+						Items.CreateAndAdd("bk:shield", level.Area!).Center = center;
 					}
 
 					break;
@@ -101,14 +101,14 @@ namespace BurningKnight.level.rooms.scourged {
 				
 				case 4: {
 					for (var i = 0; i < Rnd.Int(6, 12); i++) {
-						Items.CreateAndAdd("bk:coin", level.Area).Center = center;
+						Items.CreateAndAdd("bk:coin", level.Area!).Center = center;
 					}
 
 					break;
 				}
 
 				case 5: {
-					Gobetta.Place(GetTileCenter() * 16 + new Vector2(8, 8), level.Area);
+					Gobetta.Place(GetTileCenter() * 16 + new Vector2(8, 8), level.Area!);
 					break;
 				}
 			}

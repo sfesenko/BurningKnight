@@ -49,7 +49,7 @@ namespace BurningKnight.entity.creature.bk {
 				base.Update(dt);
 				Self.CheckForScourgeRageFree();
 
-				if (Self.DistanceTo(Self.Target) < 64f) {
+				if (Self.DistanceTo(Self.Target!) < 64f) {
 					Self.Become<FlyAwayAttackingState>();
 					return;
 				}

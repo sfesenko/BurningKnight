@@ -72,7 +72,7 @@ namespace BurningKnight.state {
 			}
 			
 			if (e is GramophoneBrokenEvent ge) {
-				var local = LocalPlayer.Locate(ge.Gramophone.Area);
+				var local = LocalPlayer.Locate(ge.Gramophone.Area!);
 
 				if (local != null && ge.Gramophone.GetComponent<RoomComponent>()!.Room ==
 				    local.GetComponent<RoomComponent>()!.Room) {

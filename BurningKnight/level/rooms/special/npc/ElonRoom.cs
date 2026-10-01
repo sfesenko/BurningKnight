@@ -4,7 +4,7 @@ namespace BurningKnight.level.rooms.special.npc {
 	public class ElonRoom : SpecialRoom {
 		public override void Paint(Level level) {
 			base.Paint(level);
-			DungeonElon.Place(GetCenter() * 16, level.Area);
+			DungeonElon.Place(GetCenter() * 16, level.Area!);
 		}
 
 		public override int GetMinWidth() {

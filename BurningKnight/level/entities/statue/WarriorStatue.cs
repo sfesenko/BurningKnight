@@ -41,7 +41,7 @@ namespace BurningKnight.level.entities.statue {
 			item!.Done = true;
 
 			if (e.GetComponent<WeaponComponent>()!.Item == null) {
-				c.Set(Items.CreateAndAdd(LevelSave.MeleeOnly || item.Data.WeaponType == WeaponType.Melee ? "bk:ancient_sword" : "bk:ancient_revolver", Area));				
+				c.Set(Items.CreateAndAdd(LevelSave.MeleeOnly || item.Data.WeaponType == WeaponType.Melee ? "bk:ancient_sword" : "bk:ancient_revolver", Area!));				
 			} else {
 				c.RequestSwap();
 			}

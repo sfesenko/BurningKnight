@@ -9,7 +9,7 @@ namespace BurningKnight.entity.item.use {
 		public new string Item = null!;
 
 		public override void Use(Entity entity, Item item) {
-			var i = Items.CreateAndAdd(Item, entity.Area);
+			var i = Items.CreateAndAdd(Item, entity.Area!);
 
 			if (i == null) {
 				Log.Error($"Invalid item {item}");

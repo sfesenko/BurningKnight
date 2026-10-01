@@ -92,7 +92,7 @@ namespace BurningKnight.level.entities.machine {
 		private bool Interact(Entity e) {
 			Animate();
 			
-			var p = e ?? LocalPlayer.Locate(Area);
+			var p = e ?? LocalPlayer.Locate(Area!);
 			var active = p.GetComponent<ActiveItemComponent>();
 			
 			if (active!.Item == null) {

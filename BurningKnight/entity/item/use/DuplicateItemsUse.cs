@@ -35,7 +35,7 @@ namespace BurningKnight.entity.item.use {
 
 					st.SetItem(Items.CreateAndAdd(ist.Item.Id, entity.Area), item);
 				} else if (it is Item i) {
-					var st = Items.CreateAndAdd(i.Id, entity.Area);
+					var st = Items.CreateAndAdd(i.Id, entity.Area!);
 					i.X -= i.Width / 2f + 1;
 					
 					st.X = i.X + i.Width + 2;

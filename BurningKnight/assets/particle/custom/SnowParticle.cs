@@ -103,7 +103,7 @@ namespace BurningKnight.assets.particle.custom {
 			}
 			
 			Graphics.Color = color;
-			Graphics.Render(region, Position, 0, Vector2.Zero, size);
+			Graphics.Render(region!, Position, 0, Vector2.Zero, size);
 			Graphics.Color = ColorUtils.WhiteColor;
 		}
 	}

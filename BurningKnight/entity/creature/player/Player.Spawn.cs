@@ -56,7 +56,7 @@ namespace BurningKnight.entity.creature.player {
 				var index = GetComponent<InputComponent>()!.Index;
 				
 				if (StartingLamps[index] != null) {
-					var i = Items.CreateAndAdd(StartingLamps[index], Area);
+					var i = Items.CreateAndAdd(StartingLamps[index], Area!);
 					i.Scourged = false;
 					GetComponent<LampComponent>()!.Set(i, false);
 					Log.Debug($"Starting lamp: {StartingLamps[index]}");
@@ -67,7 +67,7 @@ namespace BurningKnight.entity.creature.player {
 				}
 
 				if (StartingWeapons[index] != null) {
-					var i = Items.CreateAndAdd(StartingWeapons[index], Area);
+					var i = Items.CreateAndAdd(StartingWeapons[index], Area!);
 					i.Scourged = false;
 
 					var l = GetComponent<LampComponent>()!.Item;
@@ -83,7 +83,7 @@ namespace BurningKnight.entity.creature.player {
 				}
 				
 				if (StartingItems[index] != null) {
-					var i = Items.CreateAndAdd(StartingItems[index], Area);
+					var i = Items.CreateAndAdd(StartingItems[index], Area!);
 					i.Scourged = false;
 					GetComponent<ActiveItemComponent>()!.Set(i, false);
 					
@@ -96,7 +96,7 @@ namespace BurningKnight.entity.creature.player {
 						
 						foreach (var id in DailyItems) {
 							Log.Info($"Giving {id}");
-							inventory!.Pickup(Items.CreateAndAdd(id, Area), false);
+							inventory!.Pickup(Items.CreateAndAdd(id, Area!), false);
 						}
 					}
 					

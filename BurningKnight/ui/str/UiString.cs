@@ -81,7 +81,7 @@ namespace BurningKnight.ui.str {
 				Log.Error("Unknown icon");
 			}
 			
-			Icons.Add(o);
+			Icons.Add(o!);
 		}
 
 		public Color Tint = Color.White;

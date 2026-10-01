@@ -139,7 +139,7 @@ namespace BurningKnight.level.walls {
 				Setup(level, room, fill, 4, true);
 				CleanDiagonalEdges(room);
 				PaintPatch(level, room, Tiles.RandomSolid());
-				oldPatch = ArrayUtils.Clone(Patch);
+				oldPatch = ArrayUtils.Clone(Patch!);
 			}
 			
 			SimplePaint(level, room);

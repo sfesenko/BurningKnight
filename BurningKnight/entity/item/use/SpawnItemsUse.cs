@@ -31,7 +31,7 @@ namespace BurningKnight.entity.item.use {
 				var it = ToSpawn[i];
 
 				for (var m = 0; m < it.Count; m++) {
-					var itm = Items.CreateAndAdd(it.Id, entity.Area);
+					var itm = Items.CreateAndAdd(it.Id, entity.Area!);
 					var angle = j / count * Math.PI * 2;
 					
 					itm.Center = center + new Vector2((float) Math.Cos(angle) * Distance, (float) Math.Sin(angle) * Distance);

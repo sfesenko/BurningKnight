@@ -253,15 +253,15 @@ namespace BurningKnight.entity.item.use {
 					if (manaUsage > 0) {
 						if (manaDrop == 0) {
 							ProjectileCallbacks.AttachDeathCallback(projectile, (prj, e, t) => {
-								PlaceMana(entity.Area, prj.Center);
+								PlaceMana(entity.Area!, prj.Center);
 							});
 						} else if (manaDrop == 1) {
-							PlaceMana(entity.Area, entity.Center);
+							PlaceMana(entity.Area!, entity.Center);
 						} else {
 							var where = entity.Center;
 
 							ProjectileCallbacks.AttachDeathCallback(projectile, (prj, e, t) => {
-								PlaceMana(entity.Area, where);
+								PlaceMana(entity.Area!, where);
 							});
 						}
 					}

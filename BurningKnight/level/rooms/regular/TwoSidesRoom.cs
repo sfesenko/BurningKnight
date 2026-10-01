@@ -16,7 +16,7 @@ namespace BurningKnight.level.rooms.regular {
 
 		public override void Paint(Level level) {
 			SetupRect();
-			Painter.Fill(level, rect, Tile.Chasm);
+			Painter.Fill(level, rect!, Tile.Chasm);
 
 			var platform = new MovingPlatform();
 

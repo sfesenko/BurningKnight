@@ -70,7 +70,7 @@ namespace BurningKnight.entity.creature.player {
 					for (var i = 0; i < 3; i++) {
 						Timer.Add(() => {
 								var part = new ParticleEntity(new Particle(Controllers.Float,
-									new TexturedParticleRenderer(CommonAse.Particles.GetSlice($"sleep"))));
+									new TexturedParticleRenderer(CommonAse.Particles.GetSlice($"sleep")!)));
 
 								part.Position = Self.Center;
 

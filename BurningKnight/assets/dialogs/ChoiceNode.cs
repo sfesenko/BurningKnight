@@ -62,7 +62,7 @@ namespace BurningKnight.assets.dialogs {
 				}
 			}
 			
-			return new ChoiceDialog(LocaleId, choices.ToArray(), variants);
+			return new ChoiceDialog(LocaleId, choices.ToArray(), variants!);
 		}
 	}
 }

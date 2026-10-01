@@ -160,7 +160,7 @@ namespace BurningKnight.entity.item.stand {
 							var c = entity.GetComponent<ActiveWeaponComponent>();
 							var item = c!.Item;
 
-							c.Set(Items.CreateAndAdd(Item.Id, Area), false);
+							c.Set(Items.CreateAndAdd(Item.Id, Area!), false);
 							Audio.PlaySfx("item_pickup");
 
 							if (item != null) {
@@ -172,7 +172,7 @@ namespace BurningKnight.entity.item.stand {
 							var c = entity.GetComponent<ActiveItemComponent>();
 							var item = c!.Item;
 
-							c.Set(Items.CreateAndAdd(Item.Id, Area), false);
+							c.Set(Items.CreateAndAdd(Item.Id, Area!), false);
 							Audio.PlaySfx("item_pickup");
 
 							if (item != null) {
@@ -184,7 +184,7 @@ namespace BurningKnight.entity.item.stand {
 							var c = entity.GetComponent<LampComponent>();
 							var item = c!.Item;
 
-							c.Set(Items.CreateAndAdd(Item.Id, Area), false);
+							c.Set(Items.CreateAndAdd(Item.Id, Area!), false);
 							Audio.PlaySfx("item_pickup");
 
 							if (item != null) {
@@ -264,7 +264,7 @@ namespace BurningKnight.entity.item.stand {
 			}
 
 			Graphics.Color = Level.ShadowColor;
-			Graphics.Render(itemShadow, Position + shadowOffset);
+			Graphics.Render(itemShadow!, Position + shadowOffset);
 			Graphics.Color = ColorUtils.WhiteColor;
 
 			var t = item.Animation == null ? item.GetComponent<ItemGraphicsComponent>()!.T : 0;

@@ -22,7 +22,7 @@ namespace BurningKnight.entity.creature.player {
 			loaded = true;
 
 			if (Item == null) {
-				Set(Items.CreateAndAdd("bk:no_lamp", Entity.Area), false);
+				Set(Items.CreateAndAdd("bk:no_lamp", Entity.Area!), false);
 			}
 		}
 

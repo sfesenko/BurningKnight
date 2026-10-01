@@ -100,7 +100,7 @@ namespace BurningKnight.assets.lighting {
 				state.ClipRasterizerState, null, Context.Camera?.Matrix);
 			
 			
-			Graphics.Render(surface, Context.Camera!.TopLeft - new Vector2(Context.Camera!.Position.X % 1, Context.Camera!.Position.Y % 1));
+			Graphics.Render(surface!, Context.Camera!.TopLeft - new Vector2(Context.Camera!.Position.X % 1, Context.Camera!.Position.Y % 1));
 			
 			state.End();
 			Graphics.Color.A = 255;
@@ -113,7 +113,7 @@ namespace BurningKnight.assets.lighting {
 
 			foreach (var light in lights) {
 				Graphics.Color = light.Color;
-				Graphics.Render(region, light.GetPosition(), 0, region!.Center, light.Scale * RadiusMod);	
+				Graphics.Render(region!, light.GetPosition(), 0, region!.Center, light.Scale * RadiusMod);	
 			}
 
 			Graphics.Color = ColorUtils.WhiteColor;

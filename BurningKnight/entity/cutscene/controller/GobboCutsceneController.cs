@@ -80,7 +80,7 @@ namespace BurningKnight.entity.cutscene.controller {
 			Start(gobboDialog, "gobbo_0", () => {
 				gobboDialog.Close();
 
-				Start(sonDialog, "son_0", () => {
+				Start(sonDialog!, "son_0", () => {
 					sonDialog!.Close();
 
 					Start(gobboDialog, "gobbo_1", () => {

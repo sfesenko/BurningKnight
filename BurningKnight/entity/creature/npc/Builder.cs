@@ -38,7 +38,7 @@ namespace BurningKnight.entity.creature.npc {
 			var dl = GetComponent<DialogComponent>();
 
 			dl!.InitCallback = () => {
-				dl!.Dialog.Str!.AddIcon(CommonAse.Ui.GetSlice("coin"));
+				dl!.Dialog.Str!.AddIcon(CommonAse.Ui.GetSlice("coin")!);
 				dl.Dialog.Str.SetVariable("need", GetPrice());
 			};
 			

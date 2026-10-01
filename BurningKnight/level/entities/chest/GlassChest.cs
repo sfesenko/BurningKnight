@@ -46,14 +46,14 @@ namespace BurningKnight.level.entities.chest {
 			var id = stream.ReadString();
 
 			if (id != null) {
-				item = Items.CreateAndAdd(id, Area);
+				item = Items.CreateAndAdd(id, Area!);
 				item.RemoveDroppedComponents();
 			}
 		}
 
 		public override void Save(FileWriter stream) {
 			base.Save(stream);
-			stream.WriteString(item?.Id);
+			stream.WriteString(item?.Id!);
 		}
 
 		public override void Render() {
@@ -71,7 +71,7 @@ namespace BurningKnight.level.entities.chest {
 			base.PostInit();
 
 			if (!open && item == null) {
-				item = Items.CreateAndAdd(Items.Generate(ItemPool.GoldChest), Area);
+				item = Items.CreateAndAdd(Items.Generate(ItemPool.GoldChest), Area!);
 				item.RemoveDroppedComponents();
 			}
 		}

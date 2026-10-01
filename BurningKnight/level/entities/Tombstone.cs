@@ -94,7 +94,7 @@ namespace BurningKnight.level.entities {
 		public bool Revive(Entity e) {
 			Item = null;
 			UpdateSprite();
-			var p = CreatePlayer(Area, Index, WasGamepad, BottomCenter + new Vector2(0, 2));
+			var p = CreatePlayer(Area!, Index, WasGamepad, BottomCenter + new Vector2(0, 2));
 			Index = 255;
 
 			var h1 = e.GetComponent<HealthComponent>();
@@ -189,7 +189,7 @@ namespace BurningKnight.level.entities {
 				return true;
 			}
 		
-			var i = Items.CreateAndAdd(Item, entity.Area);
+			var i = Items.CreateAndAdd(Item, entity.Area!);
 
 			if (i != null) {
 				i.CenterX = CenterX;
@@ -228,7 +228,7 @@ namespace BurningKnight.level.entities {
 		public override void Save(FileWriter stream) {
 			base.Save(stream);
 			
-			stream.WriteString(Item);
+			stream.WriteString(Item!);
 			stream.WriteBoolean(WasGamepad);
 			stream.WriteBoolean(HasPlayer);
 			

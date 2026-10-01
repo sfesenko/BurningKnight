@@ -50,7 +50,7 @@ namespace BurningKnight.entity.component {
 			item.AddComponent(new OwnerComponent(Entity));
 
 			if (!animate) {
-				SetupItem(item, prev);
+				SetupItem(item, prev!);
 				return;
 			}
 			
@@ -64,10 +64,10 @@ namespace BurningKnight.entity.component {
 			
 			if (Entity is Player p) {
 				p.AnimateItemPickup(item, () => {
-					SetupItem(item, prev);
+					SetupItem(item, prev!);
 				}, false);
 			} else {
-				SetupItem(item, prev);
+				SetupItem(item, prev!);
 			}
 		}
 

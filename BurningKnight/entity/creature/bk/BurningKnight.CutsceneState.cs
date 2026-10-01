@@ -43,11 +43,11 @@ namespace BurningKnight.entity.creature.bk {
 				var bkDialog = Self.GetComponent<DialogComponent>();
 				var playerDialog = Self!.Target.GetComponent<DialogComponent>();
 				
-				Start(bkDialog, "bkw_0", Self.Target, () => {
-					Start(bkDialog, "bkw_1", Self.Target, () => {
+				Start(bkDialog!, "bkw_0", Self.Target, () => {
+					Start(bkDialog!, "bkw_1", Self.Target, () => {
 						bkDialog!.Close();
 						
-						Start(playerDialog, "bkw_2", Self.Target, () => {
+						Start(playerDialog!, "bkw_2", Self.Target, () => {
 							playerDialog!.Close();
 							
 							Start(bkDialog, "bkw_3", Self.Target, () => {
