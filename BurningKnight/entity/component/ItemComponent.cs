@@ -28,7 +28,7 @@ namespace BurningKnight.entity.component {
 			return Item?.Id == id;
 		}
 		
-		public virtual void Set(Item item, bool animate = true) {
+		public virtual void Set(Item? item, bool animate = true) {
 			var prev = Item;
 			
 			if (!animate && Item != null) {

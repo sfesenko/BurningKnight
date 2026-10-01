@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.projectile {
 	public static class ProjectileTemplate {
-		public static void Make(Entity owner, string texture, Vector2 center, float angle, float speed, int bounce, int start, Action<Projectile> modifier,  params string[] data) {
+		public static void Make(Entity owner, string texture, Vector2 center, float angle, float speed, int bounce, int start, Action<Projectile>? modifier,  params string[] data) {
 			var height = data.Length;
 			var width = 0;
 

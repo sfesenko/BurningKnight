@@ -150,7 +150,7 @@ namespace BurningKnight.state {
 			};
 		}
 
-		public Painting CurrentPainting {
+		public Painting? CurrentPainting {
 			set {
 				painting = value;
 				Paused = painting != null;

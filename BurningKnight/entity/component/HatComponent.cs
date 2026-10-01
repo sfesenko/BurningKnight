@@ -38,7 +38,7 @@ namespace BurningKnight.entity.component {
 			return item.Type == ItemType.Hat;
 		}
 		
-		public override void Set(Item item, bool animate = true) {
+		public override void Set(Item? item, bool animate = true) {
 			base.Set(item, animate);
 
 			if (loaded) {

@@ -46,7 +46,7 @@ namespace BurningKnight.entity.item.stand {
 			
 		}
 
-		public virtual void SetItem(Item i, Entity? entity, bool remove = true) {
+		public virtual void SetItem(Item? i, Entity? entity, bool remove = true) {
 			if (item == i) {
 				return;
 			}

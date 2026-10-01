@@ -101,7 +101,7 @@ namespace BurningKnight.entity.projectile {
 			return entity is ProjectileLevelBody || entity is Level || entity is Door;
 		}
 
-		public override bool BreaksFrom(Entity entity, BodyComponent body) {
+		public override bool BreaksFrom(Entity entity, BodyComponent? body) {
 			return false;
 		}
 

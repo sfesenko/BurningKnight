@@ -20,7 +20,7 @@ namespace BurningKnight.ui.inventory {
 		private string? id;
 		public float TextA;
 
-		public string Id {
+		public string? Id {
 			get => id!;
 
 			set {

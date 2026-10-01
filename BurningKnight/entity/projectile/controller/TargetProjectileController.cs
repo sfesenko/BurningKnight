@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.projectile.controller {
 	public static class TargetProjectileController {
-		public static ProjectileCallbacks.UpdateCallback Make(Entity target, float speed = 1f) {
+		public static ProjectileCallbacks.UpdateCallback Make(Entity? target, float speed = 1f) {
 			return (p, dt) => {
 				var b = p.GetAnyComponent<BodyComponent>();
 				var d = b!.Velocity.Length();

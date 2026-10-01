@@ -254,7 +254,7 @@ namespace BurningKnight.entity.creature.player {
 			}
 		}
 
-		public override void Set(Item item, bool animate = true) {
+		public override void Set(Item? item, bool animate = true) {
 			item.Done = true;
 		}
 

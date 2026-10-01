@@ -38,7 +38,7 @@ namespace BurningKnight.level.rooms {
 			Bottom
 		}
 
-		public Dictionary<RoomDef, DoorPlaceholder> Connected = new Dictionary<RoomDef, DoorPlaceholder>();
+		public Dictionary<RoomDef, DoorPlaceholder?> Connected = new Dictionary<RoomDef, DoorPlaceholder?>();
 		public int Id;
 		public int Distance = -1;
 

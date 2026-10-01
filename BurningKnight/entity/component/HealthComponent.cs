@@ -167,7 +167,7 @@ namespace BurningKnight.entity.component {
 
 		public bool Dead => dead;
 
-		public void Kill(Entity from, DamageType damageType = DamageType.Regular) {
+		public void Kill(Entity? from, DamageType damageType = DamageType.Regular) {
 			if (Phases > 0) {
 				Phases--;
 

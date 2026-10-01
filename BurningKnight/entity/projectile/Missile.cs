@@ -89,7 +89,7 @@ namespace BurningKnight.entity.projectile {
 			return base.HandleEvent(e);
 		}
 
-		public override bool BreaksFrom(Entity entity, BodyComponent body) {
+		public override bool BreaksFrom(Entity entity, BodyComponent? body) {
 			return false;
 		}
 

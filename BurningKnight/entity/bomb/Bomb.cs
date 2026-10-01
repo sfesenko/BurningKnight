@@ -30,7 +30,7 @@ namespace BurningKnight.entity.bomb {
 		public float T;
 		public bool ExplodeOnTouch;
 		
-		public Bomb(Entity owner, float time = ExplosionTime, Bomb? parent = null) {
+		public Bomb(Entity? owner, float time = ExplosionTime, Bomb? parent = null) {
 			explosionTime = time + Rnd.Float(-0.1f, 1f);
 			
 			Parent = parent!;
