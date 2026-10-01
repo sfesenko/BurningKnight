@@ -15,8 +15,8 @@ namespace BurningKnight.entity.creature.drop {
 		// From 0 to 1
 		public float Chance = 1f;
 		
-		public virtual List<string>? GetItems() { 
-			return new List<string>();
+		public virtual List<string> GetItems() { 
+			return [];
 		}
 
 		public abstract string GetId();
@@ -51,7 +51,7 @@ namespace BurningKnight.entity.creature.drop {
 				
 				var ids = drop.GetItems();
 
-				foreach (var id in ids ?? []) {
+				foreach (var id in ids) {
 					if (id != null) {
 						if (id == "bk:troll_bomb") {
 							var bomb = new Bomb(entity!);

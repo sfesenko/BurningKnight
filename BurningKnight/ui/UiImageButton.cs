@@ -7,8 +7,8 @@ namespace BurningKnight.ui {
 		private string? id;
 		public float Size = 2;
 
-		public new string Id {
-			get => id!;
+		public new string? Id {
+			get => id;
 
 			set {
 				id = value;

@@ -25,9 +25,9 @@ namespace BurningKnight.entity.creature.drop {
 
 				foreach (var drop in Drops) {
 					var results = drop.GetItems();
-					dropResults[i++] = results!;
+					dropResults[i++] = results;
 
-					if (results == null || results.Count > 0) {
+					if (results.Count > 0) {
 						sum += drop.Chance;
 					}
 				}			
@@ -39,23 +39,21 @@ namespace BurningKnight.entity.creature.drop {
 				foreach (var drop in Drops) {
 					var d = dropResults[i++];
 					
-					if (d != null && d.Count == 0) {
+					if (d.Count == 0) {
 						continue;
 					}	
 					
 					sum += drop.Chance;
 
 					if (value <= sum) {
-						if (d != null) {
-							items!.AddRange(d);
-						}
+						items.AddRange(d);
 						
 						break;
 					}
 				}
 			}
 
-			return items!;
+			return items;
 		}
 
 		public override string GetId() {

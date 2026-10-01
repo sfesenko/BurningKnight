@@ -85,7 +85,9 @@ namespace BurningKnight.ui.dialog {
 
 		public override void Destroy() {
 			base.Destroy();
-			Str!.Done = true;
+			if (Str != null) {
+				Str.Done = true;
+			}
 		}
 
 		public void Say(string s) {

@@ -79,11 +79,12 @@ namespace BurningKnight.entity.creature.player {
 				Engine.Instance.Split = 1f;
 				Engine.Instance.Flash = 1f;
 
-				Context.Camera!.Shake(4);
+				var camera = Context.Camera;
+				camera?.Shake(4);
 
-				if (Context.Camera != null && Settings.Flashes) {
-					Context.Camera!.TextureZoom -= 0.2f;
-					Tween.To(1f, Context.Camera!.TextureZoom, x => Context.Camera!.TextureZoom = x, 0.3f);					
+				if (camera != null && Settings.Flashes) {
+					camera.TextureZoom -= 0.2f;
+					Tween.To(1f, camera.TextureZoom, x => camera.TextureZoom = x, 0.3f);					
 				}	
 			}
 			

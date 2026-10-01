@@ -13,9 +13,11 @@ namespace BurningKnight.entity.item.use {
 					return base.HandleEvent(e);
 				}
 
-				var discovered = new List<Room>() {
-					rce.Old
-				};
+				var discovered = new List<Room>();
+
+				if (rce.Old != null) {
+					discovered.Add(rce.Old);
+				}
 				
 				foreach (var d in rce.New.Doors) {
 					if (d!.Rooms![0] != null && d.Rooms![1] != null) {

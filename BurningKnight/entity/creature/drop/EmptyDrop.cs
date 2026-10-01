@@ -7,8 +7,8 @@ namespace BurningKnight.entity.creature.drop {
 			Chance = chance;
 		}
 		
-		public override List<string>? GetItems() {
-			return null;
+		public override List<string> GetItems() {
+			return [];
 		}
 
 		public override string GetId() {
