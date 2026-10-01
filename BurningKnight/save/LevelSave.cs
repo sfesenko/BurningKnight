@@ -182,6 +182,10 @@ namespace BurningKnight.save {
 
 				Log.Debug("Level gen thread started");
 
+				// The generator can block on the main thread's GPU queue (a sheet it needs), so it
+				// must not pin the process open if the game exits mid-attempt.
+				thread.IsBackground = true;
+
 				var stopwatch = Stopwatch.StartNew();
 				thread.Start();
 

@@ -94,6 +94,7 @@ namespace Lens
         protected Engine(string title, int width, int height, bool fullscreen, Func<Core> coreFactory)
         {
             Instance = this;
+            Gpu.MarkMainThread();
             tmpTitle = title;
             IsFixedTimeStep = false;
 
@@ -227,6 +228,7 @@ namespace Lens
                 Timer.Update(FixedUpdateTime);
                 Tween.Update(FixedUpdateTime);
 
+                Gpu.Flush();
                 State?.Update(FixedUpdateTime);
             }
             

@@ -329,18 +329,20 @@ namespace BurningKnight.level {
 		}
 
 		public void RefreshSurfaces() {
-			WallSurface?.Dispose();
-			MessSurface?.Dispose();
-			cleared = false;
+			Gpu.Run(() => {
+				WallSurface?.Dispose();
+				MessSurface?.Dispose();
+				cleared = false;
 
-			if (Graphics.Batch == null) {
-				return;
-			}
+				if (Graphics.Batch == null) {
+					return;
+				}
 
-			WallSurface = new RenderTarget2D(Engine.GraphicsDevice, Display.Width + 1, Display.Height + 1);
+				WallSurface = new RenderTarget2D(Engine.GraphicsDevice, Display.Width + 1, Display.Height + 1);
 
-			MessSurface = new RenderTarget2D(Engine.GraphicsDevice, Width * 16, Height * 16, false,
-				Engine.Graphics.PreferredBackBufferFormat, DepthFormat.Depth24, 0, RenderTargetUsage.PreserveContents);
+				MessSurface = new RenderTarget2D(Engine.GraphicsDevice, Width * 16, Height * 16, false,
+					Engine.Graphics.PreferredBackBufferFormat, DepthFormat.Depth24, 0, RenderTargetUsage.PreserveContents);
+			});
 		}
 
 		public virtual string? GetMusic() {

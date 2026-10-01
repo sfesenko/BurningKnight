@@ -13,25 +13,30 @@ namespace Lens.assets {
 		
 		public static void Load() {
 			var textureDir = FileHandle.FromRoot("Textures/");
-			
+
 			if (textureDir.Exists()) {
-				LoadTextures(textureDir);
+				QueueTextures(textureDir);
+
+				// The device belongs to the main thread; a worker waits for the uploads.
+				Gpu.Wait();
 			}
 		}
 
 		public static Texture2D FastLoad(string path) {
 			using var stream = Assets.Source.Open(path);
 
-			return Texture2D.FromStream(Engine.GraphicsDevice, stream);
+			return Gpu.Run(() => Texture2D.FromStream(Engine.GraphicsDevice, stream));
 		}
 		
-		private static void LoadTextures(FileHandle handle) {
+		private static void QueueTextures(FileHandle handle) {
 			foreach (var h in handle.ListFileHandles()) {
-				LoadTexture(h);
+				var file = h;
+
+				Gpu.Defer(() => LoadTexture(file));
 			}
 
 			foreach (var h in handle.ListDirectoryHandles()) {
-				LoadTextures(h);
+				QueueTextures(h);
 			}
 		}
 

@@ -65,7 +65,7 @@ namespace Lens.assets {
 
 			// MonoGame does not premultiply here, and the sheets are premultiplied already.
 			using var stream = FileHandle.FromRoot($"Animations/{id}.png").OpenRead();
-			var texture = Texture2D.FromStream(Engine.GraphicsDevice, stream);
+			var texture = Gpu.Run(() => Texture2D.FromStream(Engine.GraphicsDevice, stream));
 
 			animation = AnimationUtils.LoadAnimation(texture, source);
 			animations[id] = animation;
@@ -95,7 +95,7 @@ namespace Lens.assets {
 				return null;
 			}
 
-			var data = animation.Recolor(colorMap);			
+			var data = Gpu.Run(() => animation.Recolor(colorMap));			
 			
 			animations[fullId] = data;
 			

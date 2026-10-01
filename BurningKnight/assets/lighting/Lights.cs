@@ -9,6 +9,7 @@ using Lens.entity;
 using Lens.entity.component.logic;
 using Lens.graphics;
 using Lens.graphics.gamerenderer;
+using Lens.util;
 using Lens.util.camera;
 using Lens.util.tween;
 using Microsoft.Xna.Framework;
@@ -53,10 +54,10 @@ namespace BurningKnight.assets.lighting {
 			}
 
 			if (surface == null) {
-				surface = new RenderTarget2D(
+				surface = Gpu.Run(() => new RenderTarget2D(
 					Engine.GraphicsDevice, Display.Width + 1, Display.Height + 1, false,
 					Engine.Graphics.PreferredBackBufferFormat, DepthFormat.Depth24
-				);
+				));
 			}
 		}
 

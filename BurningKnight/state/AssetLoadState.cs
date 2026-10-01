@@ -139,6 +139,9 @@ namespace BurningKnight.state {
 				ready = true;
 			});
 
+			// The worker can block on the main thread's GPU queue; it must not pin the process
+			// open if the window closes mid-load.
+			thread.IsBackground = true;
 			thread.Start();
 		}
 

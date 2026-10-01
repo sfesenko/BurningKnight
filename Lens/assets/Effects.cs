@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Lens.util;
 using Lens.util.file;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -12,9 +13,13 @@ namespace Lens.assets {
 			if (shaderDir.Exists()) {
 				foreach (var h in shaderDir.ListFileHandles()) {
 					if (h.Extension == ".xnb") {
-						LoadEffect(h);
+						var file = h;
+
+						Gpu.Defer(() => LoadEffect(file));
 					}
 				}
+
+				Gpu.Wait();
 			}
 		}
 

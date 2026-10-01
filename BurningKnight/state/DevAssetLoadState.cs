@@ -44,8 +44,9 @@ namespace BurningKnight.state {
 			progress = 0;
 			Log.Info("Init: progress = 0");
 
-			// Update polls 'progress' while this loads; `ready` is the hand-off.
-			new Thread(Load).Start();
+			// Update polls 'progress' while this loads; `ready` is the hand-off. Background: the
+			// worker can block on the main thread's GPU queue and must not pin the process.
+			new Thread(Load) { IsBackground = true }.Start();
 		}
 		
 		private void Load() {
