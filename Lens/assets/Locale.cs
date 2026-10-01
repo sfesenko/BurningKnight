@@ -129,7 +129,13 @@ namespace Lens.assets {
 		}
 
 		public static string Get(string key, bool eng = false) {
-			return !eng && Map.TryGetValue(key, out var value) ? value : GetEnglish(key);
+			// Map stays null until Assets.Load reaches the locale; the loading screen asks for a
+			// tip before that, so a miss falls back to English and then to the key itself.
+			if (eng || Map == null || !Map.TryGetValue(key, out var value)) {
+				return GetEnglish(key);
+			}
+
+			return value;
 		}
 		
 		public static string GetEnglish(string key) {

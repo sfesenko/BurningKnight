@@ -68,7 +68,13 @@ namespace BurningKnight.state {
 			});
 
 			Ui.Add(tipLabel = new UiString(Font.Small));
-			
+
+			// The tips are localized, so the locale has to be in before the first one is picked;
+			// Assets.Load would load it later, on the worker.
+			if (Locale.Map == null) {
+				Locale.Load(Locale.PrefferedClientLanguage);
+			}
+
 			GenerateNewTip();
 			
 			logoCard.Start.Y = -90;
