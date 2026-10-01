@@ -5,13 +5,14 @@ using BurningKnight.state;
 using BurningKnight.util;
 using ImGuiNET;
 using Lens.entity;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
+using Lens.util;
 using Lens.util.math;
 
 namespace BurningKnight.entity.item.use {
 	// The editor half of DoWithUse; a release build excludes every *.Debug.cs (ADR-0003).
 	public partial class DoWithUse {
-		public new static void RenderDebug(JsonValue root) {
+		public new static void RenderDebug(JsonNode root) {
 			root.InputFloat("Chance", "chance", 100f);
 			
 			if (ImGui.TreeNode("With who")) {
@@ -21,7 +22,7 @@ namespace BurningKnight.entity.item.use {
 			
 			ImGui.Separator();
 			
-			if (!root["uses"].IsJsonArray) {
+			if (!root["uses"].IsJsonArray()) {
 				root["uses"] = new JsonArray();
 			}
 			

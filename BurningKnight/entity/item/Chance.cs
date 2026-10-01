@@ -1,6 +1,6 @@
 using System;
 using BurningKnight.entity.creature.player;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
 using Lens.util;
 
 namespace BurningKnight.entity.item {
@@ -44,22 +44,22 @@ namespace BurningKnight.entity.item {
 			return new Chance(all, OtherClasses, OtherClasses, 1);
 		}
 
-		public static Chance Parse(JsonValue value) {
-			if (value.IsJsonArray) {
-				var array = value.AsJsonArray;
+		public static Chance Parse(JsonNode? value) {
+			if (value.IsJsonArray()) {
+				var array = value.AsJsonArray();
 
-				if (array.Count != 4) {
+				if (array!.Count != 4) {
 					Log.Error("Invalid chance declaration, must be [ all, melee, ranged, mage ] (3 numbers)");
 					return All();
 				}
 				
-				return new Chance(array[0], array[1], array[2], array[3]);
+				return new Chance(array![0].AsNumber(), array![1].AsNumber(), array![2].AsNumber(), array![3].AsNumber());
 			}
 			
 			return All(value.Number(1f));
 		}
 
-		public JsonValue ToJson() {
+		public JsonNode ToJson() {
 			return Any; /*new JsonArray {
 				Any, Melee, Magic, Range
 			};*/

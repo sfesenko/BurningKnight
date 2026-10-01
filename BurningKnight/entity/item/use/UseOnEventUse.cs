@@ -1,7 +1,7 @@
 using System;
 using BurningKnight.state;
 using Lens.entity;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
 using Lens.util;
 
 namespace BurningKnight.entity.item.use {
@@ -9,16 +9,16 @@ namespace BurningKnight.entity.item.use {
 		private string type = null!;
 		private Type typeInstance = null!;
 		private string use = null!;
-		private JsonValue options;
+		private JsonNode? options;
 
-		public override void Setup(JsonValue settings) {
+		public override void Setup(JsonNode settings) {
 			base.Setup(settings);
 
 			type = settings["tp"].String("");
 			use = settings["use"].String("");
 			options = settings["us"];
 
-			if (options == JsonValue.Null) {
+			if (options == null) {
 				options = new JsonObject();
 			}
 
@@ -37,7 +37,7 @@ namespace BurningKnight.entity.item.use {
 					Log.Error($"{use} is invalid item use id");
 				} else {
 					u.Item = Item;
-					u.Setup(options);
+					u.Setup(options!);
 					u.Use(Item.Owner, Item);
 				}
 			}

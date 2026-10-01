@@ -1,7 +1,7 @@
 using System;
 using BurningKnight.entity.creature.player;
 using ImGuiNET;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
 using Lens.util;
 
 namespace BurningKnight.entity.item {

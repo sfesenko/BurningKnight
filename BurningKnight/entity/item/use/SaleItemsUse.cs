@@ -3,7 +3,8 @@ using BurningKnight.entity.events;
 using BurningKnight.entity.item.stand;
 using BurningKnight.util;
 using Lens.entity;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
+using Lens.util;
 
 namespace BurningKnight.entity.item.use {
 	public partial class SaleItemsUse : ItemUse {
@@ -33,7 +34,7 @@ namespace BurningKnight.entity.item.use {
 			return base.HandleEvent(e);
 		}
 
-		public override void Setup(JsonValue settings) {
+		public override void Setup(JsonNode settings) {
 			base.Setup(settings);
 			percent = settings["prc"].Number(50f);
 			onlyOnceUsed = settings["wu"].Bool(false);

@@ -6,7 +6,7 @@ using BurningKnight.util;
 using Lens;
 using Lens.graphics;
 using Lens.input;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
 using Lens.util;
 using Lens.util.tween;
 using Microsoft.Xna.Framework;
@@ -119,7 +119,7 @@ namespace BurningKnight.entity.item.renderer {
 			ox = 8;
 		}
 
-		public override void Setup(JsonValue settings) {
+		public override void Setup(JsonNode settings) {
 			base.Setup(settings);
 			
 			InvertBack = settings["invert_back"].Bool(true);

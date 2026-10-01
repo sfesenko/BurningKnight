@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using BurningKnight.assets.achievements;
 using BurningKnight.entity.creature.npc;
 using Lens.entity;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
 using Lens.util.file;
 
 namespace BurningKnight.save {
@@ -52,8 +52,8 @@ namespace BurningKnight.save {
 			return Values.TryGetValue(Key, out var Value) ? Value : Def;
 		}
 		
-		public static JsonValue GetJson(string key) {
-			return Values.TryGetValue(key, out var Value) ? JsonValue.Parse(Value) : JsonValue.Null;
+		public static JsonNode? GetJson(string key) {
+			return Values.TryGetValue(key, out var Value) ? JsonNode.Parse(Value) : null;
 		}
 
 		public static int GetInt(string Key, int Def = 0) {

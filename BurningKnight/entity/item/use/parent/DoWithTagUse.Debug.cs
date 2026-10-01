@@ -2,13 +2,14 @@ using ImGuiNET;
 using System.Collections.Generic;
 using BurningKnight.entity.component;
 using Lens.entity;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
+using Lens.util;
 using Lens.util.math;
 
 namespace BurningKnight.entity.item.use.parent {
 	// The editor half of DoWithTagUse; a release build excludes every *.Debug.cs (ADR-0003).
 	public partial class DoWithTagUse {
-		public static void RenderDebug(JsonValue root) {
+		public static void RenderDebug(JsonNode root) {
 			var val = root["self"].Bool(false);
 
 			if (ImGui.Checkbox("Self", ref val)) {

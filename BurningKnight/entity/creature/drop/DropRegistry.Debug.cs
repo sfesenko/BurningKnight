@@ -1,5 +1,5 @@
 using System;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
 
 namespace BurningKnight.entity.creature.drop {
 	// The editor half: the item editor renders a drop by its registered callback. A release build
@@ -14,7 +14,7 @@ namespace BurningKnight.entity.creature.drop {
 			SetRenderer<SingleDrop>(SingleDrop.RenderDebug);
 		}
 
-		private static void SetRenderer<T>(Action<JsonValue> render) where T : Drop {
+		private static void SetRenderer<T>(Action<JsonNode> render) where T : Drop {
 			foreach (var id in Defined.Keys) {
 				var info = Defined[id];
 

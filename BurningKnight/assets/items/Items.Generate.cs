@@ -13,8 +13,7 @@ using BurningKnight.util;
 using Lens;
 using Lens.assets;
 using Lens.entity;
-using Lens.lightJson;
-using Lens.lightJson.Serialization;
+using System.Text.Json.Nodes;
 using Lens.util;
 using Lens.util.file;
 using Lens.util.math;
@@ -50,13 +49,13 @@ namespace BurningKnight.assets.items {
 				Uses = ParseUses(data.Uses)
 			};
 			
-			if (data.Renderer != JsonValue.Null) {
-				if (data.Renderer.IsString) {
-					var name = data.Renderer.AsString;
+			if (data.Renderer != null) {
+				if (data.Renderer.IsString()) {
+					var name = data.Renderer.String();
 					item.Renderer = RendererRegistry.Create(name)!;
 
 					CheckRendererForNull(item, name);
-				} else if (data.Renderer.IsJsonObject) {
+				} else if (data.Renderer.IsJsonObject()) {
 					var name = data.Renderer["id"].String("bk:Angled");
 					item.Renderer = RendererRegistry.Create(name)!;
 

@@ -2,7 +2,8 @@ using System.Collections.Generic;
 using BurningKnight.assets.items;
 using BurningKnight.entity.item;
 using BurningKnight.util;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
+using Lens.util;
 using Lens.util.math;
 
 namespace BurningKnight.entity.creature.drop {
@@ -36,7 +37,7 @@ namespace BurningKnight.entity.creature.drop {
 			return "pool";
 		}
 
-		public override void Load(JsonValue root) {
+		public override void Load(JsonNode root) {
 			base.Load(root);
 
 			Min = root["min"].Int(1);
@@ -44,7 +45,7 @@ namespace BurningKnight.entity.creature.drop {
 			Pool = ItemPool.ById[root["pool"].Int(0)];
 		}
 
-		public override void Save(JsonValue root) {
+		public override void Save(JsonNode root) {
 			base.Save(root);
 
 			root["min"] = Min;

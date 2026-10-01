@@ -5,15 +5,15 @@ using BurningKnight.assets.mod;
 using BurningKnight.entity.component;
 using BurningKnight.entity.events;
 using BurningKnight.entity.item.use.parent;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
 using Lens.util;
 
 namespace BurningKnight.entity.item.use {
 	public static partial class UseRegistry {
 		public static Dictionary<string, Type> Uses = new Dictionary<string, Type>();
-		public static Dictionary<string, Action<JsonValue>> Renderers = new Dictionary<string, Action<JsonValue>>();
+		public static Dictionary<string, Action<JsonNode>> Renderers = new Dictionary<string, Action<JsonNode>>();
 
-		public static void Register<T>(Mod? mod, Action<JsonValue>? renderer = null) where T : ItemUse {
+		public static void Register<T>(Mod? mod, Action<JsonNode>? renderer = null) where T : ItemUse {
 			var type = typeof(T);
 			var name = type.Name;
 			var id = $"{mod?.Prefix ?? Mods.BurningKnight}:{(name.EndsWith("Use") ? name.Substring(0, name.Length - 3) : name)}";
@@ -25,7 +25,7 @@ namespace BurningKnight.entity.item.use {
 			}
 		}
 
-		private static void Register<T>(Action<JsonValue>? renderer = null) where T : ItemUse {
+		private static void Register<T>(Action<JsonNode>? renderer = null) where T : ItemUse {
 			Register<T>(null, renderer);
 		}
 

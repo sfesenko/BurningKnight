@@ -13,30 +13,29 @@ using BurningKnight.util;
 using Lens;
 using Lens.assets;
 using Lens.entity;
-using Lens.lightJson;
-using Lens.lightJson.Serialization;
+using System.Text.Json.Nodes;
 using Lens.util;
 using Lens.util.file;
 using Lens.util.math;
 
 namespace BurningKnight.assets.items {
 	public partial class Items {
-		private static void ParseItem(string id, JsonValue item) {
+		private static void ParseItem(string id, JsonNode item) {
 			var a = item["animation"];
-			var animation = a == JsonValue.Null ? null : a.AsString;
+			var animation = a == null ? null : a.AsString();
 
 			var type = (ItemType) item["type"].Int(0);
 			var p = item["auto_pickup"];
-			var pickup = p == JsonValue.Null ? (type == ItemType.Key || type == ItemType.Bomb || type == ItemType.Heart || type == ItemType.Coin) : p.Bool(false);
+			var pickup = p == null ? (type == ItemType.Key || type == ItemType.Bomb || type == ItemType.Heart || type == ItemType.Coin) : p.Bool(false);
 			
 			var data = new ItemData {
 				Id = id,
 				UseTime = item["time"].Number(0),
 				Type = type,
-				Quality = (ItemQuality) item["quality"].AsInteger,
+				Quality = (ItemQuality) item["quality"].AsInteger(),
 				Root = item,
 				Uses = item["uses"],
-				Renderer = (item["renderer"].IsJsonObject ? item["renderer"] : JsonValue.Null),
+				Renderer = (item["renderer"].IsJsonObject() ? item["renderer"] : null),
 				Animation = animation!,
 				AutoPickup = pickup,
 				Single = item["single"].Bool(true),
@@ -52,13 +51,13 @@ namespace BurningKnight.assets.items {
 			}
 
 			if (data.Lockable) {
-				data.UnlockPrice = item["uprice"];
+				data.UnlockPrice = item["uprice"].Int();
 			}
 			
 			var pl = item["pool"];
 			var pools = 0;
 
-			if (pl == JsonValue.Null)
+			if (pl == null)
 			{
 				pools = data.Type switch
 				{
@@ -89,44 +88,44 @@ namespace BurningKnight.assets.items {
 			
 			all.Add(data);
 		}
-		public static ItemUse[] ParseUses(JsonValue data) {
-			if (data != JsonValue.Null) {
+		public static ItemUse[] ParseUses(JsonNode? data) {
+			if (data != null) {
 				var uses = new List<ItemUse>();
 
-				if (data.IsString) {
-					var use = ParseItemUse(data.AsString, null);
+				if (data.IsString()) {
+					var use = ParseItemUse(data.String(), null);
 
 					if (use != null) {
 						uses.Add(use);
 					}
-				} else if (data.IsJsonArray) {
-					foreach (var d in data.AsJsonArray) {
-						if (d.IsJsonObject) {
-							if (!d["id"].IsString) {
+				} else if (data.IsJsonArray()) {
+					foreach (var d in data.AsJsonArray()!) {
+						if (d.IsJsonObject()) {
+							if (d == null || !d["id"].IsString()) {
 								Log.Error("Item has no id");
 								continue;
 							}
 							
-							var use = ParseItemUse(d["id"], d);
+							var use = ParseItemUse(d!["id"].String(), d);
 
 							if (use != null) {
 								uses.Add(use);
 							}
-						} else if (d.IsString) {
-							var use = ParseItemUse(d.AsString, null);
+						} else if (d.IsString()) {
+							var use = ParseItemUse(d.String(), null);
 
 							if (use != null) {
 								uses.Add(use);
 							}
 						}
 					}
-				} else if (data.IsJsonObject) {
-					var obj = data.AsJsonObject;
+				} else if (data.IsJsonObject()) {
+					var obj = data.AsJsonObject()!;
 					
-					if (!obj["id"].IsString) {
+					if (!obj["id"].IsString()) {
 						Log.Error("Item has no id");
 					} else {
-						var use = ParseItemUse(obj["id"], obj);
+						var use = ParseItemUse(obj["id"].String(), obj);
 
 						if (use != null) {
 							uses.Add(use);

@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
 
 namespace BurningKnight.entity.creature.drop {
 	public static partial class DropRegistry {

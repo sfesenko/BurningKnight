@@ -2,12 +2,12 @@ using BurningKnight.entity.events;
 using BurningKnight.util;
 using ImGuiNET;
 using Lens.entity;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
 
 namespace BurningKnight.entity.item.use {
 	// The editor half of AffectDealChanceUse; a release build excludes every *.Debug.cs (ADR-0003).
 	public partial class AffectDealChanceUse {
-		public static void RenderDebug(JsonValue root) {
+		public static void RenderDebug(JsonNode root) {
 			root.Checkbox("Open Both if one is present", "bt", false);
 			
 			ImGui.Separator();

@@ -3,7 +3,8 @@ using BurningKnight.entity.component;
 using BurningKnight.entity.creature.mob;
 using BurningKnight.util;
 using Lens.entity;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
+using Lens.util;
 using Lens.util.math;
 
 namespace BurningKnight.entity.item.use {
@@ -54,7 +55,7 @@ namespace BurningKnight.entity.item.use {
 			} while (mobs.Count > 0 && i < count);
 		}
 
-		public override void Setup(JsonValue settings) {
+		public override void Setup(JsonNode settings) {
 			base.Setup(settings);
 			
 			all = settings["all"].Bool(false);

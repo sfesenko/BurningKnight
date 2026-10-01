@@ -5,13 +5,14 @@ using BurningKnight.entity.item;
 using BurningKnight.ui.imgui;
 using BurningKnight.util;
 using ImGuiNET;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
+using Lens.util;
 using Lens.util.math;
 
 namespace BurningKnight.entity.creature.drop {
 	// The editor half of PoolDrop; a release build excludes every *.Debug.cs (ADR-0003).
 	public partial class PoolDrop {
-		public static void RenderDebug(JsonValue root) {
+		public static void RenderDebug(JsonNode root) {
 			root.InputFloat("Chance", "chance");
 
 			root.InputInt("Min Count", "min");

@@ -3,7 +3,7 @@ using BurningKnight.entity.component;
 using BurningKnight.entity.orbital;
 using BurningKnight.util;
 using Lens.entity;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
 using Lens.util;
 
 namespace BurningKnight.entity.item.use {
@@ -38,7 +38,7 @@ namespace BurningKnight.entity.item.use {
 			entity.GetComponent<OrbitGiverComponent>()!.AddOrbiter(o);
 		}
 
-		public override void Setup(JsonValue settings) {
+		public override void Setup(JsonNode settings) {
 			base.Setup(settings);
 
 			random = settings["random"].Bool(false);

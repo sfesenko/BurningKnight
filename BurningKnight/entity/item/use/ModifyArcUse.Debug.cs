@@ -9,14 +9,14 @@ using BurningKnight.util;
 using ImGuiNET;
 using Lens;
 using Lens.entity;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
 using Lens.util;
 using Lens.util.math;
 
 namespace BurningKnight.entity.item.use {
 	// The editor half of ModifyArcUse; a release build excludes every *.Debug.cs (ADR-0003).
 	public partial class ModifyArcUse {
-		public static void RenderDebug(JsonValue root) {
+		public static void RenderDebug(JsonNode root) {
 			root.Checkbox("From Any Source", "any", false);
 			
 			root.InputFloat("Chance", "chance");

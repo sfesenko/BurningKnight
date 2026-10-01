@@ -1,20 +1,20 @@
 using System;
+using System.IO;
+using System.Text.Json;
 using System.Text.Json.Nodes;
 
 namespace Lens.util;
 
 /// <summary>
-/// The JSON accessors the content is read with, on System.Text.Json's DOM. lightJson's
-/// <c>JsonValue</c> was a struct with a Null sentinel: a missing key read as null-ish, and every
-/// accessor took a default instead of throwing. <see cref="JsonNode"/> is a class whose indexer
-/// returns null and whose typed getters throw, so these extensions keep the old shape at the
-/// call sites — a missing or mistyped value yields the default.
+/// The JSON accessors the content is read with, on System.Text.Json's DOM.
+/// <see cref="JsonNode"/>'s indexer returns null for a missing key and its typed getters
+/// throw on a mistyped one, so these extensions keep the call sites' shape: a missing or
+/// mistyped value yields the default, never an exception.
 ///
 /// The strict accessors (<see cref="Number"/>, <see cref="Int"/>, <see cref="Bool"/>,
-/// <see cref="String"/>) match lightJson's methods: only the exact type reads, anything else is
-/// the default. The coercing ones (<see cref="AsNumber"/>, <see cref="AsString"/>,
-/// <see cref="AsBoolean"/>, <see cref="AsInteger"/>) match lightJson's properties.
-/// </summary>
+/// <see cref="String"/>) read only the exact type; anything else is the default. The
+/// coercing ones (<see cref="AsNumber"/>, <see cref="AsString"/>, <see cref="AsBoolean"/>,
+/// <see cref="AsInteger"/>) follow the content's long-standing conversions.
 public static class Json {
 	public static bool IsNull(this JsonNode? node) => node == null;
 	public static bool IsJsonObject(this JsonNode? node) => node is JsonObject;
@@ -26,10 +26,10 @@ public static class Json {
 	public static bool IsInteger(this JsonNode? node) =>
 		node is JsonValue value && value.TryGetValue<double>(out var n) && n == Math.Floor(n);
 
-	/// <summary>Null when the node is not an object — lightJson's AsJsonObject shape.</summary>
+	/// <summary>Null when the node is not an object .</summary>
 	public static JsonObject? AsJsonObject(this JsonNode? node) => node as JsonObject;
 
-	/// <summary>Null when the node is not an array — lightJson's AsJsonArray shape.</summary>
+	/// <summary>Null when the node is not an array .</summary>
 	public static JsonArray? AsJsonArray(this JsonNode? node) => node as JsonArray;
 
 	public static float Number(this JsonNode? node, float d = 0) =>
@@ -41,10 +41,10 @@ public static class Json {
 	public static bool Bool(this JsonNode? node, bool b = false) =>
 		node is JsonValue value && value.TryGetValue<bool>(out var v) ? v : b;
 
-	public static string String(this JsonNode? node, string s = "") =>
-		node is JsonValue value && value.TryGetValue<string>(out var v) ? v : s;
+	public static string String(this JsonNode? node, string? s = null) =>
+		node is JsonValue value && value.TryGetValue<string>(out var v) ? v : s!;
 
-	/// <summary>lightJson's coercing AsNumber: bool → 1/0, number → value, numeric string → parsed, else 0.</summary>
+	/// <summary>The coercing AsNumber: bool → 1/0, number → value, numeric string → parsed, else 0.</summary>
 	public static double AsNumber(this JsonNode? node) {
 		if (node is JsonValue value) {
 			if (value.TryGetValue<bool>(out var b)) {
@@ -63,7 +63,7 @@ public static class Json {
 		return 0;
 	}
 
-	/// <summary>lightJson's coercing AsInteger: AsNumber, clamped to the int range.</summary>
+	/// <summary>The coercing AsInteger: AsNumber, clamped to the int range.</summary>
 	public static int AsInteger(this JsonNode? node) {
 		var value = node.AsNumber();
 
@@ -78,7 +78,7 @@ public static class Json {
 		return (int) value;
 	}
 
-	/// <summary>lightJson's coercing AsString: bool → "true"/"false", number → text, string → itself, else null.</summary>
+	/// <summary>The coercing AsString: bool → "true"/"false", number → text, string → itself, else null.</summary>
 	public static string? AsString(this JsonNode? node) {
 		if (node is JsonValue value) {
 			if (value.TryGetValue<bool>(out var b)) {
@@ -97,7 +97,23 @@ public static class Json {
 		return null;
 	}
 
-	/// <summary>lightJson's coercing AsBoolean: bool, number ≠ 0, non-empty string, object/array → true.</summary>
+	private static readonly JsonSerializerOptions Pretty = new() {
+		WriteIndented = true,
+		IndentCharacter = '\t',
+		IndentSize = 1
+	};
+
+	private static readonly JsonSerializerOptions Compact = new() { WriteIndented = false };
+
+	/// <summary>
+	/// Writes a DOM to a stream the way the editors always have: tab-indented when pretty,
+	/// compact otherwise. The dev editors are the callers; the content tree is hand-authored.
+	/// </summary>
+	public static void Write(this JsonNode? node, TextWriter writer, bool pretty = false) {
+		writer.Write(node?.ToJsonString(pretty ? Pretty : Compact) ?? "null");
+	}
+
+	/// <summary>The coercing AsBoolean: bool, number ≠ 0, non-empty string, object/array → true.</summary>
 	public static bool AsBoolean(this JsonNode? node) {
 		if (node is JsonObject or JsonArray) {
 			return true;

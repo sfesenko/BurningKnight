@@ -5,7 +5,8 @@ using BurningKnight.entity.item.use;
 using BurningKnight.save;
 using BurningKnight.state;
 using Lens.entity;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
+using Lens.util;
 
 namespace BurningKnight.entity.events {
 	public partial class RemoveFromPoolUse : ItemUse {
@@ -21,11 +22,11 @@ namespace BurningKnight.entity.events {
 			}
 		}
 
-		public override void Setup(JsonValue settings) {
+		public override void Setup(JsonNode settings) {
 			base.Setup(settings);
 			items.Clear();
 
-			foreach (var i in settings["items"].AsJsonArray) {
+			foreach (var i in settings["items"].AsJsonArray()!) {
 				items.Add(i.String(""));
 			}
 		}

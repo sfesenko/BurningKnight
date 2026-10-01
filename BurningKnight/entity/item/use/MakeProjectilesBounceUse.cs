@@ -1,12 +1,13 @@
 using BurningKnight.entity.events;
 using Lens.entity;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
+using Lens.util;
 
 namespace BurningKnight.entity.item.use {
 	public partial class MakeProjectilesBounceUse : ItemUse {
 		private int count;
 
-		public override void Setup(JsonValue settings) {
+		public override void Setup(JsonNode settings) {
 			base.Setup(settings);
 			count = settings["count"].Int(1);
 		}

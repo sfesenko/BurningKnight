@@ -1,7 +1,8 @@
 using BurningKnight.entity.item.use.parent;
 using BurningKnight.util;
 using Lens.entity;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
+using Lens.util;
 using Lens.util.timer;
 
 namespace BurningKnight.entity.item.use {
@@ -22,7 +23,7 @@ namespace BurningKnight.entity.item.use {
 		protected override void DoAction(Entity entity, Item item, ItemUse use) {
 		}
 
-		public override void Setup(JsonValue settings) {
+		public override void Setup(JsonNode settings) {
 			base.Setup(settings);
 			time = settings["time"].Number(1f);
 		}

@@ -3,15 +3,16 @@ using BurningKnight.assets;
 using BurningKnight.state;
 using ImGuiNET;
 using Lens.graphics;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
+using Lens.util;
 using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.item.renderer {
 	// The editor half of ItemRenderer; a release build excludes every *.Debug.cs (ADR-0003).
 	public partial class ItemRenderer {
-		public static unsafe void RenderDebug(string id, JsonValue parent, JsonValue root) {
+		public static unsafe void RenderDebug(string id, JsonNode parent, JsonNode root) {
 			if (ImGui.TreeNode("Origin")) {
-				var v = new System.Numerics.Vector2((float) root["ox"].AsNumber * 3, (float) root["oy"].AsNumber * 3);
+				var v = new System.Numerics.Vector2((float) root["ox"].AsNumber() * 3, (float) root["oy"].AsNumber() * 3);
 				var region = CommonAse.Items.GetSlice(id);
 				var m = ImGui.GetScrollY();
 				var pos = ImGui.GetWindowPos() + ImGui.GetCursorPos() - new System.Numerics.Vector2(0, m);
@@ -85,7 +86,7 @@ namespace BurningKnight.entity.item.renderer {
 			}
 			
 			if (ImGui.TreeNode("Nozzle")) {
-				var v = new System.Numerics.Vector2((float) root["nx"].AsNumber * 3, (float) root["ny"].AsNumber * 3);
+				var v = new System.Numerics.Vector2((float) root["nx"].AsNumber() * 3, (float) root["ny"].AsNumber() * 3);
 				var region = CommonAse.Items.GetSlice(id);
 				var m = ImGui.GetScrollY();
 				var pos = ImGui.GetWindowPos() + ImGui.GetCursorPos() - new System.Numerics.Vector2(0, m);

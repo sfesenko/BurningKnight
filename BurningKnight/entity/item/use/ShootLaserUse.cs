@@ -2,13 +2,13 @@ using BurningKnight.entity.component;
 using BurningKnight.entity.creature.player;
 using BurningKnight.entity.events;
 using BurningKnight.entity.projectile;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
 using Lens.util;
 using Lens.util.math;
 
 namespace BurningKnight.entity.item.use {
 	public class ShootLaserUse : ShootUse {
-		public override void Setup(JsonValue settings) {
+		public override void Setup(JsonNode settings) {
 			base.Setup(settings);
 
 			var ac = 0.1f;

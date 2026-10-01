@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
-using Lens.lightJson;
-using Lens.lightJson.Serialization;
+using System.Text.Json.Nodes;
 using Lens.util;
 using Lens.util.file;
 
@@ -50,13 +49,13 @@ namespace Lens.assets {
 			}
 
 			try {
-				var root = JsonValue.Parse(file.ReadAll());
+				var root = JsonNode.Parse(file.ReadAll());
 				
 				cached = new Dictionary<string, string>();
 				Loaded[name] = cached;
 
-				foreach (var entry in root.AsJsonObject) {
-					cached[entry.Key] = entry.Value.AsString;
+				foreach (var entry in root.AsJsonObject()!) {
+					cached[entry.Key] = entry.Value.AsString()!;
 				}
 
 				if (backup) {
@@ -100,20 +99,20 @@ namespace Lens.assets {
 				if (file == null) {
 					return;
 				}
-				var writer = new JsonWriter(file, 
-					#if DEBUG
-						true
-					#else
-						false
-					#endif
-					);
+
 				var root = new JsonObject();
 
 				foreach (var t in Map) {
 					root[t.Key] = t.Value;
 				}
 
-				writer.Write(root);
+				root.Write(file,
+					#if DEBUG
+						true
+					#else
+						false
+					#endif
+					);
 				file.Close();
 			} catch (Exception e) {
 				Log.Error(e);

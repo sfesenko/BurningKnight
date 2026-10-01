@@ -1,6 +1,7 @@
 using BurningKnight.entity.component;
 using Lens.entity;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
+using Lens.util;
 
 namespace BurningKnight.entity.item.use {
 	public partial class SetKnockbackModifierUse : ItemUse {
@@ -10,7 +11,7 @@ namespace BurningKnight.entity.item.use {
 			entity!.GetAnyComponent<BodyComponent>()!.KnockbackModifier = mod;
 		}
 
-		public override void Setup(JsonValue settings) {
+		public override void Setup(JsonNode settings) {
 			base.Setup(settings);
 			mod = settings["mod"].Number(0);
 		}

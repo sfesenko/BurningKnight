@@ -1,7 +1,8 @@
 using BurningKnight.assets.items;
 using BurningKnight.state;
 using Lens.entity;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
+using Lens.util;
 
 namespace BurningKnight.entity.item.use.parent {
 	public abstract partial class DoUsesUse : ItemUse {
@@ -17,10 +18,10 @@ namespace BurningKnight.entity.item.use.parent {
 
 		protected abstract void DoAction(Entity entity, Item item, ItemUse use);
 
-		public override void Setup(JsonValue settings) {
+		public override void Setup(JsonNode settings) {
 			base.Setup(settings);
 			
-			if (!settings["uses"].IsJsonArray) {
+			if (!settings["uses"].IsJsonArray()) {
 				settings["uses"] = new JsonArray();
 			}
 			

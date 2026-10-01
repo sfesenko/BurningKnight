@@ -7,7 +7,7 @@ using BurningKnight.state;
 using BurningKnight.util;
 using Lens.assets;
 using Lens.entity;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
 using Lens.util;
 using Lens.util.math;
 using Lens.util.timer;
@@ -62,7 +62,7 @@ namespace BurningKnight.entity.item {
 			}
 		}
 
-		public override void Setup(JsonValue settings) {
+		public override void Setup(JsonNode settings) {
 			base.Setup(settings);
 			Count = settings["count"].Int(1);
 		}

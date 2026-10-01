@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using BurningKnight.save;
 using Lens.input;
-using Lens.lightJson;
-using Lens.lightJson.Serialization;
+using System.Text.Json.Nodes;
 using Lens.util;
 using Lens.util.file;
 using Microsoft.Xna.Framework.Input;
@@ -120,7 +119,7 @@ namespace BurningKnight.assets.input {
 				Log.Info($"Saving keybindings to {p}");
 
 				var file = File.CreateText(p);
-				var writer = new JsonWriter(file, true);
+				
 				var root = new JsonObject();
 
 				foreach (var t in (custom.Count == 0 ? controls : custom)) {
@@ -159,7 +158,7 @@ namespace BurningKnight.assets.input {
 					root[t.Id] = o;
 				}
 
-				writer.Write(root);
+				root.Write(file, true);
 				file.Close();
 			} catch (Exception e) {
 				Log.Error(e);
@@ -181,16 +180,16 @@ namespace BurningKnight.assets.input {
 				
 				Log.Info("Loading keybindings");
 
-				var root = JsonValue.Parse(handle.ReadAll());
+				var root = JsonNode.Parse(handle.ReadAll());
 				custom.Clear();
 
-				foreach (var pair in root.AsJsonObject) {
+				foreach (var pair in root.AsJsonObject()!) {
 					var control = new Control(pair.Key);
 					
-					if (pair.Value["keys"].IsJsonArray) {
+					if (pair.Value!["keys"].IsJsonArray()) {
 						var l = new List<Keys>();
 						
-						foreach (var k in pair.Value["keys"].AsJsonArray) {
+						foreach (var k in pair.Value!["keys"].AsJsonArray()!) {
 							if (Enum.TryParse<Keys>(k.String(""), out var key)) {
 								l.Add(key);
 							} else {
@@ -201,10 +200,10 @@ namespace BurningKnight.assets.input {
 						control.Keys = l.ToArray();
 					}
 					
-					if (pair.Value["mouse"].IsJsonArray) {
+					if (pair.Value["mouse"].IsJsonArray()) {
 						var l = new List<MouseButtons>();
 						
-						foreach (var k in pair.Value["mouse"].AsJsonArray) {
+						foreach (var k in pair.Value!["mouse"].AsJsonArray()!) {
 							if (Enum.TryParse<MouseButtons>(k.String(""), out var key)) {
 								l.Add(key);
 							} else {
@@ -215,10 +214,10 @@ namespace BurningKnight.assets.input {
 						control.MouseButtons = l.ToArray();
 					}
 					
-					if (pair.Value["gamepad"].IsJsonArray) {
+					if (pair.Value["gamepad"].IsJsonArray()) {
 						var l = new List<Buttons>();
 						
-						foreach (var k in pair.Value["gamepad"].AsJsonArray) {
+						foreach (var k in pair.Value!["gamepad"].AsJsonArray()!) {
 							if (Enum.TryParse<Buttons>(k.String(""), out var key)) {
 								l.Add(key);
 							} else {

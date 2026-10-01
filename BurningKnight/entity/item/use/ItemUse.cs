@@ -1,5 +1,6 @@
 ﻿using Lens.entity;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
+using Lens.util;
 using Lens.util.file;
 
 namespace BurningKnight.entity.item.use {
@@ -31,7 +32,7 @@ namespace BurningKnight.entity.item.use {
 			
 		}
 
-		public virtual void Setup(JsonValue settings) {
+		public virtual void Setup(JsonNode settings) {
 			SingleUse = settings["single"].Bool(false);
 		}
 

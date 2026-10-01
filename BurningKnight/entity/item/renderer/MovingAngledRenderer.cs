@@ -1,4 +1,4 @@
-using Lens.lightJson;
+using System.Text.Json.Nodes;
 using Lens.util;
 using Lens.util.tween;
 
@@ -23,7 +23,7 @@ namespace BurningKnight.entity.item.renderer {
 			}
 		}
 
-		public override void Setup(JsonValue settings) {
+		public override void Setup(JsonNode settings) {
 			base.Setup(settings);
 
 			Stay = settings["stay"].Bool(false);

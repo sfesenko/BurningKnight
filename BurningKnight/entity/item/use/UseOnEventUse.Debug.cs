@@ -2,13 +2,13 @@ using System;
 using BurningKnight.state;
 using ImGuiNET;
 using Lens.entity;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
 using Lens.util;
 
 namespace BurningKnight.entity.item.use {
 	// The editor half of UseOnEventUse; a release build excludes every *.Debug.cs (ADR-0003).
 	public partial class UseOnEventUse {
-		public static void RenderDebug(JsonValue root) {
+		public static void RenderDebug(JsonNode root) {
 			var type = root["tp"].String("");
 			var use = root["use"].String("");
 			
@@ -38,7 +38,7 @@ namespace BurningKnight.entity.item.use {
 			
 			var us = root["us"];
 
-			if (us == JsonValue.Null) {
+			if (us == null) {
 				us = root["us"] = new JsonObject();
 			}
 

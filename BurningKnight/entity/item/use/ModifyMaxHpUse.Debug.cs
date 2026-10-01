@@ -6,12 +6,13 @@ using BurningKnight.util;
 using ImGuiNET;
 using Lens.assets;
 using Lens.entity;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
+using Lens.util;
 
 namespace BurningKnight.entity.item.use {
 	// The editor half of ModifyMaxHpUse; a release build excludes every *.Debug.cs (ADR-0003).
 	public partial class ModifyMaxHpUse {
-		public static void RenderDebug(JsonValue root) {
+		public static void RenderDebug(JsonNode root) {
 			var val = root["amount"].Int(1);
 
 			if (ImGui.InputInt("Amount", ref val)) {

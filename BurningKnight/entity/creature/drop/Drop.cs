@@ -6,7 +6,8 @@ using BurningKnight.entity.component;
 using BurningKnight.entity.item;
 using BurningKnight.util.geometry;
 using Lens.entity;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
+using Lens.util;
 using Lens.util.math;
 using Microsoft.Xna.Framework;
 
@@ -21,11 +22,11 @@ namespace BurningKnight.entity.creature.drop {
 
 		public abstract string GetId();
 
-		public virtual void Load(JsonValue root) {
+		public virtual void Load(JsonNode root) {
 			Chance = root["chance"].Number(1);
 		}
 
-		public virtual void Save(JsonValue root) {
+		public virtual void Save(JsonNode root) {
 			root["chance"] = Chance;
 		}
 

@@ -3,12 +3,12 @@ using BurningKnight.entity.component;
 using BurningKnight.util;
 using ImGuiNET;
 using Lens.entity;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
 
 namespace BurningKnight.entity.item.use {
 	// The editor half of GiveBuffImmunityUse; a release build excludes every *.Debug.cs (ADR-0003).
 	public partial class GiveBuffImmunityUse {
-		public new static void RenderDebug(JsonValue root) {
+		public new static void RenderDebug(JsonNode root) {
 			GiveBuffUse.RenderDebug(root);
 			ImGui.Separator();
 			root.Checkbox("Give ice immunity", "ice", false);

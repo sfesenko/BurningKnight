@@ -16,7 +16,7 @@ using Lens;
 using Lens.assets;
 using Lens.graphics;
 using Lens.input;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
 using Lens.util;
 using Microsoft.Xna.Framework.Input;
 using Num = System.Numerics;

@@ -4,7 +4,7 @@ using System;
 using BurningKnight.assets.loot;
 using BurningKnight.entity.creature.drop;
 using Lens.input;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
 using Microsoft.Xna.Framework.Input;
 using ImGui = ImGuiNET.ImGui;
 

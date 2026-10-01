@@ -4,12 +4,13 @@ using BurningKnight.level;
 using BurningKnight.util;
 using ImGuiNET;
 using Lens.entity;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
+using Lens.util;
 
 namespace BurningKnight.entity.item.use {
 	// The editor half of PreventDamageUse; a release build excludes every *.Debug.cs (ADR-0003).
 	public partial class PreventDamageUse {
-		public static void RenderDebug(JsonValue root) {
+		public static void RenderDebug(JsonNode root) {
 			var v = root["lv"].Bool(false);
 
 			if (ImGui.Checkbox("From lava", ref v)) {

@@ -1,12 +1,12 @@
 using BurningKnight.entity.item;
 using BurningKnight.save;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
 
 namespace BurningKnight.assets.items {
 	public class ItemData {
-		public JsonValue Root;
-		public JsonValue Uses;
-		public JsonValue Renderer;
+		public JsonNode? Root;
+		public JsonNode? Uses;
+		public JsonNode? Renderer;
 
 		public bool AutoPickup;
 		public bool Automatic;

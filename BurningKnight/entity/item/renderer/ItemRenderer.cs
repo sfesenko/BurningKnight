@@ -2,7 +2,8 @@ using System;
 using BurningKnight.assets;
 using BurningKnight.state;
 using Lens.graphics;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
+using Lens.util;
 using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.item.renderer {
@@ -16,7 +17,7 @@ namespace BurningKnight.entity.item.renderer {
 			
 		}
 
-		public virtual void Setup(JsonValue settings) {
+		public virtual void Setup(JsonNode settings) {
 			Origin.X = settings["ox"].Number(0);
 			Origin.Y = settings["oy"].Number(0);
 			Nozzle.X = settings["nx"].Number(0);

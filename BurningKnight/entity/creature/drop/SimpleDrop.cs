@@ -2,7 +2,8 @@ using System.Collections.Generic;
 using BurningKnight.state;
 using BurningKnight.util;
 using Lens.input;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
+using Lens.util;
 using Lens.util.math;
 using Microsoft.Xna.Framework.Input;
 
@@ -48,23 +49,23 @@ namespace BurningKnight.entity.creature.drop {
 			return "simple";
 		}
 
-		public override void Load(JsonValue root) {
+		public override void Load(JsonNode root) {
 			base.Load(root);
 			
 			Min = root["min"].Int(1);
 			Max = root["max"].Int(1);
 
-			if (root["items"].IsJsonArray) {
-				var items = root["items"].AsJsonArray;
-				Items = new string[items.Count];
+			if (root["items"].IsJsonArray()) {
+				var items = root["items"].AsJsonArray();
+				Items = new string[items!.Count];
 
 				for (var i = 0; i < Items.Length; i++) {
-					Items[i] = items[i].AsString;
+					Items[i] = items![i].String();
 				}
 			}
 		}
 
-		public override void Save(JsonValue root) {
+		public override void Save(JsonNode root) {
 			base.Save(root);
 
 			var items = new JsonArray();

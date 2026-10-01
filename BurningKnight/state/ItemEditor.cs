@@ -16,7 +16,7 @@ using Lens;
 using Lens.assets;
 using Lens.graphics;
 using Lens.input;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
 using Lens.util;
 using Microsoft.Xna.Framework.Input;
 using Num = System.Numerics;
@@ -33,7 +33,7 @@ namespace BurningKnight.state {
 		private static string selectedUse = null!;
 		private static string selectedRenderer = null!;
 		public static ItemData? Selected;
-		private static JsonValue toAdd;
+		private static JsonNode? toAdd;
 		
 		public static readonly string[] Types = Enum.GetNames<ItemType>();
 		private static readonly string[] WeaponTypes = Enum.GetNames<WeaponType>();

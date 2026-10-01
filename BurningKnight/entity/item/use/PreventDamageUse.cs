@@ -3,7 +3,8 @@ using BurningKnight.entity.room.controllable.spikes;
 using BurningKnight.level;
 using BurningKnight.util;
 using Lens.entity;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
+using Lens.util;
 
 namespace BurningKnight.entity.item.use {
 	public partial class PreventDamageUse : ItemUse {
@@ -28,7 +29,7 @@ namespace BurningKnight.entity.item.use {
 			return base.HandleEvent(e);
 		}
 
-		public override void Setup(JsonValue settings) {
+		public override void Setup(JsonNode settings) {
 			base.Setup(settings);
 
 			lava = settings["lv"].Bool(false);

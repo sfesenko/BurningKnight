@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using BurningKnight.assets.items;
 using BurningKnight.entity.component;
 using Lens.entity;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
+using Lens.util;
 using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.item.use {
@@ -41,20 +42,20 @@ namespace BurningKnight.entity.item.use {
 			}
 		}
 
-		public override void Setup(JsonValue settings) {
+		public override void Setup(JsonNode settings) {
 			base.Setup(settings);
 
 			ToSpawn.Clear();
 			var v = settings["items"];
 
-			if (!v.IsJsonArray) {
+			if (!v.IsJsonArray()) {
 				return;
 			}
 
-			foreach (var i in v.AsJsonArray) {
+			foreach (var i in v.AsJsonArray()!) {
 				ToSpawn.Add(new ItemPair {
-					Count = i[0],
-					Id = i[1]
+					Count = i![0].Int(),
+					Id = i![1].String()
 				});
 			}
 		}

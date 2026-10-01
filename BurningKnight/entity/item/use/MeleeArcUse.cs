@@ -4,7 +4,8 @@ using BurningKnight.entity.item.util;
 using BurningKnight.util;
 using Lens.entity;
 using Lens.input;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
+using Lens.util;
 
 namespace BurningKnight.entity.item.use {
 	public partial class MeleeArcUse : ItemUse {
@@ -41,7 +42,7 @@ namespace BurningKnight.entity.item.use {
 			entity.Area!.Add(arc);
 		}
 
-		public override void Setup(JsonValue settings) {
+		public override void Setup(JsonNode settings) {
 			base.Setup(settings);
 
 			Damage = settings["damage"].Number(1);

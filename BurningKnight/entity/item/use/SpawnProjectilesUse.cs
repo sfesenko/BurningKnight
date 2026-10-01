@@ -2,7 +2,8 @@ using System;
 using BurningKnight.assets;
 using BurningKnight.entity.projectile;
 using Lens.entity;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
+using Lens.util;
 using Microsoft.Xna.Framework;
 using Num = System.Numerics;
 
@@ -32,14 +33,14 @@ namespace BurningKnight.entity.item.use {
 			}
 		}
 
-		public override void Setup(JsonValue settings) {
+		public override void Setup(JsonNode settings) {
 			base.Setup(settings);
 			
 			damage = settings["damage"].Int(1);
 			amount = settings["amount"].Int(1);
 			speed = settings["speed"].Number(60);
 			range = settings["range"].Number(0);
-			slice = settings["texture"].AsString;
+			slice = settings["texture"].String();
 		}
 	}
 }

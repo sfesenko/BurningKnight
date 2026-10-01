@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
 
 namespace BurningKnight.entity.creature.drop {
 	public class EmptyDrop : Drop {
@@ -15,15 +15,15 @@ namespace BurningKnight.entity.creature.drop {
 			return "empty";
 		}
 
-		public override void Load(JsonValue root) {
+		public override void Load(JsonNode root) {
 			
 		}
 
-		public override void Save(JsonValue root) {
+		public override void Save(JsonNode root) {
 			
 		}
 
-		public static void RenderDebug(JsonValue root) {
+		public static void RenderDebug(JsonNode root) {
 			
 		}
 	}

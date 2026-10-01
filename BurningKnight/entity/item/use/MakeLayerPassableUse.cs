@@ -9,7 +9,8 @@ using BurningKnight.level.entities;
 using BurningKnight.physics;
 using BurningKnight.util;
 using Lens.entity;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
+using Lens.util;
 
 namespace BurningKnight.entity.item.use {
 	public partial class MakeLayerPassableUse : ItemUse {
@@ -77,7 +78,7 @@ namespace BurningKnight.entity.item.use {
 			return base.HandleEvent(e);
 		}
 
-		public override void Setup(JsonValue settings) {
+		public override void Setup(JsonNode settings) {
 			base.Setup(settings);
 
 			forProjectiles = settings["fp"].Bool(false);

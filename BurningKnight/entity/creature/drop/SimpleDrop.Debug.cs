@@ -4,7 +4,8 @@ using BurningKnight.ui.imgui;
 using BurningKnight.util;
 using ImGuiNET;
 using Lens.input;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
+using Lens.util;
 using Lens.util.math;
 using Microsoft.Xna.Framework.Input;
 
@@ -17,23 +18,23 @@ namespace BurningKnight.entity.creature.drop {
 			itemFilter ??= new ImGuiTextFilterPtr(ImGuiNative.ImGuiTextFilter_ImGuiTextFilter(null));
 		private static string? selectedItem;
 		private static int id;
-		public static void RenderDebug(JsonValue root) {
+		public static void RenderDebug(JsonNode root) {
 			root.InputFloat("Chance", "chance");
 			
 			root.InputInt("Min", "min");
 			root.InputInt("Max", "max");
 			
-			if (!root["items"].IsJsonArray) {
+			if (!root["items"].IsJsonArray()) {
 				root["items"] = new JsonArray();
 			}
 
 			var toRemove = -1;
-			var items = root["items"].AsJsonArray;
+			var items = root["items"].AsJsonArray();
 
-			for (var i = 0; i < items.Count; i++) {
+			for (var i = 0; i < items!.Count; i++) {
 				if (ImGui.SmallButton($"{items[i]}##s")) {
 					WindowManager.ItemEditor = true;
-					ItemEditor.Selected = assets.items.Items.Datas[items[i]];
+					ItemEditor.Selected = assets.items.Items.Datas[items![i].String()];
 				}
 				
 				ImGui.SameLine();

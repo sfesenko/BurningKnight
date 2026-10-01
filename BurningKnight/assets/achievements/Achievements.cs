@@ -10,8 +10,7 @@ using BurningKnight.util;
 using Lens;
 using Lens.assets;
 using Lens.input;
-using Lens.lightJson;
-using Lens.lightJson.Serialization;
+using System.Text.Json.Nodes;
 using Lens.util;
 using Lens.util.file;
 using Microsoft.Xna.Framework.Input;
@@ -58,11 +57,11 @@ namespace BurningKnight.assets.achievements {
 				return;
 			}
 			
-			var root = JsonValue.Parse(handle.ReadAll());
+			var root = JsonNode.Parse(handle.ReadAll());
 
-			foreach (var item in root.AsJsonObject) {
+			foreach (var item in root.AsJsonObject()!) {
 				var a = new Achievement(item.Key);
-				a.Load(item.Value);
+				a.Load(item.Value!);
 				Defined[item.Key] = a;
 			}
 		}
@@ -82,8 +81,7 @@ namespace BurningKnight.assets.achievements {
 				return;
 			}
 
-			var writer = new JsonWriter(file);
-			writer.Write(root);
+			root.Write(file);
 			file.Close();
 
 			Locale.Save();

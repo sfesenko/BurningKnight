@@ -3,7 +3,8 @@ using BurningKnight.entity.events;
 using BurningKnight.util;
 using Lens.assets;
 using Lens.entity;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
+using Lens.util;
 using Lens.util.math;
 
 namespace BurningKnight.entity.item.use {
@@ -26,7 +27,7 @@ namespace BurningKnight.entity.item.use {
 			return base.HandleEvent(e);
 		}
 
-		public override void Setup(JsonValue settings) {
+		public override void Setup(JsonNode settings) {
 			base.Setup(settings);
 			chance = settings["chance"].Number(10);
 		}

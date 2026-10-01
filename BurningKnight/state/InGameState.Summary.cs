@@ -36,7 +36,7 @@ using Lens.game;
 using Lens.graphics;
 using Lens.graphics.gamerenderer;
 using Lens.input;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
 using Lens.util;
 using Lens.util.camera;
 using Lens.services;
@@ -65,7 +65,7 @@ namespace BurningKnight.state {
 				var score = GlobalSave.GetInt(id);
 				var data = GlobalSave.GetJson($"{id}_data");
 
-				statsStats.Add(Locale.Get("seed"), data["seed"].AsString, false, bt => {
+				statsStats.Add(Locale.Get("seed"), data!["seed"].String(), false, bt => {
 					var b = (UiTableEntry) bt;
 					b.RealLocaleLabel = "copied_to_clipboard";
 
@@ -79,17 +79,17 @@ namespace BurningKnight.state {
 					Timer.Add(() => b.RealLocaleLabel = "seed", 0.5f);
 				});
 
-				statsStats.Add(Locale.Get("won"), Locale.Get(data["won"].AsBoolean ? "yes" : "no"));
-				statsStats.Add(Locale.Get("time"), data["time"].AsString);
+				statsStats.Add(Locale.Get("won"), Locale.Get(data["won"].AsBoolean() ? "yes" : "no"));
+				statsStats.Add(Locale.Get("time"), data["time"].String());
 				statsStats.Add(Locale.Get("lamp"), Locale.Get(data["lamp"].String("none")));
 				statsStats.Add(Locale.Get("depth"), data["depth"].String("old data"));
-				statsStats.Add(Locale.Get("coins_collected"), data["coins"].AsNumber.ToString());
-				statsStats.Add(Locale.Get("items_collected"), data["items"].AsNumber.ToString());
-				statsStats.Add(Locale.Get("damage_taken"), data["damage"].AsNumber.ToString());
-				statsStats.Add(Locale.Get("kills"), data["kills"].AsNumber.ToString());
-				statsStats.Add(Locale.Get("scourge_stats"), data["scourge"].AsNumber.ToString());
-				statsStats.Add(Locale.Get("rooms_explored"), data["rooms"].AsString);
-				statsStats.Add(Locale.Get("distance_traveled"), data["distance"].AsString);
+				statsStats.Add(Locale.Get("coins_collected"), data["coins"].AsNumber().ToString());
+				statsStats.Add(Locale.Get("items_collected"), data["items"].AsNumber().ToString());
+				statsStats.Add(Locale.Get("damage_taken"), data["damage"].AsNumber().ToString());
+				statsStats.Add(Locale.Get("kills"), data["kills"].AsNumber().ToString());
+				statsStats.Add(Locale.Get("scourge_stats"), data["scourge"].AsNumber().ToString());
+				statsStats.Add(Locale.Get("rooms_explored"), data["rooms"].String());
+				statsStats.Add(Locale.Get("distance_traveled"), data["distance"].String());
 				statsStats.Add(Locale.Get("score"), score.ToString());
 				
 			} catch (Exception e) {

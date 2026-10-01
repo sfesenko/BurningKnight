@@ -3,7 +3,7 @@ using BurningKnight.entity.component;
 using BurningKnight.entity.item.stand;
 using BurningKnight.util;
 using Lens.entity;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
 using Lens.util;
 using Microsoft.Xna.Framework;
 
@@ -48,11 +48,11 @@ namespace BurningKnight.entity.item.use {
 			}
 		}
 
-		public override void Setup(JsonValue settings) {
+		public override void Setup(JsonNode settings) {
 			base.Setup(settings);
 			
 			Amount = settings["amount"].Int(1);
-			Item = settings["item"].AsString ?? "";
+			Item = settings["item"].AsString() ?? "";
 			OnStand = settings["on_stand"].Bool(false);
 			Random = settings["random"].Bool(false);
 			Animate = settings["animate"].Bool(true);

@@ -6,7 +6,7 @@ using BurningKnight.assets.dialogs;
 using Lens;
 using Lens.assets;
 using Lens.input;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
 using Lens.util;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
@@ -119,11 +119,11 @@ namespace BurningKnight.assets {
 
 			if (pasted != null) {
 				try {
-					var root = JsonValue.Parse(pasted);
+					var root = JsonNode.Parse(pasted);
 
-					if (root.IsJsonObject) {
-						var val = root["imnode"];
-						var node = GraphNode.Create(val, true);
+					if (root.IsJsonObject()) {
+						var val = root!["imnode"];
+						var node = GraphNode.Create(DialogEditor.Current, val, true);
 
 						if (node != null) {
 							node.New = true;

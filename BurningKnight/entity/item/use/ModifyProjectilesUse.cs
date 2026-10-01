@@ -6,7 +6,7 @@ using BurningKnight.state;
 using BurningKnight.util;
 using Lens;
 using Lens.entity;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
 using Lens.util;
 using Lens.util.math;
 
@@ -124,7 +124,7 @@ namespace BurningKnight.entity.item.use {
 			}
 		}
 
-		public override void Setup(JsonValue settings) {
+		public override void Setup(JsonNode settings) {
 			base.Setup(settings);			
 			
 			Chance = settings["chance"].Number(1);
@@ -137,7 +137,7 @@ namespace BurningKnight.entity.item.use {
 			ToAny = settings["any"].Bool(false);
 			Explosive = settings["explosive"].Bool(false);
 			
-			BuffToApply = settings["buff"].String(null);
+			BuffToApply = settings["buff"].String();
 
 			if (BuffToApply != null) {
 				InfiniteBuff = settings["infinite_buff"].Bool(false);

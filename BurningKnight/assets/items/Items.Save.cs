@@ -13,8 +13,7 @@ using BurningKnight.util;
 using Lens;
 using Lens.assets;
 using Lens.entity;
-using Lens.lightJson;
-using Lens.lightJson.Serialization;
+using System.Text.Json.Nodes;
 using Lens.util;
 using Lens.util.file;
 using Lens.util.math;
@@ -75,7 +74,7 @@ namespace BurningKnight.assets.items {
 				data["pool"] = item.Pools;
 				data["uses"] = item.Uses;
 
-				if (item.Renderer.IsJsonObject) {
+				if (item.Renderer.IsJsonObject()) {
 					data["renderer"] = item.Renderer;
 				}
 
@@ -97,8 +96,7 @@ namespace BurningKnight.assets.items {
 				return;
 			}
 
-			var writer = new JsonWriter(file);
-			writer.Write(root);
+			root.Write(file);
 			file.Close();
 
 			Locale.Save();

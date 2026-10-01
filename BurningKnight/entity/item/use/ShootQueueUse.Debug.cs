@@ -1,13 +1,14 @@
 using ImGuiNET;
 using Lens.entity;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
+using Lens.util;
 using Lens.util.camera;
 using Lens.util.timer;
 
 namespace BurningKnight.entity.item.use {
 	// The editor half of ShootQueueUse; a release build excludes every *.Debug.cs (ADR-0003).
 	public partial class ShootQueueUse {
-		public new static void RenderDebug(JsonValue root) {
+		public new static void RenderDebug(JsonNode root) {
 			SimpleShootUse.RenderDebug(root);
 			
 			var amount = root["amn"].Int(3);

@@ -1,10 +1,10 @@
 using System;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
 
 namespace BurningKnight.entity.creature.drop {
 	public struct DropInfo {
 		public string Id;
 		public Type Type;
-		public Action<JsonValue> Render;
+		public Action<JsonNode> Render;
 	}
 }

@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
 using Lens.util;
 using Lens.util.math;
 
@@ -32,17 +32,17 @@ namespace BurningKnight.entity.creature.drop {
 			return "single";
 		}
 
-		public override void Load(JsonValue root) {
+		public override void Load(JsonNode root) {
 			base.Load(root);
 			Item = root["item"].String("");
 		}
 
-		public override void Save(JsonValue root) {
+		public override void Save(JsonNode root) {
 			base.Save(root);
 			root["item"] = Item;
 		}
 
-		public static void RenderDebug(JsonValue root) {
+		public static void RenderDebug(JsonNode root) {
 			
 		}
 	}

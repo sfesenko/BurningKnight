@@ -1,7 +1,7 @@
 using BurningKnight.assets.items;
 using BurningKnight.entity.creature.player;
 using Lens.entity;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
 using Lens.util;
 
 namespace BurningKnight.entity.item.use {
@@ -29,9 +29,9 @@ namespace BurningKnight.entity.item.use {
 			old!.Done = true;
 		}
 
-		public override void Setup(JsonValue settings) {
+		public override void Setup(JsonNode settings) {
 			base.Setup(settings);
-			Item = settings["item"].AsString ?? "";
+			Item = settings["item"].AsString() ?? "";
 		}
 	}
 }

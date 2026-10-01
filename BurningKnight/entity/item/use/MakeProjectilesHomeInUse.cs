@@ -3,7 +3,8 @@ using BurningKnight.entity.projectile;
 using BurningKnight.entity.projectile.controller;
 using BurningKnight.util;
 using Lens.entity;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
+using Lens.util;
 
 namespace BurningKnight.entity.item.use {
 	public partial class MakeProjectilesHomeInUse : ItemUse {
@@ -40,7 +41,7 @@ namespace BurningKnight.entity.item.use {
 			return base.HandleEvent(e);
 		}
 
-		public override void Setup(JsonValue settings) {
+		public override void Setup(JsonNode settings) {
 			base.Setup(settings);
 			speed = settings["speed"].Number(1);
 			better = settings["better"].Bool(false);

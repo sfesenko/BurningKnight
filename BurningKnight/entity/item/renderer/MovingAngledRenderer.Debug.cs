@@ -1,12 +1,12 @@
 using ImGuiNET;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
 using Lens.util;
 using Lens.util.tween;
 
 namespace BurningKnight.entity.item.renderer {
 	// The editor half of MovingAngledRenderer; a release build excludes every *.Debug.cs (ADR-0003).
 	public partial class MovingAngledRenderer {
-		public new static void RenderDebug(string id, JsonValue parent, JsonValue root) {
+		public new static void RenderDebug(string id, JsonNode parent, JsonNode root) {
 			AngledRenderer.RenderDebug(id, parent, root);
 
 			var min = (float) root["min_angle"].Number(0);
@@ -21,7 +21,7 @@ namespace BurningKnight.entity.item.renderer {
 				root["max_angle"] = max;
 			}
 			
-			var stay = root["stay"].AsBoolean;
+			var stay = root["stay"].AsBoolean();
 
 			if (ImGui.Checkbox("Stay?", ref stay)) {
 				root["stay"] = stay;

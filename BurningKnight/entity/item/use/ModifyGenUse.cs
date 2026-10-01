@@ -2,7 +2,8 @@ using BurningKnight.entity.projectile;
 using BurningKnight.save;
 using BurningKnight.util;
 using Lens.entity;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
+using Lens.util;
 
 namespace BurningKnight.entity.item.use {
 	public partial class ModifyGenUse : ItemUse {
@@ -31,7 +32,7 @@ namespace BurningKnight.entity.item.use {
 			LevelSave.MeleeOnly = melee;
 		}
 
-		public override void Setup(JsonValue settings) {
+		public override void Setup(JsonNode settings) {
 			base.Setup(settings);
 			xlLevel = settings["xl"].Bool(false);
 			chestRewardChance = settings["crc"].Number(0);

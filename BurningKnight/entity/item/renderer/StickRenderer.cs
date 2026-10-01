@@ -3,7 +3,7 @@ using BurningKnight.assets;
 using BurningKnight.entity.component;
 using Lens.graphics;
 using Lens.input;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
 using Lens.util;
 using Lens.util.tween;
 using Microsoft.Xna.Framework;
@@ -100,10 +100,10 @@ namespace BurningKnight.entity.item.renderer {
 			Graphics.Render(region, pos, fangle, or, sc);
 		}
 
-		public override void Setup(JsonValue settings) {
+		public override void Setup(JsonNode settings) {
 			base.Setup(settings);
 			
-			horizontal = settings["h"];
+			horizontal = settings["h"].Bool();
 			move = settings["mv"].Number(0);
 			moveTime = settings["mt"].Number(0.1f);
 			returnTime = settings["rt"].Number(0.2f);

@@ -2,15 +2,15 @@ using BurningKnight.entity.buff;
 using BurningKnight.entity.component;
 using ImGuiNET;
 using Lens.entity;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
 using Lens.util;
 
 namespace BurningKnight.entity.item.use {
 	// The editor half of GiveBuffUse; a release build excludes every *.Debug.cs (ADR-0003).
 	public partial class GiveBuffUse {
-		public static void RenderDebug(JsonValue root) {
+		public static void RenderDebug(JsonNode root) {
 			var time = root["time"].Number(1);
-			var buff = root["buff"].AsString ?? "";
+			var buff = root["buff"].AsString() ?? "";
 
 			if (ImGui.InputText("Buff", ref buff, 128)) {
 				root["buff"] = buff;

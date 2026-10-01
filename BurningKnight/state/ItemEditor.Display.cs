@@ -16,27 +16,27 @@ using Lens;
 using Lens.assets;
 using Lens.graphics;
 using Lens.input;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
 using Lens.util;
 using Microsoft.Xna.Framework.Input;
 using Num = System.Numerics;
 
 namespace BurningKnight.state {
 	public partial class ItemEditor {
-		public static void DisplayUse(JsonValue parent, JsonValue root, string? useId = null) {
-			if (root == JsonValue.Null) {
+		public static void DisplayUse(JsonNode? parent, JsonNode? root, string? useId = null) {
+			if (root == null) {
 				return;
 			}
 
 			ImGui.PushID(ud);
 			ud++;
 			
-			if (!root.IsJsonArray && parent != JsonValue.Null) {
+			if (!root.IsJsonArray() && parent != null) {
 				if (ImGui.Button("-")) {
-					if (parent.IsJsonArray) {
-						toRemove = parent.AsJsonArray.IndexOf(root);
-					}	else if (root.IsJsonObject) {
-						root.AsJsonObject.Clear();
+					if (parent.IsJsonArray()) {
+						toRemove = parent!.AsJsonArray()!.IndexOf(root);
+					}	else if (root.IsJsonObject()) {
+						root!.AsJsonObject()!.Clear();
 					}
 					
 					return;
@@ -45,38 +45,38 @@ namespace BurningKnight.state {
 				ImGui.SameLine();
 			}
 
-			if (root.IsString) {
-				if (ImGui.TreeNode(root.AsString)) {
+			if (root.IsString()) {
+				if (ImGui.TreeNode(root.AsString())) {
 					ImGui.TreePop();
 				}
-			} else if (root.IsJsonObject && root["id"] != JsonValue.Null) {
-				var rootId = root["id"].AsString;
+			} else if (root.IsJsonObject() && root["id"] != null) {
+				var rootId = root!["id"].String();
 				
 				if (ImGui.TreeNode(rootId)) {
 					root.Checkbox("Single Use", "single", false);
 					ImGui.Separator();
 					
 					if (UseRegistry.Renderers.TryGetValue(rootId, out var renderer)) {
-						renderer(root);
+						renderer(root!);
 					} else {
 						ImGui.Text($"No renderer found for use '{rootId}'");
 					}
 					
 					ImGui.TreePop();
 				}
-			} else if (root.IsJsonArray) {
-				foreach (var u in root.AsJsonArray) {
+			} else if (root.IsJsonArray()) {
+				foreach (var u in root!.AsJsonArray()!) {
 					DisplayUse(root, u);
 				}
 
 				if (toRemove > -1) {
-					root.AsJsonArray.Remove(toRemove);
+					root!.AsJsonArray()!.Remove(toRemove);
 					toRemove = -1;
 				}
 
 				if (useId != null) {
 					if (ImGui.Button("Add")) {
-						root.AsJsonArray.Add(new JsonObject {
+						root!.AsJsonArray()!.Add(new JsonObject {
 							["id"] = useId
 						});
 					}
@@ -110,7 +110,7 @@ namespace BurningKnight.state {
 					ImGui.Separator();
 
 					if (ImGui.Button("Add") || Input.Keyboard.WasPressed(Keys.Enter, true)) {
-						toAdd.AsJsonArray.Add(new JsonObject {
+						toAdd!.AsJsonArray()!.Add(new JsonObject {
 							["id"] = selectedUse
 						});
 
@@ -133,18 +133,18 @@ namespace BurningKnight.state {
 			
 			ImGui.PopID();
 		}
-		private static void DisplayRenderer(JsonValue parent, JsonValue root) {
-			var nil = root == JsonValue.Null || root["id"] == JsonValue.Null;
+		private static void DisplayRenderer(JsonNode? parent, JsonNode? root) {
+			var nil = root == null || root["id"] == null;
 			
 			if (nil) {
 				ImGui.Text("None");
 			} else {
-				var id = root["id"].AsString;
+				var id = root!["id"].String();
 
 				if (RendererRegistry.DebugRenderers.TryGetValue(id, out var renderer)) {
 					ImGui.PushID(ud);
 					ud++;
-					renderer(Selected!.Id, parent, root);
+					renderer(Selected!.Id, parent!, root!);
 					ImGui.PopID();
 				} else {
 					ImGui.Text($"No renderer found for '{id}'");
@@ -160,8 +160,8 @@ namespace BurningKnight.state {
 				ImGui.SameLine();
 				
 				if (ImGui.Button("Remove")) {
-					parent["renderer"] = JsonValue.Null;
-					Selected!.Renderer = JsonValue.Null;
+					parent!["renderer"] = null;
+					Selected!.Renderer = null;
 				}
 			}
 
@@ -187,7 +187,7 @@ namespace BurningKnight.state {
 				ImGui.Separator();
 				
 				if (ImGui.Button("Select") || Input.Keyboard.WasPressed(Keys.Enter, true)) {
-					toAdd["renderer"] = new JsonObject {
+					toAdd!["renderer"] = new JsonObject {
 						["id"] = selectedRenderer
 					};
 

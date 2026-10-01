@@ -4,7 +4,8 @@ using BurningKnight.entity.item.stand;
 using BurningKnight.state;
 using BurningKnight.util;
 using Lens.entity;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
+using Lens.util;
 using Lens.util.math;
 
 namespace BurningKnight.entity.item.use {
@@ -32,7 +33,7 @@ namespace BurningKnight.entity.item.use {
 			}
 		}
 		
-		public override void Setup(JsonValue settings) {
+		public override void Setup(JsonNode settings) {
 			base.Setup(settings);
 
 			rerollStands = settings["r_stands"].Bool(true);
@@ -43,10 +44,10 @@ namespace BurningKnight.entity.item.use {
 
 			var tps = settings["types"];
 
-			if (tps.IsJsonArray) {
-				var tp = tps.AsJsonArray;
+			if (tps.IsJsonArray()) {
+				var tp = tps.AsJsonArray();
 
-				if (tp.Count == 0) {
+				if (tp!.Count == 0) {
 					return;
 				}
 				

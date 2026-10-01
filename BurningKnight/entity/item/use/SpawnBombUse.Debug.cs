@@ -3,14 +3,15 @@ using BurningKnight.entity.bomb;
 using BurningKnight.entity.component;
 using ImGuiNET;
 using Lens.entity;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
+using Lens.util;
 using Lens.util.math;
 using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.item.use {
 	// The editor half of SpawnBombUse; a release build excludes every *.Debug.cs (ADR-0003).
 	public partial class SpawnBombUse {
-		public static void RenderDebug(JsonValue root) {
+		public static void RenderDebug(JsonNode root) {
 			var val = root["timer"].Number(2);
 
 			if (ImGui.InputFloat("Timer", ref val)) {

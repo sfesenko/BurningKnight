@@ -2,7 +2,8 @@ using BurningKnight.assets.items;
 using BurningKnight.entity.bomb;
 using BurningKnight.entity.component;
 using Lens.entity;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
+using Lens.util;
 using Lens.util.math;
 using Microsoft.Xna.Framework;
 
@@ -46,7 +47,7 @@ namespace BurningKnight.entity.item.use {
 			}
 		}
 
-		public override void Setup(JsonValue settings) {
+		public override void Setup(JsonNode settings) {
 			base.Setup(settings);
 			
 			Timer = settings["timer"].Number(2);

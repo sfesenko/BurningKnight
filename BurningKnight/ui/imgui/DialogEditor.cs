@@ -10,7 +10,6 @@ using Lens;
 using Lens.assets;
 using Lens.graphics;
 using System.Text.Json.Nodes;
-using Lens.lightJson.Serialization;
 using Lens.util;
 using Lens.util.file;
 using Microsoft.Xna.Framework;
@@ -62,8 +61,7 @@ namespace BurningKnight.ui.imgui {
 				return;
 			}
 
-			var writer = new JsonWriter(file);
-			writer.Write(root);
+			root.Write(file);
 			file.Close();
 		}
 
@@ -95,7 +93,7 @@ namespace BurningKnight.ui.imgui {
 			try {
 				ImGuiHelper.ClearNodes();
 				var name = files[current];
-				LoadFromRoot(name, JsonNode.Parse(FileHandle.FromRoot($"Dialogs/{name}.json").ReadAll()));
+				LoadFromRoot(name, JsonNode.Parse(FileHandle.FromRoot($"Dialogs/{name}.json").ReadAll())!.AsJsonArray()!);
 			} catch (Exception e) {
 				Log.Error(e);
 			}

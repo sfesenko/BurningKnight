@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using BurningKnight.assets.loot;
 using BurningKnight.util;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
+using Lens.util;
 using Lens.util.math;
 
 namespace BurningKnight.entity.creature.drop {
@@ -60,20 +61,20 @@ namespace BurningKnight.entity.creature.drop {
 			return "one";
 		}
 
-		public override void Load(JsonValue root) {
+		public override void Load(JsonNode root) {
 			base.Load(root);
 			
-			if (root["drops"].IsJsonArray) {
-				var drops = root["drops"].AsJsonArray;
-				Drops = new Drop[drops.Count];
+			if (root["drops"].IsJsonArray()) {
+				var drops = root["drops"].AsJsonArray();
+				Drops = new Drop[drops!.Count];
 
 				for (var i = 0; i < Drops.Length; i++) {
-					Drops[i] = LootTables.ParseDrop(drops[i])!;
+					Drops[i] = LootTables.ParseDrop(drops![i])!;
 				}
 			}
 		}
 
-		public override void Save(JsonValue root) {
+		public override void Save(JsonNode root) {
 			base.Save(root);
 			var drops = new JsonArray();
 

@@ -5,13 +5,14 @@ using BurningKnight.state;
 using BurningKnight.util;
 using ImGuiNET;
 using Lens.entity;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
+using Lens.util;
 using Lens.util.math;
 
 namespace BurningKnight.entity.item.use {
 	// The editor half of RerollItemsUse; a release build excludes every *.Debug.cs (ADR-0003).
 	public partial class RerollItemsUse {
-		public static void RenderDebug(JsonValue root) {
+		public static void RenderDebug(JsonNode root) {
 			var rerollStands = root["r_stands"].Bool(true);
 			var spawnNew = root["s_new"].Bool(true);
 			var ignore = root["ignore"].Bool(true);
@@ -29,7 +30,7 @@ namespace BurningKnight.entity.item.use {
 
 			var tps = root["types"];
 
-			if (!tps.IsJsonArray) {
+			if (!tps.IsJsonArray()) {
 				tps = root["types"] = new JsonArray();
 			}
 
@@ -40,12 +41,12 @@ namespace BurningKnight.entity.item.use {
 				
 				ImGui.Separator();
 				
-				var tp = tps.AsJsonArray;
+				var tp = tps.AsJsonArray();
 				var toRemove = -1;
 				var toAdd = -1;
 
 				for (var i = 0; i < ItemEditor.Types.Length; i++) {
-					var v = tp.Contains(i);
+					var v = tp!.Contains(i);
 
 					if (ImGui.Checkbox(ItemEditor.Types[i], ref v)) {
 						if (v) {
@@ -57,9 +58,9 @@ namespace BurningKnight.entity.item.use {
 				}
 
 				if (toRemove != -1) {
-					tp.Remove(toRemove);
+					tp!.Remove(toRemove);
 				} else if (toAdd != -1) {
-					tp.Add(toAdd);
+					tp!.Add(toAdd);
 				}
 				
 				ImGui.TreePop();

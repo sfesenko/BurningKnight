@@ -4,14 +4,14 @@ using BurningKnight.entity.item.stand;
 using BurningKnight.util;
 using ImGuiNET;
 using Lens.entity;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
 using Lens.util;
 using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.item.use {
 	// The editor half of GiveItemUse; a release build excludes every *.Debug.cs (ADR-0003).
 	public partial class GiveItemUse {
-		public static void RenderDebug(JsonValue root) {
+		public static void RenderDebug(JsonNode root) {
 			var stand = root["on_stand"].Bool(false);
 			var random = root["random"].Bool(false);
 
@@ -30,7 +30,7 @@ namespace BurningKnight.entity.item.use {
 			var val = root["amount"].Int(1);
 
 			if (!random) {
-				var item = root["item"].AsString ?? "";
+				var item = root["item"].AsString() ?? "";
 
 				if (ImGui.InputText("Item", ref item, 128)) {
 					root["item"] = item;

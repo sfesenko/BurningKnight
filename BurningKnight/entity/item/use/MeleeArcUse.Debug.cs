@@ -5,12 +5,12 @@ using BurningKnight.util;
 using ImGuiNET;
 using Lens.entity;
 using Lens.input;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
 
 namespace BurningKnight.entity.item.use {
 	// The editor half of MeleeArcUse; a release build excludes every *.Debug.cs (ADR-0003).
 	public partial class MeleeArcUse {
-		public static void RenderDebug(JsonValue root) {
+		public static void RenderDebug(JsonNode root) {
 			root.InputFloat("Damage", "damage", 1);
 			root.InputInt("Width", "w", 8);
 			root.InputInt("Height", "h", 24);

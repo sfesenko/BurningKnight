@@ -17,7 +17,7 @@ using BurningKnight.util;
 using ImGuiNET;
 using Lens.assets;
 using Lens.entity;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
 using Lens.util;
 using Lens.util.camera;
 using Lens.util.math;
@@ -28,7 +28,7 @@ using Num = System.Numerics;
 namespace BurningKnight.entity.item.use {
 	// The editor half of SimpleShootUse; a release build excludes every *.Debug.cs (ADR-0003).
 	public partial class SimpleShootUse {
-		public static void RenderDebug(JsonValue root) {
+		public static void RenderDebug(JsonNode root) {
 			if (root.InputInt("Mana Usage", "mana", 0) > 0) {
 				var b = root["mdr"].Int(0);
 
@@ -137,7 +137,7 @@ namespace BurningKnight.entity.item.use {
 			}
 
 			if (ImGui.TreeNode("Modifiers")) {
-				if (!root["modifiers"].IsJsonArray) {
+				if (!root["modifiers"].IsJsonArray()) {
 					root["modifiers"] = new JsonArray();
 				}
 

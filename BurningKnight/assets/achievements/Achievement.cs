@@ -1,5 +1,6 @@
 using Lens.entity;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
+using Lens.util;
 
 namespace BurningKnight.assets.achievements {
 	public class Achievement(string id)
@@ -12,14 +13,14 @@ namespace BurningKnight.assets.achievements {
 		public string Group = "";
 		public string CompletionDate = "???";
 
-		public void Load(JsonValue root) {
+		public void Load(JsonNode root) {
 			Max = root["max"].Int(0);
 			Unlock = root["unlock"].String("");
 			Secret = root["secret"].Bool(false);
 			Group = root["group"].String("");
 		}
 
-		public void Save(JsonValue root) {
+		public void Save(JsonNode root) {
 			if (Max > 0) {
 				root["max"] = Max;
 			}

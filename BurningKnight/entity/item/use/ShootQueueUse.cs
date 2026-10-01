@@ -1,5 +1,6 @@
 using Lens.entity;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
+using Lens.util;
 using Lens.util.camera;
 using Lens.util.timer;
 
@@ -24,7 +25,7 @@ namespace BurningKnight.entity.item.use {
 			Context.Camera!.ShakeMax(1.5f);
 		}
 
-		public override void Setup(JsonValue settings) {
+		public override void Setup(JsonNode settings) {
 			base.Setup(settings);
 
 			amount = settings["amn"].Int(3);

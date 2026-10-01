@@ -3,7 +3,8 @@ using BurningKnight.assets.items;
 using BurningKnight.entity.component;
 using BurningKnight.util;
 using Lens.entity;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
+using Lens.util;
 
 namespace BurningKnight.entity.item.use {
 	public partial class InvokeItemsUse : ItemUse {
@@ -35,7 +36,7 @@ namespace BurningKnight.entity.item.use {
 			}
 		}
 
-		public override void Setup(JsonValue settings) {
+		public override void Setup(JsonNode settings) {
 			base.Setup(settings);
 
 			pets = settings["pets"].Bool(true);

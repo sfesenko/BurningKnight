@@ -1,7 +1,8 @@
 using BurningKnight.entity.bomb.controller;
 using BurningKnight.entity.events;
 using Lens.entity;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
+using Lens.util;
 
 namespace BurningKnight.entity.item.use {
 	public partial class MakeBombsHomeUse : ItemUse {
@@ -16,7 +17,7 @@ namespace BurningKnight.entity.item.use {
 			return base.HandleEvent(e);
 		}
 
-		public override void Setup(JsonValue settings) {
+		public override void Setup(JsonNode settings) {
 			base.Setup(settings);
 			speed = settings["speed"].Number(1);
 		}

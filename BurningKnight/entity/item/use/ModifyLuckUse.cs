@@ -3,7 +3,8 @@ using BurningKnight.entity.component;
 using BurningKnight.state;
 using Lens.assets;
 using Lens.entity;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
+using Lens.util;
 
 namespace BurningKnight.entity.item.use {
 	public partial class ModifyLuckUse : ItemUse {
@@ -14,7 +15,7 @@ namespace BurningKnight.entity.item.use {
 			TextParticle.Add(entity, Locale.Get("luck"), Amount, true, Amount < 0);
 		}
 
-		public override void Setup(JsonValue settings) {
+		public override void Setup(JsonNode settings) {
 			base.Setup(settings);
 			Amount = settings["amount"].Int(1);
 		}

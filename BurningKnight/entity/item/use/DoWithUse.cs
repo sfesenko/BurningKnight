@@ -4,7 +4,8 @@ using BurningKnight.entity.item.use.parent;
 using BurningKnight.state;
 using BurningKnight.util;
 using Lens.entity;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
+using Lens.util;
 using Lens.util.math;
 
 namespace BurningKnight.entity.item.use {
@@ -24,10 +25,10 @@ namespace BurningKnight.entity.item.use {
 			}
 		}
 		
-		public override void Setup(JsonValue settings) {
+		public override void Setup(JsonNode settings) {
 			base.Setup(settings);
 			
-			if (!settings["uses"].IsJsonArray) {
+			if (!settings["uses"].IsJsonArray()) {
 				settings["uses"] = new JsonArray();
 			}
 			

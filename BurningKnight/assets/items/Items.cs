@@ -13,8 +13,7 @@ using BurningKnight.util;
 using Lens;
 using Lens.assets;
 using Lens.entity;
-using Lens.lightJson;
-using Lens.lightJson.Serialization;
+using System.Text.Json.Nodes;
 using Lens.util;
 using Lens.util.file;
 using Lens.util.math;
@@ -58,10 +57,10 @@ namespace BurningKnight.assets.items {
 				Assets.DataModified = true;
 			}
 			
-			var root = JsonValue.Parse(d);
+			var root = JsonNode.Parse(d);
 
-			foreach (var item in root.AsJsonObject) {
-				ParseItem(item.Key, item.Value);
+			foreach (var item in root.AsJsonObject()!) {
+				ParseItem(item.Key, item.Value!);
 			}
 		}
 
@@ -104,7 +103,7 @@ namespace BurningKnight.assets.items {
 			}
 		}
 
-		private static ItemUse? ParseItemUse(string id, JsonValue? data) {
+		private static ItemUse? ParseItemUse(string id, JsonNode? data) {
 			var use = UseRegistry.Create(id);
 
 			if (use == null) {
@@ -112,8 +111,8 @@ namespace BurningKnight.assets.items {
 				return null;
 			}
 
-			if (data.HasValue) {
-				use.Setup(data.Value);
+			if (data != null) {
+				use.Setup(data);
 			}
 
 			return use;

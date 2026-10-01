@@ -3,15 +3,14 @@ using System.Collections.Generic;
 using System.IO;
 using BurningKnight.entity.creature.drop;
 using Lens.assets;
-using Lens.lightJson;
-using Lens.lightJson.Serialization;
+using System.Text.Json.Nodes;
 using Lens.util;
 using Lens.util.file;
 
 namespace BurningKnight.assets.loot {
 	public static partial class LootTables {
 		public static Dictionary<string, Drop> Defined = new Dictionary<string, Drop>();
-		public static Dictionary<string, JsonValue> Data = new Dictionary<string, JsonValue>();
+		public static Dictionary<string, JsonNode> Data = new Dictionary<string, JsonNode>();
 		public static int LastDropId;
 
 		public static void Load() {
@@ -34,12 +33,11 @@ namespace BurningKnight.assets.loot {
 				return;
 			}
 
-			var writer = new JsonWriter(file);
-			writer.Write(root);
+			root.Write(file);
 			file.Close();
 		}
 
-		public static void ParseTable(string id, JsonValue table) {
+		public static void ParseTable(string id, JsonNode table) {
 			var drop = ParseDrop(table);
 
 			if (drop == null) {
@@ -50,7 +48,7 @@ namespace BurningKnight.assets.loot {
 			Data[id] = table;
 		}
 
-		public static JsonValue WriteDrop(Drop drop) {
+		public static JsonNode WriteDrop(Drop drop) {
 			var o = new JsonObject();
 
 			o["type"] = drop.GetId();
@@ -59,8 +57,8 @@ namespace BurningKnight.assets.loot {
 			return o;
 		}
 
-		public static Drop? ParseDrop(JsonValue table) {
-			var type = table["type"].String(null);
+		public static Drop? ParseDrop(JsonNode? table) {
+			var type = table?["type"].String();
 
 			if (type == null) {
 				return null;
@@ -72,7 +70,7 @@ namespace BurningKnight.assets.loot {
 			}
 
 			var drop = (Drop) Activator.CreateInstance(t.Type)!;
-			table["id"] = LastDropId++;
+			table!["id"] = LastDropId++;
 			drop!.Load(table);
 
 			return drop;

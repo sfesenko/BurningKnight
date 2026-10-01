@@ -1,6 +1,7 @@
 using BurningKnight.entity.component;
 using Lens.entity;
-using Lens.lightJson;
+using System.Text.Json.Nodes;
+using Lens.util;
 
 namespace BurningKnight.entity.item.use {
 	public partial class SetMaxHpUse : ItemUse {
@@ -11,7 +12,7 @@ namespace BurningKnight.entity.item.use {
 			component!.InitMaxHealth = Amount + 1; // 1 is hidden
 		}
 
-		public override void Setup(JsonValue settings) {
+		public override void Setup(JsonNode settings) {
 			base.Setup(settings);
 			Amount = settings["amount"].Int(1);
 		}
