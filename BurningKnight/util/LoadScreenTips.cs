@@ -1,18 +1,13 @@
 ﻿using System;
+using Lens.assets;
 
 namespace BurningKnight.util {
-  public static class LoadScreenTips {
-    public static string Generate() {
-      return jokes[new Random().Next(jokes.Length)];
-    }
+	public static class LoadScreenTips {
+		// Localised through loading_tip_0..Count-1 (see LoadScreenJokes).
+		public const int Count = 6;
 
-    private static readonly string[] jokes = {
-      "[cl yellow]Maanex[cl] holds the secret to looping",
-      "[cl red]Redkey[cl] is the key",
-      "Crosses on the walls mean something...",
-      "Press R for a surprise!",
-      "Not all paintings are useless",
-      "Aiming at enemies helps to hit them"
-    };
-  }
+		public static string Generate() {
+			return Locale.Get($"loading_tip_{new Random().Next(Count)}");
+		}
+	}
 }

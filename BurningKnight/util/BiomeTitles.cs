@@ -1,91 +1,33 @@
 using System;
 using System.Collections.Generic;
 using BurningKnight.level.biome;
+using Lens.assets;
 using Lens.util;
 using Lens.util.math;
 
 namespace BurningKnight.util {
 	public static class BiomeTitles {
-		private static Dictionary<string, List<string>> defined = new Dictionary<string, List<string>>();
-
-		public static void Add(string biome, params string[] joke) {
-			if (!defined.ContainsKey(biome)) {
-				defined[biome] = new List<string>();
-			}
-			
-			defined[biome].AddRange(joke);
-		}
+		// Localised through loading_biome_<id>_0..N in the locale files
+		// (see LoadScreenJokes for the fallback rule). Counts below must
+		// match the number of keys per biome in en.json.
+		private static Dictionary<string, int> counts = new Dictionary<string, int>() {
+			{ Biome.Hub, 2 },
+			{ Biome.Castle, 2 },
+			{ Biome.Desert, 4 },
+			{ Biome.Jungle, 4 },
+			{ Biome.Ice, 7 },
+			{ Biome.Library, 6 },
+			{ Biome.Tech, 7 },
+			{ Biome.Cave, 5 }
+		};
 
 		public static string Generate(string biome) {
-			if (!defined.TryGetValue(biome, out var list)) {
+			if (!counts.TryGetValue(biome, out var n)) {
 				Log.Error($"Didn't find title for {biome}");
 				return "Idk man, kinda 404?";
 			}
 
-			return list[new Random().Next(list.Count)];
-		}
-
-		static BiomeTitles() {
-			Add(Biome.Hub,
-				"Dodge this",
-				"Shopkeeper knows something"
-			);
-			
-			Add(Biome.Castle,
-				"This place is old",
-				"The knights are gone"
-			);
-			
-			Add(Biome.Desert,
-				"Drink water, stay hydrated",
-				"Anakin hates sand",
-				"It's getting hot",
-				"Not to be confused with the desert"
-			);
-			
-			Add(Biome.Jungle,
-				"This is wild",
-				"Jungle be like",
-				"This place is growing on me",
-				"Like snakes and ladders without ladders"
-			);
-			
-			Add(Biome.Ice,
-				"This place is cool",
-				"Let it snow",
-				"The winter is coming",
-				"Ice Age",
-				"Snow Inc.",
-				"I saw mammoth",
-				"Stop the global warming!"
-			);
-			
-			Add(Biome.Library,
-				"Try to pillage quieter, please!",
-				"Read a book",
-				"Books are expensive",
-				"Book a flight, read a book",
-				"404. Page not found",
-				"Peace was never an option"
-			);
-			
-			Add(Biome.Tech,
-				"Inside of the simulation",
-				"Chips & Chops",
-				"Null Pointer Exception",
-				"Processor Inside",
-				"Modern problems require modern solutions",
-				"Hakerman",
-				"Just like in the simulations"
-			);
-			
-			Add(Biome.Cave,
-				"Deep stuff",
-				"Rave cave",
-				"Hello?",
-				"Shiny stuff",
-				"Grab your pickaxes"
-			);
+			return Locale.Get($"loading_biome_{biome}_{new Random().Next(n)}");
 		}
 	}
 }

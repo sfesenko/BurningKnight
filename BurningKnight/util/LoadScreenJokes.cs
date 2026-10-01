@@ -1,90 +1,16 @@
 using System;
+using Lens.assets;
 
 namespace BurningKnight.util {
 	public static class LoadScreenJokes {
+		// Localised through loading_joke_0..Count-1 in the locale files.
+		// en.json is the fallback: Locale.Get returns English for locales
+		// that have not translated a key yet, so behaviour is unchanged
+		// until translations land. Bump Count when adding jokes.
+		public const int Count = 78;
+
 		public static string Generate() {
-			return jokes[new Random().Next(jokes.Length)];
+			return Locale.Get($"loading_joke_{new Random().Next(Count)}");
 		}
-		
-		private static readonly string[] jokes = {
-			"Please stand by",
-			"Press X",
-			"Generating trouble",
-			"If you want to buy something, you need to have money",
-			"Press / to open chat",
-			"Generating generators",
-			"Submitting an issue",
-			"Terraforming Mars",
-			"Occupying Mars",
-			"To defeat a boss, shoot at it until it dies",
-			"I think that knight wanted to say something",
-			"Are we there yet?",
-			"Generating secrets",
-			"Hiding secrets",
-			"I'm hungry",
-			"/!\\ /!\\ /!\\",
-			"Saving is important",
-			"Cooling down",
-			"Heating up",
-			"Adding some drama",
-			"You better get digging",
-			"Generating generators",
-			"Waking up",
-			"Deleting the saves",
-			"Preparing to start",
-			"Looking for an excuse",
-			"Automatically synchronizing cardinal grammeters",
-			"Reducing sinusoidal repleneration",
-			"Fromaging the bituminous spandrels",
-			"Reticulating splines",
-			"Calculating Math.PI",
-			"Inventing the wheel",
-			"Recruiting robot hamsters",
-			"Generating buttons",
-			"~~Installing deinstallers~~",
-			"Thinking",
-			"I like pizza",
-			"That fight tho",
-			"Be careful",
-			"Almost alive",
-			"Dog food",
-			"Always wear dry socks",
-			"Its your lucky day",
-			"Press F to pay respect",
-			"Let's do this",
-			"Let's ##go##",
-			"##YOOOOOO##",
-			"This is a joke mimic",
-			"Go go go",
-			"Делаем вид что это что-то значит",
-			"Loading terrain",
-			"Building terrain",
-			"Generating more enemies",
-			"Sending help",
-			"SOS",
-			"Are we lost?",
-			"Spooooky",
-			"On fire",
-			"It's magic time",
-			"Settings things on fire",
-			"Preparing to explode",
-			"Installing Linux",
-			"Deleting System32",
-			"Erasing data",
-			"Generating a joke",
-			"Attacking enemies does more damage, than not attacking",
-			"Getting hit hurts",
-			"^^Yeeeeet^^",
-			"You get a higher chance to hit the enemy, if you aim",
-			"Money is useful",
-			"Dying is bad",
-			"You can change the cursor in settings",
-			"Fullscreen is dope",
-			"Hold on...",
-			"You still here?",
-			"Does anyone ever read these?",
-			"Don't get hit by a car",
-			"##Always cook second##"
-		};
 	}
 }
