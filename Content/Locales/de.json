@@ -1055,7 +1055,7 @@
 	"bkw_0": "EIN WEITERER [cl red]EINDRINGLING[cl]!",
 	"bkw_1": "##RAUS HIER, SOFORT!##[dl] Oder ich äh, muss dich zwingen...",
 	"bkw_2": "Ich suche nach [cl green]meinem Vater",
-	"bkw_3": "ICH HABE DICH GEWARNT",
+	"bkw_3": "ICH HABE DICH _GEWARNT_",
 	"spanish_inquisition": "[cl red]Spanische Inquisition",
 	"lp_0": "Nicht schlecht, [cl purple]Ritta[cl][dl], ich starte [cl green]die Simulation[cl][dl] neu[dl].[dl][dl].",
 	"bk:broken_bucket": "Eimer mit Loch",

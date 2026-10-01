@@ -387,7 +387,10 @@ let fontGlyphs = fontGlyphsPerFile |> Array.fold Set.union Set.empty
 // blink, randomiser, emphasis and italic. A token present in en must survive in
 // the locale, and the pair counts must match (the parser only treats adjacent
 // pairs as markers, and a lone `_` silently deletes itself).
-let markupTokens = [| "[cl"; "[dl]"; "[ic"; "[vr"; "^^"; "@@"; "%%"; "##"; "~~" |]
+// Emphasis markers too: `**` is BoldEffect, `_` is the italic toggle, `&&` is blink.
+// `_` counts in pairs - the parser consumes a lone `_` and deletes itself, so a
+// locale that drops one silently loses the character.
+let markupTokens = [| "[cl"; "[dl]"; "[ic"; "[vr"; "^^"; "@@"; "%%"; "##"; "~~"; "**"; "_"; "&&" |]
 let markup = Regex(@"\[cl[^\]]*\]|\[dl\]|%%|##")
 let tokenCount (v: string) (tok: string) =
     if tok = "[cl" then
@@ -477,6 +480,22 @@ for loc in localeFiles do
     if not emptyValues.IsEmpty then
         strictFailures <- $"[{loc}] {emptyValues.Length} empty values: {joinKeys emptyValues}" :: strictFailures
 
+    // en.json itself is rendered when no locale is selected and is the fallback for
+    // every missing key, so its coverage matters as much as any locale's. This is
+    // computed (and enforced) outside the `loc <> "en"` guard below.
+    let missingGlyphs =
+        map.Values
+        |> Seq.collect id
+        |> Seq.filter (fun c -> c > '\u007F' && not (fontGlyphs.Contains(string c)))
+        |> Set.ofSeq
+        |> Set.toList
+        |> List.sort
+
+    if strict && not missingGlyphs.IsEmpty then
+        let shown = missingGlyphs |> List.truncate 40 |> List.map (fun c -> sprintf "U+%04X" (int c))
+        let rest = if missingGlyphs.Length > shown.Length then sprintf " (+%d more)" (missingGlyphs.Length - shown.Length) else ""
+        strictFailures <- sprintf "[%s] %d chars not in bitmap font: %s%s" loc missingGlyphs.Length (String.concat " " shown) rest :: strictFailures
+
     if loc <> "en" then
         if not extra.IsEmpty then
             strictFailures <- $"[{loc}] {extra.Length} keys not in en (stale): {joinKeys extra}" :: strictFailures
@@ -505,14 +524,6 @@ for loc in localeFiles do
                     else
                         None))
             |> Seq.toList
-
-        let missingGlyphs =
-            map.Values
-            |> Seq.collect id
-            |> Seq.filter (fun c -> c > '\u007F' && not (fontGlyphs.Contains(string c)))
-            |> Set.ofSeq
-            |> Set.toList
-            |> List.sort
 
         printfn
             "%-4s %5d %7d %5d %6d %5d %8d %5d%s%s"
@@ -543,18 +554,6 @@ for loc in localeFiles do
 
             for k, tok, enN, locN in brokenMarkup do
                 strictFailures <- $"[{loc}] {k} loses markup {tok} ({enN}->{locN})" :: strictFailures
-
-            if not missingGlyphs.IsEmpty then
-                let shown = missingGlyphs |> List.truncate 40 |> List.map (fun c -> $"U+{int c:X4}")
-
-                let rest =
-                    if missingGlyphs.Length > shown.Length then
-                        $" (+{missingGlyphs.Length - shown.Length} more)"
-                    else
-                        ""
-
-                let codes = String.concat " " shown
-                strictFailures <- $"[{loc}] {missingGlyphs.Length} chars not in bitmap font: {codes}{rest}" :: strictFailures
 
         if not strict then
             if not missing.IsEmpty then
