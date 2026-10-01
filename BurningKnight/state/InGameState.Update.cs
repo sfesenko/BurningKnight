@@ -380,7 +380,7 @@ namespace BurningKnight.state {
 							if (UiControl.Focused != null) {
 								doCheck = true;
 							} else if (currentBack != null) {
-								currentBack!.Click(currentBack);
+								currentBack!.Click?.Invoke(currentBack);
 							} else {
 								Paused = false;
 							}

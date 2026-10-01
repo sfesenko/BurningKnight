@@ -36,7 +36,7 @@ namespace BurningKnight.state {
 		public override void Destroy() {
 			Lights.Destroy();
 			Area.Destroy();
-			Area = null;
+			Area = null!;
 
 			Physics.Destroy();
 			base.Destroy();

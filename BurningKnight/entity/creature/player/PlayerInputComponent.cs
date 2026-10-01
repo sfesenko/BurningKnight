@@ -32,8 +32,8 @@ namespace BurningKnight.entity.creature.player {
 		public bool InDialog;
 		private static Audio Audio => Context.Audio;
 		
-		public DialogComponent Dialog {
-			get => dialog!;
+		public DialogComponent? Dialog {
+			get => dialog;
 			
 			set {
 				var old = dialog;
@@ -87,7 +87,7 @@ namespace BurningKnight.entity.creature.player {
 
 				if (dd != null) {
 					var isAnswer = dialog!.Current is AnswerDialog;
-					var a = isAnswer ? (AnswerDialog) dialog.Current : null!;
+					var a = isAnswer ? (AnswerDialog) dialog.Current! : null!;
 					
 					if (dd.DoneSaying) {
 						if (dialog.Current is ChoiceDialog c) {

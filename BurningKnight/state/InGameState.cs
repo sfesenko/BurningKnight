@@ -317,7 +317,7 @@ namespace BurningKnight.state {
 		private UiChoice choice = null!;
 		private UiTable leaderStats = null!;
 		private UiTable statsStats = null!;
-		private Action<string> d = null!;
+		private Action<string?> d = null!;
 		private List<UiItem> inventoryItems = new List<UiItem>();
 
 		public void GoToInventory() {

@@ -69,11 +69,11 @@ namespace BurningKnight.level.rooms.connection {
 			doorZero = !BottomHalf || InvestigateDoor(pair.Key, pair.Value!);
 			
 			if (!doorZero) {
-				doors[0].Type = DoorPlaceholder.Variant.Regular;
-				doors[1].Type = DoorPlaceholder.Variant.Hidden;
+				doors[0]!.Type = DoorPlaceholder.Variant.Regular;
+				doors[1]!.Type = DoorPlaceholder.Variant.Hidden;
 			} else {
-				doors[1].Type = DoorPlaceholder.Variant.Regular;
-				doors[0].Type = DoorPlaceholder.Variant.Hidden;
+				doors[1]!.Type = DoorPlaceholder.Variant.Regular;
+				doors[0]!.Type = DoorPlaceholder.Variant.Hidden;
 			}
 		}
 

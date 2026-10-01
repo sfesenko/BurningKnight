@@ -397,7 +397,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 			public Boss Boss = null!;
 		}
 		
-		public override void Kill(Entity w, DamageType type = DamageType.Regular) {
+		public override void Kill(Entity? w, DamageType type = DamageType.Regular) {
 			
 		}
 

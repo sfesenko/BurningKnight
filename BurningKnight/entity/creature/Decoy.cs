@@ -50,7 +50,7 @@ namespace BurningKnight.entity.creature {
 			}
 		}
 
-		public override void AnimateDeath(DiedEvent d) {
+		public override void AnimateDeath(DiedEvent? d) {
 			base.AnimateDeath(d);
 			ExplosionMaker.Make(this);
 			OnDeath?.Invoke();

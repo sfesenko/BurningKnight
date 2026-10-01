@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.bomb.controller {
 	public static class TargetBombController {
-		public static BombUpdateCallback Make(Entity target, float speed = 1f) {
+		public static BombUpdateCallback Make(Entity? target, float speed = 1f) {
 			return (p, dt) => {
 				var b = p.GetAnyComponent<BodyComponent>();
 				var d = Math.Max(100, b!.Velocity.Length());

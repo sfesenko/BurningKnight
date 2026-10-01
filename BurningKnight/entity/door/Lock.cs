@@ -135,7 +135,7 @@ namespace BurningKnight.entity.door {
 		}
 
 		public void RealRender() {
-			if (/*!Done && */GetComponent<StateComponent>().StateInstance is not OpenState) {
+			if (/*!Done && */GetComponent<StateComponent>()!.StateInstance is not OpenState) {
 				base.Render();
 			}
 		}

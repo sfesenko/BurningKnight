@@ -13,7 +13,7 @@ namespace BurningKnight.entity.creature.player {
 		private bool loaded;
 		private Item? prev;
 		
-		public override void Set(Item item, bool animate = true) {
+		public override void Set(Item? item, bool animate = true) {
 			base.Set(item, (item == null || item.Id != "bk:no_lamp") && animate);
 		}
 

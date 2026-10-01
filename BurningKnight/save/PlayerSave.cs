@@ -38,7 +38,7 @@ namespace BurningKnight.save {
 			input.GamepadEnabled = Context.Run.NumPlayers <= 1;
 
 			for (var i = 1; i < Context.Run.NumPlayers; i++) {
-				input = area!.Add(new LocalPlayer()).GetComponent<InputComponent>();
+				input = area!.Add(new LocalPlayer())!.GetComponent<InputComponent>();
 
 				input!.Index = (byte) i;
 				input.KeyboardEnabled = false;

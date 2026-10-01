@@ -448,7 +448,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 
 						Self.ModifyBuilder(b);
 						for (var i = 0; i < Rnd.Int(3, 5); i++) {
-							b!.Shoot(a + Rnd.Float(-1.4f, 1.4f), s * Rnd.Float(0.3f, 1.5f)).Build().Center = p.Center;
+							b!.Shoot(a + Rnd.Float(-1.4f, 1.4f), s * Rnd.Float(0.3f, 1.5f)).Build()!.Center = p.Center;
 						}
 					});
 				}

@@ -150,8 +150,8 @@ namespace BurningKnight.entity.creature.player {
 						case RoomType.Treasure: {
 							foreach (var door in c.New.Doors) {
 								if (door.TryGetComponent<LockComponent>(out var component) && component.Lock is GoldLock) {
-									if (!(c.New.Type == RoomType.Shop && ((door!.Rooms[0] != null && door.Rooms[0].Type == RoomType.SubShop) ||
-									                                    (door.Rooms[1] != null && door.Rooms[1].Type == RoomType.SubShop)))) {
+									if (!(c.New.Type == RoomType.Shop && ((door!.Rooms![0] != null && door.Rooms![0].Type == RoomType.SubShop) ||
+									                                    (door.Rooms![1] != null && door.Rooms![1].Type == RoomType.SubShop)))) {
 									
 										component.Lock.SetLocked(false, this);
 									} 

@@ -273,7 +273,7 @@ namespace BurningKnight.level.rooms {
 			return false;
 		}
 
-		public static RoomType DecideType(RoomDef r, Type room) {
+		public static RoomType DecideType(RoomDef? r, Type room) {
 			if (typeof(TrapRoom).IsAssignableFrom(room)) {
 				return RoomType.Trap;
 			}

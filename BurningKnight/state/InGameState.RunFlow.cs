@@ -102,7 +102,7 @@ namespace BurningKnight.state {
 			Shaders.Screen.Parameters["blur"].SetValue(0f);
 
 			Area.Destroy();
-			Area = null;
+			Area = null!;
 
 			Physics.Destroy();
 			base.Destroy();

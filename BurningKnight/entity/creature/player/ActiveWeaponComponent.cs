@@ -39,7 +39,7 @@ namespace BurningKnight.entity.creature.player {
 						var t = Item.Data.WeaponType;
 						
 						if (t == WeaponType.Ranged) {
-							foreach (var u in Item!.Uses) {
+							foreach (var u in Item!.Uses!) {
 								if (u is SimpleShootUse s) {
 									if (s.ReloadSfx) {
 										Entity.GetComponent<AudioEmitterComponent>()!.EmitRandomizedPrefixed("item_shotgun_reload", 2, 0.8f);

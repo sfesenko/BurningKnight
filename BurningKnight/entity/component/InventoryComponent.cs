@@ -161,7 +161,7 @@ namespace BurningKnight.entity.component {
 				} else {
 					var o = item.Owner;
 				
-					foreach (var u in item!.Uses) {
+					foreach (var u in item!.Uses!) {
 						u.Update(o, item, dt);
 					}
 				}

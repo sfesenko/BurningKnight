@@ -52,7 +52,7 @@ namespace BurningKnight.level.rooms.trap {
 			if (Connected.Count == 1) {
 				ty = Rnd.Int(Left + 2, Right - 2);
 
-				if (Connected!.Values!.First().Y == Top) {
+				if (Connected!.Values!.First()!.Y == Top) {
 					PlaceButton(level, new Dot(ty, Bottom - 1));
 				} else {
 					PlaceButton(level, new Dot(ty, Top + 1));

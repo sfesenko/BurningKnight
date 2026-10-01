@@ -20,7 +20,7 @@ namespace BurningKnight.entity.item.use {
 			var it = Items.Create(id);
 			item.GetComponent<ItemGraphicsComponent>()!.Sprite = CommonAse.Items.GetSlice(id)!;
 
-			foreach (var u in it!.Uses) {
+			foreach (var u in it!.Uses!) {
 				u.Item = it;
 				u.Use(entity, it);
 			}

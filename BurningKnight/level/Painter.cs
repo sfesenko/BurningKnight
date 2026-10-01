@@ -394,19 +394,19 @@ namespace BurningKnight.level {
 			}
 
 			if (rrms.Count > 0) {
-				foreach (var type in Level!.ItemsToSpawn) {
+				foreach (var type in Level!.ItemsToSpawn!) {
 					var item = Items.CreateAndAdd(type, Level.Area!);
 
 					if (item == null) {
 						continue;
 					}
 					
-					item.Center = (rrms[Rnd.Int(rrms.Count)].GetRandomFreeCell() * 16!) + new Vector2(8, 8);
+					item.Center = (rrms[Rnd.Int(rrms.Count)].GetRandomFreeCell()! * 16) + new Vector2(8, 8);
 				}
 
 				if (Context.Run.Depth == 1) {
 					var crystal = new Crystal();
-					crystal.Center = (rrms[Rnd.Int(rrms.Count)].GetRandomFreeCell() * 16!) + new Vector2(8, 8) + Rnd.Vector(-4, 4);
+					crystal.Center = (rrms[Rnd.Int(rrms.Count)].GetRandomFreeCell()! * 16) + new Vector2(8, 8) + Rnd.Vector(-4, 4);
 					Level.Area!.Add(crystal);
 				}
 			} else {

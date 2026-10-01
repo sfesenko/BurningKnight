@@ -39,8 +39,8 @@ namespace BurningKnight.entity.item.use {
 							RectHitbox = !c
 						};
 
-						builder!.Shoot(a - (float) Math.PI * 0.5f, s).Build().Center = p.Center;
-						builder!.Shoot(a + (float) Math.PI * 0.5f, s).Build().Center = p.Center;
+						builder!.Shoot(a - (float) Math.PI * 0.5f, s).Build()!.Center = p.Center;
+						builder!.Shoot(a + (float) Math.PI * 0.5f, s).Build()!.Center = p.Center;
 					}
 				});
 			}

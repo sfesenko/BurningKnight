@@ -116,7 +116,7 @@ namespace BurningKnight.entity.creature.player {
 			return true;
 		}
 		private bool died;
-		public override void AnimateDeath(DiedEvent d) {
+		public override void AnimateDeath(DiedEvent? d) {
 			Dead = true;
 			
 			base.AnimateDeath(d);

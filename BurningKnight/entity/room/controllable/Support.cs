@@ -15,8 +15,8 @@ namespace BurningKnight.entity.room.controllable {
 		}
 		
 		public class EndedSupportingEvent : Event {
-			public Support Support;
-			public Entity Entity;
+			public Support Support = null!;
+			public Entity Entity = null!;
 		}
 	}
 }

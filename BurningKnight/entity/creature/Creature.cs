@@ -150,7 +150,7 @@ namespace BurningKnight.entity.creature {
 			return false;
 		}
 
-		public virtual void AnimateDeath(DiedEvent d) {
+		public virtual void AnimateDeath(DiedEvent? d) {
 			AudioEmitterComponent.Dummy(Area!, Center).EmitRandomized(GetDeadSfx()!, sz: 0.2f);
 
 			if (!GetComponent<TileInteractionComponent>()!.HasNoSupport) {
@@ -180,7 +180,7 @@ namespace BurningKnight.entity.creature {
 		}
 
 		protected virtual TextureRegion? GetDeathFrame() {
-			return GetAnyComponent<AnimationComponent>()?.Animation.GetFrame("dead", 0);
+			return GetAnyComponent<AnimationComponent>()?.Animation?.GetFrame("dead", 0);
 		}
 
 		protected virtual void CreateGore(DiedEvent? d) {

@@ -11,9 +11,9 @@ namespace BurningKnight.entity.component {
 	public class GamepadComponent : Component {
 		public static GamepadData? Current;
 
-		private GamepadData controller = null!;
+		private GamepadData? controller;
 
-		public GamepadData Controller {
+		public GamepadData? Controller {
 			get => controller;
 
 			set {

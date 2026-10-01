@@ -18,7 +18,7 @@ namespace BurningKnight.entity.item.renderer {
 		}
 
 
-		public static void Register<T>(Mod mod, Action<string, JsonValue, JsonValue>? renderer = null) where T : ItemRenderer {
+		public static void Register<T>(Mod? mod, Action<string, JsonValue, JsonValue>? renderer = null) where T : ItemRenderer {
 			var type = typeof(T);
 			var name = type.Name;
 			var id = $"{mod?.Prefix ?? Mods.BurningKnight}:{(name.EndsWith("Renderer") ? name.Substring(0, name.Length - 8) : name)}";

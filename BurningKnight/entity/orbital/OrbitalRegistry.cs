@@ -142,7 +142,7 @@ namespace BurningKnight.entity.orbital {
 				orbital.AddComponent(new RectBodyComponent(0, 0, 9, 15, BodyType.Dynamic, true));
 				
 				orbital.OnCollision += (or, e) => {
-					if (e is Creature c && c.IsFriendly() != ((Creature) orbital.Owner).IsFriendly()) {
+					if (e is Creature c && c.IsFriendly() != ((Creature) orbital.Owner!).IsFriendly()) {
 						c.GetComponent<HealthComponent>()!.ModifyHealth(-1, orbital);
 					} else if (e is Projectile p && p.Owner != orbital.Owner) {
 						p.Break();

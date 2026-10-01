@@ -90,7 +90,7 @@ namespace BurningKnight.entity.item.use {
 			}
 		}
 
-		private void ApplyBuff(Projectile projectile, string buff, bool explosive) {
+		private void ApplyBuff(Projectile projectile, string? buff, bool explosive) {
 			if (explosive) {
 				projectile.Color = ProjectileColor.Brown;
 

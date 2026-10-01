@@ -13,7 +13,7 @@ using Lens.util.math;
 
 namespace BurningKnight.entity.creature.pet {
 	public static class PetRegistry {
-		private static Dictionary<string, Func<Entity, Entity>> defined = new Dictionary<string, Func<Entity, Entity>>();
+		private static Dictionary<string, Func<Entity, Entity?>> defined = new Dictionary<string, Func<Entity, Entity?>>();
 
 		public static Entity? Create(string id, Entity owner) {
 			return !defined.TryGetValue(id, out var d) ? null : d(owner);
@@ -24,7 +24,7 @@ namespace BurningKnight.entity.creature.pet {
 			return Create(keys[Rnd.Int(keys.Length)], owner)!;
 		}
 
-		public static void Define(string id, Func<Entity, Entity> pet, Mod? mod = null) {
+		public static void Define(string id, Func<Entity, Entity?> pet, Mod? mod = null) {
 			defined[$"{(mod == null ? Mods.BurningKnight : mod.Prefix)}:{id}"] = pet;
 		}
 

@@ -43,8 +43,8 @@ namespace BurningKnight.ui.dialog {
 		}
 
 		public class EndedEvent : Event {
-			public Dialog Dialog;
-			public Entity Owner;
+			public Dialog Dialog = null!;
+			public Entity Owner = null!;
 		}
 	}
 }

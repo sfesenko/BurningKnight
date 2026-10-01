@@ -42,7 +42,7 @@ namespace BurningKnight.entity.creature.npc {
 			return base.HandleEvent(e);
 		}
 		
-		public override void AnimateDeath(DiedEvent d) {
+		public override void AnimateDeath(DiedEvent? d) {
 			base.AnimateDeath(d);
 			CreateGore(d);
 		}

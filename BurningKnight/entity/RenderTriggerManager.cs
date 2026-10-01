@@ -25,7 +25,7 @@ namespace BurningKnight.entity {
 				if (t.Done || t.Area != entity.Area) {
 					t.Done = false;
 					t.Area = null;
-					t.Components = null;
+					t.Components = null!;
 					entity.Area!.Add(t);
 				}
 			} 

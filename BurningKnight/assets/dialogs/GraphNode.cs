@@ -49,7 +49,7 @@ namespace BurningKnight.assets.dialogs {
 			var j = -1;
 
 			if (outputs != JsonValue.Null) {
-				foreach (var i in outputs) {
+				foreach (var i in outputs!) {
 					j++;
 
 					if (!i.IsJsonArray) {

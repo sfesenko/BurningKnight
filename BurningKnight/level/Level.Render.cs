@@ -141,7 +141,7 @@ namespace BurningKnight.level {
 							if (t == Tile.PistonDown) {
 								RenderWall(x, y, index, tile, t, 0);
 							} else if (t != Tile.Chasm && t != Tile.SpikeOffTmp && t != Tile.SensingSpikeTmp) {
-									Graphics.Render((MatrixLeak![index] && t.Matches(Tile.FloorA, Tile.FloorB, Tile.FloorC, Tile.FloorD) ? MatrixTileset : Tileset).Tiles[tile][
+									Graphics.Render((MatrixLeak![index] && t.Matches(Tile.FloorA, Tile.FloorB, Tile.FloorC, Tile.FloorD) ? MatrixTileset! : Tileset).Tiles[tile][
 #if ART_DEBUG
 										0
 #else

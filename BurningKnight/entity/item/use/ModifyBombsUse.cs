@@ -59,7 +59,7 @@ namespace BurningKnight.entity.item.use {
 						};
 
 						for (var i = 0; i < 8; i++) {
-							builder!.Shoot((float) i / 8 * (float) Math.PI * 2, 8).Build().Center = b.Center;
+							builder!.Shoot((float) i / 8 * (float) Math.PI * 2, 8).Build()!.Center = b.Center;
 						}
 					};
 				}

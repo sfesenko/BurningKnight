@@ -163,7 +163,7 @@ namespace BurningKnight.entity.item.util {
 		
 		public class CreatedEvent : Event {
 			public MeleeArc Arc = null!;
-			public Entity Owner;
+			public Entity Owner = null!;
 			public Item By = null!;
 		}
 	}

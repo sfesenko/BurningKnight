@@ -64,7 +64,7 @@ namespace BurningKnight.level.entities {
 			InGameState.Multiplayer = true;
 			
 			Player p;
-			var input = area!.Add(p = new LocalPlayer()).GetComponent<InputComponent>();
+			var input = area!.Add(p = new LocalPlayer())!.GetComponent<InputComponent>();
 			
 			input!.Index = index;
 			input.KeyboardEnabled = !gamepad;

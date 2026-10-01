@@ -250,8 +250,8 @@ namespace BurningKnight.entity.component {
 				
 				ev.Item.Use(Entity);
 
-				Engine.Instance.State.Ui.Add(new ConsumableParticle(ev.Item.Animation != null!
-					? ev.Item.GetComponent<AnimatedItemGraphicsComponent>()!.Animation.GetFirstCurrent()
+				Engine.Instance.State.Ui.Add(new ConsumableParticle(ev.Item.Animation != null
+					? ev.Item.GetComponent<AnimatedItemGraphicsComponent>()!.Animation.GetFirstCurrent()!
 					: ev.Item.Region, (Player) Entity));
 				
 				ev.Item.Done = true;
