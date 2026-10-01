@@ -411,7 +411,7 @@ namespace BurningKnight.level {
 					area.Add(crystal);
 				}
 			} else {
-				Log.Error("Failed to place items");
+				Log.Debug("Failed to place items");
 			}
 
 			Level.ItemsToSpawn = null;

@@ -70,7 +70,7 @@ namespace BurningKnight.level.walls {
 				} while (attempt++ < 1000 && !valid);
 
 				if (!valid) {
-					Log.Error("Failed to generate patch");
+					Log.Debug("Failed to generate patch");
 
 					for (var i = 0; i < Patch.Length; i++) {
 						Patch[i] = false;

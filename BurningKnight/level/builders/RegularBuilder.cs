@@ -254,7 +254,7 @@ namespace BurningKnight.level.builders {
 					if (!placed) {
 						// The branch code removes a room it cannot place and carries on; failing
 						// the shop here would leave it moved with a stale connection to Prev.
-						Log.Error($"Could not place {r.GetType().Name}, skipping it");
+						Log.Debug($"Could not place {r.GetType().Name}, skipping it");
 						Collision.Remove(r);
 					}
 				}

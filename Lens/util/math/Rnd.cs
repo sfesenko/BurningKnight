@@ -42,7 +42,7 @@ namespace Lens.util.math {
 				var index = SeedChars.IndexOf(c);
 
 				if (index == -1) {
-					Log.Error($"Unknown seed char '{c}' ({(int) c})!");
+					Log.Debug($"Unknown seed char '{c}' ({(int) c})!");
 					continue;
 				}
 

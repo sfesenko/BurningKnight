@@ -181,7 +181,7 @@ namespace BurningKnight.level {
 			}
 
 			if (points.Count + wallPoints.Count == 0) {
-				Log.Error("Did not find any placeable spots for mobs");
+				Log.Debug("Did not find any placeable spots for mobs");
 				return;
 			}
 			
@@ -198,7 +198,7 @@ namespace BurningKnight.level {
 				var id = Rnd.Chances(spawnChances);
 
 				if (id == -1) {
-					Log.Error("Failed to generate mobs :O");
+					Log.Debug("Failed to generate mobs :O");
 					break;
 				}
 				

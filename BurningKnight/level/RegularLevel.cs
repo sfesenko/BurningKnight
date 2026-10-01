@@ -116,7 +116,7 @@ namespace BurningKnight.level {
 				{
 					if (Rm.Any(r => r.IsEmpty()))
 					{
-						Log.Error("Found an empty room!");
+						Log.Debug("Found an empty room!");
 						b = true;
 					}
 				}
@@ -124,14 +124,14 @@ namespace BurningKnight.level {
 				if (a || b) {
 					rooms = null;
 				
-					Log.Error($"Failed! {Builder.GetType().Name}");
+					Log.Debug($"Failed! {Builder.GetType().Name}");
 					Area!.Destroy();
 					Area.Add(Context.Level);
 					LevelSave.FailedAttempts++;
 					Builder = GetBuilder();
 
 					if (Attempt >= 10) {
-						Log.Error("Too many attempts to generate a level! Trying a different room set!");
+						Log.Debug("Too many attempts to generate a level! Trying a different room set!");
 						Attempt = 0;
 						Rooms = CreateRooms();
 						Rooms = (List<RoomDef>) Rooms.Shuffle(Rnd.Generator);

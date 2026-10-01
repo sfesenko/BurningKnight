@@ -247,7 +247,7 @@ namespace BurningKnight.level.rooms.regular {
 			PathFinder.SetMapSize(level.Width, level.Height);
 
 			if (!valid) {
-				Log.Error("Failed to build path");
+				Log.Debug("Failed to build path");
 				Paint(level);
 				return;
 			}

@@ -18,7 +18,7 @@ namespace BurningKnight.assets.mod {
 			var dir = FileHandle.FromRoot("Mods/");
 
 			if (!dir.Exists()) {
-				Log.Error("Mod directory was not found, creating and exiting.");
+				Log.Info("Mod directory was not found, creating and exiting.");
 				dir.MakeDirectory();
 				return;
 			}

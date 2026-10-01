@@ -42,7 +42,7 @@ namespace BurningKnight.level.rooms {
 			}
 
 			if (passable.Count == 0) {
-				Log.Error($"Failed to find a free cell ({GetType().Name})");
+				Log.Debug($"Failed to find a free cell ({GetType().Name})");
 				return null;
 			}
 
@@ -75,7 +75,7 @@ namespace BurningKnight.level.rooms {
 			}
 
 			if (passable.Count == 0) {
-				Log.Error($"Failed to find a free cell ({GetType().Name})");
+				Log.Debug($"Failed to find a free cell ({GetType().Name})");
 				return null;
 			}
 
