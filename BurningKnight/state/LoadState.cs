@@ -37,6 +37,18 @@ namespace BurningKnight.state {
 		public bool Menu;
 
 		private Animation animation;
+
+		// The loading title is drawn with Graphics.Print, which goes straight to
+		// DrawString without the markup parser UiString runs. A localised joke that
+		// carries `##`/`^^`/`[cl ..]` would otherwise show its raw markers on screen,
+		// so they are stripped before the string is measured and drawn. LoadScreenTips
+		// goes through a UiString, so its colours still render.
+		private static readonly System.Text.RegularExpressions.Regex markupMarkers =
+			new System.Text.RegularExpressions.Regex(@"\[cl[^\]]*\]|\[dl\]|\[\^[^\]]*\]|\*\*|__|\^\^|@@|%%|##|~~");
+
+		private static string Plain(string value) {
+			return markupMarkers.Replace(value, string.Empty).Replace("\\[", "[");
+		}
 		
 		public override void Init() {
 			base.Init();
@@ -56,7 +68,7 @@ namespace BurningKnight.state {
 			}
 
 			prefix = Locale.Get(loading || Run.Depth < 1 ? Locale.Get("loading") : Locale.Get("generating"));
-			title = new Random().NextDouble() > 0.3 ? LoadScreenJokes.Generate() : BiomeTitles.Generate(BiomeRegistry.GenerateForDepth(Run.Depth).Id);
+			title = Plain(new Random().NextDouble() > 0.3 ? LoadScreenJokes.Generate() : BiomeTitles.Generate(BiomeRegistry.GenerateForDepth(Run.Depth).Id));
 			
 			Lights.Init();
 			Physics.Init();

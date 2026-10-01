@@ -344,25 +344,62 @@ let strictExclusions : Set<string> =
           "loading_biome_cave_4"
           "painting_dungeon" ]
 
-let readMap (path: string) =
+// The game parses locales with Lens/lightJson (JsonReader), which throws on
+// duplicate object keys, and Locale.Load installs an empty map *before* parsing —
+// so a single duplicate key silently drops the whole language back to English.
+// System.Text.Json instead keeps the last value, so the duplicate has to be
+// detected here: the checker's own parser would never see it.
+let readMapRaw (path: string) =
     let text = File.ReadAllText(path).TrimStart('\uFEFF')
     use doc = JsonDocument.Parse(text)
+    let pairs, dups = ResizeArray(), ResizeArray()
 
     doc.RootElement.EnumerateObject()
-    |> Seq.choose (fun p -> if p.Value.ValueKind = JsonValueKind.String then Some(p.Name, p.Value.GetString()) else None)
-    |> Map.ofSeq
+    |> Seq.iter (fun p ->
+        if pairs |> Seq.exists (fun (n, _) -> n = p.Name) then
+            dups.Add(p.Name)
 
-let fontGlyphs =
+        pairs.Add(p.Name, p.Value))
+
+    pairs |> Seq.choose (fun (n, v) -> if v.ValueKind = JsonValueKind.String then Some(n, v.GetString()) else None) |> Map.ofSeq,
+    dups |> Seq.distinct |> List.ofSeq
+
+let readMap path = fst (readMapRaw path)
+
+// Per-file glyph sets, plus the union: the game loads every page of both fonts into
+// one flat font (BurningKnight/assets/Font.cs), so the union is what can render.
+// MonoGame.Extended has no .notdef fallback, so an uncovered char draws nothing at
+// all — this gate is the only signal for unrenderable text.
+let fontGlyphsPerFile =
     fontFiles
-    |> Seq.collect (fun f ->
+    |> List.toArray
+    |> Array.map (fun f ->
         XDocument.Load(f).Descendants(XName.Get "char")
         |> Seq.choose (fun e ->
             match e.Attribute(XName.Get "id") with
             | null -> None
-            | a -> Some(Char.ConvertFromUtf32(Int32.Parse a.Value))))
-    |> Set.ofSeq
+            | a -> Some(string (Char.ConvertFromUtf32(Int32.Parse a.Value))))
+        |> Set.ofSeq)
 
+let fontGlyphs = fontGlyphsPerFile |> Array.fold Set.union Set.empty
+
+// All markup the parser understands (UiString.Recalculate): colour, delay, wave,
+// blink, randomiser, emphasis and italic. A token present in en must survive in
+// the locale, and the pair counts must match (the parser only treats adjacent
+// pairs as markers, and a lone `_` silently deletes itself).
+let markupTokens = [| "[cl"; "[dl]"; "[ic"; "[vr"; "^^"; "@@"; "%%"; "##"; "~~" |]
 let markup = Regex(@"\[cl[^\]]*\]|\[dl\]|%%|##")
+let tokenCount (v: string) (tok: string) =
+    if tok = "[cl" then
+        Regex(@"\[cl[^\]]*\]").Matches(v).Count
+    elif tok = "[ic" || tok = "[vr" then
+        Regex(Regex.Escape(tok + " ")).Matches(v).Count
+    else
+        Regex(Regex.Escape(tok)).Matches(v).Count
+
+// A locale may add emphasis the English source does not have (many do, and that is
+// fine); what it may not do is lose or split a token. The comparison is one-sided:
+// fewer tokens than en is a failure, more is only reported.
 let trivialSymbolChars = [| '?'; '!'; '@'; '#'; '%'; '$'; '^'; '*'; '-'; '+'; '.'; ' ' |]
 let isTrivial (v: string) = v.Length <= 4 || v.Trim(trivialSymbolChars) = ""
 
@@ -401,14 +438,48 @@ printfn "%s" (String.replicate 52 "-")
 
 let mutable strictFailures = []
 
+// Font.Small and Font.Large are separate atlases but one shared coverage set: a
+// char baked into only one of them renders in some UI and silently vanishes in
+// another, which the union-based per-locale check cannot see.
+let smallOnly = Set.difference fontGlyphsPerFile.[0] fontGlyphsPerFile.[1]
+let largeOnly = Set.difference fontGlyphsPerFile.[1] fontGlyphsPerFile.[0]
+
+let fmtChars (s: Set<string>) =
+    let one (c: string) =
+        let n = Char.ConvertToUtf32(c, 0)
+        if n > 0x7F then sprintf "U+%04X " n else sprintf "'%s' " c
+
+    s |> Seq.truncate 20 |> Seq.map one |> String.concat ""
+
+if not smallOnly.IsEmpty then
+    strictFailures <- $"[fonts] {smallOnly.Count} chars in small_font.fnt but not large_font.fnt: {fmtChars smallOnly}" :: strictFailures
+
+if not largeOnly.IsEmpty then
+    strictFailures <- $"[fonts] {largeOnly.Count} chars in large_font.fnt but not small_font.fnt: {fmtChars largeOnly}" :: strictFailures
+
 for loc in localeFiles do
-    if loc = "en" then
-        () // the baseline itself
-    else
-        let map = readMap (Path.Combine(localesDir, $"{loc}.json"))
-        let keys = map |> Map.keys |> Set.ofSeq
-        let missing = Set.difference enKeys keys |> Set.toList |> List.sort
-        let extra = Set.difference keys enKeys |> Set.toList |> List.sort
+    let map, dupKeys = readMapRaw (Path.Combine(localesDir, $"{loc}.json"))
+    let keys = map |> Map.keys |> Set.ofSeq
+    let missing = Set.difference enKeys keys |> Set.toList |> List.sort
+    let extra = Set.difference keys enKeys |> Set.toList |> List.sort
+
+    // Empty/whitespace values render as a blank node; the game never validates them.
+    let emptyValues =
+        map
+        |> Map.toList
+        |> List.choose (fun (k, v) -> if String.IsNullOrWhiteSpace(v) then Some k else None)
+
+    let joinKeys xs = String.concat " " (xs |> List.truncate 12)
+
+    if not dupKeys.IsEmpty then
+        strictFailures <- $"[{loc}] duplicate keys (the game throws and drops the language): {joinKeys dupKeys}" :: strictFailures
+
+    if not emptyValues.IsEmpty then
+        strictFailures <- $"[{loc}] {emptyValues.Length} empty values: {joinKeys emptyValues}" :: strictFailures
+
+    if loc <> "en" then
+        if not extra.IsEmpty then
+            strictFailures <- $"[{loc}] {extra.Length} keys not in en (stale): {joinKeys extra}" :: strictFailures
 
         // Deliberate keeps (strictExclusions) are subtracted here too, not just from the
         // missing-key check: a value that is byte-identical to en on purpose must not be
@@ -421,14 +492,18 @@ for loc in localeFiles do
 
         let trivial, same = identical |> List.partition (fun k -> isTrivial en.[k])
 
+        // Every markup token must survive with the same count as in en: presence-only
+        // matching let `##A##` -> `#A##` through, and the parser only honours adjacent
+        // pairs, so a half-token changes how the string renders.
         let brokenMarkup =
             Set.intersect enKeys keys
-            |> Seq.choose (fun k ->
-                markup.Matches(en.[k])
-                |> Seq.cast<Match>
-                |> Seq.map (fun m -> m.Value)
-                |> Seq.tryFind (fun tok -> not (map.[k].Contains(tok, StringComparison.Ordinal)))
-                |> Option.map (fun tok -> k, tok))
+            |> Seq.collect (fun k ->
+                markupTokens
+                |> Seq.choose (fun tok ->
+                    if tokenCount map.[k] tok < tokenCount en.[k] tok then
+                        Some(k, tok, tokenCount en.[k] tok, tokenCount map.[k] tok)
+                    else
+                        None))
             |> Seq.toList
 
         let missingGlyphs =
@@ -458,8 +533,16 @@ for loc in localeFiles do
             if not gapMissing.IsEmpty then
                 strictFailures <- $"[{loc}] {gapMissing.Length} missing keys" :: strictFailures
 
-            for k, tok in brokenMarkup do
-                strictFailures <- $"[{loc}] {k} drops markup {tok}" :: strictFailures
+            // Untranslated leftovers are a strict failure: `same` was computed and
+            // printed but never enforced, so reverting a locale to English passed
+            // silently. Trivial strings stay report-only (they are often correct).
+            if not same.IsEmpty then
+                strictFailures <-
+                    $"[{loc}] {same.Length} untranslated (identical to en): {joinKeys same}"
+                    :: strictFailures
+
+            for k, tok, enN, locN in brokenMarkup do
+                strictFailures <- $"[{loc}] {k} loses markup {tok} ({enN}->{locN})" :: strictFailures
 
             if not missingGlyphs.IsEmpty then
                 let shown = missingGlyphs |> List.truncate 40 |> List.map (fun c -> $"U+{int c:X4}")
@@ -483,8 +566,14 @@ for loc in localeFiles do
             if not same.IsEmpty then
                 printfn "  untranslated (%d): %s" same.Length (String.concat " " (same |> List.truncate 8))
 
-            for k, tok in(brokenMarkup |> List.truncate 5) do
-                printfn $"  markup: {k} drops {tok} (en: {en.[k].Substring(0, Math.Min(60, en.[k].Length))})"
+            for k, tok, enN, locN in(brokenMarkup |> List.truncate 8) do
+                printfn $"  markup: {k} loses {tok} ({enN}->{locN}) (en: {en.[k].Substring(0, Math.Min(60, en.[k].Length))})"
+
+            if not dupKeys.IsEmpty then
+                printfn "  duplicate keys (%d): %s" dupKeys.Length (joinKeys dupKeys)
+
+            if not emptyValues.IsEmpty then
+                printfn "  empty values (%d): %s" emptyValues.Length (joinKeys emptyValues)
 
             if not missingGlyphs.IsEmpty then
                 let show = missingGlyphs |> List.map string |> String.concat ""
