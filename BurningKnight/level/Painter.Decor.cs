@@ -80,6 +80,7 @@ namespace BurningKnight.level {
 			}
 		}
 		protected void Decorate(Level Level, List<RoomDef> Rooms) {
+			var area = Level.Area!;
 			foreach (var Room in Rooms) {
 				// Tnt
 
@@ -90,7 +91,7 @@ namespace BurningKnight.level {
 
 							if (p != null) {
 								var barrel = new ExplodingBarrel();
-								Level.Area!.Add(barrel);
+								area.Add(barrel);
 								barrel.Center = p * 16 + new Vector2(8);
 							}
 						}
@@ -107,7 +108,7 @@ namespace BurningKnight.level {
 						for (int X = Room.Left; X <= Room.Right; X++) {
 							if ((Level.Get(X, Y, true).Matches(Tile.Grass, Tile.Dirt) && Rnd.Chance(20)) || (Level.Get(X, Y).Matches(TileFlags.Passable) && Rnd.Chance(0.5f))) {
 								var plant = new Plant();
-								Level.Area!.Add(plant);
+								area.Add(plant);
 								plant.Variant = 255;
 								plant.BottomCenter = new Vector2(X * 16 + 8 + Rnd.Float(-4, 4), Y * 16 + 8 + Rnd.Float(-4, 4));
 							}
@@ -122,7 +123,7 @@ namespace BurningKnight.level {
 				// Fireflies
 				if (Level.Dark || Rnd.Chance(FirefliesChance)) {
 					for (var I = 0; I < (!Level.Dark && Rnd.Chance() ? 1 : Rnd.Int(3, 6)) * Fireflies; I++) {
-						Level.Area!.Add(new Firefly {
+						area.Add(new Firefly {
 							X = (Room.Left + 2) * 16 + Rnd.Float((Room.GetWidth() - 4) * 16),
 							Y = (Room.Top + 2) * 16 + Rnd.Float((Room.GetHeight() - 4) * 16)
 						});
@@ -135,22 +136,22 @@ namespace BurningKnight.level {
 						for (int X = Room.Left; X <= Room.Right; X++) {
 							if (Level.Get(X, Y).IsSimpleWall()) {
 								if (Y > Room.Top && X > Room.Left && Level.Get(X - 1, Y - 1).IsSimpleWall() && !Level.Get(X, Y - 1).IsSimpleWall() && Rnd.Chance(20)) {
-									Level.Area!.Add(new SlicedProp("cobweb_c", Layers.WallDecor) {
+									area.Add(new SlicedProp("cobweb_c", Layers.WallDecor) {
 										X = X * 16,
 										Y = Y * 16 - 24
 									});
 								} else if (Y > Room.Top && X < Room.Right && Level.Get(X + 1, Y - 1).IsSimpleWall() && !Level.Get(X, Y - 1).IsSimpleWall() && Rnd.Chance(20)) {
-									Level.Area!.Add(new SlicedProp("cobweb_d", Layers.WallDecor) {
+									area.Add(new SlicedProp("cobweb_d", Layers.WallDecor) {
 										X = X * 16,
 										Y = Y * 16 - 24
 									});
 								} else if (Y < Room.Bottom - 1 && X > Room.Left && Level.Get(X - 1, Y + 1).IsSimpleWall() && !Level.Get(X, Y + 1).IsSimpleWall() && Rnd.Chance(20)) {
-									Level.Area!.Add(new SlicedProp("cobweb_a", Layers.WallDecor) {
+									area.Add(new SlicedProp("cobweb_a", Layers.WallDecor) {
 										X = X * 16,
 										Y = Y * 16 + 8
 									});
 								} else if (Y < Room.Bottom - 1 && X < Room.Right && Level.Get(X + 1, Y + 1).IsSimpleWall() && !Level.Get(X, Y + 1).IsSimpleWall() && Rnd.Chance(20)) {
-									Level.Area!.Add(new SlicedProp("cobweb_b", Layers.WallDecor) {
+									area.Add(new SlicedProp("cobweb_b", Layers.WallDecor) {
 										X = X * 16,
 										Y = Y * 16 + 8
 									});
@@ -178,13 +179,13 @@ namespace BurningKnight.level {
 							if (!s && Rnd.Chance()) {
 								if (ht) {
 									var torch = new WallTorch();
-									Level.Area!.Add(torch);
+									area.Add(torch);
 									torch.CenterX = X * 16 + 8 + Rnd.Float(-1, 1);
 									torch.CenterY = Room.Top * 16 + 13;
 								}
 							} else if (hp) {
 								var painting = PaintingRegistry.Generate(Level.Biome);
-								Level.Area!.Add(painting);
+								area.Add(painting);
 
 								painting!.CenterX = X * 16 + 8 + Rnd.Float(-1, 1);
 								painting.Bottom = Room.Top * 16 + 17;
@@ -215,7 +216,7 @@ namespace BurningKnight.level {
 						continue;
 					}
 					
-					Level.Area!.Add(prop);
+					area.Add(prop);
 					prop.Center = new Vector2(point.X * 16 + 8 + Rnd.Float(-3, 3), point.Y * 16 + 8 + Rnd.Float(-3, 3));
 				}
 			}

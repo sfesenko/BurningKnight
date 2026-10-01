@@ -141,11 +141,12 @@ namespace BurningKnight.level {
 			}
 		}
 		private void RenderWall(int x, int y, int index, int tile, Tile t, int m) {
+			var biome = Tilesets.Biome!;
 			var a = false;
 			var tileset = (MatrixLeak[index] ? MatrixTileset : Tileset);
 			
 			if (t != Tile.Transition) {
-				var region = t == Tile.Planks ? Tilesets.Biome!.PlanksTop : tileset!.Tiles[tile][0];
+				var region = t == Tile.Planks ? biome.PlanksTop : tileset!.Tiles[tile][0];
 				a = t == Tile.WallA || t == Tile.Piston || t == Tile.PistonDown;
 				var ab = a || t == Tile.GrannyWall || t == Tile.EvilWall;
 				var effect = Graphics.ParseEffect(x % 2 == 0, y % 2 == 0);
@@ -215,17 +216,17 @@ namespace BurningKnight.level {
 								}
 								
 								case Tile.Planks: {
-									ar = Tilesets.Biome!.PlankTops;
+									ar = biome.PlankTops;
 									break;
 								}
 								
 								case Tile.GrannyWall: {
-									ar = Tilesets.Biome!.GrannyWallTops;
+									ar = biome.GrannyWallTops;
 									break;
 								}
 								
 								case Tile.EvilWall: {
-									ar = Tilesets.Biome!.EvilWallTops;
+									ar = biome.EvilWallTops;
 									break;
 								}
 							}
@@ -300,17 +301,17 @@ namespace BurningKnight.level {
 						}
 							
 						case Tile.Planks: {
-							ar = Tilesets.Biome!.PlanksExtensions;
+							ar = biome.PlanksExtensions;
 							break;
 						}
 							
 						case Tile.GrannyWall: {
-							ar = Tilesets.Biome!.GrannyExtensions;
+							ar = biome.GrannyExtensions;
 							break;
 						}
 							
 						case Tile.EvilWall: {
-							ar = Tilesets.Biome!.EvilExtensions;
+							ar = biome.EvilExtensions;
 							break;
 						}
 					}

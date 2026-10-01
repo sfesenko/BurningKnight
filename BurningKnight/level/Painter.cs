@@ -109,6 +109,7 @@ namespace BurningKnight.level {
 		}
 
 		public bool Paint(Level Level, List<RoomDef> Rooms) {
+			var area = Level.Area!;
 			if (Rooms == null) {
 				return false;
 			}
@@ -395,7 +396,7 @@ namespace BurningKnight.level {
 
 			if (rrms.Count > 0) {
 				foreach (var type in Level!.ItemsToSpawn!) {
-					var item = Items.CreateAndAdd(type, Level.Area!);
+					var item = Items.CreateAndAdd(type, area);
 
 					if (item == null) {
 						continue;
@@ -407,7 +408,7 @@ namespace BurningKnight.level {
 				if (Context.Run.Depth == 1) {
 					var crystal = new Crystal();
 					crystal.Center = (rrms[Rnd.Int(rrms.Count)].GetRandomFreeCell()! * 16) + new Vector2(8, 8) + Rnd.Vector(-4, 4);
-					Level.Area!.Add(crystal);
+					area.Add(crystal);
 				}
 			} else {
 				Log.Error("Failed to place items");
@@ -431,7 +432,7 @@ namespace BurningKnight.level {
 				room.MapH = def.GetHeight();
 				room.Parent = def;
 				
-				Level.Area!.Add(room);
+				area.Add(room);
 				rms.Add(room);
 
 				def.ModifyRoom(room);

@@ -47,6 +47,7 @@ namespace BurningKnight.assets.particle.custom {
 		}
 
 		private void Reset() {
+			var camera = Context.Camera!;
 			if (End) {
 				Done = true;
 				return;
@@ -54,10 +55,10 @@ namespace BurningKnight.assets.particle.custom {
 			
 			var v = Rnd.Float(0.8f, 1f);
 			color = new Color(v, v, v, Rnd.Float(0.8f, 1f));
-			X = Rnd.Float(Context.Camera!.X - 150, Context.Camera!.Right + 150);
-			Y = Context.Camera!.Y - Rnd.Float(50, 60);
+			X = Rnd.Float(camera.X - 150, camera.Right + 150);
+			Y = camera.Y - Rnd.Float(50, 60);
 			size = new Vector2(Rnd.Float(0.05f, 0.3f));
-			target = Context.Camera!.Y + Rnd.Float(Display.Height + 20);
+			target = camera.Y + Rnd.Float(Display.Height + 20);
 			speed = Rnd.Float(1f, 1.5f);
 			delay = Rnd.Float(0, 5f);
 			t = Rnd.Float(3);

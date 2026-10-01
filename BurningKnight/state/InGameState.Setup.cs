@@ -154,8 +154,9 @@ namespace BurningKnight.state {
 			CaptureTime();
 		}
 		public void ResetFollowing() {
-			Context.Camera!.Targets.Clear();
-			Context.Camera!.MainTarget = null;
+			var camera = Context.Camera!;
+			camera.Targets.Clear();
+			camera.MainTarget = null;
 
 			var min = 16;
 			
@@ -172,13 +173,13 @@ namespace BurningKnight.state {
 			foreach (var p in Area.Tagged[Tags.Player]) {
 				if (p is LocalPlayer) {
 					var imp = !Multiplayer || p.GetComponent<InputComponent>()!.Index == min;
-					Context.Camera!.Follow(p, imp ? 1f : 0.5f, imp);
+					camera.Follow(p, imp ? 1f : 0.5f, imp);
 				}
 			}
 
 			if (!Menu) {
 				foreach (var e in TopUi.Tagged[Tags.Cursor]) {
-					Context.Camera!.Follow(e, CursorPriority);
+					camera.Follow(e, CursorPriority);
 				}
 			}
 		}

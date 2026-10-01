@@ -290,6 +290,7 @@ namespace BurningKnight.state {
 		public static bool ToolsEnabled = Engine.Version.Dev;
 		
 		public static void RenderFog() {
+			var camera = Context.Camera!;
 			var shader = Shaders.Fog;
 			Shaders.Begin(shader);
 
@@ -298,10 +299,10 @@ namespace BurningKnight.state {
 			shader.Parameters["time"].SetValue(Engine.Time * 0.01f);
 			shader.Parameters["tx"].SetValue(wind.X * -0.1f);
 			shader.Parameters["ty"].SetValue(wind.Y * -0.1f);
-			shader.Parameters["cx"].SetValue(Context.Camera!.Position.X / 512f);
-			shader.Parameters["cy"].SetValue(Context.Camera!.Position.Y / 512f);
+			shader.Parameters["cx"].SetValue(camera.Position.X / 512f);
+			shader.Parameters["cy"].SetValue(camera.Position.Y / 512f);
 		
-			Graphics.Render(fog, Context.Camera!.TopLeft);
+			Graphics.Render(fog, camera.TopLeft);
 			
 			Shaders.End();
 		}

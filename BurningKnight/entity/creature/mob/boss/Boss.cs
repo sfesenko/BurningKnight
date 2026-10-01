@@ -299,6 +299,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 		}
 
 		public virtual void PlaceRewards() {
+			var level = Context.Level!;
 			var exit = new Exit();
 
 			Exploding = false;
@@ -314,10 +315,10 @@ namespace BurningKnight.entity.creature.mob.boss {
 
 			exit.Center = p;
 
-			Painter.Fill(Context.Level!, x - 1, y - 1, 3, 3, Tiles.RandomFloor());
-			Painter.Fill(Context.Level!, x - 1, y - 3, 3, 3, Tiles.RandomFloor());
+			Painter.Fill(level, x - 1, y - 1, 3, 3, Tiles.RandomFloor());
+			Painter.Fill(level, x - 1, y - 3, 3, 3, Tiles.RandomFloor());
 
-			Context.Level!.ReTileAndCreateBodyChunks(x - 1, y - 1, 3, 7);
+			level.ReTileAndCreateBodyChunks(x - 1, y - 1, 3, 7);
 			var w = p - new Vector2(0, 32f);
 
 			if (!(this is DM || this is BkHead || Context.Run.Type == RunType.BossRush)) {

@@ -98,6 +98,7 @@ namespace BurningKnight.level.entities.decor {
 		}
 
 		private bool Interact(Entity e) {
+			var camera = Context.Camera!;
 			if (Broken || busy) {
 				return true;
 			}
@@ -114,9 +115,9 @@ namespace BurningKnight.level.entities.decor {
 
 			XSpread = 1;
 			
-			Tween.To(1f, Context.Camera!.Zoom, xx => Context.Camera!.Zoom = xx, 0.2f);
-			Tween.To(1.4f, Context.Camera!.TextureZoom, xx => Context.Camera!.TextureZoom = xx, 0.5f);
-			Context.Camera!.GetComponent<ShakeComponent>()!.Amount = 0;
+			Tween.To(1f, camera.Zoom, xx => camera.Zoom = xx, 0.2f);
+			Tween.To(1.4f, camera.TextureZoom, xx => camera.TextureZoom = xx, 0.5f);
+			camera.GetComponent<ShakeComponent>()!.Amount = 0;
 			GameSave.Put("statue_broken", true);
 
 			/*var torches = GetComponent<RoomComponent>().Room.Tagged[Tags.Torch];

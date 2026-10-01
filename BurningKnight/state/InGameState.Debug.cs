@@ -105,6 +105,7 @@ namespace BurningKnight.state {
 			Graphics.Batch.End();
 		}
 		partial void UpdateDebug(float dt) {
+			var camera = Context.Camera!;
 			if (BK.Version.Dev && Assets.ImGuiEnabled && ((Input.Keyboard.WasPressed(Keys.Tab) && Input.Keyboard.IsDown(Keys.LeftControl)))) {
 				ToolsEnabled = !ToolsEnabled;
 				var player = LocalPlayer.Locate(Area);
@@ -249,30 +250,30 @@ namespace BurningKnight.state {
 			}
 
 			if (Input.Keyboard.WasPressed(Keys.PageDown)) {
-				Context.Camera!.Detached = !Context.Camera!.Detached;
+				camera.Detached = !camera.Detached;
 
-				if (!Context.Camera!.Detached) {
+				if (!camera.Detached) {
 					ResetFollowing();
 				}
 			}
 
-			if (Context.Camera!.Detached) {
+			if (camera.Detached) {
 				float speed = dt * 120f;
 				
 				if (Input.Keyboard.IsDown(Keys.NumPad4)) {
-					Context.Camera!.PositionX -= speed;
+					camera.PositionX -= speed;
 				}
 				
 				if (Input.Keyboard.IsDown(Keys.NumPad6)) {
-					Context.Camera!.PositionX += speed;
+					camera.PositionX += speed;
 				}
 				
 				if (Input.Keyboard.IsDown(Keys.NumPad8)) {
-					Context.Camera!.PositionY -= speed;
+					camera.PositionY -= speed;
 				}
 				
 				if (Input.Keyboard.IsDown(Keys.NumPad2)) {
-					Context.Camera!.PositionY += speed;
+					camera.PositionY += speed;
 				}
 			}
 		}

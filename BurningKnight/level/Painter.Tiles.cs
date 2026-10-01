@@ -36,6 +36,7 @@ using Microsoft.Xna.Framework;
 namespace BurningKnight.level {
 	public partial class Painter {
 		public static void ReplaceTiles(Level Level, RoomDef Room) {
+			var area = Level.Area!;
 			for (var Y = Room.Top; Y <= Room.Bottom; Y++) {
 				for (var X = Room.Left; X <= Room.Right; X++) {
 					var I = Level.ToIndex(X, Y);
@@ -58,7 +59,7 @@ namespace BurningKnight.level {
 							spikes.X = X * 16;
 							spikes.Y = Y * 16;
 
-							Level.Area!.Add(spikes);
+							area.Add(spikes);
 						} else if (Level.Tiles[I] == (byte) Tile.SpikeOffTmp) {
 							Level.Tiles[I] = (byte) Tile.FloorA;
 							Level.Liquid[I] = 0;
@@ -68,7 +69,7 @@ namespace BurningKnight.level {
 							spikes.X = X * 16;
 							spikes.Y = Y * 16;
 
-							Level.Area!.Add(spikes);
+							area.Add(spikes);
 						} else if (Level.Tiles[I] == (byte) Tile.FireTrapTmp) {
 							Level.Tiles[I] = (byte) Tile.FloorA;
 							Level.Liquid[I] = 0;
@@ -78,7 +79,7 @@ namespace BurningKnight.level {
 							trap.X = X * 16;
 							trap.Y = Y * 16;
 
-							Level.Area!.Add(trap);
+							area.Add(trap);
 						} else if (Level.Tiles[I] == (byte) Tile.SpikeOnTmp) {
 							Level.Tiles[I] = (byte) Tile.FloorA;
 							Level.Liquid[I] = 0;
@@ -88,7 +89,7 @@ namespace BurningKnight.level {
 							spikes.X = X * 16;
 							spikes.Y = Y * 16;
 
-							Level.Area!.Add(spikes);
+							area.Add(spikes);
 						}
 					}
 
@@ -101,13 +102,13 @@ namespace BurningKnight.level {
 						plate.X = X * 16;
 						plate.Y = Y * 16;
 
-						Level.Area!.Add(plate);
+						area.Add(plate);
 					} else if (Level.Tiles[I] == (byte) Tile.BarrelTmp) {
 						Level.Tiles[I] = (byte) Tile.FloorA;
 						Level.Liquid[I] = 0;
 						
 						var barrel = new ExplodingBarrel();
-						Level.Area!.Add(barrel);
+						area.Add(barrel);
 
 						barrel.CenterX = X * 16 + 8;
 						barrel.Bottom = Y * 16 + 16;

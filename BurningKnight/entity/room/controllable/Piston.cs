@@ -16,10 +16,11 @@ namespace BurningKnight.entity.room.controllable {
 		}
 
 		public void Set(bool value) {
+			var level = Context.Level!;
 			if (IsOn() != value) {
-				Context.Level!.Set(X, Y, value ? Tile.Piston : Tile.PistonDown);
-				Context.Level!.ReCreateBodyChunk(X, Y);
-				Context.Level!.UpdateTile(X, Y);
+				level.Set(X, Y, value ? Tile.Piston : Tile.PistonDown);
+				level.ReCreateBodyChunk(X, Y);
+				level.UpdateTile(X, Y);
 			}
 		}
 

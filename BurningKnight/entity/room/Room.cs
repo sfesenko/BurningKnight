@@ -192,18 +192,19 @@ namespace BurningKnight.entity.room {
 		}
 
 		public void Hide(bool fast = false) {
+			var level = Context.Level!;
 			Explored = false;
 			
 			ApplyToEachTile((x, y) => {
 				var i = Context.Level!.ToIndex(x, y);
 
 				if (!Context.Level!.Get(i).IsWall() || !Context.Level!.Get(i + Context.Level!.Width).IsWall()) {
-					Context.Level!.Explored[i] = false;
+					level.Explored[i] = false;
 
 					if (fast) {
-						Context.Level!.Light[i] = 0;
+						level.Light[i] = 0;
 					} else {
-						Tween.To(0, 1f, xx => Context.Level!.Light[i] = xx, 0.5f);
+						Tween.To(0, 1f, xx => level.Light[i] = xx, 0.5f);
 					}
 				}
 			}, Type == RoomType.DarkMarket || Type == RoomType.Hidden ? 1 : 0);

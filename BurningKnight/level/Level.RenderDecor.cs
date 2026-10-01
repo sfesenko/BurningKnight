@@ -249,6 +249,7 @@ namespace BurningKnight.level {
 		}
 		private TextureRegion? clear;
 		private void RenderChasms() {
+			var biome = Tilesets.Biome!;
 			if (!LevelLayerDebug.Chasms) {
 				return;
 			}
@@ -326,13 +327,13 @@ namespace BurningKnight.level {
 										textureRegion = tileset!.WallA[ind];
 										break;
 									case Tile.Planks:
-										textureRegion = Tilesets.Biome!.Planks[ind];
+										textureRegion = biome.Planks[ind];
 										break;
 									case Tile.EvilWall: case Tile.EvilFloor:
-										textureRegion = Tilesets.Biome!.EvilWall[ind];
+										textureRegion = biome.EvilWall[ind];
 										break;
 									case Tile.GrannyWall: case Tile.GrannyFloor:
-										textureRegion = Tilesets.Biome!.GrannyWall[ind];
+										textureRegion = biome.GrannyWall[ind];
 										break;
 									case Tile.FloorA:
 										textureRegion = tileset!.FloorSidesA[ind];

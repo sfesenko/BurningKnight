@@ -109,23 +109,24 @@ namespace BurningKnight.state {
 		}
 
 		public override void Update(float dt) {
+			var camera = Context.Camera!;
 			base.Update(dt);
 			float speed = dt * 120f;
 				
 			if (Input.Keyboard.IsDown(Keys.NumPad4)) {
-				Context.Camera!.PositionX -= speed;
+				camera.PositionX -= speed;
 			}
 				
 			if (Input.Keyboard.IsDown(Keys.NumPad6)) {
-				Context.Camera!.PositionX += speed;
+				camera.PositionX += speed;
 			}
 				
 			if (Input.Keyboard.IsDown(Keys.NumPad8)) {
-				Context.Camera!.PositionY -= speed;
+				camera.PositionY -= speed;
 			}
 				
 			if (Input.Keyboard.IsDown(Keys.NumPad2)) {
-				Context.Camera!.PositionY += speed;
+				camera.PositionY += speed;
 			}
 			
 			Physics.Update(dt);

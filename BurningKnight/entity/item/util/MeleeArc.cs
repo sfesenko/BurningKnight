@@ -75,19 +75,20 @@ namespace BurningKnight.entity.item.util {
 		}
 
 		public override bool HandleEvent(Event e) {
+			var level = Context.Level!;
 			if (e is CollisionStartedEvent ev) {
 				if (ev.Entity is HalfProjectileLevel bdd) {
 					if (Mines) {
 						var hitbox = ev.Fixture.GetAABB();
-						ProjectileLevelBody.Mine(Context.Level!, hitbox.Center.X, hitbox.Center.Y);
+						ProjectileLevelBody.Mine(level, hitbox.Center.X, hitbox.Center.Y);
 					}
 				} else if (ev.Entity is ProjectileLevelBody bd) {
 					if (Mines) {
 						var hitbox = ev.Fixture.GetAABB();
-						ProjectileLevelBody.Mine(Context.Level!, hitbox.Center.X, hitbox.Center.Y);
+						ProjectileLevelBody.Mine(level, hitbox.Center.X, hitbox.Center.Y);
 					}
 					
-					if (Context.Level!.Biome is IceBiome) {
+					if (level.Biome is IceBiome) {
 						var hitbox = ev.Fixture.GetAABB();
 
 						if (bd.Break(hitbox.Center.X, hitbox.Center.Y)) {

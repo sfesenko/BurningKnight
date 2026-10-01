@@ -157,6 +157,7 @@ namespace BurningKnight.level {
 			Shaders.End(); 
 		}
 		public void RenderShadows() {
+			var biome = Tilesets.Biome!;
 			if (Done) {
 				return;
 			}
@@ -197,17 +198,17 @@ namespace BurningKnight.level {
 							}
 							
 							case Tile.Planks: {
-								ar = Tilesets.Biome!.PlanksExtensions;
+								ar = biome.PlanksExtensions;
 								break;
 							}
 							
 							case Tile.GrannyWall: {
-								ar = Tilesets.Biome!.GrannyExtensions;
+								ar = biome.GrannyExtensions;
 								break;
 							}
 							
 							case Tile.EvilWall: {
-								ar = Tilesets.Biome!.EvilExtensions;
+								ar = biome.EvilExtensions;
 								break;
 							}
 						}

@@ -128,6 +128,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 		}
 		
 		protected override void CreateGore(DiedEvent? d) {
+			var camera = Context.Camera!;
 			base.CreateGore(d);
 
 			if (saved) {
@@ -162,9 +163,9 @@ namespace BurningKnight.entity.creature.mob.boss {
 				p.RemoveComponent<PlayerInputComponent>();
 			}
 			
-			Context.Camera!.Targets.Clear();
-			Context.Camera!.Follow(dm, 1f);
-			Context.Camera!.Follow(heinur, 1f);
+			camera.Targets.Clear();
+			camera.Follow(dm, 1f);
+			camera.Follow(heinur, 1f);
 			
 			dmDialog!.Start("dm_5", null, () => Timer.Add(() => {
 				dmDialog.Close();

@@ -42,16 +42,17 @@ namespace BurningKnight.assets.particle.custom {
 		}
 
 		private void Reset() {
+			var camera = Context.Camera!;
 			if (End) {
 				Done = true;
 				return;
 			}
 			
 			color = new Color(Rnd.Float(0.3f, 0.5f), Rnd.Float(0.4f, 0.7f), Rnd.Float(0.7f, 0.8f), Rnd.Float(0.5f, 1f));
-			X = Rnd.Float(Context.Camera!.X - 150, Context.Camera!.Right + 150);
-			Y = Context.Camera!.Y - Rnd.Float(50, 60);
+			X = Rnd.Float(camera.X - 150, camera.Right + 150);
+			Y = camera.Y - Rnd.Float(50, 60);
 			size = Rnd.Float(20, 50);
-			target = Context.Camera!.Y + Rnd.Float(Display.Height + 100);
+			target = camera.Y + Rnd.Float(Display.Height + 100);
 			speed = Rnd.Float(1f, 1.5f);
 			poofed = false;
 		}

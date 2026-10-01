@@ -87,11 +87,12 @@ namespace BurningKnight.entity.room {
 			});
 		}
 		public Vector2 GetRandomWallFreeTile(Func<int, int, bool>? filter = null) {
+			var level = Context.Level!;
 			return GetRandomFreeTile((x, y) => {
 				if (!Context.Level!.CheckFor(x - 1, y, TileFlags.Passable)
-				    || !Context.Level!.CheckFor(x + 1, y, TileFlags.Passable)
-				    || !Context.Level!.CheckFor(x, y - 1, TileFlags.Passable)
-				    || !Context.Level!.CheckFor(x, y + 1, TileFlags.Passable)) {
+				    || !level.CheckFor(x + 1, y, TileFlags.Passable)
+				    || !level.CheckFor(x, y - 1, TileFlags.Passable)
+				    || !level.CheckFor(x, y + 1, TileFlags.Passable)) {
 					// Wall here :/
 					return false;
 				}

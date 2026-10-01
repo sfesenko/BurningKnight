@@ -37,19 +37,20 @@ namespace BurningKnight.entity.creature.bk {
 		private bool did;
 
 		public override void Update(float dt) {
+			var camera = Context.Camera!;
 			base.Update(dt);
 
 			if (!did && Triggered) {
-				Context.Camera!.Shake(0.5f);
+				camera.Shake(0.5f);
 				t += dt;
 
 				if (t >= 1f) {
 					did = true;
 					var r = (int) Math.Ceiling(Math.Sqrt((RoomWidth + 1) * (RoomWidth + 1) + (RoomHeight + 1) * (RoomHeight + 1)));
 
-					Context.Camera!.Targets.Clear();
-					Context.Camera!.Follow(this, 3f);
-					Tween.To(0.5f, Context.Camera!.Zoom, x => Context.Camera!.Zoom = x, 0.3f);
+					camera.Targets.Clear();
+					camera.Follow(this, 3f);
+					Tween.To(0.5f, camera.Zoom, x => camera.Zoom = x, 0.3f);
 
 					for (var j = 1; j < r; j++) {
 						var level = Context.Level;

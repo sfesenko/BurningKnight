@@ -30,6 +30,7 @@ namespace BurningKnight.entity.projectile {
 		}
 
 		public static Action<Projectile>? Get(string id) {
+			var level = Context.Level!;
 			return registry.TryGetValue(id, out var f) ? f : null;
 		}
 

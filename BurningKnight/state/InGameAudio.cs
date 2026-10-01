@@ -67,6 +67,7 @@ namespace BurningKnight.state {
 		}
 
 		public override bool HandleEvent(Event e) {
+			var level = Context.Level!;
 			if (InGameState.InMenu) {
 				return false;
 			}
@@ -90,11 +91,11 @@ namespace BurningKnight.state {
 			} else if (e is RoomChangedEvent { Who: LocalPlayer } re) {
 				switch (re.New.Type) {
 					case RoomType.Boss: {
-						if (Context.Level!.Biome is TechBiome) {
-							Audio.PlayMusic(Context.Level!.Biome.GetMusic());
+						if (level.Biome is TechBiome) {
+							Audio.PlayMusic(level.Biome.GetMusic());
 						} else {
 							if (Area!.Tagged[Tags.Boss].Count > 0 && ((Boss) Area.Tagged[Tags.Boss][0]).Awoken) {
-								Audio.PlayMusic((Context.Level!.Biome is LibraryBiome || Context.Level!.Biome is LibraryBiome)
+								Audio.PlayMusic((level.Biome is LibraryBiome || level.Biome is LibraryBiome)
 									? "Last chance"
 									: "Fatiga");
 							} else {
@@ -141,7 +142,7 @@ namespace BurningKnight.state {
 					}
 
 					default: {
-						Audio.PlayMusic(Context.Level!.GetMusic()!);
+						Audio.PlayMusic(level.GetMusic()!);
 						break;
 					}
 				}
