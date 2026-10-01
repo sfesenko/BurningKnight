@@ -40,7 +40,7 @@ namespace BurningKnight.level {
 				for (var X = Room.Left; X <= Room.Right; X++) {
 					var I = Level.ToIndex(X, Y);
 
-					var rs = !Level!.Biome.HasSpikes();
+					var rs = !Level!.Biome!.HasSpikes();
 
 					if (rs) {
 						var tl = (Tile) Level.Tiles[I];

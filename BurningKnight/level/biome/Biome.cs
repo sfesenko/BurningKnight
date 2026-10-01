@@ -87,7 +87,7 @@ namespace BurningKnight.level.biome {
 		}
 
 		public virtual Tile GetFilling() {
-			return Context.Level!.Variant.Id == LevelVariant.Chasm ? Tile.Chasm : Tile.WallA;
+			return Context.Level!.Variant!.Id == LevelVariant.Chasm ? Tile.Chasm : Tile.WallA;
 		}
 
 		public virtual bool HasCobwebs() {
@@ -115,11 +115,11 @@ namespace BurningKnight.level.biome {
 		}
 
 		public virtual bool HasPlants() {
-			return Context.Level!.Variant.Id == LevelVariant.Forest;
+			return Context.Level!.Variant!.Id == LevelVariant.Forest;
 		}
 
 		public virtual bool HasTrees() {
-			return Context.Level!.Variant.Id == LevelVariant.Forest;
+			return Context.Level!.Variant!.Id == LevelVariant.Forest;
 		}
 		
 		public virtual int GetNumRegularRooms() {

@@ -177,7 +177,7 @@ namespace BurningKnight.level.builders {
 				}
 			}
 
-			while (!Prev.ConnectTo(Entrance)) {
+			while (!Prev!.ConnectTo(Entrance)) {
 				var C = RoomRegistry.Generate(RoomType.Regular, LevelSave.BiomeGenerated!);
 
 				if ((int) PlaceRoom(Loop, Prev, C!, AngleBetweenRooms(Prev, Entrance)) == -1) {

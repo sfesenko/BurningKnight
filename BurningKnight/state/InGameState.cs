@@ -75,7 +75,7 @@ namespace BurningKnight.state {
 		private UiPane audioSettings = null!;
 		private UiPane graphicsSettings = null!;
 		private UiPane gameSettings = null!;
-		private UiPane confirmationPane = null!;
+		private UiPane? confirmationPane = null!;
 		private UiPane inputSettings = null!;
 		private UiPane gamepadSettings = null!;
 		private UiPane keyboardSettings = null!;
@@ -336,12 +336,12 @@ namespace BurningKnight.state {
 			return $"{Context.Run.Score}".PadLeft(7, '0');
 		}
 
-		public Action OnPauseCallback = null!;
+		public Action? OnPauseCallback = null!;
 		private UiMap map = null!;
 		private UiLabel scoreLabel = null!;
 		private UiLabel boardType = null!;
 
-		private UiLabel lastCreditsLabel = null!;
+		private UiLabel? lastCreditsLabel = null!;
 
 		private UiButton pauseBack = null!;
 		private UiButton settingsBack = null!;

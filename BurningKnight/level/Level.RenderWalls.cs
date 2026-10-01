@@ -69,7 +69,7 @@ namespace BurningKnight.level {
 							if (!a) {
 								switch (tl) {
 									case Tile.Planks: {
-										ar = Tilesets.Biome.Planks;
+										ar = Tilesets.Biome!.Planks;
 										arr = Tilesets.Biome.PlankSides;
 										break;
 									}
@@ -93,13 +93,13 @@ namespace BurningKnight.level {
 									}
 																		
 									case Tile.EvilWall: {
-										ar = Tilesets.Biome.EvilWall;
+										ar = Tilesets.Biome!.EvilWall;
 										arr = Tilesets.Biome.EvilWallSides;
 										break;
 									}
 
 									case Tile.GrannyWall: {
-										ar = Tilesets.Biome.GrannyWall;
+										ar = Tilesets.Biome!.GrannyWall;
 										arr = Tilesets.Biome.GrannyWallSides;
 										break;
 									}
@@ -126,15 +126,15 @@ namespace BurningKnight.level {
 						}
 					} else if (tl == Tile.Chasm) {
 						if (IsInside(index + width) && !Get(index + width).IsWall() && Get(index + width) != Tile.Chasm) {
-							Graphics.Render(Tilesets.Biome.ChasmBottom[CalcChasmIndex(x, y + 1)], new Vector2(x * 16, y * 16 + 16));
+							Graphics.Render(Tilesets.Biome!.ChasmBottom[CalcChasmIndex(x, y + 1)], new Vector2(x * 16, y * 16 + 16));
 						}
 								
 						if (IsInside(index + 1) && !Get(index + 1).IsWall() && Get(index + 1) != Tile.Chasm) {
-							Graphics.Render(Tilesets.Biome.ChasmRight[CalcChasmIndex(x + 1, y)], new Vector2(x * 16 + 16, y * 16));
+							Graphics.Render(Tilesets.Biome!.ChasmRight[CalcChasmIndex(x + 1, y)], new Vector2(x * 16 + 16, y * 16));
 						}
 								
 						if (index > 0 && !Get(index - 1).IsWall() && Get(index - 1) != Tile.Chasm) {
-							Graphics.Render(Tilesets.Biome.ChasmLeft[CalcChasmIndex(x - 1, y)], new Vector2(x * 16 - 16, y * 16));
+							Graphics.Render(Tilesets.Biome!.ChasmLeft[CalcChasmIndex(x - 1, y)], new Vector2(x * 16 - 16, y * 16));
 						}
 					}
 				}
@@ -145,7 +145,7 @@ namespace BurningKnight.level {
 			var tileset = (MatrixLeak[index] ? MatrixTileset : Tileset);
 			
 			if (t != Tile.Transition) {
-				var region = t == Tile.Planks ? Tilesets.Biome.PlanksTop : tileset!.Tiles[tile][0];
+				var region = t == Tile.Planks ? Tilesets.Biome!.PlanksTop : tileset!.Tiles[tile][0];
 				a = t == Tile.WallA || t == Tile.Piston || t == Tile.PistonDown;
 				var ab = a || t == Tile.GrannyWall || t == Tile.EvilWall;
 				var effect = Graphics.ParseEffect(x % 2 == 0, y % 2 == 0);
@@ -215,17 +215,17 @@ namespace BurningKnight.level {
 								}
 								
 								case Tile.Planks: {
-									ar = Tilesets.Biome.PlankTops;
+									ar = Tilesets.Biome!.PlankTops;
 									break;
 								}
 								
 								case Tile.GrannyWall: {
-									ar = Tilesets.Biome.GrannyWallTops;
+									ar = Tilesets.Biome!.GrannyWallTops;
 									break;
 								}
 								
 								case Tile.EvilWall: {
-									ar = Tilesets.Biome.EvilWallTops;
+									ar = Tilesets.Biome!.EvilWallTops;
 									break;
 								}
 							}
@@ -300,17 +300,17 @@ namespace BurningKnight.level {
 						}
 							
 						case Tile.Planks: {
-							ar = Tilesets.Biome.PlanksExtensions;
+							ar = Tilesets.Biome!.PlanksExtensions;
 							break;
 						}
 							
 						case Tile.GrannyWall: {
-							ar = Tilesets.Biome.GrannyExtensions;
+							ar = Tilesets.Biome!.GrannyExtensions;
 							break;
 						}
 							
 						case Tile.EvilWall: {
-							ar = Tilesets.Biome.EvilExtensions;
+							ar = Tilesets.Biome!.EvilExtensions;
 							break;
 						}
 					}

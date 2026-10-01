@@ -9,7 +9,7 @@ namespace BurningKnight.save {
 	public abstract class EntitySaver : Saver {
 		public class Comparer : IComparer<Entity> {
 			public int Compare(Entity? x, Entity? y) {
-				return x!.GetType()!.FullName!.CompareTo(y.GetType().FullName);
+				return x!.GetType()!.FullName!.CompareTo(y!.GetType()!.FullName);
 			}
 		}
 

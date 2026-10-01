@@ -22,7 +22,7 @@ namespace BurningKnight.entity.component {
 			}
 		}
 
-		public string GamepadId = null!;
+		public string? GamepadId = null!;
 
 		static GamepadComponent() {
 			Camera.OnShake += () => {

@@ -77,7 +77,7 @@ namespace BurningKnight.level {
 					var liquid = (Tile) Liquid[index];
 
 					if (liquid == Tile.Lava) {
-						Graphics.Render(Tilesets.Biome.Light[LiquidVariants[index]], new Vector2(x * 16 - 24, y * 16 - 24), 0, Vector2.Zero, new Vector2(2));
+						Graphics.Render(Tilesets.Biome!.Light[LiquidVariants[index]], new Vector2(x * 16 - 24, y * 16 - 24), 0, Vector2.Zero, new Vector2(2));
 					}
 				}
 			}
@@ -197,17 +197,17 @@ namespace BurningKnight.level {
 							}
 							
 							case Tile.Planks: {
-								ar = Tilesets.Biome.PlanksExtensions;
+								ar = Tilesets.Biome!.PlanksExtensions;
 								break;
 							}
 							
 							case Tile.GrannyWall: {
-								ar = Tilesets.Biome.GrannyExtensions;
+								ar = Tilesets.Biome!.GrannyExtensions;
 								break;
 							}
 							
 							case Tile.EvilWall: {
-								ar = Tilesets.Biome.EvilExtensions;
+								ar = Tilesets.Biome!.EvilExtensions;
 								break;
 							}
 						}

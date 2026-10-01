@@ -146,7 +146,7 @@ namespace BurningKnight.level {
 			flow.SetValue(0f);
 			
 			shader.Parameters["time"].SetValue(time * 0.04f);
-			shader.Parameters["h"].SetValue(64f / Tilesets.Biome.WaterPattern!.Texture!.Height);
+			shader.Parameters["h"].SetValue(64f / Tilesets.Biome!.WaterPattern!.Texture!.Height);
 
 			var sy = shader.Parameters["sy"];
 
@@ -326,13 +326,13 @@ namespace BurningKnight.level {
 										textureRegion = tileset!.WallA[ind];
 										break;
 									case Tile.Planks:
-										textureRegion = Tilesets.Biome.Planks[ind];
+										textureRegion = Tilesets.Biome!.Planks[ind];
 										break;
 									case Tile.EvilWall: case Tile.EvilFloor:
-										textureRegion = Tilesets.Biome.EvilWall[ind];
+										textureRegion = Tilesets.Biome!.EvilWall[ind];
 										break;
 									case Tile.GrannyWall: case Tile.GrannyFloor:
-										textureRegion = Tilesets.Biome.GrannyWall[ind];
+										textureRegion = Tilesets.Biome!.GrannyWall[ind];
 										break;
 									case Tile.FloorA:
 										textureRegion = tileset!.FloorSidesA[ind];

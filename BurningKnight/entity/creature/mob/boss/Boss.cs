@@ -191,7 +191,7 @@ namespace BurningKnight.entity.creature.mob.boss {
 								Timer.Add(() => {
 									var part = new TileParticle();
 
-									part.Top = t == Tile.GrannyFloor ? Tilesets.Biome.GrannyFloor[0] : Tilesets.Biome.EvilFloor[0];
+									part.Top = t == Tile.GrannyFloor ? Tilesets.Biome!.GrannyFloor[0] : Tilesets.Biome!.EvilFloor[0];
 									part.TopTarget = Context!.Level!.Tileset!.WallTopADecor;
 									part.Side = Context.Level!.Tileset.FloorSidesD[0];
 									part.Sides = Context.Level!.Tileset.WallSidesA[2];
