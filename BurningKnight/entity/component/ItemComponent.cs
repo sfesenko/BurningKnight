@@ -226,7 +226,7 @@ namespace BurningKnight.entity.component {
 			}
 			
 			if (ImGui.InputText("Item", ref debugItem, 128, ImGuiInputTextFlags.EnterReturnsTrue)) {
-				var item = Items.CreateAndAdd(debugItem, Entity.Area);
+				var item = Items.CreateAndAdd(debugItem, Entity.Area!);
 				Set(item);
 			}
 		}

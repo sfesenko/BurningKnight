@@ -24,20 +24,20 @@ namespace BurningKnight.ui.editor {
 		private static readonly Num.Vector4 TintColor = new(1f);
 		private static readonly Num.Vector4 Bg = new(0.1f);
 
-		public static Editor Editor;
-		public static EditorWindow Window;
+		public static Editor Editor = null!;
+		public static EditorWindow Window = null!;
 		
-		private static string[] _biomes;
+		private static string[] _biomes = null!;
 		private static int _currentBiome;
 		private static readonly List<TileInfo> Infos = [];
-		private static Texture2D _biomeTexture;
+		private static Texture2D _biomeTexture = null!;
 		private static IntPtr _biomePointer;
-		private static Texture2D _tilesetTexture;
+		private static Texture2D _tilesetTexture = null!;
 		private static IntPtr _tilesetPointer;
 		private static bool _fill;
 		private static bool _open;
 
-		private static TileInfo CurrentInfo;
+		private static TileInfo CurrentInfo = null!;
 		private static bool Grid;
 		
 		public static void ReloadBiome() {
@@ -57,10 +57,10 @@ namespace BurningKnight.ui.editor {
 				i++;
 			}
 			
-			_tilesetTexture = Animations.Get($"{Editor.Level.Biome.Id}_biome").Texture;
+			_tilesetTexture = Animations.Get($"{Editor!.Level!.Biome.Id}_biome")!.Texture;
 			_tilesetPointer = ImGuiHelper.Renderer.BindTexture(_tilesetTexture);
 			
-			_biomeTexture = Animations.Get("biome_assets").Texture;
+			_biomeTexture = Animations.Get("biome_assets")!.Texture;
 			_biomePointer = ImGuiHelper.Renderer.BindTexture(_biomeTexture);
 			
 			Infos.Clear();

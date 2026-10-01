@@ -15,7 +15,7 @@ namespace BurningKnight.entity.creature.drop {
 		private static ImGuiTextFilterPtr? itemFilter;
 		private static unsafe ImGuiTextFilterPtr PopupFilter =>
 			itemFilter ??= new ImGuiTextFilterPtr(ImGuiNative.ImGuiTextFilter_ImGuiTextFilter(null));
-		private static string selectedItem;
+		private static string? selectedItem;
 		private static int id;
 		public static void RenderDebug(JsonValue root) {
 			root.InputFloat("Chance", "chance");

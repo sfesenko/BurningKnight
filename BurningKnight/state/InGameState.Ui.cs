@@ -145,7 +145,7 @@ namespace BurningKnight.state {
 
 						try {
 							// Needs xclip on linux
-							Clipboard.SetText(Context.Run.Seed);
+							Clipboard.SetText(Context.Run.Seed!);
 						} catch (Exception e) {
 							Log.Error(e);
 						}

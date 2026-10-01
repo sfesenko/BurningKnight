@@ -19,7 +19,7 @@ namespace BurningKnight.entity.item.renderer {
 				if (ImGui.IsMouseDown(ImGuiMouseButton.Right)) {
 					v = ImGui.GetMousePos() - pos;
 					
-					if (!(v.X < 0) && !(v.Y < 0) && !(v.X > region.Width * 3) && !(v.Y > region.Height * 3)) {
+					if (!(v.X < 0) && !(v.Y < 0) && !(v.X > region!.Width * 3) && !(v.Y > region.Height * 3)) {
 						if (snapGrid) {
 							v.X = (float) (Math.Floor(v.X / 3) * 3);
 							v.Y = (float) (Math.Floor(v.Y / 3) * 3);
@@ -34,7 +34,7 @@ namespace BurningKnight.entity.item.renderer {
 				}
 				
 				ImGuiNative.ImDrawList_AddRect(ImGui.GetWindowDrawList(), pos - new System.Numerics.Vector2(1, 1),
-					pos + new System.Numerics.Vector2(region.Width * 3 + 1, region.Height * 3 + 1),
+					pos + new System.Numerics.Vector2(region!.Width * 3 + 1, region.Height * 3 + 1),
 					ColorUtils.WhiteColor.PackedValue, 0, 0, 1);
 
 				ItemEditor.DrawItem(region);
@@ -93,7 +93,7 @@ namespace BurningKnight.entity.item.renderer {
 				if (ImGui.IsMouseDown(ImGuiMouseButton.Right)) {
 					v = ImGui.GetMousePos() - pos;
 
-					if (!(v.X < 0) && !(v.Y < 0) && !(v.X > region.Width * 3) && !(v.Y > region.Height * 3)) {
+					if (!(v.X < 0) && !(v.Y < 0) && !(v.X > region!.Width * 3) && !(v.Y > region.Height * 3)) {
 						if (snapGrid) {
 							v.X = (float) (Math.Floor(v.X / 3) * 3);
 							v.Y = (float) (Math.Floor(v.Y / 3) * 3);
@@ -108,7 +108,7 @@ namespace BurningKnight.entity.item.renderer {
 				}
 
 				ImGuiNative.ImDrawList_AddRect(ImGui.GetWindowDrawList(), pos - new System.Numerics.Vector2(1, 1),
-					pos + new System.Numerics.Vector2(region.Width * 3 + 1, region.Height * 3 + 1),
+					pos + new System.Numerics.Vector2(region!.Width * 3 + 1, region.Height * 3 + 1),
 					ColorUtils.WhiteColor.PackedValue, 0, 0, 1);
 
 				ItemEditor.DrawItem(region);

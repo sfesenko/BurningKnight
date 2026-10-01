@@ -21,9 +21,9 @@ namespace BurningKnight.assets.dialogs {
 		private static Color hoveredNodeBg = new Color(0.1f, 0.1f, 0.1f, 0.8f);
 		private static Color activeNodeBg = new Color(0.2f, 0.2f, 0.2f, 0.8f);
 		private static Vector2 connectorVector = new Vector2(connectorRadius);
-		public static GraphNode Focused;
+		public static GraphNode Focused = null!;
 		public static Vector2 Offset;
-		public GraphConnection CurrentActive;
+		public GraphConnection? CurrentActive;
 		public bool Done;
 		private static bool IsConnectorHovered(Vector2 connector) {
 			var mouse = ImGui.GetIO().MousePos;
@@ -77,15 +77,17 @@ namespace BurningKnight.assets.dialogs {
 							var active = ImGuiHelper.CurrentActive;
 							ImGuiHelper.CurrentActive = null;
 							
-							if (active.CurrentActive != CurrentActive && active.CurrentActive.Input != CurrentActive.Input) {
+							if (active.CurrentActive != null && CurrentActive != null && active.CurrentActive != CurrentActive && active.CurrentActive.Input != CurrentActive.Input) {
 								active.CurrentActive.ConnectedTo.Add(CurrentActive);
 								CurrentActive.ConnectedTo.Add(active.CurrentActive);
 
 							}
 							
 							active.justStarted = true;
-							active.CurrentActive.Active = false;
-							active.CurrentActive = null;
+							if (active.CurrentActive != null) {
+								active.CurrentActive.Active = false;
+								active.CurrentActive = null;
+							}
 
 							if (CurrentActive != null) {
 								CurrentActive.Active = false;

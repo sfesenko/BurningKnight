@@ -25,8 +25,8 @@ namespace BurningKnight.state.save {
 			Graphics.Batch.End();
 		}
 
-		private FileHandle saveDir;
-		private SaveGroup nodes;
+		private FileHandle saveDir = null!;
+		private SaveGroup nodes = null!;
 
 		private void RefreshSaveDir() {
 			saveDir = new FileHandle(SaveManager.SaveDir);

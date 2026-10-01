@@ -7,8 +7,8 @@ namespace BurningKnight.debug {
 		}
 
 		public Access RunPermission = Access.Everyone;
-		public string Name;
-		public string ShortName;
+		public string Name = null!;
+		public string ShortName = null!;
 
 		public abstract void Run(Console Console, string[] Args);
 

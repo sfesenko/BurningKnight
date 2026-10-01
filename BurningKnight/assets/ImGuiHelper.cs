@@ -14,7 +14,7 @@ using Vector2 = System.Numerics.Vector2;
 
 namespace BurningKnight.assets {
 	public static class ImGuiHelper {
-		public static ImGuiRenderer Renderer;
+		public static ImGuiRenderer Renderer = null!;
 		public static IntPtr ItemsTexture;
 		public static IntPtr ProjectilesTexture;
 
@@ -148,7 +148,7 @@ namespace BurningKnight.assets {
 					GraphNode.Focused = node;
 				}
 
-				Node(node);
+				Node(node!);
 				toAdd = null;
 			}
 			
@@ -171,7 +171,7 @@ namespace BurningKnight.assets {
 			
 			RenderMenu();
 
-			GraphNode first = null;
+			GraphNode first = null!;
 			var sawFocused = false;
 			
 			foreach (var p in DialogGraph.Nodes) {
@@ -204,15 +204,15 @@ namespace BurningKnight.assets {
 			}
 
 			if (!sawFocused) {
-				GraphNode.Focused = first;
+				GraphNode.Focused = first!;
 			}
 			
 			ImGui.End();
 		}
 
-		public static GraphNode CurrentMenu;
-		private static string pasted;
-		private static string toAdd;
+		public static GraphNode CurrentMenu = null!;
+		private static string? pasted;
+		private static string? toAdd;
 		private static bool hideFiltred;
 
 		public static void RenderPaste() {
@@ -295,6 +295,6 @@ namespace BurningKnight.assets {
 			}
 		}
 
-		public static GraphNode CurrentActive;
+		public static GraphNode? CurrentActive;
 	}
 }

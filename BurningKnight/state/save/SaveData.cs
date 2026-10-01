@@ -4,7 +4,7 @@ using Lens.util.file;
 namespace BurningKnight.state.save {
 	public class SaveData : SaveNode {
 		public SaveType SaveType;
-		public SaveInspector Inspector;
+		public SaveInspector Inspector = null!;
 		
 		public void Load() {
 			var stream = new FileReader(FullPath);

@@ -13,7 +13,7 @@ namespace BurningKnight.debug {
 		private static unsafe ImGuiTextFilterPtr popupFilter = new ImGuiTextFilterPtr(ImGuiNative.ImGuiTextFilter_ImGuiTextFilter(null));
 		private static System.Numerics.Vector2 size = new System.Numerics.Vector2(300, 400);
 		private static System.Numerics.Vector2 popupSize = new System.Numerics.Vector2(400, 400);
-		private static string selectedItem;
+		private static string selectedItem = null!;
 		private static int id;
 		private static int count;
 		

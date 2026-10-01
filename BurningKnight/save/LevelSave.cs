@@ -136,7 +136,7 @@ namespace BurningKnight.save {
 					return GenerationThread(seed, area, attempt, c + 1);
 				}
 				
-				return GenerationThread(seed, area, attempt);
+				return GenerationThread(seed!, area, attempt);
 			}
 
 			BiomeGenerated = null;
@@ -170,7 +170,7 @@ namespace BurningKnight.save {
 
 				var thread = new Thread(() => {
 					try {
-						GenerationThread(seed, area, attempt);
+						GenerationThread(seed!, area, attempt);
 					} catch (ThreadInterruptedException) {
 						// The watchdog below already gave up on this attempt, so this is not a
 						// success. Re-establish the physics world, which the interrupted attempt may

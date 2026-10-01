@@ -8,7 +8,7 @@ namespace BurningKnight.debug {
 		public override void Run(Console Console, string[] Args) {
 			var level = Context.Level;
 
-			for (var i = 0; i < level.Explored.Length; i++) {
+			for (var i = 0; i < level!.Explored!.Length; i++) {
 				level.Explored[i] = true;
 			}
 		}

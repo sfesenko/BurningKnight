@@ -35,7 +35,7 @@ namespace BurningKnight.state {
 
 		// Set by the worker once the saves are in, applied by the main thread.
 		private volatile bool checkFullscreen;
-		private Area gameArea;
+		private Area gameArea = null!;
 		private float t;
 		
 		public override void Init() {

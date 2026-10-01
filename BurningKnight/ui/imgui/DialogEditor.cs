@@ -17,7 +17,7 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.ui.imgui {
 	public static class DialogEditor {
-		private static string[] files;
+		private static string[] files = null!;
 		private static int current;
 
 		public static string Current => files[current];
@@ -107,8 +107,8 @@ namespace BurningKnight.ui.imgui {
 			}
 		}
 
-		private static GraphNode last;
-		private static UiString str;
+		private static GraphNode last = null!;
+		private static UiString str = null!;
 
 		public static void RenderUi() {
 			if (GraphNode.Focused != null) {

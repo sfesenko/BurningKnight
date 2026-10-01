@@ -57,7 +57,7 @@ namespace BurningKnight.save {
 						Log.Error(e);
 					}
 				} else if (Context.Run.Type == RunType.Daily) {
-					Rnd.Seed = Context.Run.Seed;
+					Rnd.Seed = Context.Run.Seed!;
 					
 					var count = Rnd.Int(1, 4);
 

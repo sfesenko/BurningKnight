@@ -14,7 +14,7 @@ namespace BurningKnight.entity.item.stand {
 					Item.Done = true;
 				}
 
-				SetItem(Items.CreateAndAdd(debugItem, Area), null);
+				SetItem(Items.CreateAndAdd(debugItem, Area!), null);
 				SavedItem = debugItem;
 			}
 		}

@@ -56,8 +56,8 @@ namespace BurningKnight.state {
 	// The dev-tool half of the run state: the console, the editor window and the ImGui pass. A
 	// release build excludes every *.Debug.cs (ADR-0003), and the partial hooks above compile out.
 	public partial class InGameState {
-		private EditorWindow editor;
-		public Console Console;
+		private EditorWindow editor = null!;
+		public Console Console = null!;
 
 		partial void FocusAreaDebug(Entity entity) {
 			AreaDebug.ToFocus = entity;
@@ -75,7 +75,7 @@ namespace BurningKnight.state {
 			if (Assets.ImGuiEnabled) {
 				editor = new EditorWindow(new Editor {
 					Area = Area,
-					Level = Context.Level,
+					Level = Context.Level!,
 					Camera = camera
 				});
 			}
@@ -233,13 +233,13 @@ namespace BurningKnight.state {
 
 			if (Input.Keyboard.WasPressed(Keys.NumPad7) || Input.Keyboard.WasPressed(Keys.Home)) {
 				var p = LocalPlayer.Locate(Area);
-				p.Center = p.GetComponent<CursorComponent>()!.Cursor.GamePosition;
+				p!.Center = p.GetComponent<CursorComponent>()!.Cursor.GamePosition;
 			}
 
 			if (Input.Keyboard.WasPressed(Keys.PageUp)) {
 				var level = Context.Level;
 
-				for (var i = 0; i < level.Explored.Length; i++) {
+				for (var i = 0; i < level!.Explored!.Length; i++) {
 					level.Explored[i] = true;
 				}
 			}

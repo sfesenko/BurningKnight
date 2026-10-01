@@ -12,16 +12,16 @@ using Microsoft.Xna.Framework;
 
 namespace BurningKnight.state {
 	public class PicoState : GameState {
-		private TextureRegion frame;
-		private TextureRegion fill;
+		private TextureRegion frame = null!;
+		private TextureRegion fill = null!;
 
 		public override void Init() {
 			base.Init();
 
 			var anim = Animations.Get("monitor");
 
-			frame = anim.GetSlice("frame");
-			fill = anim.GetSlice("fill");
+			frame = anim!.GetSlice("frame")!;
+			fill = anim.GetSlice("fill")!;
 
 			Camera = new Camera(new FollowingDriver());
 			

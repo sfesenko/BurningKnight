@@ -49,7 +49,7 @@ namespace BurningKnight.state {
 		public bool StartedNew;
 		public bool HasRun;
 		
-		public string Seed = null!;
+		public string? Seed;
 
 		public bool IgnoreSeed;
 		public int Luck;
@@ -162,7 +162,7 @@ namespace BurningKnight.state {
 				GlobalSave.RunId++;
 			}
 
-			Rnd.Seed = Seed;
+			Rnd.Seed = Seed!;
 			AlternateMusic = Rnd.Chance(0.5f);
 			
 			Log.Debug($"This run's seed is {Seed}");

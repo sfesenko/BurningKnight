@@ -23,9 +23,9 @@ using Console = BurningKnight.debug.Console;
 
 namespace BurningKnight.state {
 	public class EditorState : GameState {
-		public Level Level;
-		public EditorWindow Editor;
-		public Console Console;
+		public Level Level = null!;
+		public EditorWindow Editor = null!;
+		public Console Console = null!;
 		
 		public override void Init() {
 			base.Init();
@@ -72,7 +72,7 @@ namespace BurningKnight.state {
 			Console.Update(dt);
 			
 			if (Input.Keyboard.IsDown(Keys.Space)) {
-				Camera.Position -= Input.Mouse.PositionDelta;
+				Camera!.Position -= Input.Mouse.PositionDelta;
 				
 				Camera.X = Math.Clamp(Camera.X, -Display.Width / 2f, Level.Width * 16f - Display.Width / 2f);
 				Camera.Y = Math.Clamp(Camera.Y, -Display.Height / 2f, Level.Height * 16f - Display.Height / 2f);

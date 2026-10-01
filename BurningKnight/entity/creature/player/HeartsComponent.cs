@@ -106,7 +106,7 @@ namespace BurningKnight.entity.creature.player {
 			}
 		}
 		
-		public bool Hurt(int amount, Entity setter, DamageType type = DamageType.Regular) {
+		public bool Hurt(int amount, Entity? setter, DamageType type = DamageType.Regular) {
 			if (amount > 0) {
 				amount *= -1;
 			}

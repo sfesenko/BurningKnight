@@ -28,7 +28,7 @@ namespace BurningKnight.entity.creature.pet {
 			defined[$"{(mod == null ? Mods.BurningKnight : mod.Prefix)}:{id}"] = pet;
 		}
 
-		public static bool? Has(string id) {
+		public static bool Has(string id) {
 			return defined.ContainsKey(id);
 		}
 

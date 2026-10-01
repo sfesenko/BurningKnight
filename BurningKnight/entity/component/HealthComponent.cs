@@ -36,7 +36,7 @@ namespace BurningKnight.entity.component {
 		public bool HasNoHealth => health <= 0.01f;
 		public float Percent => Health / MaxHealth;
 
-		public bool SetHealth(float hp, Entity setter, bool mod = true, DamageType type = DamageType.Regular) {
+		public bool SetHealth(float hp, Entity? setter, bool mod = true, DamageType type = DamageType.Regular) {
 			if (Math.Abs(hp - health) < 0.01f) {
 				return false;
 			}
@@ -84,7 +84,7 @@ namespace BurningKnight.entity.component {
 			return false;
 		}
 
-		private void TryToKill(Entity e, DamageType type) {
+		private void TryToKill(Entity? e, DamageType type) {
 			if (health <= 0.1f && (!Entity.TryGetComponent<HeartsComponent>(out var c) || c.Total == 0) && AutoKill) { 
 				Kill(e, type);
 			}
@@ -92,7 +92,7 @@ namespace BurningKnight.entity.component {
 
 		public bool LastModifiedHearts;
 
-		public bool ModifyHealth(float amount, Entity setter, DamageType type = DamageType.Regular) {
+		public bool ModifyHealth(float amount, Entity? setter, DamageType type = DamageType.Regular) {
 			LastModifiedHearts = false;
 			if (amount < 0 && Entity is Player && (Context.Run.Depth != -2 && Context.Run.Depth < 1)) {
 				if (Unhittable || (PreventDamageInInvincibility && InvincibilityTimer > 0) || Health <= 0.01f) {

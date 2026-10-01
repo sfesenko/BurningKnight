@@ -71,7 +71,7 @@ namespace BurningKnight.state {
 
 					try {
 						// Needs xclip on linux
-						Clipboard.SetText(Context.Run.Seed);
+						Clipboard.SetText(Context.Run.Seed!);
 					} catch (Exception e) {
 						Log.Error(e);
 					}
@@ -189,13 +189,13 @@ namespace BurningKnight.state {
 			gameOverMenu.Add(stats);
 
 			stats.Add(Locale.Get("run_type"), Locale.Get($"run_{Context.Run.Type.ToString().ToLower()}") + (Context.Run.CustomSeed ? " " + Locale.Get("seeded") : ""));
-			stats.Add(Locale.Get("seed"), Context.Run.Seed, false, bt => {
+			stats.Add(Locale.Get("seed"), Context.Run.Seed!, false, bt => {
 				var b = (UiTableEntry) bt;
 				b.RealLocaleLabel = "copied_to_clipboard";
 
 				try {
 					// Needs xclip on linux
-					Clipboard.SetText(Context.Run.Seed);
+					Clipboard.SetText(Context.Run.Seed!);
 				} catch (Exception e) {
 					Log.Error(e);
 				}

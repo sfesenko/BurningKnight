@@ -26,18 +26,18 @@ namespace BurningKnight.ui.editor {
 		private static Num.Vector2 size = new Num.Vector2(200, 400);
 
 		private static bool move;
-		private static Type currentType;
+		private static Type currentType = null!;
 		private static Vector2 offset;
-		private static Type copy;
-		private static Entity entity;	
+		private static Type copy = null!;
+		private static Entity? entity;
 		private static int selected;
 
 		public static List<TypeInfo> Types = new List<TypeInfo>();
 		public static bool SnapToGrid = true;
 		public static bool Center;
-		public static Editor Editor;
-		public static Entity CurrentEntity => entity;
-		public static Entity HoveredEntity;
+		public static Editor Editor = null!;
+		public static Entity CurrentEntity => entity!;
+		public static Entity HoveredEntity = null!;
 		
 		static EntityEditor() {
 			var blocked = new List<Type> {
@@ -63,7 +63,7 @@ namespace BurningKnight.ui.editor {
 				});
 			}
 			
-			Types.Sort((a, b) => a.GetType().FullName.CompareTo(b.GetType().FullName));
+			Types.Sort((a, b) => a!.GetType()!.FullName!.CompareTo(b.GetType().FullName));
 		}
 
 		private static bool open;
@@ -129,7 +129,7 @@ namespace BurningKnight.ui.editor {
 				}
 			} else if (move) {
 				var mouse = Input.Mouse.GamePosition;
-				Entity selected = null;
+				Entity selected = null!;
 					
 				foreach (var e in Editor.Area!.Entities.Entities) {
 					if (e.OnScreen && AreaDebug.PassFilter(e) && !(e is Firefly || e is WindFx || e is Lock)) {
@@ -139,14 +139,14 @@ namespace BurningKnight.ui.editor {
 					}
 				}
 
-				HoveredEntity = selected;
+				HoveredEntity = selected!;
 				
 				if (clicked) {
-					entity = selected;
+					entity = selected!;
 
 					if (selected != null) {
-						AreaDebug.ToFocus = entity;
-						offset = entity.Position - mouse;
+						AreaDebug.ToFocus = entity!;
+						offset = entity!.Position - mouse;
 					}
 				} else if (entity != null && (down && entity.Contains(mouse) || Input.Keyboard.IsDown(Keys.LeftAlt, true))) {
 					mouse += offset;
@@ -212,9 +212,9 @@ namespace BurningKnight.ui.editor {
 			}
 
 			try {
-				entity = (Entity) Activator.CreateInstance(currentType);
+				entity = (Entity) Activator.CreateInstance(currentType)!;
 				Editor.Area!.Add(entity);
-				entity.Position = Input.Mouse.GamePosition;
+				entity!.Position = Input.Mouse.GamePosition;
 				// somethig wrong here
 			} catch (Exception e) {
 				Log.Error(e);
