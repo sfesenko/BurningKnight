@@ -32,6 +32,8 @@ namespace BurningKnight.entity.component {
 			public float BaseVolume = 1f;
 			public bool KeepAround;
 			public bool ApplyBuffer;
+			public bool Dead;
+			public TweenTask? Tween;
 		}
 		
 		public override void Destroy() {
@@ -44,6 +46,9 @@ namespace BurningKnight.entity.component {
 
 		public void StopAll() {
 			foreach (var s in Playing.Values) {
+				// A pending delayed tween must not touch a disposed instance when it fires.
+				s.Dead = true;
+				s.Tween?.Ended = true;
 				s.Effect.Stop();
 				s.Effect.Dispose();
 			}
@@ -85,6 +90,12 @@ namespace BurningKnight.entity.component {
 
 				if (!s.KeepAround && s.Effect.State != SoundState.Playing) {
 					Playing.Remove(k);
+					// A finished instance still owns its OpenAL source: the pool only gets it back
+					// on Stop or Dispose. Leaving it to the GC drains the pool and Play starts
+					// throwing InstancePlayLimitException.
+					s.Dead = true;
+					s.Tween?.Ended = true;
+					s.Effect.Dispose();
 				} else if (Listener != null) {
 					s.Effect.Apply3D(Listener, Emitter);
 				}
@@ -106,6 +117,18 @@ namespace BurningKnight.entity.component {
 			
 			return Emit(sfx, volume, PitchMod + Rnd.Float(-sz, sz), insert, looped, tween);
     }
+
+		private static bool TryPlay(SoundEffectInstance effect) {
+			try {
+				effect.Play();
+
+				return true;
+			} catch (InstancePlayLimitException) {
+				// The OpenAL source pool is finite and a burst can exhaust it. A dropped sound
+				// must not kill the run.
+				return false;
+			}
+		}
 
 		public SoundEffectInstance? Emit(string sfx, float volume = 1f, float pitch = 0f, bool insert = true, bool looped = false, bool tween = false) {
 			if (!Assets.LoadSfx || sfx == null) {
@@ -151,10 +174,18 @@ namespace BurningKnight.entity.component {
 				var t = Tween.To(v, 0, x => instance.BaseVolume = x, 0.5f);
 
 				t.Delay = 1f;
+				instance.Tween = t;
 				t.OnStart = () => {
-					instance.Effect.Play();
+					if (instance.Dead) {
+						return;
+					}
+
+					TryPlay(instance.Effect);
 					instance.KeepAround = false;
-					instance.Effect.Apply3D(Listener, Emitter);
+
+					if (Listener != null) {
+						instance.Effect.Apply3D(Listener, Emitter);
+					}
 				};
 			}
 
@@ -164,7 +195,7 @@ namespace BurningKnight.entity.component {
 			instance.Effect.Pitch = MathUtils.Clamp(-1f, 1f, pitch);
 
 			if (!tween) {
-				instance.Effect.Play();
+				TryPlay(instance.Effect);
 			}
 
 			if (Listener != null) {

@@ -194,7 +194,11 @@ public class Audio
             return;
         }
 
-        sfx?.Play(MathUtils.Clamp(0, 1, volume * SfxVolume * MasterVolume), pitch, pan);
+        try {
+            sfx?.Play(MathUtils.Clamp(0, 1, volume * SfxVolume * MasterVolume), pitch, pan);
+        } catch (InstancePlayLimitException) {
+            // The OpenAL source pool is finite; a dropped sound must not kill the run.
+        }
     }
 
     public void PlayMusic(string music, bool fromStart = true)
@@ -230,15 +234,27 @@ public class Audio
             var id = Environment.CurrentManagedThreadId;
             Log.Info($"Audio.Play: {id}");
 
-            currentPlaying = GetOrLoadMusic(music);
+            var next = GetOrLoadMusic(music);
 
-            if (currentPlaying == null)
+            if (next == null)
             {
                 return;
             }
 
-            currentPlaying.Play();
-            currentPlaying.Volume = musicVolume;
+            // One track at a time: a state change must never leave the previous song running
+            // under the new one. Stopping the others also covers a fade that a new track
+            // interrupted before its callback ran.
+            foreach (var player in musicInstances.Values)
+            {
+                if (player != next && player.State == SoundState.Playing)
+                {
+                    player.Stop();
+                }
+            }
+
+            currentPlaying = next;
+            next.Play();
+            next.Volume = musicVolume;
 
             Log.Info($"Playing music {music} repeat = {Repeat}");
             currentPlayingMusic = music;
@@ -259,11 +275,17 @@ public class Audio
 
             Tween.To(0, player.Volume, x => player.Volume = x, CrossFadeTime).OnEnd = () =>
             {
-                currentPlaying = null;
-                currentPlayingMusic = null;
-                Log.Debug($@"Music state: {player.State}");
                 player.Stop();
 
+                // Only clear the state if this fade still owns it; a track started during the
+                // fade must not be forgotten.
+                if (currentPlaying == player)
+                {
+                    currentPlaying = null;
+                    currentPlayingMusic = null;
+                }
+
+                Log.Debug($@"Music state: {player.State}");
                 callback?.Invoke();
             };
         }
@@ -278,7 +300,11 @@ public class Audio
         var id = Environment.CurrentManagedThreadId;
         Log.Info($"Audio.Stop: {id}");
 
-        currentPlaying?.Stop();
+        foreach (var player in musicInstances.Values)
+        {
+            player.Stop();
+        }
+
         currentPlaying = null;
         currentPlayingMusic = null;
     }
