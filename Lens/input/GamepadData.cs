@@ -56,7 +56,10 @@ namespace Lens.input {
 				Log.Info($"Gamepad {PlayerIndex} attached");
 			}
 			
-			if (rumbleTime > 0) {
+			// MonoGame's Android backend ignores strength and always plays a fixed 500 ms
+			// one-shot — including for a zero request — so there is nothing to sustain or stop:
+			// a single call in Rumble is the whole buzz, and a "stop" would only start another.
+			if (!Engine.Mobile && rumbleTime > 0) {
 				rumbleTime -= dt;
 				rumbleStrength -= dt;
 
@@ -77,6 +80,12 @@ namespace Lens.input {
 		}
 
 		public void Rumble(float strength, float time) {
+			if (Engine.Mobile) {
+				// One call is the whole buzz; see Update.
+				GamePad.SetVibration(PlayerIndex, strength, strength);
+				return;
+			}
+
 			if (GamePad.SetVibration(PlayerIndex, strength, strength)) {
 				rumbleStrength = strength;
 				rumbleTime = time;
@@ -84,7 +93,10 @@ namespace Lens.input {
 		}
 
 		public void StopRumble() {
-			GamePad.SetVibration(PlayerIndex, 0, 0);
+			if (!Engine.Mobile) {
+				GamePad.SetVibration(PlayerIndex, 0, 0);
+			}
+
 			rumbleTime = 0;
 		}
 

@@ -1,5 +1,7 @@
 using System;
 using BurningKnight.assets.items;
+using BurningKnight.state;
+using Lens;
 using Lens.entity.component;
 using Lens.entity.component.logic;
 using Lens.input;
@@ -25,18 +27,25 @@ namespace BurningKnight.entity.component {
 		public string? GamepadId = null!;
 
 		static GamepadComponent() {
-			Camera.OnShake += () => {
+			Camera.OnShake += amount => {
 				if (Current == null || !Settings.Vibrate || Settings.Gamepad == null) {
 					return;
 				}
 
-				var am = Context.Camera!.GetComponent<ShakeComponent>()!.Amount;
-
-				if (am < 5) {
+				// Level generation closes hidden doors and settles tiles with small shakes; the
+				// accumulated camera amount crosses any threshold after a few of them, so the
+				// decision is made on the shake that was just requested, not the running total.
+				if (amount < 8) {
 					return;
 				}
-				
-				var a = Math.Max(1, am / 20f);
+
+				// Only a run in progress has a reason to buzz.
+				if (Engine.Instance.State is not InGameState) {
+					return;
+				}
+
+				// Strength was pinned at 1 by Math.Max(1, ...), so every shake hit full power.
+				var a = Math.Clamp(amount / 20f, 0.1f, 1f);
 				Current.Rumble(a, Math.Max(0.1f, a * 0.5f));
 			};
 		}
