@@ -1,0 +1,62 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net10.0-android</TargetFramework>
+        <!-- Android 6.0. The handheld runs Android 13; nothing here needs a newer floor. -->
+        <SupportedOSPlatformVersion>23</SupportedOSPlatformVersion>
+        <Nullable>enable</Nullable>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <RootNamespace>AndroidPort</RootNamespace>
+        <ApplicationId>com.burningknight.android</ApplicationId>
+        <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+        <ApplicationVersion>1</ApplicationVersion>
+        <!-- Sideloaded APK, arm64 only — the handheld's ABI. -->
+        <RuntimeIdentifiers>android-arm64</RuntimeIdentifiers>
+        <AndroidPackageFormat>apk</AndroidPackageFormat>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\BurningKnight\BurningKnight.csproj"/>
+        <ProjectReference Include="..\Lens\Lens.csproj"/>
+        <ProjectReference Include="..\Content\Content.csproj" ReferenceOutputAssembly="false"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="MonoGame.Framework.Android" Version="3.8.*"/>
+    </ItemGroup>
+
+    <!-- MonoGame.Extended reflects over an internal MonoGame property the linker would strip;
+         the descriptor keeps it. See illink.descriptors.xml. -->
+    <ItemGroup>
+        <TrimmerRootDescriptor Include="illink.descriptors.xml"/>
+    </ItemGroup>
+
+    <!-- The same payload Desktop ships: one Content.zip packed by the build and carried in the
+         APK's assets. The bootstrap copies it to FilesDir once per packed content and opens it
+         as an ArchiveContentSource. Android builds are Release only (ImGui.NET has no Android
+         natives), so Debug packs nothing. -->
+    <Target Name="StageContent" BeforeTargets="_ComputeAndroidAssetsPaths"
+            Condition="'$(Configuration)' == 'Release' and '$(DesignTimeBuild)' != 'true'">
+        <PropertyGroup>
+            <_StagedContent>$([MSBuild]::NormalizePath('$(IntermediateOutputPath)', 'Content.zip'))</_StagedContent>
+        </PropertyGroup>
+
+        <MSBuild Projects="..\Content\Content.csproj" Targets="PackContent"
+                 Properties="PackOutput=$(_StagedContent)"/>
+
+        <!-- The archive's timestamp is its version: the marker is rewritten only when the pack
+             actually ran. WriteOnlyWhenDifferent keeps it from touching on every build. -->
+        <ItemGroup>
+            <_StagedContentFile Include="$(_StagedContent)"/>
+        </ItemGroup>
+
+        <WriteLinesToFile File="$(IntermediateOutputPath)Content.version"
+                          Lines="@(_StagedContentFile->'%(ModifiedTime)')"
+                          Overwrite="true" WriteOnlyWhenDifferent="true"/>
+
+        <ItemGroup>
+            <AndroidAsset Include="$(_StagedContent)" LogicalName="Content.zip"/>
+            <AndroidAsset Include="$(IntermediateOutputPath)Content.version" LogicalName="Content.version"/>
+        </ItemGroup>
+    </Target>
+</Project>

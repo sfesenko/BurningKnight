@@ -13,6 +13,10 @@
         <PackageReference Include="ImGui.NET" Version="1.89.9.3" Condition="'$(Configuration)' == 'Debug'"/>
         <PackageReference Include="Box2D.NET" Version="3.1.654"/>
         <PackageReference Include="MonoGame.Extended" Version="4.0.4"/>
+        <!-- MusicPlayer reads Ogg through NVorbis directly. On desktop it arrives transitively
+             via MonoGame.Framework.DesktopGL (PrivateAssets=All), but the Android package does
+             not carry it, so the dependency is declared here. -->
+        <PackageReference Include="NVorbis" Version="0.10.4"/>
         <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.*">
             <PrivateAssets>All</PrivateAssets>
         </PackageReference>

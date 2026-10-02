@@ -21,3 +21,9 @@ SharpDX.D3DCompiler.xml
 
 # Test output
 TestResults/
+
+# Android build output and signing material
+*.apk
+*.aab
+*.keystore
+*.jks

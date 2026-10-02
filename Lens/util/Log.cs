@@ -24,6 +24,20 @@ public static class Log {
 	public static readonly bool WriteToFile = !Engine.Debug;
 
 	private static readonly object Lock = new();
+
+	// Android has no console: Console.ForegroundColor exists but throws there. Probe once
+	// instead of assuming one, so the same facade serves a desktop terminal and a device.
+	private static readonly bool Colors = ProbeColors();
+
+	private static bool ProbeColors() {
+		try {
+			_ = Console.ForegroundColor;
+
+			return true;
+		} catch (PlatformNotSupportedException) {
+			return false;
+		}
+	}
 	private static StreamWriter? writer;
 
 	public static void Open() {
@@ -110,21 +124,31 @@ public static class Log {
 			writer?.Write(' ');
 			writer?.WriteLine(caller);
 
-			var old = Console.ForegroundColor;
+			if (Colors) {
+				var old = Console.ForegroundColor;
 
-			Console.ForegroundColor = ConsoleColor.Gray;
-			Console.Write(time);
-			Console.Write(' ');
-			Console.ForegroundColor = ConsoleColor.Yellow;
-			Console.Write(type);
-			Console.Write(' ');
-			Console.ForegroundColor = color;
-			Console.Write(message);
-			Console.ForegroundColor = ConsoleColor.Gray;
-			Console.Write(' ');
-			Console.WriteLine(caller);
+				Console.ForegroundColor = ConsoleColor.Gray;
+				Console.Write(time);
+				Console.Write(' ');
+				Console.ForegroundColor = ConsoleColor.Yellow;
+				Console.Write(type);
+				Console.Write(' ');
+				Console.ForegroundColor = color;
+				Console.Write(message);
+				Console.ForegroundColor = ConsoleColor.Gray;
+				Console.Write(' ');
+				Console.WriteLine(caller);
 
-			Console.ForegroundColor = old;
+				Console.ForegroundColor = old;
+			} else {
+				Console.Write(time);
+				Console.Write(' ');
+				Console.Write(type);
+				Console.Write(' ');
+				Console.Write(message);
+				Console.Write(' ');
+				Console.WriteLine(caller);
+			}
 		}
 	}
 
