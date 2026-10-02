@@ -1,8 +1,10 @@
 using System;
 using System.IO;
 using Android.Content;
+using AndroidPort.core;
 using Lens;
 using Lens.assets;
+using Lens.input;
 using Lens.util;
 
 namespace AndroidPort;
@@ -17,6 +19,7 @@ public static class Bootstrap {
 		var data = context.FilesDir!.AbsolutePath;
 
 		Paths.Setup(data);
+		Vibration.Instance = new AndroidRumble();
 
 		var archive = Path.Combine(data, ArchiveName);
 		SyncArchive(context, archive);

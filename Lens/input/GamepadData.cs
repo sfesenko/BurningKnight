@@ -14,9 +14,6 @@ namespace Lens.input {
 		public bool Attached;
 
 		public static string[] Identifiers = [];
-		
-		private float rumbleStrength;
-		private float rumbleTime;
 
 		public GamepadData(PlayerIndex playerIndex) {
 			PlayerIndex = playerIndex;
@@ -55,20 +52,8 @@ namespace Lens.input {
 			if (Attached && !WasAttached) {
 				Log.Info($"Gamepad {PlayerIndex} attached");
 			}
-			
-			// MonoGame's Android backend ignores strength and always plays a fixed 500 ms
-			// one-shot — including for a zero request — so there is nothing to sustain or stop:
-			// a single call in Rumble is the whole buzz, and a "stop" would only start another.
-			if (!Engine.Mobile && rumbleTime > 0) {
-				rumbleTime -= dt;
-				rumbleStrength -= dt;
 
-				if (rumbleTime <= 0 || rumbleStrength < 0) {
-					GamePad.SetVibration(PlayerIndex, 0, 0);
-				} else {
-					GamePad.SetVibration(PlayerIndex, rumbleStrength, rumbleStrength);
-				}
-			}
+			Vibration.Instance?.Update(PlayerIndex, dt);
 
 			if (Attached != WasAttached) {
 				WasChanged = true;
@@ -80,24 +65,11 @@ namespace Lens.input {
 		}
 
 		public void Rumble(float strength, float time) {
-			if (Engine.Mobile) {
-				// One call is the whole buzz; see Update.
-				GamePad.SetVibration(PlayerIndex, strength, strength);
-				return;
-			}
-
-			if (GamePad.SetVibration(PlayerIndex, strength, strength)) {
-				rumbleStrength = strength;
-				rumbleTime = time;
-			}
+			Vibration.Instance?.Play(PlayerIndex, strength, time);
 		}
 
 		public void StopRumble() {
-			if (!Engine.Mobile) {
-				GamePad.SetVibration(PlayerIndex, 0, 0);
-			}
-
-			rumbleTime = 0;
+			Vibration.Instance?.Stop(PlayerIndex);
 		}
 
 		#region Gamepad butttons	
