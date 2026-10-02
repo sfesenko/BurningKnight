@@ -50,6 +50,11 @@ namespace Lens.input {
 
 			WasAttached = WasAttached || PreviousState.IsConnected;
 			Attached = CurrentState.IsConnected;
+
+			// Diagnostics while the port's input path is being proven on the device.
+			if (Attached && !WasAttached) {
+				Log.Info($"Gamepad {PlayerIndex} attached");
+			}
 			
 			if (rumbleTime > 0) {
 				rumbleTime -= dt;

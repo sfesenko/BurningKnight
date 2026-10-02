@@ -110,10 +110,29 @@ namespace Lens.input {
 				}
 			}
 
-			if (data != null && data.Attached && button.Buttons != null) {
-				foreach (var b in button.Buttons) {
-					if (data.Check(b, type)) {
-						return true;
+			if (button.Buttons != null) {
+				if (data != null) {
+					if (data.Attached) {
+						foreach (var b in button.Buttons) {
+							if (data.Check(b, type)) {
+								return true;
+							}
+						}
+					}
+				} else {
+					// The caller named no controller — a cutscene, a menu before the player exists.
+					// Any attached pad can answer, or a handheld with no keyboard could never get
+					// past those screens.
+					foreach (var gamepad in Gamepads) {
+						if (!gamepad.Attached) {
+							continue;
+						}
+
+						foreach (var b in button.Buttons) {
+							if (gamepad.Check(b, type)) {
+								return true;
+							}
+						}
 					}
 				}
 			}
