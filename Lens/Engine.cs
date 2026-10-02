@@ -25,6 +25,7 @@ namespace Lens
 #endif
             ;
 
+
         
         public static Action? AssetsLoaded;
 
@@ -265,6 +266,8 @@ namespace Lens
             core.SetWindowed(width, height);
             UpdateView();
         }
+
+        public bool CanToggleFullscreen => core.CanToggleFullscreen;
 
         public void SetFullscreen()
         {

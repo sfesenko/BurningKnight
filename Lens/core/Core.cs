@@ -19,6 +19,9 @@ public class Core {
 			
 	}
 
+	// Whether the platform has a windowed mode to switch to. Android always fills the screen.
+	public virtual bool CanToggleFullscreen => true;
+
 	// The host decides which core the engine runs on, so a platform can supply its own without
 	// the engine naming it.
 	public static Core Create(GameWindow window, GraphicsDeviceManager graphics, Func<Core> factory) {

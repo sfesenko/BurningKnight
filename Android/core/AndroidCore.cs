@@ -7,6 +7,8 @@ namespace AndroidPort.core;
 // the host must supply is the display's own size, because the engine derives its first view from
 // the preferred back buffer before the surface has reported anything.
 public class AndroidCore : Core {
+	public override bool CanToggleFullscreen => false;
+
 	public override void Init(int width, int height, bool fullscreen) {
 		base.Init(width, height, fullscreen);
 

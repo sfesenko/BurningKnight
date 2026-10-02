@@ -158,26 +158,30 @@ namespace BurningKnight.state {
 				Clickable = false
 			});
 
-			graphicsSettings.Add(new UiCheckbox {
-				Name = "fullscreen",
-				On = Engine.Graphics.IsFullScreen,
-				RelativeX = sx,
-				RelativeCenterY = sy - space,
-				Click = b => {
-					Settings.Fullscreen = ((UiCheckbox) b).On;
+			// Windowed mode does not exist on a handheld; the platform's core says whether the
+			// setting applies.
+			if (Engine.Instance.CanToggleFullscreen) {
+				graphicsSettings.Add(new UiCheckbox {
+					Name = "fullscreen",
+					On = Engine.Graphics.IsFullScreen,
+					RelativeX = sx,
+					RelativeCenterY = sy - space,
+					Click = b => {
+						Settings.Fullscreen = ((UiCheckbox) b).On;
 
-					if (Settings.Fullscreen) {
-						Engine.Instance.SetFullscreen();
-					} else {
-						Engine.Instance.SetWindowed(Display.Width * 3, Display.Height * 3);
+						if (Settings.Fullscreen) {
+							Engine.Instance.SetFullscreen();
+						} else {
+							Engine.Instance.SetWindowed(Display.Width * 3, Display.Height * 3);
+						}
+					},
+					
+					OnUpdate = c => {
+						((UiCheckbox) c).On = Engine.Graphics.IsFullScreen;
+						Settings.Fullscreen = ((UiCheckbox) c).On;
 					}
-				},
-				
-				OnUpdate = c => {
-					((UiCheckbox) c).On = Engine.Graphics.IsFullScreen;
-					Settings.Fullscreen = ((UiCheckbox) c).On;
-				}
-			});
+				});
+			}
 
 			/*graphicsSettings.Add(new UiCheckbox {
 				Name = "vsync",
