@@ -51,7 +51,10 @@ using Timer = Lens.util.timer.Timer;
 namespace BurningKnight.state {
 	public partial class InGameState {
 		private void SetupUi() {
-			TopUi.Add(new UiChat());
+			// Chat opens on typed '/' and there is no text source on a handheld.
+			if (TextInput.Available) {
+				TopUi.Add(new UiChat());
+			}
 			
 			UiButton.LastId = 0;
 			

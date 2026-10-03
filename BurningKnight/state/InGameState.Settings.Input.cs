@@ -131,19 +131,22 @@ namespace BurningKnight.state {
 			
 			sy += space * 0.5f;
 			
-			inputSettings.Add(new UiButton {
-				LocaleLabel = "keyboard_controls",
-				RelativeCenterX = sx,
-				RelativeCenterY = sy,
-				Click = b => {
-					currentBack = keyboardBack;
-					keyboardSettings.Enabled = true;
-					Tween.To(-Display.UiWidth * 3, pauseMenu.X, x => pauseMenu.X = x, PaneTransitionTime).OnEnd = () => {
-						SelectFirst();
-						inputSettings.Enabled = false;
-					};
-				}
-			});
+			// No keyboard on a handheld: its remap rows would be focusable dead ends.
+			if (TextInput.Available) {
+				inputSettings.Add(new UiButton {
+					LocaleLabel = "keyboard_controls",
+					RelativeCenterX = sx,
+					RelativeCenterY = sy,
+					Click = b => {
+						currentBack = keyboardBack;
+						keyboardSettings.Enabled = true;
+						Tween.To(-Display.UiWidth * 3, pauseMenu.X, x => pauseMenu.X = x, PaneTransitionTime).OnEnd = () => {
+							SelectFirst();
+							inputSettings.Enabled = false;
+						};
+					}
+				});
+			}
 			
 			gamepad = (UiButton) inputSettings.Add(new UiButton {
 				LocaleLabel = "gamepad_controls",
