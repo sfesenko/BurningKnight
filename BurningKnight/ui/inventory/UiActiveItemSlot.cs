@@ -58,18 +58,22 @@ namespace BurningKnight.ui.inventory {
 		}
 
 		public override void Render() {
+			var component = inventory.Player.GetComponent<ActiveItemComponent>();
+			var item = component!.Item;
+
+			if (item != null && item.Id != uiItem.Id) {
+				uiItem.Id = item.Id;
+				uiItem.Scourged = item.Scourged;
+			} else if (item == null && uiItem.Id != null) {
+				// The icon is a separate Area entity that keeps drawing its last
+				// region; without this a stale icon lingers after the slot hides.
+				uiItem.Id = null;
+			}
+
 			if (ActivePosition <= -0.99f) {
 				return;
 			}
 			
-			var component = inventory.Player.GetComponent<ActiveItemComponent>();
-			var item = component!.Item;
-			
-			if (item != null && item.Id != uiItem.Id) {
-				uiItem.Id = item.Id;
-				uiItem.Scourged = item.Scourged;
-			}
-
 			var v = ActivePosition * (inventory.ItemSlot.Width + 10);
 			var a = inventory.UseSlot.Center.X + 8 + v;
 
@@ -85,10 +89,15 @@ namespace BurningKnight.ui.inventory {
 			
 			if (item == null || (item.Done && !tweened)) {
 				tweened = true;
+				var target = item;
 					
 				Tween.To(-1, 0, x => ActivePosition = x, 0.3f).OnEnd = () => {
-					inventory.Player.GetComponent<ActiveItemComponent>()!.Clear();
 					tweened = false;
+					var current = inventory.Player.GetComponent<ActiveItemComponent>()!;
+					// The tween is stale if another item arrived while it ran.
+					if (current.Item == null || current.Item == target) {
+						current.Clear();
+					}
 				};
 			}
 			
@@ -167,7 +176,7 @@ namespace BurningKnight.ui.inventory {
 			} else if (e is ItemAddedEvent iae) {
 				if (iae.Who == inventory.Player) {
 					if (iae.Item.Type == ItemType.Active) {
-						if (ActivePosition <= 0f || tweened) {
+						if (ActivePosition < -0.5f || tweened) {
 							Tween.To(0, -1, x => ActivePosition = x, 0.6f, Ease.BackOut);
 						} else {
 							Animate();
