@@ -15,6 +15,7 @@ using Lens.input;
 namespace BurningKnight.entity.creature.player {
 	public class ActiveWeaponComponent : WeaponComponent {
 		private bool stopped = true;
+		private bool wasStickFiring;
 		private float timeSinceReady;
 		
 		public ActiveWeaponComponent() {
@@ -58,15 +59,21 @@ namespace BurningKnight.entity.creature.player {
 					timeSinceReady = 0;
 				}
 				
+				// Twin-stick: a deflected right stick aims (see Cursor) and fires.
+				var stickFiring = data != null && data.GetRightStick(0.25f).LengthSquared() > 0.001f;
+				var usePressed = Input.WasPressed(Controls.Use, controller) || (stickFiring && !wasStickFiring);
+				var useDown = Input.IsDown(Controls.Use, controller) || stickFiring;
+				wasStickFiring = stickFiring;
+				
 				var b = GetComponent<BuffsComponent>();
 				
 				if (b!.Has<FrozenBuff>() || b.Has<CharmedBuff>() || GetComponent<StateComponent>()!.StateInstance is Player.RollState) {
 					return;
 				}
 				
-				if ((Input.WasPressed(Controls.Use, controller) || (data != null && (
+				if ((usePressed || (data != null && (
 					data.DPadDownCheck || data.DPadLeftCheck || data.DPadUpCheck || data.DPadRightCheck                                                  
-				  ))) || ((Item.Automatic || timeSinceReady > 0.2f || (data != null && Input.IsDownOnController(Controls.Use, data))) && Input.IsDown(Controls.Use, controller) && ready)) {
+				  ))) || ((Item.Automatic || timeSinceReady > 0.2f || (data != null && Input.IsDownOnController(Controls.Use, data))) && useDown && ready)) {
 				  
 					if (!Entity.TryGetComponent<PlayerInputComponent>(out var d) || d.InDialog) {
 						return;
