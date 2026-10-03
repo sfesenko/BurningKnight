@@ -13,6 +13,7 @@ using Lens.assets;
 using Lens.entity;
 using Lens.util;
 using Lens.util.file;
+using Lens.input;
 
 namespace BurningKnight.entity.creature.player {
 	public class WeaponComponent : ItemComponent {
@@ -87,7 +88,10 @@ namespace BurningKnight.entity.creature.player {
 							var dialog = GetComponent<DialogComponent>();
 								
 							dialog!.Dialog!.Str!.ClearIcons();
-							dialog.Dialog.Str.AddIcon(CommonAse.Ui.GetSlice(Controls.FindSlice(Controls.Swap, false)!)!);
+							// No keyboard on a handheld: the pad keycap below is the whole hint.
+							if (TextInput.Available) {
+								dialog.Dialog.Str.AddIcon(CommonAse.Ui.GetSlice(Controls.FindSlice(Controls.Swap, false)!)!);
+							}
 
 							if (GamepadComponent.Current != null && GamepadComponent.Current.Attached) {
 								dialog.Dialog.Str.AddIcon(CommonAse.Ui.GetSlice(Controls.FindSlice(Controls.Swap, true)!)!);

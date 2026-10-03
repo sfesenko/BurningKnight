@@ -8,6 +8,7 @@ using BurningKnight.ui.dialog;
 using Lens;
 using Lens.util.file;
 using Lens.util.math;
+using Lens.input;
 
 namespace BurningKnight.entity.creature.npc {
 	public class Duck : Npc {
@@ -70,7 +71,10 @@ namespace BurningKnight.entity.creature.npc {
 				var dialog = GetComponent<DialogComponent>();
 								
 				dialog!.Dialog!.Str!.ClearIcons();
-				dialog.Dialog.Str.AddIcon(CommonAse.Ui.GetSlice(Controls.FindSlice(Controls.Duck, false)!)!);
+				// No keyboard on a handheld: the pad keycap below is the whole hint.
+				if (TextInput.Available) {
+					dialog.Dialog.Str.AddIcon(CommonAse.Ui.GetSlice(Controls.FindSlice(Controls.Duck, false)!)!);
+				}
 
 				if (GamepadComponent.Current != null && GamepadComponent.Current.Attached) {
 					dialog.Dialog.Str.AddIcon(CommonAse.Ui.GetSlice(Controls.FindSlice(Controls.Duck, true)!)!);

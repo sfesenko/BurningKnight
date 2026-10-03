@@ -1,5 +1,6 @@
 using System;
 using Lens.assets;
+using Lens.input;
 
 namespace BurningKnight.util {
 	public static class LoadScreenJokes {
@@ -10,7 +11,14 @@ namespace BurningKnight.util {
 		public const int Count = 78;
 
 		public static string Generate() {
-			return Locale.Get($"loading_joke_{new Random().Next(Count)}");
+			var index = new Random().Next(Count);
+
+			// Press / to open chat: no keyboard on a handheld, resample instead of lying.
+			while (index == 4 && !TextInput.Available) {
+				index = new Random().Next(Count);
+			}
+
+			return Locale.Get($"loading_joke_{index}");
 		}
 	}
 }

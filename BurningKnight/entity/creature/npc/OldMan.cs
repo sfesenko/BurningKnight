@@ -137,7 +137,10 @@ namespace BurningKnight.entity.creature.npc {
 				var dialog = GetComponent<DialogComponent>();
 								
 				dialog!.Dialog!.Str!.ClearIcons();
-				dialog.Dialog.Str.AddIcon(CommonAse.Ui.GetSlice(Controls.FindSlice(Controls.Roll, false)!)!);
+				// No keyboard on a handheld: the pad keycap below is the whole hint.
+				if (TextInput.Available) {
+					dialog.Dialog.Str.AddIcon(CommonAse.Ui.GetSlice(Controls.FindSlice(Controls.Roll, false)!)!);
+				}
 
 				if (GamepadComponent.Current != null && GamepadComponent.Current.Attached) {
 					dialog.Dialog.Str.AddIcon(CommonAse.Ui.GetSlice(Controls.FindSlice(Controls.Roll, true)!)!);
