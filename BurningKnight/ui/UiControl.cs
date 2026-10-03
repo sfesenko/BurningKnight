@@ -4,6 +4,7 @@ using Lens.assets;
 using Lens.input;
 using Lens.util;
 using Microsoft.Xna.Framework.Input;
+using System.Linq;
 
 namespace BurningKnight.ui {
 	public class UiControl : UiButton {
@@ -96,14 +97,18 @@ namespace BurningKnight.ui {
 			
 			if (Focused == this) {
 				if (Gamepad) {
-					if (GamepadComponent.Controller == null) {
+					// The picker can clear the assignment (and pause halts re-detection),
+					// so remap against any attached pad like gameplay does.
+					var controller = GamepadComponent.Controller ?? Input.Gamepads.FirstOrDefault(g => g.Attached);
+
+					if (controller == null) {
 						Log.Error("Null controller");
 						return;
 					}
 
 					
 					foreach (var b in buttonsToCheck) {
-						if (GamepadComponent.Controller.WasPressed(b)) {
+						if (controller.WasPressed(b)) {
 							Controls.Replace(Key, b);
 							Controls.Bind();
 							Controls.Save();
