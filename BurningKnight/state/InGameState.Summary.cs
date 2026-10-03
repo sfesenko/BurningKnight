@@ -66,6 +66,11 @@ namespace BurningKnight.state {
 				var data = GlobalSave.GetJson($"{id}_data");
 
 				statsStats.Add(Locale.Get("seed"), data!["seed"].String(), false, bt => {
+					// No clipboard backend on this host: leave the seed row alone.
+					if (!Clipboard.Available) {
+						return;
+					}
+
 					var b = (UiTableEntry) bt;
 					b.RealLocaleLabel = "copied_to_clipboard";
 
@@ -190,6 +195,11 @@ namespace BurningKnight.state {
 
 			stats.Add(Locale.Get("run_type"), Locale.Get($"run_{Context.Run.Type.ToString().ToLower()}") + (Context.Run.CustomSeed ? " " + Locale.Get("seeded") : ""));
 			stats.Add(Locale.Get("seed"), Context.Run.Seed!, false, bt => {
+				// No clipboard backend on this host: leave the seed row alone.
+				if (!Clipboard.Available) {
+					return;
+				}
+
 				var b = (UiTableEntry) bt;
 				b.RealLocaleLabel = "copied_to_clipboard";
 

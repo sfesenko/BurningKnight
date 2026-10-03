@@ -74,7 +74,7 @@ namespace BurningKnight.entity.creature.npc {
 		public override void Update(float dt) {
 			base.Update(dt);
 
-			if (GetComponent<DialogComponent>()!.Current?.Id == "beet_2" && Input.Keyboard.WasPressed(Keys.V) && (Input.Keyboard.IsDown(Keys.LeftControl) || Input.Keyboard.IsDown(Keys.RightControl))) {
+			if (GetComponent<DialogComponent>()!.Current?.Id == "beet_2" && Clipboard.Available && Input.Keyboard.WasPressed(Keys.V) && (Input.Keyboard.IsDown(Keys.LeftControl) || Input.Keyboard.IsDown(Keys.RightControl))) {
 				Log.Info("Pasting the seed");
 
 				var seed =

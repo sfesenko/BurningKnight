@@ -75,8 +75,8 @@ namespace BurningKnight.entity.creature.player {
 			var controller = GetComponent<InputComponent>();
 			var data = controller!.GamepadData;
 
-			if (data != null && data.WasAttached && !data.Attached) {
-				data.WasAttached = false;
+			if (data != null && data.PreviousAttached && !data.Attached) {
+				data.PreviousAttached = false;
 				Engine.Instance.State.Paused = true;
 				idle = false;
 			}

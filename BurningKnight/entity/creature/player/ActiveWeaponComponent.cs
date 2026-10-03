@@ -1,6 +1,7 @@
 using System;
 using BurningKnight.assets;
 using BurningKnight.assets.input;
+using BurningKnight.entity;
 using BurningKnight.entity.buff;
 using BurningKnight.entity.component;
 using BurningKnight.entity.item;
@@ -59,8 +60,9 @@ namespace BurningKnight.entity.creature.player {
 					timeSinceReady = 0;
 				}
 				
-				// Twin-stick: a deflected right stick aims (see Cursor) and fires.
-				var stickFiring = data != null && data.GetRightStick(0.25f).LengthSquared() > 0.001f;
+				// Twin-stick: a deflected right stick aims (see Cursor) and fires, with hysteresis
+				// (Cursor.StickFireEnter/Exit) so edge flicker does not stutter the trigger.
+				var stickFiring = Cursor.StickFiring(data, wasStickFiring);
 				var usePressed = Input.WasPressed(Controls.Use, controller) || (stickFiring && !wasStickFiring);
 				var useDown = Input.IsDown(Controls.Use, controller) || stickFiring;
 				wasStickFiring = stickFiring;
@@ -71,6 +73,8 @@ namespace BurningKnight.entity.creature.player {
 					return;
 				}
 				
+				// Semi-autos keep firing while held: the 0.2s grace after ready is intentional,
+				// so holding the trigger past the cooldown still shoots.
 				if ((usePressed || (data != null && (
 					data.DPadDownCheck || data.DPadLeftCheck || data.DPadUpCheck || data.DPadRightCheck                                                  
 				  ))) || ((Item.Automatic || timeSinceReady > 0.2f || (data != null && Input.IsDownOnController(Controls.Use, data))) && useDown && ready)) {

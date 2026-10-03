@@ -28,6 +28,22 @@ namespace BurningKnight.entity {
 		public Player Player = null!;
 		public Vector2 GamePosition;
 
+		// Right-stick fire/aim deadzone, shared with ActiveWeaponComponent: the stick must
+		// deflect past Enter to engage and stays engaged until it falls below Exit, so edge
+		// flicker does not stutter the aim or the trigger.
+		public const float StickFireDeadzone = 0.25f;
+		public const float StickFireEnter = StickFireDeadzone;
+		public const float StickFireExit = 0.2f;
+
+		public static bool StickFiring(GamepadData? data, bool wasFiring = false) {
+			if (data == null) {
+				return false;
+			}
+
+			var threshold = wasFiring ? StickFireExit : StickFireEnter;
+			return data.GetRightStick(threshold).LengthSquared() > 0.001f;
+		}
+
 		public override void Init() {
 			base.Init();
 
@@ -103,7 +119,7 @@ namespace BurningKnight.entity {
 
 				var l = stick.Length();
 
-				if (l > 0.25f) {
+				if (StickFiring(controller)) {
 					var target = MathUtils.CreateVector(Math.Atan2(dy, dx), 1f);
 
 					dx = target.X - stickOffset.X;
