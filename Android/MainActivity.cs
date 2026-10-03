@@ -15,7 +15,7 @@ namespace AndroidPort;
 	Exported = true,
 	Theme = "@android:style/Theme.NoTitleBar.Fullscreen",
 	ScreenOrientation = ScreenOrientation.Landscape,
-	ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.ScreenSize | ConfigChanges.Keyboard | ConfigChanges.KeyboardHidden)]
+	ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.ScreenSize | ConfigChanges.SmallestScreenSize | ConfigChanges.Density | ConfigChanges.ScreenLayout | ConfigChanges.Keyboard | ConfigChanges.KeyboardHidden)]
 public class MainActivity : AndroidGameActivity {
 	protected override void OnCreate(Bundle? savedInstanceState) {
 		base.OnCreate(savedInstanceState);
@@ -34,5 +34,16 @@ public class MainActivity : AndroidGameActivity {
 		view.RequestFocus();
 
 		game.Run();
+	}
+
+	// A DPI/resolution switch or rotation reaches here instead of recreating the
+	// activity (see ConfigChanges above), so the run survives it. Only the host's
+	// size snapshot is refreshed; MonoGame recreates the surface itself and the
+	// engine picks the numbers up through its normal UpdateView path.
+	// The back button needs no override: MonoGame's view consumes Keycode.Back and
+	// reports it as Buttons.Back, so the activity never finishes from it.
+	public override void OnConfigurationChanged(Android.Content.Res.Configuration? newConfig) {
+		base.OnConfigurationChanged(newConfig);
+		Lens.Engine.Instance.DisplayChanged();
 	}
 }
