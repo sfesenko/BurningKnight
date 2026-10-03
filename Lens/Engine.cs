@@ -269,6 +269,17 @@ namespace Lens
 
         public bool CanToggleFullscreen => core.CanToggleFullscreen;
 
+        // Host-supplied policy (see Core.PauseOnBackground): the game reads it when
+        // the window loses focus.
+        public bool PauseOnBackground => core.PauseOnBackground;
+
+        // A display change arrived on the host thread: refresh the host's snapshot.
+        // Applying it to the view happens through the normal UpdateView path.
+        public void DisplayChanged()
+        {
+            core.OnDisplayChanged();
+        }
+
         public void SetFullscreen()
         {
             core.SetFullscreen();

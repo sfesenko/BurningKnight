@@ -22,6 +22,16 @@ public class Core {
 	// Whether the platform has a windowed mode to switch to. Android always fills the screen.
 	public virtual bool CanToggleFullscreen => true;
 
+	// Whether losing the window should pause the run. Desktop leaves this to the
+	// mouse-oriented Autopause setting; a handheld has no mouse-leave signal.
+	public virtual bool PauseOnBackground => false;
+
+	// The display may have changed size (rotation, DPI/resolution switch) without
+	// recreating the host. Hosts that snapshot the size re-read it here.
+	public virtual void OnDisplayChanged() {
+
+	}
+
 	// The host decides which core the engine runs on, so a platform can supply its own without
 	// the engine naming it.
 	public static Core Create(GameWindow window, GraphicsDeviceManager graphics, Func<Core> factory) {

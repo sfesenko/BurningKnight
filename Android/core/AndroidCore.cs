@@ -9,9 +9,20 @@ namespace AndroidPort.core;
 public class AndroidCore : Core {
 	public override bool CanToggleFullscreen => false;
 
+	// A handheld has no mouse-leave signal, so backgrounding always pauses the run,
+	// independent of the desktop-oriented Autopause setting.
+	public override bool PauseOnBackground => true;
+
 	public override void Init(int width, int height, bool fullscreen) {
 		base.Init(width, height, fullscreen);
+		RefreshDisplaySize();
+	}
 
+	public override void OnDisplayChanged() {
+		RefreshDisplaySize();
+	}
+
+	private void RefreshDisplaySize() {
 		var display = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode;
 
 		Graphics.PreferredBackBufferWidth = display.Width;

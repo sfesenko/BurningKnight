@@ -220,7 +220,13 @@ namespace BurningKnight.state {
 		public override void OnDeactivated() {
 			base.OnDeactivated();
 
-			if (Menu || Paused || DialogComponent.Talking != null || !Settings.Autopause || !menuExited) {
+			if (Menu || Paused || DialogComponent.Talking != null || !menuExited) {
+				return;
+			}
+
+			// Desktop pauses on mouse-leave via Autopause; handhelds have no such signal,
+			// so the host policy pauses them regardless of that setting.
+			if (!Settings.Autopause && !Engine.Instance.PauseOnBackground) {
 				return;
 			}
 
