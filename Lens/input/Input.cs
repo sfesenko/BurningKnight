@@ -93,7 +93,10 @@ namespace Lens.input {
 			Buttons[id] = button;
 		}
 
-		private static bool Check(string id, CheckType type, GamepadData? data = null, bool ignoreBlock = false) {
+		// The single core behind both Check overloads: the blocked guard and the binding lookup
+		// run once, then each channel (keys, pads, mouse) runs once. No allocations on this path.
+		private static bool CheckCore(string id, CheckType type, bool ignoreBlock, bool keyboardEnabled,
+			GamepadData? gamepad, bool anyPadFallback, bool mouseEnabled) {
 			if (Blocked > 0 && !ignoreBlock) {
 				return false;
 			}
@@ -102,7 +105,7 @@ namespace Lens.input {
 				return false;
 			}
 
-			if (button.Keys != null) {
+			if (keyboardEnabled && button.Keys != null) {
 				foreach (var key in button.Keys) {
 					if (Keyboard.Check(key, type)) {
 						return true;
@@ -111,25 +114,25 @@ namespace Lens.input {
 			}
 
 			if (button.Buttons != null) {
-				if (data != null) {
-					if (data.Attached) {
+				if (gamepad != null) {
+					if (gamepad.Attached) {
 						foreach (var b in button.Buttons) {
-							if (data.Check(b, type)) {
+							if (gamepad.Check(b, type)) {
 								return true;
 							}
 						}
 					}
-				} else {
+				} else if (anyPadFallback) {
 					// The caller named no controller — a cutscene, a menu before the player exists.
 					// Any attached pad can answer, or a handheld with no keyboard could never get
 					// past those screens.
-					foreach (var gamepad in Gamepads) {
-						if (!gamepad.Attached) {
+					foreach (var attached in Gamepads) {
+						if (!attached.Attached) {
 							continue;
 						}
 
 						foreach (var b in button.Buttons) {
-							if (gamepad.Check(b, type)) {
+							if (attached.Check(b, type)) {
 								return true;
 							}
 						}
@@ -137,7 +140,7 @@ namespace Lens.input {
 				}
 			}
 
-			if (button.MouseButtons != null) {
+			if (mouseEnabled && button.MouseButtons != null) {
 				foreach (var b in button.MouseButtons) {
 					if (Mouse.Check(b, type)) {
 						return true;
@@ -147,41 +150,14 @@ namespace Lens.input {
 
 			return false;
 		}
-		
+
+		private static bool Check(string id, CheckType type, GamepadData? data = null, bool ignoreBlock = false) {
+			return CheckCore(id, type, ignoreBlock, true, data, data == null, true);
+		}
+
 		private static bool Check(string id, CheckType type, InputComponent data, bool ignoreBlock = false) {
-			if (Blocked > 0 && !ignoreBlock) {
-				return false;
-			}
-
-			if (!Buttons.TryGetValue(id, out var button)) {
-				return false;
-			}
-
-			if (data.KeyboardEnabled && button.Keys != null) {
-				foreach (var key in button.Keys) {
-					if (Keyboard.Check(key, type)) {
-						return true;
-					}
-				}
-			}
-
-			if (data.GamepadEnabled && data.GamepadData != null && data.GamepadData.Attached && button.Buttons != null) {
-				foreach (var b in button.Buttons) {
-					if (data.GamepadData.Check(b, type)) {
-						return true;
-					}
-				}
-			}
-
-			if (data.KeyboardEnabled && button.MouseButtons != null) {
-				foreach (var b in button.MouseButtons) {
-					if (Mouse.Check(b, type)) {
-						return true;
-					}
-				}
-			}
-
-			return false;
+			return CheckCore(id, type, ignoreBlock, data.KeyboardEnabled,
+				data.GamepadEnabled ? data.GamepadData : null, false, data.KeyboardEnabled);
 		}
 
 		public static bool IsDownOnController(string id, GamepadData data) {

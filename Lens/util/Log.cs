@@ -20,6 +20,7 @@ namespace Lens.util;
 /// </summary>
 public static class Log {
 	private static string LogName => Path.Combine(Paths.DataDir, "burning_log.txt");
+	private static string PrevLogName => Path.Combine(Paths.DataDir, "burning_log.prev.txt");
 
 	public static readonly bool WriteToFile = !Engine.Debug;
 
@@ -31,7 +32,10 @@ public static class Log {
 
 	private static bool ProbeColors() {
 		try {
-			_ = Console.ForegroundColor;
+			// The getter may exist where the setter throws (Android has no console), so probe
+			// the setter too: a write that throws mid-line is worse than no colors at all.
+			var old = Console.ForegroundColor;
+			Console.ForegroundColor = old;
 
 			return true;
 		} catch (Exception) {
@@ -44,14 +48,21 @@ public static class Log {
 
 	public static void Open() {
 		lock (Lock) {
-			if (File.Exists(LogName)) {
-				try {
-					File.Delete(LogName);
-				} catch (Exception e) {
-					// The file is only opened in append mode, so a failed delete costs history,
-					// not the log.
-					Console.Error.WriteLine(e);
+			try {
+				// Keep one previous log across a relaunch instead of deleting: the last run's
+				// tail is what a bug report needs. Best effort — a failed roll costs history,
+				// not the log.
+				if (File.Exists(PrevLogName)) {
+					File.Delete(PrevLogName);
 				}
+
+				if (File.Exists(LogName)) {
+					File.Move(LogName, PrevLogName);
+				}
+			} catch (Exception e) {
+				// The file is only opened in append mode, so a failed roll costs history,
+				// not the log.
+				Console.Error.WriteLine(e);
 			}
 
 			if (WriteToFile) {
@@ -60,6 +71,16 @@ public static class Log {
 				writer = new StreamWriter(new FileStream(LogName, FileMode.Append, FileAccess.Write, FileShare.ReadWrite)) {
 					AutoFlush = true
 				};
+			}
+		}
+	}
+
+	public static void Flush() {
+		lock (Lock) {
+			try {
+				writer?.Flush();
+			} catch {
+				// Nowhere left to report to.
 			}
 		}
 	}
@@ -117,14 +138,15 @@ public static class Log {
 		var time = $"{DateTime.Now:HH:mm:ss}";
 		var caller = GetCaller(file, member, line);
 
+		// Each line is built once, then written once under the lock: no interleaving, no
+		// half-lines from another thread.
+		var fileLine = $"{time}| {type}| {message} {caller}";
+		var consoleLine = $"{time} {type} {message} {caller}";
+
 		lock (Lock) {
-			writer?.Write(time);
-			writer?.Write("| ");
-			writer?.Write(type);
-			writer?.Write("| ");
-			writer?.Write(message);
-			writer?.Write(' ');
-			writer?.WriteLine(caller);
+			if (writer != null) {
+				writer.WriteLine(fileLine);
+			}
 
 			if (Colors) {
 				var old = Console.ForegroundColor;
@@ -143,13 +165,7 @@ public static class Log {
 
 				Console.ForegroundColor = old;
 			} else {
-				Console.Write(time);
-				Console.Write(' ');
-				Console.Write(type);
-				Console.Write(' ');
-				Console.Write(message);
-				Console.Write(' ');
-				Console.WriteLine(caller);
+				Console.WriteLine(consoleLine);
 			}
 		}
 	}

@@ -174,6 +174,12 @@ namespace Lens
 
         protected override void Update(GameTime gameTime)
         {
+            if (displayDirty)
+            {
+                displayDirty = false;
+                core.OnDisplayChanged();
+            }
+
             var t = DateTime.Now.Millisecond;
 
             base.Update(gameTime);
@@ -273,11 +279,16 @@ namespace Lens
         // the window loses focus.
         public bool PauseOnBackground => core.PauseOnBackground;
 
-        // A display change arrived on the host thread: refresh the host's snapshot.
+        // A display change arrives on the host thread (rotation, DPI/resolution switch), which
+        // must not touch the graphics manager: flag it here and let the game thread consume the
+        // flag at the top of Update, where the existing Core.OnDisplayChanged path is safe.
+        private volatile bool displayDirty;
+
+        // A display change arrived on the host thread: flag it for the game thread.
         // Applying it to the view happens through the normal UpdateView path.
         public void DisplayChanged()
         {
-            core.OnDisplayChanged();
+            displayDirty = true;
         }
 
         public void SetFullscreen()

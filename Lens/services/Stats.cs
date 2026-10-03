@@ -5,7 +5,7 @@ public interface IStats {
 }
 
 public static class Stats {
-	public static IStats? Instance;
+	public static volatile IStats? Instance;
 
 	public static void Reset() {
 		Instance?.Reset();

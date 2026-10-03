@@ -10,7 +10,7 @@ namespace Lens.input {
 		public PlayerIndex PlayerIndex;
 		public GamePadState PreviousState;
 		public GamePadState CurrentState;
-		public bool WasAttached;
+		public bool PreviousAttached;
 		public bool Attached;
 
 		public static string[] Identifiers = [];
@@ -45,33 +45,27 @@ namespace Lens.input {
 			PreviousState = CurrentState;
 			CurrentState = GamePad.GetState(PlayerIndex);
 
-			// A latch here reports every frame after the first attach and never
-			// notices a reconnect; the previous frame's state is the whole story.
-			WasAttached = PreviousState.IsConnected;
+			PreviousAttached = PreviousState.IsConnected;
 			Attached = CurrentState.IsConnected;
 
 			// Diagnostics while the port's input path is being proven on the device.
-			if (Attached && !WasAttached) {
+			if (Attached && !PreviousAttached) {
 				Log.Info($"Gamepad {PlayerIndex} attached");
 			}
 
-			Vibration.Instance?.Update(PlayerIndex, dt);
+			Vibration.Update(PlayerIndex, dt);
 
-			if (Attached != WasAttached) {
+			if (Attached != PreviousAttached) {
 				WasChanged = true;
-			}
-
-			if (PlayerIndex == PlayerIndex.One) {
-				// Log.Info($"X: (pressed) {WasPressed(Buttons.X)}, (down) {IsDown(Buttons.X)}");
 			}
 		}
 
 		public void Rumble(float strength, float time) {
-			Vibration.Instance?.Play(PlayerIndex, strength, time);
+			Vibration.Play(PlayerIndex, strength, time);
 		}
 
 		public void StopRumble() {
-			Vibration.Instance?.Stop(PlayerIndex);
+			Vibration.Stop(PlayerIndex);
 		}
 
 		#region Gamepad butttons	
@@ -163,52 +157,77 @@ namespace Lens.input {
 
 		#region Left stick directions
 
+		private enum Edge {
+			Held,
+			Pressed,
+			Released
+		}
+
+		// The single edge detector behind the stick-quadrant methods. `dz` carries its own sign:
+		// -dz watches the negative side, +dz the positive one. Each quadrant method passes the
+		// threshold its body used to compare, so this is a mechanical consolidation.
+		private static bool AxisEdge(float cur, float prev, float dz, Edge edge) {
+			if (dz < 0) {
+				switch (edge) {
+					case Edge.Held: return cur <= dz;
+					case Edge.Pressed: return cur <= dz && prev > dz;
+					default: return cur > dz && prev <= dz;
+				}
+			}
+
+			switch (edge) {
+				case Edge.Held: return cur >= dz;
+				case Edge.Pressed: return cur >= dz && prev < dz;
+				default: return cur < dz && prev >= dz;
+			}
+		}
+
 		public bool LeftStickLeftCheck(float deadzone) {
-			return CurrentState.ThumbSticks.Left.X <= -deadzone;
+			return AxisEdge(CurrentState.ThumbSticks.Left.X, PreviousState.ThumbSticks.Left.X, -deadzone, Edge.Held);
 		}
 
 		public bool LeftStickLeftWasPressed(float deadzone) {
-			return CurrentState.ThumbSticks.Left.X <= -deadzone && PreviousState.ThumbSticks.Left.X > -deadzone;
+			return AxisEdge(CurrentState.ThumbSticks.Left.X, PreviousState.ThumbSticks.Left.X, -deadzone, Edge.Pressed);
 		}
 
 		public bool LeftStickLeftWasReleased(float deadzone) {
-			return CurrentState.ThumbSticks.Left.X > -deadzone && PreviousState.ThumbSticks.Left.X <= -deadzone;
+			return AxisEdge(CurrentState.ThumbSticks.Left.X, PreviousState.ThumbSticks.Left.X, -deadzone, Edge.Released);
 		}
 
 		public bool LeftStickRightCheck(float deadzone) {
-			return CurrentState.ThumbSticks.Left.X >= deadzone;
+			return AxisEdge(CurrentState.ThumbSticks.Left.X, PreviousState.ThumbSticks.Left.X, deadzone, Edge.Held);
 		}
 
 		public bool LeftStickRightWasPressed(float deadzone) {
-			return CurrentState.ThumbSticks.Left.X >= deadzone && PreviousState.ThumbSticks.Left.X < deadzone;
+			return AxisEdge(CurrentState.ThumbSticks.Left.X, PreviousState.ThumbSticks.Left.X, deadzone, Edge.Pressed);
 		}
 
 		public bool LeftStickRightWasReleased(float deadzone) {
-			return CurrentState.ThumbSticks.Left.X < deadzone && PreviousState.ThumbSticks.Left.X >= deadzone;
+			return AxisEdge(CurrentState.ThumbSticks.Left.X, PreviousState.ThumbSticks.Left.X, deadzone, Edge.Released);
 		}
 
 		public bool LeftStickDownCheck(float deadzone) {
-			return CurrentState.ThumbSticks.Left.Y <= -deadzone;
+			return AxisEdge(CurrentState.ThumbSticks.Left.Y, PreviousState.ThumbSticks.Left.Y, -deadzone, Edge.Held);
 		}
 
 		public bool LeftStickDownWasPressed(float deadzone) {
-			return CurrentState.ThumbSticks.Left.Y <= -deadzone && PreviousState.ThumbSticks.Left.Y > -deadzone;
+			return AxisEdge(CurrentState.ThumbSticks.Left.Y, PreviousState.ThumbSticks.Left.Y, -deadzone, Edge.Pressed);
 		}
 
 		public bool LeftStickDownWasReleased(float deadzone) {
-			return CurrentState.ThumbSticks.Left.Y > -deadzone && PreviousState.ThumbSticks.Left.Y <= -deadzone;
+			return AxisEdge(CurrentState.ThumbSticks.Left.Y, PreviousState.ThumbSticks.Left.Y, -deadzone, Edge.Released);
 		}
 
 		public bool LeftStickUpCheck(float deadzone) {
-			return CurrentState.ThumbSticks.Left.Y >= deadzone;
+			return AxisEdge(CurrentState.ThumbSticks.Left.Y, PreviousState.ThumbSticks.Left.Y, deadzone, Edge.Held);
 		}
 
 		public bool LeftStickUpWasPressed(float deadzone) {
-			return CurrentState.ThumbSticks.Left.Y >= deadzone && PreviousState.ThumbSticks.Left.Y < deadzone;
+			return AxisEdge(CurrentState.ThumbSticks.Left.Y, PreviousState.ThumbSticks.Left.Y, deadzone, Edge.Pressed);
 		}
 
 		public bool LeftStickUpWasReleased(float deadzone) {
-			return CurrentState.ThumbSticks.Left.Y < deadzone && PreviousState.ThumbSticks.Left.Y >= deadzone;
+			return AxisEdge(CurrentState.ThumbSticks.Left.Y, PreviousState.ThumbSticks.Left.Y, deadzone, Edge.Released);
 		}
 
 		public float LeftStickHorizontal(float deadzone) {
@@ -236,51 +255,51 @@ namespace Lens.input {
 		#region Right Stick Directions
 
 		public bool RightStickLeftCheck(float deadzone) {
-			return CurrentState.ThumbSticks.Right.X <= -deadzone;
+			return AxisEdge(CurrentState.ThumbSticks.Right.X, PreviousState.ThumbSticks.Right.X, -deadzone, Edge.Held);
 		}
 
 		public bool RightStickLeftWasPressed(float deadzone) {
-			return CurrentState.ThumbSticks.Right.X <= -deadzone && PreviousState.ThumbSticks.Right.X > -deadzone;
+			return AxisEdge(CurrentState.ThumbSticks.Right.X, PreviousState.ThumbSticks.Right.X, -deadzone, Edge.Pressed);
 		}
 
 		public bool RightStickLeftWasReleased(float deadzone) {
-			return CurrentState.ThumbSticks.Right.X > -deadzone && PreviousState.ThumbSticks.Right.X <= -deadzone;
+			return AxisEdge(CurrentState.ThumbSticks.Right.X, PreviousState.ThumbSticks.Right.X, -deadzone, Edge.Released);
 		}
 
 		public bool RightStickRightCheck(float deadzone) {
-			return CurrentState.ThumbSticks.Right.X >= deadzone;
+			return AxisEdge(CurrentState.ThumbSticks.Right.X, PreviousState.ThumbSticks.Right.X, deadzone, Edge.Held);
 		}
 
 		public bool RightStickRightWasPressed(float deadzone) {
-			return CurrentState.ThumbSticks.Right.X >= deadzone && PreviousState.ThumbSticks.Right.X < deadzone;
+			return AxisEdge(CurrentState.ThumbSticks.Right.X, PreviousState.ThumbSticks.Right.X, deadzone, Edge.Pressed);
 		}
 
 		public bool RightStickRightWasReleased(float deadzone) {
-			return CurrentState.ThumbSticks.Right.X < deadzone && PreviousState.ThumbSticks.Right.X >= deadzone;
+			return AxisEdge(CurrentState.ThumbSticks.Right.X, PreviousState.ThumbSticks.Right.X, deadzone, Edge.Released);
 		}
 
 		public bool RightStickUpCheck(float deadzone) {
-			return CurrentState.ThumbSticks.Right.Y <= -deadzone;
+			return AxisEdge(CurrentState.ThumbSticks.Right.Y, PreviousState.ThumbSticks.Right.Y, -deadzone, Edge.Held);
 		}
 
 		public bool RightStickUpWasPressed(float deadzone) {
-			return CurrentState.ThumbSticks.Right.Y <= -deadzone && PreviousState.ThumbSticks.Right.Y > -deadzone;
+			return AxisEdge(CurrentState.ThumbSticks.Right.Y, PreviousState.ThumbSticks.Right.Y, -deadzone, Edge.Pressed);
 		}
 
 		public bool RightStickUpWasReleased(float deadzone) {
-			return CurrentState.ThumbSticks.Right.Y > -deadzone && PreviousState.ThumbSticks.Right.Y <= -deadzone;
+			return AxisEdge(CurrentState.ThumbSticks.Right.Y, PreviousState.ThumbSticks.Right.Y, -deadzone, Edge.Released);
 		}
 
 		public bool RightStickDownCheck(float deadzone) {
-			return CurrentState.ThumbSticks.Right.Y >= deadzone;
+			return AxisEdge(CurrentState.ThumbSticks.Right.Y, PreviousState.ThumbSticks.Right.Y, deadzone, Edge.Held);
 		}
 
 		public bool RightStickDownWasPressed(float deadzone) {
-			return CurrentState.ThumbSticks.Right.Y >= deadzone && PreviousState.ThumbSticks.Right.Y < deadzone;
+			return AxisEdge(CurrentState.ThumbSticks.Right.Y, PreviousState.ThumbSticks.Right.Y, deadzone, Edge.Pressed);
 		}
 
 		public bool RightStickDownWasReleased(float deadzone) {
-			return CurrentState.ThumbSticks.Right.Y < deadzone && PreviousState.ThumbSticks.Right.Y >= deadzone;
+			return AxisEdge(CurrentState.ThumbSticks.Right.Y, PreviousState.ThumbSticks.Right.Y, deadzone, Edge.Released);
 		}
 
 		public float RightStickHorizontal(float deadzone) {

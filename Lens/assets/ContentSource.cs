@@ -8,7 +8,7 @@ namespace Lens.assets {
 	// Content is read through a source, never through a path. The same loaders serve the source
 	// tree during development and a packaged archive in a release, and a layered source puts loose
 	// files first, so an override next to the executable wins over what shipped.
-	public interface IContentSource {
+	public interface IContentSource : IDisposable {
 		bool Exists(string path);
 
 		// Null when the path is missing.
@@ -19,7 +19,8 @@ namespace Lens.assets {
 	}
 
 	// The seam speaks one dialect: forward slashes, no leading or trailing separator, no "./"
-	// prefix. Callers and archives can then spell a path the same way.
+	// prefix, no interior "." or empty segments. Callers and archives can then spell a path the
+	// same way.
 	internal static class ContentPath {
 		public static string Normalize(string path) {
 			if (string.IsNullOrEmpty(path)) {
@@ -32,7 +33,18 @@ namespace Lens.assets {
 				normalized = normalized[2..];
 			}
 
-			return normalized.Trim('/');
+			var parts = normalized.Split('/');
+			var kept = new List<string>(parts.Length);
+
+			foreach (var part in parts) {
+				if (part.Length == 0 || part == ".") {
+					continue;
+				}
+
+				kept.Add(part);
+			}
+
+			return string.Join('/', kept);
 		}
 	}
 
@@ -63,26 +75,41 @@ namespace Lens.assets {
 				return [];
 			}
 
+			// Materialized: the caller must see a stable snapshot, not a lazily enumerated
+			// directory that changes (or vanishes) under it.
 			return Directory.EnumerateFileSystemEntries(full)
-				.Select(entry => Directory.Exists(entry) ? Path.GetFileName(entry) + "/" : Path.GetFileName(entry));
+				.Select(entry => Directory.Exists(entry) ? Path.GetFileName(entry) + "/" : Path.GetFileName(entry)).ToList();
 		}
 
 		private string Resolve(string path) {
-			return Path.GetFullPath(Path.Combine(root, ContentPath.Normalize(path)));
+			var full = Path.GetFullPath(Path.Combine(root, ContentPath.Normalize(path)));
+			var prefix = root.EndsWith(Path.DirectorySeparatorChar) ? root : root + Path.DirectorySeparatorChar;
+
+			System.Diagnostics.Debug.Assert(full.Equals(root, StringComparison.Ordinal) ||
+				full.StartsWith(prefix, StringComparison.Ordinal),
+				$"Content path escapes the root: {path}");
+
+			return full;
+		}
+
+		public void Dispose() {
+			// Plain files hold no state: nothing to release.
 		}
 	}
 
-	// A zip of the payload. Audio is stored uncompressed so the streams stay seekable; everything
-	// else is deflated. The archive and its stream stay open for the life of the process: an entry
-	// stream is only valid while the archive that owns it is alive.
+	// A zip of the payload. Everything in it is deflated (see tools/pack-content.fsx, which
+	// writes every entry with CompressionLevel.Optimal); entries are buffered to memory on open,
+	// so callers never see the raw entry streams. The archive and its stream stay open for the
+	// life of the source: an entry stream is only valid while the archive that owns it is alive.
 	public sealed class ArchiveContentSource : IContentSource {
 		private readonly FileStream file;
-		private readonly Dictionary<string, ZipArchiveEntry> entries = new();
+		private readonly ZipArchive archive;
+		private readonly Dictionary<string, ZipArchiveEntry> entries = new(StringComparer.OrdinalIgnoreCase);
+		private bool disposed;
 
 		public ArchiveContentSource(string path) {
 			file = File.OpenRead(path);
-
-			var archive = new ZipArchive(file, ZipArchiveMode.Read);
+			archive = new ZipArchive(file, ZipArchiveMode.Read);
 
 			foreach (var entry in archive.Entries) {
 				entries[ContentPath.Normalize(entry.FullName)] = entry;
@@ -113,7 +140,12 @@ namespace Lens.assets {
 			// Copy under the lock and hand out memory; everything the game loads
 			// is consumed whole except music, and one buffered song is affordable.
 			lock (gate) {
-				if (!entries.TryGetValue(ContentPath.Normalize(path), out var entry)) {
+				if (disposed || !entries.TryGetValue(ContentPath.Normalize(path), out var entry)) {
+					return null;
+				}
+
+				if (entry.FullName.EndsWith('/')) {
+					// A directory entry: no bytes to hand out.
 					return null;
 				}
 
@@ -148,6 +180,19 @@ namespace Lens.assets {
 					yield return name;
 				}
 			}
+		}
+
+		public void Dispose() {
+			lock (gate) {
+				if (disposed) {
+					return;
+				}
+
+				disposed = true;
+			}
+
+			archive.Dispose();
+			file.Dispose();
 		}
 	}
 
@@ -185,6 +230,12 @@ namespace Lens.assets {
 						yield return name;
 					}
 				}
+			}
+		}
+
+		public void Dispose() {
+			foreach (var layer in layers) {
+				layer.Dispose();
 			}
 		}
 	}
