@@ -20,6 +20,10 @@ public class MainActivity : AndroidGameActivity {
 	protected override void OnCreate(Bundle? savedInstanceState) {
 		base.OnCreate(savedInstanceState);
 
+		// MonoGame's activity does not hold the screen: without this the device
+		// sleeps mid-run on its normal timeout. Window-scoped, dies with us.
+		Window!.AddFlags(WindowManagerFlags.KeepScreenOn);
+
 		Bootstrap.Setup(this);
 
 		var game = new AndroidApp();
