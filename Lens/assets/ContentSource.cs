@@ -105,8 +105,25 @@ namespace Lens.assets {
 			return entries.Keys.Any(key => key.StartsWith(prefix, StringComparison.Ordinal));
 		}
 
+		private readonly object gate = new();
+
 		public Stream? Open(string path) {
-			return entries.TryGetValue(ContentPath.Normalize(path), out var entry) ? entry.Open() : null;
+			// Zip entries share the archive's base stream, which is not thread-safe
+			// (level loads on a worker thread, audio streams on the game thread).
+			// Copy under the lock and hand out memory; everything the game loads
+			// is consumed whole except music, and one buffered song is affordable.
+			lock (gate) {
+				if (!entries.TryGetValue(ContentPath.Normalize(path), out var entry)) {
+					return null;
+				}
+
+				var copy = new MemoryStream((int) entry.Length);
+				using var source = entry.Open();
+				source.CopyTo(copy);
+				copy.Position = 0;
+
+				return copy;
+			}
 		}
 
 		public IEnumerable<string> List(string path) {

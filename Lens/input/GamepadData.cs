@@ -45,7 +45,9 @@ namespace Lens.input {
 			PreviousState = CurrentState;
 			CurrentState = GamePad.GetState(PlayerIndex);
 
-			WasAttached = WasAttached || PreviousState.IsConnected;
+			// A latch here reports every frame after the first attach and never
+			// notices a reconnect; the previous frame's state is the whole story.
+			WasAttached = PreviousState.IsConnected;
 			Attached = CurrentState.IsConnected;
 
 			// Diagnostics while the port's input path is being proven on the device.

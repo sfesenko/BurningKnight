@@ -34,7 +34,9 @@ public static class Log {
 			_ = Console.ForegroundColor;
 
 			return true;
-		} catch (PlatformNotSupportedException) {
+		} catch (Exception) {
+			// Any console failure (not just the platform one) means no colors;
+			// throwing out of a static initializer kills the process pre-frame.
 			return false;
 		}
 	}
