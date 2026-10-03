@@ -19,7 +19,10 @@ public class AndroidCore : Core {
 	}
 
 	public override void OnDisplayChanged() {
+		// CONTRACT: the host routes this onto the game thread, so touching the graphics
+		// manager here is safe.
 		RefreshDisplaySize();
+		Graphics.ApplyChanges();
 	}
 
 	private void RefreshDisplaySize() {

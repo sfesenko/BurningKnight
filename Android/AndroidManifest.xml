@@ -3,8 +3,12 @@
     <!-- The pad is the point, but the game still installs on devices without one. -->
     <uses-feature android:name="android.hardware.gamepad" android:required="false" />
 
+    <!-- No cloud backup: saves move via Settings → Export/Import, and Auto Backup would
+         only restore stale ones over them. -->
     <application
         android:label="Burning Knight"
         android:icon="@mipmap/ic_launcher"
-        android:roundIcon="@mipmap/ic_launcher" />
+        android:roundIcon="@mipmap/ic_launcher"
+        android:allowBackup="false"
+        android:fullBackupContent="false" />
 </manifest>

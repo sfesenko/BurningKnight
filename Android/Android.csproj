@@ -14,6 +14,8 @@
         <!-- Sideloaded APK, arm64 only — the handheld's ABI. -->
         <RuntimeIdentifiers>android-arm64</RuntimeIdentifiers>
         <AndroidPackageFormat>apk</AndroidPackageFormat>
+        <!-- The payload must stay seekable for the archive source: keep the .zip stored, not deflated. -->
+        <AndroidStoreUncompressedFileExtensions>.zip</AndroidStoreUncompressedFileExtensions>
     </PropertyGroup>
 
     <ItemGroup>
@@ -36,6 +38,11 @@
          APK's assets. The bootstrap copies it to FilesDir once per packed content and opens it
          as an ArchiveContentSource. Android builds are Release only (ImGui.NET has no Android
          natives), so Debug packs nothing. -->
+    <Target Name="RequireRelease" BeforeTargets="BeforeBuild">
+        <Error Condition="'$(Configuration)'!='Release'"
+               Text="Android builds are Release-only (ImGui.NET has no Android natives). Build with -c Release." />
+    </Target>
+
     <Target Name="StageContent" BeforeTargets="_ComputeAndroidAssetsPaths"
             Condition="'$(Configuration)' == 'Release' and '$(DesignTimeBuild)' != 'true'">
         <PropertyGroup>

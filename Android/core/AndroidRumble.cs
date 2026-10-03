@@ -9,6 +9,10 @@ namespace AndroidPort.core;
 // would only start another.
 public class AndroidRumble : IRumble {
 	public void Play(PlayerIndex player, float strength, float time) {
+		if (strength <= 0 || time <= 0) {
+			return;
+		}
+
 		GamePad.SetVibration(player, strength, strength);
 	}
 
