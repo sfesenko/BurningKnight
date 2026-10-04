@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Threading;
 using BurningKnight.assets;
 using BurningKnight.assets.achievements;
+using BurningKnight.assets.input;
 using BurningKnight.assets.items;
 using BurningKnight.assets.lighting;
 using BurningKnight.assets.loot;
@@ -18,6 +19,7 @@ using Lens.assets;
 using Lens.entity;
 using Lens.game;
 using Lens.graphics;
+using Lens.input;
 using Lens.util;
 using Lens.util.math;
 using Lens.util.tween;
@@ -45,6 +47,11 @@ namespace BurningKnight.state {
 
 		// Set by the worker once the saves are in, applied by the main thread.
 		private volatile bool checkFullscreen;
+
+		// Set by the worker when loading throws: `ready` stays false, so without this
+		// the screen would load forever with no error. The game thread surfaces it.
+		private volatile bool failed;
+		private string failure = "";
 
 		private float lastV;
 		private UiString tipLabel = null!;
@@ -81,68 +88,79 @@ namespace BurningKnight.state {
 			progress = 0;
 
 			var thread = new Thread(() => {
-				var sw = Stopwatch.StartNew();
+				try {
+					var sw = Stopwatch.StartNew();
 
-				Log.Info("Starting asset loading thread");
+					Log.Info("Starting asset loading thread");
 
-				LoadSection(() => SaveManager.Load(gameArea, SaveType.Global), "Global saves");
-				
-				checkFullscreen = true;
+					LoadSection(() => SaveManager.Load(gameArea, SaveType.Global), "Global saves");
+					
+					checkFullscreen = true;
 
-				if (Assets.LoadMusic) {
-					LoadSection(() => Context.Audio.PlayMusic("Void"), "Audio");
-				} else {
-					progress++;
-				}
-
-				LoadSection(() => Assets.Load(ref progress), "Assets");
-				progress++;
-
-				LoadSection(Dialogs.Load, "Dialogs");
-
-				CommonAse.Load();
-				progress++;
-				
-				LoadSection(Shaders.Load, "Shaders");
-				LoadSection(Prefabs.Load, "Prefabs");
-				LoadSection(Items.Load, "Items");
-				LoadSection(LootTables.Load, "Loot tables");
-				LoadSection(Mods.Load, "Mods");
-				
-				Log.Info("Done loading assets! Loading level now.");
-			
-				LoadSection(() => {
-					Lights.Init();
-					Physics.Init();
-				}, "Lights & physics");
-				
-				gameArea = new GameArea();
-				Context.Level = null;
-
-				LoadSection(Tilesets.Load, "Tilesets");
-				LoadSection(Achievements.Load, "Achievements");
-				
-				LoadSection(() => {
-					SaveManager.Load(gameArea, SaveType.Game);
-				}, "Game saves");
-
-				Rnd.Seed = $"{Context.Run.Seed}_{Context.Run.Depth}";
-
-				LoadSection(() => {
-					SaveManager.Load(gameArea, SaveType.Level);
-				}, "Level saves");
-				
-				LoadSection(() => {
-					if (Context.Run.Depth > 0) {
-						SaveManager.Load(gameArea, SaveType.Player);
+					if (Assets.LoadMusic) {
+						LoadSection(() => Context.Audio.PlayMusic("Void"), "Audio");
 					} else {
-						SaveManager.Generate(gameArea, SaveType.Player);
+						progress++;
 					}
-				}, "Player saves");
 
-				Log.Info($"Done loading level in {sw.ElapsedMilliseconds} ms! Going to menu.");
+					LoadSection(() => Assets.Load(ref progress), "Assets");
+					progress++;
+
+					LoadSection(Dialogs.Load, "Dialogs");
+
+					LoadSection(CommonAse.Load, "Common");
+					
+					LoadSection(Shaders.Load, "Shaders");
+					LoadSection(Prefabs.Load, "Prefabs");
+					LoadSection(Items.Load, "Items");
+					LoadSection(LootTables.Load, "Loot tables");
+					LoadSection(Mods.Load, "Mods");
+					
+					Log.Info("Done loading assets! Loading level now.");
 				
-				ready = true;
+					LoadSection(() => {
+						Lights.Init();
+						Physics.Init();
+					}, "Lights & physics");
+					
+					gameArea = new GameArea();
+					Context.Level = null;
+
+					LoadSection(Tilesets.Load, "Tilesets");
+					LoadSection(Achievements.Load, "Achievements");
+					
+					LoadSection(() => {
+						SaveManager.Load(gameArea, SaveType.Game);
+					}, "Game saves");
+
+					Rnd.Seed = $"{Context.Run.Seed}_{Context.Run.Depth}";
+
+					LoadSection(() => {
+						SaveManager.Load(gameArea, SaveType.Level);
+					}, "Level saves");
+					
+					LoadSection(() => {
+						if (Context.Run.Depth > 0) {
+							SaveManager.Load(gameArea, SaveType.Player);
+						} else {
+							SaveManager.Generate(gameArea, SaveType.Player);
+						}
+					}, "Player saves");
+
+					Log.Info($"Done loading level in {sw.ElapsedMilliseconds} ms! Going to menu.");
+					
+					ready = true;
+				} catch (Exception e) {
+					// Never die silently on the worker: a throw used to leave `ready`
+					// false forever (infinite loading screen). Record it for the game
+					// thread to surface; per-asset guards above mean this is now a
+					// truly unexpected failure.
+					Log.Error("Asset loading failed");
+					Log.Error(e);
+
+					failure = e.Message;
+					failed = true;
+				}
 			});
 
 			// The worker can block on the main thread's GPU queue; it must not pin the process
@@ -156,6 +174,16 @@ namespace BurningKnight.state {
 		public override void Update(float dt) {
 			base.Update(dt);
 
+			if (failed) {
+				// Dead end surfaced, not hung: the label names the failure, and any
+				// confirm/back press leaves instead of sitting on a dead screen.
+				// UiSelect covers keyboard (Enter/Space/X) and pad (X/A/Y); UiAccept
+				// covers the mouse; GameStart/UiBack cover pad Start/Back and Esc.
+				if (Input.WasPressed(Controls.GameStart) || Input.WasPressed(Controls.UiSelect) || Input.WasPressed(Controls.UiAccept) || Input.WasPressed(Controls.UiBack)) {
+					Engine.Instance.Exit();
+				}
+			}
+
 			t += dt;
 			tm -= dt;
 
@@ -167,10 +195,12 @@ namespace BurningKnight.state {
 			if (checkFullscreen) {
 				checkFullscreen = false;
 				
-				if (Settings.Fullscreen) {
-					Engine.Instance.SetFullscreen();
-				} else {
-					Engine.Instance.SetWindowed(Display.Width * 3, Display.Height * 3);
+				if (Engine.Instance.CanToggleFullscreen) {
+					if (Settings.Fullscreen) {
+						Engine.Instance.SetFullscreen();
+					} else {
+						Engine.Instance.SetWindowed(Display.Width * 3, Display.Height * 3);
+					}
 				}
 			}
 
@@ -257,7 +287,7 @@ namespace BurningKnight.state {
 				Graphics.Print($"{percentage}%", Font.Small, (int)(pos.X + lastV * (w - 4)) - 15, (int)pos.Y + 3);
 			}
 
-			var loadingLabel = $"Loading: {currentlyLoadingLabel}...";
+			var loadingLabel = failed ? $"Failed to load: {failure}" : $"Loading: {currentlyLoadingLabel}...";
 			Graphics.Print(loadingLabel, Font.Small, Display.UiWidth / 2 - (int)Font.Small.MeasureString(loadingLabel).Width / 2, Display.UiHeight - 20);
 
 			Graphics.Color.A = 255;

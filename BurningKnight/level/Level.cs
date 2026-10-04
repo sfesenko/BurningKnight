@@ -330,18 +330,29 @@ namespace BurningKnight.level {
 
 		public void RefreshSurfaces() {
 			Gpu.Run(() => {
-				WallSurface?.Dispose();
-				MessSurface?.Dispose();
 				cleared = false;
 
 				if (Graphics.Batch == null) {
+					WallSurface?.Dispose();
+					MessSurface?.Dispose();
+					WallSurface = null;
+					MessSurface = null;
+
 					return;
 				}
 
-				WallSurface = new RenderTarget2D(Engine.GraphicsDevice, Display.Width + 1, Display.Height + 1);
-
-				MessSurface = new RenderTarget2D(Engine.GraphicsDevice, Width * 16, Height * 16, false,
+				// Create before disposing: Gpu.Flush logs and continues past a throwing
+				// closure, so a failed allocation must leave the old live surfaces in
+				// place instead of disposed-but-non-null ones.
+				var wall = new RenderTarget2D(Engine.GraphicsDevice, Display.Width + 1, Display.Height + 1);
+				var mess = new RenderTarget2D(Engine.GraphicsDevice, Width * 16, Height * 16, false,
 					Engine.Graphics.PreferredBackBufferFormat, DepthFormat.Depth24, 0, RenderTargetUsage.PreserveContents);
+
+				WallSurface?.Dispose();
+				MessSurface?.Dispose();
+
+				WallSurface = wall;
+				MessSurface = mess;
 			});
 		}
 

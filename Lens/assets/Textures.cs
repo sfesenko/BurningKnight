@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using Lens.graphics;
 using Lens.util;
@@ -23,9 +24,45 @@ namespace Lens.assets {
 		}
 
 		public static Texture2D FastLoad(string path) {
-			using var stream = Assets.Source.Open(path);
+			try {
+				using var stream = Assets.Source.Open(path);
 
-			return Gpu.Run(() => Texture2D.FromStream(Engine.GraphicsDevice, stream));
+				if (stream == null) {
+					Log.Error($"Texture {path} was not found, using a fallback");
+
+					return Fallback();
+				}
+
+				// The decode runs on the main thread inside Gpu.Flush: a throw there
+				// bypasses this try/catch, and Flush's own log-and-continue would hand
+				// back null. Catch inside so the fallback contract always holds.
+				var texture = Gpu.Run(() => {
+					try {
+						return Texture2D.FromStream(Engine.GraphicsDevice, stream);
+					} catch (Exception e) {
+						Log.Error($"Failed to decode texture {path}: {e}");
+
+						return null;
+					}
+				});
+
+				return texture ?? Fallback();
+			} catch (Exception e) {
+				// Boot-time load on the main thread: one corrupt file must not crash
+				// before the worker even starts. Same philosophy as LoadTexture.
+				Log.Error($"Failed to fast-load texture {path}: {e}");
+
+				return Fallback();
+			}
+		}
+
+		private static Texture2D Fallback() {
+			return Gpu.Run(() => {
+				var texture = new Texture2D(Engine.GraphicsDevice, 1, 1);
+				texture.SetData([Color.White]);
+
+				return texture;
+			});
 		}
 		
 		private static void QueueTextures(FileHandle handle) {
@@ -44,8 +81,22 @@ namespace Lens.assets {
 			var region = new TextureRegion();
 			string id = handle.NameWithoutExtension;
 
-			using var fileStream = handle.OpenRead();
-			region.Texture = Texture2D.FromStream(Engine.GraphicsDevice, fileStream);
+			try {
+				using var fileStream = handle.OpenRead();
+
+				if (fileStream == null) {
+					Log.Error($"Texture {id} is missing, skipping");
+
+					return;
+				}
+
+				region.Texture = Texture2D.FromStream(Engine.GraphicsDevice, fileStream);
+			} catch (Exception e) {
+				// One bad asset must not kill boot: log it and keep loading the rest.
+				Log.Error($"Failed to load texture {id}: {e}");
+
+				return;
+			}
 
 			region.Source = region.Texture.Bounds;
 			region.Center = new Vector2(region.Source.Width / 2f, region.Source.Height / 2f);

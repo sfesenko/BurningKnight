@@ -87,7 +87,6 @@ namespace BurningKnight.state {
 					// Synchronous: the savers serialise the live area, so a worker would be
 					// reading lists the frame is still sorting. The write is a few dozen
 					// milliseconds at most, every AutoSaveInterval seconds.
-					SaveManager.Backup();
 
 					SaveManager.Save(Area, SaveType.Global);
 					SaveManager.Save(Area, SaveType.Game);
@@ -396,7 +395,7 @@ namespace BurningKnight.state {
 
 			Context.Run.Update();
 			
-			if (Input.WasPressed(Controls.Fullscreen) || (Input.Keyboard.WasPressed(Keys.Enter) && (Input.Keyboard.IsDown(Keys.LeftAlt) || Input.Keyboard.IsDown(Keys.RightAlt)))) {
+			if (Engine.Instance.CanToggleFullscreen && (Input.WasPressed(Controls.Fullscreen) || (Input.Keyboard.WasPressed(Keys.Enter) && (Input.Keyboard.IsDown(Keys.LeftAlt) || Input.Keyboard.IsDown(Keys.RightAlt))))) {
 				if (Engine.Graphics.IsFullScreen) {
 					Engine.Instance.SetWindowed(Display.Width * 3, Display.Height * 3);
 				} else {

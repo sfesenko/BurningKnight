@@ -70,6 +70,13 @@ namespace BurningKnight.assets.lighting {
 			if (!LevelLayerDebug.Lights || !(Engine.Instance.State is InGameState)) {
 				return;
 			}
+
+			// OOM/device-loss at surface allocation leaves this null (Gpu.Flush logs
+			// and continues): skip the pass instead of SetRenderTarget(null), which
+			// would silently target the backbuffer. Init retries on the next level.
+			if (surface == null) {
+				return;
+			}
 			
 			if (EnableFog) {
 				InGameState.RenderFog();

@@ -133,6 +133,12 @@ namespace BurningKnight.entity.projectile {
 			var v = (from - closest);
 			var len = v.Length();
 
+			// A point-blank wall or a spawn overlapping geometry yields ~zero length:
+			// a zero-area fixture fails Box2D validation and leaves the body fixture-less.
+			if (len < 2f) {
+				len = 2f;
+			}
+
 			if (Math.Abs(len - Width) > 1) {
 				Width = len;
 				BodyComponent.Resize(0, -Height * 0.5f, Width, Height);

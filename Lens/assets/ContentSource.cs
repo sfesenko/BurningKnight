@@ -85,9 +85,9 @@ namespace Lens.assets {
 			var full = Path.GetFullPath(Path.Combine(root, ContentPath.Normalize(path)));
 			var prefix = root.EndsWith(Path.DirectorySeparatorChar) ? root : root + Path.DirectorySeparatorChar;
 
-			System.Diagnostics.Debug.Assert(full.Equals(root, StringComparison.Ordinal) ||
-				full.StartsWith(prefix, StringComparison.Ordinal),
-				$"Content path escapes the root: {path}");
+			if (!(full.Equals(root, StringComparison.Ordinal) || full.StartsWith(prefix, StringComparison.Ordinal))) {
+				throw new InvalidOperationException($"Content path escapes the root: {path}");
+			}
 
 			return full;
 		}
@@ -107,17 +107,38 @@ namespace Lens.assets {
 		private readonly Dictionary<string, ZipArchiveEntry> entries = new(StringComparer.OrdinalIgnoreCase);
 		private bool disposed;
 
-		public ArchiveContentSource(string path) : this(File.OpenRead(path)) {
+		public ArchiveContentSource(string path) {
+			var stream = File.OpenRead(path);
+
+			try {
+				baseStream = stream;
+				archive = new ZipArchive(baseStream, ZipArchiveMode.Read);
+
+				foreach (var entry in archive.Entries) {
+					entries[ContentPath.Normalize(entry.FullName)] = entry;
+				}
+			} catch {
+				stream.Dispose();
+
+				throw;
+			}
 		}
 
 		// A seekable stream holding the zip bytes: a file, or a bounded region
 		// of a larger file (the APK). The source takes ownership.
 		public ArchiveContentSource(Stream stream) {
 			baseStream = stream;
-			archive = new ZipArchive(baseStream, ZipArchiveMode.Read);
 
-			foreach (var entry in archive.Entries) {
-				entries[ContentPath.Normalize(entry.FullName)] = entry;
+			try {
+				archive = new ZipArchive(baseStream, ZipArchiveMode.Read);
+
+				foreach (var entry in archive.Entries) {
+					entries[ContentPath.Normalize(entry.FullName)] = entry;
+				}
+			} catch {
+				baseStream.Dispose();
+
+				throw;
 			}
 		}
 
@@ -134,7 +155,7 @@ namespace Lens.assets {
 
 			var prefix = name + "/";
 
-			return entries.Keys.Any(key => key.StartsWith(prefix, StringComparison.Ordinal));
+			return entries.Keys.Any(key => key.StartsWith(prefix, StringComparison.OrdinalIgnoreCase));
 		}
 
 		private readonly object gate = new();
@@ -173,11 +194,16 @@ namespace Lens.assets {
 			var seen = new HashSet<string>();
 
 			foreach (var key in entries.Keys) {
-				if (!key.StartsWith(prefix, StringComparison.Ordinal)) {
+				if (!key.StartsWith(prefix, StringComparison.OrdinalIgnoreCase)) {
 					continue;
 				}
 
 				var rest = key[prefix.Length..];
+
+				if (rest.Length == 0) {
+					continue;
+				}
+
 				var slash = rest.IndexOf('/');
 				var name = slash < 0 ? rest : rest[..(slash + 1)];
 
@@ -194,10 +220,15 @@ namespace Lens.assets {
 				}
 
 				disposed = true;
-			}
 
-			archive.Dispose();
-			baseStream.Dispose();
+				try {
+					archive.Dispose();
+				} finally {
+					// A throwing archive dispose must not skip the stream: the APK fd
+					// would leak permanently across activity recreation.
+					baseStream.Dispose();
+				}
+			}
 		}
 	}
 

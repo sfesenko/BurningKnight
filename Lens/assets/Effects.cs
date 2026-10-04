@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Lens.util;
 using Lens.util.file;
 using Microsoft.Xna.Framework.Graphics;
@@ -25,9 +26,15 @@ namespace Lens.assets {
 
 		private static void LoadEffect(FileHandle handle)
 		{
-			var assetName = $"Shaders/{handle.NameWithoutExtension}";
-			var effect = Assets.Content.Load<Effect>(assetName);
-			All[handle.NameWithoutExtension] = effect;
+			// Runs inside Gpu.Flush on the main thread: a throw here bypasses the
+			// queuing caller's try/catch and kills the process, so catch inside.
+			try {
+				var assetName = $"Shaders/{handle.NameWithoutExtension}";
+				var effect = Assets.Content.Load<Effect>(assetName);
+				All[handle.NameWithoutExtension] = effect;
+			} catch (Exception e) {
+				Log.Error($"Failed to load effect {handle.NameWithoutExtension}: {e}");
+			}
 		}
 		
 		public static void Destroy() {
@@ -40,6 +47,12 @@ namespace Lens.assets {
 
 		public static Effect? Get(string id) {
 			return All.TryGetValue(id, out var o) ? o : null;
+		}
+
+		// Fail-fast accessor: every mandatory lookup goes through here so the
+		// message is built in one place instead of being copy-pasted per site.
+		public static Effect Require(string id) {
+			return Get(id) ?? throw new InvalidOperationException($"Shader '{id}' failed to load.");
 		}
 	}
 }

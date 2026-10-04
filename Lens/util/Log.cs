@@ -62,7 +62,11 @@ public static class Log {
 			} catch (Exception e) {
 				// The file is only opened in append mode, so a failed roll costs history,
 				// not the log.
-				Console.Error.WriteLine(e);
+				try {
+					Console.Error.WriteLine(e);
+				} catch {
+					// Stdout may be closed; logging must never take the process down.
+				}
 			}
 
 			if (WriteToFile) {
@@ -144,28 +148,34 @@ public static class Log {
 		var consoleLine = $"{time} {type} {message} {caller}";
 
 		lock (Lock) {
-			if (writer != null) {
-				writer.WriteLine(fileLine);
-			}
+			// A logging facade must never take the process down: disk-full,
+			// unmounted FilesDir, or closed stdout all surface here.
+			try {
+				if (writer != null) {
+					writer.WriteLine(fileLine);
+				}
 
-			if (Colors) {
-				var old = Console.ForegroundColor;
+				if (Colors) {
+					var old = Console.ForegroundColor;
 
-				Console.ForegroundColor = ConsoleColor.Gray;
-				Console.Write(time);
-				Console.Write(' ');
-				Console.ForegroundColor = ConsoleColor.Yellow;
-				Console.Write(type);
-				Console.Write(' ');
-				Console.ForegroundColor = color;
-				Console.Write(message);
-				Console.ForegroundColor = ConsoleColor.Gray;
-				Console.Write(' ');
-				Console.WriteLine(caller);
+					Console.ForegroundColor = ConsoleColor.Gray;
+					Console.Write(time);
+					Console.Write(' ');
+					Console.ForegroundColor = ConsoleColor.Yellow;
+					Console.Write(type);
+					Console.Write(' ');
+					Console.ForegroundColor = color;
+					Console.Write(message);
+					Console.ForegroundColor = ConsoleColor.Gray;
+					Console.Write(' ');
+					Console.WriteLine(caller);
 
-				Console.ForegroundColor = old;
-			} else {
-				Console.WriteLine(consoleLine);
+					Console.ForegroundColor = old;
+				} else {
+					Console.WriteLine(consoleLine);
+				}
+			} catch {
+				// Nowhere left to report to.
 			}
 		}
 	}

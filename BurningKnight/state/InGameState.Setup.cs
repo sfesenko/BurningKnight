@@ -69,7 +69,7 @@ namespace BurningKnight.state {
 
 			Engine.Instance.StateRenderer.UiEffect = Shaders.Ui;
 			
-			if (Settings.Fullscreen && !Engine.Graphics.IsFullScreen) {
+			if (Settings.Fullscreen && !Engine.Graphics.IsFullScreen && Engine.Instance.CanToggleFullscreen) {
 				Engine.Instance.SetFullscreen();
 			}
 

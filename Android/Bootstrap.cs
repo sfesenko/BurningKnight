@@ -20,6 +20,7 @@ public static class Bootstrap {
 	private const int MaxCrashPayloadChars = 64 * 1024;
 
 	private static readonly object CrashLock = new();
+	private static bool crashHandlersInstalled;
 
 	public static void Setup(Context context) {
 		var files = context.FilesDir;
@@ -35,7 +36,20 @@ public static class Bootstrap {
 		WatchForCrashes(context, data);
 
 		Assets.SetRoot(data);
-		Assets.SetSource(OpenApkArchive(context));
+
+		var previous = Assets.Source;
+		var source = OpenApkArchive(context);
+		Assets.SetSource(source);
+
+		if (!ReferenceEquals(previous, source)) {
+			// First boot owns a FileContentSource (no state); a recreated activity owns
+			// the previous APK source. Never leak the APK fd across recreations.
+			try {
+				previous.Dispose();
+			} catch (Exception e) {
+				Log.Error(e);
+			}
+		}
 	}
 
 	// Content.zip ships stored (not deflated — see the csproj flag), so its bytes sit
@@ -43,29 +57,59 @@ public static class Bootstrap {
 	// APK file serves ZipArchive's seeks with no copy and no duplication. Throws when
 	// the asset is compressed instead of stored — that means the packaging regressed.
 	private static ArchiveContentSource OpenApkArchive(Context context) {
+		if (context.Assets == null) {
+			throw new InvalidOperationException("AssetManager is unavailable, cannot open Content.zip.");
+		}
+
 		long offset;
 		long length;
 
-		using (var descriptor = context.Assets!.OpenFd(ArchiveName)) {
-			offset = descriptor.StartOffset;
-			length = descriptor.Length;
+		try {
+			using (var descriptor = context.Assets.OpenFd(ArchiveName)) {
+				offset = descriptor.StartOffset;
+				length = descriptor.Length;
+			}
+		} catch (Exception e) {
+			throw new InvalidOperationException(
+				$"Content.zip is missing or compressed in the APK (expected a stored asset): {e.Message}", e);
 		}
 
-		var apk = context.ApplicationInfo!.SourceDir!;
+		if (length <= 0) {
+			throw new InvalidOperationException(
+				$"Content.zip in APK has length {length}: expected a stored (uncompressed) asset — check AndroidStoreUncompressedFileExtensions.");
+		}
 
-		var file = new FileStream(apk, FileMode.Open, FileAccess.Read, FileShare.Read, 4096, FileOptions.RandomAccess);
-		var region = new ApkRegionStream(file, offset, length);
+		if (offset < 0) {
+			throw new InvalidOperationException($"Content.zip offset {offset} is invalid.");
+		}
+
+		var apk = context.ApplicationInfo?.SourceDir;
+
+		if (string.IsNullOrEmpty(apk)) {
+			throw new InvalidOperationException("APK path (SourceDir) is unavailable.");
+		}
+
+		FileStream? file = null;
+		ApkRegionStream? region = null;
 
 		try {
+			file = new FileStream(apk, FileMode.Open, FileAccess.Read, FileShare.Read, 4096, FileOptions.RandomAccess);
+			region = new ApkRegionStream(file, offset, length);
 			var source = new ArchiveContentSource(region);
 
 			Log.Info($"Opened {ArchiveName} in place ({length} bytes at offset {offset})");
 
 			return source;
-		} catch {
-			region.Dispose();
+		} catch (Exception e) {
+			// Region owns the file once constructed; anything earlier owns nothing,
+			// so each layer is disposed only if the next one never took it.
+			if (region != null) {
+				region.Dispose();
+			} else {
+				file?.Dispose();
+			}
 
-			throw;
+			throw new InvalidOperationException($"Content.zip at offset {offset} ({length} bytes) is unreadable: {e.Message}", e);
 		}
 	}
 
@@ -77,39 +121,69 @@ public static class Bootstrap {
 			return;
 		}
 
-		var appVersion = AppVersion(context);
-
-		void Write(string kind, object? payload) {
-			// The size check and the append are one unit: two crashing threads must not both
-			// pass the check and both append past the cap.
-			lock (CrashLock) {
-				try {
-					var path = Path.Combine(data, "crash_log.txt");
-					var info = new FileInfo(path);
-
-					if (info.Exists && info.Length > CrashLogResetBytes) {
-						File.Delete(path);
-					}
-
-					var text = payload?.ToString() ?? "<null>";
-
-					if (text.Length > MaxCrashPayloadChars) {
-						text = text.Substring(0, MaxCrashPayloadChars) + "\n…[truncated]";
-					}
-
-					File.AppendAllText(path,
-						$"--- {kind} {DateTime.UtcNow:yyyy-MM-dd HH:mm:ss}Z {Build.Model} API{Build.VERSION.SdkInt} v{appVersion}\n{text}\n");
-				} catch {
-					// Nowhere left to report to.
-				}
+		lock (CrashLock) {
+			// A recreated activity runs Setup again: never double-subscribe.
+			if (crashHandlersInstalled) {
+				return;
 			}
+
+			crashHandlersInstalled = true;
 		}
 
-		AppDomain.CurrentDomain.UnhandledException += (_, e) => Write("unhandled", e.ExceptionObject);
+		var appVersion = AppVersion(context);
+
+		AppDomain.CurrentDomain.UnhandledException += (_, e) => WriteCrash(data, appVersion, "unhandled", e.ExceptionObject);
 		TaskScheduler.UnobservedTaskException += (_, e) => {
-			Write("task", e.Exception);
+			WriteCrash(data, appVersion, "task", e.Exception);
 			e.SetObserved();
 		};
+	}
+
+	// A synchronous boot failure (content missing, engine ctor throw) is caught, not
+	// unhandled, so the handlers above never fire for it — but burning_log.txt does not
+	// exist yet either (Log.Open runs in Engine.Initialize). The activity mirrors those
+	// catches here so the file the README asks for in bug reports actually exists.
+	public static void WriteCrash(Context context, string kind, object? payload) {
+		// The crash reporter must never be able to kill the catch that calls it:
+		// a throwing FilesDir/AbsolutePath here would skip ShowFailure and turn
+		// a handled boot failure into an unhandled crash with no log entry.
+		try {
+			var files = context.FilesDir;
+
+			if (files == null || string.IsNullOrEmpty(files.AbsolutePath)) {
+				return;
+			}
+
+			WriteCrash(files.AbsolutePath, AppVersion(context), kind, payload);
+		} catch {
+			// Nowhere left to report to.
+		}
+	}
+
+	private static void WriteCrash(string data, string appVersion, string kind, object? payload) {
+		// The size check and the append are one unit: two crashing threads must not both
+		// pass the check and both append past the cap.
+		lock (CrashLock) {
+			try {
+				var path = Path.Combine(data, "crash_log.txt");
+				var info = new FileInfo(path);
+
+				if (info.Exists && info.Length > CrashLogResetBytes) {
+					File.Delete(path);
+				}
+
+				var text = payload?.ToString() ?? "<null>";
+
+				if (text.Length > MaxCrashPayloadChars) {
+					text = text.Substring(0, MaxCrashPayloadChars) + "\n…[truncated]";
+				}
+
+				File.AppendAllText(path,
+					$"--- {kind} {DateTime.UtcNow:yyyy-MM-dd HH:mm:ss}Z {Build.Model} API{Build.VERSION.SdkInt} v{appVersion}\n{text}\n");
+			} catch {
+				// Nowhere left to report to.
+			}
+		}
 	}
 
 	// Display version + version code, best effort: a missing PackageManager must not take

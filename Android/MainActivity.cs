@@ -11,7 +11,9 @@ namespace AndroidPort;
 
 // The whole host bootstrap sits in OnCreate, where Program.Main sits on desktop: writable paths,
 // the content archive, then the game. The activity is locked to landscape and handles its own
-// configuration changes so a rotation, a font-scale switch, or a keyboard flip never recreates it.
+// size-relevant configuration changes so a rotation, a font-scale switch, or a keyboard flip
+// never recreates it. A locale switch still recreates it: Bootstrap.Setup is idempotent
+// (previous source disposed, crash handlers installed once), so the second boot is clean.
 // SingleTask so a second launch reuses this activity instead of stacking another game on top.
 [Activity(
 	Label = "Burning Knight",
@@ -28,9 +30,9 @@ public class MainActivity : AndroidGameActivity {
 	protected override void OnCreate(Bundle? savedInstanceState) {
 		base.OnCreate(savedInstanceState);
 
-		// MonoGame's activity does not hold the screen: without this the device
-		// sleeps mid-run on its normal timeout. Window-scoped, dies with us.
-		Window!.AddFlags(WindowManagerFlags.KeepScreenOn);
+		// ApplyImmersive re-adds KeepScreenOn (MonoGame's activity does not hold the
+		// screen or the device sleeps mid-run); it null-checks the window, so a
+		// missing window degrades to normal sleep instead of bypassing ShowFailure.
 		ApplyImmersive();
 
 		Android.Util.Log.Info("BK", "OnCreate");
@@ -43,6 +45,8 @@ public class MainActivity : AndroidGameActivity {
 			Bootstrap.Setup(this);
 		} catch (Exception e) {
 			Android.Util.Log.Info("BK", $"Setup failed: {e.Message}");
+			Log.Error(e);
+			Bootstrap.WriteCrash(this, "setup", e);
 			ShowFailure($"Failed to start:\n{e.Message}");
 
 			return;
@@ -71,8 +75,17 @@ public class MainActivity : AndroidGameActivity {
 
 		try {
 			var app = new AndroidApp();
+
+			// Own it before anything can throw: OnDestroy disposes `game`, so a
+			// failure below (view service, SetContentView, focus) is cleaned up
+			// there. Do NOT dispose here — MonoGame's AndroidGameActivity keeps
+			// its own Game ref until OnDestroy, so OnResume would dereference a
+			// disposed game (Platform == null) and crash past ShowFailure.
+			game = app;
+
 			Android.Util.Log.Info("BK", "app created");
-			var view = (View) app.Services.GetService(typeof(View))!;
+			var view = app.Services.GetService(typeof(View)) as View
+				?? throw new InvalidOperationException("MonoGame view service missing: expected an Android View from AndroidGameActivity.");
 
 			SetContentView(view);
 
@@ -82,7 +95,6 @@ public class MainActivity : AndroidGameActivity {
 			view.FocusableInTouchMode = true;
 			view.RequestFocus();
 
-			game = app;
 			started = true;
 
 			ApplyImmersive();
@@ -91,6 +103,7 @@ public class MainActivity : AndroidGameActivity {
 		} catch (Exception e) {
 			Android.Util.Log.Info("BK", $"StartGame failed: {e.Message}");
 			Log.Error(e);
+			Bootstrap.WriteCrash(this, "start", e);
 			ShowFailure($"Failed to start:\n{e.Message}");
 		}
 	}
@@ -139,6 +152,22 @@ public class MainActivity : AndroidGameActivity {
 			}
 
 			window.AddFlags(WindowManagerFlags.KeepScreenOn);
+		} catch (Exception e) {
+			// The screen merely sleeps on its normal timeout without this; still
+			// worth a breadcrumb since a regression here looks like a hang report.
+			try {
+				Android.Util.Log.Info("BK", $"KeepScreenOn failed: {e.Message}");
+			} catch {
+				// Cosmetic; the game runs fine without it.
+			}
+		}
+
+		try {
+			var window = Window;
+
+			if (window == null) {
+				return;
+			}
 
 			if (OperatingSystem.IsAndroidVersionAtLeast(30)) {
 				var controller = window.InsetsController;
@@ -165,17 +194,17 @@ public class MainActivity : AndroidGameActivity {
 	}
 
 	// A DPI/resolution switch or rotation reaches here instead of recreating the
-	// activity (see ConfigChanges above), so the run survives it. Only the host's
-	// size snapshot is refreshed; MonoGame recreates the surface itself and the
-	// engine picks the numbers up through its normal UpdateView path.
+	// activity (see ConfigChanges above), so the run survives it. The engine consumes
+	// the flag on the game thread via Core.OnDisplayChanged plus UpdateView, which
+	// recomputes scale, viewport, and renderer targets.
 	// The back button needs no override: MonoGame's view consumes Keycode.Back and
 	// reports it as Buttons.Back, so the activity never finishes from it.
 	public override void OnConfigurationChanged(Android.Content.Res.Configuration? newConfig) {
 		base.OnConfigurationChanged(newConfig);
 
 		try {
-			// The engine does not exist yet while the unpack label is up.
-			Lens.Engine.Instance.DisplayChanged();
+			// The engine does not exist yet before the game is constructed.
+			Lens.Engine.Instance?.DisplayChanged();
 		} catch {
 			// No game to tell.
 		}

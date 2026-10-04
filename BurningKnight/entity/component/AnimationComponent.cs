@@ -47,7 +47,11 @@ namespace BurningKnight.entity.component {
 		}
 
 		public void SetAutoStop(bool stop) {
-			Animation!.AutoStop = stop;
+			// Null when the sheet failed to load (Animations.Get's null contract);
+			// gameplay must degrade to no auto-stop, not crash.
+			if (Animation != null) {
+				Animation.AutoStop = stop;
+			}
 		}
 		
 		private void ReloadAnimation(string? layer = null, string? tag = null) {
@@ -82,7 +86,10 @@ namespace BurningKnight.entity.component {
 
 			if (shadow) {
 				FlippedVerticaly = !FlippedVerticaly;
-				pos.Y += Animation!.GetCurrentTexture().Height - ShadowOffset * 2;
+				// Null when the sheet failed to load: the body renders without a shadow
+				// offset instead of crashing mid-frame (CallRender is null-guarded too).
+				var height = Animation?.GetCurrentTexture().Height ?? 0;
+				pos.Y += height - ShadowOffset * 2;
 			}
 			
 			if (Entity.TryGetComponent<InteractableComponent>(out var component) && component.OutlineAlpha > 0.05f) {

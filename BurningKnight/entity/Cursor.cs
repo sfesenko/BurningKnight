@@ -22,6 +22,7 @@ namespace BurningKnight.entity {
 		private Vector2 stickOffset;
 		private bool needsAdjusting = true;
 		private bool readTint = true;
+		private bool wasStickFiring;
 		private Color tint;
 		private Vector2 lastPos;
 
@@ -119,7 +120,10 @@ namespace BurningKnight.entity {
 
 				var l = stick.Length();
 
-				if (StickFiring(controller)) {
+				var firing = StickFiring(controller, wasStickFiring);
+				wasStickFiring = firing;
+
+				if (firing) {
 					var target = MathUtils.CreateVector(Math.Atan2(dy, dx), 1f);
 
 					dx = target.X - stickOffset.X;

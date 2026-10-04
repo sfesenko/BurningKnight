@@ -19,8 +19,6 @@ namespace BurningKnight.save {
 		public static readonly byte CurrentSlot = 0;
 		public static string SlotDir = $"{SaveDir}slot-{CurrentSlot}/";
 
-		public static string BackupDir => Paths.DataDir;
-
 		public static Saver[] Savers = null!;
 
 		public static void Init() {
@@ -211,12 +209,6 @@ namespace BurningKnight.save {
 					Log.Error(e);
 				}
 			}
-		}
-
-		public static void Backup() {
-			// Disabled: a backup you cannot restore is not worth keeping. The implementation was
-			// unreachable and was removed; git has it if it ever comes back.
-			Log.Info("Backups are disabled, cause you cant restore anyway. Should I implement that?");
 		}
 	}
 }

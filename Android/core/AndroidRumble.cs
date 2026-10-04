@@ -1,3 +1,4 @@
+using System;
 using Lens.input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
@@ -13,7 +14,13 @@ public class AndroidRumble : IRumble {
 			return;
 		}
 
-		GamePad.SetVibration(player, strength, strength);
+		try {
+			GamePad.SetVibration(player, strength, strength);
+		} catch (Exception e) {
+			// Missing VIBRATE permission or a dead vibrator service: rumble is
+			// cosmetic, it must never kill the game thread.
+			Lens.util.Log.Error(e);
+		}
 	}
 
 	public void Update(PlayerIndex player, float dt) {

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using Lens.graphics.animation;
@@ -64,8 +65,56 @@ namespace Lens.assets {
 			}
 
 			// MonoGame does not premultiply here, and the sheets are premultiplied already.
-			using var stream = FileHandle.FromRoot($"Animations/{id}.png").OpenRead();
-			var texture = Gpu.Run(() => Texture2D.FromStream(Engine.GraphicsDevice, stream));
+			// Buffer on the caller thread and upload only a valid stream: FromStream runs
+			// on the main thread via Gpu, so a throw there would bypass the caller's
+			// try/catch and kill the process instead of failing the load. OpenRead is
+			// guarded too: the archive source reads the whole entry inside Open, so a
+			// corrupt deflate/CRC throws from Open itself (see Textures.LoadTexture).
+			MemoryStream copy;
+
+			try {
+				using (var stream = FileHandle.FromRoot($"Animations/{id}.png").OpenRead()) {
+					if (stream == null) {
+						Log.Error($"Animation sheet {id} was not found!");
+
+						return null;
+					}
+
+					copy = new MemoryStream();
+					stream.CopyTo(copy);
+					copy.Position = 0;
+				}
+			} catch (Exception e) {
+				Log.Error($"Failed to read animation sheet {id}: {e}");
+
+				return null;
+			}
+
+			Texture2D? texture = null;
+
+			try {
+				using (copy) {
+					// The decode runs on the main thread inside Gpu.Flush: a throw there
+					// bypasses this caller's try/catch, so catch inside the closure.
+					texture = Gpu.Run(() => {
+						try {
+							return Texture2D.FromStream(Engine.GraphicsDevice, copy);
+						} catch (Exception e) {
+							Log.Error($"Failed to decode animation sheet {id}: {e}");
+
+							return null;
+						}
+					});
+				}
+			} catch (Exception e) {
+				Log.Error($"Failed to decode animation sheet {id}: {e}");
+
+				return null;
+			}
+
+			if (texture == null) {
+				return null;
+			}
 
 			animation = AnimationUtils.LoadAnimation(texture, source);
 			animations[id] = animation;
@@ -73,8 +122,14 @@ namespace Lens.assets {
 			return animation;
 		}
 
+		// Fail-fast accessor: every mandatory lookup goes through here so the
+		// message is built in one place instead of being copy-pasted per site.
+		public static AnimationData Require(string id) {
+			return Get(id) ?? throw new InvalidOperationException($"Animation '{id}' failed to load.");
+		}
+
 		public static Animation Create(string id, string? layer = null) {
-			return new Animation(Get(id)!, layer);
+			return new Animation(Require(id), layer);
 		}
 
 		public static AnimationData? GetColored(string id, ColorMap colorMap) {
@@ -95,8 +150,30 @@ namespace Lens.assets {
 				return null;
 			}
 
-			var data = Gpu.Run(() => animation.Recolor(colorMap));			
-			
+			AnimationData? data = null;
+
+			try {
+				// Same no-throw Gpu contract as above: GetData/new Texture2D/SetData
+				// run on the main thread, so catch inside the closure.
+				data = Gpu.Run(() => {
+					try {
+						return animation.Recolor(colorMap);
+					} catch (Exception e) {
+						Log.Error($"Failed to recolor animation {id}: {e}");
+
+						return null;
+					}
+				});
+			} catch (Exception e) {
+				Log.Error($"Failed to recolor animation {id}: {e}");
+
+				return null;
+			}
+
+			if (data == null) {
+				return null;
+			}
+
 			animations[fullId] = data;
 			
 			return data;

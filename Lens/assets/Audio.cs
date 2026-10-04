@@ -68,6 +68,15 @@ public class Audio
         LoadSfx(FileHandle.FromRoot("Sfx/"), "", true);
 
         Log.Debug($"Loaded {sounds.Count} sounds");
+
+        // Mirrors the desktop SoundEffect.Initialize probe: if nothing loaded at all
+        // (broken audio device or content), stop pretending audio works — every
+        // trigger would otherwise log a miss for the whole session, and the in-game
+        // "Audio Failed" notice never fires.
+        if (sounds.Count == 0 && Assets.LoadSfx) {
+            Assets.LoadSfx = false;
+            Assets.FailedToLoadAudio = true;
+        }
     }
 
     private void LoadSound(FileHandle file, string path)
@@ -75,9 +84,24 @@ public class Audio
         var s = file.NameWithoutExtension;
         var key = $"{path}{s}".Replace('/', '_');
 
-        using (var stream = file.OpenRead())
+        // One corrupt file must not take the whole audio bank with it.
+        // Runs inline on the worker, so this catch is effective.
+        try
         {
-            sounds[key] = SoundEffect.FromStream(stream);
+            using (var stream = file.OpenRead())
+            {
+                if (stream == null) {
+                    Log.Error($"Sound file {file.Name} was not found, skipping");
+
+                    return;
+                }
+
+                sounds[key] = SoundEffect.FromStream(stream);
+            }
+        }
+        catch (Exception e)
+        {
+            Log.Error($"Failed to load sound {key}: {e}");
         }
     }
 
@@ -149,17 +173,43 @@ public class Audio
     {
         foreach (var sound in sounds.Values)
         {
-            sound.Dispose();
-            GC.SuppressFinalize(sound); // Lol what?
+            try {
+                sound.Dispose();
+                GC.SuppressFinalize(sound); // Lol what?
+            } catch (Exception e) {
+                // A dead effect must not break teardown or leak the rest.
+                Log.Error(e);
+            }
         }
+
+        sounds.Clear();
+
+        foreach (var player in musicInstances.Values)
+        {
+            try {
+                player.Stop();
+                player.Dispose();
+            } catch (Exception e) {
+                // A dead voice must not break teardown or leak the rest.
+                Log.Error(e);
+            }
+        }
+
+        musicInstances.Clear();
+        currentPlaying = null;
+        currentPlayingMusic = null;
 
         if (SoundEffectInstance != null)
         {
             Log.Info("Disposing audio mixer");
 
-            SoundEffectInstance.Stop();
-            SoundEffectInstance.Dispose();
-            GC.SuppressFinalize(SoundEffectInstance);
+            try {
+                SoundEffectInstance.Stop();
+                SoundEffectInstance.Dispose();
+                GC.SuppressFinalize(SoundEffectInstance);
+            } catch (Exception e) {
+                Log.Error(e);
+            }
 
             SoundEffectInstance = null;
         }
@@ -198,6 +248,10 @@ public class Audio
             sfx?.Play(MathUtils.Clamp(0, 1, volume * SfxVolume * MasterVolume), pitch, pan);
         } catch (InstancePlayLimitException) {
             // The OpenAL source pool is finite; a dropped sound must not kill the run.
+        } catch (Exception e) {
+            // Lost audio device across pause/resume, disposed effect, OpenAL errors:
+            // a dropped sound must never kill the run, whatever the reason.
+            Log.Error(e);
         }
     }
 
@@ -246,9 +300,15 @@ public class Audio
             // interrupted before its callback ran.
             foreach (var player in musicInstances.Values)
             {
-                if (player != next && player.State == SoundState.Playing)
-                {
-                    player.Stop();
+                // State and Stop both touch the voice: either can throw on a dead
+                // device, and neither may abort the new track's play below.
+                try {
+                    if (player != next && player.State == SoundState.Playing)
+                    {
+                        player.Stop();
+                    }
+                } catch (Exception e) {
+                    Log.Error(e);
                 }
             }
 
@@ -302,7 +362,13 @@ public class Audio
 
         foreach (var player in musicInstances.Values)
         {
-            player.Stop();
+            try {
+                player.Stop();
+            } catch (Exception e) {
+                // A dead voice (device loss across pause/resume) must not skip
+                // the remaining voices or the state reset below.
+                Log.Error(e);
+            }
         }
 
         currentPlaying = null;

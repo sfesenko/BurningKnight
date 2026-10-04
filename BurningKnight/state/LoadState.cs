@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 using BurningKnight.assets;
+using BurningKnight.assets.input;
 using BurningKnight.assets.lighting;
 using BurningKnight.level.biome;
 using BurningKnight.level.tile;
@@ -13,6 +14,8 @@ using Lens.entity;
 using Lens.game;
 using Lens.graphics;
 using Lens.graphics.animation;
+using Lens.input;
+using Lens.util;
 using Lens.util.math;
 using Microsoft.Xna.Framework;
 
@@ -24,6 +27,11 @@ namespace BurningKnight.state {
 		// Set by the loading worker; the main thread only reads it to decide when the loaded
 		// area may be touched. Volatile: the write publishes `gameArea` and everything in it.
 		private volatile bool ready;
+
+		// The loading worker's failure seam, same shape as AssetLoadState's: a throw on the
+		// worker must not abort the process or hang the screen forever.
+		private volatile bool failed;
+		private string failure = null!;
 
 		private bool down;
 		private float alpha;
@@ -95,27 +103,38 @@ namespace BurningKnight.state {
 			progress = 0;
 
 			var thread = new Thread(() => {
-				Tilesets.Load();
-				
-				SaveManager.Load(gameArea, SaveType.Game, Path);
-				progress++;
+				try {
+					Tilesets.Load();
 
-				SaveManager.Load(gameArea, SaveType.Level, Path);
-				progress++;
+					SaveManager.Load(gameArea, SaveType.Game, Path);
+					progress++;
 
-				Context.Run.Luck = 0;
-				Context.Run.ResetScourge();
-				
-				if (Context.Run.Depth > 0) {
-					SaveManager.Load(gameArea, SaveType.Player, Path);
-				} else {
-					SaveManager.Generate(gameArea, SaveType.Player);
+					SaveManager.Load(gameArea, SaveType.Level, Path);
+					progress++;
+
+					Context.Run.Luck = 0;
+					Context.Run.ResetScourge();
+
+					if (Context.Run.Depth > 0) {
+						SaveManager.Load(gameArea, SaveType.Player, Path);
+					} else {
+						SaveManager.Generate(gameArea, SaveType.Player);
+					}
+
+					GC.Collect();
+					progress++;
+					Engine.AssetsLoaded?.Invoke();
+					ready = true;
+				} catch (Exception e) {
+					// Never die silently on the worker: a throw used to abort the whole
+					// process (unhandled on a background thread) mid level-transition.
+					// Record it for the game thread to surface, like AssetLoadState does.
+					Log.Error("Level loading failed");
+					Log.Error(e);
+
+					failure = e.Message;
+					failed = true;
 				}
-
-				GC.Collect();
-				progress++;
-				Engine.AssetsLoaded?.Invoke();
-				ready = true;
 			});
 
 			// A scheduling hint so the loading screen keeps animating; the hand-off is `ready`.
@@ -133,6 +152,18 @@ namespace BurningKnight.state {
 
 		public override void Update(float dt) {
 			base.Update(dt);
+
+			if (failed) {
+				// Dead end surfaced, not hung: the label names the failure, and any
+				// confirm/back press leaves instead of sitting on a dead screen.
+				// UiSelect covers keyboard (Enter/Space/X) and pad (X/A/Y); UiAccept
+				// covers the mouse; GameStart/UiBack cover pad Start/Back and Esc.
+				if (Input.WasPressed(Controls.GameStart) || Input.WasPressed(Controls.UiSelect) || Input.WasPressed(Controls.UiAccept) || Input.WasPressed(Controls.UiBack)) {
+					Engine.Instance.Exit();
+				}
+
+				return;
+			}
 
 			animation.Update(dt);
 
@@ -168,6 +199,15 @@ namespace BurningKnight.state {
 
 		public override void RenderUi() {
 			base.RenderUi();
+
+			if (failed) {
+				var label = $"Failed to load: {failure}";
+
+				Graphics.Print(label, Font.Small, Display.UiWidth / 2 - (int) Font.Small.MeasureString(label).Width / 2, Display.UiHeight - 20);
+				Graphics.Print("Press any button to exit.", Font.Small, Display.UiWidth / 2 - (int) Font.Small.MeasureString("Press any button to exit.").Width / 2, Display.UiHeight - 8);
+
+				return;
+			}
 
 			var value = (int) Math.Min(102, Math.Floor(timer * 100f));
 			var s = $"{prefix} {(nice && value == 69 ? "Nice." : $"{value}")}%";

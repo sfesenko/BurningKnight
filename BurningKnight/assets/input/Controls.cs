@@ -72,7 +72,7 @@ namespace BurningKnight.assets.input {
 			controls.Add(new Control(Fps, Keys.F2));
 
 			controls.Add(new Control(Cancel, Keys.Escape).Gamepad(Buttons.Back));
-			controls.Add(new Control(GameStart, Keys.Space, Keys.Enter, Keys.X, Keys.Enter, Keys.Space).Gamepad(Buttons.X, Buttons.Start));
+			controls.Add(new Control(GameStart, Keys.Space, Keys.Enter, Keys.X).Gamepad(Buttons.X, Buttons.Start));
 			
 			controls.Add(new Control(UiUp, Keys.W, Keys.Up).Gamepad(Buttons.LeftThumbstickUp, Buttons.RightThumbstickUp, Buttons.DPadUp));
 			controls.Add(new Control(UiDown, Keys.S, Keys.Down).Gamepad(Buttons.LeftThumbstickDown, Buttons.RightThumbstickDown, Buttons.DPadDown));
@@ -162,18 +162,24 @@ namespace BurningKnight.assets.input {
 		}
 
 		private static T[]? ParseChannel<T>(JsonNode? node) where T : struct, Enum {
-			if (!node.IsJsonArray()) {
+			if (node is not JsonArray array) {
 				return null;
 			}
 
 			var list = new List<T>();
 
-			foreach (var k in node!.AsJsonArray()!) {
+			foreach (var k in array) {
 				if (Enum.TryParse<T>(k.String(""), out var value)) {
 					list.Add(value);
 				} else {
 					Log.Error($"Unknown {typeof(T).Name} value {k}");
 				}
+			}
+
+			// An explicitly empty array means deliberately unbound; a non-empty array
+			// with nothing parseable is corrupt, treated as missing (keeps defaults).
+			if (list.Count == 0 && array.Count > 0) {
+				return null;
 			}
 
 			return list.ToArray();
@@ -215,16 +221,18 @@ namespace BurningKnight.assets.input {
 				}
 
 				// Validate-then-merge: start from the defaults and overlay, per channel,
-				// only values that parsed. Unknown ids and empty channels keep defaults.
+				// what parsed. Unknown ids and missing channels keep defaults; an
+				// explicitly empty array means deliberately unbound (it round-trips
+				// through Save, which writes empty arrays as-is).
 				var merged = new List<Control>();
 
 				foreach (var def in controls) {
 					var over = parsed.TryGetValue(def.Id, out var p) ? p : null;
 
 					merged.Add(new Control(def.Id) {
-						Keys = over?.Keys is { Length: > 0 } ? over.Keys : def.Keys,
-						MouseButtons = over?.MouseButtons is { Length: > 0 } ? over.MouseButtons : def.MouseButtons,
-						Buttons = over?.Buttons is { Length: > 0 } ? over.Buttons : def.Buttons
+						Keys = over?.Keys ?? def.Keys,
+						MouseButtons = over?.MouseButtons ?? def.MouseButtons,
+						Buttons = over?.Buttons ?? def.Buttons
 					});
 				}
 

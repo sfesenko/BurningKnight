@@ -35,6 +35,9 @@ public static class Gpu {
 	public static bool IsMainThread => mainThreadId == 0 || Environment.CurrentManagedThreadId == mainThreadId;
 
 	/// <summary>Runs the action on the main thread; a worker blocks until it has run.</summary>
+	/// <remarks>Deferred actions must not throw: the closure runs in <see cref="Flush"/>
+	/// on the main thread, so a throw there bypasses the queuing caller's try/catch and
+	/// surfaces in the engine loop instead. Catch inside the closure.</remarks>
 	public static void Run(Action action) {
 		if (IsMainThread) {
 			action();
@@ -46,6 +49,7 @@ public static class Gpu {
 	}
 
 	/// <summary>Runs the function on the main thread and returns its result.</summary>
+	/// <remarks>Same no-throw contract as <see cref="Run(Action)"/>: catch inside the closure.</remarks>
 	public static T Run<T>(Func<T> action) {
 		if (IsMainThread) {
 			return action();
@@ -60,6 +64,7 @@ public static class Gpu {
 	}
 
 	/// <summary>Queues the action for the main thread; on the main thread it runs now.</summary>
+	/// <remarks>Same no-throw contract as <see cref="Run(Action)"/>: catch inside the closure.</remarks>
 	public static void Defer(Action action) {
 		if (IsMainThread) {
 			action();
@@ -82,6 +87,9 @@ public static class Gpu {
 	}
 
 	/// <summary>The main thread runs the queue, a few milliseconds per call.</summary>
+	/// <remarks>Belt-and-suspenders behind the no-throw contract above: a throwing
+	/// closure is logged and skipped instead of killing the frame loop and hanging
+	/// the waiter in <see cref="Wait"/> forever. Callers must still catch inside.</remarks>
 	public static void Flush() {
 		if (!IsMainThread) {
 			return;
@@ -101,7 +109,11 @@ public static class Gpu {
 				action = Queue.Dequeue();
 			}
 
-			action();
+			try {
+				action();
+			} catch (Exception e) {
+				Log.Error(e);
+			}
 
 			if (Budget.Elapsed.TotalMilliseconds >= FrameBudgetMs) {
 				return;

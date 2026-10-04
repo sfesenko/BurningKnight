@@ -174,10 +174,10 @@ namespace Lens
 
         protected override void Update(GameTime gameTime)
         {
-            if (displayDirty)
+            if (System.Threading.Interlocked.Exchange(ref displayDirty, 0) == 1)
             {
-                displayDirty = false;
                 core.OnDisplayChanged();
+                UpdateView();
             }
 
             var t = DateTime.Now.Millisecond;
@@ -262,6 +262,15 @@ namespace Lens
         protected override void Draw(GameTime gameTime)
         {
             var t = DateTime.Now.Millisecond;
+
+            // The Android surface can deliver a frame before Initialize ran (cold start,
+            // resume, reinstall force-stop): Batch/StateRenderer do not exist yet. Skip the
+            // frame instead of NRE-ing; desktop always initializes first so this is a no-op there.
+            if (GraphicsDevice == null || StateRenderer == null || graphics.Graphics.Batch == null) {
+                base.Draw(gameTime);
+                return;
+            }
+
             StateRenderer.Render();
             base.Draw(gameTime);
             RenderTime = DateTime.Now.Millisecond - t;
@@ -282,13 +291,15 @@ namespace Lens
         // A display change arrives on the host thread (rotation, DPI/resolution switch), which
         // must not touch the graphics manager: flag it here and let the game thread consume the
         // flag at the top of Update, where the existing Core.OnDisplayChanged path is safe.
-        private volatile bool displayDirty;
+        // An int with Interlocked so a set landing between the read and the clear is not lost.
+        private volatile int displayDirty;
 
         // A display change arrived on the host thread: flag it for the game thread.
-        // Applying it to the view happens through the normal UpdateView path.
+        // The game thread applies it via Core.OnDisplayChanged plus UpdateView, which
+        // recomputes Upscale/Viewport/ScreenMatrix and resizes the renderer targets.
         public void DisplayChanged()
         {
-            displayDirty = true;
+            System.Threading.Interlocked.Exchange(ref displayDirty, 1);
         }
 
         public void SetFullscreen()

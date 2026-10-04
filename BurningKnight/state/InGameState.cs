@@ -439,7 +439,6 @@ namespace BurningKnight.state {
 			// Synchronous: a handful of small files, and a worker would race the teardown.
 			// SaveManager.Save(Area, SaveType.Statistics);
 			SaveManager.Delete(SaveType.Player, SaveType.Level, SaveType.Game);
-			SaveManager.Backup();
 		}
 
 		// private TweenTask last;

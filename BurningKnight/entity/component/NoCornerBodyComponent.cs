@@ -1,10 +1,16 @@
-﻿using BurningKnight.physics;
+﻿using System;
+using BurningKnight.physics;
 using Lens.physics;
 using Microsoft.Xna.Framework;
 
 namespace BurningKnight.entity.component {
 	public class NoCornerBodyComponent : BodyComponent {
 		public NoCornerBodyComponent(float x, float y, float w, float h, BodyType type = BodyType.Dynamic, bool sensor = false, bool center = false) {
+			// Dormant today (zero call sites), but the next user gets the same
+			// degenerate-quad Box2D throw as Rect did: clamp like Rect does.
+			w = Math.Max(w, 0.5f);
+			h = Math.Max(h, 0.5f);
+
 			if (center) {
 				x -= w / 2;
 				y -= h / 2;

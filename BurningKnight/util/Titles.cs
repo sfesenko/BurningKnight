@@ -121,7 +121,7 @@ namespace BurningKnight.util {
 			"⌐■-■",
 			"Open fire",
 			"In case of fire break the monitor",
-			"In case of fire backup the saves",
+			"In case of fire dodge the flames",
 			"You'd better get burning",
 			"Why are you reading this?",
 			"Yes",

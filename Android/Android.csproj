@@ -2,7 +2,7 @@
     <PropertyGroup>
         <OutputType>Exe</OutputType>
         <TargetFramework>net10.0-android</TargetFramework>
-        <!-- Android 5.0, the lowest net10.0-android allows. Tested on a handheld (Android 14). -->
+        <!-- Android 5.0, the lowest net10.0-android allows. -->
         <SupportedOSPlatformVersion>21</SupportedOSPlatformVersion>
         <Nullable>enable</Nullable>
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
@@ -11,7 +11,7 @@
         <!-- Mirror the game version (Lens Engine.Version) so reports identify builds. -->
         <ApplicationDisplayVersion>1.3.1.4</ApplicationDisplayVersion>
         <ApplicationVersion>2</ApplicationVersion>
-        <!-- Sideloaded APK, arm64 only — the handheld's ABI. -->
+        <!-- Sideloaded APK, arm64 only. -->
         <RuntimeIdentifiers>android-arm64</RuntimeIdentifiers>
         <AndroidPackageFormat>apk</AndroidPackageFormat>
         <!-- The payload must stay seekable for the archive source: keep the .zip stored, not deflated. -->

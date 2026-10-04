@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using Lens;
 using Lens.assets;
@@ -15,9 +16,15 @@ namespace BurningKnight.assets {
 		public static SpriteFont Test = null!;
 		
 		public static void Load() {
-			Small = Gpu.Run(() => LoadFont("Fonts/small_font"))!;
-			Medium = Gpu.Run(() => LoadFont("Fonts/large_font"))!;
+			// Fail fast with a clear message: a null font only moves the crash
+			// to the first text render, far from the cause.
+			Small = RequireFont("Fonts/small_font");
+			Medium = RequireFont("Fonts/large_font");
 			// Test = Assets.Content.Load<SpriteFont>("Fonts/fnt");
+		}
+
+		private static BitmapFont RequireFont(string name) {
+			return Gpu.Run(() => LoadFont(name)) ?? throw new InvalidOperationException($"Font {name} failed to load.");
 		}
 
 		// MonoGame.Extended's own loader resolves the page images through TitleContainer, which
@@ -35,20 +42,52 @@ namespace BurningKnight.assets {
 			}
 
 			// The parser seeks and a deflated archive entry cannot, so the descriptor is read
-			// into memory first — it is a few tens of kilobytes.
-			using var memory = new MemoryStream();
+			// into memory first — it is a few tens of kilobytes. Guarded like the pages:
+			// a corrupt descriptor must fail with the clear message, not a raw throw.
+			BitmapFontFileContent file;
 
-			stream.CopyTo(memory);
-			memory.Position = 0;
+			try {
+				using var memory = new MemoryStream();
 
-			var file = BitmapFontFileReader.Read(memory, name);
+				stream.CopyTo(memory);
+				memory.Position = 0;
+
+				file = BitmapFontFileReader.Read(memory, name);
+			} catch (Exception e) {
+				Log.Error($"Failed to read font descriptor {name}: {e}");
+
+				return null;
+			}
 			var pages = new Dictionary<string, Texture2D>();
 
 			foreach (var page in file.Pages)
 			{
 				using var pageStream = Assets.Source.Open($"{Path.GetDirectoryName(name)}/{page}");
 
-				pages[page] = Texture2D.FromStream(Engine.GraphicsDevice, pageStream);
+				if (pageStream == null)
+				{
+					Log.Error($"Font page {page} for {name} was not found!");
+					return null;
+				}
+
+				try {
+					pages[page] = Texture2D.FromStream(Engine.GraphicsDevice, pageStream);
+				} catch (Exception e) {
+					Log.Error($"Failed to decode font page {page} for {name}: {e}");
+
+					// Already-decoded pages would leak on the fail-fast path; free them.
+					foreach (var loaded in pages.Values) {
+						try {
+							loaded.Dispose();
+						} catch {
+							// Dying anyway.
+						}
+					}
+
+					pages.Clear();
+
+					return null;
+				}
 			}
 
 			var characters = new List<BitmapFontCharacter>();

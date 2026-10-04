@@ -312,10 +312,9 @@ namespace BurningKnight.state {
 				killedLabel.Done = true;
 				Killer.Done = true;
 
-				// Synchronous: a handful of small files, and Backup is a no-op.
+				// Synchronous: a handful of small files.
 				// SaveManager.Save(Area, SaveType.Statistics);
 				SaveManager.Delete(SaveType.Player, SaveType.Level, SaveType.Game);
-				SaveManager.Backup();
 			}
 			
 			Audio.PlayMusic("Nostalgia", true);

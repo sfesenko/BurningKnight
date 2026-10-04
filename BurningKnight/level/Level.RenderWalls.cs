@@ -338,6 +338,12 @@ namespace BurningKnight.level {
 			if (!LevelLayerDebug.Walls) {
 				return;
 			}
+
+			// OOM/device-loss at surface allocation leaves this null (Gpu.Flush logs and
+			// continues): skip the pass rather than NRE on `WallSurface!` below.
+			if (WallSurface == null) {
+				return;
+			}
 			
 			var camera = Context.Camera;
 			var state = Engine.Instance.StateRenderer;
