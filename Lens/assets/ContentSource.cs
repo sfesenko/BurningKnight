@@ -102,14 +102,19 @@ namespace Lens.assets {
 	// so callers never see the raw entry streams. The archive and its stream stay open for the
 	// life of the source: an entry stream is only valid while the archive that owns it is alive.
 	public sealed class ArchiveContentSource : IContentSource {
-		private readonly FileStream file;
+		private readonly Stream baseStream;
 		private readonly ZipArchive archive;
 		private readonly Dictionary<string, ZipArchiveEntry> entries = new(StringComparer.OrdinalIgnoreCase);
 		private bool disposed;
 
-		public ArchiveContentSource(string path) {
-			file = File.OpenRead(path);
-			archive = new ZipArchive(file, ZipArchiveMode.Read);
+		public ArchiveContentSource(string path) : this(File.OpenRead(path)) {
+		}
+
+		// A seekable stream holding the zip bytes: a file, or a bounded region
+		// of a larger file (the APK). The source takes ownership.
+		public ArchiveContentSource(Stream stream) {
+			baseStream = stream;
+			archive = new ZipArchive(baseStream, ZipArchiveMode.Read);
 
 			foreach (var entry in archive.Entries) {
 				entries[ContentPath.Normalize(entry.FullName)] = entry;
@@ -192,7 +197,7 @@ namespace Lens.assets {
 			}
 
 			archive.Dispose();
-			file.Dispose();
+			baseStream.Dispose();
 		}
 	}
 

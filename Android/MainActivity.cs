@@ -35,10 +35,10 @@ public class MainActivity : AndroidGameActivity {
 
 		Android.Util.Log.Info("BK", "OnCreate");
 
-		// Synchronous, like Program.Main on desktop: the unpack runs here on the UI thread.
+		// Synchronous, like Program.Main on desktop: the game boots here on the UI thread.
 		// An async attempt (Task.Run + RunOnUiThread) left a black screen on cold start —
 		// the game never reached its first frame — so this stays on the proven path.
-		// The copy itself is staged and atomic, and the marker skips it on later launches.
+		// Content is read in place from the APK, so there is no unpack step to wait on.
 		try {
 			Bootstrap.Setup(this);
 		} catch (Exception e) {

@@ -1,6 +1,5 @@
 using System;
 using System.IO;
-using System.IO.Compression;
 using System.Threading.Tasks;
 using Android.Content;
 using Android.OS;
@@ -12,11 +11,10 @@ using Lens.util;
 
 namespace AndroidPort;
 
-// The host side of the engine's seams: writable state under FilesDir, content from the APK's
-// asset copy, opened as an archive. Everything after this is game behaviour.
+// The host side of the engine's seams: writable state under FilesDir, content read in
+// place from the APK. Everything after this is game behaviour.
 public static class Bootstrap {
 	private const string ArchiveName = "Content.zip";
-	private const string VersionName = "Content.version";
 
 	private const long CrashLogResetBytes = 256 * 1024;
 	private const int MaxCrashPayloadChars = 64 * 1024;
@@ -36,35 +34,38 @@ public static class Bootstrap {
 		Vibration.Instance = new AndroidRumble();
 		WatchForCrashes(context, data);
 
-		var archive = Path.Combine(data, ArchiveName);
-		var marker = archive + ".version";
-
-		SyncArchive(context, archive, marker);
-
 		Assets.SetRoot(data);
+		Assets.SetSource(OpenApkArchive(context));
+	}
+
+	// Content.zip ships stored (not deflated — see the csproj flag), so its bytes sit
+	// verbatim in base.apk. OpenFd gives the offset/length; a bounded stream over the
+	// APK file serves ZipArchive's seeks with no copy and no duplication. Throws when
+	// the asset is compressed instead of stored — that means the packaging regressed.
+	private static ArchiveContentSource OpenApkArchive(Context context) {
+		long offset;
+		long length;
+
+		using (var descriptor = context.Assets!.OpenFd(ArchiveName)) {
+			offset = descriptor.StartOffset;
+			length = descriptor.Length;
+		}
+
+		var apk = context.ApplicationInfo!.SourceDir!;
+
+		var file = new FileStream(apk, FileMode.Open, FileAccess.Read, FileShare.Read, 4096, FileOptions.RandomAccess);
+		var region = new ApkRegionStream(file, offset, length);
 
 		try {
-			Assets.SetSource(new ArchiveContentSource(archive));
-		} catch (Exception e) {
-			// A corrupt copy (killed mid-unpack, bad flash) would otherwise crash-loop every
-			// launch: the marker says current so the copy is never redone. Drop both and unpack
-			// once more from the APK; if that fails too, it is genuinely broken, let it throw.
-			Log.Error($"Content archive unreadable, re-syncing: {e}");
+			var source = new ArchiveContentSource(region);
 
-			try {
-				if (File.Exists(archive)) {
-					File.Delete(archive);
-				}
+			Log.Info($"Opened {ArchiveName} in place ({length} bytes at offset {offset})");
 
-				if (File.Exists(marker)) {
-					File.Delete(marker);
-				}
-			} catch (Exception deleteError) {
-				Log.Error(deleteError);
-			}
+			return source;
+		} catch {
+			region.Dispose();
 
-			SyncArchive(context, archive, marker);
-			Assets.SetSource(new ArchiveContentSource(archive));
+			throw;
 		}
 	}
 
@@ -147,98 +148,4 @@ public static class Bootstrap {
 		}
 	}
 
-	// The APK carries one archive; it is copied out once per packed content, not on every
-	// launch. The version asset is the archive's build timestamp, written by the build.
-	// The copy is staged (Content.zip.tmp, validated, then renamed): a kill mid-unpack never
-	// leaves half an archive behind, and a leftover .tmp is a killed unpack, dropped on boot.
-	private static void SyncArchive(Context context, string archive, string marker) {
-		try {
-			var stale = archive + ".tmp";
-
-			if (File.Exists(stale)) {
-				File.Delete(stale);
-			}
-		} catch (Exception e) {
-			Log.Error(e);
-		}
-
-		var version = ReadAsset(context, VersionName);
-		string? marked = null;
-
-		try {
-			// An unreadable marker just means unpack again; it must not kill boot.
-			if (File.Exists(archive) && version != null && File.Exists(marker)) {
-				marked = File.ReadAllText(marker);
-			}
-		} catch (Exception e) {
-			Log.Error(e);
-		}
-
-		if (marked != null && marked == version) {
-			return;
-		}
-
-		var tmp = archive + ".tmp";
-
-		try {
-			using var source = context.Assets!.Open(ArchiveName);
-			using var destination = File.Create(tmp);
-
-			source.CopyTo(destination);
-		} catch (Exception e) {
-			Log.Error($"Failed to unpack {ArchiveName}: {e}");
-
-			try {
-				if (File.Exists(tmp)) {
-					File.Delete(tmp);
-				}
-			} catch {
-				// Stale .tmp is dropped on the next boot.
-			}
-
-			return;
-		}
-
-		// Validate before it replaces anything: opening parses the central directory.
-		try {
-			using var stream = File.OpenRead(tmp);
-			using var zip = new ZipArchive(stream, ZipArchiveMode.Read);
-
-			_ = zip.Entries.Count;
-		} catch (Exception e) {
-			Log.Error($"Unpacked {ArchiveName} is corrupt, discarding: {e}");
-
-			try {
-				File.Delete(tmp);
-			} catch {
-				// Stale .tmp is dropped on the next boot.
-			}
-
-			return;
-		}
-
-		try {
-			// Same directory, so the rename replaces atomically.
-			File.Move(tmp, archive, true);
-
-			if (version != null) {
-				File.WriteAllText(marker, version);
-			}
-
-			Log.Info($"Unpacked {ArchiveName} ({new FileInfo(archive).Length} bytes)");
-		} catch (Exception e) {
-			Log.Error($"Failed to unpack {ArchiveName}: {e}");
-		}
-	}
-
-	private static string? ReadAsset(Context context, string name) {
-		try {
-			using var stream = context.Assets!.Open(name);
-			using var reader = new StreamReader(stream);
-
-			return reader.ReadToEnd().Trim();
-		} catch (Exception) {
-			return null;
-		}
-	}
 }

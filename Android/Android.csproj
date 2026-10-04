@@ -35,9 +35,8 @@
     </ItemGroup>
 
     <!-- The same payload Desktop ships: one Content.zip packed by the build and carried in the
-         APK's assets. The bootstrap copies it to FilesDir once per packed content and opens it
-         as an ArchiveContentSource. Android builds are Release only (ImGui.NET has no Android
-         natives), so Debug packs nothing. -->
+         APK's assets, stored uncompressed so the game reads it in place from base.apk.
+         Android builds are Release only (ImGui.NET has no Android natives), so Debug packs nothing. -->
     <Target Name="RequireRelease" BeforeTargets="BeforeBuild">
         <Error Condition="'$(Configuration)'!='Release'"
                Text="Android builds are Release-only (ImGui.NET has no Android natives). Build with -c Release." />
@@ -52,19 +51,8 @@
         <MSBuild Projects="..\Content\Content.csproj" Targets="PackContent"
                  Properties="PackOutput=$(_StagedContent)"/>
 
-        <!-- The archive's timestamp is its version: the marker is rewritten only when the pack
-             actually ran. WriteOnlyWhenDifferent keeps it from touching on every build. -->
-        <ItemGroup>
-            <_StagedContentFile Include="$(_StagedContent)"/>
-        </ItemGroup>
-
-        <WriteLinesToFile File="$(IntermediateOutputPath)Content.version"
-                          Lines="@(_StagedContentFile->'%(ModifiedTime)')"
-                          Overwrite="true" WriteOnlyWhenDifferent="true"/>
-
         <ItemGroup>
             <AndroidAsset Include="$(_StagedContent)" LogicalName="Content.zip"/>
-            <AndroidAsset Include="$(IntermediateOutputPath)Content.version" LogicalName="Content.version"/>
         </ItemGroup>
     </Target>
 </Project>
