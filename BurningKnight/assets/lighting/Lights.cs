@@ -24,11 +24,22 @@ namespace BurningKnight.assets.lighting {
 
 		private static List<Light> lights = new List<Light>();
 		private static RenderTarget2D? surface;
+		private static GraphicsDevice? device;
 
 		public static BlendState Blend = null!;
 		private static BlendState messBlend = null!;
 		
 		public static void Init() {
+			// A new Game in the same process (configuration recreation) has a new device; the
+			// old statics were disposed with the old one — rebuild instead of reusing them.
+			var gd = Engine.GraphicsDevice;
+
+			if (!ReferenceEquals(device, gd)) {
+				device = gd;
+				region = null;
+				surface = null;
+			}
+
 			var v = Context.Run.Depth == 0 ? 0.9f : 0.25f;
 			
 			ClearColor = new Color(v, v, v, 1f);

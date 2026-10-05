@@ -44,6 +44,20 @@ namespace BurningKnight.entity {
 			return data.GetRightStick(threshold).LengthSquared() > 0.001f;
 		}
 
+		// The weapon updates before this entity (Area before TopUi): a flick must snap the aim
+		// or its first shot fires at the old side of the player.
+		public void SnapToStick(GamepadData data) {
+			var stick = data.GetRightStick();
+			var l = stick.Length();
+
+			if (l <= 0.0001f) {
+				return;
+			}
+
+			stickOffset = stick / l;
+			Position = Context.Camera!.CameraToUi(GamePosition = Player.Center + stickOffset * (48 * Settings.CursorRadius));
+		}
+
 		public override void Init() {
 			base.Init();
 

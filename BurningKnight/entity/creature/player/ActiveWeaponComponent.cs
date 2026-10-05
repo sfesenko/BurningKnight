@@ -63,9 +63,22 @@ namespace BurningKnight.entity.creature.player {
 				// Twin-stick: a deflected right stick aims (see Cursor) and fires, with hysteresis
 				// (Cursor.StickFireEnter/Exit) so edge flicker does not stutter the trigger.
 				var stickFiring = Cursor.StickFiring(data, wasStickFiring);
-				var usePressed = Input.WasPressed(Controls.Use, controller) || (stickFiring && !wasStickFiring);
+				var stickStarted = stickFiring && !wasStickFiring;
+				var usePressed = Input.WasPressed(Controls.Use, controller) || stickStarted;
 				var useDown = Input.IsDown(Controls.Use, controller) || stickFiring;
 				wasStickFiring = stickFiring;
+
+				// Snap the aim on a flick before any shot: this component runs before the cursor
+				// entity, so the first shot would otherwise use the previous side.
+				if (stickStarted && data != null && Entity.TryGetComponent<CursorComponent>(out var cursorComponent)) {
+					cursorComponent.Cursor.SnapToStick(data);
+
+					// Most weapons shoot via AimComponent.RealAim, which the weapon renderer
+					// computes a frame late from a smoothed angle — refresh it too.
+					if (Entity.TryGetComponent<AimComponent>(out var aim)) {
+						aim.RealAim = cursorComponent.Cursor.GamePosition;
+					}
+				}
 				
 				var b = GetComponent<BuffsComponent>();
 				

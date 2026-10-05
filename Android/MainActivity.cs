@@ -138,6 +138,18 @@ public class MainActivity : AndroidGameActivity {
 		} catch (Exception e) {
 			Log.Error(e);
 		}
+
+		// A second Game in this process would reuse static caches whose resources the old
+		// device just disposed (Lights blends, particle renderers, tilesets, ...). Every
+		// destroy except configuration recreation is a real exit — end the process so the
+		// next launch starts clean. Home/recents resume never reaches here.
+		if (!IsChangingConfigurations) {
+			try {
+				Process.KillProcess(Process.MyPid());
+			} catch {
+				// Nothing left to report to.
+			}
+		}
 	}
 
 	public override void OnWindowFocusChanged(bool hasFocus) {
