@@ -148,8 +148,7 @@ namespace BurningKnight.state {
 			};
 		}
 
-		// Every settings checkbox is a name, a getter/setter over Settings and a position;
-		// `after` covers rows with side effects (engine toggles, rumble stop), `tick`
+		// A name, a getter/setter over Settings and a position; `after` adds side effects, `tick`
 		// replaces the update sync when a row mirrors external state (see fullscreen).
 		private UiCheckbox CheckRow(UiPane pane, string name, float x, float y, Func<bool> get, Action<bool> set, Action<UiCheckbox>? after = null, Action<UiCheckbox>? tick = null) {
 			var row = new UiCheckbox {

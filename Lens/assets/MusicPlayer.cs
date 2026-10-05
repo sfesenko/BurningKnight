@@ -5,10 +5,9 @@ using Microsoft.Xna.Framework.Audio;
 using NVorbis;
 
 namespace Lens.assets {
-	// MonoGame's Song opens from a file path only — its constructors are private and its playback
-	// path is not overridable — so the archive's music is played here instead: NVorbis, the decoder
-	// MonoGame itself ships, reads the entry from the content source and feeds a dynamic sound
-	// instance, which is a public MonoGame API. Nothing is written to disk.
+	// MonoGame's Song opens from a file path only, so the archive's music plays here instead:
+	// NVorbis (the decoder MonoGame ships) reads the entry straight from the content source
+	// into a dynamic sound instance. Nothing is written to disk.
 	public class MusicPlayer : IDisposable {
 		private const int SamplesPerBuffer = 4096;
 
@@ -18,37 +17,43 @@ namespace Lens.assets {
 		private readonly byte[] buffer = new byte[SamplesPerBuffer * 2];
 
 		public MusicPlayer(string name) {
-			using var source = Assets.Source.Open($"Music/{name}.ogg");
+			try {
+				using var source = Assets.Source.Open($"Music/{name}.ogg");
 
-			if (source == null) {
-				Log.Error($"Music {name} was not found!");
-				return;
+				if (source == null) {
+					Log.Error($"Music {name} was not found!");
+					return;
+				}
+
+				// NVorbis seeks, a deflated entry cannot — read the whole track into memory first.
+				var memory = new MemoryStream();
+
+				source.CopyTo(memory);
+				memory.Position = 0;
+
+				reader = new VorbisReader(memory, true);
+				Log.Debug($"Music {name}: {reader.TotalSamples / (double) reader.SampleRate:F1}s at {reader.SampleRate} Hz, {reader.Channels} channel(s)");
+
+				instance = new DynamicSoundEffectInstance(reader.SampleRate, (AudioChannels) reader.Channels);
+				instance.BufferNeeded += (sender, args) => Submit();
+
+				Submit();
+			} catch (Exception e) {
+				// Dead device or corrupt track: stay not-Ready, free what was created.
+				Log.Error($"Music {name} failed to load: {e}");
+
+				reader?.Dispose();
+				instance?.Dispose();
+
+				reader = null;
+				instance = null;
 			}
-
-			// NVorbis seeks — it reads the last page for the length and loops by seeking back — and
-			// a deflated archive entry cannot, so the track is read into memory first. That is the
-			// whole file, a few megabytes, and only while it plays.
-			var memory = new MemoryStream();
-
-			source.CopyTo(memory);
-			memory.Position = 0;
-
-			reader = new VorbisReader(memory, true);
-			Log.Debug($"Music {name}: {reader.TotalSamples / (double) reader.SampleRate:F1}s at {reader.SampleRate} Hz, {reader.Channels} channel(s)");
-
-			instance = new DynamicSoundEffectInstance(reader.SampleRate, (AudioChannels) reader.Channels);
-			instance.BufferNeeded += (sender, args) => Submit();
-
-			Submit();
 		}
 
 		public bool Ready => instance != null;
 
-		// Every member below is touched from tweens and loops all over Audio.cs. Two
-		// failure modes must never reach those callers: the instance being null (no
-		// device) and the voice being dead (device loss across pause/resume throws
-		// from setters/getters even though the reference is non-null). All of it is
-		// funneled through Guard so the properties stay one-liners.
+		// Callers are tweens/loops all over Audio.cs: null instance and dead voice (device loss
+		// throws from setters even when the reference is live) must never reach them.
 		private void Guard(Action<DynamicSoundEffectInstance> action) {
 			var i = instance;
 
@@ -58,8 +63,13 @@ namespace Lens.assets {
 
 			try {
 				action(i);
-			} catch {
+			} catch (ObjectDisposedException) {
 				// Dead voice: degrade (fade stops, track ends) instead of crashing.
+			} catch (InvalidOperationException) {
+				// Device lost mid-call reports this; same degrade.
+			} catch (Exception e) {
+				// Anything else is a real bug — keep it visible.
+				Log.Error(e);
 			}
 		}
 
@@ -72,7 +82,13 @@ namespace Lens.assets {
 
 			try {
 				return read(i);
-			} catch {
+			} catch (ObjectDisposedException) {
+				return fallback;
+			} catch (InvalidOperationException) {
+				return fallback;
+			} catch (Exception e) {
+				Log.Error(e);
+
 				return fallback;
 			}
 		}
@@ -86,11 +102,8 @@ namespace Lens.assets {
 
 		private bool failed;
 
-		// Runs from MonoGame's BufferNeeded on the main update thread: a corrupt or
-		// truncated tail that survives the header makes NVorbis throw mid-stream, and
-		// an uncaught throw here lands in the frame loop and kills the process. Catch
-		// inside (same rule as the Gpu closures) and stop feeding after the first
-		// failure so this cannot log per buffer or submit an empty buffer.
+		// BufferNeeded runs on the frame loop: a corrupt tail makes NVorbis throw there and kill
+		// the process. Catch inside; stop feeding after the first failure (no per-buffer spam).
 		private void Submit() {
 			if (failed) {
 				return;
@@ -136,6 +149,10 @@ namespace Lens.assets {
 				reader!.SamplePosition = 0;
 				Submit();
 				instance!.Play();
+			} catch (InstancePlayLimitException) {
+				// Transient pool exhaustion: propagate so Audio leaves the track unset and
+				// retries — latching `failed` here would mute it for the whole session.
+				throw;
 			} catch (Exception e) {
 				// A dead device must not take the game down with the track.
 				failed = true;

@@ -5,19 +5,11 @@ using System.Runtime.CompilerServices;
 
 namespace Lens.util;
 
-/// <summary>
-/// The engine's logging facade: one coloured console line, and — in Release — one line in
-/// <c>burning_log.txt</c> beside the game's other data. MonoGame ships no runtime logging API,
-/// so the engine provides this one.
-///
-/// Writes are serialised and flushed, so threads cannot interleave or lose lines and a crash
-/// keeps the tail. Every line carries its call site; in DEBUG it also carries the frame above
-/// it. <see cref="Debug"/> and <see cref="Assert"/> are compiled out of Release builds
-/// entirely, so their messages cost nothing there.
-///
-/// The implementation is private on purpose — this type is the seam, and no call site can tell
-/// what sits behind it.
-/// </summary>
+/// <summary>The engine's logging facade: one console line plus — in Release — one line in
+/// <c>burning_log.txt</c>. MonoGame ships no runtime logging API, so the engine provides this one.
+/// Writes are serialised and flushed (a crash keeps the tail); every line carries its call site.
+/// <see cref="Debug"/> and <see cref="Assert"/> are compiled out of Release entirely.
+/// The implementation is private on purpose — this type is the seam.</summary>
 public static class Log {
 	private static string LogName => Path.Combine(Paths.DataDir, "burning_log.txt");
 	private static string PrevLogName => Path.Combine(Paths.DataDir, "burning_log.prev.txt");
@@ -26,21 +18,18 @@ public static class Log {
 
 	private static readonly object Lock = new();
 
-	// Android has no console: Console.ForegroundColor exists but throws there. Probe once
-	// instead of assuming one, so the same facade serves a desktop terminal and a device.
+	// Android has no console (the setter throws): probe once so one facade serves both.
 	private static readonly bool Colors = ProbeColors();
 
 	private static bool ProbeColors() {
 		try {
-			// The getter may exist where the setter throws (Android has no console), so probe
-			// the setter too: a write that throws mid-line is worse than no colors at all.
+			// Probe the setter too: a write throwing mid-line is worse than no colors.
 			var old = Console.ForegroundColor;
 			Console.ForegroundColor = old;
 
 			return true;
 		} catch (Exception) {
-			// Any console failure (not just the platform one) means no colors;
-			// throwing out of a static initializer kills the process pre-frame.
+			// Any console failure means no colors; a static-init throw kills the process pre-frame.
 			return false;
 		}
 	}
@@ -49,9 +38,8 @@ public static class Log {
 	public static void Open() {
 		lock (Lock) {
 			try {
-				// Keep one previous log across a relaunch instead of deleting: the last run's
-				// tail is what a bug report needs. Best effort — a failed roll costs history,
-				// not the log.
+				// Keep one previous log across a relaunch: the last run's tail is the bug report.
+				// Best effort — a failed roll costs history, not the log.
 				if (File.Exists(PrevLogName)) {
 					File.Delete(PrevLogName);
 				}
@@ -60,8 +48,7 @@ public static class Log {
 					File.Move(LogName, PrevLogName);
 				}
 			} catch (Exception e) {
-				// The file is only opened in append mode, so a failed roll costs history,
-				// not the log.
+				// A failed roll costs history, not the log (append mode below).
 				try {
 					Console.Error.WriteLine(e);
 				} catch {
@@ -70,8 +57,11 @@ public static class Log {
 			}
 
 			if (WriteToFile) {
-				// AutoFlush puts every line on disk as it is written, so the tail survives a
-				// crash — which is what the file is for.
+				// Close the previous writer first (locale-change reopen): a stale one keeps its
+				// old file position and would overwrite newer content mid-file after the roll.
+				Close();
+
+				// AutoFlush: every line reaches disk as written, so a crash keeps the tail.
 				writer = new StreamWriter(new FileStream(LogName, FileMode.Append, FileAccess.Write, FileShare.ReadWrite)) {
 					AutoFlush = true
 				};

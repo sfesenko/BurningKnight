@@ -339,8 +339,7 @@ namespace BurningKnight.level {
 				return;
 			}
 
-			// OOM/device-loss at surface allocation leaves this null (Gpu.Flush logs and
-			// continues): skip the pass rather than NRE on `WallSurface!` below.
+			// Null after failed allocation (Gpu.Flush logs and continues): skip rather than NRE.
 			if (WallSurface == null) {
 				return;
 			}

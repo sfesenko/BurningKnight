@@ -42,8 +42,7 @@ public static class Bootstrap {
 		Assets.SetSource(source);
 
 		if (!ReferenceEquals(previous, source)) {
-			// First boot owns a FileContentSource (no state); a recreated activity owns
-			// the previous APK source. Never leak the APK fd across recreations.
+			// Never leak the previous APK fd across recreations.
 			try {
 				previous.Dispose();
 			} catch (Exception e) {
@@ -52,10 +51,8 @@ public static class Bootstrap {
 		}
 	}
 
-	// Content.zip ships stored (not deflated — see the csproj flag), so its bytes sit
-	// verbatim in base.apk. OpenFd gives the offset/length; a bounded stream over the
-	// APK file serves ZipArchive's seeks with no copy and no duplication. Throws when
-	// the asset is compressed instead of stored — that means the packaging regressed.
+	// Content.zip ships stored, so its bytes sit verbatim in base.apk: OpenFd gives offset/length,
+	// a bounded stream serves ZipArchive's seeks. Throws when compressed — packaging regressed.
 	private static ArchiveContentSource OpenApkArchive(Context context) {
 		if (context.Assets == null) {
 			throw new InvalidOperationException("AssetManager is unavailable, cannot open Content.zip.");
@@ -101,8 +98,6 @@ public static class Bootstrap {
 
 			return source;
 		} catch (Exception e) {
-			// Region owns the file once constructed; anything earlier owns nothing,
-			// so each layer is disposed only if the next one never took it.
 			if (region != null) {
 				region.Dispose();
 			} else {
@@ -113,9 +108,8 @@ public static class Bootstrap {
 		}
 	}
 
-	// No store, no backend, no crash service on a sideloaded handheld: managed
-	// crashes land in a local file instead of vanishing with the process. The
-	// game log has the run-up; this has the exception. Send both on a bug report.
+	// No store, no crash service on a sideloaded handheld: managed crashes land in a local
+	// file instead of vanishing with the process.
 	private static void WatchForCrashes(Context context, string data) {
 		if (string.IsNullOrEmpty(data)) {
 			return;
@@ -139,14 +133,10 @@ public static class Bootstrap {
 		};
 	}
 
-	// A synchronous boot failure (content missing, engine ctor throw) is caught, not
-	// unhandled, so the handlers above never fire for it — but burning_log.txt does not
-	// exist yet either (Log.Open runs in Engine.Initialize). The activity mirrors those
-	// catches here so the file the README asks for in bug reports actually exists.
+	// Boot failures are caught by the activity, not unhandled — but burning_log.txt doesn't
+	// exist yet at that point (Log.Open runs in Engine.Initialize), so mirror them here.
 	public static void WriteCrash(Context context, string kind, object? payload) {
-		// The crash reporter must never be able to kill the catch that calls it:
-		// a throwing FilesDir/AbsolutePath here would skip ShowFailure and turn
-		// a handled boot failure into an unhandled crash with no log entry.
+		// Never throw: a failing FilesDir/AbsolutePath would skip ShowFailure.
 		try {
 			var files = context.FilesDir;
 
@@ -161,8 +151,7 @@ public static class Bootstrap {
 	}
 
 	private static void WriteCrash(string data, string appVersion, string kind, object? payload) {
-		// The size check and the append are one unit: two crashing threads must not both
-		// pass the check and both append past the cap.
+		// Size check + append under one lock: two crashing threads must not both pass.
 		lock (CrashLock) {
 			try {
 				var path = Path.Combine(data, "crash_log.txt");
@@ -186,8 +175,7 @@ public static class Bootstrap {
 		}
 	}
 
-	// Display version + version code, best effort: a missing PackageManager must not take
-	// the crash reporter down with it.
+	// Best effort: a missing PackageManager must not take the crash reporter down.
 	private static string AppVersion(Context context) {
 		try {
 			var pm = context.PackageManager;

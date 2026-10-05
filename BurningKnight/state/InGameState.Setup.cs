@@ -199,7 +199,11 @@ namespace BurningKnight.state {
 						rainSound.IsLooped = true;
 						rainSound.Play();
 
-						Tween.To(0.5f * Settings.MusicVolume * Settings.MasterVolume, 0, x => rainSound.Volume = x, 5f);
+						Tween.To(0.5f * Settings.MusicVolume * Settings.MasterVolume, 0, x => {
+							if (rainSound != null) {
+								rainSound.Volume = x;
+							}
+						}, 5f);
 					}
 				}
 				

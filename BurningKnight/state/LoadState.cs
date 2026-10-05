@@ -24,12 +24,11 @@ namespace BurningKnight.state {
 		public string Path = null!;
 		private Area gameArea = null!;
 
-		// Set by the loading worker; the main thread only reads it to decide when the loaded
-		// area may be touched. Volatile: the write publishes `gameArea` and everything in it.
+		// Set by the loading worker; volatile so the write publishes `gameArea` with it.
 		private volatile bool ready;
 
-		// The loading worker's failure seam, same shape as AssetLoadState's: a throw on the
-		// worker must not abort the process or hang the screen forever.
+		// Failure seam, same shape as AssetLoadState's: a worker throw must not abort the
+		// process or hang the screen.
 		private volatile bool failed;
 		private string failure = null!;
 
@@ -126,13 +125,11 @@ namespace BurningKnight.state {
 					Engine.AssetsLoaded?.Invoke();
 					ready = true;
 				} catch (Exception e) {
-					// Never die silently on the worker: a throw used to abort the whole
-					// process (unhandled on a background thread) mid level-transition.
-					// Record it for the game thread to surface, like AssetLoadState does.
+					// Record for the game thread; an unhandled throw here would abort the process.
 					Log.Error("Level loading failed");
 					Log.Error(e);
 
-					failure = e.Message;
+					failure = e.Message.Length > 100 ? $"{e.Message[..100]}…" : e.Message;
 					failed = true;
 				}
 			});
@@ -154,12 +151,10 @@ namespace BurningKnight.state {
 			base.Update(dt);
 
 			if (failed) {
-				// Dead end surfaced, not hung: the label names the failure, and any
-				// confirm/back press leaves instead of sitting on a dead screen.
-				// UiSelect covers keyboard (Enter/Space/X) and pad (X/A/Y); UiAccept
-				// covers the mouse; GameStart/UiBack cover pad Start/Back and Esc.
+				// Failure is up; any confirm/back press leaves instead of sitting on a dead screen.
+				// UiSelect: keyboard/pad, UiAccept: mouse, GameStart/UiBack: pad Start/Back and Esc.
 				if (Input.WasPressed(Controls.GameStart) || Input.WasPressed(Controls.UiSelect) || Input.WasPressed(Controls.UiAccept) || Input.WasPressed(Controls.UiBack)) {
-					Engine.Instance.Exit();
+					Engine.Instance.Quit();
 				}
 
 				return;

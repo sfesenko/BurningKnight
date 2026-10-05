@@ -5,9 +5,8 @@ using Microsoft.Xna.Framework.Input;
 
 namespace AndroidPort.core;
 
-// MonoGame's Android backend ignores strength and always plays a fixed 500 ms one-shot, even for
-// a zero request. There is nothing to sustain or stop: one call is the whole buzz, and a stop
-// would only start another.
+// MonoGame's Android backend ignores strength: one fixed 500 ms one-shot, even for a zero
+// request. Nothing to sustain or stop — a "stop" would only buzz again.
 public class AndroidRumble : IRumble {
 	public void Play(PlayerIndex player, float strength, float time) {
 		if (strength <= 0 || time <= 0) {
@@ -17,8 +16,7 @@ public class AndroidRumble : IRumble {
 		try {
 			GamePad.SetVibration(player, strength, strength);
 		} catch (Exception e) {
-			// Missing VIBRATE permission or a dead vibrator service: rumble is
-			// cosmetic, it must never kill the game thread.
+			// Missing VIBRATE or dead service: rumble is cosmetic, never fatal.
 			Lens.util.Log.Error(e);
 		}
 	}

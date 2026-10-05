@@ -64,12 +64,10 @@ namespace Lens.assets {
 				return null;
 			}
 
-			// MonoGame does not premultiply here, and the sheets are premultiplied already.
-			// Buffer on the caller thread and upload only a valid stream: FromStream runs
-			// on the main thread via Gpu, so a throw there would bypass the caller's
-			// try/catch and kill the process instead of failing the load. OpenRead is
-			// guarded too: the archive source reads the whole entry inside Open, so a
-			// corrupt deflate/CRC throws from Open itself (see Textures.LoadTexture).
+			// MonoGame does not premultiply here; the sheets are premultiplied already. Buffer on
+			// the caller thread: FromStream runs on the main thread via Gpu, where a throw would
+			// bypass this try/catch. OpenRead is guarded too — the archive reads the whole entry
+			// inside Open, so a corrupt deflate/CRC throws from Open itself.
 			MemoryStream copy;
 
 			try {
@@ -94,8 +92,7 @@ namespace Lens.assets {
 
 			try {
 				using (copy) {
-					// The decode runs on the main thread inside Gpu.Flush: a throw there
-					// bypasses this caller's try/catch, so catch inside the closure.
+					// Decode runs on the main thread inside Gpu.Flush: catch inside the closure.
 					texture = Gpu.Run(() => {
 						try {
 							return Texture2D.FromStream(Engine.GraphicsDevice, copy);
@@ -122,8 +119,7 @@ namespace Lens.assets {
 			return animation;
 		}
 
-		// Fail-fast accessor: every mandatory lookup goes through here so the
-		// message is built in one place instead of being copy-pasted per site.
+		// Fail-fast: mandatory lookup, message built in one place.
 		public static AnimationData Require(string id) {
 			return Get(id) ?? throw new InvalidOperationException($"Animation '{id}' failed to load.");
 		}
@@ -153,8 +149,7 @@ namespace Lens.assets {
 			AnimationData? data = null;
 
 			try {
-				// Same no-throw Gpu contract as above: GetData/new Texture2D/SetData
-				// run on the main thread, so catch inside the closure.
+				// Same no-throw Gpu contract: catch inside the closure.
 				data = Gpu.Run(() => {
 					try {
 						return animation.Recolor(colorMap);

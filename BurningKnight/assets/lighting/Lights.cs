@@ -54,10 +54,20 @@ namespace BurningKnight.assets.lighting {
 			}
 
 			if (surface == null) {
-				surface = Gpu.Run(() => new RenderTarget2D(
-					Engine.GraphicsDevice, Display.Width + 1, Display.Height + 1, false,
-					Engine.Graphics.PreferredBackBufferFormat, DepthFormat.Depth24
-				));
+				surface = Gpu.Run<RenderTarget2D?>(() => {
+					try {
+						return new RenderTarget2D(
+							Engine.GraphicsDevice, Display.Width + 1, Display.Height + 1, false,
+							Engine.Graphics.PreferredBackBufferFormat, DepthFormat.Depth24
+						);
+					} catch (Exception e) {
+						// Catch inside (Gpu contract): this also runs on the main thread, where a
+						// throw would escape the LoadState seam. Null surface → Render skips.
+						Log.Error(e);
+
+						return null;
+					}
+				});
 			}
 		}
 
@@ -71,9 +81,8 @@ namespace BurningKnight.assets.lighting {
 				return;
 			}
 
-			// OOM/device-loss at surface allocation leaves this null (Gpu.Flush logs
-			// and continues): skip the pass instead of SetRenderTarget(null), which
-			// would silently target the backbuffer. Init retries on the next level.
+			// Surface can be null after OOM/device-loss (Gpu.Flush logs and continues): skip the
+			// pass rather than SetRenderTarget(null) → backbuffer. Init retries on the next level.
 			if (surface == null) {
 				return;
 			}

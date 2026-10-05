@@ -176,8 +176,7 @@ namespace BurningKnight.assets.input {
 				}
 			}
 
-			// An explicitly empty array means deliberately unbound; a non-empty array
-			// with nothing parseable is corrupt, treated as missing (keeps defaults).
+			// Empty array = deliberately unbound; non-empty but unparseable = corrupt → defaults.
 			if (list.Count == 0 && array.Count > 0) {
 				return null;
 			}
@@ -220,10 +219,8 @@ namespace BurningKnight.assets.input {
 					};
 				}
 
-				// Validate-then-merge: start from the defaults and overlay, per channel,
-				// what parsed. Unknown ids and missing channels keep defaults; an
-				// explicitly empty array means deliberately unbound (it round-trips
-				// through Save, which writes empty arrays as-is).
+				// Validate-then-merge over the defaults: unknown ids/missing channels keep defaults;
+				// an explicitly empty array stays unbound (Save round-trips empty arrays as-is).
 				var merged = new List<Control>();
 
 				foreach (var def in controls) {

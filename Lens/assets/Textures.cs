@@ -33,9 +33,8 @@ namespace Lens.assets {
 					return Fallback();
 				}
 
-				// The decode runs on the main thread inside Gpu.Flush: a throw there
-				// bypasses this try/catch, and Flush's own log-and-continue would hand
-				// back null. Catch inside so the fallback contract always holds.
+				// Decode runs on the main thread inside Gpu.Flush: catch inside the closure
+				// (Flush would otherwise hand back null and the fallback contract breaks).
 				var texture = Gpu.Run(() => {
 					try {
 						return Texture2D.FromStream(Engine.GraphicsDevice, stream);
@@ -48,8 +47,7 @@ namespace Lens.assets {
 
 				return texture ?? Fallback();
 			} catch (Exception e) {
-				// Boot-time load on the main thread: one corrupt file must not crash
-				// before the worker even starts. Same philosophy as LoadTexture.
+				// Boot-time load on the main thread: one corrupt file must not crash boot.
 				Log.Error($"Failed to fast-load texture {path}: {e}");
 
 				return Fallback();
@@ -58,10 +56,18 @@ namespace Lens.assets {
 
 		private static Texture2D Fallback() {
 			return Gpu.Run(() => {
-				var texture = new Texture2D(Engine.GraphicsDevice, 1, 1);
-				texture.SetData([Color.White]);
+				try {
+					var texture = new Texture2D(Engine.GraphicsDevice, 1, 1);
+					texture.SetData([Color.White]);
 
-				return texture;
+					return texture;
+				} catch (Exception e) {
+					// Even this can fail on a dead device: log and hand back null rather than
+					// throw out of FastLoad's fallback path.
+					Log.Error(e);
+
+					return null!;
+				}
 			});
 		}
 		

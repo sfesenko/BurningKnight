@@ -161,10 +161,8 @@ namespace Lens.assets {
 		private readonly object gate = new();
 
 		public Stream? Open(string path) {
-			// Zip entries share the archive's base stream, which is not thread-safe
-			// (level loads on a worker thread, audio streams on the game thread).
-			// Copy under the lock and hand out memory; everything the game loads
-			// is consumed whole except music, and one buffered song is affordable.
+			// Zip entries share a non-thread-safe base stream (worker loads + game-thread audio):
+			// copy under the lock; everything is consumed whole except one buffered song.
 			lock (gate) {
 				if (disposed || !entries.TryGetValue(ContentPath.Normalize(path), out var entry)) {
 					return null;
@@ -224,8 +222,7 @@ namespace Lens.assets {
 				try {
 					archive.Dispose();
 				} finally {
-					// A throwing archive dispose must not skip the stream: the APK fd
-					// would leak permanently across activity recreation.
+					// A throwing archive dispose must not skip the stream: the APK fd would leak.
 					baseStream.Dispose();
 				}
 			}

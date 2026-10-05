@@ -26,6 +26,12 @@ public class Core {
 	// mouse-oriented Autopause setting; a handheld has no mouse-leave signal.
 	public virtual bool PauseOnBackground => false;
 
+	// How the run ends on a quit request. The default is MonoGame's Exit(); a host where
+	// Exit() only backgrounds the task (Android) overrides to finish for real.
+	public virtual void Quit() {
+		Engine.Instance.Exit();
+	}
+
 	// The display may have changed size (rotation, DPI/resolution switch) without
 	// recreating the host. Hosts that snapshot the size re-read it here.
 	public virtual void OnDisplayChanged() {

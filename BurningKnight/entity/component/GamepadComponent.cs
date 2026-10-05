@@ -32,9 +32,7 @@ namespace BurningKnight.entity.component {
 					return;
 				}
 
-				// Level generation closes hidden doors and settles tiles with small shakes; the
-				// accumulated camera amount crosses any threshold after a few of them, so the
-				// decision is made on the shake that was just requested, not the running total.
+				// Decide on the shake just requested: accumulated gen-shakes would trip the threshold.
 				if (amount < 8) {
 					return;
 				}

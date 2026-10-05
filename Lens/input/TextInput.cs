@@ -4,11 +4,8 @@ using Microsoft.Xna.Framework;
 
 namespace Lens.input;
 
-// Window.TextInput is a desktop-only event: the Android MonoGame build carries the event args
-// but has no such member on GameWindow, so a direct subscription — compiled against the desktop
-// package — is a MissingMethodException on the device. The facade resolves the event once by
-// reflection, so the game can wire the same handlers on every platform; where the event does not
-// exist, the handlers simply never fire.
+// Window.TextInput is desktop-only: the Android build has the event args but no GameWindow
+// member. Resolve once by reflection; where the event doesn't exist, the handlers never fire.
 public static class TextInput {
 	private static readonly EventInfo? Event = typeof(GameWindow).GetEvent("TextInput");
 	private static readonly MethodInfo? Add = Event?.GetAddMethod();

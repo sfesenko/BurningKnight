@@ -32,12 +32,10 @@ namespace BurningKnight.state {
 		private TextureRegion pixel = null!;
 		// private PhotoCard[] cards = new PhotoCard[3];
 
-		// Set by the loading worker; the main thread only reads it to decide when the loaded
-		// area may be touched. Volatile: the write publishes `gameArea` and everything in it.
+		// Set by the loading worker; volatile so the write publishes `gameArea` with it.
 		private volatile bool ready;
 
-		// Display-only: the progress bar may read a slightly stale value; it is also passed by
-		// ref into the loader, so it cannot be volatile. The hand-off is `ready`.
+		// Display-only (stale reads fine); passed by ref, cannot be volatile. Hand-off is `ready`.
 		private int progress;
 
 		private Area gameArea = null!;
@@ -48,8 +46,7 @@ namespace BurningKnight.state {
 		// Set by the worker once the saves are in, applied by the main thread.
 		private volatile bool checkFullscreen;
 
-		// Set by the worker when loading throws: `ready` stays false, so without this
-		// the screen would load forever with no error. The game thread surfaces it.
+		// Set by the worker when loading throws; `ready` stays false so the game thread surfaces it.
 		private volatile bool failed;
 		private string failure = "";
 
@@ -76,8 +73,7 @@ namespace BurningKnight.state {
 
 			Ui.Add(tipLabel = new UiString(Font.Small));
 
-			// The tips are localized, so the locale has to be in before the first one is picked;
-			// Assets.Load would load it later, on the worker.
+			// Locale first: it has to be in before the first tip is picked.
 			if (Locale.Map == null) {
 				Locale.Load(Locale.PrefferedClientLanguage);
 			}
@@ -151,20 +147,16 @@ namespace BurningKnight.state {
 					
 					ready = true;
 				} catch (Exception e) {
-					// Never die silently on the worker: a throw used to leave `ready`
-					// false forever (infinite loading screen). Record it for the game
-					// thread to surface; per-asset guards above mean this is now a
-					// truly unexpected failure.
+					// Record for the game thread; an unhandled throw here would abort the process.
 					Log.Error("Asset loading failed");
 					Log.Error(e);
 
-					failure = e.Message;
+					failure = e.Message.Length > 100 ? $"{e.Message[..100]}…" : e.Message;
 					failed = true;
 				}
 			});
 
-			// The worker can block on the main thread's GPU queue; it must not pin the process
-			// open if the window closes mid-load.
+			// Background: the worker can block on the main thread's GPU queue.
 			thread.IsBackground = true;
 			thread.Start();
 		}
@@ -175,12 +167,10 @@ namespace BurningKnight.state {
 			base.Update(dt);
 
 			if (failed) {
-				// Dead end surfaced, not hung: the label names the failure, and any
-				// confirm/back press leaves instead of sitting on a dead screen.
-				// UiSelect covers keyboard (Enter/Space/X) and pad (X/A/Y); UiAccept
-				// covers the mouse; GameStart/UiBack cover pad Start/Back and Esc.
+				// Failure is up; any confirm/back press leaves instead of sitting on a dead screen.
+				// UiSelect: keyboard/pad, UiAccept: mouse, GameStart/UiBack: pad Start/Back and Esc.
 				if (Input.WasPressed(Controls.GameStart) || Input.WasPressed(Controls.UiSelect) || Input.WasPressed(Controls.UiAccept) || Input.WasPressed(Controls.UiBack)) {
-					Engine.Instance.Exit();
+					Engine.Instance.Quit();
 				}
 			}
 

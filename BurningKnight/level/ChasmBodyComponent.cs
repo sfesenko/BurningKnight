@@ -192,8 +192,7 @@ namespace BurningKnight.level {
 						try {
 							body.CreatePolygonFixture(new Vertices(list), 1f);
 						} catch (Exception e) {
-							// A degenerate tile-neighbor polygon fails Box2D validation;
-							// one bad chunk must not kill level gen.
+							// Degenerate tile-neighbor polygon: one bad chunk must not kill level gen.
 							Log.Error(e);
 						}			
 					}

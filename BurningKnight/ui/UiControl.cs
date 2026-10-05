@@ -71,8 +71,8 @@ namespace BurningKnight.ui {
 			MouseButtons.Left, MouseButtons.Middle, MouseButtons.Right
 		};
 
-		// Start and Back stay out: they drive pause and menu flow, so capturing one here would trap the
-		// player without a way to pause or back out. BigButton never arrives (consumed by the OS guide).
+		// Start/Back stay out: they drive pause/menu flow — capturing them would trap the player.
+		// BigButton never arrives (consumed by the OS guide).
 		private static Buttons[] buttonsToCheck = {
 			Buttons.A, Buttons.B, Buttons.X, Buttons.Y, Buttons.LeftShoulder, Buttons.RightShoulder,
 			Buttons.LeftStick, Buttons.RightStick, Buttons.LeftTrigger, Buttons.RightTrigger,
@@ -104,8 +104,7 @@ namespace BurningKnight.ui {
 			
 			if (Focused == this) {
 				if (Gamepad) {
-					// The stored component may be null or stale (captured when the pane was built),
-					// so resolve the live pad at remap time: the local player's, then any attached pad.
+					// Stored component may be stale (captured at pane build); resolve the live pad.
 					var component = GamepadComponent;
 
 					if (Area != null && component?.Controller == null) {

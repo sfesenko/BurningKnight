@@ -98,9 +98,7 @@ public class AnimationData
         return Textures.Missing;
     }
 
-    // Fail-fast accessor for mandatory slices: GetSlice's normal fallback is the
-    // Missing texture, which is itself still null while CommonAse.Load runs, so a
-    // load-time lookup must fail with the name instead of propagating a bare null.
+    // Fail-fast: GetSlice's normal fallback (Missing) is still null while CommonAse.Load runs.
     public TextureRegion RequireSlice(string name)
     {
         return GetSlice(name, false) ?? throw new InvalidOperationException($"Slice '{name}' failed to load.");

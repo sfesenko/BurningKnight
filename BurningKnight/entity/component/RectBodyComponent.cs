@@ -7,8 +7,8 @@ using Microsoft.Xna.Framework;
 namespace BurningKnight.entity.component {
 	public class RectBodyComponent : BodyComponent {
 		public RectBodyComponent(float x, float y, float w, float h, BodyType type = BodyType.Dynamic, bool sensor = false, bool center = false) {
-			// Box2D rejects degenerate quads: clamp to a sliver rather than hand
-			// native code a zero-area polygon (same reason Resize clamps below).
+			// Box2D rejects degenerate quads: clamp to a sliver, never hand native code a
+			// zero-area polygon.
 			w = Math.Max(w, 0.5f);
 			h = Math.Max(h, 0.5f);
 
@@ -34,10 +34,8 @@ namespace BurningKnight.entity.component {
 		}
 
 		public override void Resize(float x, float y, float w, float h, bool center = false) {
-			// Clamp, don't skip: a silent return would leave Width/Height already
-			// shrunk while the fixture keeps its old size (visual/physics mismatch).
-			// A degenerate quad fails Box2D validation and would leave the body
-			// fixture-less even if the caller catches it.
+			// Clamp instead of skipping: an early return would leave the fixture at the old
+			// size while Width/Height moved on; a degenerate quad fails Box2D validation.
 			w = Math.Max(w, 0.5f);
 			h = Math.Max(h, 0.5f);
 

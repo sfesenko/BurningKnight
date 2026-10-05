@@ -47,8 +47,7 @@ namespace BurningKnight.entity.component {
 		}
 
 		public void SetAutoStop(bool stop) {
-			// Null when the sheet failed to load (Animations.Get's null contract);
-			// gameplay must degrade to no auto-stop, not crash.
+			// Null when the sheet failed to load: degrade to no auto-stop, don't crash.
 			if (Animation != null) {
 				Animation.AutoStop = stop;
 			}
@@ -86,8 +85,7 @@ namespace BurningKnight.entity.component {
 
 			if (shadow) {
 				FlippedVerticaly = !FlippedVerticaly;
-				// Null when the sheet failed to load: the body renders without a shadow
-				// offset instead of crashing mid-frame (CallRender is null-guarded too).
+				// Null when the sheet failed to load: no shadow offset instead of a mid-frame crash.
 				var height = Animation?.GetCurrentTexture().Height ?? 0;
 				pos.Y += height - ShadowOffset * 2;
 			}

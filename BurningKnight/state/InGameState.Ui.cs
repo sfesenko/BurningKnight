@@ -248,7 +248,7 @@ namespace BurningKnight.state {
 					RelativeCenterX = Display.UiWidth / 2f,
 					RelativeCenterY = BackY,
 					Click = b => {
-						Engine.Instance.Exit();
+						Engine.Instance.Quit();
 					}
 				});
 			}

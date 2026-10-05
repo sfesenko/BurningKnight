@@ -93,8 +93,7 @@ namespace Lens.input {
 			Buttons[id] = button;
 		}
 
-		// The single core behind both Check overloads: the blocked guard and the binding lookup
-		// run once, then each channel (keys, pads, mouse) runs once. No allocations on this path.
+		// Single core behind both Check overloads: guard + binding lookup run once, no allocations.
 		private static bool CheckCore(string id, CheckType type, bool ignoreBlock, bool keyboardEnabled,
 			GamepadData? gamepad, bool anyPadFallback, bool mouseEnabled) {
 			if (Blocked > 0 && !ignoreBlock) {
@@ -123,9 +122,8 @@ namespace Lens.input {
 						}
 					}
 				} else if (anyPadFallback) {
-					// The caller named no controller — a cutscene, a menu before the player exists.
-					// Any attached pad can answer, or a handheld with no keyboard could never get
-					// past those screens.
+					// No controller named (cutscene, menu before the player exists): any attached
+					// pad answers — a handheld with no keyboard could never get past those screens.
 					foreach (var attached in Gamepads) {
 						if (!attached.Attached) {
 							continue;

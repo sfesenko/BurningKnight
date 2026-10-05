@@ -2,18 +2,15 @@ using Microsoft.Xna.Framework;
 
 namespace Lens.input;
 
-// How a rumble reaches the motors differs by platform: a desktop sustains a motor value and can
-// stop it, while MonoGame's Android backend plays one fixed one-shot and ignores strength — a
-// "stop" there would only start another buzz. The host supplies the implementation; until it
-// does (or on a platform with no rumble at all) the NoRumble default silently absorbs every call.
+// Rumble differs per platform: desktop sustains and stops a motor value; MonoGame's Android
+// backend plays one fixed one-shot and ignores strength. The host supplies the implementation.
 public interface IRumble {
 	void Play(PlayerIndex player, float strength, float time);
 	void Update(PlayerIndex player, float dt);
 	void Stop(PlayerIndex player);
 }
 
-// The default when the host supplies no rumble: every call is a no-op, so game code never
-// null-checks. A platform with no rumble at all simply never replaces it.
+// Default when the host supplies none: a no-op, so game code never null-checks.
 public sealed class NoRumble : IRumble {
 	public static readonly NoRumble Default = new();
 

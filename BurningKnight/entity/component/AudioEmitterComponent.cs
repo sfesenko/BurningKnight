@@ -46,14 +46,13 @@ namespace BurningKnight.entity.component {
 
 		public void StopAll() {
 			foreach (var s in Playing.Values) {
-				// A pending delayed tween must not touch a disposed instance when it fires.
+				// Kill the tween first: it must not touch a disposed instance when it fires.
 				s.Dead = true;
 				s.Tween?.Ended = true;
 
 				try {
 					s.Effect.Stop();
 				} catch (Exception e) {
-					// Dead voice (device loss): teardown continues regardless.
 					Log.Error(e);
 				}
 
@@ -84,7 +83,6 @@ namespace BurningKnight.entity.component {
 						
 						s.Effect.Volume = MathUtils.Clamp(0, 1, sfxVolumeBuffer);
 					} catch (Exception e) {
-						// Dead voice (device loss): the Update loop drops it below.
 						Log.Error(e);
 					}
 				}
@@ -107,9 +105,8 @@ namespace BurningKnight.entity.component {
 				try {
 					if (!s.KeepAround && s.Effect.State != SoundState.Playing) {
 						Playing.Remove(k);
-						// A finished instance still owns its OpenAL source: the pool only gets it back
-						// on Stop or Dispose. Leaving it to the GC drains the pool and Play starts
-						// throwing InstancePlayLimitException.
+						// Finished instances still own an OpenAL source; only Stop/Dispose
+						// returns it. GC alone drains the pool and Play starts throwing.
 						s.Dead = true;
 						s.Tween?.Ended = true;
 						s.Effect.Dispose();
@@ -117,9 +114,7 @@ namespace BurningKnight.entity.component {
 						s.Effect.Apply3D(Listener, Emitter);
 					}
 				} catch (Exception e) {
-					// Dead voice (device loss across pause/resume): drop it, keep the rest.
-					// A live device that threw on State/Apply3D still owns its OpenAL
-					// source — release it like the finished path above, or the pool drains.
+					// Dead voice (or State/Apply3D threw): release the source, keep the rest.
 					Log.Error(e);
 					Playing.Remove(k);
 					s.Dead = true;
@@ -156,11 +151,10 @@ namespace BurningKnight.entity.component {
 
 				return true;
 			} catch (InstancePlayLimitException) {
-				// The OpenAL source pool is finite and a burst can exhaust it. A dropped sound
-				// must not kill the run.
+				// Pool exhausted by a burst: a dropped sound must not kill the run.
 				return false;
 			} catch (Exception e) {
-				// Lost device across pause/resume, disposed instance: same, never fatal.
+				// Dead device; never fatal.
 				Log.Error(e);
 
 				return false;
@@ -192,9 +186,8 @@ namespace BurningKnight.entity.component {
 					return null;
 				}
 
-				// CreateInstance/IsLooped touch the OpenAL source pool: an exhausted or
-				// dead device throws, and Emit must degrade to a silent no-op like
-				// TryPlay does instead of crashing the caller.
+				// CreateInstance/IsLooped touch the OpenAL pool: exhausted/dead device throws
+				// and Emit degrades to a no-op, like TryPlay.
 				SoundEffectInstance? effect = null;
 
 				try {

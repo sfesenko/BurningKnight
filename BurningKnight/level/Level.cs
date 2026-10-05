@@ -103,8 +103,15 @@ namespace BurningKnight.level {
 		public override void Destroy() {
 			base.Destroy();
 
-			rainSound?.Stop();
-			rainSound?.Dispose();
+			var rain = rainSound;
+			rainSound = null;
+
+			try {
+				rain?.Stop();
+				rain?.Dispose();
+			} catch (Exception e) {
+				Log.Error(e);
+			}
 
 			if (Chasm != null) {
 				HalfProjectile.Done = true;
@@ -124,9 +131,22 @@ namespace BurningKnight.level {
 				Context.Level = null;
 			}
 
-			if (WallSurface != null) {
-				WallSurface?.Dispose();
-				MessSurface?.Dispose();
+			var wall = WallSurface;
+			var mess = MessSurface;
+
+			WallSurface = null;
+			MessSurface = null;
+
+			try {
+				wall?.Dispose();
+			} catch (Exception e) {
+				Log.Error(e);
+			}
+
+			try {
+				mess?.Dispose();
+			} catch (Exception e) {
+				Log.Error(e);
 			}
 
 			manager?.Destroy();
@@ -233,8 +253,11 @@ namespace BurningKnight.level {
 								rainSound.IsLooped = true;
 								rainSound.Play();
 
-								Tween.To(0.5f * Settings.MusicVolume * Settings.MasterVolume, 0, x => rainSound.Volume = x, 0.5f)
-									.Delay = 3f;
+								Tween.To(0.5f * Settings.MusicVolume * Settings.MasterVolume, 0, x => {
+									if (rainSound != null) {
+										rainSound.Volume = x;
+									}
+								}, 0.5f).Delay = 3f;
 							}
 						}
 					}
@@ -341,18 +364,25 @@ namespace BurningKnight.level {
 					return;
 				}
 
-				// Create before disposing: Gpu.Flush logs and continues past a throwing
-				// closure, so a failed allocation must leave the old live surfaces in
-				// place instead of disposed-but-non-null ones.
+				// Create before disposing: Gpu.Flush logs past a throwing closure, so a failed
+				// allocation must leave the old live surfaces in place, not disposed-non-null.
 				var wall = new RenderTarget2D(Engine.GraphicsDevice, Display.Width + 1, Display.Height + 1);
 				var mess = new RenderTarget2D(Engine.GraphicsDevice, Width * 16, Height * 16, false,
 					Engine.Graphics.PreferredBackBufferFormat, DepthFormat.Depth24, 0, RenderTargetUsage.PreserveContents);
 
-				WallSurface?.Dispose();
-				MessSurface?.Dispose();
+				var oldWall = WallSurface;
+				var oldMess = MessSurface;
 
 				WallSurface = wall;
 				MessSurface = mess;
+
+				try {
+					oldWall?.Dispose();
+					oldMess?.Dispose();
+				} catch (Exception e) {
+					// After the swap: a throw can only leak the old targets, not leave disposed fields.
+					Log.Error(e);
+				}
 			});
 		}
 

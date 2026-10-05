@@ -26,8 +26,7 @@ namespace Lens.assets {
 
 		private static void LoadEffect(FileHandle handle)
 		{
-			// Runs inside Gpu.Flush on the main thread: a throw here bypasses the
-			// queuing caller's try/catch and kills the process, so catch inside.
+			// Runs inside Gpu.Flush on the main thread: catch inside the closure.
 			try {
 				var assetName = $"Shaders/{handle.NameWithoutExtension}";
 				var effect = Assets.Content.Load<Effect>(assetName);
@@ -49,8 +48,7 @@ namespace Lens.assets {
 			return All.TryGetValue(id, out var o) ? o : null;
 		}
 
-		// Fail-fast accessor: every mandatory lookup goes through here so the
-		// message is built in one place instead of being copy-pasted per site.
+		// Fail-fast: mandatory lookup, message built in one place.
 		public static Effect Require(string id) {
 			return Get(id) ?? throw new InvalidOperationException($"Shader '{id}' failed to load.");
 		}

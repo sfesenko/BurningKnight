@@ -3,10 +3,8 @@ using System.IO;
 
 namespace AndroidPort.core;
 
-// A readable, seekable window over a larger file: the Content.zip bytes inside
-// base.apk. ZipArchive seeks constantly (central directory at the end, then back
-// and forth per entry), so the forward-only asset stream cannot serve it — but
-// the asset is stored uncompressed, which makes its APK bytes directly readable.
+// Seekable window over the Content.zip bytes inside base.apk: ZipArchive seeks constantly
+// (central directory, per entry), which the forward-only asset stream cannot serve.
 public sealed class ApkRegionStream : Stream {
 	private readonly Stream baseStream;
 	private readonly long start;
@@ -112,9 +110,8 @@ public sealed class ApkRegionStream : Stream {
 				count = (int) remaining;
 			}
 
-			// ZipArchive reads sequentially; skip the seek when already positioned.
-			// Seek and read are one unit under the same lock: a concurrent reader
-			// must not move FileStream.Position between them.
+			// Skip the seek when already positioned; seek+read under one lock — a concurrent
+			// reader must not move FileStream.Position between them.
 			var want = start + position;
 
 			if (baseStream.Position != want) {

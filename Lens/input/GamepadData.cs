@@ -163,9 +163,8 @@ namespace Lens.input {
 			Released
 		}
 
-		// The single edge detector behind the stick-quadrant methods. `dz` carries its own sign:
-		// -dz watches the negative side, +dz the positive one. Each quadrant method passes the
-		// threshold its body used to compare, so this is a mechanical consolidation.
+		// Single edge detector behind the stick-quadrant methods; `dz` carries its own sign
+		// (-dz negative side, +dz positive).
 		private static bool AxisEdge(float cur, float prev, float dz, Edge edge) {
 			if (dz < 0) {
 				switch (edge) {
