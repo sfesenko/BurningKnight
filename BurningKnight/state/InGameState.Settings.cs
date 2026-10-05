@@ -68,7 +68,7 @@ namespace BurningKnight.state {
 				Click = b => {
 					currentBack = gameBack;
 					gameSettings.Enabled = true;
-					Tween.To(-Display.UiWidth * 2, pauseMenu.X, x => pauseMenu.X = x, PaneTransitionTime).OnEnd = SelectFirst;
+					SlideTo(-Display.UiWidth * 2);
 				}
 			});
 			
@@ -79,7 +79,7 @@ namespace BurningKnight.state {
 				Click = b => {
 					currentBack = graphicsBack;
 					graphicsSettings.Enabled = true;
-					Tween.To(-Display.UiWidth * 2, pauseMenu.X, x => pauseMenu.X = x, PaneTransitionTime).OnEnd = SelectFirst;
+					SlideTo(-Display.UiWidth * 2);
 				}
 			});
 			
@@ -90,7 +90,7 @@ namespace BurningKnight.state {
 				Click = b => {
 					currentBack = audioBack;
 					audioSettings.Enabled = true;
-					Tween.To(-Display.UiWidth * 2, pauseMenu.X, x => pauseMenu.X = x, PaneTransitionTime).OnEnd = SelectFirst;
+					SlideTo(-Display.UiWidth * 2);
 				}
 			});
 			
@@ -101,7 +101,7 @@ namespace BurningKnight.state {
 				Click = b => {
 					currentBack = inputBack;
 					inputSettings.Enabled = true;
-					Tween.To(-Display.UiWidth * 2, pauseMenu.X, x => pauseMenu.X = x, PaneTransitionTime).OnEnd = SelectFirst;
+					SlideTo(-Display.UiWidth * 2);
 				}
 			});
 			
@@ -112,7 +112,7 @@ namespace BurningKnight.state {
 				Click = b => {
 					currentBack = languageBack;
 					languageSettings.Enabled = true;
-					Tween.To(-Display.UiWidth * 2, pauseMenu.X, x => pauseMenu.X = x, PaneTransitionTime).OnEnd = SelectFirst;
+					SlideTo(-Display.UiWidth * 2);
 				}
 			});
 
@@ -128,9 +128,7 @@ namespace BurningKnight.state {
 					currentBack = pauseBack;
 					pauseMenu.Enabled = true;
 					
-					Tween.To(0, pauseMenu.X, x => pauseMenu.X = x, PaneTransitionTime).OnEnd = () => {
-						SelectFirst();
-					};
+					SlideTo(0);
 				}
 			});
 			
@@ -142,6 +140,53 @@ namespace BurningKnight.state {
 			AddInputSettings();
 			AddLanguageSettings();
 		}
+		// The settings panes drill one UiWidth left per level; sliding back reveals the right one.
+		private void SlideTo(float targetX, Action? end = null) {
+			Tween.To(targetX, pauseMenu.X, x => pauseMenu.X = x, PaneTransitionTime).OnEnd = () => {
+				end?.Invoke();
+				SelectFirst();
+			};
+		}
+
+		// A name, a getter/setter over Settings and a position; `after` adds side effects, `tick`
+		// replaces the update sync when a row mirrors external state (see fullscreen).
+		private UiCheckbox CheckRow(UiPane pane, string name, float x, float y, Func<bool> get, Action<bool> set, Action<UiCheckbox>? after = null, Action<UiCheckbox>? tick = null) {
+			var row = new UiCheckbox {
+				Name = name,
+				On = get(),
+				RelativeX = x,
+				RelativeCenterY = y,
+				Click = b => {
+					var c = (UiCheckbox) b;
+					set(c.On);
+					after?.Invoke(c);
+				},
+				OnUpdate = c => {
+					var box = (UiCheckbox) c;
+
+					if (tick != null) {
+						tick(box);
+					} else {
+						box.On = get();
+					}
+				}
+			};
+
+			pane.Add(row);
+			return row;
+		}
+
+		private void DismissConfirm() {
+			if (confirmationPane == null) {
+				return;
+			}
+
+			confirmationPane.Active = false;
+			pauseMenu.Remove(confirmationPane);
+			confirmationPane = null;
+			SelectFirst();
+		}
+
 		private void AddGraphicsSettings() {
 			pauseMenu.Add(graphicsSettings = new UiPane {
 				RelativeX = Display.UiWidth * 2	
@@ -158,26 +203,23 @@ namespace BurningKnight.state {
 				Clickable = false
 			});
 
-			graphicsSettings.Add(new UiCheckbox {
-				Name = "fullscreen",
-				On = Engine.Graphics.IsFullScreen,
-				RelativeX = sx,
-				RelativeCenterY = sy - space,
-				Click = b => {
-					Settings.Fullscreen = ((UiCheckbox) b).On;
-
-					if (Settings.Fullscreen) {
-						Engine.Instance.SetFullscreen();
-					} else {
-						Engine.Instance.SetWindowed(Display.Width * 3, Display.Height * 3);
-					}
-				},
-				
-				OnUpdate = c => {
-					((UiCheckbox) c).On = Engine.Graphics.IsFullScreen;
-					Settings.Fullscreen = ((UiCheckbox) c).On;
-				}
-			});
+			// Windowed mode does not exist on a handheld; the platform's core says whether the
+			// setting applies.
+			if (Engine.Instance.CanToggleFullscreen) {
+				CheckRow(graphicsSettings, "fullscreen", sx, sy - space,
+					() => Engine.Graphics.IsFullScreen, v => Settings.Fullscreen = v,
+					c => {
+						if (c.On) {
+							Engine.Instance.SetFullscreen();
+						} else {
+							Engine.Instance.SetWindowed(Display.Width * 3, Display.Height * 3);
+						}
+					},
+					c => {
+						c.On = Engine.Graphics.IsFullScreen;
+						Settings.Fullscreen = c.On;
+					});
+			}
 
 			/*graphicsSettings.Add(new UiCheckbox {
 				Name = "vsync",
@@ -191,19 +233,8 @@ namespace BurningKnight.state {
 				}
 			});*/
 
-			graphicsSettings.Add(new UiCheckbox {
-				Name = "fps",
-				On = Settings.ShowFps,
-				RelativeX = sx,
-				RelativeCenterY = sy,
-				Click = b => {
-					Settings.ShowFps = ((UiCheckbox) b).On;
-				},
-				
-				OnUpdate = c => {
-					((UiCheckbox) c).On = Settings.ShowFps;
-				}
-			});
+			CheckRow(graphicsSettings, "fps", sx, sy,
+				() => Settings.ShowFps, v => Settings.ShowFps = v);
 			
 			graphicsSettings.Add(new UiChoice {
 				Name = "cursor",
@@ -253,49 +284,24 @@ namespace BurningKnight.state {
 				Tween.To(s.Value / 100f, Settings.FloorDarkness, x => Settings.FloorDarkness = x, 0.3f);
 			};
 
-			graphicsSettings.Add(new UiCheckbox {
-				Name = "pixel_perfect",
-				On = Settings.PixelPerfect,
-				RelativeX = sx,
-				RelativeCenterY = sy + space * 6,
-				Click = b => {
-					Settings.PixelPerfect = ((UiCheckbox) b).On;
-					Engine.Instance.UpdateView();
-				}
-			});
+			CheckRow(graphicsSettings, "pixel_perfect", sx, sy + space * 6,
+				() => Settings.PixelPerfect, v => Settings.PixelPerfect = v,
+				c => Engine.Instance.UpdateView());
 
-			graphicsSettings.Add(new UiCheckbox {
-				Name = "vsync",
-				On = Settings.Vsync,
-				RelativeX = sx,
-				RelativeCenterY = sy + space * 7,
-				Click = b => {
-					Settings.Vsync = ((UiCheckbox) b).On;
-					Engine.Graphics.SynchronizeWithVerticalRetrace = Settings.Vsync;
+			CheckRow(graphicsSettings, "vsync", sx, sy + space * 7,
+				() => Settings.Vsync, v => Settings.Vsync = v,
+				c => {
+					Engine.Graphics.SynchronizeWithVerticalRetrace = c.On;
 					Engine.Graphics.ApplyChanges();
-				}
-			});
+				});
 
-			graphicsSettings.Add(new UiCheckbox {
-				Name = "flashes",
-				On = Settings.Flashes,
-				RelativeX = sx,
-				RelativeCenterY = sy + space * 8,
-				Click = b => {
-					Engine.Flashes = Settings.Flashes = ((UiCheckbox) b).On;
-				}
-			});
-			
-			graphicsSettings.Add(new UiCheckbox {
-				Name = "Vignette",
-				On = Settings.Vignette,
-				RelativeX = sx,
-				RelativeCenterY = sy + space * 9,
-				Click = b => {
-					Settings.Vignette = ((UiCheckbox) b).On;
-					Shaders.Screen.Parameters["vignette"].SetValue(Settings.Vignette);
-				}
-			});
+			CheckRow(graphicsSettings, "flashes", sx, sy + space * 8,
+				() => Settings.Flashes, v => Settings.Flashes = v,
+				c => Engine.Flashes = c.On);
+
+			CheckRow(graphicsSettings, "Vignette", sx, sy + space * 9,
+				() => Settings.Vignette, v => Settings.Vignette = v,
+				c => Shaders.Screen.Parameters["vignette"].SetValue(c.On));
 
 			
 			graphicsBack = (UiButton) graphicsSettings.Add(new UiButton {
@@ -305,10 +311,7 @@ namespace BurningKnight.state {
 				RelativeCenterY = BackY,
 				Click = b => {
 					currentBack = settingsBack;
-					Tween.To(-Display.UiWidth, pauseMenu.X, x => pauseMenu.X = x, PaneTransitionTime).OnEnd = () => {
-						SelectFirst();
-						graphicsSettings.Enabled = false;
-					};
+					SlideTo(-Display.UiWidth, () => graphicsSettings.Enabled = false);
 				}
 			});
 			
@@ -344,15 +347,8 @@ namespace BurningKnight.state {
 				Settings.SfxVolume = s.Value / 100f;
 			};
 
-			audioSettings.Add(new UiCheckbox {
-				Name = "ui_sfx",
-				On = Settings.UiSfx,
-				RelativeX = sx,
-				RelativeCenterY = sy + space * 2.5f,
-				Click = b => {
-					Settings.UiSfx = ((UiCheckbox) b).On;
-				}
-			});
+			CheckRow(audioSettings, "ui_sfx", sx, sy + space * 2.5f,
+				() => Settings.UiSfx, v => Settings.UiSfx = v);
 			
 			audioBack = (UiButton) audioSettings.Add(new UiButton {
 				LocaleLabel = "back",
@@ -361,10 +357,7 @@ namespace BurningKnight.state {
 				RelativeCenterY = BackY,
 				Click = b => {
 					currentBack = settingsBack;
-					Tween.To(-Display.UiWidth, pauseMenu.X, x => pauseMenu.X = x, PaneTransitionTime).OnEnd = () => {
-						SelectFirst();
-						audioSettings.Enabled = false;
-					};
+					SlideTo(-Display.UiWidth, () => audioSettings.Enabled = false);
 				}
 			});
 			
@@ -417,10 +410,7 @@ namespace BurningKnight.state {
 					pauseMenu.Enabled = true;
 					currentBack = settingsBack;
 					
-					Tween.To(-Display.UiWidth, pauseMenu.X, x => pauseMenu.X = x, PaneTransitionTime).OnEnd = () => {
-						SelectFirst();
-						languageSettings.Enabled = false;
-					};
+					SlideTo(-Display.UiWidth, () => languageSettings.Enabled = false);
 				}
 			});
 

@@ -143,7 +143,8 @@ namespace Lens.assets {
 		}
 
 		public static bool Contains(string key) {
-			return Map.ContainsKey(key) || Fallback.ContainsKey(key);
+			// Like Get: the loading screen can ask before Assets.Load reached the locale.
+			return (Map?.ContainsKey(key) ?? false) || Fallback.ContainsKey(key);
 		}
 	}
 }

@@ -220,7 +220,13 @@ namespace BurningKnight.state {
 		public override void OnDeactivated() {
 			base.OnDeactivated();
 
-			if (Menu || Paused || DialogComponent.Talking != null || !Settings.Autopause || !menuExited) {
+			if (Menu || Paused || DialogComponent.Talking != null || !menuExited) {
+				return;
+			}
+
+			// Desktop pauses on mouse-leave via Autopause; handhelds have no such signal,
+			// so the host policy pauses them regardless of that setting.
+			if (!Settings.Autopause && !Engine.Instance.PauseOnBackground) {
 				return;
 			}
 
@@ -433,7 +439,6 @@ namespace BurningKnight.state {
 			// Synchronous: a handful of small files, and a worker would race the teardown.
 			// SaveManager.Save(Area, SaveType.Statistics);
 			SaveManager.Delete(SaveType.Player, SaveType.Level, SaveType.Game);
-			SaveManager.Backup();
 		}
 
 		// private TweenTask last;

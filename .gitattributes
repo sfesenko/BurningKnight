@@ -1,0 +1,13 @@
+# Everything text is stored and checked out with LF, everywhere.
+* text=auto eol=lf
+
+# Binary assets — never touched by EOL conversion.
+*.wav binary
+*.ogg binary
+*.mp3 binary
+*.png binary
+*.bmp binary
+*.ico binary
+*.ase binary
+*.xnb binary
+*.ttf binary

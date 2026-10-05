@@ -23,6 +23,7 @@ public class Audio
     private MusicPlayer? currentPlaying;
     private string? currentPlayingMusic = null;
     private Dictionary<string, MusicPlayer> musicInstances = new();
+    private readonly HashSet<string> failedMusic = new();
     private Dictionary<string, SoundEffect> sounds = new();
 
     // The player loops on its own; the flag stays because PlayMusic sets it and the log names it.
@@ -68,6 +69,13 @@ public class Audio
         LoadSfx(FileHandle.FromRoot("Sfx/"), "", true);
 
         Log.Debug($"Loaded {sounds.Count} sounds");
+
+        // Empty bank (broken device or content): stop pretending audio works, or every
+        // trigger logs a miss forever and the "Audio Failed" notice never fires.
+        if (sounds.Count == 0 && Assets.LoadSfx) {
+            Assets.LoadSfx = false;
+            Assets.FailedToLoadAudio = true;
+        }
     }
 
     private void LoadSound(FileHandle file, string path)
@@ -75,19 +83,31 @@ public class Audio
         var s = file.NameWithoutExtension;
         var key = $"{path}{s}".Replace('/', '_');
 
-        using (var stream = file.OpenRead())
+        // One corrupt file must not take the whole bank with it. Inline on the worker,
+        // so this catch is effective.
+        try
         {
-            sounds[key] = SoundEffect.FromStream(stream);
+            using (var stream = file.OpenRead())
+            {
+                if (stream == null) {
+                    Log.Error($"Sound file {file.Name} was not found, skipping");
+
+                    return;
+                }
+
+                sounds[key] = SoundEffect.FromStream(stream);
+            }
+        }
+        catch (Exception e)
+        {
+            Log.Error($"Failed to load sound {key}: {e}");
         }
     }
 
-    // MonoGame hands OpenAL sources out of one shared pool and never clears AL_LOOPING when a source
-    // comes back, so a source a looping SoundEffectInstance has used can still be flagged as looping
-    // when the music player reserves it. OpenAL then loops the track's first buffers forever
-    // instead of playing through, and nothing in the audio API can clear the flag afterwards.
-    // A SoundEffectInstance applies IsLooped to the source it plays on, so playing and stopping a
-    // silent non-looping one first clears the flag on the source the Song is about to reserve: the
-    // pool hands back the most recently returned source, and that is now this one.
+    // The source pool never clears AL_LOOPING on reuse: a looping instance's source can come
+    // back still flagged, making the music track loop its first buffers forever. Play+stop a
+    // silent non-looping instance first — the pool hands back the most recently returned
+    // source, so the flag is cleared on the one the music is about to reserve.
     private void ClearLoopFlagOnNextSource()
     {
         if (!Assets.LoadSfx || sounds.Count == 0)
@@ -121,14 +141,17 @@ public class Audio
         }
     }
 
-    // MonoGame's Song opens from a path only, so the archive's music is played by a MusicPlayer
-    // instead — NVorbis reads the entry straight from the content source, and nothing is written
-    // out to disk.
+    // Song opens from a path only; NVorbis plays the archive entry instead — nothing written out.
     private MusicPlayer? GetOrLoadMusic(string music)
     {
         if (musicInstances.TryGetValue(music, out var player))
         {
             return player;
+        }
+
+        if (failedMusic.Contains(music))
+        {
+            return null;
         }
 
         ClearLoopFlagOnNextSource();
@@ -137,6 +160,9 @@ public class Audio
 
         if (!player.Ready)
         {
+            // Missing file or dead device: don't re-read the whole ogg every PlayMusic.
+            failedMusic.Add(music);
+
             return null;
         }
 
@@ -149,17 +175,44 @@ public class Audio
     {
         foreach (var sound in sounds.Values)
         {
-            sound.Dispose();
-            GC.SuppressFinalize(sound); // Lol what?
+            try {
+                sound.Dispose();
+                GC.SuppressFinalize(sound); // Lol what?
+            } catch (Exception e) {
+                // A dead effect must not break teardown or leak the rest.
+                Log.Error(e);
+            }
         }
+
+        sounds.Clear();
+
+        foreach (var player in musicInstances.Values)
+        {
+            try {
+                player.Stop();
+                player.Dispose();
+            } catch (Exception e) {
+                // A dead voice must not break teardown or leak the rest.
+                Log.Error(e);
+            }
+        }
+
+        musicInstances.Clear();
+        failedMusic.Clear();
+        currentPlaying = null;
+        currentPlayingMusic = null;
 
         if (SoundEffectInstance != null)
         {
             Log.Info("Disposing audio mixer");
 
-            SoundEffectInstance.Stop();
-            SoundEffectInstance.Dispose();
-            GC.SuppressFinalize(SoundEffectInstance);
+            try {
+                SoundEffectInstance.Stop();
+                SoundEffectInstance.Dispose();
+                GC.SuppressFinalize(SoundEffectInstance);
+            } catch (Exception e) {
+                Log.Error(e);
+            }
 
             SoundEffectInstance = null;
         }
@@ -194,7 +247,14 @@ public class Audio
             return;
         }
 
-        sfx?.Play(MathUtils.Clamp(0, 1, volume * SfxVolume * MasterVolume), pitch, pan);
+        try {
+            sfx?.Play(MathUtils.Clamp(0, 1, volume * SfxVolume * MasterVolume), pitch, pan);
+        } catch (InstancePlayLimitException) {
+            // Pool exhausted; a dropped sound must not kill the run.
+        } catch (Exception e) {
+            // Dead/disposed effect: same, never fatal.
+            Log.Error(e);
+        }
     }
 
     public void PlayMusic(string music, bool fromStart = true)
@@ -230,15 +290,30 @@ public class Audio
             var id = Environment.CurrentManagedThreadId;
             Log.Info($"Audio.Play: {id}");
 
-            currentPlaying = GetOrLoadMusic(music);
+            var next = GetOrLoadMusic(music);
 
-            if (currentPlaying == null)
+            if (next == null)
             {
                 return;
             }
 
-            currentPlaying.Play();
-            currentPlaying.Volume = musicVolume;
+            // One track at a time; stopping the others also covers a fade this track interrupted.
+            foreach (var player in musicInstances.Values)
+            {
+                // State/Stop can throw on a dead device; neither may abort the new track below.
+                try {
+                    if (player != next && player.State == SoundState.Playing)
+                    {
+                        player.Stop();
+                    }
+                } catch (Exception e) {
+                    Log.Error(e);
+                }
+            }
+
+            currentPlaying = next;
+            next.Play();
+            next.Volume = musicVolume;
 
             Log.Info($"Playing music {music} repeat = {Repeat}");
             currentPlayingMusic = music;
@@ -259,11 +334,16 @@ public class Audio
 
             Tween.To(0, player.Volume, x => player.Volume = x, CrossFadeTime).OnEnd = () =>
             {
-                currentPlaying = null;
-                currentPlayingMusic = null;
-                Log.Debug($@"Music state: {player.State}");
                 player.Stop();
 
+                // Only clear if this fade still owns the state; a track started during it isn't forgotten.
+                if (currentPlaying == player)
+                {
+                    currentPlaying = null;
+                    currentPlayingMusic = null;
+                }
+
+                Log.Debug($@"Music state: {player.State}");
                 callback?.Invoke();
             };
         }
@@ -278,7 +358,16 @@ public class Audio
         var id = Environment.CurrentManagedThreadId;
         Log.Info($"Audio.Stop: {id}");
 
-        currentPlaying?.Stop();
+        foreach (var player in musicInstances.Values)
+        {
+            try {
+                player.Stop();
+            } catch (Exception e) {
+                // Dead voice: must not skip the remaining voices or the reset below.
+                Log.Error(e);
+            }
+        }
+
         currentPlaying = null;
         currentPlayingMusic = null;
     }

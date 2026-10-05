@@ -1,4 +1,5 @@
-﻿using BurningKnight.physics;
+﻿using System;
+using BurningKnight.physics;
 using Lens.physics;
 using Lens.util;
 using Microsoft.Xna.Framework;
@@ -6,6 +7,11 @@ using Microsoft.Xna.Framework;
 namespace BurningKnight.entity.component {
 	public class RectBodyComponent : BodyComponent {
 		public RectBodyComponent(float x, float y, float w, float h, BodyType type = BodyType.Dynamic, bool sensor = false, bool center = false) {
+			// Box2D rejects degenerate quads: clamp to a sliver, never hand native code a
+			// zero-area polygon.
+			w = Math.Max(w, 0.5f);
+			h = Math.Max(h, 0.5f);
+
 			if (center) {
 				x -= w / 2;
 				y -= h / 2;
@@ -28,6 +34,11 @@ namespace BurningKnight.entity.component {
 		}
 
 		public override void Resize(float x, float y, float w, float h, bool center = false) {
+			// Clamp instead of skipping: an early return would leave the fixture at the old
+			// size while Width/Height moved on; a degenerate quad fails Box2D validation.
+			w = Math.Max(w, 0.5f);
+			h = Math.Max(h, 0.5f);
+
 			var fixture = Body!.FixtureList[0];
 			var sensor = fixture.IsSensor;
 			

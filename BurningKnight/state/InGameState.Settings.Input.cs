@@ -131,19 +131,19 @@ namespace BurningKnight.state {
 			
 			sy += space * 0.5f;
 			
-			inputSettings.Add(new UiButton {
-				LocaleLabel = "keyboard_controls",
-				RelativeCenterX = sx,
-				RelativeCenterY = sy,
-				Click = b => {
-					currentBack = keyboardBack;
-					keyboardSettings.Enabled = true;
-					Tween.To(-Display.UiWidth * 3, pauseMenu.X, x => pauseMenu.X = x, PaneTransitionTime).OnEnd = () => {
-						SelectFirst();
-						inputSettings.Enabled = false;
-					};
-				}
-			});
+			// No keyboard on a handheld: its remap rows would be focusable dead ends.
+			if (TextInput.Available) {
+				inputSettings.Add(new UiButton {
+					LocaleLabel = "keyboard_controls",
+					RelativeCenterX = sx,
+					RelativeCenterY = sy,
+					Click = b => {
+						currentBack = keyboardBack;
+						keyboardSettings.Enabled = true;
+						SlideTo(-Display.UiWidth * 3, () => inputSettings.Enabled = false);
+					}
+				});
+			}
 			
 			gamepad = (UiButton) inputSettings.Add(new UiButton {
 				LocaleLabel = "gamepad_controls",
@@ -152,10 +152,7 @@ namespace BurningKnight.state {
 				Click = b => {
 					currentBack = gamepadBack;
 					gamepadSettings.Enabled = true;
-					Tween.To(-Display.UiWidth * 3, pauseMenu.X, x => pauseMenu.X = x, PaneTransitionTime).OnEnd = () => {
-						SelectFirst();
-						inputSettings.Enabled = false;
-					};
+					SlideTo(-Display.UiWidth * 3, () => inputSettings.Enabled = false);
 				}
 			});
 			
@@ -168,10 +165,7 @@ namespace BurningKnight.state {
 				RelativeCenterY = BackY,
 				Click = b => {
 					currentBack = settingsBack;
-					Tween.To(-Display.UiWidth, pauseMenu.X, x => pauseMenu.X = x, PaneTransitionTime).OnEnd = () => {
-						SelectFirst();
-						inputSettings.Enabled = false;
-					};
+					SlideTo(-Display.UiWidth, () => inputSettings.Enabled = false);
 				}
 			});
 
@@ -180,6 +174,22 @@ namespace BurningKnight.state {
 			AddKeyboardSettings();
 			AddGamepadSettings();
 		}
+		private static readonly (string Key, float Dx, float Dy)[] KeyControlRows = [
+			(Controls.Left, -1, -4), (Controls.Right, 1, -4),
+			(Controls.Up, -1, -3), (Controls.Down, 1, -3),
+			(Controls.Use, -1, -2), (Controls.Active, 1, -2),
+			(Controls.Bomb, -1, -1), (Controls.Interact, 1, -1),
+			(Controls.Swap, -1, 0), (Controls.Roll, 1, 0),
+			(Controls.Duck, 0, 1)
+		];
+
+		private static readonly (string Key, float Dx, float Dy)[] PadControlRows = [
+			(Controls.Use, -1, -3), (Controls.Active, 1, -3),
+			(Controls.Bomb, -1, -2), (Controls.Interact, 1, -2),
+			(Controls.Swap, -1, -1), (Controls.Roll, 1, -1),
+			(Controls.Duck, 0, 0)
+		];
+
 		private void AddKeyboardSettings() {
 			pauseMenu.Add(keyboardSettings = new UiPane {
 				RelativeX = Display.UiWidth * 3
@@ -196,72 +206,14 @@ namespace BurningKnight.state {
 				RelativeCenterY = TitleY,
 				Clickable = false
 			});
-			
-			keyboardSettings.Add(new UiControl {
-					Key = Controls.Left,
-					RelativeX = sx - spX,
-					RelativeCenterY = sy - space * 4,
-			});
-			
-			keyboardSettings.Add(new UiControl {
-					Key = Controls.Right,
-					RelativeX = sx + spX,
-					RelativeCenterY = sy - space * 4,
-			});
 
-			keyboardSettings.Add(new UiControl {
-					Key = Controls.Up,
-					RelativeX = sx - spX,
-					RelativeCenterY = sy - space * 3,
-			});
-			
-			keyboardSettings.Add(new UiControl {
-					Key = Controls.Down,
-					RelativeX = sx + spX,
-					RelativeCenterY = sy - space * 3,
-			});
-
-			keyboardSettings.Add(new UiControl {
-				Key = Controls.Use,
-				RelativeX = sx - spX,
-				RelativeCenterY = sy - space * 2,
-			});
-			
-			keyboardSettings.Add(new UiControl {
-				Key = Controls.Active,
-				RelativeX = sx + spX,
-				RelativeCenterY = sy - space * 2,
-			});
-
-			keyboardSettings.Add(new UiControl {
-				Key = Controls.Bomb,
-				RelativeX = sx - spX,
-				RelativeCenterY = sy - space,
-			});
-			
-			keyboardSettings.Add(new UiControl {
-				Key = Controls.Interact,
-				RelativeX = sx + spX,
-				RelativeCenterY = sy - space,
-			});
-			
-			keyboardSettings.Add(new UiControl {
-				Key = Controls.Swap,
-				RelativeX = sx - spX,
-				RelativeCenterY = sy,
-			});
-			
-			keyboardSettings.Add(new UiControl {
-				Key = Controls.Roll,
-				RelativeX = sx + spX,
-				RelativeCenterY = sy,
-			});
-			
-			keyboardSettings.Add(new UiControl {
-				Key = Controls.Duck,
-				RelativeX = sx,
-				RelativeCenterY = sy + space,
-			});
+			foreach (var (key, dx, dy) in KeyControlRows) {
+				keyboardSettings.Add(new UiControl {
+					Key = key,
+					RelativeX = sx + dx * spX,
+					RelativeCenterY = sy + dy * space
+				});
+			}
 			
 			keyboardBack = (UiButton) keyboardSettings.Add(new UiButton {
 				LocaleLabel = "back",
@@ -271,10 +223,7 @@ namespace BurningKnight.state {
 				Click = b => {
 					inputSettings.Enabled = true;
 					currentBack = inputBack;
-					Tween.To(Display.UiWidth * -2, pauseMenu.X, x => pauseMenu.X = x, PaneTransitionTime).OnEnd = () => {
-						SelectFirst();
-						keyboardSettings.Enabled = false;
-					};
+					SlideTo(Display.UiWidth * -2, () => keyboardSettings.Enabled = false);
 				}
 			});
 
@@ -297,81 +246,25 @@ namespace BurningKnight.state {
 				Clickable = false
 			});
 
-			var g = LocalPlayer.Locate(Area)?.GetComponent<GamepadComponent>();
+			foreach (var (key, dx, dy) in PadControlRows) {
+				gamepadSettings.Add(new UiControl {
+					Key = key,
+					Gamepad = true,
+					RelativeX = sx + dx * spX,
+					RelativeCenterY = sy + dy * space
+				});
+			}
 
-			gamepadSettings.Add(new UiControl {
-				Key = Controls.Use,
-				Gamepad = true,
-				GamepadComponent = g!,
-				RelativeX = sx - spX,
-				RelativeCenterY = sy - space * 3,
-			});
-			
-			gamepadSettings.Add(new UiControl {
-				Key = Controls.Active,
-				Gamepad = true,
-				GamepadComponent = g!,
-				RelativeX = sx + spX,
-				RelativeCenterY = sy - space * 3,
-			});
-
-			gamepadSettings.Add(new UiControl {
-				Key = Controls.Bomb,
-				Gamepad = true,
-				GamepadComponent = g!,
-				RelativeX = sx - spX,
-				RelativeCenterY = sy - space * 2,
-			});
-			
-			gamepadSettings.Add(new UiControl {
-				Key = Controls.Interact,
-				Gamepad = true,
-				GamepadComponent = g!,
-				RelativeX = sx + spX,
-				RelativeCenterY = sy - space * 2,
-			});
-			
-			gamepadSettings.Add(new UiControl {
-				Key = Controls.Swap,
-				Gamepad = true,
-				GamepadComponent = g!,
-				RelativeX = sx - spX,
-				RelativeCenterY = sy - space,
-			});
-			
-			gamepadSettings.Add(new UiControl {
-				Key = Controls.Roll,
-				Gamepad = true,
-				GamepadComponent = g!,
-				RelativeX = sx + spX,
-				RelativeCenterY = sy - space,
-			});
-			
-			gamepadSettings.Add(new UiControl {
-				Key = Controls.Duck,
-				Gamepad = true,
-				GamepadComponent = g!,
-				RelativeX = sx,
-				RelativeCenterY = sy,
-			});
-			
-			gamepadSettings.Add(new UiCheckbox {
-				Name = "vibration",
-				On = Settings.Vibrate,
-				RelativeX = sx,
-				RelativeCenterY = sy + space * 1.5f,
-				Click = b => {
-					Settings.Vibrate = ((UiCheckbox) b).On;
-
-					if (!Settings.Vibrate) {
-						GamepadComponent.Current?.StopRumble();
-					}
-				},
-				
-				OnUpdate = c => {
-					((UiCheckbox) c).On = Settings.Vibrate;
-				}
-			});
+			// No rumble without a host backend; desktop always has one (see Program.cs).
+			if (Vibration.Available) {
+				CheckRow(gamepadSettings, "vibration", sx, sy + space * 1.5f,
+					() => Settings.Vibrate, v => Settings.Vibrate = v,
+					c => {
+						if (!c.On) {
+							GamepadComponent.Current?.StopRumble();
+						}
+					});
+			}
 			
 			UiSlider.Make(gamepadSettings, sx, sy + space * 2.5f, "sensivity", (int) (Settings.Sensivity * 100), 200, 10).OnValueChange = s => {
 				Settings.Sensivity = s.Value / 100f;
@@ -389,10 +282,7 @@ namespace BurningKnight.state {
 				Click = b => {
 					currentBack = inputBack;
 					inputSettings.Enabled = true;
-					Tween.To(Display.UiWidth * -2, pauseMenu.X, x => pauseMenu.X = x, PaneTransitionTime).OnEnd = () => {
-						SelectFirst();
-						gamepadSettings.Enabled = false;
-					};
+					SlideTo(Display.UiWidth * -2, () => gamepadSettings.Enabled = false);
 				}
 			});
 			

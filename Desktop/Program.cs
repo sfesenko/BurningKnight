@@ -2,10 +2,12 @@
 using System.Diagnostics;
 using System.IO;
 using BurningKnight;
+using Desktop.core;
 using Desktop.integration.crash;
 using Desktop.services;
 using Lens;
 using Lens.assets;
+using Lens.input;
 using Lens.services;
 using Microsoft.Xna.Framework.Audio;
 
@@ -102,6 +104,7 @@ namespace Desktop {
 			Clipboard.Instance = new DesktopClipboard();
 			CloudSave.Instance = SteamCloudSave.Instance;
 			Stats.Instance = new SteamStats();
+			Vibration.Instance = new DesktopRumble();
 
 			CrashReporter.Bind();
 

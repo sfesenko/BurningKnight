@@ -6,6 +6,7 @@ using BurningKnight.physics;
 using BurningKnight.state;
 using BurningKnight.util;
 using Lens.physics;
+using Lens.util;
 using Microsoft.Xna.Framework;
 
 namespace BurningKnight.level {
@@ -188,7 +189,12 @@ namespace BurningKnight.level {
 							list.Add(new Vector2(xx + 6 + 4, yy + 16));
 						}
 						
-						body.CreatePolygonFixture(new Vertices(list), 1f);			
+						try {
+							body.CreatePolygonFixture(new Vertices(list), 1f);
+						} catch (Exception e) {
+							// Degenerate tile-neighbor polygon: one bad chunk must not kill level gen.
+							Log.Error(e);
+						}			
 					}
 				}
 			}

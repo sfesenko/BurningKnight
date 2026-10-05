@@ -1,6 +1,7 @@
 using System;
 using BurningKnight.assets;
 using BurningKnight.assets.input;
+using BurningKnight.entity;
 using BurningKnight.entity.buff;
 using BurningKnight.entity.component;
 using BurningKnight.entity.item;
@@ -15,6 +16,7 @@ using Lens.input;
 namespace BurningKnight.entity.creature.player {
 	public class ActiveWeaponComponent : WeaponComponent {
 		private bool stopped = true;
+		private bool wasStickFiring;
 		private float timeSinceReady;
 		
 		public ActiveWeaponComponent() {
@@ -58,15 +60,37 @@ namespace BurningKnight.entity.creature.player {
 					timeSinceReady = 0;
 				}
 				
+				// Twin-stick: a deflected right stick aims (see Cursor) and fires, with hysteresis
+				// (Cursor.StickFireEnter/Exit) so edge flicker does not stutter the trigger.
+				var stickFiring = Cursor.StickFiring(data, wasStickFiring);
+				var stickStarted = stickFiring && !wasStickFiring;
+				var usePressed = Input.WasPressed(Controls.Use, controller) || stickStarted;
+				var useDown = Input.IsDown(Controls.Use, controller) || stickFiring;
+				wasStickFiring = stickFiring;
+
+				// Snap the aim on a flick before any shot: this component runs before the cursor
+				// entity, so the first shot would otherwise use the previous side.
+				if (stickStarted && data != null && Entity.TryGetComponent<CursorComponent>(out var cursorComponent)) {
+					cursorComponent.Cursor.SnapToStick(data);
+
+					// Most weapons shoot via AimComponent.RealAim, which the weapon renderer
+					// computes a frame late from a smoothed angle — refresh it too.
+					if (Entity.TryGetComponent<AimComponent>(out var aim)) {
+						aim.RealAim = cursorComponent.Cursor.GamePosition;
+					}
+				}
+				
 				var b = GetComponent<BuffsComponent>();
 				
 				if (b!.Has<FrozenBuff>() || b.Has<CharmedBuff>() || GetComponent<StateComponent>()!.StateInstance is Player.RollState) {
 					return;
 				}
 				
-				if ((Input.WasPressed(Controls.Use, controller) || (data != null && (
+				// Semi-autos keep firing while held: the 0.2s grace after ready is intentional,
+				// so holding the trigger past the cooldown still shoots.
+				if ((usePressed || (data != null && (
 					data.DPadDownCheck || data.DPadLeftCheck || data.DPadUpCheck || data.DPadRightCheck                                                  
-				  ))) || ((Item.Automatic || timeSinceReady > 0.2f || (data != null && Input.IsDownOnController(Controls.Use, data))) && Input.IsDown(Controls.Use, controller) && ready)) {
+				  ))) || ((Item.Automatic || timeSinceReady > 0.2f || (data != null && Input.IsDownOnController(Controls.Use, data))) && useDown && ready)) {
 				  
 					if (!Entity.TryGetComponent<PlayerInputComponent>(out var d) || d.InDialog) {
 						return;
@@ -125,7 +149,10 @@ namespace BurningKnight.entity.creature.player {
 				var dialog = GetComponent<DialogComponent>();
 								
 				dialog!.Dialog!.Str!.ClearIcons();
-				dialog.Dialog.Str.AddIcon(CommonAse.Ui.GetSlice(Controls.FindSlice(Controls.Use, false)!)!);
+				// No keyboard on a handheld: the pad keycap below is the whole hint.
+				if (TextInput.Available) {
+					dialog.Dialog.Str.AddIcon(CommonAse.Ui.GetSlice(Controls.FindSlice(Controls.Use, false)!)!);
+				}
 
 				if (GamepadComponent.Current != null && GamepadComponent.Current.Attached) {
 					dialog.Dialog.Str.AddIcon(CommonAse.Ui.GetSlice(Controls.FindSlice(Controls.Use, true)!)!);

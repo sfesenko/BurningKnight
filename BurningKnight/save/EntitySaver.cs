@@ -76,9 +76,8 @@ namespace BurningKnight.save {
 			Loading = false;
 		}
 
-		// Version 2 and older framed a payload with a 16-bit size, which a level's tile array
-		// overflows; the current format gives it 32 bits. The size is only a resync aid — the
-		// payload itself is self-describing.
+		// v2 and older framed a payload with a 16-bit size, which a level's tile array overflows;
+		// current format is 32-bit. Resync aid only — the payload is self-describing.
 		protected static int ReadSize(FileReader reader) {
 			return reader.SaveVersion == 2 ? reader.ReadUint16() : reader.ReadInt32();
 		}

@@ -7,7 +7,7 @@ public interface ICloudSave {
 }
 
 public static class CloudSave {
-	public static ICloudSave? Instance;
+	public static volatile ICloudSave? Instance;
 
 	public static void Load() {
 		Instance?.Load();

@@ -65,86 +65,45 @@ namespace BurningKnight.state {
 				Clickable = false
 			});
 
-			gameSettings.Add(new UiCheckbox {
-				Name = "autosave",
-				On = Settings.Autosave,
-				RelativeX = sx,
-				RelativeCenterY = sy - space * 2,
-				Click = b => {
-					Settings.Autosave = ((UiCheckbox) b).On;
-				}
-			});
+			CheckRow(gameSettings, "autosave", sx, sy - space * 2,
+				() => Settings.Autosave, v => Settings.Autosave = v);
 
-			gameSettings.Add(new UiCheckbox {
-				Name = "autopause",
-				On = Settings.Autopause,
-				RelativeX = sx,
-				RelativeCenterY = sy - space,
-				Click = b => {
-					Settings.Autopause = ((UiCheckbox) b).On;
-				}
-			});
+			CheckRow(gameSettings, "autopause", sx, sy - space,
+				() => Settings.Autopause, v => Settings.Autopause = v);
 
-			gameSettings.Add(new UiCheckbox {
-				Name = "speedrun_timer",
-				On = Settings.SpeedrunTimer,
-				RelativeX = sx,
-				RelativeCenterY = sy,
-				Click = b => {
-					Settings.SpeedrunTimer = ((UiCheckbox) b).On;
-				}
-			});
+			CheckRow(gameSettings, "speedrun_timer", sx, sy,
+				() => Settings.SpeedrunTimer, v => Settings.SpeedrunTimer = v);
 
 			var presses = 0;
 
-			gameSettings.Add(new UiCheckbox {
-				Name = "vegan_mode",
-				On = Settings.Vegan,
-				RelativeX = sx,
-				RelativeCenterY = sy + space,
-				Click = b => {
+			CheckRow(gameSettings, "vegan_mode", sx, sy + space,
+				() => Settings.Vegan, v => Settings.Vegan = v,
+				c => {
 					presses++;
-					Settings.Vegan = ((UiCheckbox) b).On;
-
 					Log.Info($"Click #{presses}");
-					
+
 					if (presses == 20) {
 						Log.Debug("Unlock npcs!");
-						
+
 						GlobalSave.Put(ShopNpc.AccessoryTrader, true);
 						GlobalSave.Put(ShopNpc.ActiveTrader, true);
 						GlobalSave.Put(ShopNpc.HatTrader, true);
 						GlobalSave.Put(ShopNpc.WeaponTrader, true);
 						GlobalSave.Put(ShopNpc.Mike, true);
-						
+
 						GlobalSave.Put("control_use", true);
 						GlobalSave.Put("control_swap", true);
 						GlobalSave.Put("control_roll", true);
 						GlobalSave.Put("control_interact", true);
 						GlobalSave.Put("control_duck", true);
 					}
-				}
-			});
+				});
 
-			gameSettings.Add(new UiCheckbox {
-				Name = "blood_n_gore",
-				On = Settings.Blood,
-				RelativeX = sx,
-				RelativeCenterY = sy + space * 2,
-				Click = b => {
-					Settings.Blood = ((UiCheckbox) b).On;
-				}
-			});
-			
-			gameSettings.Add(new UiCheckbox {
-				Name = "minimap",
-				On = Settings.Minimap,
-				RelativeX = sx,
-				RelativeCenterY = sy + space * 3,
-				Click = b => {
-					Settings.Minimap = ((UiCheckbox) b).On;
-				}
-			});
+			CheckRow(gameSettings, "blood_n_gore", sx, sy + space * 2,
+				() => Settings.Blood, v => Settings.Blood = v);
+
+			CheckRow(gameSettings, "minimap", sx, sy + space * 3,
+				() => Settings.Minimap, v => Settings.Minimap = v);
 			
 			gameSettings.Add(new UiButton {
 				LocaleLabel = "reset_settings",
@@ -154,7 +113,7 @@ namespace BurningKnight.state {
 					GoConfirm("reset_settings_dis", () => {
 						currentBack = settingsBack;
 						gameSettings.Enabled = true;
-						
+
 						// Synchronous: this writes the controls file and regenerates the
 						// settings — all main-thread state, a worker would race the frame.
 						var d = Context.Run.Depth;
@@ -163,15 +122,13 @@ namespace BurningKnight.state {
 						Controls.BindDefault();
 						Controls.Save();
 						Settings.Generate();
+
+						DismissConfirm();
+						SlideTo(-Display.UiWidth);
 					}, () => {
 						currentBack = gameBack;
 						gameSettings.Enabled = true;
-
-						Tween.To(Display.UiWidth * -2, pauseMenu.X, x => pauseMenu.X = x, PaneTransitionTime).OnEnd = () => {
-							pauseMenu.Remove(confirmationPane!);
-							confirmationPane = null;	
-							SelectFirst();
-						};
+						SlideTo(Display.UiWidth * -2, DismissConfirm);
 					});
 				}
 			});
@@ -184,10 +141,10 @@ namespace BurningKnight.state {
 					GoConfirm("reset_progress_dis", () => {
 						currentBack = settingsBack;
 						gameSettings.Enabled = true;
-						
+
 						Achievements.ItemBuffer.Clear();
 						Achievements.AchievementBuffer.Clear();
-						
+
 						// Synchronous: deleting the saves and resetting the run state are quick,
 						// and a worker would race every frame that reads Run.
 						SaveManager.Delete(SaveType.Player, SaveType.Level, SaveType.Game, SaveType.Global);
@@ -198,24 +155,21 @@ namespace BurningKnight.state {
 						} catch (Exception e) {
 							Log.Error(e);
 						}
-						
+
 						Achievements.LoadState();
 						GlobalSave.Emeralds = 0;
-						
+
 						Context.Run.StartingNew = true;
 						Context.Run.NextDepth = 0;
 						Context.Run.IntoMenu = true;
 						Settings.Setup();
+
+						DismissConfirm();
+						SlideTo(-Display.UiWidth);
 					}, () => {
 						currentBack = gameBack;
 						gameSettings.Enabled = true;
-
-						Tween.To(Display.UiWidth * -2, pauseMenu.X, x => pauseMenu.X = x, PaneTransitionTime).OnEnd = () => {
-							confirmationPane!.Active = false;
-							pauseMenu.Remove(confirmationPane);
-							confirmationPane = null;	
-							SelectFirst();
-						};
+						SlideTo(Display.UiWidth * -2, DismissConfirm);
 					});
 				}
 			});
@@ -227,10 +181,8 @@ namespace BurningKnight.state {
 					Click = b => {
 						SetupCredits();
 						credits.Enabled = true;
-						
-						Tween.To(Display.UiWidth * -3, pauseMenu.X, x => pauseMenu.X = x, PaneTransitionTime).OnEnd = () => {
-							gameSettings.Enabled = false;
-						};
+
+						SlideTo(-Display.UiWidth * 3, () => gameSettings.Enabled = false);
 					}
 			});
 			
@@ -250,10 +202,7 @@ namespace BurningKnight.state {
 				RelativeCenterY = BackY,
 				Click = b => {
 					currentBack = settingsBack;
-					Tween.To(-Display.UiWidth, pauseMenu.X, x => pauseMenu.X = x, PaneTransitionTime).OnEnd = () => {
-						SelectFirst();
-						gameSettings.Enabled = false;
-					};
+					SlideTo(-Display.UiWidth, () => gameSettings.Enabled = false);
 				}
 			});
 			
@@ -306,10 +255,7 @@ namespace BurningKnight.state {
 				}
 			});
 			
-			Tween.To(Display.UiWidth * -3, pauseMenu.X, x => pauseMenu.X = x, PaneTransitionTime).OnEnd = () => {
-				SelectFirst();
-				gameSettings.Enabled = false;
-			};
+			SlideTo(Display.UiWidth * -3, () => gameSettings.Enabled = false);
 		}
 	}
 }

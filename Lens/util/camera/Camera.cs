@@ -20,7 +20,7 @@ namespace Lens.util.camera {
 		
 		public static bool Debug = true;
 
-		public static Action? OnShake;
+		public static Action<float>? OnShake;
 
 		public Vector2 TopLeft => new Vector2(X, Y);
 		// Todo: count zoom here?
@@ -103,14 +103,14 @@ namespace Lens.util.camera {
 			var component = GetComponent<ShakeComponent>()!;
 			component.Amount = Math.Min(component.Amount + a, 20f);
 			
-			OnShake?.Invoke();
+			OnShake?.Invoke(a);
 		}
 
 		public void ShakeMax(float a = 1f) {
 			var component = GetComponent<ShakeComponent>()!;
 			component.Amount = Math.Min(Math.Max(component.Amount, a), 20f);
 			
-			OnShake?.Invoke();
+			OnShake?.Invoke(a);
 		}
 
 		public void Push(float angle, float force) {

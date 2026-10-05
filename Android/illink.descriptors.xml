@@ -1,0 +1,9 @@
+<linker>
+    <!-- MonoGame.Extended picks its embedded shader bytecode by reflecting over MonoGame's
+         internal Shader.Profile. The linker cannot see that use and strips the property, which
+         makes EffectResource's type initializer throw before the first frame. Preserve the
+         type so the reflection finds what it looks for. -->
+    <assembly fullname="MonoGame.Framework">
+        <type fullname="Microsoft.Xna.Framework.Graphics.Shader" preserve="all"/>
+    </assembly>
+</linker>

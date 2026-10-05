@@ -6,7 +6,9 @@ public interface IClipboard {
 }
 
 public static class Clipboard {
-	public static IClipboard? Instance;
+	public static volatile IClipboard? Instance;
+
+	public static bool Available => Instance != null;
 
 	public static void SetText(string text) {
 		Instance?.SetText(text);

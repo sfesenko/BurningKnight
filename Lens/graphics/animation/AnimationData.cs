@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Lens.assets;
 using Lens.util;
@@ -95,6 +96,12 @@ public class AnimationData
 
         Log.Warning($"Unable to find slice {name}");
         return Textures.Missing;
+    }
+
+    // Fail-fast: GetSlice's normal fallback (Missing) is still null while CommonAse.Load runs.
+    public TextureRegion RequireSlice(string name)
+    {
+        return GetSlice(name, false) ?? throw new InvalidOperationException($"Slice '{name}' failed to load.");
     }
 
     public AnimationFrame? GetFrame(string? layer, uint id)

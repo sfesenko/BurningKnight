@@ -133,6 +133,11 @@ namespace BurningKnight.entity.projectile {
 			var v = (from - closest);
 			var len = v.Length();
 
+			// ~zero length (point-blank wall): a zero-area fixture fails Box2D validation.
+			if (len < 2f) {
+				len = 2f;
+			}
+
 			if (Math.Abs(len - Width) > 1) {
 				Width = len;
 				BodyComponent.Resize(0, -Height * 0.5f, Width, Height);

@@ -5,16 +5,11 @@ using System.Threading;
 
 namespace Lens.util;
 
-/// <summary>
-/// The main thread's GPU queue. MonoGame's <c>GraphicsDevice</c> is not documented as
-/// thread-safe, so every texture, shader and render-target creation goes through here: a worker
-/// defers the work and waits, and the main thread runs the queue in its fixed update with a
-/// small time budget per call, so the loading screen keeps drawing while the worker blocks.
-///
-/// On the main thread everything runs immediately — that is what the tests and the editors do —
-/// so a call site never has to ask which thread it is on. <see cref="Flush"/> must run on the
-/// main thread once per frame; the engine's fixed-step loop calls it.
-/// </summary>
+/// <summary>The main thread's GPU queue: MonoGame's <c>GraphicsDevice</c> is not documented as
+/// thread-safe, so every texture/shader/render-target creation goes through here — workers defer
+/// and wait while the main thread drains a few ms per frame, keeping the loading screen alive.
+/// On the main thread everything runs immediately (tests, editors), so call sites never ask which
+/// thread they are on. <see cref="Flush"/> must run once per frame on the main thread.</summary>
 public static class Gpu {
 	private const double FrameBudgetMs = 8;
 
@@ -35,6 +30,8 @@ public static class Gpu {
 	public static bool IsMainThread => mainThreadId == 0 || Environment.CurrentManagedThreadId == mainThreadId;
 
 	/// <summary>Runs the action on the main thread; a worker blocks until it has run.</summary>
+	/// <remarks>Deferred actions must not throw: Flush runs them on the main thread, past the
+	/// queuing caller's try/catch. Catch inside the closure.</remarks>
 	public static void Run(Action action) {
 		if (IsMainThread) {
 			action();
@@ -46,6 +43,7 @@ public static class Gpu {
 	}
 
 	/// <summary>Runs the function on the main thread and returns its result.</summary>
+	/// <remarks>Same no-throw contract as <see cref="Run(Action)"/>: catch inside the closure.</remarks>
 	public static T Run<T>(Func<T> action) {
 		if (IsMainThread) {
 			return action();
@@ -60,6 +58,7 @@ public static class Gpu {
 	}
 
 	/// <summary>Queues the action for the main thread; on the main thread it runs now.</summary>
+	/// <remarks>Same no-throw contract as <see cref="Run(Action)"/>: catch inside the closure.</remarks>
 	public static void Defer(Action action) {
 		if (IsMainThread) {
 			action();
@@ -82,6 +81,8 @@ public static class Gpu {
 	}
 
 	/// <summary>The main thread runs the queue, a few milliseconds per call.</summary>
+	/// <remarks>Belt-and-suspenders behind the no-throw contract: a throwing closure is logged
+	/// and skipped instead of killing the frame loop and hanging <see cref="Wait"/> forever.</remarks>
 	public static void Flush() {
 		if (!IsMainThread) {
 			return;
@@ -101,7 +102,11 @@ public static class Gpu {
 				action = Queue.Dequeue();
 			}
 
-			action();
+			try {
+				action();
+			} catch (Exception e) {
+				Log.Error(e);
+			}
 
 			if (Budget.Elapsed.TotalMilliseconds >= FrameBudgetMs) {
 				return;

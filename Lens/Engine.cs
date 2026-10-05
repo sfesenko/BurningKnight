@@ -25,6 +25,7 @@ namespace Lens
 #endif
             ;
 
+
         
         public static Action? AssetsLoaded;
 
@@ -149,6 +150,21 @@ namespace Lens
         {
         }
 
+        // The statics are the only engine-side roots back into the host's activity; clear them or
+        // a destroyed activity stays pinned for the process lifetime. Callbacks null-check Instance.
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+
+            if (disposing)
+            {
+                Instance = null!;
+                Graphics = null!;
+                GraphicsDevice = null!;
+                core = null!;
+            }
+        }
+
         protected override void Initialize()
         {
             GraphicsDevice = base.GraphicsDevice;
@@ -173,6 +189,12 @@ namespace Lens
 
         protected override void Update(GameTime gameTime)
         {
+            if (System.Threading.Interlocked.Exchange(ref displayDirty, 0) == 1)
+            {
+                core.OnDisplayChanged();
+                UpdateView();
+            }
+
             var t = DateTime.Now.Millisecond;
 
             base.Update(gameTime);
@@ -255,6 +277,14 @@ namespace Lens
         protected override void Draw(GameTime gameTime)
         {
             var t = DateTime.Now.Millisecond;
+
+            // A frame can arrive before Initialize ran (Android cold start/resume): skip it
+            // instead of NRE-ing. Desktop always initializes first — no-op there.
+            if (GraphicsDevice == null || StateRenderer == null || graphics.Graphics.Batch == null) {
+                base.Draw(gameTime);
+                return;
+            }
+
             StateRenderer.Render();
             base.Draw(gameTime);
             RenderTime = DateTime.Now.Millisecond - t;
@@ -266,10 +296,32 @@ namespace Lens
             UpdateView();
         }
 
+        public bool CanToggleFullscreen => core.CanToggleFullscreen;
+
+        // Host-supplied policy (see Core.PauseOnBackground): pause when the window loses focus.
+        public bool PauseOnBackground => core.PauseOnBackground;
+
+        // A display change arrives on the host thread, which must not touch the graphics manager:
+        // flag it (Interlocked int — a set between read and clear isn't lost), consume at top of Update.
+        private volatile int displayDirty;
+
+        // Flag it for the game thread; it applies Core.OnDisplayChanged plus UpdateView (scale,
+        // viewport, matrices, renderer targets).
+        public void DisplayChanged()
+        {
+            System.Threading.Interlocked.Exchange(ref displayDirty, 1);
+        }
+
         public void SetFullscreen()
         {
             core.SetFullscreen();
             UpdateView();
+        }
+
+        // Ends the run through the host core (Android finishes its activity; desktop exits).
+        public void Quit()
+        {
+            core.Quit();
         }
 
         public float GetScreenWidth()

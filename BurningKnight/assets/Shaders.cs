@@ -1,4 +1,5 @@
-﻿using Lens;
+﻿using System;
+using Lens;
 using Lens.assets;
 using Lens.graphics.gamerenderer;
 using Microsoft.Xna.Framework.Graphics;
@@ -15,14 +16,14 @@ namespace BurningKnight.assets {
 		public static Effect Bk = null!;
 		
 		public static void Load() {
-			Ui = Effects.Get("ui")!;
-			Entity = Effects.Get("entity")!;
-			Terrain = Effects.Get("terrain")!;
-			Screen = Effects.Get("screen")!;
-			Fog = Effects.Get("fog")!;
-			Chasm = Effects.Get("chasm")!;
-			Item = Effects.Get("item")!;
-			Bk = Effects.Get("bk")!;
+			Ui = Effects.Require("ui");
+			Entity = Effects.Require("entity");
+			Terrain = Effects.Require("terrain");
+			Screen = Effects.Require("screen");
+			Fog = Effects.Require("fog");
+			Chasm = Effects.Require("chasm");
+			Item = Effects.Require("item");
+			Bk = Effects.Require("bk");
 
 			Engine.Instance.StateRenderer.GameEffect = Screen;
 			// Engine.Instance.StateRenderer.UiEffect = Ui;

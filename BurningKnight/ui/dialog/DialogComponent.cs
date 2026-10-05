@@ -9,6 +9,7 @@ using Lens.entity;
 using Lens.entity.component;
 using Lens.entity.component.logic;
 using Lens.graphics;
+using Lens.input;
 using Lens.util.camera;
 using Lens.util.tween;
 using Microsoft.Xna.Framework;
@@ -44,7 +45,7 @@ namespace BurningKnight.ui.dialog {
 		public override void Init() {
 			base.Init();
 			
-			Engine.Instance.Window.TextInput += HandleInput;
+			TextInput.Subscribe(Engine.Instance.Window, HandleInput);
 
 			Dialog = new UiDialog();
 			Dialog.Owner = Entity;
@@ -89,7 +90,7 @@ namespace BurningKnight.ui.dialog {
 			base.Destroy();
 			
 			Dialog!.Close(() => { Dialog.Done = true; });
-			Engine.Instance.Window.TextInput -= HandleInput;
+			TextInput.Unsubscribe(Engine.Instance.Window, HandleInput);
 
 			if (Talking == this) {
 				Talking = null;

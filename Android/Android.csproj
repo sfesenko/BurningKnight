@@ -1,0 +1,58 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net10.0-android</TargetFramework>
+        <!-- Android 5.0, the lowest net10.0-android allows. -->
+        <SupportedOSPlatformVersion>21</SupportedOSPlatformVersion>
+        <Nullable>enable</Nullable>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <RootNamespace>AndroidPort</RootNamespace>
+        <ApplicationId>com.burningknight.android</ApplicationId>
+        <!-- Mirror the game version (Lens Engine.Version) so reports identify builds. -->
+        <ApplicationDisplayVersion>1.3.1.4</ApplicationDisplayVersion>
+        <ApplicationVersion>2</ApplicationVersion>
+        <!-- Sideloaded APK, arm64 only. -->
+        <RuntimeIdentifiers>android-arm64</RuntimeIdentifiers>
+        <AndroidPackageFormat>apk</AndroidPackageFormat>
+        <!-- The payload must stay seekable for the archive source: keep the .zip stored, not deflated. -->
+        <AndroidStoreUncompressedFileExtensions>.zip</AndroidStoreUncompressedFileExtensions>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\BurningKnight\BurningKnight.csproj"/>
+        <ProjectReference Include="..\Lens\Lens.csproj"/>
+        <ProjectReference Include="..\Content\Content.csproj" ReferenceOutputAssembly="false"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="MonoGame.Framework.Android" Version="3.8.*"/>
+    </ItemGroup>
+
+    <!-- MonoGame.Extended reflects over an internal MonoGame property the linker would strip;
+         the descriptor keeps it. See illink.descriptors.xml. -->
+    <ItemGroup>
+        <TrimmerRootDescriptor Include="illink.descriptors.xml"/>
+    </ItemGroup>
+
+    <!-- The same payload Desktop ships: one Content.zip packed by the build and carried in the
+         APK's assets, stored uncompressed so the game reads it in place from base.apk.
+         Android builds are Release only (ImGui.NET has no Android natives), so Debug packs nothing. -->
+    <Target Name="RequireRelease" BeforeTargets="BeforeBuild">
+        <Error Condition="'$(Configuration)'!='Release'"
+               Text="Android builds are Release-only (ImGui.NET has no Android natives). Build with -c Release." />
+    </Target>
+
+    <Target Name="StageContent" BeforeTargets="_ComputeAndroidAssetsPaths"
+            Condition="'$(Configuration)' == 'Release' and '$(DesignTimeBuild)' != 'true'">
+        <PropertyGroup>
+            <_StagedContent>$([MSBuild]::NormalizePath('$(IntermediateOutputPath)', 'Content.zip'))</_StagedContent>
+        </PropertyGroup>
+
+        <MSBuild Projects="..\Content\Content.csproj" Targets="PackContent"
+                 Properties="PackOutput=$(_StagedContent)"/>
+
+        <ItemGroup>
+            <AndroidAsset Include="$(_StagedContent)" LogicalName="Content.zip"/>
+        </ItemGroup>
+    </Target>
+</Project>

@@ -1,16 +1,19 @@
 using BurningKnight.assets.input;
 using BurningKnight.entity.component;
+using BurningKnight.entity.creature.player;
 using Lens.assets;
 using Lens.input;
 using Lens.util;
 using Microsoft.Xna.Framework.Input;
+using System.Linq;
 
 namespace BurningKnight.ui {
 	public class UiControl : UiButton {
 		public static UiControl? Focused = null!;
 		public string Key = null!;
 		public bool Gamepad;
-		public GamepadComponent GamepadComponent = null!;
+		// May be null or stale (captured when the pane was built); DoCheck resolves the live pad lazily instead.
+		public GamepadComponent? GamepadComponent;
 
 		private float cx;
 		private bool firstClickFrame;
@@ -46,7 +49,7 @@ namespace BurningKnight.ui {
 		}
 
 		private void SetLabel() {
-			var k = Controls.Find(Key, Gamepad);
+			var k = Gamepad ? Controls.FindGamepad(Key) : Controls.FindKeyboard(Key);
 			
 			Label = $"{Locale.Get(Key)}: {k}";
 			RelativeCenterX = cx;
@@ -56,15 +59,20 @@ namespace BurningKnight.ui {
 			Keys.Q, Keys.W, Keys.E, Keys.R, Keys.T, Keys.Y, Keys.U, Keys.I, Keys.O, Keys.P,
 			Keys.A, Keys.S, Keys.D, Keys.F, Keys.G, Keys.H, Keys.J, Keys.K, Keys.L,
 			Keys.Z, Keys.X, Keys.C, Keys.V, Keys.B, Keys.N, Keys.M, 
-			Keys.D0, Keys.D1, Keys.D2, Keys.D3, Keys.D4, Keys.D5, Keys.D6, Keys.D7, Keys.D9,
+			Keys.D0, Keys.D1, Keys.D2, Keys.D3, Keys.D4, Keys.D5, Keys.D6, Keys.D7, Keys.D8, Keys.D9,
+			Keys.Up, Keys.Down, Keys.Left, Keys.Right, Keys.Enter, Keys.Escape, Keys.Tab, Keys.CapsLock,
+			Keys.F1, Keys.F2, Keys.F3, Keys.F4, Keys.F5, Keys.F6, Keys.F7, Keys.F8, Keys.F9, Keys.F10, Keys.F11, Keys.F12,
 		
-			Keys.Space, Keys.LeftShift, Keys.LeftControl, Keys.LeftWindows, Keys.LeftAlt, Keys.Tab, Keys.CapsLock
+			Keys.Space, Keys.LeftShift, Keys.LeftControl, Keys.LeftWindows, Keys.LeftAlt,
+			Keys.RightShift, Keys.RightControl, Keys.RightWindows, Keys.RightAlt
 		};
 
 		private static MouseButtons[] mouseToCheck = {
 			MouseButtons.Left, MouseButtons.Middle, MouseButtons.Right
 		};
 
+		// Start/Back stay out: they drive pause/menu flow — capturing them would trap the player.
+		// BigButton never arrives (consumed by the OS guide).
 		private static Buttons[] buttonsToCheck = {
 			Buttons.A, Buttons.B, Buttons.X, Buttons.Y, Buttons.LeftShoulder, Buttons.RightShoulder,
 			Buttons.LeftStick, Buttons.RightStick, Buttons.LeftTrigger, Buttons.RightTrigger,
@@ -96,14 +104,23 @@ namespace BurningKnight.ui {
 			
 			if (Focused == this) {
 				if (Gamepad) {
-					if (GamepadComponent.Controller == null) {
+					// Stored component may be stale (captured at pane build); resolve the live pad.
+					var component = GamepadComponent;
+
+					if (Area != null && component?.Controller == null) {
+						component = LocalPlayer.Locate(Area)?.GetComponent<GamepadComponent>();
+					}
+
+					var controller = component?.Controller ?? Input.Gamepads.FirstOrDefault(g => g.Attached);
+
+					if (controller == null) {
 						Log.Error("Null controller");
 						return;
 					}
 
 					
 					foreach (var b in buttonsToCheck) {
-						if (GamepadComponent.Controller.WasPressed(b)) {
+						if (controller.WasPressed(b)) {
 							Controls.Replace(Key, b);
 							Controls.Bind();
 							Controls.Save();

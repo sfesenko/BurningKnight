@@ -22,12 +22,12 @@ namespace BurningKnight.ui {
 			AlwaysVisible = true;
 			Depth = 32;
 
-			Engine.Instance.Window.TextInput += HandleInput;
+			TextInput.Subscribe(Engine.Instance.Window, HandleInput);
 		}
 
 		public override void Destroy() {
 			base.Destroy();
-			Engine.Instance.Window.TextInput -= HandleInput;
+			TextInput.Unsubscribe(Engine.Instance.Window, HandleInput);
 		}
 		
 		public void HandleInput(object? e, TextInputEventArgs args) {

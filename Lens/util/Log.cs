@@ -5,45 +5,76 @@ using System.Runtime.CompilerServices;
 
 namespace Lens.util;
 
-/// <summary>
-/// The engine's logging facade: one coloured console line, and — in Release — one line in
-/// <c>burning_log.txt</c> beside the game's other data. MonoGame ships no runtime logging API,
-/// so the engine provides this one.
-///
-/// Writes are serialised and flushed, so threads cannot interleave or lose lines and a crash
-/// keeps the tail. Every line carries its call site; in DEBUG it also carries the frame above
-/// it. <see cref="Debug"/> and <see cref="Assert"/> are compiled out of Release builds
-/// entirely, so their messages cost nothing there.
-///
-/// The implementation is private on purpose — this type is the seam, and no call site can tell
-/// what sits behind it.
-/// </summary>
+/// <summary>The engine's logging facade: one console line plus — in Release — one line in
+/// <c>burning_log.txt</c>. MonoGame ships no runtime logging API, so the engine provides this one.
+/// Writes are serialised and flushed (a crash keeps the tail); every line carries its call site.
+/// <see cref="Debug"/> and <see cref="Assert"/> are compiled out of Release entirely.
+/// The implementation is private on purpose — this type is the seam.</summary>
 public static class Log {
 	private static string LogName => Path.Combine(Paths.DataDir, "burning_log.txt");
+	private static string PrevLogName => Path.Combine(Paths.DataDir, "burning_log.prev.txt");
 
 	public static readonly bool WriteToFile = !Engine.Debug;
 
 	private static readonly object Lock = new();
+
+	// Android has no console (the setter throws): probe once so one facade serves both.
+	private static readonly bool Colors = ProbeColors();
+
+	private static bool ProbeColors() {
+		try {
+			// Probe the setter too: a write throwing mid-line is worse than no colors.
+			var old = Console.ForegroundColor;
+			Console.ForegroundColor = old;
+
+			return true;
+		} catch (Exception) {
+			// Any console failure means no colors; a static-init throw kills the process pre-frame.
+			return false;
+		}
+	}
 	private static StreamWriter? writer;
 
 	public static void Open() {
 		lock (Lock) {
-			if (File.Exists(LogName)) {
+			try {
+				// Keep one previous log across a relaunch: the last run's tail is the bug report.
+				// Best effort — a failed roll costs history, not the log.
+				if (File.Exists(PrevLogName)) {
+					File.Delete(PrevLogName);
+				}
+
+				if (File.Exists(LogName)) {
+					File.Move(LogName, PrevLogName);
+				}
+			} catch (Exception e) {
+				// A failed roll costs history, not the log (append mode below).
 				try {
-					File.Delete(LogName);
-				} catch (Exception e) {
-					// The file is only opened in append mode, so a failed delete costs history,
-					// not the log.
 					Console.Error.WriteLine(e);
+				} catch {
+					// Stdout may be closed; logging must never take the process down.
 				}
 			}
 
 			if (WriteToFile) {
-				// AutoFlush puts every line on disk as it is written, so the tail survives a
-				// crash — which is what the file is for.
+				// Close the previous writer first (locale-change reopen): a stale one keeps its
+				// old file position and would overwrite newer content mid-file after the roll.
+				Close();
+
+				// AutoFlush: every line reaches disk as written, so a crash keeps the tail.
 				writer = new StreamWriter(new FileStream(LogName, FileMode.Append, FileAccess.Write, FileShare.ReadWrite)) {
 					AutoFlush = true
 				};
+			}
+		}
+	}
+
+	public static void Flush() {
+		lock (Lock) {
+			try {
+				writer?.Flush();
+			} catch {
+				// Nowhere left to report to.
 			}
 		}
 	}
@@ -101,30 +132,41 @@ public static class Log {
 		var time = $"{DateTime.Now:HH:mm:ss}";
 		var caller = GetCaller(file, member, line);
 
+		// Each line is built once, then written once under the lock: no interleaving, no
+		// half-lines from another thread.
+		var fileLine = $"{time}| {type}| {message} {caller}";
+		var consoleLine = $"{time} {type} {message} {caller}";
+
 		lock (Lock) {
-			writer?.Write(time);
-			writer?.Write("| ");
-			writer?.Write(type);
-			writer?.Write("| ");
-			writer?.Write(message);
-			writer?.Write(' ');
-			writer?.WriteLine(caller);
+			// A logging facade must never take the process down: disk-full,
+			// unmounted FilesDir, or closed stdout all surface here.
+			try {
+				if (writer != null) {
+					writer.WriteLine(fileLine);
+				}
 
-			var old = Console.ForegroundColor;
+				if (Colors) {
+					var old = Console.ForegroundColor;
 
-			Console.ForegroundColor = ConsoleColor.Gray;
-			Console.Write(time);
-			Console.Write(' ');
-			Console.ForegroundColor = ConsoleColor.Yellow;
-			Console.Write(type);
-			Console.Write(' ');
-			Console.ForegroundColor = color;
-			Console.Write(message);
-			Console.ForegroundColor = ConsoleColor.Gray;
-			Console.Write(' ');
-			Console.WriteLine(caller);
+					Console.ForegroundColor = ConsoleColor.Gray;
+					Console.Write(time);
+					Console.Write(' ');
+					Console.ForegroundColor = ConsoleColor.Yellow;
+					Console.Write(type);
+					Console.Write(' ');
+					Console.ForegroundColor = color;
+					Console.Write(message);
+					Console.ForegroundColor = ConsoleColor.Gray;
+					Console.Write(' ');
+					Console.WriteLine(caller);
 
-			Console.ForegroundColor = old;
+					Console.ForegroundColor = old;
+				} else {
+					Console.WriteLine(consoleLine);
+				}
+			} catch {
+				// Nowhere left to report to.
+			}
 		}
 	}
 

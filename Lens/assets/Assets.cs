@@ -48,15 +48,17 @@ namespace Lens.assets {
 
 		// Reads go through the source, so the same loaders serve plain files and a packaged
 		// archive. FullPath on a handle still points into the content root, for writes.
-		public static IContentSource Source { get; private set; } = new FileContentSource(Root);
+		// Volatile: the host installs it before the game thread starts, and loader workers read it.
+		private static volatile IContentSource source = new FileContentSource(Root);
+		public static IContentSource Source => source;
 
 		// The host supplies the root; the engine must not guess it from the working directory.
 		public static void SetRoot(string root) {
 			Root = Path.EndsInDirectorySeparator(root) ? root : root + Path.DirectorySeparatorChar;
 		}
 
-		public static void SetSource(IContentSource source) {
-			Source = source;
+		public static void SetSource(IContentSource value) {
+			source = value;
 		}
 
 		/// <summary>

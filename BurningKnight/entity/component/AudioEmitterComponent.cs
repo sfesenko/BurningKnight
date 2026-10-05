@@ -32,6 +32,8 @@ namespace BurningKnight.entity.component {
 			public float BaseVolume = 1f;
 			public bool KeepAround;
 			public bool ApplyBuffer;
+			public bool Dead;
+			public TweenTask? Tween;
 		}
 		
 		public override void Destroy() {
@@ -44,8 +46,21 @@ namespace BurningKnight.entity.component {
 
 		public void StopAll() {
 			foreach (var s in Playing.Values) {
-				s.Effect.Stop();
-				s.Effect.Dispose();
+				// Kill the tween first: it must not touch a disposed instance when it fires.
+				s.Dead = true;
+				s.Tween?.Ended = true;
+
+				try {
+					s.Effect.Stop();
+				} catch (Exception e) {
+					Log.Error(e);
+				}
+
+				try {
+					s.Effect.Dispose();
+				} catch (Exception e) {
+					Log.Error(e);
+				}
 			}
 
 			Playing.Clear();
@@ -59,13 +74,17 @@ namespace BurningKnight.entity.component {
 
 				foreach (var s in Playing.Values)
 				{
-					var sfxVolumeBuffer = (1 - Math.Min(Distance, d) / Distance) 
-					                      * Settings.MasterVolume 
-					                      * Settings.SfxVolume 
-					                      * s.BaseVolume 
-					                      * (s.ApplyBuffer ? Audio.SfxVolumeBuffer : 1);
-					
-					s.Effect.Volume = MathUtils.Clamp(0, 1, sfxVolumeBuffer);
+					try {
+						var sfxVolumeBuffer = (1 - Math.Min(Distance, d) / Distance) 
+						                      * Settings.MasterVolume 
+						                      * Settings.SfxVolume 
+						                      * s.BaseVolume 
+						                      * (s.ApplyBuffer ? Audio.SfxVolumeBuffer : 1);
+						
+						s.Effect.Volume = MathUtils.Clamp(0, 1, sfxVolumeBuffer);
+					} catch (Exception e) {
+						Log.Error(e);
+					}
 				}
 			}
 		} // 6y0204mm
@@ -83,10 +102,29 @@ namespace BurningKnight.entity.component {
 			foreach (var k in keys) {
 				var s = Playing[k];
 
-				if (!s.KeepAround && s.Effect.State != SoundState.Playing) {
+				try {
+					if (!s.KeepAround && s.Effect.State != SoundState.Playing) {
+						Playing.Remove(k);
+						// Finished instances still own an OpenAL source; only Stop/Dispose
+						// returns it. GC alone drains the pool and Play starts throwing.
+						s.Dead = true;
+						s.Tween?.Ended = true;
+						s.Effect.Dispose();
+					} else if (Listener != null) {
+						s.Effect.Apply3D(Listener, Emitter);
+					}
+				} catch (Exception e) {
+					// Dead voice (or State/Apply3D threw): release the source, keep the rest.
+					Log.Error(e);
 					Playing.Remove(k);
-				} else if (Listener != null) {
-					s.Effect.Apply3D(Listener, Emitter);
+					s.Dead = true;
+					s.Tween?.Ended = true;
+
+					try {
+						s.Effect.Dispose();
+					} catch (Exception disposeException) {
+						Log.Error(disposeException);
+					}
 				}
 			}
 		}
@@ -106,6 +144,22 @@ namespace BurningKnight.entity.component {
 			
 			return Emit(sfx, volume, PitchMod + Rnd.Float(-sz, sz), insert, looped, tween);
     }
+
+		private static bool TryPlay(SoundEffectInstance effect) {
+			try {
+				effect.Play();
+
+				return true;
+			} catch (InstancePlayLimitException) {
+				// Pool exhausted by a burst: a dropped sound must not kill the run.
+				return false;
+			} catch (Exception e) {
+				// Dead device; never fatal.
+				Log.Error(e);
+
+				return false;
+			}
+		}
 
 		public SoundEffectInstance? Emit(string sfx, float volume = 1f, float pitch = 0f, bool insert = true, bool looped = false, bool tween = false) {
 			if (!Assets.LoadSfx || sfx == null) {
@@ -132,8 +186,27 @@ namespace BurningKnight.entity.component {
 					return null;
 				}
 
+				// CreateInstance/IsLooped touch the OpenAL pool: exhausted/dead device throws
+				// and Emit degrades to a no-op, like TryPlay.
+				SoundEffectInstance? effect = null;
+
+				try {
+					effect = sound.CreateInstance();
+					effect.IsLooped = looped;
+				} catch (Exception e) {
+					Log.Error(e);
+
+					try {
+						effect?.Dispose();
+					} catch {
+						// Already dead.
+					}
+
+					return null;
+				}
+
 				instance = new Sfx {
-					Effect = sound.CreateInstance(),
+					Effect = effect,
 					KeepAround = tween,
 					ApplyBuffer = applyBuffer
 				};
@@ -141,8 +214,6 @@ namespace BurningKnight.entity.component {
 				if (insert) {
 					Playing[sfx] = instance;
 				}
-
-				instance.Effect.IsLooped = looped;
 			}
 
 			instance.BaseVolume = tween ? 0 : v;
@@ -151,24 +222,44 @@ namespace BurningKnight.entity.component {
 				var t = Tween.To(v, 0, x => instance.BaseVolume = x, 0.5f);
 
 				t.Delay = 1f;
+				instance.Tween = t;
 				t.OnStart = () => {
-					instance.Effect.Play();
+					if (instance.Dead) {
+						return;
+					}
+
+					TryPlay(instance.Effect);
 					instance.KeepAround = false;
-					instance.Effect.Apply3D(Listener, Emitter);
+
+					if (Listener != null) {
+						try {
+							instance.Effect.Apply3D(Listener, Emitter);
+						} catch (Exception e) {
+							Log.Error(e);
+						}
+					}
 				};
 			}
 
 			UpdatePosition();
-			
-			instance.Effect.Stop();
-			instance.Effect.Pitch = MathUtils.Clamp(-1f, 1f, pitch);
+
+			try {
+				instance.Effect.Stop();
+				instance.Effect.Pitch = MathUtils.Clamp(-1f, 1f, pitch);
+			} catch (Exception e) {
+				Log.Error(e);
+			}
 
 			if (!tween) {
-				instance.Effect.Play();
+				TryPlay(instance.Effect);
 			}
 
 			if (Listener != null) {
-				instance.Effect.Apply3D(Listener, Emitter);
+				try {
+					instance.Effect.Apply3D(Listener, Emitter);
+				} catch (Exception e) {
+					Log.Error(e);
+				}
 			}
 			
 			return instance.Effect;

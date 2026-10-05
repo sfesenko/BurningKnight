@@ -30,7 +30,6 @@ namespace BurningKnight.assets.input {
 
 		public const string Roll = "roll";
 		public const string Duck = "duck";
-		public const string Map = "map";
 		
 		public const string Pause = "pause";
 
@@ -61,12 +60,11 @@ namespace BurningKnight.assets.input {
 			controls.Add(new Control(Active, Keys.Space).Gamepad(Buttons.RightShoulder));
 			controls.Add(new Control(Use).Mouse(MouseButtons.Left).Gamepad(Buttons.RightTrigger));
 
-			controls.Add(new Control(Bomb, Keys.Q).Gamepad(Buttons.LeftShoulder));
+			controls.Add(new Control(Bomb, Keys.Q).Gamepad(Buttons.B));
 			controls.Add(new Control(Interact, Keys.E).Gamepad(Buttons.X));
 			controls.Add(new Control(Swap, Keys.LeftShift).Gamepad(Buttons.A));
-			controls.Add(new Control(Roll).Mouse(MouseButtons.Right).Gamepad(Buttons.LeftTrigger));
-			controls.Add(new Control(Duck, Keys.R).Gamepad(Buttons.B));
-			controls.Add(new Control(Map, Keys.M).Gamepad(Buttons.RightShoulder));
+			controls.Add(new Control(Roll).Mouse(MouseButtons.Right).Gamepad(Buttons.Y, Buttons.LeftTrigger));
+			controls.Add(new Control(Duck, Keys.R).Gamepad(Buttons.LeftShoulder));
 
 			controls.Add(new Control(Pause, Keys.Escape).Gamepad(Buttons.Back));
 			
@@ -74,7 +72,7 @@ namespace BurningKnight.assets.input {
 			controls.Add(new Control(Fps, Keys.F2));
 
 			controls.Add(new Control(Cancel, Keys.Escape).Gamepad(Buttons.Back));
-			controls.Add(new Control(GameStart, Keys.Space, Keys.Enter, Keys.X, Keys.Enter, Keys.Space).Gamepad(Buttons.X, Buttons.Start));
+			controls.Add(new Control(GameStart, Keys.Space, Keys.Enter, Keys.X).Gamepad(Buttons.X, Buttons.Start));
 			
 			controls.Add(new Control(UiUp, Keys.W, Keys.Up).Gamepad(Buttons.LeftThumbstickUp, Buttons.RightThumbstickUp, Buttons.DPadUp));
 			controls.Add(new Control(UiDown, Keys.S, Keys.Down).Gamepad(Buttons.LeftThumbstickDown, Buttons.RightThumbstickDown, Buttons.DPadDown));
@@ -99,17 +97,27 @@ namespace BurningKnight.assets.input {
 			Input.ClearBindings();
 
 			foreach (var c in controls) {
-				if (c.Keys != null) {
-					Input.Bind(c.Id, c.Keys);
-				}
+				BindChannel(c.Id, c.Keys);
+				BindChannel(c.Id, c.Buttons);
+				BindChannel(c.Id, c.MouseButtons);
+			}
+		}
 
-				if (c.Buttons != null) {
-					Input.Bind(c.Id, c.Buttons);
-				}
+		private static void BindChannel(string id, Keys[]? values) {
+			if (values != null) {
+				Input.Bind(id, values);
+			}
+		}
 
-				if (c.MouseButtons != null) {
-					Input.Bind(c.Id, c.MouseButtons);
-				}
+		private static void BindChannel(string id, Buttons[]? values) {
+			if (values != null) {
+				Input.Bind(id, values);
+			}
+		}
+
+		private static void BindChannel(string id, MouseButtons[]? values) {
+			if (values != null) {
+				Input.Bind(id, values);
 			}
 		}
 
@@ -125,35 +133,9 @@ namespace BurningKnight.assets.input {
 				foreach (var t in (custom.Count == 0 ? controls : custom)) {
 					var o = new JsonObject();
 
-					if (t.Keys != null) {
-						var a = new JsonArray();
-
-						foreach (var k in t.Keys) {
-							a.Add(k.ToString());
-						}
-						
-						o["keys"] = a;
-					}
-
-					if (t.MouseButtons != null) {
-						var a = new JsonArray();
-
-						foreach (var k in t.MouseButtons) {
-							a.Add(k.ToString());
-						}
-						
-						o["mouse"] = a;
-					}
-
-					if (t.Buttons != null) {
-						var a = new JsonArray();
-
-						foreach (var k in t.Buttons) {
-							a.Add(k.ToString());
-						}
-						
-						o["gamepad"] = a;
-					}
+					WriteChannel(o, "keys", t.Keys);
+					WriteChannel(o, "mouse", t.MouseButtons);
+					WriteChannel(o, "gamepad", t.Buttons);
 					
 					root[t.Id] = o;
 				}
@@ -165,11 +147,52 @@ namespace BurningKnight.assets.input {
 			}
 		}
 
-		public static void Load() {
-			try {
-				var handle = BindingsHandle;
+		private static void WriteChannel<T>(JsonObject o, string name, T[]? values) {
+			if (values == null) {
+				return;
+			}
 
-				if (!handle.Exists()) {
+			var a = new JsonArray();
+
+			foreach (var v in values) {
+				a.Add(v!.ToString());
+			}
+
+			o[name] = a;
+		}
+
+		private static T[]? ParseChannel<T>(JsonNode? node) where T : struct, Enum {
+			if (node is not JsonArray array) {
+				return null;
+			}
+
+			var list = new List<T>();
+
+			foreach (var k in array) {
+				if (Enum.TryParse<T>(k.String(""), out var value)) {
+					list.Add(value);
+				} else {
+					Log.Error($"Unknown {typeof(T).Name} value {k}");
+				}
+			}
+
+			// Empty array = deliberately unbound; non-empty but unparseable = corrupt → defaults.
+			if (list.Count == 0 && array.Count > 0) {
+				return null;
+			}
+
+			return list.ToArray();
+		}
+
+		public static void Load() {
+			var handle = BindingsHandle;
+			var legacy = false;
+
+			if (!handle.Exists()) {
+				// The version rides in the filename above; a v1 file carries forward.
+				var old = new FileHandle($"{SaveManager.SaveDir}keybindings_{Version - 1}.json");
+
+				if (!old.Exists()) {
 					Log.Info("Keybindings file was not found, creating new one");
 
 					BindDefault();
@@ -177,206 +200,196 @@ namespace BurningKnight.assets.input {
 
 					return;
 				}
-				
+
+				handle = old;
+				legacy = true;
+			}
+
+			try {
 				Log.Info("Loading keybindings");
 
-				var root = JsonNode.Parse(handle.ReadAll());
-				custom.Clear();
+				var root = JsonNode.Parse(handle.ReadAll())!.AsJsonObject()!;
+				var parsed = new Dictionary<string, Control>();
 
-				foreach (var pair in root.AsJsonObject()!) {
-					var control = new Control(pair.Key);
-					
-					if (pair.Value!["keys"].IsJsonArray()) {
-						var l = new List<Keys>();
-						
-						foreach (var k in pair.Value!["keys"].AsJsonArray()!) {
-							if (Enum.TryParse<Keys>(k.String(""), out var key)) {
-								l.Add(key);
-							} else {
-								Log.Error($"Unknown key {k}");
-							}
-						}
-
-						control.Keys = l.ToArray();
-					}
-					
-					if (pair.Value["mouse"].IsJsonArray()) {
-						var l = new List<MouseButtons>();
-						
-						foreach (var k in pair.Value!["mouse"].AsJsonArray()!) {
-							if (Enum.TryParse<MouseButtons>(k.String(""), out var key)) {
-								l.Add(key);
-							} else {
-								Log.Error($"Unknown mouse button {k}");
-							}
-						}
-
-						control.MouseButtons = l.ToArray();
-					}
-					
-					if (pair.Value["gamepad"].IsJsonArray()) {
-						var l = new List<Buttons>();
-						
-						foreach (var k in pair.Value!["gamepad"].AsJsonArray()!) {
-							if (Enum.TryParse<Buttons>(k.String(""), out var key)) {
-								l.Add(key);
-							} else {
-								Log.Error($"Unknown gamepad button {k}");
-							}
-						}
-
-						control.Buttons = l.ToArray();
-					}
-					
-					custom.Add(control);
+				foreach (var pair in root) {
+					parsed[pair.Key] = new Control(pair.Key) {
+						Keys = ParseChannel<Keys>(pair.Value?["keys"]),
+						MouseButtons = ParseChannel<MouseButtons>(pair.Value?["mouse"]),
+						Buttons = ParseChannel<Buttons>(pair.Value?["gamepad"])
+					};
 				}
 
+				// Validate-then-merge over the defaults: unknown ids/missing channels keep defaults;
+				// an explicitly empty array stays unbound (Save round-trips empty arrays as-is).
+				var merged = new List<Control>();
+
+				foreach (var def in controls) {
+					var over = parsed.TryGetValue(def.Id, out var p) ? p : null;
+
+					merged.Add(new Control(def.Id) {
+						Keys = over?.Keys ?? def.Keys,
+						MouseButtons = over?.MouseButtons ?? def.MouseButtons,
+						Buttons = over?.Buttons ?? def.Buttons
+					});
+				}
+
+				custom.Clear();
+				custom.AddRange(merged);
+
 				Bind();
+
+				if (legacy) {
+					Save();
+				}
+			} catch (Exception e) {
+				Log.Error(e);
+				BindDefault();
+				Quarantine(handle);
+			}
+		}
+
+		private static void Quarantine(FileHandle handle) {
+			try {
+				var path = handle.FullPath;
+				File.Move(path, $"{path}.corrupt", true);
 			} catch (Exception e) {
 				Log.Error(e);
 			}
 		}
 
-		public static string Find(string id, bool gamepad, bool both = false) {
-			var k = "None";
-			string? a = null;
-			string? b = null;
-			
-			if (!gamepad) {
-				both = false;
-			}
-			
+		private static string? FindRaw(string id, bool gamepad) {
 			foreach (var c in (custom.Count == 0 ? controls : custom)) {
 				if (c.Id == id) {
-					if (c.Buttons != null && c.Buttons.Length > 0) {
-						a = c.Buttons[0].ToString();
-					}
-
-					if (c.Keys != null && c.Keys.Length > 0) {
-						b = c.Keys[0].ToString();
+					if (gamepad) {
+						if (c.Buttons != null && c.Buttons.Length > 0) {
+							return c.Buttons[0].ToString();
+						}
+					} else if (c.Keys != null && c.Keys.Length > 0) {
+						return c.Keys[0].ToString();
 					} else if (c.MouseButtons != null && c.MouseButtons.Length > 0) {
-						b = c.MouseButtons[0].ToString();
+						return c.MouseButtons[0].ToString();
 					}
 				}
 			}
 
-			if (both) {
-				if (a != null && b != null) {
-					k = $"{a} / {b}";
-				} else if (a != null) {
-					k = a;
-				}
-			} else if (gamepad && a != null) {
-				k = a;
-			} else if (!gamepad && b != null) {
-				k = b;
+			return null;
+		}
+
+		public static string FindKeyboard(string id) {
+			return Prettify(FindRaw(id, false) ?? "None");
+		}
+
+		public static string FindGamepad(string id) {
+			return Prettify(FindRaw(id, true) ?? "None");
+		}
+
+		private static readonly Dictionary<string, string> PrettyExact = new() {
+			["Left"] = "LMB",
+			["Right"] = "RMB",
+			["Middle"] = "MMB"
+		};
+
+		private static string Prettify(string k) {
+			if (PrettyExact.TryGetValue(k, out var pretty)) {
+				return pretty;
 			}
-			
-			if (k == "Left") {
-				k = "LMB";
-			} else if (k == "Right") {
-				k = "RMB";
-			} else if (k == "Middle") {
-				k = "MMB";
-			} else if (k.Length == 2 && k[0] == 'D') {
-				k = k[1].ToString();
-			} else if (k.StartsWith("Left")) {
-				k = $"Left {k.Substring(4, k.Length - 4)}";
-			} else if (k.StartsWith("Right")) {
-				k = $"Right {k.Substring(5, k.Length - 5)}";
-			} else if (k.EndsWith("Left")) {
-				k = $"{k.Substring(0, k.Length - 4)} Left";
-			} else if (k.EndsWith("Right")) {
-				k = $"{k.Substring(0, k.Length - 5)} Right";
-			} else if (k.EndsWith("Down")) {
-				k = $"{k.Substring(0, k.Length - 4)} Down";
-			} else if (k.EndsWith("Up")) {
-				k = $"{k.Substring(0, k.Length - 2)} Up";
+
+			if (k.Length == 2 && k[0] == 'D') {
+				return k[1].ToString();
+			}
+
+			foreach (var affix in new[] { "Left", "Right" }) {
+				if (k.StartsWith(affix)) {
+					return $"{affix} {k[affix.Length..]}";
+				}
+			}
+
+			foreach (var affix in new[] { "Left", "Right", "Down", "Up" }) {
+				if (k.EndsWith(affix)) {
+					return $"{k[..^affix.Length]} {affix}";
+				}
 			}
 
 			return k;
 		}
 
 
+		private static readonly Dictionary<string, string> GamepadSlices = new() {
+			["Left Trigger"] = "button_lt",
+			["Left Shoulder"] = "button_lb",
+			["Right Trigger"] = "button_rt",
+			["Right Shoulder"] = "button_rb"
+		};
+
+		private static readonly Dictionary<string, string> KeySlices = new() {
+			["lmb"] = "button_lmb",
+			["rmb"] = "button_rmb"
+		};
+
+		private static readonly (string Part, string Slice)[] KeySliceHints = [
+			("shift", "key_shift"),
+			("caps", "key_capslock"),
+			// Matches "control": the legacy substring, kept as-is.
+			("ntrl", "key_control")
+		];
+
 		public static string? FindSlice(string name, bool gamepad) {
-			var id = Find(name, gamepad);
+			var id = gamepad ? FindGamepad(name) : FindKeyboard(name);
 
 			if (id == null) {
 				return null;
 			}
-			
+
 			if (gamepad) {
-				if (id == "Left Trigger") {
-					return "button_lt";
+				if (GamepadSlices.TryGetValue(id, out var slice)) {
+					return slice;
 				}
-				
-				if (id == "Left Shoulder") {
-					return "button_lb";
-				}
-				
-				if (id == "Right Trigger") {
-					return "button_rt";
-				}
-				
-				if (id == "Right Shoulder") {
-					return "button_rb";
-				}
-				
+
 				return $"button_{id.ToLower()}";
-			} else {
-				id = id.ToLower();
-				
-				if (id == "lmb") {
-					return "button_lmb";
-				}
+			}
 
-				if (id == "rmb") {
-					return "button_rmb";
-				}
-				
-				if (id.Contains("shift")) {
-					return "key_shift";
-				}
+			id = id.ToLower();
 
-				if (id.Contains("caps")) {
-					return "key_capslock";
-				}
+			if (KeySlices.TryGetValue(id, out var key)) {
+				return key;
+			}
 
-				if (id.Contains("ntrl")) {
-					return "key_control";
+			foreach (var (part, slice) in KeySliceHints) {
+				if (id.Contains(part)) {
+					return slice;
 				}
+			}
 
-				return $"key_{id}";
+			return $"key_{id}";
+		}
+
+		private static void ReplaceCore(string id, Action<Control> apply) {
+			foreach (var c in (custom.Count == 0 ? controls : custom)) {
+				if (c.Id == id) {
+					apply(c);
+					break;
+				}
 			}
 		}
 
 		public static void Replace(string id, Keys key) {
-			foreach (var c in (custom.Count == 0 ? controls : custom)) {
-				if (c.Id == id) {
-					c.Keys = new[] {key};
-					c.MouseButtons = null;
-					break;
-				}
-			}
+			ReplaceCore(id, c => {
+				c.Keys = new[] {key};
+				c.MouseButtons = null;
+			});
 		}
 
 		public static void Replace(string id, Buttons button) {
-			foreach (var c in (custom.Count == 0 ? controls : custom)) {
-				if (c.Id == id) {
-					c.Buttons = new[] {button};
-					break;
-				}
-			}
+			ReplaceCore(id, c => {
+				c.Buttons = new[] {button};
+			});
 		}
 
 		public static void Replace(string id, MouseButtons button) {
-			foreach (var c in (custom.Count == 0 ? controls : custom)) {
-				if (c.Id == id) {
-					c.MouseButtons = new[] {button};
-					c.Keys = null;
-					break;
-				}
-			}
+			ReplaceCore(id, c => {
+				c.MouseButtons = new[] {button};
+				c.Keys = null;
+			});
 		}
 	}
 }

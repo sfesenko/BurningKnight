@@ -338,6 +338,11 @@ namespace BurningKnight.level {
 			if (!LevelLayerDebug.Walls) {
 				return;
 			}
+
+			// Null after failed allocation (Gpu.Flush logs and continues): skip rather than NRE.
+			if (WallSurface == null) {
+				return;
+			}
 			
 			var camera = Context.Camera;
 			var state = Engine.Instance.StateRenderer;

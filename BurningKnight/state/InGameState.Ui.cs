@@ -51,7 +51,10 @@ using Timer = Lens.util.timer.Timer;
 namespace BurningKnight.state {
 	public partial class InGameState {
 		private void SetupUi() {
-			TopUi.Add(new UiChat());
+			// Chat opens on typed '/' and there is no text source on a handheld.
+			if (TextInput.Available) {
+				TopUi.Add(new UiChat());
+			}
 			
 			UiButton.LastId = 0;
 			
@@ -141,6 +144,11 @@ namespace BurningKnight.state {
 					RelativeCenterY = BackY,
 					AngleMod = 0,
 					Click = b => {
+						// No clipboard backend on this host: leave the seed label alone.
+						if (!Clipboard.Available) {
+							return;
+						}
+
 						b.LocaleLabel = "copied_to_clipboard";
 
 						try {
@@ -168,7 +176,7 @@ namespace BurningKnight.state {
 				RelativeCenterY = start,
 				Click = b => {
 					currentBack = settingsBack;
-					Tween.To(-Display.UiWidth, pauseMenu.X, x => pauseMenu.X = x, PaneTransitionTime).OnEnd = SelectFirst;
+					SlideTo(-Display.UiWidth);
 				}
 			});
 			
@@ -229,12 +237,7 @@ namespace BurningKnight.state {
 						Click = b => GoConfirm("start_new_run", () => { Context.Run.StartNew(); }, () => {
 							currentBack = pauseBack;
 							pauseMenu.Enabled = true;
-
-							Tween.To(0, pauseMenu.X, x => pauseMenu.X = x, PaneTransitionTime).OnEnd = () => {
-								pauseMenu.Remove(confirmationPane!);
-								confirmationPane = null;
-								SelectFirst();
-							};
+							SlideTo(0, DismissConfirm);
 						})
 					});
 				}
@@ -245,7 +248,7 @@ namespace BurningKnight.state {
 					RelativeCenterX = Display.UiWidth / 2f,
 					RelativeCenterY = BackY,
 					Click = b => {
-						Engine.Instance.Exit();
+						Engine.Instance.Quit();
 					}
 				});
 			}

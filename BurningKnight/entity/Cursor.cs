@@ -22,11 +22,41 @@ namespace BurningKnight.entity {
 		private Vector2 stickOffset;
 		private bool needsAdjusting = true;
 		private bool readTint = true;
+		private bool wasStickFiring;
 		private Color tint;
 		private Vector2 lastPos;
 
 		public Player Player = null!;
 		public Vector2 GamePosition;
+
+		// Right-stick deadzone shared with ActiveWeaponComponent: engage past Enter, release below
+		// Exit, so edge flicker doesn't stutter aim or trigger.
+		public const float StickFireDeadzone = 0.25f;
+		public const float StickFireEnter = StickFireDeadzone;
+		public const float StickFireExit = 0.2f;
+
+		public static bool StickFiring(GamepadData? data, bool wasFiring = false) {
+			if (data == null) {
+				return false;
+			}
+
+			var threshold = wasFiring ? StickFireExit : StickFireEnter;
+			return data.GetRightStick(threshold).LengthSquared() > 0.001f;
+		}
+
+		// The weapon updates before this entity (Area before TopUi): a flick must snap the aim
+		// or its first shot fires at the old side of the player.
+		public void SnapToStick(GamepadData data) {
+			var stick = data.GetRightStick();
+			var l = stick.Length();
+
+			if (l <= 0.0001f) {
+				return;
+			}
+
+			stickOffset = stick / l;
+			Position = Context.Camera!.CameraToUi(GamePosition = Player.Center + stickOffset * (48 * Settings.CursorRadius));
+		}
 
 		public override void Init() {
 			base.Init();
@@ -103,7 +133,10 @@ namespace BurningKnight.entity {
 
 				var l = stick.Length();
 
-				if (l > 0.25f) {
+				var firing = StickFiring(controller, wasStickFiring);
+				wasStickFiring = firing;
+
+				if (firing) {
 					var target = MathUtils.CreateVector(Math.Atan2(dy, dx), 1f);
 
 					dx = target.X - stickOffset.X;

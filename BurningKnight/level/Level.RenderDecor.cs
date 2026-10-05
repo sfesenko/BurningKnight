@@ -41,6 +41,11 @@ namespace BurningKnight.level {
 			if (!LevelLayerDebug.Mess ) {
 				return;
 			}
+
+			// Same null-after-failed-allocation guard as RenderWalls.
+			if (MessSurface == null) {
+				return;
+			}
 			
 			var camera = Context.Camera;
 			var state = Engine.Instance.StateRenderer;
@@ -251,6 +256,11 @@ namespace BurningKnight.level {
 		private void RenderChasms() {
 			var biome = Tilesets.Biome!;
 			if (!LevelLayerDebug.Chasms) {
+				return;
+			}
+
+			// Same null-after-failed-allocation guard as RenderWalls.
+			if (MessSurface == null) {
 				return;
 			}
 			

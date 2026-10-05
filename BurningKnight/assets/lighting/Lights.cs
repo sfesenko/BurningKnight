@@ -24,11 +24,22 @@ namespace BurningKnight.assets.lighting {
 
 		private static List<Light> lights = new List<Light>();
 		private static RenderTarget2D? surface;
+		private static GraphicsDevice? device;
 
 		public static BlendState Blend = null!;
 		private static BlendState messBlend = null!;
 		
 		public static void Init() {
+			// A new Game in the same process (configuration recreation) has a new device; the
+			// old statics were disposed with the old one — rebuild instead of reusing them.
+			var gd = Engine.GraphicsDevice;
+
+			if (!ReferenceEquals(device, gd)) {
+				device = gd;
+				region = null;
+				surface = null;
+			}
+
 			var v = Context.Run.Depth == 0 ? 0.9f : 0.25f;
 			
 			ClearColor = new Color(v, v, v, 1f);
@@ -54,10 +65,20 @@ namespace BurningKnight.assets.lighting {
 			}
 
 			if (surface == null) {
-				surface = Gpu.Run(() => new RenderTarget2D(
-					Engine.GraphicsDevice, Display.Width + 1, Display.Height + 1, false,
-					Engine.Graphics.PreferredBackBufferFormat, DepthFormat.Depth24
-				));
+				surface = Gpu.Run<RenderTarget2D?>(() => {
+					try {
+						return new RenderTarget2D(
+							Engine.GraphicsDevice, Display.Width + 1, Display.Height + 1, false,
+							Engine.Graphics.PreferredBackBufferFormat, DepthFormat.Depth24
+						);
+					} catch (Exception e) {
+						// Catch inside (Gpu contract): this also runs on the main thread, where a
+						// throw would escape the LoadState seam. Null surface → Render skips.
+						Log.Error(e);
+
+						return null;
+					}
+				});
 			}
 		}
 
@@ -68,6 +89,12 @@ namespace BurningKnight.assets.lighting {
 			}
 			
 			if (!LevelLayerDebug.Lights || !(Engine.Instance.State is InGameState)) {
+				return;
+			}
+
+			// Surface can be null after OOM/device-loss (Gpu.Flush logs and continues): skip the
+			// pass rather than SetRenderTarget(null) → backbuffer. Init retries on the next level.
+			if (surface == null) {
 				return;
 			}
 			

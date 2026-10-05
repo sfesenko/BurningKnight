@@ -1,8 +1,10 @@
+using System;
 using System.Collections.Generic;
 using BurningKnight.level.tile;
 using BurningKnight.physics;
 using BurningKnight.util;
 using Lens.physics;
+using Lens.util;
 using Microsoft.Xna.Framework;
 
 namespace BurningKnight.level {
@@ -79,7 +81,12 @@ namespace BurningKnight.level {
 						list.Add(new Vector2(xx + 16, yy + (Check(level, x, y + 1) ? 17 : 24)));
 						list.Add(new Vector2(xx, yy + (Check(level, x, y + 1) ? 17 : 24)));
 
-						body.CreatePolygonFixture(new Vertices(list), 1f);
+						try {
+							body.CreatePolygonFixture(new Vertices(list), 1f);
+						} catch (Exception e) {
+							// Degenerate tile-neighbor polygon: one bad chunk must not kill level gen.
+							Log.Error(e);
+						}
 					}
 				}
 			}

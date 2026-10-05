@@ -69,7 +69,7 @@ namespace BurningKnight.state {
 
 			Engine.Instance.StateRenderer.UiEffect = Shaders.Ui;
 			
-			if (Settings.Fullscreen && !Engine.Graphics.IsFullScreen) {
+			if (Settings.Fullscreen && !Engine.Graphics.IsFullScreen && Engine.Instance.CanToggleFullscreen) {
 				Engine.Instance.SetFullscreen();
 			}
 
@@ -199,7 +199,11 @@ namespace BurningKnight.state {
 						rainSound.IsLooped = true;
 						rainSound.Play();
 
-						Tween.To(0.5f * Settings.MusicVolume * Settings.MasterVolume, 0, x => rainSound.Volume = x, 5f);
+						Tween.To(0.5f * Settings.MusicVolume * Settings.MasterVolume, 0, x => {
+							if (rainSound != null) {
+								rainSound.Volume = x;
+							}
+						}, 5f);
 					}
 				}
 				

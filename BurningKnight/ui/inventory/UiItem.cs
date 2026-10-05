@@ -162,6 +162,11 @@ namespace BurningKnight.ui.inventory {
 		public override void OnClick() {
 			base.OnClick();
 
+			// Desktop bonus: no keyboard and no browser intent on a handheld.
+			if (!TextInput.Available) {
+				return;
+			}
+
 			if (Input.Keyboard.IsDown(Keys.LeftControl) || Input.Keyboard.IsDown(Keys.LeftShift) ||
 			    Input.Keyboard.IsDown(Keys.RightControl)) {
 

@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Threading;
 using BurningKnight.assets;
 using BurningKnight.assets.achievements;
+using BurningKnight.assets.input;
 using BurningKnight.assets.items;
 using BurningKnight.assets.lighting;
 using BurningKnight.assets.loot;
@@ -18,6 +19,7 @@ using Lens.assets;
 using Lens.entity;
 using Lens.game;
 using Lens.graphics;
+using Lens.input;
 using Lens.util;
 using Lens.util.math;
 using Lens.util.tween;
@@ -30,12 +32,10 @@ namespace BurningKnight.state {
 		private TextureRegion pixel = null!;
 		// private PhotoCard[] cards = new PhotoCard[3];
 
-		// Set by the loading worker; the main thread only reads it to decide when the loaded
-		// area may be touched. Volatile: the write publishes `gameArea` and everything in it.
+		// Set by the loading worker; volatile so the write publishes `gameArea` with it.
 		private volatile bool ready;
 
-		// Display-only: the progress bar may read a slightly stale value; it is also passed by
-		// ref into the loader, so it cannot be volatile. The hand-off is `ready`.
+		// Display-only (stale reads fine); passed by ref, cannot be volatile. Hand-off is `ready`.
 		private int progress;
 
 		private Area gameArea = null!;
@@ -45,6 +45,10 @@ namespace BurningKnight.state {
 
 		// Set by the worker once the saves are in, applied by the main thread.
 		private volatile bool checkFullscreen;
+
+		// Set by the worker when loading throws; `ready` stays false so the game thread surfaces it.
+		private volatile bool failed;
+		private string failure = "";
 
 		private float lastV;
 		private UiString tipLabel = null!;
@@ -69,8 +73,7 @@ namespace BurningKnight.state {
 
 			Ui.Add(tipLabel = new UiString(Font.Small));
 
-			// The tips are localized, so the locale has to be in before the first one is picked;
-			// Assets.Load would load it later, on the worker.
+			// Locale first: it has to be in before the first tip is picked.
 			if (Locale.Map == null) {
 				Locale.Load(Locale.PrefferedClientLanguage);
 			}
@@ -81,72 +84,79 @@ namespace BurningKnight.state {
 			progress = 0;
 
 			var thread = new Thread(() => {
-				var sw = Stopwatch.StartNew();
+				try {
+					var sw = Stopwatch.StartNew();
 
-				Log.Info("Starting asset loading thread");
+					Log.Info("Starting asset loading thread");
 
-				LoadSection(() => SaveManager.Load(gameArea, SaveType.Global), "Global saves");
-				
-				checkFullscreen = true;
+					LoadSection(() => SaveManager.Load(gameArea, SaveType.Global), "Global saves");
+					
+					checkFullscreen = true;
 
-				if (Assets.LoadMusic) {
-					LoadSection(() => Context.Audio.PlayMusic("Void"), "Audio");
-				} else {
-					progress++;
-				}
-
-				LoadSection(() => Assets.Load(ref progress), "Assets");
-				progress++;
-
-				LoadSection(Dialogs.Load, "Dialogs");
-
-				CommonAse.Load();
-				progress++;
-				
-				LoadSection(Shaders.Load, "Shaders");
-				LoadSection(Prefabs.Load, "Prefabs");
-				LoadSection(Items.Load, "Items");
-				LoadSection(LootTables.Load, "Loot tables");
-				LoadSection(Mods.Load, "Mods");
-				
-				Log.Info("Done loading assets! Loading level now.");
-			
-				LoadSection(() => {
-					Lights.Init();
-					Physics.Init();
-				}, "Lights & physics");
-				
-				gameArea = new GameArea();
-				Context.Level = null;
-
-				LoadSection(Tilesets.Load, "Tilesets");
-				LoadSection(Achievements.Load, "Achievements");
-				
-				LoadSection(() => {
-					SaveManager.Load(gameArea, SaveType.Game);
-				}, "Game saves");
-
-				Rnd.Seed = $"{Context.Run.Seed}_{Context.Run.Depth}";
-
-				LoadSection(() => {
-					SaveManager.Load(gameArea, SaveType.Level);
-				}, "Level saves");
-				
-				LoadSection(() => {
-					if (Context.Run.Depth > 0) {
-						SaveManager.Load(gameArea, SaveType.Player);
+					if (Assets.LoadMusic) {
+						LoadSection(() => Context.Audio.PlayMusic("Void"), "Audio");
 					} else {
-						SaveManager.Generate(gameArea, SaveType.Player);
+						progress++;
 					}
-				}, "Player saves");
 
-				Log.Info($"Done loading level in {sw.ElapsedMilliseconds} ms! Going to menu.");
+					LoadSection(() => Assets.Load(ref progress), "Assets");
+					progress++;
+
+					LoadSection(Dialogs.Load, "Dialogs");
+
+					LoadSection(CommonAse.Load, "Common");
+					
+					LoadSection(Shaders.Load, "Shaders");
+					LoadSection(Prefabs.Load, "Prefabs");
+					LoadSection(Items.Load, "Items");
+					LoadSection(LootTables.Load, "Loot tables");
+					LoadSection(Mods.Load, "Mods");
+					
+					Log.Info("Done loading assets! Loading level now.");
 				
-				ready = true;
+					LoadSection(() => {
+						Lights.Init();
+						Physics.Init();
+					}, "Lights & physics");
+					
+					gameArea = new GameArea();
+					Context.Level = null;
+
+					LoadSection(Tilesets.Load, "Tilesets");
+					LoadSection(Achievements.Load, "Achievements");
+					
+					LoadSection(() => {
+						SaveManager.Load(gameArea, SaveType.Game);
+					}, "Game saves");
+
+					Rnd.Seed = $"{Context.Run.Seed}_{Context.Run.Depth}";
+
+					LoadSection(() => {
+						SaveManager.Load(gameArea, SaveType.Level);
+					}, "Level saves");
+					
+					LoadSection(() => {
+						if (Context.Run.Depth > 0) {
+							SaveManager.Load(gameArea, SaveType.Player);
+						} else {
+							SaveManager.Generate(gameArea, SaveType.Player);
+						}
+					}, "Player saves");
+
+					Log.Info($"Done loading level in {sw.ElapsedMilliseconds} ms! Going to menu.");
+					
+					ready = true;
+				} catch (Exception e) {
+					// Record for the game thread; an unhandled throw here would abort the process.
+					Log.Error("Asset loading failed");
+					Log.Error(e);
+
+					failure = e.Message.Length > 100 ? $"{e.Message[..100]}…" : e.Message;
+					failed = true;
+				}
 			});
 
-			// The worker can block on the main thread's GPU queue; it must not pin the process
-			// open if the window closes mid-load.
+			// Background: the worker can block on the main thread's GPU queue.
 			thread.IsBackground = true;
 			thread.Start();
 		}
@@ -155,6 +165,14 @@ namespace BurningKnight.state {
 
 		public override void Update(float dt) {
 			base.Update(dt);
+
+			if (failed) {
+				// Failure is up; any confirm/back press leaves instead of sitting on a dead screen.
+				// UiSelect: keyboard/pad, UiAccept: mouse, GameStart/UiBack: pad Start/Back and Esc.
+				if (Input.WasPressed(Controls.GameStart) || Input.WasPressed(Controls.UiSelect) || Input.WasPressed(Controls.UiAccept) || Input.WasPressed(Controls.UiBack)) {
+					Engine.Instance.Quit();
+				}
+			}
 
 			t += dt;
 			tm -= dt;
@@ -167,10 +185,12 @@ namespace BurningKnight.state {
 			if (checkFullscreen) {
 				checkFullscreen = false;
 				
-				if (Settings.Fullscreen) {
-					Engine.Instance.SetFullscreen();
-				} else {
-					Engine.Instance.SetWindowed(Display.Width * 3, Display.Height * 3);
+				if (Engine.Instance.CanToggleFullscreen) {
+					if (Settings.Fullscreen) {
+						Engine.Instance.SetFullscreen();
+					} else {
+						Engine.Instance.SetWindowed(Display.Width * 3, Display.Height * 3);
+					}
 				}
 			}
 
@@ -257,7 +277,7 @@ namespace BurningKnight.state {
 				Graphics.Print($"{percentage}%", Font.Small, (int)(pos.X + lastV * (w - 4)) - 15, (int)pos.Y + 3);
 			}
 
-			var loadingLabel = $"Loading: {currentlyLoadingLabel}...";
+			var loadingLabel = failed ? $"Failed to load: {failure}" : $"Loading: {currentlyLoadingLabel}...";
 			Graphics.Print(loadingLabel, Font.Small, Display.UiWidth / 2 - (int)Font.Small.MeasureString(loadingLabel).Width / 2, Display.UiHeight - 20);
 
 			Graphics.Color.A = 255;

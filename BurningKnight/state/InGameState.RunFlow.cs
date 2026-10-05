@@ -74,8 +74,6 @@ namespace BurningKnight.state {
 
 			Tween.To(1f, Audio.Speed, x => Audio.Speed = x, 1f);
 			
-			SaveManager.Backup();
-
 			var old = !Engine.Quiting;
 
 			SaveManager.Save(Area, SaveType.Global, old);
